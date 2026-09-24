@@ -1,0 +1,3 @@
+export {};
+const s=await Bun.file('spec/extensions/parquet/metadata-transform.schema.json').json();s.$id='urn:umf:parquet:offset-repair:0.1.0';delete s.properties.added;const integer={type:'integer',minimum:0};s.properties.repairs={type:'array',minItems:1,items:{type:'object',required:['rowGroup','column','oldDataOffset','dataOffset','dictionaryOffset'],properties:{rowGroup:integer,column:integer,oldDataOffset:integer,dataOffset:integer,dictionaryOffset:integer},additionalProperties:false}};
+await Bun.write('spec/extensions/parquet/offset-repair.schema.json',JSON.stringify(JSON.parse(JSON.stringify(s).replaceAll('"added"','"repairs"')),null,2)+'\n');

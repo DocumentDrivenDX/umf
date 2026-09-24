@@ -1,0 +1,25 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://example.org/> .
+
+# Deliberate role overlaps are retained, not certified as legal OWL DL.
+ex:Shared a owl:Class, rdfs:Datatype, owl:ObjectProperty,
+    owl:DatatypeProperty, owl:AnnotationProperty, owl:NamedIndividual .
+ex:Shared a owl:Class .
+ex:Order a owl:Class .
+ex:Code a rdfs:Datatype .
+ex:owns a owl:ObjectProperty .
+ex:amount a owl:DatatypeProperty .
+ex:note a owl:AnnotationProperty .
+ex:alice a owl:NamedIndividual .
+
+# These type assertions are not named entity declarations.
+_:expression a owl:Class ; owl:intersectionOf (ex:Order ex:Shared) .
+_:data a rdfs:Datatype .
+_:unnamed a owl:NamedIndividual .
+ex:RdfsOnly a rdfs:Class .
+ex:Opaque a ex:FutureEntityKind .
+ex:UsedOnly ex:undeclaredProperty ex:OtherUsedOnly .
+ex:ontology a owl:Ontology ; owl:imports <https://example.org/not-fetched> .
+ex:Shared ex:unknown "9007199254740993"^^<http://www.w3.org/2001/XMLSchema#integer> .

@@ -1,0 +1,266 @@
+{
+  "runtime": "dbt-semantic-interfaces 0.8.5 native parser and SemanticManifestValidator; jsonschema 4.25.1",
+  "metricTypes": [
+    "conversion",
+    "cumulative",
+    "derived",
+    "ratio",
+    "simple"
+  ],
+  "metricCount": 7,
+  "sources": [
+    {
+      "format": "json",
+      "sha256": "8f03a25505dfe4ca13215c1948c16deb710abd8d3f8a8cdc54385bcd41153c31"
+    },
+    {
+      "format": "yaml",
+      "sha256": "8f03a25505dfe4ca13215c1948c16deb710abd8d3f8a8cdc54385bcd41153c31"
+    }
+  ],
+  "results": [
+    {
+      "id": "measure-average",
+      "format": "json",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": true,
+      "errors": [],
+      "warnings": [],
+      "sha256": "0b10b839b8349ca313d67eb968c2f55e53249f83ea9b98163f7a1e45b8e3410b"
+    },
+    {
+      "id": "measure-average",
+      "format": "yaml",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": true,
+      "errors": [],
+      "warnings": [],
+      "sha256": "0b10b839b8349ca313d67eb968c2f55e53249f83ea9b98163f7a1e45b8e3410b"
+    },
+    {
+      "id": "ratio-alias",
+      "format": "json",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": true,
+      "errors": [],
+      "warnings": [],
+      "sha256": "580b5033ab7f7188c24f95e3f8fca915e743f0d36127cd4c6ecec73ba6c9b142"
+    },
+    {
+      "id": "ratio-alias",
+      "format": "yaml",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": true,
+      "errors": [],
+      "warnings": [],
+      "sha256": "580b5033ab7f7188c24f95e3f8fca915e743f0d36127cd4c6ecec73ba6c9b142"
+    },
+    {
+      "id": "derived-offset",
+      "format": "json",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": true,
+      "errors": [],
+      "warnings": [],
+      "sha256": "165046f5d563721073e72391c10c593b52716d2244bcd5dddaa636e34293b07e"
+    },
+    {
+      "id": "derived-offset",
+      "format": "yaml",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": true,
+      "errors": [],
+      "warnings": [],
+      "sha256": "165046f5d563721073e72391c10c593b52716d2244bcd5dddaa636e34293b07e"
+    },
+    {
+      "id": "rolling-window",
+      "format": "json",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": true,
+      "errors": [],
+      "warnings": [],
+      "sha256": "41bd378e506901739e25a91b15bbf713cbbaaa5bc2cf29fcab3a0155bfc55375"
+    },
+    {
+      "id": "rolling-window",
+      "format": "yaml",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": true,
+      "errors": [],
+      "warnings": [],
+      "sha256": "41bd378e506901739e25a91b15bbf713cbbaaa5bc2cf29fcab3a0155bfc55375"
+    },
+    {
+      "id": "period-aggregation",
+      "format": "json",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": true,
+      "errors": [],
+      "warnings": [],
+      "sha256": "cad305ef5ea0dca682315715dbac5afbe83617025eb98ae3cb2a94617f880adc"
+    },
+    {
+      "id": "period-aggregation",
+      "format": "yaml",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": true,
+      "errors": [],
+      "warnings": [],
+      "sha256": "cad305ef5ea0dca682315715dbac5afbe83617025eb98ae3cb2a94617f880adc"
+    },
+    {
+      "id": "conversion-calculation",
+      "format": "json",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": true,
+      "errors": [],
+      "warnings": [],
+      "sha256": "bed21e2a7dc67064cedca72e3dc144ab85bc9ffece068fe24278c96bbac0c0d7"
+    },
+    {
+      "id": "conversion-calculation",
+      "format": "yaml",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": true,
+      "errors": [],
+      "warnings": [],
+      "sha256": "bed21e2a7dc67064cedca72e3dc144ab85bc9ffece068fe24278c96bbac0c0d7"
+    },
+    {
+      "id": "conflicting-window",
+      "format": "json",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": false,
+      "errors": [
+        "Both window and grain_to_date set for cumulative metric. Please set one or the other."
+      ],
+      "warnings": [],
+      "sha256": "febecf7d5fb007238f7b1231bc771246a35efd56d4e6fe6c72ac9e7f54f31dfb"
+    },
+    {
+      "id": "conflicting-window",
+      "format": "yaml",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": false,
+      "errors": [
+        "Both window and grain_to_date set for cumulative metric. Please set one or the other."
+      ],
+      "warnings": [],
+      "sha256": "febecf7d5fb007238f7b1231bc771246a35efd56d4e6fe6c72ac9e7f54f31dfb"
+    },
+    {
+      "id": "missing-input-metric",
+      "format": "json",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": false,
+      "errors": [
+        "For metric: amount_change, input metric: 'missing_metric' does not exist as a configured metric in the model."
+      ],
+      "warnings": [],
+      "sha256": "90b7fbb23745c90f84ad151bb320a9ee4f4b00f862145084191877bea420605e"
+    },
+    {
+      "id": "missing-input-metric",
+      "format": "yaml",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": false,
+      "errors": [
+        "For metric: amount_change, input metric: 'missing_metric' does not exist as a configured metric in the model."
+      ],
+      "warnings": [],
+      "sha256": "90b7fbb23745c90f84ad151bb320a9ee4f4b00f862145084191877bea420605e"
+    },
+    {
+      "id": "missing-conversion-entity",
+      "format": "json",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": false,
+      "errors": [
+        "Entity: missing_entity not found in base semantic model: events.",
+        "Entity: missing_entity not found in conversion semantic model: events."
+      ],
+      "warnings": [],
+      "sha256": "27c3ded3ce0353437ebdf827e3a97ad931e28eca8b622fda995736c300c270dc"
+    },
+    {
+      "id": "missing-conversion-entity",
+      "format": "yaml",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": false,
+      "errors": [
+        "Entity: missing_entity not found in base semantic model: events.",
+        "Entity: missing_entity not found in conversion semantic model: events."
+      ],
+      "warnings": [],
+      "sha256": "27c3ded3ce0353437ebdf827e3a97ad931e28eca8b622fda995736c300c270dc"
+    },
+    {
+      "id": "unknown-aggregation",
+      "format": "json",
+      "shapeValid": false,
+      "parserValid": false,
+      "semanticValid": false,
+      "errors": [
+        "1 validation error for PydanticSemanticManifest\nsemantic_models -> 0 -> measures -> 0 -> agg\n  value is not a valid enumeration member; permitted: 'sum', 'min', 'max', 'count_distinct', 'sum_boolean', 'average', 'percentile', 'median', 'count' (type=type_error.enum; enum_values=[<AggregationType.SUM: 'sum'>, <AggregationType.MIN: 'min'>, <AggregationType.MAX: 'max'>, <AggregationType.COUNT_DISTINCT: 'count_distinct'>, <AggregationType.SUM_BOOLEAN: 'sum_boolean'>, <AggregationType.AVERAGE: 'average'>, <AggregationType.PERCENTILE: 'percentile'>, <AggregationType.MEDIAN: 'median'>, <AggregationType.COUNT: 'count'>])"
+      ],
+      "warnings": [],
+      "sha256": "e3a2072bfd32e7ed29cacde5b849c8905f5078ab1005e5840864ae1cd3958de6"
+    },
+    {
+      "id": "unknown-aggregation",
+      "format": "yaml",
+      "shapeValid": false,
+      "parserValid": false,
+      "semanticValid": false,
+      "errors": [
+        "1 validation error for PydanticSemanticManifest\nsemantic_models -> 0 -> measures -> 0 -> agg\n  value is not a valid enumeration member; permitted: 'sum', 'min', 'max', 'count_distinct', 'sum_boolean', 'average', 'percentile', 'median', 'count' (type=type_error.enum; enum_values=[<AggregationType.SUM: 'sum'>, <AggregationType.MIN: 'min'>, <AggregationType.MAX: 'max'>, <AggregationType.COUNT_DISTINCT: 'count_distinct'>, <AggregationType.SUM_BOOLEAN: 'sum_boolean'>, <AggregationType.AVERAGE: 'average'>, <AggregationType.PERCENTILE: 'percentile'>, <AggregationType.MEDIAN: 'median'>, <AggregationType.COUNT: 'count'>])"
+      ],
+      "warnings": [],
+      "sha256": "e3a2072bfd32e7ed29cacde5b849c8905f5078ab1005e5840864ae1cd3958de6"
+    },
+    {
+      "id": "null-metrics",
+      "format": "json",
+      "shapeValid": false,
+      "parserValid": false,
+      "semanticValid": false,
+      "errors": [
+        "1 validation error for PydanticSemanticManifest\nmetrics\n  none is not an allowed value (type=type_error.none.not_allowed)"
+      ],
+      "warnings": [],
+      "sha256": "f9c7684f8e5e0b5382c4f37473db48aa40cd1a8c228b4d12ae05937f13fdb539"
+    },
+    {
+      "id": "null-metrics",
+      "format": "yaml",
+      "shapeValid": false,
+      "parserValid": false,
+      "semanticValid": false,
+      "errors": [
+        "1 validation error for PydanticSemanticManifest\nmetrics\n  none is not an allowed value (type=type_error.none.not_allowed)"
+      ],
+      "warnings": [],
+      "sha256": "f9c7684f8e5e0b5382c4f37473db48aa40cd1a8c228b4d12ae05937f13fdb539"
+    }
+  ],
+  "limits": "Semantic validation of candidate artifacts only; no MetricFlow planning, SQL execution or analytic-result equivalence"
+}

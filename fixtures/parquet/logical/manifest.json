@@ -1,0 +1,305 @@
+{
+  "runtime": "PyArrow 21.0.0 logical-to-Arrow schema observation",
+  "cases": [
+    {
+      "id": "decimal32",
+      "path": "fixtures/parquet/logical/decimal32.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "logical": "Decimal(precision=9, scale=2)",
+        "arrow": "decimal128(9, 2)"
+      }
+    },
+    {
+      "id": "decimal32-over",
+      "path": "fixtures/parquet/logical/decimal32-over.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "errorType": "OSError",
+        "message": "Decimal(precision=10, scale=2) cannot be applied to primitive type INT32"
+      }
+    },
+    {
+      "id": "decimal64",
+      "path": "fixtures/parquet/logical/decimal64.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "logical": "Decimal(precision=18, scale=2)",
+        "arrow": "decimal128(18, 2)"
+      }
+    },
+    {
+      "id": "decimal64-over",
+      "path": "fixtures/parquet/logical/decimal64-over.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "errorType": "OSError",
+        "message": "Decimal(precision=19, scale=2) cannot be applied to primitive type INT64"
+      }
+    },
+    {
+      "id": "decimal-fixed",
+      "path": "fixtures/parquet/logical/decimal-fixed.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "logical": "Decimal(precision=38, scale=9)",
+        "arrow": "decimal128(38, 9)"
+      }
+    },
+    {
+      "id": "decimal-fixed-over",
+      "path": "fixtures/parquet/logical/decimal-fixed-over.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "errorType": "OSError",
+        "message": "Decimal(precision=39, scale=9) cannot be applied to primitive type FIXED_LEN_BYTE_ARRAY"
+      }
+    },
+    {
+      "id": "decimal-scale-negative",
+      "path": "fixtures/parquet/logical/decimal-scale-negative.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "errorType": "OSError",
+        "message": "Scale must be a non-negative integer that does not exceed precision for Decimal logical type"
+      }
+    },
+    {
+      "id": "decimal-scale-over",
+      "path": "fixtures/parquet/logical/decimal-scale-over.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "errorType": "OSError",
+        "message": "Scale must be a non-negative integer that does not exceed precision for Decimal logical type"
+      }
+    },
+    {
+      "id": "decimal-legacy-default",
+      "path": "fixtures/parquet/logical/decimal-legacy-default.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "logical": "Decimal(precision=5, scale=0)",
+        "arrow": "decimal128(5, 0)"
+      }
+    },
+    {
+      "id": "decimal-legacy-missing",
+      "path": "fixtures/parquet/logical/decimal-legacy-missing.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "errorType": "OSError",
+        "message": "Invalid DECIMAL precision: 0. Precision must be a number between 1 and 38 inclusive"
+      }
+    },
+    {
+      "id": "decimal-legacy-conflict",
+      "path": "fixtures/parquet/logical/decimal-legacy-conflict.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "logical": "Decimal(precision=5, scale=2)",
+        "arrow": "decimal128(5, 2)"
+      }
+    },
+    {
+      "id": "uint32",
+      "path": "fixtures/parquet/logical/uint32.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "logical": "Int(bitWidth=32, isSigned=false)",
+        "arrow": "uint32"
+      }
+    },
+    {
+      "id": "uint32-wrong",
+      "path": "fixtures/parquet/logical/uint32-wrong.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "errorType": "OSError",
+        "message": "Int(bitWidth=32, isSigned=false) cannot be applied to primitive type INT64"
+      }
+    },
+    {
+      "id": "int8",
+      "path": "fixtures/parquet/logical/int8.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "logical": "Int(bitWidth=8, isSigned=true)",
+        "arrow": "int8"
+      }
+    },
+    {
+      "id": "int-bits",
+      "path": "fixtures/parquet/logical/int-bits.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "errorType": "OSError",
+        "message": "Bit width must be exactly 8, 16, 32, or 64 for Int logical type"
+      }
+    },
+    {
+      "id": "timestamp-local",
+      "path": "fixtures/parquet/logical/timestamp-local.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "logical": "Timestamp(isAdjustedToUTC=false, timeUnit=microseconds, is_from_converted_type=false, force_set_converted_type=false)",
+        "arrow": "timestamp[us]"
+      }
+    },
+    {
+      "id": "timestamp-wrong",
+      "path": "fixtures/parquet/logical/timestamp-wrong.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "errorType": "OSError",
+        "message": "Timestamp(isAdjustedToUTC=true, timeUnit=milliseconds, is_from_converted_type=false, force_set_converted_type=false) cannot be applied to primitive type INT32"
+      }
+    },
+    {
+      "id": "time-ms",
+      "path": "fixtures/parquet/logical/time-ms.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "logical": "Time(isAdjustedToUTC=false, timeUnit=milliseconds)",
+        "arrow": "time32[ms]"
+      }
+    },
+    {
+      "id": "time-us-wrong",
+      "path": "fixtures/parquet/logical/time-us-wrong.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "errorType": "OSError",
+        "message": "Time(isAdjustedToUTC=true, timeUnit=microseconds) cannot be applied to primitive type INT32"
+      }
+    },
+    {
+      "id": "time-nanos",
+      "path": "fixtures/parquet/logical/time-nanos.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "logical": "Time(isAdjustedToUTC=true, timeUnit=nanoseconds)",
+        "arrow": "time64[ns]"
+      }
+    },
+    {
+      "id": "string",
+      "path": "fixtures/parquet/logical/string.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "logical": "String",
+        "arrow": "string"
+      }
+    },
+    {
+      "id": "string-wrong",
+      "path": "fixtures/parquet/logical/string-wrong.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "errorType": "OSError",
+        "message": "String cannot be applied to primitive type INT32"
+      }
+    },
+    {
+      "id": "uuid",
+      "path": "fixtures/parquet/logical/uuid.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "logical": "UUID",
+        "arrow": "extension<arrow.uuid>"
+      }
+    },
+    {
+      "id": "uuid-wrong",
+      "path": "fixtures/parquet/logical/uuid-wrong.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "errorType": "OSError",
+        "message": "UUID cannot be applied to primitive type FIXED_LEN_BYTE_ARRAY"
+      }
+    },
+    {
+      "id": "float16",
+      "path": "fixtures/parquet/logical/float16.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "logical": "Float16",
+        "arrow": "halffloat"
+      }
+    },
+    {
+      "id": "float16-wrong",
+      "path": "fixtures/parquet/logical/float16-wrong.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "errorType": "OSError",
+        "message": "Float16 cannot be applied to primitive type FIXED_LEN_BYTE_ARRAY"
+      }
+    },
+    {
+      "id": "date",
+      "path": "fixtures/parquet/logical/date.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "logical": "Date",
+        "arrow": "date32[day]"
+      }
+    },
+    {
+      "id": "date-wrong",
+      "path": "fixtures/parquet/logical/date-wrong.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "errorType": "OSError",
+        "message": "Date cannot be applied to primitive type INT64"
+      }
+    },
+    {
+      "id": "interval",
+      "path": "fixtures/parquet/logical/interval.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "logical": "Interval",
+        "arrow": "fixed_size_binary[12]"
+      }
+    },
+    {
+      "id": "interval-wrong",
+      "path": "fixtures/parquet/logical/interval-wrong.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "errorType": "OSError",
+        "message": "INTERVAL can only annotate FIXED_LEN_BYTE_ARRAY(12)"
+      }
+    }
+  ]
+}

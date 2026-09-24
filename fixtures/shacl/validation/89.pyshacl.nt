@@ -1,0 +1,10 @@
+_:N37a2cb5b2e9c4ed38be7b47d081467e5 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N37a2cb5b2e9c4ed38be7b47d081467e5 <http://www.w3.org/ns/shacl#resultPath> <http://example.org/shacl-test/message> .
+_:N3231a2cd45fa475baddbee2cd98d7a14 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N37a2cb5b2e9c4ed38be7b47d081467e5 <http://www.w3.org/ns/shacl#resultMessage> "More than one String shares the same Language" .
+_:N3231a2cd45fa475baddbee2cd98d7a14 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N37a2cb5b2e9c4ed38be7b47d081467e5 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N37a2cb5b2e9c4ed38be7b47d081467e5 <http://www.w3.org/ns/shacl#sourceShape> <http://example.org/shacl-test/s1> .
+_:N37a2cb5b2e9c4ed38be7b47d081467e5 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#UniqueLangConstraintComponent> .
+_:N37a2cb5b2e9c4ed38be7b47d081467e5 <http://www.w3.org/ns/shacl#focusNode> <http://example.org/shacl-test/i> .
+_:N3231a2cd45fa475baddbee2cd98d7a14 <http://www.w3.org/ns/shacl#result> _:N37a2cb5b2e9c4ed38be7b47d081467e5 .

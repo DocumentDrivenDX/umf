@@ -1,0 +1,14 @@
+@prefix ex: <https://example.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:explicit sh:targetNode ex:absent, "absent literal", "9007199254740993"^^<http://www.w3.org/2001/XMLSchema#integer> .
+ex:class sh:targetClass ex:Root .
+ex:subjects sh:targetSubjectsOf ex:p .
+ex:objects sh:targetObjectsOf ex:p .
+ex:union sh:targetNode ex:a ; sh:targetClass ex:Root ; sh:targetSubjectsOf ex:p ; sh:targetObjectsOf ex:p .
+ex:Implicit a ex:ShapeType, ex:ClassType .
+ex:ShapeType rdfs:subClassOf sh:NodeShape .
+ex:ClassType rdfs:subClassOf rdfs:Class .
+ex:ShapeOnlySub rdfs:subClassOf ex:Root .
+ex:inactive sh:targetNode ex:absent ; sh:deactivated true .
+ex:none a sh:NodeShape .

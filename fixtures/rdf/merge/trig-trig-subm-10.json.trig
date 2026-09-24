@@ -1,0 +1,12 @@
+_:m_0_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+_:m_0_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+_:m_0_1 <http://www.w3.org/2002/07/owl#onProperty> _:m_0_0 .
+_:m_0_1 <http://www.w3.org/2002/07/owl#maxCardinality> "2"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://example/graph> { _:m_0_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> . }
+<http://example/graph> { _:m_0_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> . }
+<http://example/graph> { _:m_0_2 <http://www.w3.org/2002/07/owl#onProperty> _:m_0_0 . }
+<http://example/graph> { _:m_0_2 <http://www.w3.org/2002/07/owl#maxCardinality> "2"^^<http://www.w3.org/2001/XMLSchema#integer> . }
+_:m_1_0 <urn:example:related> <urn:example:resource> .
+<urn:example:populated> { _:m_1_0 <urn:example:label> "Original label" . }
+<urn:example:empty> {}
+_:m_1_0 {}

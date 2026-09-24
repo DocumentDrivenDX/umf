@@ -1,0 +1,202 @@
+[build-system]
+requires = ["hatchling", "uv-dynamic-versioning"]
+build-backend = "hatchling.build"
+
+[project]
+name = "tablespec"
+dynamic = ["version"]
+description = "Python library for working with table schemas in Universal Metadata Format (UMF)"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "Apache-2.0"}
+authors = [
+    {name = "Erik LaBianca", email = "erik.labianca@gmail.com"},
+]
+keywords = ["schema", "metadata", "umf", "data-quality", "great-expectations", "pyspark"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "gitpython>=3.1.0,<4.0.0",
+    "pydantic>=2.0.0,<3.0.0",
+    "pyyaml>=6.0.0,<7.0.0",
+    "great-expectations>=1.6.0,<2.0.0",
+    "openpyxl>=3.1.0",
+    # typer 0.26.0 dropped its click dependency and the click-type bridge
+    # (cli.py passes click_type=click.Choice and imports click directly).
+    "typer>=0.9.0,<0.26.0",
+    "click>=8.0.0,<9.0.0",
+    "rich>=13.0.0,<14.0.0",
+    "ruamel.yaml>=0.18.0,<1.0.0",
+    "sqlparse>=0.4.0,<1.0.0",
+    "sqlglot>=26.0.0",
+]
+
+[project.scripts]
+tablespec = "tablespec.cli:app"
+
+[project.optional-dependencies]
+spark = [
+    "pyspark>=4.0.0,<5.0.0",
+    "pyarrow>=15.0.0,<18.0.0",
+]
+duckdb = [
+    "duckdb>=1.0.0,<2.0.0",
+    "duckdb-engine>=0.15.0,<1.0.0",
+    "sqlalchemy>=2.0.0,<3.0.0",
+]
+tui = [
+    "textual>=0.50.0",
+]
+# NOTE: dbt is intentionally NOT a user-facing extra. tablespec's runtime never
+# imports dbt -- generating a dbt project is pure-Python text emission (enforced
+# by tests/test_core_encapsulation.py::test_src_never_imports_dbt). dbt is only
+# needed to EXECUTE generated projects in the conformance/parity TESTS, so the
+# dbt stack lives in the [dependency-groups] dev group below, not here.
+
+[tool.hatch.version]
+source = "uv-dynamic-versioning"
+
+[tool.uv-dynamic-versioning]
+fallback-version = "0.0.0"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2",
+    "pytest-cov>=6.0.0",
+    "anyio>=4.0.0",
+    "pytest-mock>=3.15.1",
+    "ruff>=0.13.3",
+    "pyright>=1.1.0",
+    "pre-commit>=4.0.0",
+    "hypothesis>=6.0.0",
+    # Required to run apps/data-profiling's suite (see [tool.pytest.ini_options]
+    # testpaths). `profiler` imports pandas at module import time; drift.py
+    # imports scipy lazily, but the drift tests exercise those paths. These are
+    # TEST-ONLY here -- the app declares its own runtime deps in
+    # apps/data-profiling/requirements.txt.
+    "pandas>=2.0",
+    "scipy>=1.11",
+    "mkdocs>=1.6",
+    "mkdocs-material>=9.5",
+    "mkdocstrings[python]>=0.27",
+    # Local Spark Connect lane: pysail is a Rust-based Spark Connect server
+    # (no JVM / no JAVA_HOME). It powers the cheap, JVM-free Connect test lane
+    # for the profiler and the GX domain/date-order standalone validators. The
+    # grpc/protobuf packages are the Spark Connect *client* dependencies.
+    "pysail>=0.6.3",
+    "grpcio",
+    "grpcio-status",
+    "googleapis-common-protos",
+    # dbt is a TEST-ONLY tool here (see NOTE in [project.optional-dependencies]):
+    # the conformance/parity tests EXECUTE generated dbt projects on DuckDB, a
+    # local Spark session (dbt-spark[session]), and a compile-only Databricks
+    # target. It lives in dev so `uv sync --group dev` always yields a working
+    # test stack -- no `--extra` to remember.
+    "dbt-core>=1.9.0,<2.0.0",
+    "dbt-duckdb>=1.9.0,<2.0.0",
+    "dbt-spark[session]>=1.10,<2",
+    "dbt-databricks>=1.9,<2",
+    "duckdb>=1.5.0,<2.0.0",
+]
+
+[tool.pytest.ini_options]
+# The Databricks app's suite runs alongside the library's. Its tests import the
+# `profiler` package directly, so the app directory goes on the import path.
+# (apps/data-profiling/tests is intentionally NOT a package: a second top-level
+# `tests` package would shadow this repo's own `tests` package at import time.)
+testpaths = ["tests", "apps/data-profiling/tests"]
+pythonpath = ["apps/data-profiling"]
+markers = [
+    "acceptance: acceptance criteria tests tied to user stories",
+    "contract: marks contract tests that require dedicated compatibility coverage",
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "fast: marks tests that complete in <100ms with no I/O or external deps",
+    "no_spark: marks tests that do not require PySpark",
+    "spark_only: marks tests that REQUIRE a JVM-backed Spark session (excluded from the no_spark fast lane)",
+    "databricks_e2e: opt-in tier that deploys + executes on a REAL Databricks workspace (skipped unless DATABRICKS_HOST is set)",
+]
+filterwarnings = [
+    "error",
+    "ignore::DeprecationWarning:great_expectations.*",
+    "ignore::DeprecationWarning:pydantic.*",
+    "ignore::PendingDeprecationWarning",
+]
+addopts = "--strict-markers"
+
+[tool.ruff]
+# Keep in sync with .pre-commit-config.yaml ruff excludes.
+# notebooks: Databricks cell layout and injected globals (spark, dbutils).
+# tests/golden: expected generator output compared byte-for-byte.
+# .ddx: vendored plugin/bench tooling, not product source.
+exclude = [
+    ".bzr",
+    ".ddx",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+    "notebooks",
+    "tests/golden",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Demo script intentionally imports after narrative setup blocks.
+"examples/demo.py" = ["E402"]
+# Optional deps / spark probed before importing the module under test.
+"tests/unit/test_classify_validation.py" = ["E402"]
+"tests/unit/test_date_processing.py" = ["E402"]
+"tests/unit/test_tui.py" = ["E402"]
+# Streamlit page modules are imported after set_page_config / path setup.
+"apps/data-profiling/streamlit_app.py" = ["E402"]
+# Heavy SDK import deferred until after --help parse.
+"apps/data-profiling/scripts/verify_schema_match.py" = ["E402"]
+
+[tool.coverage.run]
+source = ["src/tablespec"]
+branch = true
+omit = [
+    "src/tablespec/__init__.py",
+]
+
+[tool.coverage.report]
+fail_under = 70
+show_missing = true
+precision = 1
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+    "raise NotImplementedError",
+    "@overload",
+]
+
+[tool.uv]
+package = true

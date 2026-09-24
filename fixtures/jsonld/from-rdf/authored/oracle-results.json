@@ -1,0 +1,246 @@
+{
+  "processor": "PyLD 2.0.4",
+  "comparison": "Unmodified native RDF conversion, exact output comparison; empty graph inventory cannot be supplied via N-Quads",
+  "results": [
+    {
+      "id": "exact-native",
+      "umf": "candidate",
+      "oracleInput": "original N-Quads source",
+      "native": "accepted",
+      "expectedEqual": false,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": false
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": false
+        }
+      ]
+    },
+    {
+      "id": "typed-lexical",
+      "umf": "candidate",
+      "oracleInput": "original N-Quads source",
+      "native": "accepted",
+      "expectedEqual": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true
+        }
+      ]
+    },
+    {
+      "id": "nonfinite-typed",
+      "umf": "candidate",
+      "oracleInput": "original N-Quads source",
+      "native": "accepted",
+      "expectedEqual": false,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": false
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": false
+        }
+      ]
+    },
+    {
+      "id": "exact-json",
+      "umf": "candidate",
+      "oracleInput": "original N-Quads source",
+      "native": "accepted",
+      "expectedEqual": false,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": false
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": false
+        }
+      ]
+    },
+    {
+      "id": "direction-native",
+      "umf": "candidate",
+      "oracleInput": "original N-Quads source",
+      "native": "accepted",
+      "expectedEqual": false,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": false
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": false
+        }
+      ]
+    },
+    {
+      "id": "empty-graph",
+      "umf": "candidate",
+      "oracleInput": "explicit nonempty N-Quads subset",
+      "native": "accepted",
+      "expectedEqual": false,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": false
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": false
+        }
+      ]
+    },
+    {
+      "id": "loss-reject",
+      "umf": "blocked",
+      "oracleInput": "original N-Quads source",
+      "native": "accepted",
+      "expectedEqual": null,
+      "exports": []
+    },
+    {
+      "id": "normalized-comments",
+      "umf": "candidate",
+      "oracleInput": "original N-Quads source",
+      "native": "rejected",
+      "error": "('Error while parsing N-Quads invalid quad.',)\nType: jsonld.ParseError\nDetails: {'line': 1}"
+    },
+    {
+      "id": "bad-json",
+      "umf": "blocked",
+      "oracleInput": "original N-Quads source",
+      "native": "rejected",
+      "error": "('JSON literal could not be parsed.',)\nType: jsonld.InvalidJsonLiteral\nCode: invalid JSON literal\nDetails: {'value': '{\"n\":}'}\nCause: Expecting value: line 1 column 6 (char 5)  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 3736, in _rdf_to_object\n    rval['@value'] = json.loads(rval['@value'])\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/.local/share/uv/python/cpython-3.12.3-linux-aarch64-gnu/lib/python3.12/json/__init__.py\", line 346, in loads\n    return _default_decoder.decode(s)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/.local/share/uv/python/cpython-3.12.3-linux-aarch64-gnu/lib/python3.12/json/decoder.py\", line 337, in decode\n    obj, end = self.raw_decode(s, idx=_w(s, 0).end())\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/.local/share/uv/python/cpython-3.12.3-linux-aarch64-gnu/lib/python3.12/json/decoder.py\", line 355, in raw_decode\n    raise JSONDecodeError(\"Expecting value\", s, err.value) from None\n"
+    },
+    {
+      "id": "compound-shared",
+      "umf": "candidate",
+      "oracleInput": "original N-Quads source",
+      "native": "accepted",
+      "expectedEqual": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true
+        }
+      ]
+    },
+    {
+      "id": "compound-extra-report",
+      "umf": "candidate",
+      "oracleInput": "original N-Quads source",
+      "native": "accepted",
+      "expectedEqual": false,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": false
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": false
+        }
+      ]
+    },
+    {
+      "id": "compound-extra-reject",
+      "umf": "blocked",
+      "oracleInput": "original N-Quads source",
+      "native": "accepted",
+      "expectedEqual": null,
+      "exports": []
+    },
+    {
+      "id": "compound-invalid",
+      "umf": "blocked",
+      "oracleInput": "original N-Quads source",
+      "native": "accepted",
+      "expectedEqual": null,
+      "exports": []
+    },
+    {
+      "id": "compound-list",
+      "umf": "candidate",
+      "oracleInput": "original N-Quads source",
+      "native": "accepted",
+      "expectedEqual": false,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": false
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": false
+        }
+      ]
+    },
+    {
+      "id": "json-10-typed",
+      "umf": "candidate",
+      "oracleInput": "original N-Quads source",
+      "native": "accepted",
+      "expectedEqual": false,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": false
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": false
+        }
+      ]
+    },
+    {
+      "id": "direction-invalid",
+      "umf": "blocked",
+      "oracleInput": "original N-Quads source",
+      "native": "accepted",
+      "expectedEqual": null,
+      "exports": []
+    },
+    {
+      "id": "direction-extra",
+      "umf": "blocked",
+      "oracleInput": "original N-Quads source",
+      "native": "rejected",
+      "error": "too many values to unpack (expected 3)"
+    },
+    {
+      "id": "direction-opaque",
+      "umf": "candidate",
+      "oracleInput": "original N-Quads source",
+      "native": "accepted",
+      "expectedEqual": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true
+        }
+      ]
+    }
+  ]
+}

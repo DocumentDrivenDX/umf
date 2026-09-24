@@ -1,0 +1,13 @@
+{
+  "oracle": "pglast v7.18",
+  "postgresqlVersion": [
+    17,
+    7
+  ],
+  "wasmPostgresqlVersion": 170004,
+  "upstream": "1c1a32ed2f4c7799830d50bf4cb159222aafec48",
+  "cases": 416,
+  "statements": 420,
+  "nativeAstEqualExcludingOffsets": true,
+  "scope": "Original/regenerated query AST equality within the separate native wrapper. No catalog resolution or execution; PostgreSQL 17.7 differs from WASM 17.4."
+}

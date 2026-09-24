@@ -1,0 +1,102 @@
+txn: struct<appId: string, version: int64, lastUpdated: int64>
+  child 0, appId: string
+  child 1, version: int64
+  child 2, lastUpdated: int64
+add: struct<path: string, partitionValues: map<string, string ('partitionValues')>, size: int64, modifica (... 657 chars omitted)
+  child 0, path: string
+  child 1, partitionValues: map<string, string ('partitionValues')>
+      child 0, partitionValues: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+  child 2, size: int64
+  child 3, modificationTime: int64
+  child 4, dataChange: bool
+  child 5, tags: map<string, string ('tags')>
+      child 0, tags: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+  child 6, deletionVector: struct<storageType: string, pathOrInlineDv: string, offset: int32, sizeInBytes: int32, cardinality:  (... 6 chars omitted)
+      child 0, storageType: string
+      child 1, pathOrInlineDv: string
+      child 2, offset: int32
+      child 3, sizeInBytes: int32
+      child 4, cardinality: int64
+  child 7, baseRowId: int64
+  child 8, stats: string
+  child 9, stats_parsed: struct<numRecords: int64, minValues: struct<address: string, age: double, company: string, id: int64 (... 314 chars omitted)
+      child 0, numRecords: int64
+      child 1, minValues: struct<address: string, age: double, company: string, id: int64, name: string, nbr: int64, phone_num (... 12 chars omitted)
+          child 0, address: string
+          child 1, age: double
+          child 2, company: string
+          child 3, id: int64
+          child 4, name: string
+          child 5, nbr: int64
+          child 6, phone_number: string
+      child 2, maxValues: struct<address: string, age: double, company: string, id: int64, name: string, nbr: int64, phone_num (... 12 chars omitted)
+          child 0, address: string
+          child 1, age: double
+          child 2, company: string
+          child 3, id: int64
+          child 4, name: string
+          child 5, nbr: int64
+          child 6, phone_number: string
+      child 3, nullCount: struct<address: int64, age: int64, company: int64, id: int64, name: int64, nbr: int64, phone_number: (... 7 chars omitted)
+          child 0, address: int64
+          child 1, age: int64
+          child 2, company: int64
+          child 3, id: int64
+          child 4, name: int64
+          child 5, nbr: int64
+          child 6, phone_number: int64
+      child 4, tightBounds: bool
+remove: struct<path: string, deletionTimestamp: int64, dataChange: bool, extendedFileMetadata: bool, partiti (... 205 chars omitted)
+  child 0, path: string
+  child 1, deletionTimestamp: int64
+  child 2, dataChange: bool
+  child 3, extendedFileMetadata: bool
+  child 4, partitionValues: map<string, string ('partitionValues')>
+      child 0, partitionValues: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+  child 5, size: int64
+  child 6, deletionVector: struct<storageType: string, pathOrInlineDv: string, offset: int32, sizeInBytes: int32, cardinality:  (... 6 chars omitted)
+      child 0, storageType: string
+      child 1, pathOrInlineDv: string
+      child 2, offset: int32
+      child 3, sizeInBytes: int32
+      child 4, cardinality: int64
+  child 7, baseRowId: int64
+metaData: struct<id: string, name: string, description: string, format: struct<provider: string, options: map< (... 166 chars omitted)
+  child 0, id: string
+  child 1, name: string
+  child 2, description: string
+  child 3, format: struct<provider: string, options: map<string, string ('options')>>
+      child 0, provider: string
+      child 1, options: map<string, string ('options')>
+          child 0, options: struct<key: string not null, value: string> not null
+              child 0, key: string not null
+              child 1, value: string
+  child 4, schemaString: string
+  child 5, partitionColumns: list<element: string>
+      child 0, element: string
+  child 6, configuration: map<string, string ('configuration')>
+      child 0, configuration: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+  child 7, createdTime: int64
+protocol: struct<minReaderVersion: int32, minWriterVersion: int32, readerFeatures: list<element: string>, writ (... 34 chars omitted)
+  child 0, minReaderVersion: int32
+  child 1, minWriterVersion: int32
+  child 2, readerFeatures: list<element: string>
+      child 0, element: string
+  child 3, writerFeatures: list<element: string>
+      child 0, element: string
+rowIdHighWaterMark: struct<value: int64>
+  child 0, value: int64
+-- schema metadata --
+org.apache.spark.timeZone: 'Etc/UTC'
+org.apache.spark.legacyINT96: ''
+org.apache.spark.version: '3.3.2'
+org.apache.spark.sql.parquet.row.metadata: '{"type":"struct","fields":[{"' + 5931
+org.apache.spark.legacyDateTime: ''

@@ -1,0 +1,31 @@
+[ {
+  "id" : "int-identity",
+  "formatsAgree" : 2,
+  "nativeOperation" : "SchemaUpdate.updateColumn + TableMetadata.updateSchema",
+  "excludedComparison" : "last-updated-ms: UMF candidate does not advance commit time"
+}, {
+  "id" : "int-bucket",
+  "formatsAgree" : 2,
+  "nativeOperation" : "SchemaUpdate.updateColumn + TableMetadata.updateSchema",
+  "excludedComparison" : "last-updated-ms: UMF candidate does not advance commit time"
+}, {
+  "id" : "int-truncate",
+  "formatsAgree" : 2,
+  "nativeOperation" : "SchemaUpdate.updateColumn + TableMetadata.updateSchema",
+  "excludedComparison" : "last-updated-ms: UMF candidate does not advance commit time"
+}, {
+  "id" : "float-identity",
+  "formatsAgree" : 2,
+  "nativeOperation" : "SchemaUpdate.updateColumn + TableMetadata.updateSchema",
+  "excludedComparison" : "last-updated-ms: UMF candidate does not advance commit time"
+}, {
+  "id" : "decimal-bucket",
+  "formatsAgree" : 2,
+  "nativeOperation" : "SchemaUpdate.updateColumn + TableMetadata.updateSchema",
+  "excludedComparison" : "last-updated-ms: UMF candidate does not advance commit time"
+}, {
+  "id" : "decimal-truncate",
+  "formatsAgree" : 2,
+  "nativeOperation" : "SchemaUpdate.updateColumn + TableMetadata.updateSchema",
+  "excludedComparison" : "last-updated-ms: UMF candidate does not advance commit time"
+} ]

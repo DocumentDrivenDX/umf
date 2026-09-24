@@ -1,0 +1,2450 @@
+{
+  "counts": {
+    "induction-blocked": 13,
+    "membership-blocked": 24,
+    "compared": 310
+  },
+  "cases": [
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/annotations.yaml",
+      "nativeStatus": "loaded",
+      "queries": [
+        {
+          "className": "annotatable",
+          "slotName": "annotations",
+          "status": "induction-blocked"
+        },
+        {
+          "className": "annotation",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extension",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/array.yaml",
+      "nativeStatus": "loaded",
+      "queries": [
+        {
+          "className": "NDArray",
+          "slotName": "dimensions",
+          "status": "compared"
+        },
+        {
+          "className": "NDArray",
+          "slotName": "elements",
+          "status": "compared"
+        },
+        {
+          "className": "NDArray",
+          "slotName": "array_linearization_order",
+          "status": "compared"
+        },
+        {
+          "className": "OneDimensionalSeries",
+          "slotName": "dimensions",
+          "status": "compared"
+        },
+        {
+          "className": "OneDimensionalSeries",
+          "slotName": "elements",
+          "status": "compared"
+        },
+        {
+          "className": "OneDimensionalSeries",
+          "slotName": "array_linearization_order",
+          "status": "compared"
+        },
+        {
+          "className": "DataArray",
+          "slotName": "axis",
+          "status": "compared"
+        },
+        {
+          "className": "DataArray",
+          "slotName": "array",
+          "status": "compared"
+        },
+        {
+          "className": "ColumnOrderedArray",
+          "slotName": "array_linearization_order",
+          "status": "compared"
+        },
+        {
+          "className": "RowOrderedArray",
+          "slotName": "array_linearization_order",
+          "status": "compared"
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/datasets.yaml",
+      "nativeStatus": "loaded",
+      "queries": [
+        {
+          "className": "Information",
+          "slotName": "id",
+          "status": "compared"
+        },
+        {
+          "className": "Information",
+          "slotName": "download_url",
+          "status": "compared"
+        },
+        {
+          "className": "Information",
+          "slotName": "license",
+          "status": "compared"
+        },
+        {
+          "className": "Information",
+          "slotName": "title",
+          "status": "compared"
+        },
+        {
+          "className": "Information",
+          "slotName": "description",
+          "status": "compared"
+        },
+        {
+          "className": "Information",
+          "slotName": "conforms_to",
+          "status": "compared"
+        },
+        {
+          "className": "Information",
+          "slotName": "conforms_to_schema",
+          "status": "compared"
+        },
+        {
+          "className": "Information",
+          "slotName": "conforms_to_class",
+          "status": "compared"
+        },
+        {
+          "className": "Information",
+          "slotName": "version",
+          "status": "compared"
+        },
+        {
+          "className": "Information",
+          "slotName": "language",
+          "status": "compared"
+        },
+        {
+          "className": "Information",
+          "slotName": "publisher",
+          "status": "compared"
+        },
+        {
+          "className": "Information",
+          "slotName": "keywords",
+          "status": "compared"
+        },
+        {
+          "className": "Information",
+          "slotName": "issued",
+          "status": "compared"
+        },
+        {
+          "className": "Information",
+          "slotName": "created_by",
+          "status": "compared"
+        },
+        {
+          "className": "Information",
+          "slotName": "created_on",
+          "status": "compared"
+        },
+        {
+          "className": "Information",
+          "slotName": "compression",
+          "status": "compared"
+        },
+        {
+          "className": "Information",
+          "slotName": "was_derived_from",
+          "status": "compared"
+        },
+        {
+          "className": "Information",
+          "slotName": "page",
+          "status": "compared"
+        },
+        {
+          "className": "Information",
+          "slotName": "test_roles",
+          "status": "compared"
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "resources",
+          "status": "compared"
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "id",
+          "status": "compared"
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "download_url",
+          "status": "compared"
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "license",
+          "status": "compared"
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "title",
+          "status": "compared"
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "description",
+          "status": "compared"
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "conforms_to",
+          "status": "compared"
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "conforms_to_schema",
+          "status": "compared"
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "conforms_to_class",
+          "status": "compared"
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "version",
+          "status": "compared"
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "language",
+          "status": "compared"
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "publisher",
+          "status": "compared"
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "keywords",
+          "status": "compared"
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "issued",
+          "status": "compared"
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "created_by",
+          "status": "compared"
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "created_on",
+          "status": "compared"
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "compression",
+          "status": "compared"
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "was_derived_from",
+          "status": "compared"
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "page",
+          "status": "compared"
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "test_roles",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "path",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "title",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "description",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "format",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "media_type",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "encoding",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "bytes",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "hash",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "md5",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "sha256",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "dialect",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "id",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "download_url",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "license",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "conforms_to",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "conforms_to_schema",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "conforms_to_class",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "version",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "language",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "publisher",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "keywords",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "issued",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "created_by",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "created_on",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "compression",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "was_derived_from",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "page",
+          "status": "compared"
+        },
+        {
+          "className": "DataResource",
+          "slotName": "test_roles",
+          "status": "compared"
+        },
+        {
+          "className": "FormatDialect",
+          "slotName": "comment_prefix",
+          "status": "compared"
+        },
+        {
+          "className": "FormatDialect",
+          "slotName": "delimiter",
+          "status": "compared"
+        },
+        {
+          "className": "FormatDialect",
+          "slotName": "double_quote",
+          "status": "compared"
+        },
+        {
+          "className": "FormatDialect",
+          "slotName": "header",
+          "status": "compared"
+        },
+        {
+          "className": "FormatDialect",
+          "slotName": "quote_char",
+          "status": "compared"
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/extended_types.yaml",
+      "nativeStatus": "loaded",
+      "queries": []
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/extensions.yaml",
+      "nativeStatus": "loaded",
+      "queries": [
+        {
+          "className": "extension",
+          "slotName": "extension_tag",
+          "status": "compared"
+        },
+        {
+          "className": "extension",
+          "slotName": "extension_value",
+          "status": "compared"
+        },
+        {
+          "className": "extension",
+          "slotName": "extensions",
+          "status": "compared"
+        },
+        {
+          "className": "extensible",
+          "slotName": "extensions",
+          "status": "compared"
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/meta.yaml",
+      "nativeStatus": "loaded",
+      "queries": [
+        {
+          "className": "common_metadata",
+          "slotName": "description",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "alt_descriptions",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "title",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "deprecated",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "todos",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "notes",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "comments",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "examples",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "in_subset",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "from_schema",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "imported_from",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "source",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "in_language",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "see_also",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "deprecated element has exact replacement",
+          "status": "induction-blocked"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "deprecated element has possible replacement",
+          "status": "induction-blocked"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "aliases",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "structured_aliases",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "mappings",
+          "status": "induction-blocked"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "exact mappings",
+          "status": "induction-blocked"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "close mappings",
+          "status": "induction-blocked"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "related mappings",
+          "status": "induction-blocked"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "narrow mappings",
+          "status": "induction-blocked"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "broad mappings",
+          "status": "induction-blocked"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "created_by",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "contributors",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "created_on",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "last_updated_on",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "modified_by",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "status",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "rank",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "categories",
+          "status": "compared"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "keywords",
+          "status": "compared"
+        },
+        {
+          "className": "element",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/annotatable",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extensible",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        },
+        {
+          "className": "schema_definition",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/annotatable",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extensible",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        },
+        {
+          "className": "type_expression",
+          "slotName": "pattern",
+          "status": "compared"
+        },
+        {
+          "className": "type_expression",
+          "slotName": "structured_pattern",
+          "status": "compared"
+        },
+        {
+          "className": "type_expression",
+          "slotName": "unit",
+          "status": "induction-blocked"
+        },
+        {
+          "className": "type_expression",
+          "slotName": "implicit_prefix",
+          "status": "compared"
+        },
+        {
+          "className": "type_expression",
+          "slotName": "equals_string",
+          "status": "compared"
+        },
+        {
+          "className": "type_expression",
+          "slotName": "equals_string_in",
+          "status": "compared"
+        },
+        {
+          "className": "type_expression",
+          "slotName": "equals_number",
+          "status": "compared"
+        },
+        {
+          "className": "type_expression",
+          "slotName": "minimum_value",
+          "status": "compared"
+        },
+        {
+          "className": "type_expression",
+          "slotName": "maximum_value",
+          "status": "compared"
+        },
+        {
+          "className": "type_expression",
+          "slotName": "none_of",
+          "status": "compared"
+        },
+        {
+          "className": "type_expression",
+          "slotName": "exactly_one_of",
+          "status": "compared"
+        },
+        {
+          "className": "type_expression",
+          "slotName": "any_of",
+          "status": "compared"
+        },
+        {
+          "className": "type_expression",
+          "slotName": "all_of",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "pattern",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "structured_pattern",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "unit",
+          "status": "induction-blocked"
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "implicit_prefix",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "equals_string",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "equals_string_in",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "equals_number",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "minimum_value",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "maximum_value",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "none_of",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "exactly_one_of",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "any_of",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "all_of",
+          "status": "compared"
+        },
+        {
+          "className": "type_definition",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/annotatable",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extensible",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        },
+        {
+          "className": "subset_definition",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/annotatable",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extensible",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        },
+        {
+          "className": "definition",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/annotatable",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extensible",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        },
+        {
+          "className": "enum_expression",
+          "slotName": "code_set",
+          "status": "compared"
+        },
+        {
+          "className": "enum_expression",
+          "slotName": "code_set_tag",
+          "status": "compared"
+        },
+        {
+          "className": "enum_expression",
+          "slotName": "code_set_version",
+          "status": "compared"
+        },
+        {
+          "className": "enum_expression",
+          "slotName": "pv_formula",
+          "status": "compared"
+        },
+        {
+          "className": "enum_expression",
+          "slotName": "permissible_values",
+          "status": "compared"
+        },
+        {
+          "className": "enum_expression",
+          "slotName": "include",
+          "status": "compared"
+        },
+        {
+          "className": "enum_expression",
+          "slotName": "minus",
+          "status": "compared"
+        },
+        {
+          "className": "enum_expression",
+          "slotName": "inherits",
+          "status": "compared"
+        },
+        {
+          "className": "enum_expression",
+          "slotName": "reachable_from",
+          "status": "compared"
+        },
+        {
+          "className": "enum_expression",
+          "slotName": "matches",
+          "status": "compared"
+        },
+        {
+          "className": "enum_expression",
+          "slotName": "concepts",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "slotName": "code_set",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "slotName": "code_set_tag",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "slotName": "code_set_version",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "slotName": "pv_formula",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "slotName": "permissible_values",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "slotName": "include",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "slotName": "minus",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "slotName": "inherits",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "slotName": "reachable_from",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "slotName": "matches",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "slotName": "concepts",
+          "status": "compared"
+        },
+        {
+          "className": "enum_definition",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/annotatable",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extensible",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        },
+        {
+          "className": "enum_binding",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/annotatable",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extensible",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        },
+        {
+          "className": "match_query",
+          "slotName": "identifier_pattern",
+          "status": "compared"
+        },
+        {
+          "className": "match_query",
+          "slotName": "source_ontology",
+          "status": "compared"
+        },
+        {
+          "className": "reachability_query",
+          "slotName": "source_ontology",
+          "status": "compared"
+        },
+        {
+          "className": "reachability_query",
+          "slotName": "source_nodes",
+          "status": "compared"
+        },
+        {
+          "className": "reachability_query",
+          "slotName": "relationship_types",
+          "status": "compared"
+        },
+        {
+          "className": "reachability_query",
+          "slotName": "is_direct",
+          "status": "compared"
+        },
+        {
+          "className": "reachability_query",
+          "slotName": "include_self",
+          "status": "compared"
+        },
+        {
+          "className": "reachability_query",
+          "slotName": "traverse_up",
+          "status": "compared"
+        },
+        {
+          "className": "structured_alias",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/annotatable",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extensible",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        },
+        {
+          "className": "anonymous_expression",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/annotatable",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extensible",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        },
+        {
+          "className": "path_expression",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/annotatable",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extensible",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "range",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "range_expression",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "enum_range",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "bindings",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "required",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "recommended",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "multivalued",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "inlined",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "inlined_as_list",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "minimum_value",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "maximum_value",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "pattern",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "structured_pattern",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "unit",
+          "status": "induction-blocked"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "implicit_prefix",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "value_presence",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "equals_string",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "equals_string_in",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "equals_number",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "equals_expression",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "exact_cardinality",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "minimum_cardinality",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "maximum_cardinality",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "has_member",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "all_members",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "none_of",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "exactly_one_of",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "any_of",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "all_of",
+          "status": "compared"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "array",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_slot_expression",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/annotatable",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extensible",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        },
+        {
+          "className": "slot_definition",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/annotatable",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extensible",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        },
+        {
+          "className": "class_expression",
+          "slotName": "any_of",
+          "status": "compared"
+        },
+        {
+          "className": "class_expression",
+          "slotName": "exactly_one_of",
+          "status": "compared"
+        },
+        {
+          "className": "class_expression",
+          "slotName": "none_of",
+          "status": "compared"
+        },
+        {
+          "className": "class_expression",
+          "slotName": "all_of",
+          "status": "compared"
+        },
+        {
+          "className": "class_expression",
+          "slotName": "slot_conditions",
+          "status": "compared"
+        },
+        {
+          "className": "anonymous_class_expression",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/annotatable",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extensible",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        },
+        {
+          "className": "class_definition",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/annotatable",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extensible",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        },
+        {
+          "className": "class_rule",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/annotatable",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extensible",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        },
+        {
+          "className": "array_expression",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/annotatable",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extensible",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        },
+        {
+          "className": "dimension_expression",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/annotatable",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extensible",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        },
+        {
+          "className": "pattern_expression",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/annotatable",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extensible",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        },
+        {
+          "className": "import_expression",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/annotatable",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extensible",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        },
+        {
+          "className": "setting",
+          "slotName": "setting_key",
+          "status": "compared"
+        },
+        {
+          "className": "setting",
+          "slotName": "setting_value",
+          "status": "compared"
+        },
+        {
+          "className": "prefix",
+          "slotName": "prefix_prefix",
+          "status": "compared"
+        },
+        {
+          "className": "prefix",
+          "slotName": "prefix_reference",
+          "status": "compared"
+        },
+        {
+          "className": "local_name",
+          "slotName": "local_name_source",
+          "status": "compared"
+        },
+        {
+          "className": "local_name",
+          "slotName": "local_name_value",
+          "status": "compared"
+        },
+        {
+          "className": "example",
+          "slotName": "value",
+          "status": "compared"
+        },
+        {
+          "className": "example",
+          "slotName": "value_description",
+          "status": "compared"
+        },
+        {
+          "className": "example",
+          "slotName": "value_object",
+          "status": "compared"
+        },
+        {
+          "className": "alt_description",
+          "slotName": "alt_description_source",
+          "status": "compared"
+        },
+        {
+          "className": "alt_description",
+          "slotName": "alt_description_text",
+          "status": "compared"
+        },
+        {
+          "className": "permissible_value",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/annotatable",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extensible",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        },
+        {
+          "className": "unique_key",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/annotatable",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extensible",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        },
+        {
+          "className": "type_mapping",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/annotatable",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/extensible",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        },
+        {
+          "className": "extra_slots_expression",
+          "slotName": "allowed",
+          "status": "compared"
+        },
+        {
+          "className": "extra_slots_expression",
+          "slotName": "range_expression",
+          "status": "compared"
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/units.yaml",
+      "nativeStatus": "loaded",
+      "queries": [
+        {
+          "className": "UnitOfMeasure",
+          "slotName": "symbol",
+          "status": "compared"
+        },
+        {
+          "className": "UnitOfMeasure",
+          "slotName": "abbreviation",
+          "status": "compared"
+        },
+        {
+          "className": "UnitOfMeasure",
+          "slotName": "descriptive_name",
+          "status": "compared"
+        },
+        {
+          "className": "UnitOfMeasure",
+          "slotName": "exact mappings",
+          "status": "induction-blocked"
+        },
+        {
+          "className": "UnitOfMeasure",
+          "slotName": "ucum_code",
+          "status": "compared"
+        },
+        {
+          "className": "UnitOfMeasure",
+          "slotName": "derivation",
+          "status": "compared"
+        },
+        {
+          "className": "UnitOfMeasure",
+          "slotName": "has_quantity_kind",
+          "status": "compared"
+        },
+        {
+          "className": "UnitOfMeasure",
+          "slotName": "iec61360code",
+          "status": "compared"
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/validation.yaml",
+      "nativeStatus": "loaded",
+      "queries": [
+        {
+          "className": "ValidationReport",
+          "slotName": "results",
+          "status": "compared"
+        },
+        {
+          "className": "ValidationResult",
+          "slotName": "type",
+          "status": "compared"
+        },
+        {
+          "className": "ValidationResult",
+          "slotName": "severity",
+          "status": "compared"
+        },
+        {
+          "className": "ValidationResult",
+          "slotName": "subject",
+          "status": "compared"
+        },
+        {
+          "className": "ValidationResult",
+          "slotName": "instantiates",
+          "status": "compared"
+        },
+        {
+          "className": "ValidationResult",
+          "slotName": "predicate",
+          "status": "compared"
+        },
+        {
+          "className": "ValidationResult",
+          "slotName": "object",
+          "status": "compared"
+        },
+        {
+          "className": "ValidationResult",
+          "slotName": "object_str",
+          "status": "compared"
+        },
+        {
+          "className": "ValidationResult",
+          "slotName": "node_source",
+          "status": "compared"
+        },
+        {
+          "className": "ValidationResult",
+          "slotName": "info",
+          "status": "compared"
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-array-1.yaml",
+      "nativeStatus": "loaded",
+      "queries": [
+        {
+          "className": "TemperatureDataset",
+          "slotName": "name",
+          "status": "compared"
+        },
+        {
+          "className": "TemperatureDataset",
+          "slotName": "latitude_in_deg",
+          "status": "compared"
+        },
+        {
+          "className": "TemperatureDataset",
+          "slotName": "longitude_in_deg",
+          "status": "compared"
+        },
+        {
+          "className": "TemperatureDataset",
+          "slotName": "time_in_d",
+          "status": "compared"
+        },
+        {
+          "className": "TemperatureDataset",
+          "slotName": "temperatures_in_K",
+          "status": "compared"
+        },
+        {
+          "className": "TemperatureMatrix",
+          "slotName": "values",
+          "status": "compared"
+        },
+        {
+          "className": "LatitudeSeries",
+          "slotName": "values",
+          "status": "compared"
+        },
+        {
+          "className": "LongitudeSeries",
+          "slotName": "values",
+          "status": "compared"
+        },
+        {
+          "className": "DaySeries",
+          "slotName": "values",
+          "status": "compared"
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-array-2.yaml",
+      "nativeStatus": "loaded",
+      "queries": [
+        {
+          "className": "IrregularlySampledTimestampSeries",
+          "slotName": "name",
+          "status": "compared"
+        },
+        {
+          "className": "IrregularlySampledTimestampSeries",
+          "slotName": "values",
+          "status": "compared"
+        },
+        {
+          "className": "RegularlySampledTimestampSeries",
+          "slotName": "name",
+          "status": "compared"
+        },
+        {
+          "className": "RegularlySampledTimestampSeries",
+          "slotName": "sampling_rate",
+          "status": "compared"
+        },
+        {
+          "className": "RegularlySampledTimestampSeries",
+          "slotName": "starting_time",
+          "status": "compared"
+        },
+        {
+          "className": "RegularlySampledTimestampSeries",
+          "slotName": "length",
+          "status": "compared"
+        },
+        {
+          "className": "RegularlySampledTimestampSeries",
+          "slotName": "values",
+          "status": "compared"
+        },
+        {
+          "className": "Electrode",
+          "slotName": "name",
+          "status": "compared"
+        },
+        {
+          "className": "Electrode",
+          "slotName": "impedance",
+          "status": "compared"
+        },
+        {
+          "className": "ElectrodeSeries",
+          "slotName": "values",
+          "status": "compared"
+        },
+        {
+          "className": "ElectricalDataMatrix",
+          "slotName": "values",
+          "status": "compared"
+        },
+        {
+          "className": "ElectricalDataArray",
+          "slotName": "time",
+          "status": "compared"
+        },
+        {
+          "className": "ElectricalDataArray",
+          "slotName": "electrode",
+          "status": "compared"
+        },
+        {
+          "className": "ElectricalDataArray",
+          "slotName": "values",
+          "status": "compared"
+        },
+        {
+          "className": "IrregularlySampledElectricalDataArray",
+          "slotName": "time",
+          "status": "compared"
+        },
+        {
+          "className": "IrregularlySampledElectricalDataArray",
+          "slotName": "electrode",
+          "status": "compared"
+        },
+        {
+          "className": "IrregularlySampledElectricalDataArray",
+          "slotName": "values",
+          "status": "compared"
+        },
+        {
+          "className": "RegularlySampledElectricalDataArray",
+          "slotName": "time",
+          "status": "compared"
+        },
+        {
+          "className": "RegularlySampledElectricalDataArray",
+          "slotName": "electrode",
+          "status": "compared"
+        },
+        {
+          "className": "RegularlySampledElectricalDataArray",
+          "slotName": "values",
+          "status": "compared"
+        },
+        {
+          "className": "File",
+          "slotName": "electrical_data_arrays",
+          "status": "compared"
+        },
+        {
+          "className": "File",
+          "slotName": "electrodes",
+          "status": "compared"
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-dynamic-enums.yaml",
+      "nativeStatus": "loaded",
+      "queries": [
+        {
+          "className": "HumanSample",
+          "slotName": "name",
+          "status": "compared"
+        },
+        {
+          "className": "HumanSample",
+          "slotName": "disease",
+          "status": "compared"
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-enum_bindings-1.yaml",
+      "nativeStatus": "loaded",
+      "queries": [
+        {
+          "className": "Concept",
+          "slotName": "id",
+          "status": "compared"
+        },
+        {
+          "className": "Concept",
+          "slotName": "name",
+          "status": "compared"
+        },
+        {
+          "className": "Concept",
+          "slotName": "vocabulary",
+          "status": "compared"
+        },
+        {
+          "className": "Sample",
+          "slotName": "name",
+          "status": "compared"
+        },
+        {
+          "className": "Sample",
+          "slotName": "sample_material_type",
+          "status": "compared"
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-implements.yaml",
+      "nativeStatus": "loaded",
+      "queries": [
+        {
+          "className": "Measurement",
+          "slotName": "value",
+          "status": "compared"
+        },
+        {
+          "className": "Measurement",
+          "slotName": "unit",
+          "status": "compared"
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-instantiates.yaml",
+      "nativeStatus": "loaded",
+      "queries": [
+        {
+          "className": "Person",
+          "slotName": "id",
+          "status": "compared"
+        },
+        {
+          "className": "Person",
+          "slotName": "name",
+          "status": "compared"
+        },
+        {
+          "className": "Person",
+          "slotName": "address",
+          "status": "compared"
+        },
+        {
+          "className": "Reviewable",
+          "slotName": "description",
+          "status": "compared"
+        },
+        {
+          "className": "Reviewable",
+          "slotName": "review",
+          "status": "compared"
+        },
+        {
+          "className": "Review",
+          "slotName": "desc",
+          "status": "compared"
+        },
+        {
+          "className": "Review",
+          "slotName": "score",
+          "status": "compared"
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-multivalued-in-any-of.yaml",
+      "nativeStatus": "loaded",
+      "queries": [
+        {
+          "className": "A",
+          "slotName": "s",
+          "status": "compared"
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-native-array-1.yaml",
+      "nativeStatus": "loader-rejected",
+      "queries": []
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-native-array-rgb.yaml",
+      "nativeStatus": "loaded",
+      "queries": [
+        {
+          "className": "RGBImage",
+          "slotName": "rgb",
+          "status": "compared"
+        },
+        {
+          "className": "SquareDataset",
+          "slotName": "square_matrix",
+          "status": "compared"
+        },
+        {
+          "className": "UnboundedTimeSeries",
+          "slotName": "my_matrix",
+          "status": "compared"
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-type_mappings-1.yaml",
+      "nativeStatus": "loaded",
+      "queries": [
+        {
+          "className": "A",
+          "slotName": "my_big_integer",
+          "status": "compared"
+        },
+        {
+          "className": "A",
+          "slotName": "my_date",
+          "status": "compared"
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/examples/people.yaml",
+      "nativeStatus": "loaded",
+      "queries": [
+        {
+          "className": "Agent",
+          "slotName": "id",
+          "status": "compared"
+        },
+        {
+          "className": "Addressable",
+          "slotName": "email",
+          "status": "compared"
+        },
+        {
+          "className": "Person",
+          "slotName": "status",
+          "status": "compared"
+        },
+        {
+          "className": "Person",
+          "slotName": "manager",
+          "status": "compared"
+        },
+        {
+          "className": "Person",
+          "slotName": "email",
+          "status": "compared"
+        },
+        {
+          "className": "Person",
+          "slotName": "id",
+          "status": "compared"
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/examples/inheritance.json",
+      "nativeStatus": "loaded",
+      "queries": [
+        {
+          "className": "Root",
+          "slotName": "root",
+          "status": "compared"
+        },
+        {
+          "className": "Root",
+          "slotName": "duplicate",
+          "status": "compared"
+        },
+        {
+          "className": "Root",
+          "slotName": "inline",
+          "status": "compared"
+        },
+        {
+          "className": "MixinBase",
+          "slotName": "mixin_base",
+          "status": "compared"
+        },
+        {
+          "className": "Mixin",
+          "slotName": "duplicate",
+          "status": "compared"
+        },
+        {
+          "className": "Mixin",
+          "slotName": "mixin",
+          "status": "compared"
+        },
+        {
+          "className": "Mixin",
+          "slotName": "mixin_base",
+          "status": "compared"
+        },
+        {
+          "className": "Parent",
+          "slotName": "parent",
+          "status": "compared"
+        },
+        {
+          "className": "Parent",
+          "slotName": "root",
+          "status": "compared"
+        },
+        {
+          "className": "Parent",
+          "slotName": "duplicate",
+          "status": "compared"
+        },
+        {
+          "className": "Parent",
+          "slotName": "inline",
+          "status": "compared"
+        },
+        {
+          "className": "Child",
+          "slotName": "child",
+          "status": "compared"
+        },
+        {
+          "className": "Child",
+          "slotName": "duplicate",
+          "status": "compared"
+        },
+        {
+          "className": "Child",
+          "slotName": "inline",
+          "status": "compared"
+        },
+        {
+          "className": "Child",
+          "slotName": "mixin",
+          "status": "compared"
+        },
+        {
+          "className": "Child",
+          "slotName": "parent",
+          "status": "compared"
+        },
+        {
+          "className": "Child",
+          "slotName": "root",
+          "status": "compared"
+        },
+        {
+          "className": "Child",
+          "slotName": "mixin_base",
+          "status": "compared"
+        },
+        {
+          "className": "CycleA",
+          "slotName": "a",
+          "status": "compared"
+        },
+        {
+          "className": "CycleA",
+          "slotName": "b",
+          "status": "compared"
+        },
+        {
+          "className": "CycleB",
+          "slotName": "b",
+          "status": "compared"
+        },
+        {
+          "className": "CycleB",
+          "slotName": "a",
+          "status": "compared"
+        },
+        {
+          "className": "Missing",
+          "status": "membership-blocked",
+          "diagnostics": [
+            {
+              "code": "LINKML_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+            },
+            {
+              "code": "LINKML_CLASS_SLOTS",
+              "path": "/classes/External",
+              "message": "Class is absent or not an object in this document",
+              "severity": "error"
+            },
+            {
+              "code": "LINKML_CLASS_CONTEXT",
+              "path": "",
+              "severity": "warning",
+              "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

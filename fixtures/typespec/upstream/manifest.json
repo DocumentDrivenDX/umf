@@ -1,0 +1,680 @@
+{
+  "repository": "https://github.com/microsoft/typespec",
+  "commit": "5ee1157f337e461e50a7d57c2be2ae95e5026a4a",
+  "selection": "All files under packages/samples/specs, plus upstream license and compiler package metadata",
+  "license": "MIT",
+  "files": [
+    {
+      "path": "authentication/interface-auth.tsp",
+      "upstreamPath": "packages/samples/specs/authentication/interface-auth.tsp",
+      "sha256": "7e45341b53a9eb6f9d54a9818d45b7812a6215f071251256af6c5fd3fbf67f14",
+      "bytes": 317
+    },
+    {
+      "path": "authentication/main.tsp",
+      "upstreamPath": "packages/samples/specs/authentication/main.tsp",
+      "sha256": "dce2cbb49224a125ed0e07832ade676b845128735d83199c455e37714be009d1",
+      "bytes": 91
+    },
+    {
+      "path": "authentication/operation-auth.tsp",
+      "upstreamPath": "packages/samples/specs/authentication/operation-auth.tsp",
+      "sha256": "4b0120d78573842856d7e2c62b8a474efe9564293c0a1dc9461f5083d2a9d3de",
+      "bytes": 766
+    },
+    {
+      "path": "authentication/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/authentication/sample-config.yaml",
+      "sha256": "667fecb1396951f1e91db13d6369b0b3c047c8be46d3f62bd33f3daadf02afa1",
+      "bytes": 126
+    },
+    {
+      "path": "authentication/service-auth.tsp",
+      "upstreamPath": "packages/samples/specs/authentication/service-auth.tsp",
+      "sha256": "8be47b58e47320aedc5e69134f9ebe5f178137de4bc447ed9bba9e0821618ec7",
+      "bytes": 562
+    },
+    {
+      "path": "binary/binary.tsp",
+      "upstreamPath": "packages/samples/specs/binary/binary.tsp",
+      "sha256": "26b7e654cb5ce2027cc758c2024a70bd5baf620e19e19f9bba9f92985c0b3b74",
+      "bytes": 706
+    },
+    {
+      "path": "binary/main.tsp",
+      "upstreamPath": "packages/samples/specs/binary/main.tsp",
+      "sha256": "67e4813df223fb832ef70057c4e38857271cc39dc7de96d6d0cfc3c131686425",
+      "bytes": 23
+    },
+    {
+      "path": "binary/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/binary/sample-config.yaml",
+      "sha256": "ad4847d2826b56a2ec55825e2c6bfa62b9efece49b8fd89b4be5079652cfc336",
+      "bytes": 94
+    },
+    {
+      "path": "documentation/docs.tsp",
+      "upstreamPath": "packages/samples/specs/documentation/docs.tsp",
+      "sha256": "e53f60b015acfaa4ebac4aff3ffc7e17c3b484d6e7995305edc6304be6f4e41f",
+      "bytes": 938
+    },
+    {
+      "path": "documentation/main.tsp",
+      "upstreamPath": "packages/samples/specs/documentation/main.tsp",
+      "sha256": "5aa11e9ffa5b2664c07009f36541ab5c65c3b70909ca9f4c3543a43295e3fa7a",
+      "bytes": 21
+    },
+    {
+      "path": "documentation/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/documentation/sample-config.yaml",
+      "sha256": "8d11908b617af98ff1b595f430c2610c761be8229d3491628aa98c28c0ad6ef3",
+      "bytes": 125
+    },
+    {
+      "path": "emitters/graphql/main.tsp",
+      "upstreamPath": "packages/samples/specs/emitters/graphql/main.tsp",
+      "sha256": "75f18368ad6a6b433c50cf9002460916be7a1cf4edbcb6c1bd9ec30e842b1b43",
+      "bytes": 720
+    },
+    {
+      "path": "emitters/graphql/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/emitters/graphql/sample-config.yaml",
+      "sha256": "960aa126a5e67ae7eb4aa00d4b5031654dd10fdad601beb210ffdad4862e72c6",
+      "bytes": 98
+    },
+    {
+      "path": "emitters/graphql/tspconfig.yaml",
+      "upstreamPath": "packages/samples/specs/emitters/graphql/tspconfig.yaml",
+      "sha256": "87953a738df638e0fdfba126d39ce004b7f487ff320ec166bf7b44fc87e962e2",
+      "bytes": 30
+    },
+    {
+      "path": "emitters/json-schema/main.tsp",
+      "upstreamPath": "packages/samples/specs/emitters/json-schema/main.tsp",
+      "sha256": "81e2bf63f7c19a199d4db31231497308fd2c987c6f57b50d45d637856d2d4bd4",
+      "bytes": 616
+    },
+    {
+      "path": "emitters/json-schema/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/emitters/json-schema/sample-config.yaml",
+      "sha256": "1b051f4303534315c16e4a2c1901c6c0fb5fc59edeeaa60da45e7f8aac578e37",
+      "bytes": 101
+    },
+    {
+      "path": "emitters/json-schema/tspconfig.yaml",
+      "upstreamPath": "packages/samples/specs/emitters/json-schema/tspconfig.yaml",
+      "sha256": "876121addeb579aebf5d226f52aafc9f14740668df8f6a79501428c47dc5cba3",
+      "bytes": 34
+    },
+    {
+      "path": "emitters/protobuf-kiosk/main.tsp",
+      "upstreamPath": "packages/samples/specs/emitters/protobuf-kiosk/main.tsp",
+      "sha256": "98fa9328c776f0a0daa9efa53c26ca90b249394a7b6e5981e389fe1c6766126d",
+      "bytes": 1664
+    },
+    {
+      "path": "emitters/protobuf-kiosk/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/emitters/protobuf-kiosk/sample-config.yaml",
+      "sha256": "09e3818d9dbc75c9f4ca274ff93de45b1be4d535e4289e0f48495e17d7ccfc76",
+      "bytes": 112
+    },
+    {
+      "path": "emitters/protobuf-kiosk/tspconfig.yaml",
+      "upstreamPath": "packages/samples/specs/emitters/protobuf-kiosk/tspconfig.yaml",
+      "sha256": "1b049afe3782ed7ebded394587c5b18d1ddaac90abe0242264d1920143987b37",
+      "bytes": 31
+    },
+    {
+      "path": "emitters/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/emitters/sample-config.yaml",
+      "sha256": "b463f20629775816f58205059a2cddc6be5c88ae769ac227dae9fe41d6e82d66",
+      "bytes": 32
+    },
+    {
+      "path": "encoded-names/encoded-names.tsp",
+      "upstreamPath": "packages/samples/specs/encoded-names/encoded-names.tsp",
+      "sha256": "48080a39fcf36e2cea29a6bc63fb3b73a32c17400774acfc900859225a6b5d1d",
+      "bytes": 509
+    },
+    {
+      "path": "encoded-names/main.tsp",
+      "upstreamPath": "packages/samples/specs/encoded-names/main.tsp",
+      "sha256": "caceba689303e2ae5a7a083499c18e9b368962272e2bae89e2481aee9b7c5947",
+      "bytes": 30
+    },
+    {
+      "path": "encoded-names/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/encoded-names/sample-config.yaml",
+      "sha256": "94747116716555b3ad5874c3b6a824972a417ee0af38fecb617035f2de8f6bab",
+      "bytes": 103
+    },
+    {
+      "path": "encoding/encoding.tsp",
+      "upstreamPath": "packages/samples/specs/encoding/encoding.tsp",
+      "sha256": "47bd0e87e51b7ce69249cacc0680b3324ab14b8174f38e59436b8bd4b38cbab5",
+      "bytes": 1261
+    },
+    {
+      "path": "encoding/main.tsp",
+      "upstreamPath": "packages/samples/specs/encoding/main.tsp",
+      "sha256": "5308f92ba4449dfdc54258a1b36eef2ec58fc2903cfc70e6e28b41a024e61b8a",
+      "bytes": 25
+    },
+    {
+      "path": "encoding/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/encoding/sample-config.yaml",
+      "sha256": "4b64f797d660b81eaf84a606dfa93ac765b51f43f8e118959d5fe3d29e08c2bc",
+      "bytes": 104
+    },
+    {
+      "path": "getting-started/http-service/main.tsp",
+      "upstreamPath": "packages/samples/specs/getting-started/http-service/main.tsp",
+      "sha256": "4379d2c75fd036d9917830c87f56c77b8eb2d320528857eae3e282e8d7bae846",
+      "bytes": 844
+    },
+    {
+      "path": "getting-started/http-service/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/getting-started/http-service/sample-config.yaml",
+      "sha256": "6a3f7e140ea242982ded08db8eb33aadfb9b98e3f24024808856cc01e47b5651",
+      "bytes": 111
+    },
+    {
+      "path": "getting-started/http-service/tspconfig.yaml",
+      "upstreamPath": "packages/samples/specs/getting-started/http-service/tspconfig.yaml",
+      "sha256": "76512ae464a9ebeb2c95a1a61d2c9a8164cdde040e584d7834cf3393b24907cb",
+      "bytes": 77
+    },
+    {
+      "path": "getting-started/rest-framework/main.tsp",
+      "upstreamPath": "packages/samples/specs/getting-started/rest-framework/main.tsp",
+      "sha256": "274af76c817dea52ecb56e418a756a4b776779d44a068a75f3b4bd2324ae5c2d",
+      "bytes": 407
+    },
+    {
+      "path": "getting-started/rest-framework/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/getting-started/rest-framework/sample-config.yaml",
+      "sha256": "3e99809d207789131a69a99891d47c68f0e88783e7e2ed232498774e112938c6",
+      "bytes": 114
+    },
+    {
+      "path": "getting-started/rest-framework/tspconfig.yaml",
+      "upstreamPath": "packages/samples/specs/getting-started/rest-framework/tspconfig.yaml",
+      "sha256": "76512ae464a9ebeb2c95a1a61d2c9a8164cdde040e584d7834cf3393b24907cb",
+      "bytes": 77
+    },
+    {
+      "path": "getting-started/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/getting-started/sample-config.yaml",
+      "sha256": "ad1d78ac81a89776e3529db905209dd91374b149149804e9226309fda42cfdab",
+      "bytes": 39
+    },
+    {
+      "path": "grpc-kiosk-example/README.md",
+      "upstreamPath": "packages/samples/specs/grpc-kiosk-example/README.md",
+      "sha256": "d44f293bb8ab2aa6fd6e5a8a54b0b5ec310f1bbf635f238561cfab87d8503888",
+      "bytes": 4883
+    },
+    {
+      "path": "grpc-kiosk-example/kiosk.proto",
+      "upstreamPath": "packages/samples/specs/grpc-kiosk-example/kiosk.proto",
+      "sha256": "32b434ed7516dc98fd05020f0a5b12a8d16597a7fb19c8fd2d03f7ee00e9206d",
+      "bytes": 4478
+    },
+    {
+      "path": "grpc-kiosk-example/kiosk.swagger.json",
+      "upstreamPath": "packages/samples/specs/grpc-kiosk-example/kiosk.swagger.json",
+      "sha256": "1543483d52b1a76b13f0751695304b2cc064bc177ef2e33f3394d49a642db4bf",
+      "bytes": 11108
+    },
+    {
+      "path": "grpc-kiosk-example/kiosk.tsp",
+      "upstreamPath": "packages/samples/specs/grpc-kiosk-example/kiosk.tsp",
+      "sha256": "7a1a20bd8ec1e2f46faa5c4e5ea347a708a975a752951b476cf02e5208f2c567",
+      "bytes": 2720
+    },
+    {
+      "path": "grpc-kiosk-example/main.tsp",
+      "upstreamPath": "packages/samples/specs/grpc-kiosk-example/main.tsp",
+      "sha256": "8aeb4b9785ba58ec2d584789bda5b13383eda68f715933ca96ea3748a3cdb8a4",
+      "bytes": 44
+    },
+    {
+      "path": "grpc-kiosk-example/openapi.json",
+      "upstreamPath": "packages/samples/specs/grpc-kiosk-example/openapi.json",
+      "sha256": "e57c123c36843458ca9ebdeeb0f93a513b6f2ee73cb2e4bfcfad0eedb78773b8",
+      "bytes": 12202
+    },
+    {
+      "path": "grpc-kiosk-example/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/grpc-kiosk-example/sample-config.yaml",
+      "sha256": "f9e4b320849219aaddb48fa1927a5be2843db74095d29cf451c83e51a576afd0",
+      "bytes": 116
+    },
+    {
+      "path": "grpc-kiosk-example/types.tsp",
+      "upstreamPath": "packages/samples/specs/grpc-kiosk-example/types.tsp",
+      "sha256": "a4acff592e0072245112dc152e733f72b2bc4c7070ad917def7272cca8ddecef",
+      "bytes": 999
+    },
+    {
+      "path": "grpc-library-example/README.md",
+      "upstreamPath": "packages/samples/specs/grpc-library-example/README.md",
+      "sha256": "2b5bf6689a81b4a821eebcfd6e8cbe3980e1c24e5bd2ea3666e078cb407d15eb",
+      "bytes": 3260
+    },
+    {
+      "path": "grpc-library-example/library.proto",
+      "upstreamPath": "packages/samples/specs/grpc-library-example/library.proto",
+      "sha256": "03630aaf975ac0d9fa61d2a0ef4ab7bc09a55c60f8110045c01891087672d582",
+      "bytes": 11094
+    },
+    {
+      "path": "grpc-library-example/library.swagger.json",
+      "upstreamPath": "packages/samples/specs/grpc-library-example/library.swagger.json",
+      "sha256": "620f0f5aecba97cb577ae1cfcb6b708db0daa13473c663fa36ae917e683eb6f4",
+      "bytes": 17206
+    },
+    {
+      "path": "grpc-library-example/library.tsp",
+      "upstreamPath": "packages/samples/specs/grpc-library-example/library.tsp",
+      "sha256": "e2df639c788852824c69f2c847ddf71c201d191749463fa857285b272f908fa1",
+      "bytes": 7572
+    },
+    {
+      "path": "grpc-library-example/main.tsp",
+      "upstreamPath": "packages/samples/specs/grpc-library-example/main.tsp",
+      "sha256": "5ef9abfc3c9ee88b523d90ea4564558b3df7a617b722002acb43970c038cb4d1",
+      "bytes": 24
+    },
+    {
+      "path": "grpc-library-example/openapi.json",
+      "upstreamPath": "packages/samples/specs/grpc-library-example/openapi.json",
+      "sha256": "16fe682635f7b5c3b1897330aee603a14f6c671ad3a1e9093334709648ed4997",
+      "bytes": 14847
+    },
+    {
+      "path": "grpc-library-example/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/grpc-library-example/sample-config.yaml",
+      "sha256": "4b39389b7a16f9ec9a4eda68f5dd9d0dd3ae87ceaaff60a2bd712000c7aba827",
+      "bytes": 105
+    },
+    {
+      "path": "init/main.tsp",
+      "upstreamPath": "packages/samples/specs/init/main.tsp",
+      "sha256": "f886e9f7ba124d84a1d1ee6a37a413e5fd3df36e02d506968bf6c5aa01de8604",
+      "bytes": 831
+    },
+    {
+      "path": "init/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/init/sample-config.yaml",
+      "sha256": "4a8e779ba3b6bfa2b7bc8d72ad26717e775c7f9c9582924577896185246d6f0a",
+      "bytes": 125
+    },
+    {
+      "path": "language/api-versioning/main.tsp",
+      "upstreamPath": "packages/samples/specs/language/api-versioning/main.tsp",
+      "sha256": "2e40311df2476ffa16f6ae46880c19b7c81bc2ea50795eb0be342cf2bf1fd949",
+      "bytes": 569
+    },
+    {
+      "path": "language/api-versioning/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/language/api-versioning/sample-config.yaml",
+      "sha256": "737d1ffdacd00ae4d17cf879c57451b11da02c2b93ae00adb2f1f4e952723160",
+      "bytes": 106
+    },
+    {
+      "path": "language/api-versioning/tspconfig.yaml",
+      "upstreamPath": "packages/samples/specs/language/api-versioning/tspconfig.yaml",
+      "sha256": "2d772ed2b0c3ed79dd3726899c16f8cb961896a6673af0e01e755f673eea09f2",
+      "bytes": 31
+    },
+    {
+      "path": "language/discriminated-unions/main.tsp",
+      "upstreamPath": "packages/samples/specs/language/discriminated-unions/main.tsp",
+      "sha256": "dcd9434ade623fad40179bb0e842bb8f48e98cf0fff8927e8ef8ccbdabb184f4",
+      "bytes": 572
+    },
+    {
+      "path": "language/discriminated-unions/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/language/discriminated-unions/sample-config.yaml",
+      "sha256": "1f90e190b94d3216490e2e5f5a69fc4e485d2a60e3a12dccd024369e0c740145",
+      "bytes": 94
+    },
+    {
+      "path": "language/discriminated-unions/tspconfig.yaml",
+      "upstreamPath": "packages/samples/specs/language/discriminated-unions/tspconfig.yaml",
+      "sha256": "2d772ed2b0c3ed79dd3726899c16f8cb961896a6673af0e01e755f673eea09f2",
+      "bytes": 31
+    },
+    {
+      "path": "language/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/language/sample-config.yaml",
+      "sha256": "a149d81c6eb16936b8d1724833fcab037590dbf4827e063a283734a1075506e8",
+      "bytes": 32
+    },
+    {
+      "path": "local-typespec/.vscode/settings.json",
+      "upstreamPath": "packages/samples/specs/local-typespec/.vscode/settings.json",
+      "sha256": "704a7a8119566d1386442bbfade36c46cea138b2d2bfce090d6e28fa96183bb3",
+      "bytes": 87
+    },
+    {
+      "path": "local-typespec/README.md",
+      "upstreamPath": "packages/samples/specs/local-typespec/README.md",
+      "sha256": "8534415f8cec2b8378547fd277756ab22cb5da71e9094bd55b2ed93f661e51e0",
+      "bytes": 882
+    },
+    {
+      "path": "local-typespec/main.tsp",
+      "upstreamPath": "packages/samples/specs/local-typespec/main.tsp",
+      "sha256": "a11a4a9974c973b616b3dd8967379924d645b28e0714cde01853b9b23a2819bf",
+      "bytes": 21
+    },
+    {
+      "path": "local-typespec/package.json",
+      "upstreamPath": "packages/samples/specs/local-typespec/package.json",
+      "sha256": "4dd7d5e3932cb343d07559be14ba2fe6dc4dbe08cab36984585118f107dedb76",
+      "bytes": 256
+    },
+    {
+      "path": "local-typespec/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/local-typespec/sample-config.yaml",
+      "sha256": "3c8fec08c4ae8df96dbe2d8cc7700dd9e17335ba19513c24e1c84a1113d10552",
+      "bytes": 128
+    },
+    {
+      "path": "local-typespec/test.tsp",
+      "upstreamPath": "packages/samples/specs/local-typespec/test.tsp",
+      "sha256": "6656455f43aeb224f0fc8adc6242a82a958f1a39aa7794aa86f4453b6f365add",
+      "bytes": 83
+    },
+    {
+      "path": "multipart/main.tsp",
+      "upstreamPath": "packages/samples/specs/multipart/main.tsp",
+      "sha256": "405797098a2e89ac26d182625a4d267d0872d7c8a9677de582167f8ac7103123",
+      "bytes": 369
+    },
+    {
+      "path": "multipart/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/multipart/sample-config.yaml",
+      "sha256": "e2e66f12f58716aaab905bc3c5916830dd7ec2798aaa8cdcd8d6d9c82aa8ae7c",
+      "bytes": 118
+    },
+    {
+      "path": "openapi-extensions/main.tsp",
+      "upstreamPath": "packages/samples/specs/openapi-extensions/main.tsp",
+      "sha256": "68a4a91d3155fb0398f1015b70b4c9054680909ef2e50e17353d4e50e9c5d30e",
+      "bytes": 35
+    },
+    {
+      "path": "openapi-extensions/openapi-extensions.tsp",
+      "upstreamPath": "packages/samples/specs/openapi-extensions/openapi-extensions.tsp",
+      "sha256": "9f950bb2efc1a3bc51dde63f3472f2197269b4121dd0bd97b07b62ec383593ff",
+      "bytes": 435
+    },
+    {
+      "path": "openapi-extensions/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/openapi-extensions/sample-config.yaml",
+      "sha256": "b50fa1f7268ef80aa4de68cc7dd9476fb1d7eb2eb7354ffe578cefff37a709fe",
+      "bytes": 115
+    },
+    {
+      "path": "param-decorators/main.tsp",
+      "upstreamPath": "packages/samples/specs/param-decorators/main.tsp",
+      "sha256": "b3599dbdbbcff31ce9ebd3d2c1489f9a38add55180c9f5596bd810013b3e6a36",
+      "bytes": 33
+    },
+    {
+      "path": "param-decorators/param-decorators.tsp",
+      "upstreamPath": "packages/samples/specs/param-decorators/param-decorators.tsp",
+      "sha256": "a13a0218e2b2301db5ca6df4903e6f24e144b8f9e6533033acba26263cfec0fd",
+      "bytes": 638
+    },
+    {
+      "path": "param-decorators/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/param-decorators/sample-config.yaml",
+      "sha256": "1123d9c4388541fa8a6d25b74dbfca9782f5be0f0db7ac16925e0880f4da2d1d",
+      "bytes": 115
+    },
+    {
+      "path": "petstore/decorators.js",
+      "upstreamPath": "packages/samples/specs/petstore/decorators.js",
+      "sha256": "c2410bfad926184443ca261797b1d603fa10c076fc4f356c39d6d758bc6b80cf",
+      "bytes": 399
+    },
+    {
+      "path": "petstore/notes.md",
+      "upstreamPath": "packages/samples/specs/petstore/notes.md",
+      "sha256": "010c621bb54c7b2953d56ebcc88ca42ab2fb0deabac4429ce45d407ecc18c164",
+      "bytes": 122
+    },
+    {
+      "path": "petstore/package.json",
+      "upstreamPath": "packages/samples/specs/petstore/package.json",
+      "sha256": "9e2dbe18ac802227bf36b98ad0963a0f8b70a39f9ead3408abc726b5077ba783",
+      "bytes": 52
+    },
+    {
+      "path": "petstore/petstore.json",
+      "upstreamPath": "packages/samples/specs/petstore/petstore.json",
+      "sha256": "4529120ab8f1d2e2849680f16b30619f3bff7172d2075f2600333e6cb98a8880",
+      "bytes": 3845
+    },
+    {
+      "path": "petstore/petstore.tsp",
+      "upstreamPath": "packages/samples/specs/petstore/petstore.tsp",
+      "sha256": "4c44385fec84b109e22051aea5354c49e4715625a1b1f8661c7e18b3a2549075",
+      "bytes": 1449
+    },
+    {
+      "path": "petstore/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/petstore/sample-config.yaml",
+      "sha256": "20912da5f6f18a4b7ef63f8a38ef88a891ccad17d7b2d8dcfec3805703afea1b",
+      "bytes": 124
+    },
+    {
+      "path": "polymorphism/main.tsp",
+      "upstreamPath": "packages/samples/specs/polymorphism/main.tsp",
+      "sha256": "d145601cb1c5528e39314644511b044061070d369b19a1847be87021b5f16722",
+      "bytes": 29
+    },
+    {
+      "path": "polymorphism/polymorphism.tsp",
+      "upstreamPath": "packages/samples/specs/polymorphism/polymorphism.tsp",
+      "sha256": "ccfc32528879fae6cedf5c07ab30bd888be3124d1cc3ec324c75e98324e8c748",
+      "bytes": 389
+    },
+    {
+      "path": "polymorphism/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/polymorphism/sample-config.yaml",
+      "sha256": "75ad7782de906b56fcf1718a3e6b93c5dd50557816a780a112dbc3ec859f765d",
+      "bytes": 116
+    },
+    {
+      "path": "rest-metadata-emitter/main.tsp",
+      "upstreamPath": "packages/samples/specs/rest-metadata-emitter/main.tsp",
+      "sha256": "b75656d8116b93d7f8e7f68e7e93fa6c71313996a752f529fdbd3cc1ba8f4783",
+      "bytes": 699
+    },
+    {
+      "path": "rest-metadata-emitter/rest-metadata-emitter-sample.ts",
+      "upstreamPath": "packages/samples/specs/rest-metadata-emitter/rest-metadata-emitter-sample.ts",
+      "sha256": "66d4c83b77621978aa36628f35747d77522fc06d4dd42e449445553721899a73",
+      "bytes": 9279
+    },
+    {
+      "path": "rest-metadata-emitter/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/rest-metadata-emitter/sample-config.yaml",
+      "sha256": "532c92b4d913a9c8926f2060843b92d86eeebaf22e134b54c78bd1c74bc7c39c",
+      "bytes": 105
+    },
+    {
+      "path": "rest-metadata-emitter/tspconfig.yaml",
+      "upstreamPath": "packages/samples/specs/rest-metadata-emitter/tspconfig.yaml",
+      "sha256": "2d19348daaa2ec243587b03430ad127a6145d5d3f7512814775388bf315f68b9",
+      "bytes": 81
+    },
+    {
+      "path": "rest/petstore/package.json",
+      "upstreamPath": "packages/samples/specs/rest/petstore/package.json",
+      "sha256": "9e2dbe18ac802227bf36b98ad0963a0f8b70a39f9ead3408abc726b5077ba783",
+      "bytes": 52
+    },
+    {
+      "path": "rest/petstore/petstore.tsp",
+      "upstreamPath": "packages/samples/specs/rest/petstore/petstore.tsp",
+      "sha256": "e6a624d82972129d2cfda5bee8abe9702d081d61441e779ef5c2f72bf2844043",
+      "bytes": 1880
+    },
+    {
+      "path": "rest/petstore/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/rest/petstore/sample-config.yaml",
+      "sha256": "5a280f4993ea616f00cbe117593371b64fee99fa67d49b1d3daa8eb6daf0f05b",
+      "bytes": 99
+    },
+    {
+      "path": "signatures/main.tsp",
+      "upstreamPath": "packages/samples/specs/signatures/main.tsp",
+      "sha256": "97d2e397be23fa695c6d51519339c18697d2f5ea5e6632c64c1138006b14c11b",
+      "bytes": 27
+    },
+    {
+      "path": "signatures/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/signatures/sample-config.yaml",
+      "sha256": "da7aada01104848413dafa91ac9c22f5d4c272977a6fc9fb5c12e4b1216a48fb",
+      "bytes": 114
+    },
+    {
+      "path": "signatures/signatures.tsp",
+      "upstreamPath": "packages/samples/specs/signatures/signatures.tsp",
+      "sha256": "78655f5a4942e0b831760721d18e9c8d16216b361bab0e2546a689bea4813261",
+      "bytes": 1040
+    },
+    {
+      "path": "status-code-ranges/main.tsp",
+      "upstreamPath": "packages/samples/specs/status-code-ranges/main.tsp",
+      "sha256": "71d48c6d840d44e70232b174a53b905dd71e54a21983dbd02b04b7651e7898c6",
+      "bytes": 35
+    },
+    {
+      "path": "status-code-ranges/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/status-code-ranges/sample-config.yaml",
+      "sha256": "01d8c985755ad2b96db88b3f54d51d43569f6efa6ef72d64df560dba61d466ec",
+      "bytes": 110
+    },
+    {
+      "path": "status-code-ranges/status-code-ranges.tsp",
+      "upstreamPath": "packages/samples/specs/status-code-ranges/status-code-ranges.tsp",
+      "sha256": "74c742c41d0c622e2948198aaff5469395d0f010a57b8fd551b4e96c0138d0ed",
+      "bytes": 305
+    },
+    {
+      "path": "string-template/main.tsp",
+      "upstreamPath": "packages/samples/specs/string-template/main.tsp",
+      "sha256": "ab25f92cf71186aa9efe1cba4ee57dcce4db869947a91d1bdafff618e433c91c",
+      "bytes": 450
+    },
+    {
+      "path": "string-template/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/string-template/sample-config.yaml",
+      "sha256": "6c9e151234d2a51004a72a87d7c3038f08a12c23bdc7fe1508d8fd01d320910a",
+      "bytes": 105
+    },
+    {
+      "path": "tags/main.tsp",
+      "upstreamPath": "packages/samples/specs/tags/main.tsp",
+      "sha256": "db820b7480b13ae4f4845c687197b1da6bb813c988aed75df69ba8ef4d63b57d",
+      "bytes": 34
+    },
+    {
+      "path": "tags/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/tags/sample-config.yaml",
+      "sha256": "2325b79eb248a9301b95d0ecfecebb18b6ef063282ce7b38b7aecf4e6b4cbdd2",
+      "bytes": 87
+    },
+    {
+      "path": "tags/tagged-operations.tsp",
+      "upstreamPath": "packages/samples/specs/tags/tagged-operations.tsp",
+      "sha256": "afd07ba4f72a9711085890c2e1eb1f15309785b79223cc3ed8c0c78a97ff6b30",
+      "bytes": 807
+    },
+    {
+      "path": "todoApp/main.tsp",
+      "upstreamPath": "packages/samples/specs/todoApp/main.tsp",
+      "sha256": "31552f47edd67cd54e8d9ce4fb502ac8da629a545bb821ac470f6e07b11f8ed4",
+      "bytes": 6890
+    },
+    {
+      "path": "todoApp/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/todoApp/sample-config.yaml",
+      "sha256": "37fa8c849399ff006fbe76468195f239fe4856013f67b0b5e17c38ff19577fc2",
+      "bytes": 112
+    },
+    {
+      "path": "use-versioned-lib/library.tsp",
+      "upstreamPath": "packages/samples/specs/use-versioned-lib/library.tsp",
+      "sha256": "8cfecd22aea3451049fcf42547bda206e2763eacfe7b1a691f5bb2d199d204ad",
+      "bytes": 208
+    },
+    {
+      "path": "use-versioned-lib/main.tsp",
+      "upstreamPath": "packages/samples/specs/use-versioned-lib/main.tsp",
+      "sha256": "ea9200dcd14ef6149c8800eb3d23dc0bef9db90534c67581f13e0f0f297082a0",
+      "bytes": 279
+    },
+    {
+      "path": "use-versioned-lib/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/use-versioned-lib/sample-config.yaml",
+      "sha256": "21921edb49e5c2738e3ab62e6591616abac3cc5d338b844190adb7cd85a9bb6a",
+      "bytes": 109
+    },
+    {
+      "path": "versioning/library.tsp",
+      "upstreamPath": "packages/samples/specs/versioning/library.tsp",
+      "sha256": "8cfecd22aea3451049fcf42547bda206e2763eacfe7b1a691f5bb2d199d204ad",
+      "bytes": 208
+    },
+    {
+      "path": "versioning/main.tsp",
+      "upstreamPath": "packages/samples/specs/versioning/main.tsp",
+      "sha256": "97e9829baf05dc9e807f3f39321f9ee931d9673753d87cd6f4c8046c841ba253",
+      "bytes": 1007
+    },
+    {
+      "path": "versioning/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/versioning/sample-config.yaml",
+      "sha256": "1efc34f6823271b41a46ba5c992992c8287bda05f37fa761ec1f55f2abf64793",
+      "bytes": 121
+    },
+    {
+      "path": "visibility/main.tsp",
+      "upstreamPath": "packages/samples/specs/visibility/main.tsp",
+      "sha256": "f32645564a635e6c0503d5e60f9d4bbf57bc6c956b50e36c9e2b1f323cf589de",
+      "bytes": 27
+    },
+    {
+      "path": "visibility/sample-config.yaml",
+      "upstreamPath": "packages/samples/specs/visibility/sample-config.yaml",
+      "sha256": "345d250284f8745f2be7e56963509a3240794537432b1647335e0fa52ee62f67",
+      "bytes": 125
+    },
+    {
+      "path": "visibility/visibility.tsp",
+      "upstreamPath": "packages/samples/specs/visibility/visibility.tsp",
+      "sha256": "96eefd404ad5c07749348d800412524b47146373a01a3870cc637e92488214f7",
+      "bytes": 1465
+    },
+    {
+      "path": "LICENSE",
+      "upstreamPath": "LICENSE",
+      "sha256": "27ebda9d51f0a56b7e281ccd8230a27236dcb51c05f64b07869ecf6e965d68b0",
+      "bytes": 1162
+    },
+    {
+      "path": "compiler-package.json",
+      "upstreamPath": "packages/compiler/package.json",
+      "sha256": "e7d25d595c7379a2940f8639b141038c0d02df0ec8634ecaa2eb5f2870104487",
+      "bytes": 4759
+    }
+  ]
+}

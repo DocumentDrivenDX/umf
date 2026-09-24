@@ -1,0 +1,130 @@
+{
+  "umf": "0.1.0",
+  "id": "cpp-21.0.0/generated_decimal32.stream/message/0",
+  "vocabularies": {
+    "umf.arrow.flatbuffer": {
+      "version": "0.1.0"
+    }
+  },
+  "modules": [
+    {
+      "id": "metadata",
+      "namespace": "",
+      "elements": [
+        {
+          "id": "root",
+          "extensions": {
+            "umf.arrow.flatbuffer": {
+              "profile": "arrow-flatbuffer-model",
+              "model": {
+                "rootType": "Message",
+                "value": {
+                  "version": "V5",
+                  "header": {
+                    "type": "Schema",
+                    "value": {
+                      "fields": [
+                        {
+                          "name": "f0",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 3,
+                              "scale": 2,
+                              "bitWidth": 32
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f1",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 4,
+                              "scale": 2,
+                              "bitWidth": 32
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f2",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 5,
+                              "scale": 2,
+                              "bitWidth": 32
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f3",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 6,
+                              "scale": 2,
+                              "bitWidth": 32
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f4",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 7,
+                              "scale": 2,
+                              "bitWidth": 32
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f5",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 8,
+                              "scale": 2,
+                              "bitWidth": 32
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f6",
+                          "nullable": true,
+                          "type": {
+                            "type": "Decimal",
+                            "value": {
+                              "precision": 9,
+                              "scale": 2,
+                              "bitWidth": 32
+                            }
+                          },
+                          "children": []
+                        }
+                      ],
+                      "custom_metadata": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

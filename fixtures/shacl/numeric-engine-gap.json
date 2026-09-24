@@ -1,0 +1,18 @@
+{
+  "engine": "rdf-validate-shacl@0.6.5",
+  "nativeConforms": true,
+  "expectedConforms": false,
+  "numericProfile": "umf-numeric-2",
+  "wrapperStatus": "evaluated",
+  "wrapperConforms": false,
+  "diagnostics": [
+    {
+      "code": "SHACL_ENGINE_EXPERIMENTAL",
+      "path": "",
+      "severity": "warning",
+      "message": "Pinned engine with UMF exact integer/decimal validators. Complete SHACL conformance, shape syntax checking, numeric fidelity and recursion semantics are not established. Do not treat engineConforms as a verified UMF conformance verdict."
+    }
+  ],
+  "source": "native/shacl/numeric-shapes.ttl",
+  "data": "native/shacl/numeric-data.ttl"
+}

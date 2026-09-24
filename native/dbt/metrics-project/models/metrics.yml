@@ -1,0 +1,68 @@
+version: 2
+semantic_models:
+  - name: events
+    model: ref('events')
+    defaults:
+      agg_time_dimension: ordered_at
+    entities:
+      - {name: order, type: primary, expr: order_id}
+      - {name: customer, type: foreign, expr: customer_id}
+    dimensions:
+      - name: ordered_at
+        type: time
+        type_params: {time_granularity: day}
+    measures:
+      - {name: amount_sum, agg: sum, expr: amount}
+      - {name: order_count, agg: count, expr: order_id}
+      - {name: conversion_count, agg: count_distinct, expr: order_id}
+metrics:
+  - name: total_amount
+    label: Total amount
+    type: simple
+    type_params: {measure: amount_sum}
+  - name: total_orders
+    label: Total orders
+    type: simple
+    type_params: {measure: order_count}
+  - name: amount_per_order
+    label: Amount per order
+    type: ratio
+    type_params:
+      numerator: total_amount
+      denominator: total_orders
+  - name: amount_change
+    label: Amount change
+    type: derived
+    type_params:
+      expr: current_amount - prior_amount
+      metrics:
+        - {name: total_amount, alias: current_amount}
+        - {name: total_amount, alias: prior_amount, offset_window: 1 week}
+  - name: rolling_amount
+    label: Rolling amount
+    type: cumulative
+    type_params:
+      measure: amount_sum
+      cumulative_type_params: {window: 7 days, period_agg: first}
+  - name: monthly_amount
+    label: Monthly amount
+    type: cumulative
+    type_params:
+      measure: amount_sum
+      cumulative_type_params: {grain_to_date: month, period_agg: last}
+  - name: order_conversion
+    label: Order conversion
+    type: conversion
+    type_params:
+      conversion_type_params:
+        base_measure: order_count
+        conversion_measure: conversion_count
+        entity: order
+        calculation: conversion_rate
+        window: 7 days
+saved_queries:
+  - name: metric_summary
+    description: Authored metric-shape coverage, not executed analytics.
+    query_params:
+      metrics: [total_amount, total_orders, amount_per_order, amount_change, rolling_amount, monthly_amount, order_conversion]
+      group_by: ["TimeDimension('metric_time', 'DAY')"]

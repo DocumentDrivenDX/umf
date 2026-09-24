@@ -1,0 +1,27 @@
+version: 2
+models:
+  - name: order_totals
+    description: Totals for synthetic customer IDs.
+    config:
+      materialized: table
+      group: finance
+    columns:
+      - name: customer_id
+        description: Synthetic customer identity.
+        data_type: integer
+        data_tests: [not_null, unique]
+      - name: total_amount
+        description: Signed total amount.
+        data_type: decimal(18,2)
+  - name: metricflow_time_spine
+    time_spine:
+      standard_granularity_column: date_day
+    columns:
+      - name: date_day
+        granularity: day
+seeds:
+  - name: orders
+    description: Synthetic orders, no personal data.
+    columns:
+      - name: order_id
+        data_tests: [unique, not_null]

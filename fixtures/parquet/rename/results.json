@@ -1,0 +1,1039 @@
+{
+  "cases": 49,
+  "transformed": 48,
+  "results": [
+    {
+      "id": "none-1",
+      "path": "fixtures/parquet/rename/none.parquet",
+      "index": 1,
+      "name": "renamed.注文_1",
+      "status": "transformed",
+      "rename": {
+        "index": 1,
+        "from": [
+          "order"
+        ],
+        "to": [
+          "renamed.注文_1"
+        ]
+      },
+      "unchangedPrefixBytes": 2772,
+      "sha256": "1d304cbb8a76c294cc1c52809842e1659c9e675f3a353d5206759af3d52b3703",
+      "roundtripSha256": "f86b294358a781b52ecdaf2d3d016d7c824c798f3ceaadf8c4ae7ba5d06e08aa"
+    },
+    {
+      "id": "none-2",
+      "path": "fixtures/parquet/rename/none.parquet",
+      "index": 2,
+      "name": "renamed.注文_2",
+      "status": "transformed",
+      "rename": {
+        "index": 2,
+        "from": [
+          "detail"
+        ],
+        "to": [
+          "renamed.注文_2"
+        ]
+      },
+      "unchangedPrefixBytes": 2772,
+      "sha256": "96efea5cf27823c5e91ae9951f9b660bf90b7e264700b6056499921ac7921529",
+      "roundtripSha256": "f86b294358a781b52ecdaf2d3d016d7c824c798f3ceaadf8c4ae7ba5d06e08aa"
+    },
+    {
+      "id": "none-3",
+      "path": "fixtures/parquet/rename/none.parquet",
+      "index": 3,
+      "name": "renamed.注文_3",
+      "status": "transformed",
+      "rename": {
+        "index": 3,
+        "from": [
+          "detail",
+          "item.name"
+        ],
+        "to": [
+          "detail",
+          "renamed.注文_3"
+        ]
+      },
+      "unchangedPrefixBytes": 2772,
+      "sha256": "8247a4695cec0e76b29989ab9c54ec86d48973c9fc353d42c71c959eab8e88c8",
+      "roundtripSha256": "f86b294358a781b52ecdaf2d3d016d7c824c798f3ceaadf8c4ae7ba5d06e08aa"
+    },
+    {
+      "id": "none-4",
+      "path": "fixtures/parquet/rename/none.parquet",
+      "index": 4,
+      "name": "renamed.注文_4",
+      "status": "transformed",
+      "rename": {
+        "index": 4,
+        "from": [
+          "detail",
+          "price"
+        ],
+        "to": [
+          "detail",
+          "renamed.注文_4"
+        ]
+      },
+      "unchangedPrefixBytes": 2772,
+      "sha256": "7b5700a1eb6657b8ad7388184f0ddc72adb5ea43f04f7c22e29c766f49fde737",
+      "roundtripSha256": "f86b294358a781b52ecdaf2d3d016d7c824c798f3ceaadf8c4ae7ba5d06e08aa"
+    },
+    {
+      "id": "none-5",
+      "path": "fixtures/parquet/rename/none.parquet",
+      "index": 5,
+      "name": "renamed.注文_5",
+      "status": "transformed",
+      "rename": {
+        "index": 5,
+        "from": [
+          "tags"
+        ],
+        "to": [
+          "renamed.注文_5"
+        ]
+      },
+      "unchangedPrefixBytes": 2772,
+      "sha256": "b6ca541f48b277c6ed41efbf76861f3fe0b0e68f36af2da72849408c43e7d588",
+      "roundtripSha256": "f86b294358a781b52ecdaf2d3d016d7c824c798f3ceaadf8c4ae7ba5d06e08aa"
+    },
+    {
+      "id": "none-6",
+      "path": "fixtures/parquet/rename/none.parquet",
+      "index": 6,
+      "name": "renamed.注文_6",
+      "status": "transformed",
+      "rename": {
+        "index": 6,
+        "from": [
+          "tags",
+          "list"
+        ],
+        "to": [
+          "tags",
+          "renamed.注文_6"
+        ]
+      },
+      "unchangedPrefixBytes": 2772,
+      "sha256": "8f1421756397099b45d0c71f5c82a51e847666bcfa33c0c8b11a0188c5e0af26",
+      "roundtripSha256": "f86b294358a781b52ecdaf2d3d016d7c824c798f3ceaadf8c4ae7ba5d06e08aa"
+    },
+    {
+      "id": "none-7",
+      "path": "fixtures/parquet/rename/none.parquet",
+      "index": 7,
+      "name": "renamed.注文_7",
+      "status": "transformed",
+      "rename": {
+        "index": 7,
+        "from": [
+          "tags",
+          "list",
+          "element"
+        ],
+        "to": [
+          "tags",
+          "list",
+          "renamed.注文_7"
+        ]
+      },
+      "unchangedPrefixBytes": 2772,
+      "sha256": "8d87c609669f9c650ac3d2659c86aee088388fd7736e3ba6e5aa08953c21fbbd",
+      "roundtripSha256": "f86b294358a781b52ecdaf2d3d016d7c824c798f3ceaadf8c4ae7ba5d06e08aa"
+    },
+    {
+      "id": "none-8",
+      "path": "fixtures/parquet/rename/none.parquet",
+      "index": 8,
+      "name": "renamed.注文_8",
+      "status": "transformed",
+      "rename": {
+        "index": 8,
+        "from": [
+          "attributes"
+        ],
+        "to": [
+          "renamed.注文_8"
+        ]
+      },
+      "unchangedPrefixBytes": 2772,
+      "sha256": "7b617c9a876f2ee37aa4cf8263993ee8d8db925a572957f61512109589f252d7",
+      "roundtripSha256": "f86b294358a781b52ecdaf2d3d016d7c824c798f3ceaadf8c4ae7ba5d06e08aa"
+    },
+    {
+      "id": "none-9",
+      "path": "fixtures/parquet/rename/none.parquet",
+      "index": 9,
+      "name": "renamed.注文_9",
+      "status": "transformed",
+      "rename": {
+        "index": 9,
+        "from": [
+          "attributes",
+          "key_value"
+        ],
+        "to": [
+          "attributes",
+          "renamed.注文_9"
+        ]
+      },
+      "unchangedPrefixBytes": 2772,
+      "sha256": "930cc9fe633fd16de65b7fa4d487fd406a7ebc7a279283e8f740aca25ac3b880",
+      "roundtripSha256": "f86b294358a781b52ecdaf2d3d016d7c824c798f3ceaadf8c4ae7ba5d06e08aa"
+    },
+    {
+      "id": "none-10",
+      "path": "fixtures/parquet/rename/none.parquet",
+      "index": 10,
+      "name": "renamed.注文_10",
+      "status": "transformed",
+      "rename": {
+        "index": 10,
+        "from": [
+          "attributes",
+          "key_value",
+          "key"
+        ],
+        "to": [
+          "attributes",
+          "key_value",
+          "renamed.注文_10"
+        ]
+      },
+      "unchangedPrefixBytes": 2772,
+      "sha256": "48277c702ae0b0f619dfd634ec084597b3821dc6d46f851ccf16ad2da33d4926",
+      "roundtripSha256": "f86b294358a781b52ecdaf2d3d016d7c824c798f3ceaadf8c4ae7ba5d06e08aa"
+    },
+    {
+      "id": "none-11",
+      "path": "fixtures/parquet/rename/none.parquet",
+      "index": 11,
+      "name": "renamed.注文_11",
+      "status": "transformed",
+      "rename": {
+        "index": 11,
+        "from": [
+          "attributes",
+          "key_value",
+          "value"
+        ],
+        "to": [
+          "attributes",
+          "key_value",
+          "renamed.注文_11"
+        ]
+      },
+      "unchangedPrefixBytes": 2772,
+      "sha256": "ef8a9ae9af1531c0f008f0aac04dab33cc8e98132ef857b44589090886a254ea",
+      "roundtripSha256": "f86b294358a781b52ecdaf2d3d016d7c824c798f3ceaadf8c4ae7ba5d06e08aa"
+    },
+    {
+      "id": "none-12",
+      "path": "fixtures/parquet/rename/none.parquet",
+      "index": 12,
+      "name": "renamed.注文_12",
+      "status": "transformed",
+      "rename": {
+        "index": 12,
+        "from": [
+          "events"
+        ],
+        "to": [
+          "renamed.注文_12"
+        ]
+      },
+      "unchangedPrefixBytes": 2772,
+      "sha256": "97ef0bf3347af20ea10380fc4dad2ebde2a259b3b3d3e57aec63575c7f1eba1a",
+      "roundtripSha256": "f86b294358a781b52ecdaf2d3d016d7c824c798f3ceaadf8c4ae7ba5d06e08aa"
+    },
+    {
+      "id": "none-13",
+      "path": "fixtures/parquet/rename/none.parquet",
+      "index": 13,
+      "name": "renamed.注文_13",
+      "status": "transformed",
+      "rename": {
+        "index": 13,
+        "from": [
+          "events",
+          "list"
+        ],
+        "to": [
+          "events",
+          "renamed.注文_13"
+        ]
+      },
+      "unchangedPrefixBytes": 2772,
+      "sha256": "281cc6c04daa81d1015c127a9f52af2dcd0b25c43b8716a946dd1d3631689eed",
+      "roundtripSha256": "f86b294358a781b52ecdaf2d3d016d7c824c798f3ceaadf8c4ae7ba5d06e08aa"
+    },
+    {
+      "id": "none-14",
+      "path": "fixtures/parquet/rename/none.parquet",
+      "index": 14,
+      "name": "renamed.注文_14",
+      "status": "transformed",
+      "rename": {
+        "index": 14,
+        "from": [
+          "events",
+          "list",
+          "element"
+        ],
+        "to": [
+          "events",
+          "list",
+          "renamed.注文_14"
+        ]
+      },
+      "unchangedPrefixBytes": 2772,
+      "sha256": "2647d195e7006152ac3b81b5c2b41184df8b745a5b1559be3efb0a3d0161447e",
+      "roundtripSha256": "f86b294358a781b52ecdaf2d3d016d7c824c798f3ceaadf8c4ae7ba5d06e08aa"
+    },
+    {
+      "id": "none-15",
+      "path": "fixtures/parquet/rename/none.parquet",
+      "index": 15,
+      "name": "renamed.注文_15",
+      "status": "transformed",
+      "rename": {
+        "index": 15,
+        "from": [
+          "events",
+          "list",
+          "element",
+          "at"
+        ],
+        "to": [
+          "events",
+          "list",
+          "element",
+          "renamed.注文_15"
+        ]
+      },
+      "unchangedPrefixBytes": 2772,
+      "sha256": "4c362112a8c9256a5af0ad1f05fff976e098d9817e613dc2145a23570045c8bb",
+      "roundtripSha256": "f86b294358a781b52ecdaf2d3d016d7c824c798f3ceaadf8c4ae7ba5d06e08aa"
+    },
+    {
+      "id": "none-16",
+      "path": "fixtures/parquet/rename/none.parquet",
+      "index": 16,
+      "name": "renamed.注文_16",
+      "status": "transformed",
+      "rename": {
+        "index": 16,
+        "from": [
+          "events",
+          "list",
+          "element",
+          "value"
+        ],
+        "to": [
+          "events",
+          "list",
+          "element",
+          "renamed.注文_16"
+        ]
+      },
+      "unchangedPrefixBytes": 2772,
+      "sha256": "d9669f4ca563896126c6a5575f4bfe894eec50cdd573a99d162326dc454057d4",
+      "roundtripSha256": "f86b294358a781b52ecdaf2d3d016d7c824c798f3ceaadf8c4ae7ba5d06e08aa"
+    },
+    {
+      "id": "snappy-1",
+      "path": "fixtures/parquet/rename/snappy.parquet",
+      "index": 1,
+      "name": "renamed.注文_1",
+      "status": "transformed",
+      "rename": {
+        "index": 1,
+        "from": [
+          "order"
+        ],
+        "to": [
+          "renamed.注文_1"
+        ]
+      },
+      "unchangedPrefixBytes": 2851,
+      "sha256": "146bd200d287c43677dd3ed859f52cb81cd07c3efd919c8f04c5ae4e43be328f",
+      "roundtripSha256": "1169835e6232b25f92170066e8d62069a92cd7d2bd3ab726e73a800c97ef9be5"
+    },
+    {
+      "id": "snappy-2",
+      "path": "fixtures/parquet/rename/snappy.parquet",
+      "index": 2,
+      "name": "renamed.注文_2",
+      "status": "transformed",
+      "rename": {
+        "index": 2,
+        "from": [
+          "detail"
+        ],
+        "to": [
+          "renamed.注文_2"
+        ]
+      },
+      "unchangedPrefixBytes": 2851,
+      "sha256": "c7f2bb99cfb32becbdda68d1b1723cf9e944dda97634c21553652f424610592d",
+      "roundtripSha256": "1169835e6232b25f92170066e8d62069a92cd7d2bd3ab726e73a800c97ef9be5"
+    },
+    {
+      "id": "snappy-3",
+      "path": "fixtures/parquet/rename/snappy.parquet",
+      "index": 3,
+      "name": "renamed.注文_3",
+      "status": "transformed",
+      "rename": {
+        "index": 3,
+        "from": [
+          "detail",
+          "item.name"
+        ],
+        "to": [
+          "detail",
+          "renamed.注文_3"
+        ]
+      },
+      "unchangedPrefixBytes": 2851,
+      "sha256": "cb078dfe6666412a11113bfe966cf2f7151298cd97329019ce973d8bc0e9ab18",
+      "roundtripSha256": "1169835e6232b25f92170066e8d62069a92cd7d2bd3ab726e73a800c97ef9be5"
+    },
+    {
+      "id": "snappy-4",
+      "path": "fixtures/parquet/rename/snappy.parquet",
+      "index": 4,
+      "name": "renamed.注文_4",
+      "status": "transformed",
+      "rename": {
+        "index": 4,
+        "from": [
+          "detail",
+          "price"
+        ],
+        "to": [
+          "detail",
+          "renamed.注文_4"
+        ]
+      },
+      "unchangedPrefixBytes": 2851,
+      "sha256": "915739a17e6400fddf630c0dea5b82d45faf5094fd0ebda9ca87eefa0a3f6103",
+      "roundtripSha256": "1169835e6232b25f92170066e8d62069a92cd7d2bd3ab726e73a800c97ef9be5"
+    },
+    {
+      "id": "snappy-5",
+      "path": "fixtures/parquet/rename/snappy.parquet",
+      "index": 5,
+      "name": "renamed.注文_5",
+      "status": "transformed",
+      "rename": {
+        "index": 5,
+        "from": [
+          "tags"
+        ],
+        "to": [
+          "renamed.注文_5"
+        ]
+      },
+      "unchangedPrefixBytes": 2851,
+      "sha256": "e8adaf63d47be36a419b5e7f6a423a57d4e6bb712db034f3afac10aee45fbf95",
+      "roundtripSha256": "1169835e6232b25f92170066e8d62069a92cd7d2bd3ab726e73a800c97ef9be5"
+    },
+    {
+      "id": "snappy-6",
+      "path": "fixtures/parquet/rename/snappy.parquet",
+      "index": 6,
+      "name": "renamed.注文_6",
+      "status": "transformed",
+      "rename": {
+        "index": 6,
+        "from": [
+          "tags",
+          "list"
+        ],
+        "to": [
+          "tags",
+          "renamed.注文_6"
+        ]
+      },
+      "unchangedPrefixBytes": 2851,
+      "sha256": "69c5d7d54b0eff5dc614ee00a2e58b4c6a8a2c1a46af511871ad8f349b2a2523",
+      "roundtripSha256": "1169835e6232b25f92170066e8d62069a92cd7d2bd3ab726e73a800c97ef9be5"
+    },
+    {
+      "id": "snappy-7",
+      "path": "fixtures/parquet/rename/snappy.parquet",
+      "index": 7,
+      "name": "renamed.注文_7",
+      "status": "transformed",
+      "rename": {
+        "index": 7,
+        "from": [
+          "tags",
+          "list",
+          "element"
+        ],
+        "to": [
+          "tags",
+          "list",
+          "renamed.注文_7"
+        ]
+      },
+      "unchangedPrefixBytes": 2851,
+      "sha256": "ab018009386bdcc3b28c068a10b5f83c4f5d9ec33a43817d60b027b62f9ee71d",
+      "roundtripSha256": "1169835e6232b25f92170066e8d62069a92cd7d2bd3ab726e73a800c97ef9be5"
+    },
+    {
+      "id": "snappy-8",
+      "path": "fixtures/parquet/rename/snappy.parquet",
+      "index": 8,
+      "name": "renamed.注文_8",
+      "status": "transformed",
+      "rename": {
+        "index": 8,
+        "from": [
+          "attributes"
+        ],
+        "to": [
+          "renamed.注文_8"
+        ]
+      },
+      "unchangedPrefixBytes": 2851,
+      "sha256": "43403555fdd9695ac897032f9da4b075d5385973310b102703c7a78cfe418215",
+      "roundtripSha256": "1169835e6232b25f92170066e8d62069a92cd7d2bd3ab726e73a800c97ef9be5"
+    },
+    {
+      "id": "snappy-9",
+      "path": "fixtures/parquet/rename/snappy.parquet",
+      "index": 9,
+      "name": "renamed.注文_9",
+      "status": "transformed",
+      "rename": {
+        "index": 9,
+        "from": [
+          "attributes",
+          "key_value"
+        ],
+        "to": [
+          "attributes",
+          "renamed.注文_9"
+        ]
+      },
+      "unchangedPrefixBytes": 2851,
+      "sha256": "d600f45dc4184434d578121dc0ee239fc3bd19796a62886c8cb5bfd04b43e127",
+      "roundtripSha256": "1169835e6232b25f92170066e8d62069a92cd7d2bd3ab726e73a800c97ef9be5"
+    },
+    {
+      "id": "snappy-10",
+      "path": "fixtures/parquet/rename/snappy.parquet",
+      "index": 10,
+      "name": "renamed.注文_10",
+      "status": "transformed",
+      "rename": {
+        "index": 10,
+        "from": [
+          "attributes",
+          "key_value",
+          "key"
+        ],
+        "to": [
+          "attributes",
+          "key_value",
+          "renamed.注文_10"
+        ]
+      },
+      "unchangedPrefixBytes": 2851,
+      "sha256": "235a0c9977ea4f7c285af771aa7105d271ac429b3471bbf1dc5807234b7d7d33",
+      "roundtripSha256": "1169835e6232b25f92170066e8d62069a92cd7d2bd3ab726e73a800c97ef9be5"
+    },
+    {
+      "id": "snappy-11",
+      "path": "fixtures/parquet/rename/snappy.parquet",
+      "index": 11,
+      "name": "renamed.注文_11",
+      "status": "transformed",
+      "rename": {
+        "index": 11,
+        "from": [
+          "attributes",
+          "key_value",
+          "value"
+        ],
+        "to": [
+          "attributes",
+          "key_value",
+          "renamed.注文_11"
+        ]
+      },
+      "unchangedPrefixBytes": 2851,
+      "sha256": "17e1760ca15c703821b24d3e0964a6f3d2aad0027f826972d7f6d1d9c5ae6074",
+      "roundtripSha256": "1169835e6232b25f92170066e8d62069a92cd7d2bd3ab726e73a800c97ef9be5"
+    },
+    {
+      "id": "snappy-12",
+      "path": "fixtures/parquet/rename/snappy.parquet",
+      "index": 12,
+      "name": "renamed.注文_12",
+      "status": "transformed",
+      "rename": {
+        "index": 12,
+        "from": [
+          "events"
+        ],
+        "to": [
+          "renamed.注文_12"
+        ]
+      },
+      "unchangedPrefixBytes": 2851,
+      "sha256": "722f2fb081da476ed3f069f37ee18555e4024c634e70efb133311a3174966840",
+      "roundtripSha256": "1169835e6232b25f92170066e8d62069a92cd7d2bd3ab726e73a800c97ef9be5"
+    },
+    {
+      "id": "snappy-13",
+      "path": "fixtures/parquet/rename/snappy.parquet",
+      "index": 13,
+      "name": "renamed.注文_13",
+      "status": "transformed",
+      "rename": {
+        "index": 13,
+        "from": [
+          "events",
+          "list"
+        ],
+        "to": [
+          "events",
+          "renamed.注文_13"
+        ]
+      },
+      "unchangedPrefixBytes": 2851,
+      "sha256": "bab24dd7d6c6255e9dc14983e485578d7599e9ec5ba6bed3635aec70d7ba863e",
+      "roundtripSha256": "1169835e6232b25f92170066e8d62069a92cd7d2bd3ab726e73a800c97ef9be5"
+    },
+    {
+      "id": "snappy-14",
+      "path": "fixtures/parquet/rename/snappy.parquet",
+      "index": 14,
+      "name": "renamed.注文_14",
+      "status": "transformed",
+      "rename": {
+        "index": 14,
+        "from": [
+          "events",
+          "list",
+          "element"
+        ],
+        "to": [
+          "events",
+          "list",
+          "renamed.注文_14"
+        ]
+      },
+      "unchangedPrefixBytes": 2851,
+      "sha256": "f2e71428b7856925e6df8512b1bb41dabff74727cbd1b43fe7c23c8a690c830c",
+      "roundtripSha256": "1169835e6232b25f92170066e8d62069a92cd7d2bd3ab726e73a800c97ef9be5"
+    },
+    {
+      "id": "snappy-15",
+      "path": "fixtures/parquet/rename/snappy.parquet",
+      "index": 15,
+      "name": "renamed.注文_15",
+      "status": "transformed",
+      "rename": {
+        "index": 15,
+        "from": [
+          "events",
+          "list",
+          "element",
+          "at"
+        ],
+        "to": [
+          "events",
+          "list",
+          "element",
+          "renamed.注文_15"
+        ]
+      },
+      "unchangedPrefixBytes": 2851,
+      "sha256": "aedf56e6ea96186d41b62c7c631460a4534e6de234f02082804cd1c35859e2c2",
+      "roundtripSha256": "1169835e6232b25f92170066e8d62069a92cd7d2bd3ab726e73a800c97ef9be5"
+    },
+    {
+      "id": "snappy-16",
+      "path": "fixtures/parquet/rename/snappy.parquet",
+      "index": 16,
+      "name": "renamed.注文_16",
+      "status": "transformed",
+      "rename": {
+        "index": 16,
+        "from": [
+          "events",
+          "list",
+          "element",
+          "value"
+        ],
+        "to": [
+          "events",
+          "list",
+          "element",
+          "renamed.注文_16"
+        ]
+      },
+      "unchangedPrefixBytes": 2851,
+      "sha256": "3b62fa61d88ec836ea85825de5ef1ead0a98e69a6dbbd8e1be9bca58f79e9017",
+      "roundtripSha256": "1169835e6232b25f92170066e8d62069a92cd7d2bd3ab726e73a800c97ef9be5"
+    },
+    {
+      "id": "gzip-1",
+      "path": "fixtures/parquet/rename/gzip.parquet",
+      "index": 1,
+      "name": "renamed.注文_1",
+      "status": "transformed",
+      "rename": {
+        "index": 1,
+        "from": [
+          "order"
+        ],
+        "to": [
+          "renamed.注文_1"
+        ]
+      },
+      "unchangedPrefixBytes": 3592,
+      "sha256": "c6de0447eb5e5bf0fe0a91ebdb12a6676518e622845264d041797aed0878a487",
+      "roundtripSha256": "6f812845ec1ce009ee150ab3ec4500849a3946389f63a09281c30f07e399c722"
+    },
+    {
+      "id": "gzip-2",
+      "path": "fixtures/parquet/rename/gzip.parquet",
+      "index": 2,
+      "name": "renamed.注文_2",
+      "status": "transformed",
+      "rename": {
+        "index": 2,
+        "from": [
+          "detail"
+        ],
+        "to": [
+          "renamed.注文_2"
+        ]
+      },
+      "unchangedPrefixBytes": 3592,
+      "sha256": "f2fe9d08dfb53bad7a7b98901e4efd4b39ed70588c7bfd9b599e27973d309645",
+      "roundtripSha256": "6f812845ec1ce009ee150ab3ec4500849a3946389f63a09281c30f07e399c722"
+    },
+    {
+      "id": "gzip-3",
+      "path": "fixtures/parquet/rename/gzip.parquet",
+      "index": 3,
+      "name": "renamed.注文_3",
+      "status": "transformed",
+      "rename": {
+        "index": 3,
+        "from": [
+          "detail",
+          "item.name"
+        ],
+        "to": [
+          "detail",
+          "renamed.注文_3"
+        ]
+      },
+      "unchangedPrefixBytes": 3592,
+      "sha256": "d587527a0395c7b946453dbf2fa0972d14796dc164c5df554af932cb5eaa6fbb",
+      "roundtripSha256": "6f812845ec1ce009ee150ab3ec4500849a3946389f63a09281c30f07e399c722"
+    },
+    {
+      "id": "gzip-4",
+      "path": "fixtures/parquet/rename/gzip.parquet",
+      "index": 4,
+      "name": "renamed.注文_4",
+      "status": "transformed",
+      "rename": {
+        "index": 4,
+        "from": [
+          "detail",
+          "price"
+        ],
+        "to": [
+          "detail",
+          "renamed.注文_4"
+        ]
+      },
+      "unchangedPrefixBytes": 3592,
+      "sha256": "f9d8e8f6936721fba7e75a1066dd534356e17049ae47f759b8d7bccc81be1d32",
+      "roundtripSha256": "6f812845ec1ce009ee150ab3ec4500849a3946389f63a09281c30f07e399c722"
+    },
+    {
+      "id": "gzip-5",
+      "path": "fixtures/parquet/rename/gzip.parquet",
+      "index": 5,
+      "name": "renamed.注文_5",
+      "status": "transformed",
+      "rename": {
+        "index": 5,
+        "from": [
+          "tags"
+        ],
+        "to": [
+          "renamed.注文_5"
+        ]
+      },
+      "unchangedPrefixBytes": 3592,
+      "sha256": "ed84f9988d3f1612bf407bed23645837e70bfc5ba325937c0b8eca10d38d5be8",
+      "roundtripSha256": "6f812845ec1ce009ee150ab3ec4500849a3946389f63a09281c30f07e399c722"
+    },
+    {
+      "id": "gzip-6",
+      "path": "fixtures/parquet/rename/gzip.parquet",
+      "index": 6,
+      "name": "renamed.注文_6",
+      "status": "transformed",
+      "rename": {
+        "index": 6,
+        "from": [
+          "tags",
+          "list"
+        ],
+        "to": [
+          "tags",
+          "renamed.注文_6"
+        ]
+      },
+      "unchangedPrefixBytes": 3592,
+      "sha256": "67c075476547ec1c39c917a3d107b03660bb78a2751bcc9f7ff1f942b4cacae3",
+      "roundtripSha256": "6f812845ec1ce009ee150ab3ec4500849a3946389f63a09281c30f07e399c722"
+    },
+    {
+      "id": "gzip-7",
+      "path": "fixtures/parquet/rename/gzip.parquet",
+      "index": 7,
+      "name": "renamed.注文_7",
+      "status": "transformed",
+      "rename": {
+        "index": 7,
+        "from": [
+          "tags",
+          "list",
+          "element"
+        ],
+        "to": [
+          "tags",
+          "list",
+          "renamed.注文_7"
+        ]
+      },
+      "unchangedPrefixBytes": 3592,
+      "sha256": "59edac83391fc75ec9a5b70bdba5953021259b14105d0a3d7756be7ddb74adcf",
+      "roundtripSha256": "6f812845ec1ce009ee150ab3ec4500849a3946389f63a09281c30f07e399c722"
+    },
+    {
+      "id": "gzip-8",
+      "path": "fixtures/parquet/rename/gzip.parquet",
+      "index": 8,
+      "name": "renamed.注文_8",
+      "status": "transformed",
+      "rename": {
+        "index": 8,
+        "from": [
+          "attributes"
+        ],
+        "to": [
+          "renamed.注文_8"
+        ]
+      },
+      "unchangedPrefixBytes": 3592,
+      "sha256": "974d44ef782e980b61b7703dd8c1f5eed560587d0734f4c9c2ac1f602aa4f30e",
+      "roundtripSha256": "6f812845ec1ce009ee150ab3ec4500849a3946389f63a09281c30f07e399c722"
+    },
+    {
+      "id": "gzip-9",
+      "path": "fixtures/parquet/rename/gzip.parquet",
+      "index": 9,
+      "name": "renamed.注文_9",
+      "status": "transformed",
+      "rename": {
+        "index": 9,
+        "from": [
+          "attributes",
+          "key_value"
+        ],
+        "to": [
+          "attributes",
+          "renamed.注文_9"
+        ]
+      },
+      "unchangedPrefixBytes": 3592,
+      "sha256": "294fdea4c7afa9e9bb96a41188e65638370e8db31f9e20f873ef8d4ab7948417",
+      "roundtripSha256": "6f812845ec1ce009ee150ab3ec4500849a3946389f63a09281c30f07e399c722"
+    },
+    {
+      "id": "gzip-10",
+      "path": "fixtures/parquet/rename/gzip.parquet",
+      "index": 10,
+      "name": "renamed.注文_10",
+      "status": "transformed",
+      "rename": {
+        "index": 10,
+        "from": [
+          "attributes",
+          "key_value",
+          "key"
+        ],
+        "to": [
+          "attributes",
+          "key_value",
+          "renamed.注文_10"
+        ]
+      },
+      "unchangedPrefixBytes": 3592,
+      "sha256": "5ea9bac4aa0d7f546b6aa3db2d7efd1aae839dca1d61710cc3b96ad4d2d50577",
+      "roundtripSha256": "6f812845ec1ce009ee150ab3ec4500849a3946389f63a09281c30f07e399c722"
+    },
+    {
+      "id": "gzip-11",
+      "path": "fixtures/parquet/rename/gzip.parquet",
+      "index": 11,
+      "name": "renamed.注文_11",
+      "status": "transformed",
+      "rename": {
+        "index": 11,
+        "from": [
+          "attributes",
+          "key_value",
+          "value"
+        ],
+        "to": [
+          "attributes",
+          "key_value",
+          "renamed.注文_11"
+        ]
+      },
+      "unchangedPrefixBytes": 3592,
+      "sha256": "10c64ee4f0854eb3d36bfba630afa7f5c6e51a536c04f5b06d0335932f5c2d13",
+      "roundtripSha256": "6f812845ec1ce009ee150ab3ec4500849a3946389f63a09281c30f07e399c722"
+    },
+    {
+      "id": "gzip-12",
+      "path": "fixtures/parquet/rename/gzip.parquet",
+      "index": 12,
+      "name": "renamed.注文_12",
+      "status": "transformed",
+      "rename": {
+        "index": 12,
+        "from": [
+          "events"
+        ],
+        "to": [
+          "renamed.注文_12"
+        ]
+      },
+      "unchangedPrefixBytes": 3592,
+      "sha256": "e0afaefc6521a1b6386c54480466df8471d2c512391e6309fecf4b1896a656f2",
+      "roundtripSha256": "6f812845ec1ce009ee150ab3ec4500849a3946389f63a09281c30f07e399c722"
+    },
+    {
+      "id": "gzip-13",
+      "path": "fixtures/parquet/rename/gzip.parquet",
+      "index": 13,
+      "name": "renamed.注文_13",
+      "status": "transformed",
+      "rename": {
+        "index": 13,
+        "from": [
+          "events",
+          "list"
+        ],
+        "to": [
+          "events",
+          "renamed.注文_13"
+        ]
+      },
+      "unchangedPrefixBytes": 3592,
+      "sha256": "39de3aa86be24f18f19a2ae9ddfb847f369ae83b269f4bd7f1870c358743b615",
+      "roundtripSha256": "6f812845ec1ce009ee150ab3ec4500849a3946389f63a09281c30f07e399c722"
+    },
+    {
+      "id": "gzip-14",
+      "path": "fixtures/parquet/rename/gzip.parquet",
+      "index": 14,
+      "name": "renamed.注文_14",
+      "status": "transformed",
+      "rename": {
+        "index": 14,
+        "from": [
+          "events",
+          "list",
+          "element"
+        ],
+        "to": [
+          "events",
+          "list",
+          "renamed.注文_14"
+        ]
+      },
+      "unchangedPrefixBytes": 3592,
+      "sha256": "c3b6207834d4792f2924b1dca0bb666c26fb4e62c2b8a1092ca7b9e5bc7d98fb",
+      "roundtripSha256": "6f812845ec1ce009ee150ab3ec4500849a3946389f63a09281c30f07e399c722"
+    },
+    {
+      "id": "gzip-15",
+      "path": "fixtures/parquet/rename/gzip.parquet",
+      "index": 15,
+      "name": "renamed.注文_15",
+      "status": "transformed",
+      "rename": {
+        "index": 15,
+        "from": [
+          "events",
+          "list",
+          "element",
+          "at"
+        ],
+        "to": [
+          "events",
+          "list",
+          "element",
+          "renamed.注文_15"
+        ]
+      },
+      "unchangedPrefixBytes": 3592,
+      "sha256": "a92f36dbf6e361b8e94fb91ca4020c27b282e3224df8e03fca26ef4074b4b054",
+      "roundtripSha256": "6f812845ec1ce009ee150ab3ec4500849a3946389f63a09281c30f07e399c722"
+    },
+    {
+      "id": "gzip-16",
+      "path": "fixtures/parquet/rename/gzip.parquet",
+      "index": 16,
+      "name": "renamed.注文_16",
+      "status": "transformed",
+      "rename": {
+        "index": 16,
+        "from": [
+          "events",
+          "list",
+          "element",
+          "value"
+        ],
+        "to": [
+          "events",
+          "list",
+          "element",
+          "renamed.注文_16"
+        ]
+      },
+      "unchangedPrefixBytes": 3592,
+      "sha256": "4a0ea8e46544d3492fdbaf2fde15d9a15e73897c6dfd1609fe4b887af32fa198",
+      "roundtripSha256": "6f812845ec1ce009ee150ab3ec4500849a3946389f63a09281c30f07e399c722"
+    },
+    {
+      "id": "embedded-schema-1",
+      "path": "fixtures/parquet/rename/embedded-schema.parquet",
+      "index": 1,
+      "name": "renamed.注文_1",
+      "status": "blocked"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "authority": "Pinned references.md runtime arity/context rules plus authored variations of the official example; pairing does not enforce data constraints",
+  "upstreamPath": "native/odcs/sources/docs/examples/references/relationships.odcs.yaml",
+  "upstreamSha256": "78a9f10a3875fd2cef0a615b86b6c9124877ec2f3d5af070e4f8e5637687952f",
+  "results": [
+    {
+      "id": "upstream",
+      "expected": "blocked",
+      "code": "ODCS_REFERENCE_MISSING",
+      "sourceSha256": "979b49b49aa36a5c89a5cf915f6f1e8d324e9080d35b83472e3a74b78c9ed617"
+    },
+    {
+      "id": "paired",
+      "expected": "checked",
+      "sourceSha256": "09bcad1b45111177ec0ccd3b6ea43d01d3b4e71d917724a02fe75f3c6babcd74"
+    },
+    {
+      "id": "arity",
+      "expected": "blocked",
+      "code": "ODCS_RELATIONSHIP_ARITY",
+      "sourceSha256": "b814ef0cbcc1ef79ac1d6d78fe143660acbeabaa295c856f9a42352e5513661c"
+    },
+    {
+      "id": "property-from",
+      "expected": "blocked",
+      "code": "ODCS_RELATIONSHIP_FROM",
+      "sourceSha256": "5839e51b5eb3ab719497d7e0251b5333a8dd8be2bd1d944d305f038a5f267cfa"
+    },
+    {
+      "id": "mixed-shapes",
+      "expected": "blocked",
+      "code": "ODCS_RELATIONSHIP_SHAPE",
+      "sourceSha256": "04084d0d322836bb0947712779ad660423590f3b503324c50305f06394d365ec"
+    },
+    {
+      "id": "duplicate-id",
+      "expected": "blocked",
+      "code": "ODCS_RELATIONSHIP_ID",
+      "sourceSha256": "2f4a5e3e6782f8c51ad5bbff9fffc541cbc8f5b2610c9096fe1bf09a4f639ede"
+    },
+    {
+      "id": "property-array",
+      "expected": "blocked",
+      "code": "ODCS_RELATIONSHIP_PROPERTY_ARRAY",
+      "sourceSha256": "fe13ea87a90e0ea88260f60282719d8a964b6ae45b3711d9bbc78ddd3d3e5658"
+    },
+    {
+      "id": "unknown-type",
+      "expected": "blocked",
+      "code": "ODCS_RELATIONSHIP_TYPE",
+      "sourceSha256": "4c2d72ef431f5066f76fc2c35725d1598f2c863afa59c8795d4000c6e4b2e109"
+    },
+    {
+      "id": "external",
+      "expected": "blocked",
+      "code": "ODCS_REFERENCE_EXTERNAL",
+      "sourceSha256": "082cbdcc37af3313ab357d6ef40b96f7fb1cb57d347de54c475b171804c17f34"
+    }
+  ]
+}

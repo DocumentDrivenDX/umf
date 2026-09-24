@@ -1,0 +1,63 @@
+{
+  "processor": "PyLD 2.0.4",
+  "numberLoader": "Python integers and selective Decimal; exact decimal comparisons",
+  "results": [
+    {
+      "id": "large-integer",
+      "native": "accepted",
+      "exactEqual": true,
+      "exports": 2,
+      "edits": 2
+    },
+    {
+      "id": "typed-decimal",
+      "native": "accepted",
+      "exactEqual": true,
+      "exports": 2,
+      "edits": 0
+    },
+    {
+      "id": "extreme-values",
+      "native": "accepted",
+      "exactEqual": true,
+      "exports": 2,
+      "edits": 0
+    },
+    {
+      "id": "json-literal",
+      "native": "accepted",
+      "exactEqual": true,
+      "exports": 2,
+      "edits": 0
+    },
+    {
+      "id": "string-control",
+      "native": "accepted",
+      "exactEqual": true,
+      "exports": 2,
+      "edits": 0
+    },
+    {
+      "id": "id-coercion-numeric",
+      "native": "accepted",
+      "exactEqual": true,
+      "exports": 2,
+      "edits": 0
+    },
+    {
+      "id": "invalid-id",
+      "native": "rejected"
+    },
+    {
+      "id": "invalid-version",
+      "native": "rejected"
+    },
+    {
+      "id": "free-floating",
+      "native": "accepted",
+      "exactEqual": true,
+      "exports": 2,
+      "edits": 0
+    }
+  ]
+}

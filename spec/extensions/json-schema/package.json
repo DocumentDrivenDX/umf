@@ -1,0 +1,154 @@
+{
+  "id": "umf.json-schema",
+  "version": "0.1.0",
+  "coreVersion": "0.1.0",
+  "description": "JSON Schema Draft 2020-12 syntax, scoped validation, and lossless-number native interchange",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:json-schema:0.1.0",
+    "type": "object",
+    "required": [
+      "dialect",
+      "baseUri",
+      "root",
+      "resources"
+    ],
+    "properties": {
+      "dialect": {
+        "const": "https://json-schema.org/draft/2020-12/schema"
+      },
+      "baseUri": {
+        "type": "string",
+        "minLength": 1
+      },
+      "root": {
+        "$ref": "#/$defs/node"
+      },
+      "resources": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/$defs/node"
+        }
+      }
+    },
+    "$defs": {
+      "node": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "const": "null"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "boolean"
+              },
+              "value": {
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "number"
+              },
+              "value": {
+                "type": "string",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "items"
+            ],
+            "properties": {
+              "kind": {
+                "const": "array"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "members"
+            ],
+            "properties": {
+              "kind": {
+                "const": "object"
+              },
+              "members": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "semantics": "docs/helix/02-design/contracts/CONTRACT-002-json-schema.md",
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "semantic",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "JSON Schema",
+      "version": "2020-12",
+      "subset": "Native JSON tree preservation; semantic validation limited to known dialect/keywords and JavaScript-compatible numerics, format annotation-only; see CONTRACT-002 and evidence."
+    },
+    "evidence": [
+      "tests/json-schema/native.test.ts",
+      "tests/json-schema/upstream.test.ts"
+    ]
+  }
+}

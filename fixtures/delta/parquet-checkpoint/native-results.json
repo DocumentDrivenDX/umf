@@ -1,0 +1,144 @@
+{
+  "runtime": "deltalake 1.6.4 DataFusion scan",
+  "earlierCommitsAbsent": true,
+  "results": [
+    {
+      "id": "v1",
+      "version": "10",
+      "rows": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        }
+      ],
+      "paths": [
+        "a.parquet",
+        "b.parquet"
+      ],
+      "job": 2,
+      "other": 9223372036854775807
+    },
+    {
+      "id": "v1",
+      "version": "11",
+      "rows": [
+        {
+          "id": 1
+        }
+      ],
+      "paths": [
+        "a.parquet"
+      ],
+      "job": 1,
+      "other": 9223372036854775807
+    },
+    {
+      "id": "v1",
+      "version": "12",
+      "rows": [
+        {
+          "id": 1
+        }
+      ],
+      "paths": [
+        "a.parquet"
+      ],
+      "job": 1,
+      "other": 9223372036854775807
+    },
+    {
+      "id": "v2-embedded",
+      "version": "10",
+      "rows": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        }
+      ],
+      "paths": [
+        "a.parquet",
+        "b.parquet"
+      ],
+      "job": 2,
+      "other": 9223372036854775807
+    },
+    {
+      "id": "v2-embedded",
+      "version": "11",
+      "rows": [
+        {
+          "id": 1
+        }
+      ],
+      "paths": [
+        "a.parquet"
+      ],
+      "job": 1,
+      "other": 9223372036854775807
+    },
+    {
+      "id": "v2-embedded",
+      "version": "12",
+      "rows": [
+        {
+          "id": 1
+        }
+      ],
+      "paths": [
+        "a.parquet"
+      ],
+      "job": 1,
+      "other": 9223372036854775807
+    },
+    {
+      "id": "v2-sidecars",
+      "version": "10",
+      "rows": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        }
+      ],
+      "paths": [
+        "a.parquet",
+        "b.parquet"
+      ],
+      "job": 2,
+      "other": 9223372036854775807
+    },
+    {
+      "id": "v2-sidecars",
+      "version": "11",
+      "rows": [
+        {
+          "id": 1
+        }
+      ],
+      "paths": [
+        "a.parquet"
+      ],
+      "job": 1,
+      "other": 9223372036854775807
+    },
+    {
+      "id": "v2-sidecars",
+      "version": "12",
+      "rows": [
+        {
+          "id": 1
+        }
+      ],
+      "paths": [
+        "a.parquet"
+      ],
+      "job": 1,
+      "other": 9223372036854775807
+    }
+  ]
+}

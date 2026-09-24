@@ -1,0 +1,11 @@
+import {chromium} from 'playwright';
+const base='fixtures/dbt/semantic-fields/',evidence=await Bun.file(base+'results.json').json();
+await Bun.write('.cache/dbt-semantic-fields-entry.ts',`export {createValidator} from '../src/validation/schema'; export {default as schema} from '../spec/extensions/dbt-semantic/native-schema.json';`);
+const build=await Bun.build({entrypoints:['.cache/dbt-semantic-fields-entry.ts'],outdir:'.cache/dbt-semantic-fields-browser',naming:'fields.js',target:'browser',format:'esm'});if(!build.success)throw Error(build.logs.join('\n'));
+const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/fields.js'?new Response(Bun.file('.cache/dbt-semantic-fields-browser/fields.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>dbt field shapes</title>');}});let browser;
+try{browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();await page.goto('http://127.0.0.1:'+server.port);
+ const result=await page.evaluate(async(evidence)=>{const path='/fields.js',u=await import(path),schema=u.schema,ajv=u.createValidator(false).addSchema(schema),checks=new Map();const esc=(s:string)=>s.replaceAll('~','~0').replaceAll('/','~1');let inputs=0,serialized=0;
+ for(const r of evidence.results){const key=r.model+'/'+r.field;let check=checks.get(key);if(!check){const prefix=r.model==='PydanticSemanticManifest'?'':'/definitions/'+esc(r.model);check=ajv.compile({$ref:schema.$id+'#'+prefix+'/properties/'+esc(r.alias)});checks.set(key,check);}if(check(r.input)!==r.inputShapeValid)throw Error(key+' input mismatch');inputs++;if(r.nativeAccepted){if(!check(r.serialized))throw Error(key+' serialized mismatch');serialized++;}}
+ return {fields:checks.size,inputs,serialized,nodeGlobalsAbsent:!('process' in globalThis)&&!('Buffer' in globalThis),scope:'Derived field shape validation; native parser outcomes are captured evidence'};
+ },evidence);if(result.fields!==143||result.inputs!==1859||result.serialized!==690||!result.nodeGlobalsAbsent)throw Error('Browser baseline changed');await Bun.write(base+'browser-results.json',JSON.stringify({...result,browser:browser.version()},null,2)+'\n');console.log(result);
+}finally{await browser?.close();server.stop(true);}

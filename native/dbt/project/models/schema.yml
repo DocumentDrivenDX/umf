@@ -1,0 +1,20 @@
+version: 2
+models:
+  - name: order_totals
+    description: Totals for synthetic customer IDs.
+    config:
+      materialized: table
+    columns:
+      - name: customer_id
+        description: Synthetic customer identity.
+        data_type: integer
+        data_tests: [not_null, unique]
+      - name: total_amount
+        description: Signed total amount.
+        data_type: decimal(18,2)
+seeds:
+  - name: orders
+    description: Synthetic orders, no personal data.
+    columns:
+      - name: order_id
+        data_tests: [unique, not_null]

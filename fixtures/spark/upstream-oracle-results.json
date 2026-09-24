@@ -1,0 +1,1120 @@
+{
+  "commit": "29434ea766b0fc3c3bf6eaadb43a8f931133649e",
+  "sourceSha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355",
+  "cases": 42,
+  "roundTripped": 41,
+  "structureRejected": 1,
+  "nativeComparisons": 82,
+  "accepted": {
+    "python": 37,
+    "jvm": 37
+  },
+  "results": [
+    {
+      "id": "00-standalone_string",
+      "python": {
+        "status": "accepted",
+        "output": "string collate UNICODE"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "string collate UNICODE"
+      }
+    },
+    {
+      "id": "01-standalone_array",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "containsNull": true,
+          "elementType": "string collate UNICODE",
+          "type": "array"
+        }
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "array",
+          "elementType": "string collate UNICODE",
+          "containsNull": true
+        }
+      }
+    },
+    {
+      "id": "02-standalone_map",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "keyType": "string collate UTF8_LCASE",
+          "type": "map",
+          "valueContainsNull": true,
+          "valueType": "string collate UNICODE"
+        }
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "map",
+          "keyType": "string collate UTF8_LCASE",
+          "valueType": "string collate UNICODE",
+          "valueContainsNull": true
+        }
+      }
+    },
+    {
+      "id": "03-standalone_nested",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "containsNull": true,
+          "elementType": {
+            "keyType": "string collate UTF8_LCASE",
+            "type": "map",
+            "valueContainsNull": true,
+            "valueType": {
+              "containsNull": true,
+              "elementType": "string collate UNICODE",
+              "type": "array"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "array",
+          "elementType": {
+            "type": "map",
+            "keyType": "string collate UTF8_LCASE",
+            "valueType": {
+              "type": "array",
+              "elementType": "string collate UNICODE",
+              "containsNull": true
+            },
+            "valueContainsNull": true
+          },
+          "containsNull": true
+        }
+      }
+    },
+    {
+      "id": "04-simple_struct",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {
+                "__COLLATIONS": {
+                  "c1": "icu.UNICODE"
+                }
+              },
+              "name": "c1",
+              "nullable": true,
+              "type": "string"
+            }
+          ],
+          "type": "struct"
+        }
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "c1",
+              "type": "string",
+              "nullable": true,
+              "metadata": {
+                "__COLLATIONS": {
+                  "c1": "icu.UNICODE"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "05-nested_struct",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {},
+              "name": "nested",
+              "nullable": true,
+              "type": {
+                "fields": [
+                  {
+                    "metadata": {
+                      "__COLLATIONS": {
+                        "c1": "icu.UNICODE"
+                      }
+                    },
+                    "name": "c1",
+                    "nullable": true,
+                    "type": "string"
+                  }
+                ],
+                "type": "struct"
+              }
+            }
+          ],
+          "type": "struct"
+        }
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "nested",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "c1",
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {
+                      "__COLLATIONS": {
+                        "c1": "icu.UNICODE"
+                      }
+                    }
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "06-array_in_schema",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {
+                "__COLLATIONS": {
+                  "array.element": "icu.UNICODE"
+                }
+              },
+              "name": "array",
+              "nullable": true,
+              "type": {
+                "containsNull": true,
+                "elementType": "string",
+                "type": "array"
+              }
+            }
+          ],
+          "type": "struct"
+        }
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "array",
+              "type": {
+                "type": "array",
+                "elementType": "string",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {
+                "__COLLATIONS": {
+                  "array.element": "icu.UNICODE"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "07-map_in_schema",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {
+                "__COLLATIONS": {
+                  "map.key": "icu.UNICODE",
+                  "map.value": "icu.UNICODE"
+                }
+              },
+              "name": "map",
+              "nullable": true,
+              "type": {
+                "keyType": "string",
+                "type": "map",
+                "valueContainsNull": true,
+                "valueType": "string"
+              }
+            }
+          ],
+          "type": "struct"
+        }
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "map",
+              "type": {
+                "type": "map",
+                "keyType": "string",
+                "valueType": "string",
+                "valueContainsNull": true
+              },
+              "nullable": true,
+              "metadata": {
+                "__COLLATIONS": {
+                  "map.key": "icu.UNICODE",
+                  "map.value": "icu.UNICODE"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "08-nested_map",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {},
+              "name": "nested",
+              "nullable": true,
+              "type": {
+                "fields": [
+                  {
+                    "metadata": {
+                      "__COLLATIONS": {
+                        "mapField.key": "icu.UNICODE",
+                        "mapField.value": "icu.UNICODE"
+                      }
+                    },
+                    "name": "mapField",
+                    "nullable": true,
+                    "type": {
+                      "keyType": "string",
+                      "type": "map",
+                      "valueContainsNull": true,
+                      "valueType": "string"
+                    }
+                  }
+                ],
+                "type": "struct"
+              }
+            }
+          ],
+          "type": "struct"
+        }
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "nested",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "mapField",
+                    "type": {
+                      "type": "map",
+                      "keyType": "string",
+                      "valueType": "string",
+                      "valueContainsNull": true
+                    },
+                    "nullable": true,
+                    "metadata": {
+                      "__COLLATIONS": {
+                        "mapField.key": "icu.UNICODE",
+                        "mapField.value": "icu.UNICODE"
+                      }
+                    }
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "09-array_in_map",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {
+                "__COLLATIONS": {
+                  "arrInMap.key": "icu.UNICODE",
+                  "arrInMap.value.element": "icu.UNICODE"
+                }
+              },
+              "name": "arrInMap",
+              "nullable": true,
+              "type": {
+                "keyType": "string",
+                "type": "map",
+                "valueContainsNull": true,
+                "valueType": {
+                  "containsNull": true,
+                  "elementType": "string",
+                  "type": "array"
+                }
+              }
+            }
+          ],
+          "type": "struct"
+        }
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "arrInMap",
+              "type": {
+                "type": "map",
+                "keyType": "string",
+                "valueType": {
+                  "type": "array",
+                  "elementType": "string",
+                  "containsNull": true
+                },
+                "valueContainsNull": true
+              },
+              "nullable": true,
+              "metadata": {
+                "__COLLATIONS": {
+                  "arrInMap.key": "icu.UNICODE",
+                  "arrInMap.value.element": "icu.UNICODE"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "10-nested_array_in_map_value",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {
+                "__COLLATIONS": {
+                  "nestedArrayInMap.element.key": "icu.UNICODE",
+                  "nestedArrayInMap.element.value.element.element": "icu.UNICODE"
+                }
+              },
+              "name": "nestedArrayInMap",
+              "nullable": true,
+              "type": {
+                "containsNull": true,
+                "elementType": {
+                  "keyType": "string",
+                  "type": "map",
+                  "valueContainsNull": true,
+                  "valueType": {
+                    "containsNull": true,
+                    "elementType": {
+                      "containsNull": true,
+                      "elementType": "string",
+                      "type": "array"
+                    },
+                    "type": "array"
+                  }
+                },
+                "type": "array"
+              }
+            }
+          ],
+          "type": "struct"
+        }
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "nestedArrayInMap",
+              "type": {
+                "type": "array",
+                "elementType": {
+                  "type": "map",
+                  "keyType": "string",
+                  "valueType": {
+                    "type": "array",
+                    "elementType": {
+                      "type": "array",
+                      "elementType": "string",
+                      "containsNull": true
+                    },
+                    "containsNull": true
+                  },
+                  "valueContainsNull": true
+                },
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {
+                "__COLLATIONS": {
+                  "nestedArrayInMap.element.value.element.element": "icu.UNICODE",
+                  "nestedArrayInMap.element.key": "icu.UNICODE"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "11-schema_with_multiple_fields",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {
+                "__COLLATIONS": {
+                  "c1": "icu.UNICODE"
+                }
+              },
+              "name": "c1",
+              "nullable": true,
+              "type": "string"
+            },
+            {
+              "metadata": {},
+              "name": "nested",
+              "nullable": true,
+              "type": {
+                "fields": [
+                  {
+                    "metadata": {
+                      "__COLLATIONS": {
+                        "c1": "icu.UNICODE"
+                      }
+                    },
+                    "name": "c1",
+                    "nullable": true,
+                    "type": "string"
+                  }
+                ],
+                "type": "struct"
+              }
+            },
+            {
+              "metadata": {
+                "__COLLATIONS": {
+                  "array.element": "icu.UNICODE"
+                }
+              },
+              "name": "array",
+              "nullable": true,
+              "type": {
+                "containsNull": true,
+                "elementType": "string",
+                "type": "array"
+              }
+            },
+            {
+              "metadata": {
+                "__COLLATIONS": {
+                  "map.key": "icu.UNICODE",
+                  "map.value": "icu.UNICODE"
+                }
+              },
+              "name": "map",
+              "nullable": true,
+              "type": {
+                "keyType": "string",
+                "type": "map",
+                "valueContainsNull": true,
+                "valueType": "string"
+              }
+            },
+            {
+              "metadata": {},
+              "name": "nested",
+              "nullable": true,
+              "type": {
+                "fields": [
+                  {
+                    "metadata": {
+                      "__COLLATIONS": {
+                        "mapField.key": "icu.UNICODE",
+                        "mapField.value": "icu.UNICODE"
+                      }
+                    },
+                    "name": "mapField",
+                    "nullable": true,
+                    "type": {
+                      "keyType": "string",
+                      "type": "map",
+                      "valueContainsNull": true,
+                      "valueType": "string"
+                    }
+                  }
+                ],
+                "type": "struct"
+              }
+            },
+            {
+              "metadata": {
+                "__COLLATIONS": {
+                  "arrInMap.key": "icu.UNICODE",
+                  "arrInMap.value.element": "icu.UNICODE"
+                }
+              },
+              "name": "arrInMap",
+              "nullable": true,
+              "type": {
+                "keyType": "string",
+                "type": "map",
+                "valueContainsNull": true,
+                "valueType": {
+                  "containsNull": true,
+                  "elementType": "string",
+                  "type": "array"
+                }
+              }
+            },
+            {
+              "metadata": {
+                "__COLLATIONS": {
+                  "nestedArrayInMap.element.key": "icu.UNICODE",
+                  "nestedArrayInMap.element.value.element.element": "icu.UNICODE"
+                }
+              },
+              "name": "nestedArrayInMap",
+              "nullable": true,
+              "type": {
+                "containsNull": true,
+                "elementType": {
+                  "keyType": "string",
+                  "type": "map",
+                  "valueContainsNull": true,
+                  "valueType": {
+                    "containsNull": true,
+                    "elementType": {
+                      "containsNull": true,
+                      "elementType": "string",
+                      "type": "array"
+                    },
+                    "type": "array"
+                  }
+                },
+                "type": "array"
+              }
+            }
+          ],
+          "type": "struct"
+        }
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "c1",
+              "type": "string",
+              "nullable": true,
+              "metadata": {
+                "__COLLATIONS": {
+                  "c1": "icu.UNICODE"
+                }
+              }
+            },
+            {
+              "name": "nested",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "c1",
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {
+                      "__COLLATIONS": {
+                        "c1": "icu.UNICODE"
+                      }
+                    }
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "array",
+              "type": {
+                "type": "array",
+                "elementType": "string",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {
+                "__COLLATIONS": {
+                  "array.element": "icu.UNICODE"
+                }
+              }
+            },
+            {
+              "name": "map",
+              "type": {
+                "type": "map",
+                "keyType": "string",
+                "valueType": "string",
+                "valueContainsNull": true
+              },
+              "nullable": true,
+              "metadata": {
+                "__COLLATIONS": {
+                  "map.key": "icu.UNICODE",
+                  "map.value": "icu.UNICODE"
+                }
+              }
+            },
+            {
+              "name": "nested",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "mapField",
+                    "type": {
+                      "type": "map",
+                      "keyType": "string",
+                      "valueType": "string",
+                      "valueContainsNull": true
+                    },
+                    "nullable": true,
+                    "metadata": {
+                      "__COLLATIONS": {
+                        "mapField.key": "icu.UNICODE",
+                        "mapField.value": "icu.UNICODE"
+                      }
+                    }
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "arrInMap",
+              "type": {
+                "type": "map",
+                "keyType": "string",
+                "valueType": {
+                  "type": "array",
+                  "elementType": "string",
+                  "containsNull": true
+                },
+                "valueContainsNull": true
+              },
+              "nullable": true,
+              "metadata": {
+                "__COLLATIONS": {
+                  "arrInMap.key": "icu.UNICODE",
+                  "arrInMap.value.element": "icu.UNICODE"
+                }
+              }
+            },
+            {
+              "name": "nestedArrayInMap",
+              "type": {
+                "type": "array",
+                "elementType": {
+                  "type": "map",
+                  "keyType": "string",
+                  "valueType": {
+                    "type": "array",
+                    "elementType": {
+                      "type": "array",
+                      "elementType": "string",
+                      "containsNull": true
+                    },
+                    "containsNull": true
+                  },
+                  "valueContainsNull": true
+                },
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {
+                "__COLLATIONS": {
+                  "nestedArrayInMap.element.value.element.element": "icu.UNICODE",
+                  "nestedArrayInMap.element.key": "icu.UNICODE"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "12-datatype-0",
+      "python": {
+        "status": "accepted",
+        "output": "string"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "string"
+      }
+    },
+    {
+      "id": "13-datatype-1",
+      "python": {
+        "status": "accepted",
+        "output": "char(5)"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "char(5)"
+      }
+    },
+    {
+      "id": "14-datatype-2",
+      "python": {
+        "status": "accepted",
+        "output": "varchar(10)"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "varchar(10)"
+      }
+    },
+    {
+      "id": "15-datatype-3",
+      "python": {
+        "status": "accepted",
+        "output": "binary"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "binary"
+      }
+    },
+    {
+      "id": "16-datatype-4",
+      "python": {
+        "status": "accepted",
+        "output": "boolean"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "boolean"
+      }
+    },
+    {
+      "id": "17-datatype-5",
+      "python": {
+        "status": "accepted",
+        "output": "decimal(10,0)"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "decimal(10,0)"
+      }
+    },
+    {
+      "id": "18-datatype-6",
+      "python": {
+        "status": "accepted",
+        "output": "decimal(10,2)"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "decimal(10,2)"
+      }
+    },
+    {
+      "id": "19-datatype-7",
+      "python": {
+        "status": "accepted",
+        "output": "float"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "float"
+      }
+    },
+    {
+      "id": "20-datatype-8",
+      "python": {
+        "status": "accepted",
+        "output": "double"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "double"
+      }
+    },
+    {
+      "id": "21-datatype-9",
+      "python": {
+        "status": "accepted",
+        "output": "byte"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "byte"
+      }
+    },
+    {
+      "id": "22-datatype-10",
+      "python": {
+        "status": "accepted",
+        "output": "short"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "short"
+      }
+    },
+    {
+      "id": "23-datatype-11",
+      "python": {
+        "status": "accepted",
+        "output": "integer"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "integer"
+      }
+    },
+    {
+      "id": "24-datatype-12",
+      "python": {
+        "status": "accepted",
+        "output": "long"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "long"
+      }
+    },
+    {
+      "id": "25-datatype-13",
+      "python": {
+        "status": "accepted",
+        "output": "date"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "date"
+      }
+    },
+    {
+      "id": "26-datatype-14",
+      "python": {
+        "status": "accepted",
+        "output": "timestamp"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "timestamp"
+      }
+    },
+    {
+      "id": "27-datatype-15",
+      "python": {
+        "status": "accepted",
+        "output": "timestamp_ntz"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "timestamp_ntz"
+      }
+    },
+    {
+      "id": "28-datatype-16",
+      "python": {
+        "status": "accepted",
+        "output": "void"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "void"
+      }
+    },
+    {
+      "id": "29-datatype-17",
+      "python": {
+        "status": "accepted",
+        "output": "variant"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "variant"
+      }
+    },
+    {
+      "id": "30-datatype-18",
+      "python": {
+        "status": "accepted",
+        "output": "interval year to month"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "interval year to month"
+      }
+    },
+    {
+      "id": "31-datatype-19",
+      "python": {
+        "status": "accepted",
+        "output": "interval year"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "interval year"
+      }
+    },
+    {
+      "id": "32-datatype-20",
+      "python": {
+        "status": "accepted",
+        "output": "interval year to month"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "interval year to month"
+      }
+    },
+    {
+      "id": "33-datatype-21",
+      "python": {
+        "status": "accepted",
+        "output": "interval day to second"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "interval day to second"
+      }
+    },
+    {
+      "id": "34-datatype-22",
+      "python": {
+        "status": "accepted",
+        "output": "interval day"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "interval day"
+      }
+    },
+    {
+      "id": "35-datatype-23",
+      "python": {
+        "status": "accepted",
+        "output": "interval hour to second"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "interval hour to second"
+      }
+    },
+    {
+      "id": "36-datatype-24",
+      "python": {
+        "status": "accepted",
+        "output": "interval"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "interval"
+      }
+    },
+    {
+      "id": "37-collations_on_int_col_json",
+      "python": {
+        "status": "rejected",
+        "errorType": "PySparkTypeError"
+      },
+      "jvm": {
+        "status": "rejected",
+        "errorType": "Py4JJavaError"
+      }
+    },
+    {
+      "id": "38-collations_in_array_element_json",
+      "python": {
+        "status": "rejected",
+        "errorType": "PySparkTypeError"
+      },
+      "jvm": {
+        "status": "rejected",
+        "errorType": "Py4JJavaError"
+      }
+    },
+    {
+      "id": "39-collations_on_array_json",
+      "python": {
+        "status": "rejected",
+        "errorType": "PySparkTypeError"
+      },
+      "jvm": {
+        "status": "rejected",
+        "errorType": "Py4JJavaError"
+      }
+    },
+    {
+      "id": "40-collations_in_nested_map_json",
+      "python": {
+        "status": "rejected",
+        "errorType": "PySparkTypeError"
+      },
+      "jvm": {
+        "status": "rejected",
+        "errorType": "Py4JJavaError"
+      }
+    },
+    {
+      "id": "41-schema_json",
+      "python": {
+        "status": "rejected",
+        "errorType": "PySparkValueError"
+      },
+      "jvm": {
+        "status": "rejected",
+        "errorType": "Py4JJavaError"
+      }
+    }
+  ]
+}

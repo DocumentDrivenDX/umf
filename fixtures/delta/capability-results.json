@@ -1,0 +1,742 @@
+{
+  "runtime": "deltalake 1.6.4",
+  "cases": 39,
+  "accepted": 29,
+  "changed": [
+    "unknown-root",
+    "unknown-field",
+    "map-missing-nullability"
+  ],
+  "results": [
+    {
+      "id": "type-0",
+      "inputSha256": "6c1ca2a4ee99724a816d62e157035ed2587cd3047573e1364d63ef6369e8a19b",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Utf8\n",
+      "invariants": []
+    },
+    {
+      "id": "type-1",
+      "inputSha256": "4c9e2940e23956aa3700f8b272f0750afe3debffe9132a6118c3a3b7bc9f71b7",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "long",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Int64\n",
+      "invariants": []
+    },
+    {
+      "id": "type-2",
+      "inputSha256": "cf84bfff5687ed108032920248d73b42339ae262a04291a2e7b77faea5cfe60f",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "integer",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Int32\n",
+      "invariants": []
+    },
+    {
+      "id": "type-3",
+      "inputSha256": "bca983e930818f6fa00506fed9b2bb2a8255e1814344f1708f1b157a93655d51",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "short",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Int16\n",
+      "invariants": []
+    },
+    {
+      "id": "type-4",
+      "inputSha256": "c17bd8e42237051424d316280ed3340d09415ca8b133bbeb514735c23f0d190a",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "byte",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Int8\n",
+      "invariants": []
+    },
+    {
+      "id": "type-5",
+      "inputSha256": "ded58d0a94bb7fe1583edbe91433524a4bb9c40ae1f3ce020b2bc97c4985f4f0",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "float",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Float32\n",
+      "invariants": []
+    },
+    {
+      "id": "type-6",
+      "inputSha256": "2d5d3f18ab7ceeb1ab6b29779298a7af6e79924f636ff292860dd8730a035030",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "double",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Float64\n",
+      "invariants": []
+    },
+    {
+      "id": "type-7",
+      "inputSha256": "cee79ef7393b29c7ac6ffeb5ab1956c68cc4938abc726026a775d9d8d6298a84",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "boolean",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Boolean\n",
+      "invariants": []
+    },
+    {
+      "id": "type-8",
+      "inputSha256": "9ee4746af7b9020c4768bfe9ec64b09a30a25a5b296eb2b2cbbb82cf4b36b10a",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "binary",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Binary\n",
+      "invariants": []
+    },
+    {
+      "id": "type-9",
+      "inputSha256": "b81feb1a059770d2988b0ed05c5677384b0d8931868038c1a64840004990f3b4",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "date",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Date32\n",
+      "invariants": []
+    },
+    {
+      "id": "type-10",
+      "inputSha256": "85d61d92fd449b62dc073143a6628c9a698306bf480bfbe1b99ae19da8bd8c87",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "timestamp",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Timestamp(\u00b5s, \"UTC\")\n",
+      "invariants": []
+    },
+    {
+      "id": "type-11",
+      "inputSha256": "5e4df4cde68a5f4637bc76014799e555601cc3ca195c23704a2afdadb003e2f3",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "timestamp_ntz",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Timestamp(\u00b5s)\n",
+      "invariants": []
+    },
+    {
+      "id": "type-12",
+      "inputSha256": "d855a189a00b8e02433d911ebad508dff02ed94fab8aa7628c74bcee20a39ca3",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "void",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Null\n",
+      "invariants": []
+    },
+    {
+      "id": "type-13",
+      "inputSha256": "afb9b50ba684ad93754a974053453f27fd2de1e0cbce123d779e46923fdc3275",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "variant",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Struct(\"metadata\": non-null Binary, \"value\": non-null Binary)\n",
+      "invariants": []
+    },
+    {
+      "id": "type-14",
+      "inputSha256": "af5ac2aa188dbd151f7cb43453dd1dd7f7f1bcc8aa3facb88d91d824f1b3d328",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "decimal(10,2)",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Decimal128(10, 2)\n",
+      "invariants": []
+    },
+    {
+      "id": "type-15",
+      "inputSha256": "edeacea240196d34bcf53d328db602a090b70fcf0d3f8ad85dd1de2dc0ad23b0",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "decimal(38,18)",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Decimal128(38, 18)\n",
+      "invariants": []
+    },
+    {
+      "id": "type-16",
+      "inputSha256": "69e7d13383b0c18250dc89fbada2793f33f5ecb87bee50c524bedbbdce049b4c",
+      "status": "rejected",
+      "errorType": "ValueError",
+      "message": "Invalid decimal: precision must be in range 1..38 inclusive, found: 39."
+    },
+    {
+      "id": "type-17",
+      "inputSha256": "88aec0315c2929553a13acedbb98d96c7fe7aff1376c16b4972962d96d6d64e3",
+      "status": "rejected",
+      "errorType": "ValueError",
+      "message": "Invalid scale in decimal: decimal(10,-2)"
+    },
+    {
+      "id": "type-18",
+      "inputSha256": "d3847be8a0ee6942b601a555da9c27a0c69bad7474d62e96ef0f11482bcddad3",
+      "status": "rejected",
+      "errorType": "ValueError",
+      "message": "Unsupported Delta table type: 'char(5)'"
+    },
+    {
+      "id": "type-19",
+      "inputSha256": "2c7174d604d4b63e21bedc5b1ea6d21a903fc433f29565def4e32d3db9861783",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "interval day to second",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Int64\n",
+      "invariants": []
+    },
+    {
+      "id": "type-20",
+      "inputSha256": "994fdc1ac69b0b9940db270f0767e04ca7315be573172aa561adf41df233a509",
+      "status": "rejected",
+      "errorType": "ValueError",
+      "message": "Unsupported Delta table type: 'future_type'"
+    },
+    {
+      "id": "variant-object",
+      "inputSha256": "0f87594ee99853e6ee366c8ad6915de372d56edd8366d3ca9c77a336ca78515c",
+      "status": "rejected",
+      "errorType": "ValueError",
+      "message": "Unsupported Delta table type: 'variant'"
+    },
+    {
+      "id": "array",
+      "inputSha256": "034af71630200dbd3d2b0e8f4c1d21d63884e65f7d412cc1af866b9988cb9bc7",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "array",
+              "elementType": "string",
+              "containsNull": false
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: List(non-null Utf8, field: 'element')\n",
+      "invariants": []
+    },
+    {
+      "id": "map",
+      "inputSha256": "645550a4da3e444de6337c4c7a5d152f2d14fd46c4ec94d5f19288f559f3bd8e",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "map",
+              "keyType": "string",
+              "valueType": "long",
+              "valueContainsNull": false
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Map(\"key_value\": non-null Struct(\"key\": non-null Utf8, \"value\": non-null Int64), unsorted)\n",
+      "invariants": []
+    },
+    {
+      "id": "nested",
+      "inputSha256": "b53fecea7af6bc17d7c8e51b156063731af4af8c9f6abebd6bdc1f0552481787",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "struct",
+              "fields": [
+                {
+                  "name": "value",
+                  "type": "integer",
+                  "nullable": true,
+                  "metadata": {}
+                }
+              ]
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Struct(\"value\": Int32)\n",
+      "invariants": []
+    },
+    {
+      "id": "future-object",
+      "inputSha256": "1bfec50d5388ba55382e08a747b6e1419bb42349c599de06287a995965b987e7",
+      "status": "rejected",
+      "errorType": "ValueError",
+      "message": "Unsupported Delta table type: 'future'"
+    },
+    {
+      "id": "column-mapping",
+      "inputSha256": "8bb741c0f6cd60ba7f080ecb4dd547d1b6f953da28cb62d618aa9e8eedfc856e",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "long",
+            "nullable": true,
+            "metadata": {
+              "delta.columnMapping.id": 1,
+              "delta.columnMapping.physicalName": "col-abcd"
+            }
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Int64\n",
+      "invariants": []
+    },
+    {
+      "id": "identity",
+      "inputSha256": "ea713b35e5471e7e8271325e8acdddae3a9563fe5c75180dbedb5d8d2ace168a",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "long",
+            "nullable": true,
+            "metadata": {
+              "delta.identity.start": 1,
+              "delta.identity.step": 1,
+              "delta.identity.highWaterMark": 9223372036854775807,
+              "delta.identity.allowExplicitInsert": false
+            }
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Int64\n",
+      "invariants": []
+    },
+    {
+      "id": "invariant",
+      "inputSha256": "a8ea6f26fa1daf62b0015814ac28f7b490b05c28825be031433a1375af485d88",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "long",
+            "nullable": true,
+            "metadata": {
+              "delta.invariants": "{\"expression\": {\"expression\": \"value > 0\"}}"
+            }
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Int64\n",
+      "invariants": [
+        [
+          "value",
+          "value > 0"
+        ]
+      ]
+    },
+    {
+      "id": "generated",
+      "inputSha256": "053a2e41657b554e7301bec042595bb31c46096c5aff172f0f44755d36daf1e1",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "long",
+            "nullable": true,
+            "metadata": {
+              "EXISTS_DEFAULT": "42",
+              "delta.generationExpression": "other + 1",
+              "CURRENT_DEFAULT": "42"
+            }
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Int64\n",
+      "invariants": []
+    },
+    {
+      "id": "metadata-unknown",
+      "inputSha256": "2a2205d78d8340233756111d71d0995da8fdc28cb26bda5c4ae5ab8e2cf5359f",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {
+              "large": 9223372036854775808,
+              "future": {
+                "nested": [
+                  1,
+                  true,
+                  null
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Utf8\n",
+      "invariants": []
+    },
+    {
+      "id": "unknown-root",
+      "inputSha256": "ca5b871def39070b635835ee88632e581b0a69ee2593cfc90f223b200835f939",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": false,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Utf8\n",
+      "invariants": []
+    },
+    {
+      "id": "unknown-field",
+      "inputSha256": "66699091c5ad210d362130529b37d80542eadbf0fe72041c5b6e1281f104b8f0",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": false,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Utf8\n",
+      "invariants": []
+    },
+    {
+      "id": "duplicate",
+      "inputSha256": "78569d17480989e7a3af326c0b4b3ee0ee59a2a8da3ea0bf7fff8d2ccc21c9e9",
+      "status": "rejected",
+      "errorType": "ValueError",
+      "message": "Schema error: Duplicate field name (case-insensitive): 'value'"
+    },
+    {
+      "id": "case-duplicate",
+      "inputSha256": "8c619152900ab3e357b74bab3beaf2f270e60f7a5a28034ebb23e2c35dae3409",
+      "status": "rejected",
+      "errorType": "ValueError",
+      "message": "Schema error: Duplicate field name (case-insensitive): 'VALUE'"
+    },
+    {
+      "id": "missing-field-defaults",
+      "inputSha256": "f46f71e7e2538bc513e1046292875e07a56c7636ebeb71c553f3e1a07283db62",
+      "status": "rejected",
+      "errorType": "ValueError",
+      "message": "missing field `nullable`"
+    },
+    {
+      "id": "array-missing-nullability",
+      "inputSha256": "16b6bd341fc94f34b86ee143d708241ff23d4aebe18e36ffa2e9cce7e910a74b",
+      "status": "rejected",
+      "errorType": "ValueError",
+      "message": "missing field `containsNull`"
+    },
+    {
+      "id": "map-missing-nullability",
+      "inputSha256": "24aa9cf21d2a0e067313d940bc4d807cc4f8329213c05b96db0fe52e14f55cbd",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "value",
+            "type": {
+              "type": "map",
+              "keyType": "string",
+              "valueType": "long",
+              "valueContainsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": false,
+      "arrowDescription": "arro3.core.Schema\n------------\nvalue: Map(\"key_value\": non-null Struct(\"key\": non-null Utf8, \"value\": Int64), unsorted)\n",
+      "invariants": []
+    },
+    {
+      "id": "protocol-example",
+      "inputSha256": "e3d4d03b085e3e6e460072747a9b10751fa447bafd89b903dd83715602841534",
+      "status": "accepted",
+      "output": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "a",
+            "type": "integer",
+            "nullable": false,
+            "metadata": {}
+          },
+          {
+            "name": "b",
+            "type": {
+              "type": "struct",
+              "fields": [
+                {
+                  "name": "d",
+                  "type": "integer",
+                  "nullable": false,
+                  "metadata": {}
+                }
+              ]
+            },
+            "nullable": true,
+            "metadata": {}
+          },
+          {
+            "name": "c",
+            "type": {
+              "type": "array",
+              "elementType": "integer",
+              "containsNull": false
+            },
+            "nullable": true,
+            "metadata": {}
+          },
+          {
+            "name": "e",
+            "type": {
+              "type": "array",
+              "elementType": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "d",
+                    "type": "integer",
+                    "nullable": false,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "containsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          },
+          {
+            "name": "f",
+            "type": {
+              "type": "map",
+              "keyType": "string",
+              "valueType": "string",
+              "valueContainsNull": true
+            },
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "sourceEqual": true,
+      "arrowDescription": "arro3.core.Schema\n------------\na: Int32\nb: Struct(\"d\": non-null Int32)\nc: List(non-null Int32, field: 'element')\ne: List(Struct(\"d\": non-null Int32), field: 'element')\nf: Map(\"key_value\": non-null Struct(\"key\": non-null Utf8, \"value\": Utf8), unsorted)\n",
+      "invariants": []
+    }
+  ]
+}

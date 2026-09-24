@@ -1,0 +1,10 @@
+_:Ndca521499f1741f9b9ba3c23735fa3bb <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Ndca521499f1741f9b9ba3c23735fa3bb <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N615eea583dcb4b2f8337a350db16d039 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have class ex:C" .
+_:N615eea583dcb4b2f8337a350db16d039 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N615eea583dcb4b2f8337a350db16d039 <http://www.w3.org/ns/shacl#value> <http://example.org/shacl/tests/j> .
+_:N615eea583dcb4b2f8337a350db16d039 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#ClassConstraintComponent> .
+_:Ndca521499f1741f9b9ba3c23735fa3bb <http://www.w3.org/ns/shacl#result> _:N615eea583dcb4b2f8337a350db16d039 .
+_:N615eea583dcb4b2f8337a350db16d039 <http://www.w3.org/ns/shacl#sourceShape> <http://example.org/shacl/tests/s1> .
+_:N615eea583dcb4b2f8337a350db16d039 <http://www.w3.org/ns/shacl#focusNode> <http://example.org/shacl/tests/j> .
+_:N615eea583dcb4b2f8337a350db16d039 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .

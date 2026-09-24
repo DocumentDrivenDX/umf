@@ -1,0 +1,109 @@
+[
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "stats",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 2,
+              "name": "value",
+              "value": {
+                "kind": "decimal",
+                "value": "99999999999999999999999999999.999999999",
+                "physical": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "4b3b4ca85a86c47a098a223fffffffff"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "stats",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 2,
+              "name": "value",
+              "value": {
+                "kind": "decimal",
+                "value": "-99999999999999999999999999999.999999999",
+                "physical": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "b4c4b357a5793b85f675ddc000000001"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "stats",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 2,
+              "name": "value",
+              "value": {
+                "kind": "decimal",
+                "value": "0.000000000",
+                "physical": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "00000000000000000000000000000000"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "stats",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 2,
+              "name": "value",
+              "value": null
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "stats",
+        "value": null
+      }
+    ]
+  }
+]

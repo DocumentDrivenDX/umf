@@ -1,0 +1,10 @@
+_:Nfb050101eb9e41d2982f77fd08cb8c8a <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#QualifiedMinCountConstraintComponent> .
+_:Nfb050101eb9e41d2982f77fd08cb8c8a <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/qualifiedMinCountDisjoint-001.test#HandShape-digit-minCount1> .
+_:Nd1198d813d234b70a12383d31bbe5114 <http://www.w3.org/ns/shacl#result> _:Nfb050101eb9e41d2982f77fd08cb8c8a .
+_:Nfb050101eb9e41d2982f77fd08cb8c8a <http://www.w3.org/ns/shacl#resultMessage> "Focus node does not conform to shape MinCount 1: ex:ThumbShape" .
+_:Nfb050101eb9e41d2982f77fd08cb8c8a <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/qualifiedMinCountDisjoint-001.test#InvalidHand1> .
+_:Nd1198d813d234b70a12383d31bbe5114 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Nfb050101eb9e41d2982f77fd08cb8c8a <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nfb050101eb9e41d2982f77fd08cb8c8a <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/qualifiedMinCountDisjoint-001.test#digit> .
+_:Nfb050101eb9e41d2982f77fd08cb8c8a <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nd1198d813d234b70a12383d31bbe5114 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .

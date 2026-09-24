@@ -1,0 +1,101 @@
+{
+  "umf": "0.1.0",
+  "id": "1.0.0-littleendian/generated_interval.stream/message/0",
+  "vocabularies": {
+    "umf.arrow.flatbuffer": {
+      "version": "0.1.0"
+    }
+  },
+  "modules": [
+    {
+      "id": "metadata",
+      "namespace": "",
+      "elements": [
+        {
+          "id": "root",
+          "extensions": {
+            "umf.arrow.flatbuffer": {
+              "profile": "arrow-flatbuffer-model",
+              "model": {
+                "rootType": "Message",
+                "value": {
+                  "version": "V5",
+                  "header": {
+                    "type": "Schema",
+                    "value": {
+                      "fields": [
+                        {
+                          "name": "f1",
+                          "nullable": true,
+                          "type": {
+                            "type": "Duration",
+                            "value": {
+                              "unit": "SECOND"
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f2",
+                          "nullable": true,
+                          "type": {
+                            "type": "Duration",
+                            "value": {}
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f3",
+                          "nullable": true,
+                          "type": {
+                            "type": "Duration",
+                            "value": {
+                              "unit": "MICROSECOND"
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f4",
+                          "nullable": true,
+                          "type": {
+                            "type": "Duration",
+                            "value": {
+                              "unit": "NANOSECOND"
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f5",
+                          "nullable": true,
+                          "type": {
+                            "type": "Interval",
+                            "value": {}
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f6",
+                          "nullable": true,
+                          "type": {
+                            "type": "Interval",
+                            "value": {
+                              "unit": "DAY_TIME"
+                            }
+                          },
+                          "children": []
+                        }
+                      ],
+                      "custom_metadata": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

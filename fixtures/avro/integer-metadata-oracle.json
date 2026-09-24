@@ -1,0 +1,470 @@
+{
+  "avro": "1.12.0",
+  "fastavro": "1.12.2",
+  "inputSha256": "b35170cd499deac31f683caa8c3c381908df035aa4752ec7f4fe9bdc31c17131",
+  "observations": [
+    {
+      "key": "precision",
+      "token": "1.0000000000000000001",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "class": "FixedSchema",
+          "logicalType": null
+        },
+        "warnings": [
+          "Invalid decimal precision 1.0. Must be a positive integer."
+        ]
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "precision",
+      "token": "1.0000000000000000001",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "message": "decimal precision must be a positive integer, not 1.0",
+        "warnings": []
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "precision",
+      "token": "1E-400",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "class": "FixedSchema",
+          "logicalType": null
+        },
+        "warnings": [
+          "Invalid decimal precision 0.0. Must be a positive integer."
+        ]
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "precision",
+      "token": "1E-400",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": {
+            "logicalType": "decimal",
+            "precision": 0.0,
+            "scale": 1,
+            "type": "fixed",
+            "name": "DecimalValue",
+            "size": 4
+          }
+        },
+        "warnings": []
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "precision",
+      "token": "9007199254740993",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "class": "FixedSchema",
+          "logicalType": null
+        },
+        "warnings": [
+          "Invalid decimal precision 9007199254740993. Max is 9."
+        ]
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "precision",
+      "token": "9007199254740993",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "message": "decimal precision of 9007199254740993 doesn't fit into array of length 4",
+        "warnings": []
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "precision",
+      "token": "-0",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "class": "FixedSchema",
+          "logicalType": null
+        },
+        "warnings": [
+          "Invalid decimal precision 0. Must be a positive integer."
+        ]
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "precision",
+      "token": "-0",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": {
+            "logicalType": "decimal",
+            "precision": 0,
+            "scale": 1,
+            "type": "fixed",
+            "name": "DecimalValue",
+            "size": 4
+          }
+        },
+        "warnings": []
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "precision",
+      "token": "1.00",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "class": "FixedSchema",
+          "logicalType": null
+        },
+        "warnings": [
+          "Invalid decimal precision 1.0. Must be a positive integer."
+        ]
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "precision",
+      "token": "1.00",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "message": "decimal precision must be a positive integer, not 1.0",
+        "warnings": []
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "scale",
+      "token": "1.0000000000000000001",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "class": "FixedSchema",
+          "logicalType": null
+        },
+        "warnings": [
+          "Invalid decimal scale 1.0. Must be a non-negative integer."
+        ]
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "scale",
+      "token": "1.0000000000000000001",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "message": "decimal scale must be a positive integer, not 1.0",
+        "warnings": []
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "scale",
+      "token": "1E-400",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "class": "FixedSchema",
+          "logicalType": null
+        },
+        "warnings": [
+          "Invalid decimal scale 0.0. Must be a non-negative integer."
+        ]
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "scale",
+      "token": "1E-400",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": {
+            "logicalType": "decimal",
+            "precision": 2,
+            "scale": 0.0,
+            "type": "fixed",
+            "name": "DecimalValue",
+            "size": 4
+          }
+        },
+        "warnings": []
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "scale",
+      "token": "9007199254740993",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "class": "FixedSchema",
+          "logicalType": null
+        },
+        "warnings": [
+          "Invalid decimal scale 9007199254740993. Cannot be greater than precision 2."
+        ]
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "scale",
+      "token": "9007199254740993",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "message": "decimal scale must be less than or equal to the precision of 2",
+        "warnings": []
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "scale",
+      "token": "-0",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "class": "FixedDecimalSchema",
+          "logicalType": "decimal"
+        },
+        "warnings": []
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "scale",
+      "token": "-0",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": {
+            "logicalType": "decimal",
+            "precision": 2,
+            "scale": 0,
+            "type": "fixed",
+            "name": "DecimalValue",
+            "size": 4
+          }
+        },
+        "warnings": []
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "scale",
+      "token": "1.00",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "class": "FixedSchema",
+          "logicalType": null
+        },
+        "warnings": [
+          "Invalid decimal scale 1.0. Must be a non-negative integer."
+        ]
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "scale",
+      "token": "1.00",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "message": "decimal scale must be a positive integer, not 1.0",
+        "warnings": []
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "size",
+      "token": "1.0000000000000000001",
+      "engine": "apache",
+      "outcome": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "message": "Type property \"{'type': 'fixed', 'name': 'DecimalValue', 'size': 1.0, 'logicalType': 'decimal', 'precision': 2, 'scale': 1}\" not a valid Avro schema: Fixed Schema requires a valid positive integer for size property.",
+        "warnings": []
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "size",
+      "token": "1.0000000000000000001",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": {
+            "logicalType": "decimal",
+            "precision": 2,
+            "scale": 1,
+            "type": "fixed",
+            "name": "DecimalValue",
+            "size": 1.0
+          }
+        },
+        "warnings": []
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "size",
+      "token": "1E-400",
+      "engine": "apache",
+      "outcome": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "message": "Type property \"{'type': 'fixed', 'name': 'DecimalValue', 'size': 0.0, 'logicalType': 'decimal', 'precision': 2, 'scale': 1}\" not a valid Avro schema: Fixed Schema requires a valid positive integer for size property.",
+        "warnings": [
+          "Invalid decimal precision 2. Max is -1."
+        ]
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "size",
+      "token": "1E-400",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "message": "decimal precision of 2 doesn't fit into array of length 0.0",
+        "warnings": []
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "size",
+      "token": "9007199254740993",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "class": "FixedDecimalSchema",
+          "logicalType": "decimal"
+        },
+        "warnings": []
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "size",
+      "token": "9007199254740993",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": {
+            "logicalType": "decimal",
+            "precision": 2,
+            "scale": 1,
+            "type": "fixed",
+            "name": "DecimalValue",
+            "size": 9007199254740993
+          }
+        },
+        "warnings": []
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "size",
+      "token": "-0",
+      "engine": "apache",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "class": "FixedSchema",
+          "logicalType": null
+        },
+        "warnings": [
+          "Invalid decimal precision 2. Max is -1."
+        ]
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "size",
+      "token": "-0",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "message": "decimal precision of 2 doesn't fit into array of length 0",
+        "warnings": []
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "size",
+      "token": "1.00",
+      "engine": "apache",
+      "outcome": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "message": "Type property \"{'type': 'fixed', 'name': 'DecimalValue', 'size': 1.0, 'logicalType': 'decimal', 'precision': 2, 'scale': 1}\" not a valid Avro schema: Fixed Schema requires a valid positive integer for size property.",
+        "warnings": []
+      },
+      "recoveries": 2
+    },
+    {
+      "key": "size",
+      "token": "1.00",
+      "engine": "fastavro",
+      "outcome": {
+        "accepted": true,
+        "detail": {
+          "type": {
+            "logicalType": "decimal",
+            "precision": 2,
+            "scale": 1,
+            "type": "fixed",
+            "name": "DecimalValue",
+            "size": 1.0
+          }
+        },
+        "warnings": []
+      },
+      "recoveries": 2
+    }
+  ],
+  "scope": "Native parser acceptance/warnings preserved through 60 recovered schemas. Native JSON parsers may themselves round numbers; their acceptance does not prove exact decimal meaning or justify core promotion."
+}

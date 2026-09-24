@@ -1,0 +1,8 @@
+export {};
+const schema={
+ $schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:arrow-ipc:0.1.0',
+ title:'Arrow IPC source capture; structural validity is not native validity',type:'object',
+ required:['profile','encoding','bytes'],properties:{profile:{const:'arrow-ipc-source'},encoding:{const:'hex'},bytes:{type:'string',maxLength:2000000,pattern:'^(?:[0-9a-f]{2})*$'}},additionalProperties:true,
+};
+const manifest={id:'umf.arrow.ipc',version:'0.1.0',coreVersion:'0.1.0',description:'Exact bounded IPC source bytes independent of native decoder support',schema,semantics:'CONTRACT-016. Archive capture accepts uninterpreted or invalid input; it makes no native format validity claim. Schema observations are derived separately and never replace source.',scopes:['element'],capabilities:{validation:'structural',directions:['import','export'],native:{system:'Apache Arrow IPC source bytes',version:'Capture profile 0.1.0; optional observations apache-arrow 21.2.0',subset:'Exact original bytes up to 1000000 bytes, including unrecognized and invalid content. No semantic edits, complete framing validation or decoded data model.'},evidence:['tests/arrow/capture.test.ts','fixtures/arrow/ipc-inputs/manifest.json','fixtures/arrow/upstream/results.json','fixtures/arrow/upstream/oracle-results.json']}};
+for(const [name,value] of Object.entries({'schema.json':schema,'package.json':manifest}))await Bun.write('spec/extensions/arrow-ipc/'+name,JSON.stringify(value,null,2)+'\n');

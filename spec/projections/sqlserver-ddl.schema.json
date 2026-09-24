@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:projection:sqlserver-ddl:0.1.0",
+  "type": "object",
+  "properties": {
+    "status": {
+      "enum": [
+        "blocked",
+        "projected"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "policy": {
+      "type": "object",
+      "properties": {
+        "aliases": {
+          "enum": [
+            "reject",
+            "base-type"
+          ]
+        },
+        "physicalLayout": {
+          "const": "default-rowstore"
+        },
+        "nativeExpressions": {
+          "const": "verbatim"
+        },
+        "sourceState": {
+          "enum": [
+            "captured-only",
+            "allow-candidate"
+          ]
+        },
+        "lossPolicy": {
+          "enum": [
+            "strict",
+            "allow-reported-loss"
+          ]
+        }
+      },
+      "required": [
+        "aliases",
+        "physicalLayout",
+        "nativeExpressions",
+        "sourceState",
+        "lossPolicy"
+      ],
+      "additionalProperties": false
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "classification": {
+            "enum": [
+              "representation-change",
+              "not-enforced",
+              "unsupported",
+              "annotation-only"
+            ]
+          },
+          "detail": {
+            "type": "string"
+          },
+          "retainedInSource": {
+            "const": true
+          }
+        },
+        "required": [
+          "path",
+          "code",
+          "classification",
+          "detail",
+          "retainedInSource"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "statements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sourcePath": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "schema",
+              "table",
+              "key",
+              "check",
+              "foreign-key",
+              "index",
+              "disable",
+              "description"
+            ]
+          },
+          "sql": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "sourcePath",
+          "kind",
+          "sql"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "nativeSource": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "status",
+    "source",
+    "policy",
+    "issues",
+    "statements"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "nativeSource": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "nativeSource"
+        ]
+      },
+      "else": {
+        "properties": {
+          "statements": {
+            "type": "array",
+            "maxItems": 0
+          }
+        },
+        "not": {
+          "properties": {
+            "nativeSource": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "nativeSource"
+          ]
+        }
+      }
+    }
+  ]
+}

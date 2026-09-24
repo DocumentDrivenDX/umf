@@ -1,0 +1,496 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:avro:native-schema:1.12.0",
+  "title": "Avro 1.12.0 native schema syntax",
+  "description": "Structural schema syntax, including error records and unknown metadata. Not a native semantic validator or protocol/IDL schema. Name resolution, declaration/field-name uniqueness, defaults, logical annotations and exact numeric token handling require separate checks. Invalid or unknown logical annotations remain available for native fallback.",
+  "$comment": "Source: https://avro.apache.org/docs/1.12.0/specification/. Applied separately from preservation-oriented UMF payload validation. Empty unions/enums and zero-size fixed shapes are not prohibited here beyond the stated syntax; native implementations may reject them.",
+  "$ref": "#/$defs/schema",
+  "$defs": {
+    "name": {
+      "type": "string",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?![\\s\\S])"
+    },
+    "fullname": {
+      "type": "string",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_]*(?:\\.[A-Za-z_][A-Za-z0-9_]*)*(?![\\s\\S])"
+    },
+    "namespace": {
+      "type": "string",
+      "pattern": "^(?:[A-Za-z_][A-Za-z0-9_]*(?:\\.[A-Za-z_][A-Za-z0-9_]*)*)?(?![\\s\\S])"
+    },
+    "field": {
+      "type": "object",
+      "required": [
+        "name",
+        "type"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/name"
+        },
+        "type": {
+          "$ref": "#/$defs/schema"
+        },
+        "doc": {
+          "type": "string"
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "order": {
+          "enum": [
+            "ascending",
+            "descending",
+            "ignore"
+          ]
+        },
+        "default": {
+          "$comment": "Reader-default type/value compatibility requires native validation."
+        }
+      },
+      "additionalProperties": true
+    },
+    "record": {
+      "type": "object",
+      "required": [
+        "type",
+        "name",
+        "fields"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "record",
+            "error"
+          ]
+        },
+        "name": {
+          "$ref": "#/$defs/fullname"
+        },
+        "namespace": {
+          "$ref": "#/$defs/namespace"
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "doc": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/field"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "enum": {
+      "type": "object",
+      "required": [
+        "type",
+        "name",
+        "symbols"
+      ],
+      "properties": {
+        "type": {
+          "const": "enum"
+        },
+        "name": {
+          "$ref": "#/$defs/fullname"
+        },
+        "namespace": {
+          "$ref": "#/$defs/namespace"
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "doc": {
+          "type": "string"
+        },
+        "symbols": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/name"
+          }
+        },
+        "default": {
+          "type": "string",
+          "$comment": "Membership in symbols requires semantic validation."
+        }
+      },
+      "additionalProperties": true
+    },
+    "fixed": {
+      "type": "object",
+      "required": [
+        "type",
+        "name",
+        "size"
+      ],
+      "properties": {
+        "type": {
+          "const": "fixed"
+        },
+        "name": {
+          "$ref": "#/$defs/fullname"
+        },
+        "namespace": {
+          "$ref": "#/$defs/namespace"
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "doc": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": true
+    },
+    "array": {
+      "type": "object",
+      "required": [
+        "type",
+        "items"
+      ],
+      "properties": {
+        "type": {
+          "const": "array"
+        },
+        "items": {
+          "$ref": "#/$defs/schema"
+        }
+      },
+      "additionalProperties": true
+    },
+    "map": {
+      "type": "object",
+      "required": [
+        "type",
+        "values"
+      ],
+      "properties": {
+        "type": {
+          "const": "map"
+        },
+        "values": {
+          "$ref": "#/$defs/schema"
+        }
+      },
+      "additionalProperties": true
+    },
+    "reference": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/fullname"
+            },
+            {
+              "not": {
+                "enum": [
+                  "record",
+                  "error",
+                  "enum",
+                  "fixed",
+                  "array",
+                  "map"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "nonUnion": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/fullname"
+        },
+        {
+          "$ref": "#/$defs/record"
+        },
+        {
+          "$ref": "#/$defs/enum"
+        },
+        {
+          "$ref": "#/$defs/fixed"
+        },
+        {
+          "$ref": "#/$defs/array"
+        },
+        {
+          "$ref": "#/$defs/map"
+        },
+        {
+          "$ref": "#/$defs/reference"
+        }
+      ]
+    },
+    "union": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonUnion"
+      },
+      "allOf": [
+        {
+          "contains": {
+            "anyOf": [
+              {
+                "const": "null"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "const": "null"
+                  }
+                },
+                "additionalProperties": true
+              }
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "anyOf": [
+              {
+                "const": "boolean"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "const": "boolean"
+                  }
+                },
+                "additionalProperties": true
+              }
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "anyOf": [
+              {
+                "const": "int"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "const": "int"
+                  }
+                },
+                "additionalProperties": true
+              }
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "anyOf": [
+              {
+                "const": "long"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "const": "long"
+                  }
+                },
+                "additionalProperties": true
+              }
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "anyOf": [
+              {
+                "const": "float"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "const": "float"
+                  }
+                },
+                "additionalProperties": true
+              }
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "anyOf": [
+              {
+                "const": "double"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "const": "double"
+                  }
+                },
+                "additionalProperties": true
+              }
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "anyOf": [
+              {
+                "const": "bytes"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "const": "bytes"
+                  }
+                },
+                "additionalProperties": true
+              }
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "anyOf": [
+              {
+                "const": "string"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "const": "string"
+                  }
+                },
+                "additionalProperties": true
+              }
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "anyOf": [
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "const": "array"
+                  }
+                },
+                "additionalProperties": true
+              }
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        },
+        {
+          "contains": {
+            "anyOf": [
+              {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "const": "map"
+                  }
+                },
+                "additionalProperties": true
+              }
+            ]
+          },
+          "minContains": 0,
+          "maxContains": 1
+        }
+      ]
+    },
+    "schema": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/nonUnion"
+        },
+        {
+          "$ref": "#/$defs/union"
+        }
+      ]
+    }
+  }
+}

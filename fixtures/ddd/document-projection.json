@@ -1,0 +1,1099 @@
+{
+  "status": "projected",
+  "source": {
+    "umf": "0.1.0",
+    "id": "ddd:sales-example",
+    "vocabularies": {
+      "umf.ddd": {
+        "version": "0.1.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "sales",
+        "namespace": "sales",
+        "extensions": {
+          "umf.ddd": {
+            "kind": "bounded-context",
+            "terms": [
+              {
+                "term": "Order",
+                "definition": "Order in the sales bounded context.",
+                "concept": {
+                  "module": "sales",
+                  "element": "Order"
+                }
+              },
+              {
+                "term": "OrderLine",
+                "definition": "OrderLine in the sales bounded context.",
+                "concept": {
+                  "module": "sales",
+                  "element": "OrderLine"
+                }
+              },
+              {
+                "term": "ShippingAddress",
+                "definition": "ShippingAddress in the sales bounded context.",
+                "concept": {
+                  "module": "sales",
+                  "element": "ShippingAddress"
+                }
+              },
+              {
+                "term": "Money",
+                "definition": "Money in the sales bounded context.",
+                "concept": {
+                  "module": "sales",
+                  "element": "Money"
+                }
+              },
+              {
+                "term": "Customer",
+                "definition": "Customer in the sales bounded context.",
+                "concept": {
+                  "module": "sales",
+                  "element": "Customer"
+                }
+              },
+              {
+                "term": "OrderPlaced",
+                "definition": "OrderPlaced in the sales bounded context.",
+                "concept": {
+                  "module": "sales",
+                  "element": "OrderPlaced"
+                }
+              },
+              {
+                "term": "Ordering",
+                "definition": "Ordering in the sales bounded context.",
+                "concept": {
+                  "module": "sales",
+                  "element": "Ordering"
+                }
+              },
+              {
+                "term": "Orders",
+                "definition": "Orders in the sales bounded context.",
+                "concept": {
+                  "module": "sales",
+                  "element": "Orders"
+                }
+              }
+            ]
+          }
+        },
+        "elements": [
+          {
+            "id": "Order",
+            "name": "Order",
+            "extensions": {
+              "umf.ddd": {
+                "kind": "entity",
+                "fields": {
+                  "order_id": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "one"
+                  },
+                  "total": {
+                    "type": {
+                      "kind": "concept",
+                      "target": {
+                        "module": "sales",
+                        "element": "Money"
+                      }
+                    },
+                    "cardinality": "one"
+                  },
+                  "lines": {
+                    "type": {
+                      "kind": "concept",
+                      "target": {
+                        "module": "sales",
+                        "element": "OrderLine"
+                      }
+                    },
+                    "cardinality": "many"
+                  },
+                  "shipping": {
+                    "type": {
+                      "kind": "concept",
+                      "target": {
+                        "module": "sales",
+                        "element": "ShippingAddress"
+                      }
+                    },
+                    "cardinality": "one"
+                  },
+                  "customer": {
+                    "type": {
+                      "kind": "concept",
+                      "target": {
+                        "module": "sales",
+                        "element": "Customer"
+                      }
+                    },
+                    "cardinality": "one"
+                  }
+                },
+                "identity": {
+                  "fields": [
+                    "order_id"
+                  ],
+                  "scope": "context"
+                },
+                "aggregate": {
+                  "members": [
+                    {
+                      "module": "sales",
+                      "element": "OrderLine"
+                    },
+                    {
+                      "module": "sales",
+                      "element": "ShippingAddress"
+                    },
+                    {
+                      "module": "sales",
+                      "element": "Money"
+                    }
+                  ]
+                },
+                "invariants": [
+                  {
+                    "id": "total-nonnegative",
+                    "scope": "aggregate",
+                    "language": "domain-prose",
+                    "version": "1",
+                    "expression": "Order total must not be negative and must equal the sum of its lines in the same currency.",
+                    "references": [
+                      {
+                        "module": "sales",
+                        "element": "Order"
+                      },
+                      {
+                        "module": "sales",
+                        "element": "OrderLine"
+                      },
+                      {
+                        "module": "sales",
+                        "element": "Money"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": "OrderLine",
+            "name": "OrderLine",
+            "extensions": {
+              "umf.ddd": {
+                "kind": "entity",
+                "fields": {
+                  "line_id": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "one"
+                  },
+                  "sku": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "one"
+                  },
+                  "quantity": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "integer"
+                    },
+                    "cardinality": "one"
+                  },
+                  "price": {
+                    "type": {
+                      "kind": "concept",
+                      "target": {
+                        "module": "sales",
+                        "element": "Money"
+                      }
+                    },
+                    "cardinality": "one"
+                  }
+                },
+                "identity": {
+                  "fields": [
+                    "line_id"
+                  ],
+                  "scope": "aggregate"
+                }
+              }
+            }
+          },
+          {
+            "id": "ShippingAddress",
+            "name": "ShippingAddress",
+            "extensions": {
+              "umf.ddd": {
+                "kind": "value",
+                "fields": {
+                  "street": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "one"
+                  },
+                  "city": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "one"
+                  },
+                  "postal_code": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "one"
+                  }
+                },
+                "equality": {
+                  "fields": [
+                    "street",
+                    "city",
+                    "postal_code"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "id": "Money",
+            "name": "Money",
+            "extensions": {
+              "umf.ddd": {
+                "kind": "value",
+                "fields": {
+                  "amount": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "decimal"
+                    },
+                    "cardinality": "one"
+                  },
+                  "currency": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "one"
+                  }
+                },
+                "equality": {
+                  "fields": [
+                    "amount",
+                    "currency"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "id": "Customer",
+            "name": "Customer",
+            "extensions": {
+              "umf.ddd": {
+                "kind": "entity",
+                "fields": {
+                  "customer_id": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "one"
+                  },
+                  "name": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "one"
+                  }
+                },
+                "identity": {
+                  "fields": [
+                    "customer_id"
+                  ],
+                  "scope": "context"
+                }
+              }
+            }
+          },
+          {
+            "id": "OrderPlaced",
+            "name": "OrderPlaced",
+            "extensions": {
+              "umf.ddd": {
+                "kind": "domain-event",
+                "fields": {
+                  "order": {
+                    "type": {
+                      "kind": "concept",
+                      "target": {
+                        "module": "sales",
+                        "element": "Order"
+                      }
+                    },
+                    "cardinality": "one"
+                  },
+                  "occurred_at": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "date-time"
+                    },
+                    "cardinality": "one"
+                  }
+                },
+                "emittedBy": {
+                  "module": "sales",
+                  "element": "Order"
+                },
+                "immutable": true
+              }
+            }
+          },
+          {
+            "id": "Ordering",
+            "name": "Ordering",
+            "extensions": {
+              "umf.ddd": {
+                "kind": "domain-service",
+                "operations": [
+                  {
+                    "name": "place",
+                    "input": {
+                      "module": "sales",
+                      "element": "Order"
+                    },
+                    "output": {
+                      "module": "sales",
+                      "element": "Order"
+                    },
+                    "emits": [
+                      {
+                        "module": "sales",
+                        "element": "OrderPlaced"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": "Orders",
+            "name": "Orders",
+            "extensions": {
+              "umf.ddd": {
+                "kind": "repository",
+                "aggregate": {
+                  "module": "sales",
+                  "element": "Order"
+                },
+                "operations": [
+                  "find",
+                  "store"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "support",
+        "namespace": "support",
+        "extensions": {
+          "umf.ddd": {
+            "kind": "bounded-context",
+            "terms": [
+              {
+                "term": "Customer",
+                "definition": "Customer in the support bounded context.",
+                "concept": {
+                  "module": "support",
+                  "element": "Customer"
+                }
+              }
+            ]
+          }
+        },
+        "elements": [
+          {
+            "id": "Customer",
+            "name": "Customer",
+            "extensions": {
+              "umf.ddd": {
+                "kind": "entity",
+                "fields": {
+                  "customer_id": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "one"
+                  },
+                  "name": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "one"
+                  }
+                },
+                "identity": {
+                  "fields": [
+                    "customer_id"
+                  ],
+                  "scope": "context"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "billing",
+        "namespace": "billing",
+        "extensions": {
+          "umf.ddd": {
+            "kind": "bounded-context",
+            "terms": [
+              {
+                "term": "AccountHolder",
+                "definition": "AccountHolder in the billing bounded context.",
+                "concept": {
+                  "module": "billing",
+                  "element": "AccountHolder"
+                }
+              }
+            ]
+          }
+        },
+        "elements": [
+          {
+            "id": "AccountHolder",
+            "name": "AccountHolder",
+            "extensions": {
+              "umf.ddd": {
+                "kind": "entity",
+                "fields": {
+                  "account_id": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "one"
+                  },
+                  "name": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "one"
+                  }
+                },
+                "identity": {
+                  "fields": [
+                    "account_id"
+                  ],
+                  "scope": "context"
+                }
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "extensions": {
+      "umf.ddd": {
+        "kind": "context-map",
+        "mappings": [
+          {
+            "id": "customer-translation",
+            "source": {
+              "module": "sales",
+              "element": "Customer"
+            },
+            "target": {
+              "module": "support",
+              "element": "Customer"
+            },
+            "direction": "source-to-target",
+            "equivalence": "partial",
+            "description": "Translate sales customer identity into the support vocabulary.",
+            "limitations": [
+              "Support identity lifecycle and case ownership are not equivalent to sales customer identity."
+            ],
+            "antiCorruptionLayer": {
+              "ownerModule": "support",
+              "description": "Support owns translation of incoming sales identifiers; no shared canonical customer is implied."
+            }
+          }
+        ]
+      }
+    }
+  },
+  "policy": {
+    "id": "order-document",
+    "schemaId": "https://example.test/order-document",
+    "root": {
+      "module": "sales",
+      "element": "Order"
+    },
+    "closedObjects": true,
+    "integer": "json-integer",
+    "decimal": "decimal-string",
+    "dateTime": "string",
+    "bytes": "hex-string",
+    "collection": "array",
+    "lossPolicy": "allow-reported-loss",
+    "relations": {
+      "/sales/Order/fields/total": "embed",
+      "/sales/Order/fields/lines": "embed",
+      "/sales/Order/fields/shipping": "embed",
+      "/sales/Order/fields/customer": "identity",
+      "/sales/OrderLine/fields/price": "embed"
+    }
+  },
+  "issues": [
+    {
+      "path": "/modules/0/elements/0/extensions/umf.ddd/invariants/0",
+      "code": "DDD_INVARIANT_OPAQUE",
+      "classification": "unsupported",
+      "detail": "Invariant expression is preserved with its language/version; it is not interpreted or enforced",
+      "retainedInSource": true
+    },
+    {
+      "path": "",
+      "code": "DOMAIN_MODEL_RETAINED",
+      "classification": "not-enforced",
+      "detail": "Bounded contexts, terminology, mappings/ACLs, services, repositories and unselected definitions remain in source; document validation does not implement them",
+      "retainedInSource": true
+    },
+    {
+      "path": "",
+      "code": "OBJECT_BINDING",
+      "classification": "representation-change",
+      "detail": "Closed JSON objects are an explicit physical binding, not an inferred domain rule",
+      "retainedInSource": true
+    },
+    {
+      "path": "/modules/0/elements/0/extensions/umf.ddd",
+      "code": "IDENTITY_UNENFORCED",
+      "classification": "not-enforced",
+      "detail": "Required identity fields do not enforce uniqueness, lifecycle or referential integrity",
+      "retainedInSource": true
+    },
+    {
+      "path": "/modules/0/elements/0/extensions/umf.ddd",
+      "code": "AGGREGATE_UNENFORCED",
+      "classification": "not-enforced",
+      "detail": "Embedding does not enforce aggregate ownership, consistency or transactions",
+      "retainedInSource": true
+    },
+    {
+      "path": "/modules/0/elements/3/extensions/umf.ddd",
+      "code": "VALUE_EQUALITY_UNENFORCED",
+      "classification": "not-enforced",
+      "detail": "Object shape does not enforce domain value equality or immutability",
+      "retainedInSource": true
+    },
+    {
+      "path": "/modules/0/elements/3/extensions/umf.ddd/fields/amount",
+      "code": "DECIMAL_ENCODING",
+      "classification": "representation-change",
+      "detail": "Decimal values use non-exponent base-ten strings; scale and value equality are not enforced",
+      "retainedInSource": true
+    },
+    {
+      "path": "/modules/0/elements/1/extensions/umf.ddd",
+      "code": "IDENTITY_UNENFORCED",
+      "classification": "not-enforced",
+      "detail": "Required identity fields do not enforce uniqueness, lifecycle or referential integrity",
+      "retainedInSource": true
+    },
+    {
+      "path": "/modules/0/elements/1/extensions/umf.ddd/fields/quantity",
+      "code": "INTEGER_ENCODING",
+      "classification": "representation-change",
+      "detail": "JSON integer encoding does not guarantee host-runtime precision; no instance conversion is supplied",
+      "retainedInSource": true
+    },
+    {
+      "path": "/modules/0/elements/0/extensions/umf.ddd/fields/lines",
+      "code": "COLLECTION_ENCODING",
+      "classification": "representation-change",
+      "detail": "Selected optional array encoding permits absent/empty collections and adds order; it does not enforce domain set semantics or aggregate ownership",
+      "retainedInSource": true
+    },
+    {
+      "path": "/modules/0/elements/2/extensions/umf.ddd",
+      "code": "VALUE_EQUALITY_UNENFORCED",
+      "classification": "not-enforced",
+      "detail": "Object shape does not enforce domain value equality or immutability",
+      "retainedInSource": true
+    },
+    {
+      "path": "/modules/0/elements/4/extensions/umf.ddd",
+      "code": "IDENTITY_UNENFORCED",
+      "classification": "not-enforced",
+      "detail": "Required identity fields do not enforce uniqueness, lifecycle or referential integrity",
+      "retainedInSource": true
+    },
+    {
+      "path": "/modules/0/elements/4/extensions/umf.ddd",
+      "code": "IDENTITY_REFERENCE",
+      "classification": "representation-change",
+      "detail": "Only the selected identity fields are emitted at this relationship; the full entity stays in source",
+      "retainedInSource": true
+    }
+  ],
+  "mappings": [
+    {
+      "concept": {
+        "module": "sales",
+        "element": "Order"
+      },
+      "mode": "embed",
+      "targetPointer": "/$defs/concept_0"
+    },
+    {
+      "concept": {
+        "module": "sales",
+        "element": "Money"
+      },
+      "mode": "embed",
+      "targetPointer": "/$defs/concept_1"
+    },
+    {
+      "concept": {
+        "module": "sales",
+        "element": "OrderLine"
+      },
+      "mode": "embed",
+      "targetPointer": "/$defs/concept_2"
+    },
+    {
+      "concept": {
+        "module": "sales",
+        "element": "ShippingAddress"
+      },
+      "mode": "embed",
+      "targetPointer": "/$defs/concept_3"
+    },
+    {
+      "concept": {
+        "module": "sales",
+        "element": "Customer"
+      },
+      "mode": "identity",
+      "targetPointer": "/$defs/concept_4"
+    }
+  ],
+  "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/order-document\",\n  \"$ref\": \"#/$defs/concept_0\",\n  \"$defs\": {\n    \"concept_0\": {\n      \"type\": \"object\",\n      \"title\": \"sales.Order\",\n      \"properties\": {\n        \"order_id\": {\n          \"type\": \"string\"\n        },\n        \"total\": {\n          \"$ref\": \"#/$defs/concept_1\"\n        },\n        \"lines\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/$defs/concept_2\"\n          }\n        },\n        \"shipping\": {\n          \"$ref\": \"#/$defs/concept_3\"\n        },\n        \"customer\": {\n          \"$ref\": \"#/$defs/concept_4\"\n        }\n      },\n      \"additionalProperties\": false,\n      \"required\": [\n        \"order_id\",\n        \"total\",\n        \"shipping\",\n        \"customer\"\n      ]\n    },\n    \"concept_1\": {\n      \"type\": \"object\",\n      \"title\": \"sales.Money\",\n      \"properties\": {\n        \"amount\": {\n          \"type\": \"string\",\n          \"pattern\": \"^-?(0|[1-9][0-9]*)(\\\\.[0-9]+)?$\"\n        },\n        \"currency\": {\n          \"type\": \"string\"\n        }\n      },\n      \"additionalProperties\": false,\n      \"required\": [\n        \"amount\",\n        \"currency\"\n      ]\n    },\n    \"concept_2\": {\n      \"type\": \"object\",\n      \"title\": \"sales.OrderLine\",\n      \"properties\": {\n        \"line_id\": {\n          \"type\": \"string\"\n        },\n        \"sku\": {\n          \"type\": \"string\"\n        },\n        \"quantity\": {\n          \"type\": \"integer\"\n        },\n        \"price\": {\n          \"$ref\": \"#/$defs/concept_1\"\n        }\n      },\n      \"additionalProperties\": false,\n      \"required\": [\n        \"line_id\",\n        \"sku\",\n        \"quantity\",\n        \"price\"\n      ]\n    },\n    \"concept_3\": {\n      \"type\": \"object\",\n      \"title\": \"sales.ShippingAddress\",\n      \"properties\": {\n        \"street\": {\n          \"type\": \"string\"\n        },\n        \"city\": {\n          \"type\": \"string\"\n        },\n        \"postal_code\": {\n          \"type\": \"string\"\n        }\n      },\n      \"additionalProperties\": false,\n      \"required\": [\n        \"street\",\n        \"city\",\n        \"postal_code\"\n      ]\n    },\n    \"concept_4\": {\n      \"type\": \"object\",\n      \"title\": \"sales.Customer identity\",\n      \"properties\": {\n        \"customer_id\": {\n          \"type\": \"string\"\n        }\n      },\n      \"additionalProperties\": false,\n      \"required\": [\n        \"customer_id\"\n      ]\n    }\n  }\n}\n",
+  "target": {
+    "umf": "0.1.0",
+    "id": "order-document",
+    "vocabularies": {
+      "umf.json-schema": {
+        "version": "0.1.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "schema",
+        "namespace": "https://example.test/order-document",
+        "elements": [
+          {
+            "id": "schema",
+            "extensions": {
+              "umf.json-schema": {
+                "dialect": "https://json-schema.org/draft/2020-12/schema",
+                "baseUri": "https://example.test/order-document",
+                "root": {
+                  "kind": "object",
+                  "members": {
+                    "$schema": {
+                      "kind": "string",
+                      "value": "https://json-schema.org/draft/2020-12/schema"
+                    },
+                    "$id": {
+                      "kind": "string",
+                      "value": "https://example.test/order-document"
+                    },
+                    "$ref": {
+                      "kind": "string",
+                      "value": "#/$defs/concept_0"
+                    },
+                    "$defs": {
+                      "kind": "object",
+                      "members": {
+                        "concept_0": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            },
+                            "title": {
+                              "kind": "string",
+                              "value": "sales.Order"
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "order_id": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "total": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/concept_1"
+                                    }
+                                  }
+                                },
+                                "lines": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "array"
+                                    },
+                                    "items": {
+                                      "kind": "object",
+                                      "members": {
+                                        "$ref": {
+                                          "kind": "string",
+                                          "value": "#/$defs/concept_2"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "shipping": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/concept_3"
+                                    }
+                                  }
+                                },
+                                "customer": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/concept_4"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": false
+                            },
+                            "required": {
+                              "kind": "array",
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "order_id"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "total"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "shipping"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "customer"
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        "concept_1": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            },
+                            "title": {
+                              "kind": "string",
+                              "value": "sales.Money"
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "amount": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    },
+                                    "pattern": {
+                                      "kind": "string",
+                                      "value": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                                    }
+                                  }
+                                },
+                                "currency": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": false
+                            },
+                            "required": {
+                              "kind": "array",
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "amount"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "currency"
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        "concept_2": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            },
+                            "title": {
+                              "kind": "string",
+                              "value": "sales.OrderLine"
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "line_id": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "sku": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "quantity": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "integer"
+                                    }
+                                  }
+                                },
+                                "price": {
+                                  "kind": "object",
+                                  "members": {
+                                    "$ref": {
+                                      "kind": "string",
+                                      "value": "#/$defs/concept_1"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": false
+                            },
+                            "required": {
+                              "kind": "array",
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "line_id"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "sku"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "quantity"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "price"
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        "concept_3": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            },
+                            "title": {
+                              "kind": "string",
+                              "value": "sales.ShippingAddress"
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "street": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "city": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "postal_code": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": false
+                            },
+                            "required": {
+                              "kind": "array",
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "street"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "city"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "postal_code"
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        "concept_4": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            },
+                            "title": {
+                              "kind": "string",
+                              "value": "sales.Customer identity"
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "customer_id": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": false
+                            },
+                            "required": {
+                              "kind": "array",
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "customer_id"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "resources": {}
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

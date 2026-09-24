@@ -1,0 +1,19 @@
+_:N3584c2bf886949589b615b7735be1cfd <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/misc/severity-002.test#TestShape1> .
+_:N4e222334034a41d09bc4658b9949f14f <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/misc/severity-002.test#InvalidResource1> .
+_:N3584c2bf886949589b615b7735be1cfd <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:N4e222334034a41d09bc4658b9949f14f <http://www.w3.org/ns/shacl#resultMessage> "Value is not Literal with datatype xsd:integer" .
+_:N3584c2bf886949589b615b7735be1cfd <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/misc/severity-002.test#InvalidResource1> .
+_:N4e222334034a41d09bc4658b9949f14f <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/misc/severity-002.test#TestShape2> .
+_:N3584c2bf886949589b615b7735be1cfd <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/misc/severity-002.test#InvalidResource1> .
+_:N4e222334034a41d09bc4658b9949f14f <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nd49c620dc115435396ea21811a4f6ee0 <http://www.w3.org/ns/shacl#result> _:N4e222334034a41d09bc4658b9949f14f .
+_:Nd49c620dc115435396ea21811a4f6ee0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N3584c2bf886949589b615b7735be1cfd <http://www.w3.org/ns/shacl#resultMessage> "Value is not of Node Kind sh:BlankNode" .
+_:N3584c2bf886949589b615b7735be1cfd <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N4e222334034a41d09bc4658b9949f14f <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:N4e222334034a41d09bc4658b9949f14f <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Info> .
+_:Nd49c620dc115435396ea21811a4f6ee0 <http://www.w3.org/ns/shacl#result> _:N3584c2bf886949589b615b7735be1cfd .
+_:N4e222334034a41d09bc4658b9949f14f <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/misc/severity-002.test#property> .
+_:Nd49c620dc115435396ea21811a4f6ee0 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N4e222334034a41d09bc4658b9949f14f <http://www.w3.org/ns/shacl#value> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N3584c2bf886949589b615b7735be1cfd <http://www.w3.org/ns/shacl#resultSeverity> <http://datashapes.org/sh/tests/core/misc/severity-002.test#MySeverity> .

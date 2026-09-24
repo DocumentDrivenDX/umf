@@ -1,0 +1,53 @@
+{
+  "recordedAt": "2026-09-21T21:12:39.270377+00:00",
+  "runtime": "Bun 1.3.14",
+  "runs": [
+    {
+      "command": "bun test tests/tablespec tests/postgresql tests/sqlserver tests/avro tests/parquet",
+      "exitCode": 0,
+      "passed": 129,
+      "failed": 0,
+      "assertions": 6980,
+      "tests": 129,
+      "files": 51,
+      "duration": "150.24s",
+      "log": {
+        "path": "fixtures/validation/priority-suite.log",
+        "sha256": "8143f5da4755ad9f183ce59e017c78399ec5ce96c29ebeb4a99169cb8d4ba7f7"
+      }
+    },
+    {
+      "command": "bun test tests/core tests/consumers",
+      "exitCode": 0,
+      "passed": 34,
+      "failed": 0,
+      "assertions": 586,
+      "tests": 34,
+      "files": 7,
+      "duration": "10.76s",
+      "log": {
+        "path": "fixtures/validation/core-consumers-suite.log",
+        "sha256": "819b22aa13f573e9745501584f06743e10e222a2b337e283b73ff39138fa194e"
+      }
+    }
+  ],
+  "totals": {
+    "tests": 163,
+    "assertions": 7566,
+    "files": 58
+  },
+  "sourceFingerprint": {
+    "files": 588,
+    "sha256": "631c5c9186875a9c08bcb443672a2d5855d43300104130dd026d2d8d56d07e88",
+    "scope": "src, spec, tests, package/lock and TypeScript configs",
+    "algorithm": "SHA-256 over sorted UTF-16 path order: UTF-8 path, NUL, file bytes, NUL",
+    "timing": "Captured after both completed runs; no source, spec or test edits made during these runs."
+  },
+  "additionalChecks": {
+    "typecheck": "passed",
+    "jsonSchemas": 174,
+    "extensionPackages": 32,
+    "browserBuildBytes": 9668704
+  },
+  "scope": "Priority integration suites and shared core/consumer tests only. Fixture assertions may reference previously recorded native/browser evidence; standalone native services and browser oracles were not all rerun. This is not a new full-repository baseline or completion of remaining requirements."
+}

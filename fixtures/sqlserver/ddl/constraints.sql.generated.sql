@@ -1,0 +1,35 @@
+SET ANSI_NULLS ON;
+SET QUOTED_IDENTIFIER ON;
+SET ANSI_PADDING ON;
+SET ANSI_WARNINGS ON;
+SET ARITHABORT ON;
+SET CONCAT_NULL_YIELDS_NULL ON;
+SET NUMERIC_ROUNDABORT OFF;
+IF SCHEMA_ID(N'sales') IS NULL EXEC(N'CREATE SCHEMA [sales]');
+CREATE TABLE [sales].[Child] (
+  [id] int NOT NULL,
+  [parent_b] int NULL,
+  [parent_a] int NULL,
+  [qty] int NULL,
+  [other] int NULL
+);
+CREATE TABLE [sales].[Parent] (
+  [a] int NOT NULL,
+  [b] int NOT NULL,
+  [code] nvarchar(20) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
+);
+CREATE TABLE [sales].[Untrusted] (
+  [id] int NOT NULL,
+  [parent_code] nvarchar(20) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
+);
+ALTER TABLE [sales].[Child] ADD CONSTRAINT [PK_Child] PRIMARY KEY CLUSTERED ([id] ASC) WITH (IGNORE_DUP_KEY=OFF);
+ALTER TABLE [sales].[Parent] ADD CONSTRAINT [PK_Parent] PRIMARY KEY CLUSTERED ([a] ASC, [b] DESC) WITH (IGNORE_DUP_KEY=OFF);
+ALTER TABLE [sales].[Parent] ADD CONSTRAINT [UQ_Parent_code] UNIQUE NONCLUSTERED ([code] ASC) WITH (IGNORE_DUP_KEY=OFF);
+ALTER TABLE [sales].[Parent] ADD CONSTRAINT [UQ_Parent_reverse] UNIQUE NONCLUSTERED ([b] ASC, [a] ASC) WITH (IGNORE_DUP_KEY=OFF);
+ALTER TABLE [sales].[Untrusted] ADD CONSTRAINT [PK_Untrusted] PRIMARY KEY CLUSTERED ([id] ASC) WITH (IGNORE_DUP_KEY=OFF);
+ALTER TABLE [sales].[Child] WITH NOCHECK ADD CONSTRAINT [CK_Child_disabled] CHECK (([id]>(0)));
+ALTER TABLE [sales].[Child] NOCHECK CONSTRAINT [CK_Child_disabled];
+ALTER TABLE [sales].[Child] WITH NOCHECK ADD CONSTRAINT [CK_Child_other] CHECK (([other]>(0)));
+ALTER TABLE [sales].[Child] WITH NOCHECK ADD CONSTRAINT [CK_Child_qty] CHECK NOT FOR REPLICATION (([qty]>=(0)));
+ALTER TABLE [sales].[Child] WITH CHECK ADD CONSTRAINT [FK_Child_Parent] FOREIGN KEY ([parent_b], [parent_a]) REFERENCES [sales].[Parent] ([b], [a]) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE [sales].[Untrusted] WITH NOCHECK ADD CONSTRAINT [FK_Untrusted_Parent] FOREIGN KEY ([parent_code]) REFERENCES [sales].[Parent] ([code]) ON DELETE NO ACTION ON UPDATE NO ACTION;

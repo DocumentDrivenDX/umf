@@ -1,0 +1,1034 @@
+[
+  {
+    "rowGroup": 0,
+    "column": 0,
+    "offset": 4,
+    "headerBytes": 20,
+    "bodyOffset": 24,
+    "bodyBytes": 24,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "24",
+      "compressed_page_size": "24",
+      "crc": "1334598860",
+      "dictionary_page_header": {
+        "num_values": "3",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "000000000000000001000000000000000200000000000000",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 0,
+    "column": 0,
+    "offset": 48,
+    "headerBytes": 23,
+    "bodyOffset": 71,
+    "bodyBytes": 4,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "4",
+      "compressed_page_size": "4",
+      "crc": "2028161128",
+      "data_page_header": {
+        "num_values": "3",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "02032400",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 0,
+    "column": 1,
+    "offset": 75,
+    "headerBytes": 20,
+    "bodyOffset": 95,
+    "bodyBytes": 24,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "24",
+      "compressed_page_size": "24",
+      "crc": "-526537840",
+      "dictionary_page_header": {
+        "num_values": "2",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "08000000e6b3a8e69687203008000000e6b3a8e696872032",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 0,
+    "column": 1,
+    "offset": 119,
+    "headerBytes": 23,
+    "bodyOffset": 142,
+    "bodyBytes": 10,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "10",
+      "compressed_page_size": "10",
+      "crc": "-238451353",
+      "data_page_header": {
+        "num_values": "3",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "03000000032200010302",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 0,
+    "column": 2,
+    "offset": 152,
+    "headerBytes": 20,
+    "bodyOffset": 172,
+    "bodyBytes": 6,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "6",
+      "compressed_page_size": "6",
+      "crc": "830545752",
+      "dictionary_page_header": {
+        "num_values": "1",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "000000003039",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 0,
+    "column": 2,
+    "offset": 178,
+    "headerBytes": 23,
+    "bodyOffset": 201,
+    "bodyBytes": 10,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "10",
+      "compressed_page_size": "10",
+      "crc": "1350988428",
+      "data_page_header": {
+        "num_values": "3",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "03000000032200010400",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 0,
+    "column": 3,
+    "offset": 211,
+    "headerBytes": 20,
+    "bodyOffset": 231,
+    "bodyBytes": 10,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "10",
+      "compressed_page_size": "10",
+      "crc": "1362949747",
+      "dictionary_page_header": {
+        "num_values": "2",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "01000000610100000062",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 0,
+    "column": 3,
+    "offset": 241,
+    "headerBytes": 23,
+    "bodyOffset": 264,
+    "bodyBytes": 16,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "16",
+      "compressed_page_size": "16",
+      "crc": "-1527237983",
+      "data_page_header": {
+        "num_values": "7",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "0200000003360300000003fb0e01030a",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 0,
+    "column": 4,
+    "offset": 280,
+    "headerBytes": 20,
+    "bodyOffset": 300,
+    "bodyBytes": 19,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "19",
+      "compressed_page_size": "19",
+      "crc": "1804197530",
+      "dictionary_page_header": {
+        "num_values": "2",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "050000006669727374060000007365636f6e64",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 0,
+    "column": 4,
+    "offset": 319,
+    "headerBytes": 23,
+    "bodyOffset": 342,
+    "bodyBytes": 15,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "15",
+      "compressed_page_size": "15",
+      "crc": "244562496",
+      "data_page_header": {
+        "num_values": "6",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "02000000032a020000000c0201032a",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 0,
+    "column": 5,
+    "offset": 357,
+    "headerBytes": 20,
+    "bodyOffset": 377,
+    "bodyBytes": 12,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "12",
+      "compressed_page_size": "12",
+      "crc": "494276218",
+      "dictionary_page_header": {
+        "num_values": "3",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "000000000100000002000000",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 0,
+    "column": 5,
+    "offset": 389,
+    "headerBytes": 23,
+    "bodyOffset": 412,
+    "bodyBytes": 17,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "17",
+      "compressed_page_size": "17",
+      "crc": "-1536227486",
+      "data_page_header": {
+        "num_values": "6",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "02000000032a0300000003bb0b02032400",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 0,
+    "column": 6,
+    "offset": 429,
+    "headerBytes": 20,
+    "bodyOffset": 449,
+    "bodyBytes": 16,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "16",
+      "compressed_page_size": "16",
+      "crc": "-2105308522",
+      "dictionary_page_header": {
+        "num_values": "2",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "00f00b555247060080742a5552470600",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 0,
+    "column": 6,
+    "offset": 465,
+    "headerBytes": 23,
+    "bodyOffset": 488,
+    "bodyBytes": 17,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "17",
+      "compressed_page_size": "17",
+      "crc": "1665425716",
+      "data_page_header": {
+        "num_values": "5",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "0200000003120400000003542800010302",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 0,
+    "column": 7,
+    "offset": 505,
+    "headerBytes": 20,
+    "bodyOffset": 525,
+    "bodyBytes": 8,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "8",
+      "compressed_page_size": "8",
+      "crc": "-819259422",
+      "dictionary_page_header": {
+        "num_values": "2",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "0000000002000000",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 0,
+    "column": 7,
+    "offset": 533,
+    "headerBytes": 23,
+    "bodyOffset": 556,
+    "bodyBytes": 17,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "17",
+      "compressed_page_size": "17",
+      "crc": "1665425716",
+      "data_page_header": {
+        "num_values": "5",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "0200000003120400000003542800010302",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 1,
+    "column": 0,
+    "offset": 573,
+    "headerBytes": 20,
+    "bodyOffset": 593,
+    "bodyBytes": 24,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "24",
+      "compressed_page_size": "24",
+      "crc": "1728979435",
+      "dictionary_page_header": {
+        "num_values": "3",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "030000000000000004000000000000000500000000000000",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 1,
+    "column": 0,
+    "offset": 617,
+    "headerBytes": 23,
+    "bodyOffset": 640,
+    "bodyBytes": 4,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "4",
+      "compressed_page_size": "4",
+      "crc": "2028161128",
+      "data_page_header": {
+        "num_values": "3",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "02032400",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 1,
+    "column": 1,
+    "offset": 644,
+    "headerBytes": 20,
+    "bodyOffset": 664,
+    "bodyBytes": 36,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "36",
+      "compressed_page_size": "36",
+      "crc": "-508661914",
+      "dictionary_page_header": {
+        "num_values": "3",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "08000000e6b3a8e69687203308000000e6b3a8e69687203408000000e6b3a8e696872035",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 1,
+    "column": 1,
+    "offset": 700,
+    "headerBytes": 23,
+    "bodyOffset": 723,
+    "bodyBytes": 10,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "10",
+      "compressed_page_size": "10",
+      "crc": "306290498",
+      "data_page_header": {
+        "num_values": "3",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "02000000060202032400",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 1,
+    "column": 2,
+    "offset": 733,
+    "headerBytes": 20,
+    "bodyOffset": 753,
+    "bodyBytes": 6,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "6",
+      "compressed_page_size": "6",
+      "crc": "830545752",
+      "dictionary_page_header": {
+        "num_values": "1",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "000000003039",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 1,
+    "column": 2,
+    "offset": 759,
+    "headerBytes": 23,
+    "bodyOffset": 782,
+    "bodyBytes": 9,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "9",
+      "compressed_page_size": "9",
+      "crc": "-1171338062",
+      "data_page_header": {
+        "num_values": "3",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "020000000602010600",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 1,
+    "column": 3,
+    "offset": 791,
+    "headerBytes": 20,
+    "bodyOffset": 811,
+    "bodyBytes": 10,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "10",
+      "compressed_page_size": "10",
+      "crc": "1362949747",
+      "dictionary_page_header": {
+        "num_values": "2",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "01000000610100000062",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 1,
+    "column": 3,
+    "offset": 821,
+    "headerBytes": 23,
+    "bodyOffset": 844,
+    "bodyBytes": 16,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "16",
+      "compressed_page_size": "16",
+      "crc": "381476272",
+      "data_page_header": {
+        "num_values": "7",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "02000000036c0300000003ed3b01030a",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 1,
+    "column": 4,
+    "offset": 860,
+    "headerBytes": 20,
+    "bodyOffset": 880,
+    "bodyBytes": 19,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "19",
+      "compressed_page_size": "19",
+      "crc": "1804197530",
+      "dictionary_page_header": {
+        "num_values": "2",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "050000006669727374060000007365636f6e64",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 1,
+    "column": 4,
+    "offset": 899,
+    "headerBytes": 22,
+    "bodyOffset": 921,
+    "bodyBytes": 16,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "16",
+      "compressed_page_size": "16",
+      "crc": "-1518438",
+      "data_page_header": {
+        "num_values": "4",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "02000000030203000000034a00010302",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 1,
+    "column": 5,
+    "offset": 937,
+    "headerBytes": 20,
+    "bodyOffset": 957,
+    "bodyBytes": 4,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "4",
+      "compressed_page_size": "4",
+      "crc": "871461106",
+      "dictionary_page_header": {
+        "num_values": "1",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "03000000",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 1,
+    "column": 5,
+    "offset": 961,
+    "headerBytes": 23,
+    "bodyOffset": 984,
+    "bodyBytes": 16,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "16",
+      "compressed_page_size": "16",
+      "crc": "899525959",
+      "data_page_header": {
+        "num_values": "4",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "02000000030203000000034b00010200",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 1,
+    "column": 6,
+    "offset": 1000,
+    "headerBytes": 20,
+    "bodyOffset": 1020,
+    "bodyBytes": 8,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "8",
+      "compressed_page_size": "8",
+      "crc": "-977824973",
+      "dictionary_page_header": {
+        "num_values": "1",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "00f9485552470600",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 1,
+    "column": 6,
+    "offset": 1028,
+    "headerBytes": 23,
+    "bodyOffset": 1051,
+    "bodyBytes": 17,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "17",
+      "compressed_page_size": "17",
+      "crc": "-1185233334",
+      "data_page_header": {
+        "num_values": "4",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "0200000003040400000003a10200010200",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 1,
+    "column": 7,
+    "offset": 1068,
+    "headerBytes": 20,
+    "bodyOffset": 1088,
+    "bodyBytes": 4,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "4",
+      "compressed_page_size": "4",
+      "crc": "-1373222837",
+      "dictionary_page_header": {
+        "num_values": "1",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "04000000",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 1,
+    "column": 7,
+    "offset": 1092,
+    "headerBytes": 23,
+    "bodyOffset": 1115,
+    "bodyBytes": 17,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "17",
+      "compressed_page_size": "17",
+      "crc": "-1185233334",
+      "data_page_header": {
+        "num_values": "4",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "0200000003040400000003a10200010200",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 2,
+    "column": 0,
+    "offset": 1132,
+    "headerBytes": 20,
+    "bodyOffset": 1152,
+    "bodyBytes": 16,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "16",
+      "compressed_page_size": "16",
+      "crc": "-1242616920",
+      "dictionary_page_header": {
+        "num_values": "2",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "06000000000000000700000000000000",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 2,
+    "column": 0,
+    "offset": 1168,
+    "headerBytes": 23,
+    "bodyOffset": 1191,
+    "bodyBytes": 3,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "3",
+      "compressed_page_size": "3",
+      "crc": "1000374730",
+      "data_page_header": {
+        "num_values": "2",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "010302",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 2,
+    "column": 1,
+    "offset": 1194,
+    "headerBytes": 20,
+    "bodyOffset": 1214,
+    "bodyBytes": 24,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "24",
+      "compressed_page_size": "24",
+      "crc": "806518978",
+      "dictionary_page_header": {
+        "num_values": "2",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "08000000e6b3a8e69687203608000000e6b3a8e696872037",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 2,
+    "column": 1,
+    "offset": 1238,
+    "headerBytes": 23,
+    "bodyOffset": 1261,
+    "bodyBytes": 9,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "9",
+      "compressed_page_size": "9",
+      "crc": "1402407611",
+      "data_page_header": {
+        "num_values": "2",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "020000000402010302",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 2,
+    "column": 2,
+    "offset": 1270,
+    "headerBytes": 20,
+    "bodyOffset": 1290,
+    "bodyBytes": 6,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "6",
+      "compressed_page_size": "6",
+      "crc": "830545752",
+      "dictionary_page_header": {
+        "num_values": "1",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "000000003039",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 2,
+    "column": 2,
+    "offset": 1296,
+    "headerBytes": 23,
+    "bodyOffset": 1319,
+    "bodyBytes": 9,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "9",
+      "compressed_page_size": "9",
+      "crc": "-220660400",
+      "data_page_header": {
+        "num_values": "2",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "020000000402010400",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 2,
+    "column": 3,
+    "offset": 1328,
+    "headerBytes": 20,
+    "bodyOffset": 1348,
+    "bodyBytes": 10,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "10",
+      "compressed_page_size": "10",
+      "crc": "1362949747",
+      "dictionary_page_header": {
+        "num_values": "2",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "01000000610100000062",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 2,
+    "column": 3,
+    "offset": 1358,
+    "headerBytes": 23,
+    "bodyOffset": 1381,
+    "bodyBytes": 16,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "16",
+      "compressed_page_size": "16",
+      "crc": "-1527237983",
+      "data_page_header": {
+        "num_values": "6",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "0200000003360300000003fb0e01030a",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 2,
+    "column": 4,
+    "offset": 1397,
+    "headerBytes": 20,
+    "bodyOffset": 1417,
+    "bodyBytes": 19,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "19",
+      "compressed_page_size": "19",
+      "crc": "1804197530",
+      "dictionary_page_header": {
+        "num_values": "2",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "050000006669727374060000007365636f6e64",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 2,
+    "column": 4,
+    "offset": 1436,
+    "headerBytes": 23,
+    "bodyOffset": 1459,
+    "bodyBytes": 15,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "15",
+      "compressed_page_size": "15",
+      "crc": "-1893711976",
+      "data_page_header": {
+        "num_values": "4",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "02000000030a02000000080201030a",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 2,
+    "column": 5,
+    "offset": 1474,
+    "headerBytes": 20,
+    "bodyOffset": 1494,
+    "bodyBytes": 8,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "8",
+      "compressed_page_size": "8",
+      "crc": "1050340951",
+      "dictionary_page_header": {
+        "num_values": "2",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "0600000007000000",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 2,
+    "column": 5,
+    "offset": 1502,
+    "headerBytes": 23,
+    "bodyOffset": 1525,
+    "bodyBytes": 16,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "16",
+      "compressed_page_size": "16",
+      "crc": "813648946",
+      "data_page_header": {
+        "num_values": "4",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "02000000030a0300000003bb00010302",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 2,
+    "column": 6,
+    "offset": 1541,
+    "headerBytes": 20,
+    "bodyOffset": 1561,
+    "bodyBytes": 8,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "8",
+      "compressed_page_size": "8",
+      "crc": "472870891",
+      "dictionary_page_header": {
+        "num_values": "1",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "807d675552470600",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 2,
+    "column": 6,
+    "offset": 1569,
+    "headerBytes": 23,
+    "bodyOffset": 1592,
+    "bodyBytes": 17,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "17",
+      "compressed_page_size": "17",
+      "crc": "1777907808",
+      "data_page_header": {
+        "num_values": "3",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "0200000003020400000003540000010200",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 2,
+    "column": 7,
+    "offset": 1609,
+    "headerBytes": 19,
+    "bodyOffset": 1628,
+    "bodyBytes": 4,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "4",
+      "compressed_page_size": "4",
+      "crc": "70222016",
+      "dictionary_page_header": {
+        "num_values": "1",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "06000000",
+    "checksum": "verified"
+  },
+  {
+    "rowGroup": 2,
+    "column": 7,
+    "offset": 1632,
+    "headerBytes": 23,
+    "bodyOffset": 1655,
+    "bodyBytes": 17,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "17",
+      "compressed_page_size": "17",
+      "crc": "1777907808",
+      "data_page_header": {
+        "num_values": "3",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3"
+      }
+    },
+    "bodyHex": "0200000003020400000003540000010200",
+    "checksum": "verified"
+  }
+]

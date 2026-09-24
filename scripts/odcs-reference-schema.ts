@@ -1,0 +1,5 @@
+export {};
+const native=await Bun.file('spec/core/native-json.schema.json').json(),str={type:'string'},object=(properties:any,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:false});
+const diagnostic=object({code:str,path:str,severity:{enum:['warning','error']},message:str});
+const schema={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:odcs:reference-result:0.1.0',...object({source:{$ref:'urn:umf:core:0.1.0'},reference:{type:'string',minLength:1,maxLength:4096},usage:{enum:['element','foreignKey']},status:{enum:['resolved','blocked']},complete:{const:false},target:object({path:str,notation:{enum:['id','name']},node:{$ref:'#/$defs/node'}}),diagnostics:{type:'array',items:diagnostic}},['source','reference','usage','status','complete','diagnostics']),$defs:native.$defs,allOf:[{if:{properties:{status:{const:'resolved'}}},then:{required:['target']},else:{not:{required:['target']}}}]};
+await Bun.write('spec/extensions/odcs/reference-schema.json',JSON.stringify(schema,null,2)+'\n');

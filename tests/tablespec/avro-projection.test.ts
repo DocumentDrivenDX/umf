@@ -1,0 +1,33 @@
+import {test,expect} from 'bun:test';
+import {importTableSpec,importTableSpecBundle,projectTableSpecToAvro,exportAvroSchema,coreSchema,readDocument,writeDocument,type TableSpecAvroPolicy} from '../../src';
+import {createValidator} from '../../src/validation/schema';
+import schema from '../../spec/projections/tablespec-avro.schema.json';
+const ajv=createValidator();ajv.addSchema(coreSchema);const check=ajv.compile(schema);
+const columns=[{name:'flag',data_type:'BOOLEAN',nullable:{MD:false,MP:true}},{name:'count',data_type:'INTEGER',nullable:false},{name:'large',data_type:'INTEGER',nullable:false},{name:'single',data_type:'FLOAT',nullable:false},{name:'wide',data_type:'FLOAT',nullable:false},{name:'amount',data_type:'DECIMAL',precision:18,scale:4,nullable:false},{name:'day',data_type:'DATE',format:'YYYYMMDD',nullable:false},{name:'date_text',data_type:'DATE',nullable:false},{name:'instant',data_type:'TIMESTAMP',nullable:false},{name:'local_time',data_type:'DATETIME',nullable:false},{name:'vector',data_type:'EMBEDDING',dimension:3,nullable:false},{name:'title',data_type:'VARCHAR',length:20,nullable:false}];
+const reps=['boolean','int32','int64','float32','float64','decimal','date','string','timestamp-micros','local-timestamp-micros','embedding-float32','string'];
+const authored=JSON.stringify({version:'1.0',table_name:'Types',columns});
+const policy:TableSpecAvroPolicy={id:'target',recordName:'TableSpecRecord',namespace:'example.tablespec',context:'MD',lossPolicy:'allow-reported-loss',fields:Object.fromEntries(columns.map((c,i)=>[c.name,{name:c.name,representation:reps[i],nullable:'source',...(c.data_type==='EMBEDDING'?{itemsNullable:true}:{})}])) as TableSpecAvroPolicy['fields']};
+test('CONTRACT-033 TableSpec primitive, temporal and vector bindings retain source and report constraints',async()=>{
+ const cases=[];
+ const source=importTableSpec(authored,{id:'authored',format:'json'}),result=projectTableSpecToAvro(source,policy);expect(result.status).toBe('projected');expect(check(result)).toBe(true);expect(result.source).toEqual(source);
+ const fields=JSON.parse(result.nativeSchema!).fields;expect(fields[0].type).toBe('boolean');expect(fields[1].type).toBe('int');expect(fields[2].type).toBe('long');expect(fields[5].type).toEqual({type:'bytes',logicalType:'decimal',precision:18,scale:4});expect(fields[6].type.logicalType).toBe('date');expect(fields[7].type).toBe('string');expect(fields[10].type).toEqual({type:'array',items:['null','float']});
+ expect(result.issues.some(i=>i.code==='EMBEDDING_DIMENSION')).toBe(true);expect(result.issues.some(i=>i.code==='CONTEXT_SELECTED')).toBe(true);
+ cases.push({id:'authored',nativeSource:authored,format:'json',result,exports:['json','yaml'].map(format=>({format,schema:exportAvroSchema(readDocument(writeDocument(result.target!,format as 'json'|'yaml'),format as 'json'|'yaml'))}))});
+ const text=await Bun.file('native/tablespec/sources/examples/providers.yaml').text(),providers=importTableSpec(text,{id:'providers',format:'yaml'}),providerPolicy={...policy,fields:Object.fromEntries(providers.modules[0]!.elements.map(e=>[e.name!,{name:e.name!,representation:'string' as const,nullable:'source' as const}]))};
+ const providerResult=projectTableSpecToAvro(providers,providerPolicy);expect(providerResult.status).toBe('projected');expect(check(providerResult)).toBe(true);expect(JSON.parse(providerResult.nativeSchema!).fields[2].type).toEqual(['null','string']);
+ cases.push({id:'providers',nativeSource:text,format:'yaml',result:providerResult,exports:['json','yaml'].map(format=>({format,schema:exportAvroSchema(readDocument(writeDocument(providerResult.target!,format as 'json'|'yaml'),format as 'json'|'yaml'))}))});
+ const bundle={'table.yaml':'version: "1.0"\ntable_name: split\n','columns/value.yaml':'column: {name: value, data_type: INTEGER, nullable: false}\n','future.txt':'keep this'};
+ const split=projectTableSpecToAvro(importTableSpecBundle(bundle,{id:'split'}),{...policy,fields:{value:{name:'value',representation:'int32',nullable:'source'}}});expect(split.status).toBe('projected');expect((split.source.extensions!['umf.tablespec'] as any).splitFiles).toEqual(bundle);
+ const strict=projectTableSpecToAvro(source,{...policy,lossPolicy:'strict'});expect(strict.status).toBe('blocked');expect(check(strict)).toBe(true);
+ await Bun.write('fixtures/tablespec/avro-projection.json',JSON.stringify({cases},null,2)+'\n');
+});
+test('CONTRACT-033 missing context, default precision and incompatible choices never get inferred',()=>{
+ const source=importTableSpec(authored,{id:'authored',format:'json'});
+ const noContext={...policy};delete noContext.context;expect(projectTableSpecToAvro(source,noContext).status).toBe('blocked');expect(projectTableSpecToAvro(source,{...policy,context:'absent'}).status).toBe('blocked');
+ const override=projectTableSpecToAvro(source,{...noContext,fields:{flag:{name:'flag',representation:'boolean',nullable:true}}});expect(override.status).toBe('projected');expect(override.issues.some(i=>i.code==='NULLABILITY_BINDING')).toBe(true);
+ const broken=JSON.parse(authored);delete broken.columns[5].scale;expect(projectTableSpecToAvro(importTableSpec(JSON.stringify(broken),{id:'missing-scale',format:'json'}),policy).status).toBe('blocked');
+ expect(projectTableSpecToAvro(source,{...policy,fields:{count:{name:'count',representation:'boolean',nullable:'source'}}}).status).toBe('blocked');
+ expect(projectTableSpecToAvro(source,{...policy,fields:{vector:{name:'vector',representation:'embedding-float32',nullable:'source'}}}).status).toBe('blocked');
+ expect(()=>projectTableSpecToAvro(source,{...policy,fields:{count:{name:'count',representation:'int32',nullable:'source',itemsNullable:false}}})).toThrow('binding');
+ const stale=structuredClone(source);stale.modules[0]!.elements[0]!.scalarType='string';expect(()=>projectTableSpecToAvro(stale,policy)).toThrow('disagree');
+});

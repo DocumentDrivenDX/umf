@@ -1,0 +1,145 @@
+{
+  "id": "umf.postgresql",
+  "version": "0.1.0",
+  "coreVersion": "0.1.0",
+  "description": "PostgreSQL raw parse trees with original SQL source and explicit parser-only limits",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:postgresql:0.1.0",
+    "$defs": {
+      "node": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "const": "null"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "boolean"
+              },
+              "value": {
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "number"
+              },
+              "value": {
+                "type": "string",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "items"
+            ],
+            "properties": {
+              "kind": {
+                "const": "array"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "members"
+            ],
+            "properties": {
+              "kind": {
+                "const": "object"
+              },
+              "members": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type": "object",
+    "required": [
+      "profile",
+      "source",
+      "root"
+    ],
+    "properties": {
+      "profile": {
+        "const": "postgresql-raw-parse-tree"
+      },
+      "source": {
+        "type": "string"
+      },
+      "root": {
+        "$ref": "#/$defs/node"
+      }
+    }
+  },
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "semantic",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "PostgreSQL raw SQL syntax",
+      "version": "PostgreSQL 17.4 (170004), @libpg-query/parser 17.6.10",
+      "subset": "Supplied SQL source and complete raw parse-tree retention. Parse/deparse AST agreement checks exclude source offsets only; no catalog resolution or database execution claim."
+    },
+    "evidence": [
+      "tests/postgresql/native.test.ts"
+    ]
+  },
+  "semantics": "CONTRACT-015. Native raw syntax trees are not resolved catalog models or evidence that SQL can execute."
+}

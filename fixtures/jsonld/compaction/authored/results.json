@@ -1,0 +1,429 @@
+{
+  "results": [
+    {
+      "id": "exact-language",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":[9007199254740993,333333333.33333329,-0,1e400,1e-400]}",
+      "options": {
+        "lossPolicy": "report",
+        "context": "{\"@language\":\"en\",\"p\":\"urn:p\"}"
+      },
+      "expected": "{\"@context\":{\"@language\":\"en\",\"p\":\"urn:p\"},\"@id\":\"urn:s\",\"p\":[9007199254740993,333333333.33333329,-0,1e400,1e-400]}",
+      "edit": {
+        "pointer": "/urn:p/0",
+        "text": "9007199254740995"
+      },
+      "editedExpected": "{\"@context\":{\"@language\":\"en\",\"p\":\"urn:p\"},\"@id\":\"urn:s\",\"p\":[9007199254740995,333333333.33333329,-0,1e400,1e-400]}",
+      "inputs": {
+        "id": "exact-language",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_COMPACTION",
+          "path": "",
+          "severity": "warning",
+          "message": "Compacted candidate retains source/context archives. Target aliases, relative IRI spellings and array shapes can change. Warning events are recorded; compaction does not prove RDF or ontology equivalence."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/compaction/authored/exact-language.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/compaction/authored/exact-language.yaml.jsonld"
+        }
+      ],
+      "edits": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/compaction/authored/exact-language.edited.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/compaction/authored/exact-language.edited.yaml.jsonld"
+        }
+      ]
+    },
+    {
+      "id": "aliased-list",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":{\"@list\":[1e400,9007199254740993,1e400]}}",
+      "options": {
+        "lossPolicy": "report",
+        "context": "{\"p\":{\"@id\":\"urn:p\",\"@container\":\"@list\"}}"
+      },
+      "expected": "{\"@context\":{\"p\":{\"@id\":\"urn:p\",\"@container\":\"@list\"}},\"@id\":\"urn:s\",\"p\":[1e400,9007199254740993,1e400]}",
+      "inputs": {
+        "id": "aliased-list",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_COMPACTION",
+          "path": "",
+          "severity": "warning",
+          "message": "Compacted candidate retains source/context archives. Target aliases, relative IRI spellings and array shapes can change. Warning events are recorded; compaction does not prove RDF or ontology equivalence."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/compaction/authored/aliased-list.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/compaction/authored/aliased-list.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "opaque-json",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":{\"@type\":\"@json\",\"@value\":{\"@language\":\"EN\",\"values\":[1e400,9007199254740993]}}}",
+      "options": {
+        "lossPolicy": "report",
+        "context": "{\"p\":{\"@id\":\"urn:p\",\"@type\":\"@json\"}}"
+      },
+      "expected": "{\"@context\":{\"p\":{\"@id\":\"urn:p\",\"@type\":\"@json\"}},\"@id\":\"urn:s\",\"p\":{\"@language\":\"EN\",\"values\":[1e400,9007199254740993]}}",
+      "inputs": {
+        "id": "opaque-json",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_COMPACTION",
+          "path": "",
+          "severity": "warning",
+          "message": "Compacted candidate retains source/context archives. Target aliases, relative IRI spellings and array shapes can change. Warning events are recorded; compaction does not prove RDF or ontology equivalence."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/compaction/authored/opaque-json.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/compaction/authored/opaque-json.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "singleton-array",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":9007199254740993}",
+      "options": {
+        "lossPolicy": "report",
+        "context": "{\"p\":\"urn:p\"}",
+        "compactArrays": false
+      },
+      "expected": "{\"@context\":{\"p\":\"urn:p\"},\"@graph\":[{\"@id\":\"urn:s\",\"p\":[9007199254740993]}]}",
+      "inputs": {
+        "id": "singleton-array",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_COMPACTION",
+          "path": "",
+          "severity": "warning",
+          "message": "Compacted candidate retains source/context archives. Target aliases, relative IRI spellings and array shapes can change. Warning events are recorded; compaction does not prove RDF or ontology equivalence."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/compaction/authored/singleton-array.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/compaction/authored/singleton-array.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "absolute-id",
+      "source": "{\"@id\":\"https://example.org/item\",\"urn:p\":\"v\"}",
+      "options": {
+        "lossPolicy": "report",
+        "context": "{\"p\":\"urn:p\"}",
+        "compactToRelative": false
+      },
+      "expected": "{\"@context\":{\"p\":\"urn:p\"},\"@id\":\"https://example.org/item\",\"p\":\"v\"}",
+      "inputs": {
+        "id": "absolute-id",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_COMPACTION",
+          "path": "",
+          "severity": "warning",
+          "message": "Compacted candidate retains source/context archives. Target aliases, relative IRI spellings and array shapes can change. Warning events are recorded; compaction does not prove RDF or ontology equivalence."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/compaction/authored/absolute-id.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/compaction/authored/absolute-id.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "relative-id",
+      "source": "{\"@id\":\"https://example.org/item\",\"urn:p\":\"v\"}",
+      "options": {
+        "lossPolicy": "report",
+        "context": "{\"p\":\"urn:p\"}"
+      },
+      "expected": "{\"@context\":{\"p\":\"urn:p\"},\"@id\":\"item\",\"p\":\"v\"}",
+      "inputs": {
+        "id": "relative-id",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_COMPACTION",
+          "path": "",
+          "severity": "warning",
+          "message": "Compacted candidate retains source/context archives. Target aliases, relative IRI spellings and array shapes can change. Warning events are recorded; compaction does not prove RDF or ontology equivalence."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/compaction/authored/relative-id.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/compaction/authored/relative-id.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "remote-target",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":\"v\"}",
+      "options": {
+        "lossPolicy": "report",
+        "context": "\"https://example.org/target\""
+      },
+      "inputs": {
+        "id": "remote-target",
+        "baseIRI": "https://example.org/source",
+        "contexts": [
+          {
+            "url": "https://example.org/target",
+            "text": "{\"@context\":{\"p\":\"urn:p\"}}"
+          }
+        ]
+      },
+      "expected": "{\"@context\":\"https://example.org/target\",\"@id\":\"urn:s\",\"p\":\"v\"}",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_COMPACTION",
+          "path": "",
+          "severity": "warning",
+          "message": "Compacted candidate retains source/context archives. Target aliases, relative IRI spellings and array shapes can change. Warning events are recorded; compaction does not prove RDF or ontology equivalence."
+        }
+      ],
+      "resourcesUsed": [
+        "https://example.org/target"
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/compaction/authored/remote-target.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/compaction/authored/remote-target.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "missing-target",
+      "source": "{\"urn:p\":\"v\"}",
+      "options": {
+        "lossPolicy": "report",
+        "context": "\"https://example.org/missing\""
+      },
+      "blocked": true,
+      "inputs": {
+        "id": "missing-target",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_CONTEXT_MISSING",
+          "path": "",
+          "severity": "error",
+          "message": "No supplied context for https://example.org/missing"
+        },
+        {
+          "code": "JSONLD_COMPACTION_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.InvalidUrl: Dereferencing a URL did not result in a valid JSON-LD object. Possible causes are an inaccessible URL perhaps due to a same-origin policy (ensure the server uses CORS if you are using client-side JavaScript), too many redirects, a non-JSON response, or more than one HTTP Link Header was provided for a remote context. URL: \"https://example.org/missing\"."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "loss-reject",
+      "source": "{\"urn:p\":\"v\",\"unmapped\":\"retained\"}",
+      "options": {
+        "lossPolicy": "reject",
+        "context": "{}"
+      },
+      "blocked": true,
+      "inputs": {
+        "id": "loss-reject",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "invalid property: Dropping property that did not expand into an absolute IRI or keyword."
+        },
+        {
+          "code": "JSONLD_COMPACTION_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: invalid property"
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "expand-context-once",
+      "source": "{\"@id\":\"\",\"p\":\"v\"}",
+      "inputs": {
+        "id": "expand-context-once",
+        "baseIRI": "https://example.org/source",
+        "expandContext": "{\"@base\":null,\"p\":\"urn:p\"}"
+      },
+      "options": {
+        "lossPolicy": "report",
+        "context": "{\"@base\":null,\"q\":\"urn:p\"}"
+      },
+      "expected": "{\"@context\":{\"@base\":null,\"q\":\"urn:p\"},\"@id\":\"\",\"q\":\"v\"}",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "relative @id reference: Relative @id reference found."
+        },
+        {
+          "code": "JSONLD_COMPACTION",
+          "path": "",
+          "severity": "warning",
+          "message": "Compacted candidate retains source/context archives. Target aliases, relative IRI spellings and array shapes can change. Warning events are recorded; compaction does not prove RDF or ontology equivalence."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/compaction/authored/expand-context-once.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/compaction/authored/expand-context-once.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "invalid-null-target",
+      "source": "{\"urn:p\":\"v\"}",
+      "options": {
+        "lossPolicy": "report",
+        "context": "null"
+      },
+      "blocked": true,
+      "inputs": {
+        "id": "invalid-null-target",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_COMPACTION_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.CompactError: The compaction context must not be null."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "empty-custom-index",
+      "source": "{\"urn:items\":[{\"urn:key\":[\"\",\"other\"],\"urn:value\":\"x\"}]}",
+      "options": {
+        "lossPolicy": "report",
+        "context": "{\"items\":{\"@id\":\"urn:items\",\"@container\":\"@index\",\"@index\":\"urn:key\"},\"key\":\"urn:key\",\"value\":\"urn:value\"}",
+        "compactArrays": false
+      },
+      "expected": "{\"@context\":{\"items\":{\"@id\":\"urn:items\",\"@container\":\"@index\",\"@index\":\"urn:key\"},\"key\":\"urn:key\",\"value\":\"urn:value\"},\"@graph\":[{\"items\":{\"\": [{\"key\":[\"other\"],\"value\":[\"x\"]}]}}]}",
+      "inputs": {
+        "id": "empty-custom-index",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_COMPACTION",
+          "path": "",
+          "severity": "warning",
+          "message": "Compacted candidate retains source/context archives. Target aliases, relative IRI spellings and array shapes can change. Warning events are recorded; compaction does not prove RDF or ontology equivalence."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/compaction/authored/empty-custom-index.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/compaction/authored/empty-custom-index.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    }
+  ]
+}

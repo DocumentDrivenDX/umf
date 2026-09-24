@@ -1,0 +1,2673 @@
+{
+  "modelVersion": "1.11.0",
+  "runtimeVersion": "1.11.0rc2",
+  "results": [
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/annotations.yaml",
+      "comparison": "native",
+      "results": [
+        {
+          "className": "annotatable",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "annotatable"
+          ],
+          "slots": [
+            "annotations"
+          ]
+        },
+        {
+          "className": "annotatable",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "annotatable"
+          ],
+          "slots": [
+            "annotations"
+          ]
+        },
+        {
+          "className": "annotation",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"extension\""
+        },
+        {
+          "className": "annotation",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"extension\""
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/array.yaml",
+      "comparison": "native",
+      "results": [
+        {
+          "className": "Any",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Any"
+          ],
+          "slots": []
+        },
+        {
+          "className": "Any",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Any"
+          ],
+          "slots": []
+        },
+        {
+          "className": "DataStructure",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "DataStructure"
+          ],
+          "slots": []
+        },
+        {
+          "className": "DataStructure",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "DataStructure"
+          ],
+          "slots": []
+        },
+        {
+          "className": "NDArray",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "NDArray",
+            "DataStructure"
+          ],
+          "slots": [
+            "dimensions",
+            "elements",
+            "array_linearization_order"
+          ]
+        },
+        {
+          "className": "NDArray",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "NDArray",
+            "DataStructure"
+          ],
+          "slots": [
+            "dimensions",
+            "elements",
+            "array_linearization_order"
+          ]
+        },
+        {
+          "className": "OneDimensionalSeries",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "OneDimensionalSeries",
+            "NDArray",
+            "DataStructure"
+          ],
+          "slots": [
+            "dimensions",
+            "elements",
+            "array_linearization_order"
+          ]
+        },
+        {
+          "className": "OneDimensionalSeries",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "OneDimensionalSeries",
+            "NDArray",
+            "DataStructure"
+          ],
+          "slots": [
+            "dimensions",
+            "elements",
+            "array_linearization_order"
+          ]
+        },
+        {
+          "className": "DataArray",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "DataArray",
+            "DataStructure"
+          ],
+          "slots": [
+            "axis",
+            "array"
+          ]
+        },
+        {
+          "className": "DataArray",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "DataArray",
+            "DataStructure"
+          ],
+          "slots": [
+            "axis",
+            "array"
+          ]
+        },
+        {
+          "className": "GroupingByArrayOrder",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "GroupingByArrayOrder"
+          ],
+          "slots": []
+        },
+        {
+          "className": "GroupingByArrayOrder",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "GroupingByArrayOrder"
+          ],
+          "slots": []
+        },
+        {
+          "className": "ColumnOrderedArray",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "ColumnOrderedArray",
+            "GroupingByArrayOrder"
+          ],
+          "slots": [
+            "array_linearization_order"
+          ]
+        },
+        {
+          "className": "ColumnOrderedArray",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "ColumnOrderedArray",
+            "GroupingByArrayOrder"
+          ],
+          "slots": [
+            "array_linearization_order"
+          ]
+        },
+        {
+          "className": "RowOrderedArray",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "RowOrderedArray",
+            "GroupingByArrayOrder"
+          ],
+          "slots": [
+            "array_linearization_order"
+          ]
+        },
+        {
+          "className": "RowOrderedArray",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "RowOrderedArray",
+            "GroupingByArrayOrder"
+          ],
+          "slots": [
+            "array_linearization_order"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/datasets.yaml",
+      "comparison": "native",
+      "results": [
+        {
+          "className": "Information",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Information"
+          ],
+          "slots": [
+            "id",
+            "download_url",
+            "license",
+            "title",
+            "description",
+            "conforms_to",
+            "conforms_to_schema",
+            "conforms_to_class",
+            "version",
+            "language",
+            "publisher",
+            "keywords",
+            "issued",
+            "created_by",
+            "created_on",
+            "compression",
+            "was_derived_from",
+            "page",
+            "test_roles"
+          ]
+        },
+        {
+          "className": "Information",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Information"
+          ],
+          "slots": [
+            "id",
+            "download_url",
+            "license",
+            "title",
+            "description",
+            "conforms_to",
+            "conforms_to_schema",
+            "conforms_to_class",
+            "version",
+            "language",
+            "publisher",
+            "keywords",
+            "issued",
+            "created_by",
+            "created_on",
+            "compression",
+            "was_derived_from",
+            "page",
+            "test_roles"
+          ]
+        },
+        {
+          "className": "DataPackage",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "DataPackage",
+            "Information"
+          ],
+          "slots": [
+            "resources",
+            "id",
+            "download_url",
+            "license",
+            "title",
+            "description",
+            "conforms_to",
+            "conforms_to_schema",
+            "conforms_to_class",
+            "version",
+            "language",
+            "publisher",
+            "keywords",
+            "issued",
+            "created_by",
+            "created_on",
+            "compression",
+            "was_derived_from",
+            "page",
+            "test_roles"
+          ]
+        },
+        {
+          "className": "DataPackage",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "DataPackage",
+            "Information"
+          ],
+          "slots": [
+            "resources",
+            "id",
+            "download_url",
+            "license",
+            "title",
+            "description",
+            "conforms_to",
+            "conforms_to_schema",
+            "conforms_to_class",
+            "version",
+            "language",
+            "publisher",
+            "keywords",
+            "issued",
+            "created_by",
+            "created_on",
+            "compression",
+            "was_derived_from",
+            "page",
+            "test_roles"
+          ]
+        },
+        {
+          "className": "DataResource",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "DataResource",
+            "Information"
+          ],
+          "slots": [
+            "path",
+            "title",
+            "description",
+            "format",
+            "media_type",
+            "encoding",
+            "bytes",
+            "hash",
+            "md5",
+            "sha256",
+            "dialect",
+            "id",
+            "download_url",
+            "license",
+            "conforms_to",
+            "conforms_to_schema",
+            "conforms_to_class",
+            "version",
+            "language",
+            "publisher",
+            "keywords",
+            "issued",
+            "created_by",
+            "created_on",
+            "compression",
+            "was_derived_from",
+            "page",
+            "test_roles"
+          ]
+        },
+        {
+          "className": "DataResource",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "DataResource",
+            "Information"
+          ],
+          "slots": [
+            "path",
+            "title",
+            "description",
+            "format",
+            "media_type",
+            "encoding",
+            "bytes",
+            "hash",
+            "md5",
+            "sha256",
+            "dialect",
+            "id",
+            "download_url",
+            "license",
+            "conforms_to",
+            "conforms_to_schema",
+            "conforms_to_class",
+            "version",
+            "language",
+            "publisher",
+            "keywords",
+            "issued",
+            "created_by",
+            "created_on",
+            "compression",
+            "was_derived_from",
+            "page",
+            "test_roles"
+          ]
+        },
+        {
+          "className": "FormatDialect",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "FormatDialect"
+          ],
+          "slots": [
+            "comment_prefix",
+            "delimiter",
+            "double_quote",
+            "header",
+            "quote_char"
+          ]
+        },
+        {
+          "className": "FormatDialect",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "FormatDialect"
+          ],
+          "slots": [
+            "comment_prefix",
+            "delimiter",
+            "double_quote",
+            "header",
+            "quote_char"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/extended_types.yaml",
+      "comparison": "native",
+      "results": [
+        {
+          "className": "Any",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Any"
+          ],
+          "slots": []
+        },
+        {
+          "className": "Any",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Any"
+          ],
+          "slots": []
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/extensions.yaml",
+      "comparison": "native",
+      "results": [
+        {
+          "className": "AnyValue",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "AnyValue"
+          ],
+          "slots": []
+        },
+        {
+          "className": "AnyValue",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "AnyValue"
+          ],
+          "slots": []
+        },
+        {
+          "className": "extension",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "extension"
+          ],
+          "slots": [
+            "extension_tag",
+            "extension_value",
+            "extensions"
+          ]
+        },
+        {
+          "className": "extension",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "extension"
+          ],
+          "slots": [
+            "extension_tag",
+            "extension_value",
+            "extensions"
+          ]
+        },
+        {
+          "className": "extensible",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "extensible"
+          ],
+          "slots": [
+            "extensions"
+          ]
+        },
+        {
+          "className": "extensible",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "extensible"
+          ],
+          "slots": [
+            "extensions"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/meta.yaml",
+      "comparison": "native",
+      "results": [
+        {
+          "className": "Anything",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Anything"
+          ],
+          "slots": []
+        },
+        {
+          "className": "Anything",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Anything"
+          ],
+          "slots": []
+        },
+        {
+          "className": "common_metadata",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "common_metadata"
+          ],
+          "slots": [
+            "description",
+            "alt_descriptions",
+            "title",
+            "deprecated",
+            "todos",
+            "notes",
+            "comments",
+            "examples",
+            "in_subset",
+            "from_schema",
+            "imported_from",
+            "source",
+            "in_language",
+            "see_also",
+            "deprecated element has exact replacement",
+            "deprecated element has possible replacement",
+            "aliases",
+            "structured_aliases",
+            "mappings",
+            "exact mappings",
+            "close mappings",
+            "related mappings",
+            "narrow mappings",
+            "broad mappings",
+            "created_by",
+            "contributors",
+            "created_on",
+            "last_updated_on",
+            "modified_by",
+            "status",
+            "rank",
+            "categories",
+            "keywords"
+          ]
+        },
+        {
+          "className": "common_metadata",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "common_metadata"
+          ],
+          "slots": [
+            "description",
+            "alt_descriptions",
+            "title",
+            "deprecated",
+            "todos",
+            "notes",
+            "comments",
+            "examples",
+            "in_subset",
+            "from_schema",
+            "imported_from",
+            "source",
+            "in_language",
+            "see_also",
+            "deprecated element has exact replacement",
+            "deprecated element has possible replacement",
+            "aliases",
+            "structured_aliases",
+            "mappings",
+            "exact mappings",
+            "close mappings",
+            "related mappings",
+            "narrow mappings",
+            "broad mappings",
+            "created_by",
+            "contributors",
+            "created_on",
+            "last_updated_on",
+            "modified_by",
+            "status",
+            "rank",
+            "categories",
+            "keywords"
+          ]
+        },
+        {
+          "className": "element",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "element",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "schema_definition",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "schema_definition",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "type_expression",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "type_expression",
+            "expression"
+          ],
+          "slots": [
+            "pattern",
+            "structured_pattern",
+            "unit",
+            "implicit_prefix",
+            "equals_string",
+            "equals_string_in",
+            "equals_number",
+            "minimum_value",
+            "maximum_value",
+            "none_of",
+            "exactly_one_of",
+            "any_of",
+            "all_of"
+          ]
+        },
+        {
+          "className": "type_expression",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "type_expression",
+            "expression"
+          ],
+          "slots": [
+            "pattern",
+            "structured_pattern",
+            "unit",
+            "implicit_prefix",
+            "equals_string",
+            "equals_string_in",
+            "equals_number",
+            "minimum_value",
+            "maximum_value",
+            "none_of",
+            "exactly_one_of",
+            "any_of",
+            "all_of"
+          ]
+        },
+        {
+          "className": "anonymous_type_expression",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "anonymous_type_expression",
+            "type_expression",
+            "expression"
+          ],
+          "slots": [
+            "pattern",
+            "structured_pattern",
+            "unit",
+            "implicit_prefix",
+            "equals_string",
+            "equals_string_in",
+            "equals_number",
+            "minimum_value",
+            "maximum_value",
+            "none_of",
+            "exactly_one_of",
+            "any_of",
+            "all_of"
+          ]
+        },
+        {
+          "className": "anonymous_type_expression",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "anonymous_type_expression",
+            "type_expression",
+            "expression"
+          ],
+          "slots": [
+            "pattern",
+            "structured_pattern",
+            "unit",
+            "implicit_prefix",
+            "equals_string",
+            "equals_string_in",
+            "equals_number",
+            "minimum_value",
+            "maximum_value",
+            "none_of",
+            "exactly_one_of",
+            "any_of",
+            "all_of"
+          ]
+        },
+        {
+          "className": "type_definition",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "type_definition",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "subset_definition",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "subset_definition",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "definition",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "definition",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "enum_expression",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "enum_expression",
+            "expression"
+          ],
+          "slots": [
+            "code_set",
+            "code_set_tag",
+            "code_set_version",
+            "pv_formula",
+            "permissible_values",
+            "include",
+            "minus",
+            "inherits",
+            "reachable_from",
+            "matches",
+            "concepts"
+          ]
+        },
+        {
+          "className": "enum_expression",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "enum_expression",
+            "expression"
+          ],
+          "slots": [
+            "code_set",
+            "code_set_tag",
+            "code_set_version",
+            "pv_formula",
+            "permissible_values",
+            "include",
+            "minus",
+            "inherits",
+            "reachable_from",
+            "matches",
+            "concepts"
+          ]
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "anonymous_enum_expression",
+            "enum_expression",
+            "expression"
+          ],
+          "slots": [
+            "code_set",
+            "code_set_tag",
+            "code_set_version",
+            "pv_formula",
+            "permissible_values",
+            "include",
+            "minus",
+            "inherits",
+            "reachable_from",
+            "matches",
+            "concepts"
+          ]
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "anonymous_enum_expression",
+            "enum_expression",
+            "expression"
+          ],
+          "slots": [
+            "code_set",
+            "code_set_tag",
+            "code_set_version",
+            "pv_formula",
+            "permissible_values",
+            "include",
+            "minus",
+            "inherits",
+            "reachable_from",
+            "matches",
+            "concepts"
+          ]
+        },
+        {
+          "className": "enum_definition",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "enum_definition",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "enum_binding",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "enum_binding",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "match_query",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "match_query"
+          ],
+          "slots": [
+            "identifier_pattern",
+            "source_ontology"
+          ]
+        },
+        {
+          "className": "match_query",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "match_query"
+          ],
+          "slots": [
+            "identifier_pattern",
+            "source_ontology"
+          ]
+        },
+        {
+          "className": "reachability_query",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "reachability_query"
+          ],
+          "slots": [
+            "source_ontology",
+            "source_nodes",
+            "relationship_types",
+            "is_direct",
+            "include_self",
+            "traverse_up"
+          ]
+        },
+        {
+          "className": "reachability_query",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "reachability_query"
+          ],
+          "slots": [
+            "source_ontology",
+            "source_nodes",
+            "relationship_types",
+            "is_direct",
+            "include_self",
+            "traverse_up"
+          ]
+        },
+        {
+          "className": "structured_alias",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "structured_alias",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "expression",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "expression"
+          ],
+          "slots": []
+        },
+        {
+          "className": "expression",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "expression"
+          ],
+          "slots": []
+        },
+        {
+          "className": "anonymous_expression",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "anonymous_expression",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "path_expression",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "path_expression",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "slot_expression",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "slot_expression",
+            "expression"
+          ],
+          "slots": [
+            "range",
+            "range_expression",
+            "enum_range",
+            "bindings",
+            "required",
+            "recommended",
+            "multivalued",
+            "inlined",
+            "inlined_as_list",
+            "minimum_value",
+            "maximum_value",
+            "pattern",
+            "structured_pattern",
+            "unit",
+            "implicit_prefix",
+            "value_presence",
+            "equals_string",
+            "equals_string_in",
+            "equals_number",
+            "equals_expression",
+            "exact_cardinality",
+            "minimum_cardinality",
+            "maximum_cardinality",
+            "has_member",
+            "all_members",
+            "none_of",
+            "exactly_one_of",
+            "any_of",
+            "all_of",
+            "array"
+          ]
+        },
+        {
+          "className": "slot_expression",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "slot_expression",
+            "expression"
+          ],
+          "slots": [
+            "range",
+            "range_expression",
+            "enum_range",
+            "bindings",
+            "required",
+            "recommended",
+            "multivalued",
+            "inlined",
+            "inlined_as_list",
+            "minimum_value",
+            "maximum_value",
+            "pattern",
+            "structured_pattern",
+            "unit",
+            "implicit_prefix",
+            "value_presence",
+            "equals_string",
+            "equals_string_in",
+            "equals_number",
+            "equals_expression",
+            "exact_cardinality",
+            "minimum_cardinality",
+            "maximum_cardinality",
+            "has_member",
+            "all_members",
+            "none_of",
+            "exactly_one_of",
+            "any_of",
+            "all_of",
+            "array"
+          ]
+        },
+        {
+          "className": "anonymous_slot_expression",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "anonymous_slot_expression",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "slot_definition",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "slot_definition",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "class_expression",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "class_expression"
+          ],
+          "slots": [
+            "any_of",
+            "exactly_one_of",
+            "none_of",
+            "all_of",
+            "slot_conditions"
+          ]
+        },
+        {
+          "className": "class_expression",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "class_expression"
+          ],
+          "slots": [
+            "any_of",
+            "exactly_one_of",
+            "none_of",
+            "all_of",
+            "slot_conditions"
+          ]
+        },
+        {
+          "className": "anonymous_class_expression",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "anonymous_class_expression",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "class_definition",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "class_definition",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "class_level_rule",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "class_level_rule"
+          ],
+          "slots": []
+        },
+        {
+          "className": "class_level_rule",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "class_level_rule"
+          ],
+          "slots": []
+        },
+        {
+          "className": "class_rule",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "class_rule",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "array_expression",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "array_expression",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "dimension_expression",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "dimension_expression",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "pattern_expression",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "pattern_expression",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "import_expression",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "import_expression",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "setting",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "setting"
+          ],
+          "slots": [
+            "setting_key",
+            "setting_value"
+          ]
+        },
+        {
+          "className": "setting",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "setting"
+          ],
+          "slots": [
+            "setting_key",
+            "setting_value"
+          ]
+        },
+        {
+          "className": "prefix",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "prefix"
+          ],
+          "slots": [
+            "prefix_prefix",
+            "prefix_reference"
+          ]
+        },
+        {
+          "className": "prefix",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "prefix"
+          ],
+          "slots": [
+            "prefix_prefix",
+            "prefix_reference"
+          ]
+        },
+        {
+          "className": "local_name",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "local_name"
+          ],
+          "slots": [
+            "local_name_source",
+            "local_name_value"
+          ]
+        },
+        {
+          "className": "local_name",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "local_name"
+          ],
+          "slots": [
+            "local_name_source",
+            "local_name_value"
+          ]
+        },
+        {
+          "className": "example",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "example"
+          ],
+          "slots": [
+            "value",
+            "value_description",
+            "value_object"
+          ]
+        },
+        {
+          "className": "example",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "example"
+          ],
+          "slots": [
+            "value",
+            "value_description",
+            "value_object"
+          ]
+        },
+        {
+          "className": "alt_description",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "alt_description"
+          ],
+          "slots": [
+            "alt_description_source",
+            "alt_description_text"
+          ]
+        },
+        {
+          "className": "alt_description",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "alt_description"
+          ],
+          "slots": [
+            "alt_description_source",
+            "alt_description_text"
+          ]
+        },
+        {
+          "className": "permissible_value",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "permissible_value",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "unique_key",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "unique_key",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "type_mapping",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "type_mapping",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "extra_slots_expression",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "extra_slots_expression",
+            "expression"
+          ],
+          "slots": [
+            "allowed",
+            "range_expression"
+          ]
+        },
+        {
+          "className": "extra_slots_expression",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "extra_slots_expression",
+            "expression"
+          ],
+          "slots": [
+            "allowed",
+            "range_expression"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/units.yaml",
+      "comparison": "native",
+      "results": [
+        {
+          "className": "UnitOfMeasure",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "UnitOfMeasure"
+          ],
+          "slots": [
+            "symbol",
+            "abbreviation",
+            "descriptive_name",
+            "exact mappings",
+            "ucum_code",
+            "derivation",
+            "has_quantity_kind",
+            "iec61360code"
+          ]
+        },
+        {
+          "className": "UnitOfMeasure",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "UnitOfMeasure"
+          ],
+          "slots": [
+            "symbol",
+            "abbreviation",
+            "descriptive_name",
+            "exact mappings",
+            "ucum_code",
+            "derivation",
+            "has_quantity_kind",
+            "iec61360code"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/validation.yaml",
+      "comparison": "native",
+      "results": [
+        {
+          "className": "ValidationReport",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "ValidationReport"
+          ],
+          "slots": [
+            "results"
+          ]
+        },
+        {
+          "className": "ValidationReport",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "ValidationReport"
+          ],
+          "slots": [
+            "results"
+          ]
+        },
+        {
+          "className": "ValidationResult",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "ValidationResult"
+          ],
+          "slots": [
+            "type",
+            "severity",
+            "subject",
+            "instantiates",
+            "predicate",
+            "object",
+            "object_str",
+            "node_source",
+            "info"
+          ]
+        },
+        {
+          "className": "ValidationResult",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "ValidationResult"
+          ],
+          "slots": [
+            "type",
+            "severity",
+            "subject",
+            "instantiates",
+            "predicate",
+            "object",
+            "object_str",
+            "node_source",
+            "info"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-array-1.yaml",
+      "comparison": "native",
+      "results": [
+        {
+          "className": "TemperatureDataset",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "TemperatureDataset"
+          ],
+          "slots": [
+            "name",
+            "latitude_in_deg",
+            "longitude_in_deg",
+            "time_in_d",
+            "temperatures_in_K"
+          ]
+        },
+        {
+          "className": "TemperatureDataset",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "TemperatureDataset"
+          ],
+          "slots": [
+            "name",
+            "latitude_in_deg",
+            "longitude_in_deg",
+            "time_in_d",
+            "temperatures_in_K"
+          ]
+        },
+        {
+          "className": "TemperatureMatrix",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "TemperatureMatrix"
+          ],
+          "slots": [
+            "values"
+          ]
+        },
+        {
+          "className": "TemperatureMatrix",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "TemperatureMatrix"
+          ],
+          "slots": [
+            "values"
+          ]
+        },
+        {
+          "className": "LatitudeSeries",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "LatitudeSeries"
+          ],
+          "slots": [
+            "values"
+          ]
+        },
+        {
+          "className": "LatitudeSeries",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "LatitudeSeries"
+          ],
+          "slots": [
+            "values"
+          ]
+        },
+        {
+          "className": "LongitudeSeries",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "LongitudeSeries"
+          ],
+          "slots": [
+            "values"
+          ]
+        },
+        {
+          "className": "LongitudeSeries",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "LongitudeSeries"
+          ],
+          "slots": [
+            "values"
+          ]
+        },
+        {
+          "className": "DaySeries",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "DaySeries"
+          ],
+          "slots": [
+            "values"
+          ]
+        },
+        {
+          "className": "DaySeries",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "DaySeries"
+          ],
+          "slots": [
+            "values"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-array-2.yaml",
+      "comparison": "native",
+      "results": [
+        {
+          "className": "TimestampSeries",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "TimestampSeries"
+          ],
+          "slots": []
+        },
+        {
+          "className": "TimestampSeries",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "TimestampSeries"
+          ],
+          "slots": []
+        },
+        {
+          "className": "IrregularlySampledTimestampSeries",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "IrregularlySampledTimestampSeries",
+            "TimestampSeries"
+          ],
+          "slots": [
+            "name",
+            "values"
+          ]
+        },
+        {
+          "className": "IrregularlySampledTimestampSeries",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "IrregularlySampledTimestampSeries",
+            "TimestampSeries"
+          ],
+          "slots": [
+            "name",
+            "values"
+          ]
+        },
+        {
+          "className": "RegularlySampledTimestampSeries",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "RegularlySampledTimestampSeries",
+            "TimestampSeries"
+          ],
+          "slots": [
+            "name",
+            "sampling_rate",
+            "starting_time",
+            "length",
+            "values"
+          ]
+        },
+        {
+          "className": "RegularlySampledTimestampSeries",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "RegularlySampledTimestampSeries",
+            "TimestampSeries"
+          ],
+          "slots": [
+            "name",
+            "sampling_rate",
+            "starting_time",
+            "length",
+            "values"
+          ]
+        },
+        {
+          "className": "Electrode",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Electrode"
+          ],
+          "slots": [
+            "name",
+            "impedance"
+          ]
+        },
+        {
+          "className": "Electrode",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Electrode"
+          ],
+          "slots": [
+            "name",
+            "impedance"
+          ]
+        },
+        {
+          "className": "ElectrodeSeries",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "ElectrodeSeries"
+          ],
+          "slots": [
+            "values"
+          ]
+        },
+        {
+          "className": "ElectrodeSeries",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "ElectrodeSeries"
+          ],
+          "slots": [
+            "values"
+          ]
+        },
+        {
+          "className": "ElectricalDataMatrix",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "ElectricalDataMatrix"
+          ],
+          "slots": [
+            "values"
+          ]
+        },
+        {
+          "className": "ElectricalDataMatrix",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "ElectricalDataMatrix"
+          ],
+          "slots": [
+            "values"
+          ]
+        },
+        {
+          "className": "ElectricalDataArray",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "ElectricalDataArray"
+          ],
+          "slots": [
+            "time",
+            "electrode",
+            "values"
+          ]
+        },
+        {
+          "className": "ElectricalDataArray",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "ElectricalDataArray"
+          ],
+          "slots": [
+            "time",
+            "electrode",
+            "values"
+          ]
+        },
+        {
+          "className": "IrregularlySampledElectricalDataArray",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "IrregularlySampledElectricalDataArray",
+            "ElectricalDataArray"
+          ],
+          "slots": [
+            "time",
+            "electrode",
+            "values"
+          ]
+        },
+        {
+          "className": "IrregularlySampledElectricalDataArray",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "IrregularlySampledElectricalDataArray",
+            "ElectricalDataArray"
+          ],
+          "slots": [
+            "time",
+            "electrode",
+            "values"
+          ]
+        },
+        {
+          "className": "RegularlySampledElectricalDataArray",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "RegularlySampledElectricalDataArray",
+            "ElectricalDataArray"
+          ],
+          "slots": [
+            "time",
+            "electrode",
+            "values"
+          ]
+        },
+        {
+          "className": "RegularlySampledElectricalDataArray",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "RegularlySampledElectricalDataArray",
+            "ElectricalDataArray"
+          ],
+          "slots": [
+            "time",
+            "electrode",
+            "values"
+          ]
+        },
+        {
+          "className": "File",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "File"
+          ],
+          "slots": [
+            "electrical_data_arrays",
+            "electrodes"
+          ]
+        },
+        {
+          "className": "File",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "File"
+          ],
+          "slots": [
+            "electrical_data_arrays",
+            "electrodes"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-dynamic-enums.yaml",
+      "comparison": "native",
+      "results": [
+        {
+          "className": "HumanSample",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "HumanSample"
+          ],
+          "slots": [
+            "name",
+            "disease"
+          ]
+        },
+        {
+          "className": "HumanSample",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "HumanSample"
+          ],
+          "slots": [
+            "name",
+            "disease"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-enum_bindings-1.yaml",
+      "comparison": "native",
+      "results": [
+        {
+          "className": "Concept",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Concept"
+          ],
+          "slots": [
+            "id",
+            "name",
+            "vocabulary"
+          ]
+        },
+        {
+          "className": "Concept",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Concept"
+          ],
+          "slots": [
+            "id",
+            "name",
+            "vocabulary"
+          ]
+        },
+        {
+          "className": "Sample",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Sample"
+          ],
+          "slots": [
+            "name",
+            "sample_material_type"
+          ]
+        },
+        {
+          "className": "Sample",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Sample"
+          ],
+          "slots": [
+            "name",
+            "sample_material_type"
+          ]
+        },
+        {
+          "className": "EnvironmentalMaterialSample",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "EnvironmentalMaterialSample"
+          ],
+          "slots": []
+        },
+        {
+          "className": "EnvironmentalMaterialSample",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "EnvironmentalMaterialSample"
+          ],
+          "slots": []
+        },
+        {
+          "className": "HumanSampleSample",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "HumanSampleSample"
+          ],
+          "slots": []
+        },
+        {
+          "className": "HumanSampleSample",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "HumanSampleSample"
+          ],
+          "slots": []
+        },
+        {
+          "className": "AlternateHumanSampleSample",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "AlternateHumanSampleSample"
+          ],
+          "slots": []
+        },
+        {
+          "className": "AlternateHumanSampleSample",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "AlternateHumanSampleSample"
+          ],
+          "slots": []
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-implements.yaml",
+      "comparison": "native",
+      "results": [
+        {
+          "className": "Measurement",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Measurement"
+          ],
+          "slots": [
+            "value",
+            "unit"
+          ]
+        },
+        {
+          "className": "Measurement",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Measurement"
+          ],
+          "slots": [
+            "value",
+            "unit"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-instantiates.yaml",
+      "comparison": "native",
+      "results": [
+        {
+          "className": "Person",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Person"
+          ],
+          "slots": [
+            "id",
+            "name",
+            "address"
+          ]
+        },
+        {
+          "className": "Person",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Person"
+          ],
+          "slots": [
+            "id",
+            "name",
+            "address"
+          ]
+        },
+        {
+          "className": "Reviewable",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Reviewable"
+          ],
+          "slots": [
+            "description",
+            "review"
+          ]
+        },
+        {
+          "className": "Reviewable",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Reviewable"
+          ],
+          "slots": [
+            "description",
+            "review"
+          ]
+        },
+        {
+          "className": "Review",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Review"
+          ],
+          "slots": [
+            "desc",
+            "score"
+          ]
+        },
+        {
+          "className": "Review",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Review"
+          ],
+          "slots": [
+            "desc",
+            "score"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-multivalued-in-any-of.yaml",
+      "comparison": "native",
+      "results": [
+        {
+          "className": "Any",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Any"
+          ],
+          "slots": []
+        },
+        {
+          "className": "Any",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Any"
+          ],
+          "slots": []
+        },
+        {
+          "className": "A",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "A"
+          ],
+          "slots": [
+            "s"
+          ]
+        },
+        {
+          "className": "A",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "A"
+          ],
+          "slots": [
+            "s"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-native-array-1.yaml",
+      "comparison": "loader-rejected",
+      "error": "TypeError: Annotation.__init__() got an unexpected keyword argument 'data'"
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-native-array-rgb.yaml",
+      "comparison": "native",
+      "results": [
+        {
+          "className": "RGBImage",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "RGBImage"
+          ],
+          "slots": [
+            "rgb"
+          ]
+        },
+        {
+          "className": "RGBImage",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "RGBImage"
+          ],
+          "slots": [
+            "rgb"
+          ]
+        },
+        {
+          "className": "SquareDataset",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "SquareDataset"
+          ],
+          "slots": [
+            "square_matrix"
+          ]
+        },
+        {
+          "className": "SquareDataset",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "SquareDataset"
+          ],
+          "slots": [
+            "square_matrix"
+          ]
+        },
+        {
+          "className": "UnboundedTimeSeries",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "UnboundedTimeSeries"
+          ],
+          "slots": [
+            "my_matrix"
+          ]
+        },
+        {
+          "className": "UnboundedTimeSeries",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "UnboundedTimeSeries"
+          ],
+          "slots": [
+            "my_matrix"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-type_mappings-1.yaml",
+      "comparison": "native",
+      "results": [
+        {
+          "className": "A",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "A"
+          ],
+          "slots": [
+            "my_big_integer",
+            "my_date"
+          ]
+        },
+        {
+          "className": "A",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "A"
+          ],
+          "slots": [
+            "my_big_integer",
+            "my_date"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/examples/people.yaml",
+      "comparison": "native",
+      "results": [
+        {
+          "className": "Agent",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Agent"
+          ],
+          "slots": [
+            "id"
+          ]
+        },
+        {
+          "className": "Agent",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Agent"
+          ],
+          "slots": [
+            "id"
+          ]
+        },
+        {
+          "className": "Addressable",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Addressable"
+          ],
+          "slots": [
+            "email"
+          ]
+        },
+        {
+          "className": "Addressable",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Addressable"
+          ],
+          "slots": [
+            "email"
+          ]
+        },
+        {
+          "className": "Person",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Person",
+            "Addressable",
+            "Agent"
+          ],
+          "slots": [
+            "status",
+            "manager",
+            "email",
+            "id"
+          ]
+        },
+        {
+          "className": "Person",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Person",
+            "Addressable",
+            "Agent"
+          ],
+          "slots": [
+            "status",
+            "manager",
+            "email",
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "native/linkml/examples/inheritance.json",
+      "comparison": "native",
+      "results": [
+        {
+          "className": "Root",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Root"
+          ],
+          "slots": [
+            "root",
+            "duplicate",
+            "inline"
+          ]
+        },
+        {
+          "className": "Root",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Root"
+          ],
+          "slots": [
+            "root",
+            "duplicate",
+            "inline"
+          ]
+        },
+        {
+          "className": "MixinBase",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "MixinBase"
+          ],
+          "slots": [
+            "mixin_base"
+          ]
+        },
+        {
+          "className": "MixinBase",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "MixinBase"
+          ],
+          "slots": [
+            "mixin_base"
+          ]
+        },
+        {
+          "className": "Mixin",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Mixin",
+            "MixinBase"
+          ],
+          "slots": [
+            "duplicate",
+            "mixin",
+            "mixin_base"
+          ]
+        },
+        {
+          "className": "Mixin",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Mixin",
+            "MixinBase"
+          ],
+          "slots": [
+            "duplicate",
+            "mixin",
+            "mixin_base"
+          ]
+        },
+        {
+          "className": "Parent",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Parent",
+            "Root"
+          ],
+          "slots": [
+            "parent",
+            "root",
+            "duplicate",
+            "inline"
+          ]
+        },
+        {
+          "className": "Parent",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Parent",
+            "Root"
+          ],
+          "slots": [
+            "parent",
+            "root",
+            "duplicate",
+            "inline"
+          ]
+        },
+        {
+          "className": "Child",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Child",
+            "Mixin",
+            "Parent",
+            "Root",
+            "MixinBase"
+          ],
+          "slots": [
+            "child",
+            "duplicate",
+            "inline",
+            "mixin",
+            "parent",
+            "root",
+            "mixin_base"
+          ]
+        },
+        {
+          "className": "Child",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "Child",
+            "Mixin",
+            "Parent",
+            "Root",
+            "MixinBase"
+          ],
+          "slots": [
+            "child",
+            "duplicate",
+            "inline",
+            "mixin",
+            "parent",
+            "root",
+            "mixin_base"
+          ]
+        },
+        {
+          "className": "CycleA",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "CycleA",
+            "CycleB"
+          ],
+          "slots": [
+            "a",
+            "b"
+          ]
+        },
+        {
+          "className": "CycleA",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "CycleA",
+            "CycleB"
+          ],
+          "slots": [
+            "a",
+            "b"
+          ]
+        },
+        {
+          "className": "CycleB",
+          "format": "json",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "CycleB",
+            "CycleA"
+          ],
+          "slots": [
+            "b",
+            "a"
+          ]
+        },
+        {
+          "className": "CycleB",
+          "format": "yaml",
+          "comparison": "ordered-membership",
+          "ancestors": [
+            "CycleB",
+            "CycleA"
+          ],
+          "slots": [
+            "b",
+            "a"
+          ]
+        },
+        {
+          "className": "Missing",
+          "format": "json",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"External\""
+        },
+        {
+          "className": "Missing",
+          "format": "yaml",
+          "comparison": "blocked",
+          "error": "ValueError: No such class: \"External\""
+        }
+      ]
+    }
+  ]
+}

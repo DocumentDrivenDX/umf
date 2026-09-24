@@ -1,0 +1,8 @@
+import {importSparkSchema,exportSparkSchema,captureArrowIpc,exportArrowIpcCapture,inspectArrowIpcLayout,readDocument,writeDocument} from '../src';
+const base='fixtures/projections/spark-arrow/',report=await Bun.file(base+'native-results.json').json();let captured=0;const sources=new Set<string>();
+for(const row of report.results){if(!sources.has(row.case)){const text=await Bun.file(base+row.case+'.spark.json').text(),doc=importSparkSchema(text,{id:row.case});for(const format of ['json','yaml'] as const)if(exportSparkSchema(readDocument(writeDocument(doc,format),format))!==text)throw Error('Spark source changed');sources.add(row.case);}
+ if(row.status!=='converted')continue;const bytes=new Uint8Array(await Bun.file(base+row.id+'.arrow').arrayBuffer()),doc=captureArrowIpc(bytes,{id:row.id});const hash=(b:Uint8Array)=>new Bun.CryptoHasher('sha256').update(b).digest('hex');if(hash(bytes)!==row.sha256)throw Error('Native fixture hash');
+ for(const format of ['json','yaml'] as const)if(hash(exportArrowIpcCapture(readDocument(writeDocument(doc,format),format)))!==row.sha256)throw Error('Arrow target changed');
+ const layout=inspectArrowIpcLayout(doc);if(!layout.bytesAccountedFor||layout.frames.length!==1)throw Error('Expected one schema message');await Bun.write(base+row.id+'.umf.json',writeDocument(layout.frames[0]!.metadata,'json'));captured++;
+}
+if(captured!==188||sources.size!==29)throw Error('Matrix changed');await Bun.write(base+'umf-results.json',JSON.stringify({sourceSchemas:sources.size,targetCaptures:captured,exactJsonYaml:true,projectionImplemented:false},null,2)+'\n');console.log({sources:sources.size,captured});

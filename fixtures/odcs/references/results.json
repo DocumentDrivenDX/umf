@@ -1,0 +1,1123 @@
+{
+  "sourceSha256": "78a9f10a3875fd2cef0a615b86b6c9124877ec2f3d5af070e4f8e5637687952f",
+  "results": [
+    {
+      "reference": "customers.id",
+      "usage": "foreignKey",
+      "format": "json",
+      "status": "resolved",
+      "target": {
+        "path": "/schema/0/properties/0",
+        "notation": "name",
+        "node": {
+          "kind": "object",
+          "members": {
+            "id": {
+              "kind": "string",
+              "value": "customer_id_prop"
+            },
+            "name": {
+              "kind": "string",
+              "value": "id"
+            },
+            "primaryKey": {
+              "kind": "boolean",
+              "value": true
+            },
+            "primaryKeyPosition": {
+              "kind": "number",
+              "value": "1"
+            },
+            "logicalType": {
+              "kind": "string",
+              "value": "string"
+            },
+            "physicalType": {
+              "kind": "string",
+              "value": "VARCHAR(36)"
+            },
+            "required": {
+              "kind": "boolean",
+              "value": true
+            }
+          }
+        }
+      },
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_CONTEXT",
+          "path": "/schema/0/properties/0",
+          "severity": "warning",
+          "message": "Local element lookup only; does not validate foreign-key uniqueness, types, composite cardinality or data constraints"
+        }
+      ]
+    },
+    {
+      "reference": "customers.id",
+      "usage": "foreignKey",
+      "format": "yaml",
+      "status": "resolved",
+      "target": {
+        "path": "/schema/0/properties/0",
+        "notation": "name",
+        "node": {
+          "kind": "object",
+          "members": {
+            "id": {
+              "kind": "string",
+              "value": "customer_id_prop"
+            },
+            "name": {
+              "kind": "string",
+              "value": "id"
+            },
+            "primaryKey": {
+              "kind": "boolean",
+              "value": true
+            },
+            "primaryKeyPosition": {
+              "kind": "number",
+              "value": "1"
+            },
+            "logicalType": {
+              "kind": "string",
+              "value": "string"
+            },
+            "physicalType": {
+              "kind": "string",
+              "value": "VARCHAR(36)"
+            },
+            "required": {
+              "kind": "boolean",
+              "value": true
+            }
+          }
+        }
+      },
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_CONTEXT",
+          "path": "/schema/0/properties/0",
+          "severity": "warning",
+          "message": "Local element lookup only; does not validate foreign-key uniqueness, types, composite cardinality or data constraints"
+        }
+      ]
+    },
+    {
+      "reference": "addresses.customer_id",
+      "usage": "foreignKey",
+      "format": "json",
+      "status": "resolved",
+      "target": {
+        "path": "/schema/1/properties/0",
+        "notation": "name",
+        "node": {
+          "kind": "object",
+          "members": {
+            "id": {
+              "kind": "string",
+              "value": "address_customer_id_prop"
+            },
+            "name": {
+              "kind": "string",
+              "value": "customer_id"
+            },
+            "primaryKey": {
+              "kind": "boolean",
+              "value": true
+            },
+            "primaryKeyPosition": {
+              "kind": "number",
+              "value": "1"
+            },
+            "logicalType": {
+              "kind": "string",
+              "value": "string"
+            },
+            "physicalType": {
+              "kind": "string",
+              "value": "VARCHAR(36)"
+            },
+            "required": {
+              "kind": "boolean",
+              "value": true
+            }
+          }
+        }
+      },
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_CONTEXT",
+          "path": "/schema/1/properties/0",
+          "severity": "warning",
+          "message": "Local element lookup only; does not validate foreign-key uniqueness, types, composite cardinality or data constraints"
+        }
+      ]
+    },
+    {
+      "reference": "addresses.customer_id",
+      "usage": "foreignKey",
+      "format": "yaml",
+      "status": "resolved",
+      "target": {
+        "path": "/schema/1/properties/0",
+        "notation": "name",
+        "node": {
+          "kind": "object",
+          "members": {
+            "id": {
+              "kind": "string",
+              "value": "address_customer_id_prop"
+            },
+            "name": {
+              "kind": "string",
+              "value": "customer_id"
+            },
+            "primaryKey": {
+              "kind": "boolean",
+              "value": true
+            },
+            "primaryKeyPosition": {
+              "kind": "number",
+              "value": "1"
+            },
+            "logicalType": {
+              "kind": "string",
+              "value": "string"
+            },
+            "physicalType": {
+              "kind": "string",
+              "value": "VARCHAR(36)"
+            },
+            "required": {
+              "kind": "boolean",
+              "value": true
+            }
+          }
+        }
+      },
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_CONTEXT",
+          "path": "/schema/1/properties/0",
+          "severity": "warning",
+          "message": "Local element lookup only; does not validate foreign-key uniqueness, types, composite cardinality or data constraints"
+        }
+      ]
+    },
+    {
+      "reference": "addresses.address_street",
+      "usage": "foreignKey",
+      "format": "json",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_MISSING",
+          "path": "/schema/1/properties",
+          "message": "No element with name \"address_street\"",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "reference": "addresses.address_street",
+      "usage": "foreignKey",
+      "format": "yaml",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_MISSING",
+          "path": "/schema/1/properties",
+          "message": "No element with name \"address_street\"",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "reference": "orders.customer_id",
+      "usage": "foreignKey",
+      "format": "json",
+      "status": "resolved",
+      "target": {
+        "path": "/schema/2/properties/1",
+        "notation": "name",
+        "node": {
+          "kind": "object",
+          "members": {
+            "id": {
+              "kind": "string",
+              "value": "order_customer_prop"
+            },
+            "name": {
+              "kind": "string",
+              "value": "customer_id"
+            },
+            "logicalType": {
+              "kind": "string",
+              "value": "string"
+            },
+            "physicalType": {
+              "kind": "string",
+              "value": "VARCHAR(36)"
+            },
+            "relationships": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "id": {
+                      "kind": "string",
+                      "value": "fk_order_customer"
+                    },
+                    "to": {
+                      "kind": "string",
+                      "value": "customers.id"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "foreignKey"
+                    },
+                    "customProperties": {
+                      "kind": "array",
+                      "items": [
+                        {
+                          "kind": "object",
+                          "members": {
+                            "property": {
+                              "kind": "string",
+                              "value": "cardinality"
+                            },
+                            "value": {
+                              "kind": "string",
+                              "value": "many-to-one"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_CONTEXT",
+          "path": "/schema/2/properties/1",
+          "severity": "warning",
+          "message": "Local element lookup only; does not validate foreign-key uniqueness, types, composite cardinality or data constraints"
+        }
+      ]
+    },
+    {
+      "reference": "orders.customer_id",
+      "usage": "foreignKey",
+      "format": "yaml",
+      "status": "resolved",
+      "target": {
+        "path": "/schema/2/properties/1",
+        "notation": "name",
+        "node": {
+          "kind": "object",
+          "members": {
+            "id": {
+              "kind": "string",
+              "value": "order_customer_prop"
+            },
+            "name": {
+              "kind": "string",
+              "value": "customer_id"
+            },
+            "logicalType": {
+              "kind": "string",
+              "value": "string"
+            },
+            "physicalType": {
+              "kind": "string",
+              "value": "VARCHAR(36)"
+            },
+            "relationships": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "id": {
+                      "kind": "string",
+                      "value": "fk_order_customer"
+                    },
+                    "to": {
+                      "kind": "string",
+                      "value": "customers.id"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "foreignKey"
+                    },
+                    "customProperties": {
+                      "kind": "array",
+                      "items": [
+                        {
+                          "kind": "object",
+                          "members": {
+                            "property": {
+                              "kind": "string",
+                              "value": "cardinality"
+                            },
+                            "value": {
+                              "kind": "string",
+                              "value": "many-to-one"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_CONTEXT",
+          "path": "/schema/2/properties/1",
+          "severity": "warning",
+          "message": "Local element lookup only; does not validate foreign-key uniqueness, types, composite cardinality or data constraints"
+        }
+      ]
+    },
+    {
+      "reference": "orders.shipping_address_street",
+      "usage": "foreignKey",
+      "format": "json",
+      "status": "resolved",
+      "target": {
+        "path": "/schema/2/properties/2",
+        "notation": "name",
+        "node": {
+          "kind": "object",
+          "members": {
+            "id": {
+              "kind": "string",
+              "value": "order_address_prop"
+            },
+            "name": {
+              "kind": "string",
+              "value": "shipping_address_street"
+            },
+            "logicalType": {
+              "kind": "string",
+              "value": "string"
+            },
+            "relationships": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "id": {
+                      "kind": "string",
+                      "value": "fk_order_shipping_address"
+                    },
+                    "to": {
+                      "kind": "string",
+                      "value": "addresses.address_street"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "foreignKey"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_CONTEXT",
+          "path": "/schema/2/properties/2",
+          "severity": "warning",
+          "message": "Local element lookup only; does not validate foreign-key uniqueness, types, composite cardinality or data constraints"
+        }
+      ]
+    },
+    {
+      "reference": "orders.shipping_address_street",
+      "usage": "foreignKey",
+      "format": "yaml",
+      "status": "resolved",
+      "target": {
+        "path": "/schema/2/properties/2",
+        "notation": "name",
+        "node": {
+          "kind": "object",
+          "members": {
+            "id": {
+              "kind": "string",
+              "value": "order_address_prop"
+            },
+            "name": {
+              "kind": "string",
+              "value": "shipping_address_street"
+            },
+            "logicalType": {
+              "kind": "string",
+              "value": "string"
+            },
+            "relationships": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "id": {
+                      "kind": "string",
+                      "value": "fk_order_shipping_address"
+                    },
+                    "to": {
+                      "kind": "string",
+                      "value": "addresses.address_street"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "foreignKey"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_CONTEXT",
+          "path": "/schema/2/properties/2",
+          "severity": "warning",
+          "message": "Local element lookup only; does not validate foreign-key uniqueness, types, composite cardinality or data constraints"
+        }
+      ]
+    },
+    {
+      "reference": "schema/addresses_obj/properties/address_street_prop",
+      "usage": "foreignKey",
+      "format": "json",
+      "status": "resolved",
+      "target": {
+        "path": "/schema/1/properties/2",
+        "notation": "id",
+        "node": {
+          "kind": "object",
+          "members": {
+            "id": {
+              "kind": "string",
+              "value": "address_street_prop"
+            },
+            "name": {
+              "kind": "string",
+              "value": "street"
+            },
+            "logicalType": {
+              "kind": "string",
+              "value": "string"
+            }
+          }
+        }
+      },
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_CONTEXT",
+          "path": "/schema/1/properties/2",
+          "severity": "warning",
+          "message": "Local element lookup only; does not validate foreign-key uniqueness, types, composite cardinality or data constraints"
+        }
+      ]
+    },
+    {
+      "reference": "schema/addresses_obj/properties/address_street_prop",
+      "usage": "foreignKey",
+      "format": "yaml",
+      "status": "resolved",
+      "target": {
+        "path": "/schema/1/properties/2",
+        "notation": "id",
+        "node": {
+          "kind": "object",
+          "members": {
+            "id": {
+              "kind": "string",
+              "value": "address_street_prop"
+            },
+            "name": {
+              "kind": "string",
+              "value": "street"
+            },
+            "logicalType": {
+              "kind": "string",
+              "value": "string"
+            }
+          }
+        }
+      },
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_CONTEXT",
+          "path": "/schema/1/properties/2",
+          "severity": "warning",
+          "message": "Local element lookup only; does not validate foreign-key uniqueness, types, composite cardinality or data constraints"
+        }
+      ]
+    },
+    {
+      "reference": "/schema/customers_obj",
+      "usage": "element",
+      "format": "json",
+      "status": "resolved",
+      "target": {
+        "path": "/schema/0",
+        "notation": "id",
+        "node": {
+          "kind": "object",
+          "members": {
+            "id": {
+              "kind": "string",
+              "value": "customers_obj"
+            },
+            "name": {
+              "kind": "string",
+              "value": "customers"
+            },
+            "physicalType": {
+              "kind": "string",
+              "value": "table"
+            },
+            "properties": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "id": {
+                      "kind": "string",
+                      "value": "customer_id_prop"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "id"
+                    },
+                    "primaryKey": {
+                      "kind": "boolean",
+                      "value": true
+                    },
+                    "primaryKeyPosition": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "logicalType": {
+                      "kind": "string",
+                      "value": "string"
+                    },
+                    "physicalType": {
+                      "kind": "string",
+                      "value": "VARCHAR(36)"
+                    },
+                    "required": {
+                      "kind": "boolean",
+                      "value": true
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_CONTEXT",
+          "path": "/schema/0",
+          "severity": "warning",
+          "message": "Local element lookup only; does not validate foreign-key uniqueness, types, composite cardinality or data constraints"
+        }
+      ]
+    },
+    {
+      "reference": "/schema/customers_obj",
+      "usage": "element",
+      "format": "yaml",
+      "status": "resolved",
+      "target": {
+        "path": "/schema/0",
+        "notation": "id",
+        "node": {
+          "kind": "object",
+          "members": {
+            "id": {
+              "kind": "string",
+              "value": "customers_obj"
+            },
+            "name": {
+              "kind": "string",
+              "value": "customers"
+            },
+            "physicalType": {
+              "kind": "string",
+              "value": "table"
+            },
+            "properties": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "id": {
+                      "kind": "string",
+                      "value": "customer_id_prop"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "id"
+                    },
+                    "primaryKey": {
+                      "kind": "boolean",
+                      "value": true
+                    },
+                    "primaryKeyPosition": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "logicalType": {
+                      "kind": "string",
+                      "value": "string"
+                    },
+                    "physicalType": {
+                      "kind": "string",
+                      "value": "VARCHAR(36)"
+                    },
+                    "required": {
+                      "kind": "boolean",
+                      "value": true
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_CONTEXT",
+          "path": "/schema/0",
+          "severity": "warning",
+          "message": "Local element lookup only; does not validate foreign-key uniqueness, types, composite cardinality or data constraints"
+        }
+      ]
+    },
+    {
+      "reference": "#/schema/customers_obj/properties/customer_id_prop",
+      "usage": "foreignKey",
+      "format": "json",
+      "status": "resolved",
+      "target": {
+        "path": "/schema/0/properties/0",
+        "notation": "id",
+        "node": {
+          "kind": "object",
+          "members": {
+            "id": {
+              "kind": "string",
+              "value": "customer_id_prop"
+            },
+            "name": {
+              "kind": "string",
+              "value": "id"
+            },
+            "primaryKey": {
+              "kind": "boolean",
+              "value": true
+            },
+            "primaryKeyPosition": {
+              "kind": "number",
+              "value": "1"
+            },
+            "logicalType": {
+              "kind": "string",
+              "value": "string"
+            },
+            "physicalType": {
+              "kind": "string",
+              "value": "VARCHAR(36)"
+            },
+            "required": {
+              "kind": "boolean",
+              "value": true
+            }
+          }
+        }
+      },
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_CONTEXT",
+          "path": "/schema/0/properties/0",
+          "severity": "warning",
+          "message": "Local element lookup only; does not validate foreign-key uniqueness, types, composite cardinality or data constraints"
+        }
+      ]
+    },
+    {
+      "reference": "#/schema/customers_obj/properties/customer_id_prop",
+      "usage": "foreignKey",
+      "format": "yaml",
+      "status": "resolved",
+      "target": {
+        "path": "/schema/0/properties/0",
+        "notation": "id",
+        "node": {
+          "kind": "object",
+          "members": {
+            "id": {
+              "kind": "string",
+              "value": "customer_id_prop"
+            },
+            "name": {
+              "kind": "string",
+              "value": "id"
+            },
+            "primaryKey": {
+              "kind": "boolean",
+              "value": true
+            },
+            "primaryKeyPosition": {
+              "kind": "number",
+              "value": "1"
+            },
+            "logicalType": {
+              "kind": "string",
+              "value": "string"
+            },
+            "physicalType": {
+              "kind": "string",
+              "value": "VARCHAR(36)"
+            },
+            "required": {
+              "kind": "boolean",
+              "value": true
+            }
+          }
+        }
+      },
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_CONTEXT",
+          "path": "/schema/0/properties/0",
+          "severity": "warning",
+          "message": "Local element lookup only; does not validate foreign-key uniqueness, types, composite cardinality or data constraints"
+        }
+      ]
+    },
+    {
+      "reference": "schema/0/properties/0",
+      "usage": "foreignKey",
+      "format": "json",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_MISSING",
+          "path": "/schema",
+          "message": "No element with id \"0\"",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "reference": "schema/0/properties/0",
+      "usage": "foreignKey",
+      "format": "yaml",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_MISSING",
+          "path": "/schema",
+          "message": "No element with id \"0\"",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "reference": "schema/customers_obj",
+      "usage": "foreignKey",
+      "format": "json",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_TARGET",
+          "path": "",
+          "message": "Foreign-key references must select a property",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "reference": "schema/customers_obj",
+      "usage": "foreignKey",
+      "format": "yaml",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_TARGET",
+          "path": "",
+          "message": "Foreign-key references must select a property",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "reference": "customers.id",
+      "usage": "element",
+      "format": "json",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_USAGE",
+          "path": "",
+          "message": "Name shorthand is only interpreted for foreign-key references",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "reference": "customers.id",
+      "usage": "element",
+      "format": "yaml",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_USAGE",
+          "path": "",
+          "message": "Name shorthand is only interpreted for foreign-key references",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "reference": "other.yaml#/schema/customers_obj/properties/customer_id_prop",
+      "usage": "foreignKey",
+      "format": "json",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_EXTERNAL",
+          "path": "",
+          "message": "External contract must be supplied through a future explicit resource API; no fetch performed",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "reference": "other.yaml#/schema/customers_obj/properties/customer_id_prop",
+      "usage": "foreignKey",
+      "format": "yaml",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_EXTERNAL",
+          "path": "",
+          "message": "External contract must be supplied through a future explicit resource API; no fetch performed",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "reference": "schema/customers_obj/properties/customer%5fid",
+      "usage": "foreignKey",
+      "format": "json",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_SYNTAX",
+          "path": "",
+          "message": "Expected schema/id followed by properties/id pairs",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "reference": "schema/customers_obj/properties/customer%5fid",
+      "usage": "foreignKey",
+      "format": "yaml",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "ODCS_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Contract shape checks do not enforce data quality/SLA rules, resolve references, map physical types or prove exact-number constraints beyond JS precision; edits regenerate layout while retaining original source"
+        },
+        {
+          "code": "ODCS_REFERENCE_SYNTAX",
+          "path": "",
+          "message": "Expected schema/id followed by properties/id pairs",
+          "severity": "error"
+        }
+      ]
+    }
+  ]
+}

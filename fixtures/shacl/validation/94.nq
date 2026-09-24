@@ -1,0 +1,18 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b28892 .
+_:report <http://www.w3.org/ns/shacl#result> _:b28893 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b28892 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b28892 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b28892 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:b28892 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/targets/targetObjectsOf-001.test#TestShape> .
+_:b28892 <http://www.w3.org/ns/shacl#focusNode> "String" .
+_:b28892 <http://www.w3.org/ns/shacl#value> "String" .
+_:b28892 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have datatype <http://www.w3.org/2001/XMLSchema#integer>" .
+_:b28893 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b28893 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b28893 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:b28893 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/targets/targetObjectsOf-001.test#TestShape> .
+_:b28893 <http://www.w3.org/ns/shacl#focusNode> <http://www.w3.org/2000/01/rdf-schema#Resource> .
+_:b28893 <http://www.w3.org/ns/shacl#value> <http://www.w3.org/2000/01/rdf-schema#Resource> .
+_:b28893 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have datatype <http://www.w3.org/2001/XMLSchema#integer>" .

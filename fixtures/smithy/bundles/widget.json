@@ -1,0 +1,7 @@
+{
+ "smithy":"2.0",
+ "metadata":{"dependencyExact":9007199254740993},
+ "shapes":{
+  "foo.example#Widget":{"type":"structure","members":{"id":{"target":"smithy.api#String"}}}
+ }
+}

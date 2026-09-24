@@ -1,0 +1,112 @@
+{
+  "cases": [
+    {
+      "id": "t0118",
+      "path": "native/jsonld/sources/toRdf/0118-in.jsonld",
+      "inputs": {
+        "id": "t0118",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/toRdf/0118-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "options": {
+        "id": "t0118-rdf",
+        "numericPolicy": "binary64",
+        "lossPolicy": "report",
+        "rdfDirection": null,
+        "produceGeneralizedRdf": true
+      },
+      "nativeOptions": {
+        "specVersion": "json-ld-1.0",
+        "produceGeneralizedRdf": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/toRdf/0118-out.nq",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/generalized-rdf/t0118.json.json"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/generalized-rdf/t0118.yaml.json"
+        }
+      ],
+      "backOptions": {
+        "id": "t0118-back",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/toRdf/0118-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "lossPolicy": "report"
+      },
+      "reversePath": "fixtures/generalized-rdf/t0118.back.jsonld",
+      "againPath": "fixtures/generalized-rdf/t0118.again.json",
+      "editPath": "fixtures/generalized-rdf/t0118.edited.json",
+      "editIndex": 3,
+      "quadCount": 9
+    },
+    {
+      "id": "te075",
+      "path": "native/jsonld/sources/toRdf/e075-in.jsonld",
+      "inputs": {
+        "id": "te075",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/toRdf/e075-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "options": {
+        "id": "te075-rdf",
+        "numericPolicy": "binary64",
+        "lossPolicy": "report",
+        "rdfDirection": null,
+        "produceGeneralizedRdf": true
+      },
+      "nativeOptions": {
+        "processingMode": "json-ld-1.0",
+        "produceGeneralizedRdf": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/toRdf/e075-out.nq",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/generalized-rdf/te075.json.json"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/generalized-rdf/te075.yaml.json"
+        }
+      ],
+      "backOptions": {
+        "id": "te075-back",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/toRdf/e075-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "lossPolicy": "report"
+      },
+      "reversePath": "fixtures/generalized-rdf/te075.back.jsonld",
+      "againPath": "fixtures/generalized-rdf/te075.again.json",
+      "editPath": "fixtures/generalized-rdf/te075.edited.json",
+      "editIndex": 0,
+      "quadCount": 2
+    }
+  ]
+}

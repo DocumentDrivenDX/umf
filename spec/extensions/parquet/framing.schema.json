@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:parquet:framing:0.1.0",
+  "type": "object",
+  "properties": {
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "status": {
+      "enum": [
+        "located",
+        "invalid"
+      ]
+    },
+    "complete": {
+      "const": false
+    },
+    "byteLength": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "footerRegion": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "length": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "mode": {
+          "enum": [
+            "plaintext-or-signed",
+            "encrypted"
+          ]
+        }
+      },
+      "required": [
+        "offset",
+        "length",
+        "mode"
+      ],
+      "additionalProperties": false
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "path",
+          "severity",
+          "message"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "source",
+    "status",
+    "complete",
+    "byteLength",
+    "diagnostics"
+  ],
+  "additionalProperties": false
+}

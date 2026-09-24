@@ -1,0 +1,332 @@
+{
+  "commit": "43756549c27cbf84107b190b82c65e0336f2f09f",
+  "versions": {
+    "jsonschema": "4.26.0",
+    "PyYAML": "6.0.3"
+  },
+  "files": [
+    {
+      "path": "examples/v2.0/json/api-with-examples.json",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v2.0/json/petstore-expanded.json",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v2.0/json/petstore-minimal.json",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v2.0/json/petstore-separate/common/Error.json",
+      "role": "referenced-fragment",
+      "nativeContentEqual": true,
+      "validated": false
+    },
+    {
+      "path": "examples/v2.0/json/petstore-separate/spec/NewPet.json",
+      "role": "referenced-fragment",
+      "nativeContentEqual": true,
+      "validated": false
+    },
+    {
+      "path": "examples/v2.0/json/petstore-separate/spec/Pet.json",
+      "role": "referenced-fragment",
+      "nativeContentEqual": true,
+      "validated": false
+    },
+    {
+      "path": "examples/v2.0/json/petstore-separate/spec/parameters.json",
+      "role": "referenced-fragment",
+      "nativeContentEqual": true,
+      "validated": false
+    },
+    {
+      "path": "examples/v2.0/json/petstore-separate/spec/swagger.json",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v2.0/json/petstore-simple.json",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v2.0/json/petstore-with-external-docs.json",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v2.0/json/petstore.json",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v2.0/json/uber.json",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v2.0/yaml/api-with-examples.yaml",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v2.0/yaml/petstore-expanded.yaml",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v2.0/yaml/petstore-minimal.yaml",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v2.0/yaml/petstore-separate/common/Error.yaml",
+      "role": "referenced-fragment",
+      "nativeContentEqual": true,
+      "validated": false
+    },
+    {
+      "path": "examples/v2.0/yaml/petstore-separate/spec/NewPet.yaml",
+      "role": "referenced-fragment",
+      "nativeContentEqual": true,
+      "validated": false
+    },
+    {
+      "path": "examples/v2.0/yaml/petstore-separate/spec/Pet.yaml",
+      "role": "referenced-fragment",
+      "nativeContentEqual": true,
+      "validated": false
+    },
+    {
+      "path": "examples/v2.0/yaml/petstore-separate/spec/parameters.yaml",
+      "role": "referenced-fragment",
+      "nativeContentEqual": true,
+      "validated": false
+    },
+    {
+      "path": "examples/v2.0/yaml/petstore-separate/spec/swagger.yaml",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v2.0/yaml/petstore-simple.yaml",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v2.0/yaml/petstore-with-external-docs.yaml",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v2.0/yaml/petstore.yaml",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v2.0/yaml/uber.yaml",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v3.0/api-with-examples.json",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v3.0/api-with-examples.yaml",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v3.0/callback-example.json",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v3.0/callback-example.yaml",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v3.0/link-example.json",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v3.0/link-example.yaml",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v3.0/petstore-expanded.json",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v3.0/petstore-expanded.yaml",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v3.0/petstore.json",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v3.0/petstore.yaml",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v3.0/uspto.json",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v3.0/uspto.yaml",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v3.1/non-oauth-scopes.json",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v3.1/non-oauth-scopes.yaml",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v3.1/tictactoe.json",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v3.1/tictactoe.yaml",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v3.1/webhook-example.json",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v3.1/webhook-example.yaml",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v3.2/3.2-query-example.json",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v3.2/3.2-query-example.yaml",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v3.2/3.2-tags-example.json",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    },
+    {
+      "path": "examples/v3.2/3.2-tags-example.yaml",
+      "role": "description",
+      "nativeContentEqual": true,
+      "validated": true
+    }
+  ],
+  "legacyCases": [
+    {
+      "version": "2.0",
+      "name": "missing-title",
+      "accepted": false
+    },
+    {
+      "version": "2.0",
+      "name": "missing-paths",
+      "accepted": false
+    },
+    {
+      "version": "2.0",
+      "name": "invalid-scheme",
+      "accepted": false
+    },
+    {
+      "version": "2.0",
+      "name": "valid",
+      "accepted": true
+    },
+    {
+      "version": "3.0.3",
+      "name": "missing-title",
+      "accepted": false
+    },
+    {
+      "version": "3.0.3",
+      "name": "missing-paths",
+      "accepted": false
+    },
+    {
+      "version": "3.0.3",
+      "name": "invalid-scheme",
+      "accepted": false
+    },
+    {
+      "version": "3.0.3",
+      "name": "valid",
+      "accepted": true
+    }
+  ],
+  "yamlProfile": "PyYAML safe loader with timestamp-tag literals retained as strings for the OpenAPI JSON-compatible profile",
+  "limits": [
+    "Eight referenced fragments are preserved as corpus resources but are not standalone OpenAPI documents",
+    "No referenced-file composition, HTTP runtime, parameter serialization or all-prose conformance evidence"
+  ]
+}

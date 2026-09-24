@@ -1,0 +1,7 @@
+{
+  "entrypoint": "main.tsp",
+  "files": {
+    "main.tsp": "import \"./common.tsp\";\nnamespace Sales;\n/** An order with recursive related orders and exact native literals. */\n@doc(\"Customer order — preserves Unicode and comments\")\nmodel Order extends Entity<string> {\n  state: OrderState;\n  total: string = 42;\n  cost: Money;\n  related?: Order[];\n  externalId?: 9007199254740993;\n}\nalias OrdersPage = Page<Order>;\nunion OrderResult { found: Order, absent: NotFound }\ninterface Orders {\n  read(id: string): OrderResult;\n  list(): OrdersPage;\n}\nconst retryCount = 3;\n",
+    "common.tsp": "// Shared definitions remain distinct source files.\nnamespace Sales;\n@pattern(\"^[A-Z]{3}$\")\nscalar CurrencyCode extends string;\nmodel Money { amount: decimal; currency: CurrencyCode; }\nmodel Entity<TId> { @key id: TId; }\nmodel Page<T> { data: T[]; next?: string; }\nenum OrderState { pending, shipped, cancelled }\n@error model NotFound { message: string; }\n"
+  }
+}

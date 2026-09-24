@@ -1,0 +1,19 @@
+{
+  "authority": "ODCS v3.2.0 docs/references.md and docs/examples/references/relationships.odcs.yaml at f0bdad95346905d500be5ef4b2c2d9b1d95223b7; expected paths are authored from those source elements, not a native execution engine",
+  "source": "native/odcs/sources/docs/examples/references/relationships.odcs.yaml",
+  "cases": [
+    {"reference":"customers.id","usage":"foreignKey","target":"/schema/0/properties/0"},
+    {"reference":"addresses.customer_id","usage":"foreignKey","target":"/schema/1/properties/0"},
+    {"reference":"addresses.address_street","usage":"foreignKey","error":"ODCS_REFERENCE_MISSING"},
+    {"reference":"orders.customer_id","usage":"foreignKey","target":"/schema/2/properties/1"},
+    {"reference":"orders.shipping_address_street","usage":"foreignKey","target":"/schema/2/properties/2"},
+    {"reference":"schema/addresses_obj/properties/address_street_prop","usage":"foreignKey","target":"/schema/1/properties/2"},
+    {"reference":"/schema/customers_obj","usage":"element","target":"/schema/0"},
+    {"reference":"#/schema/customers_obj/properties/customer_id_prop","usage":"foreignKey","target":"/schema/0/properties/0"},
+    {"reference":"schema/0/properties/0","usage":"foreignKey","error":"ODCS_REFERENCE_MISSING"},
+    {"reference":"schema/customers_obj","usage":"foreignKey","error":"ODCS_REFERENCE_TARGET"},
+    {"reference":"customers.id","usage":"element","error":"ODCS_REFERENCE_USAGE"},
+    {"reference":"other.yaml#/schema/customers_obj/properties/customer_id_prop","usage":"foreignKey","error":"ODCS_REFERENCE_EXTERNAL"},
+    {"reference":"schema/customers_obj/properties/customer%5fid","usage":"foreignKey","error":"ODCS_REFERENCE_SYNTAX"}
+  ]
+}

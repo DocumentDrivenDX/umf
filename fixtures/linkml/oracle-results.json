@@ -1,0 +1,348 @@
+{
+  "runtime": "Pinned linkml-model 1.11.0 classes, linkml-runtime 1.11.0rc2, jsonschema 4.25.1 without formats",
+  "outcomes": [
+    {
+      "id": "000",
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-array-1.yaml",
+      "native": "accepted",
+      "normalizedSchemaErrors": []
+    },
+    {
+      "id": "001",
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-array-2.yaml",
+      "native": "accepted",
+      "normalizedSchemaErrors": []
+    },
+    {
+      "id": "002",
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-dynamic-enums.yaml",
+      "native": "accepted",
+      "normalizedSchemaErrors": []
+    },
+    {
+      "id": "003",
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-enum_bindings-1.yaml",
+      "native": "accepted",
+      "normalizedSchemaErrors": []
+    },
+    {
+      "id": "004",
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-implements.yaml",
+      "native": "accepted",
+      "normalizedSchemaErrors": []
+    },
+    {
+      "id": "005",
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-instantiates.yaml",
+      "native": "accepted",
+      "normalizedSchemaErrors": []
+    },
+    {
+      "id": "006",
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-multivalued-in-any-of.yaml",
+      "native": "accepted",
+      "normalizedSchemaErrors": []
+    },
+    {
+      "id": "007",
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-native-array-1.yaml",
+      "native": "rejected",
+      "exception": "TypeError",
+      "message": "Annotation.__init__() got an unexpected keyword argument 'data'",
+      "normalizedSchemaErrors": []
+    },
+    {
+      "id": "008",
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-native-array-rgb.yaml",
+      "native": "accepted",
+      "normalizedSchemaErrors": []
+    },
+    {
+      "id": "009",
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-type_mappings-1.yaml",
+      "native": "accepted",
+      "normalizedSchemaErrors": [
+        {
+          "path": [
+            "classes",
+            "A"
+          ],
+          "message": "{'name': 'A', 'examples': [{'object': {'my_big_integer': 12345678901234567890, 'my_date': '2021-01-01'}}], 'attributes': {'my_big_integer': {'name': 'my_big_integer', 'type_mappings': [\"JsonObj(JSON=JsonObj(type='string', description='we serialize this as a string because some json implementations may implement as doubles'), PROTOBUF=JsonObj(type='int64'))\"], 'range': 'integer'}, 'my_date': {'name': 'my_date', 'type_mappings': [\"JsonObj(PYTHON=JsonObj(type='string'))\"], 'range': 'date'}}} is not valid under any of the given schemas"
+        }
+      ]
+    },
+    {
+      "id": "010",
+      "path": "native/linkml/examples/people.yaml",
+      "native": "accepted",
+      "normalizedSchemaErrors": []
+    }
+  ],
+  "results": [
+    {
+      "id": "000",
+      "format": "json",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "692bb44f05c6e223d08b4f9840bd5eb763e9f37147efce66994aaf083de5be8c",
+      "editedSha256": "27954cfad3745e526f9f0d5337d275b081f157c695009a5115b17db44e6b97f9"
+    },
+    {
+      "id": "000",
+      "format": "yaml",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "692bb44f05c6e223d08b4f9840bd5eb763e9f37147efce66994aaf083de5be8c",
+      "editedSha256": "27954cfad3745e526f9f0d5337d275b081f157c695009a5115b17db44e6b97f9"
+    },
+    {
+      "id": "001",
+      "format": "json",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "3ef325e48d7810f7876983e39a12d7e98d7a32a7477573aa01131bacc1eaa9c3",
+      "editedSha256": "a02bf2c5a969464989ee2b8291aae232c362d585090832b623fa55ed03ff13ce"
+    },
+    {
+      "id": "001",
+      "format": "yaml",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "3ef325e48d7810f7876983e39a12d7e98d7a32a7477573aa01131bacc1eaa9c3",
+      "editedSha256": "a02bf2c5a969464989ee2b8291aae232c362d585090832b623fa55ed03ff13ce"
+    },
+    {
+      "id": "002",
+      "format": "json",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "4eb68dd1daf2b035a40dfb4d9e1044db0a34143c90d089ddb517ce5bf5fb3f4c",
+      "editedSha256": "7f24e2b48bbf8491e4caf48e985710cd7e1e287ed638c62bef6b54279a4ab45f"
+    },
+    {
+      "id": "002",
+      "format": "yaml",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "4eb68dd1daf2b035a40dfb4d9e1044db0a34143c90d089ddb517ce5bf5fb3f4c",
+      "editedSha256": "7f24e2b48bbf8491e4caf48e985710cd7e1e287ed638c62bef6b54279a4ab45f"
+    },
+    {
+      "id": "003",
+      "format": "json",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "3bee7f337948c26d4c293835cf3779a771dc81a4950ef325f3ad5d8be9d3b5b8",
+      "editedSha256": "722d8cd8b18ce05a164458999d82b294f90f18d3f9646a951bf6e68b73dc4a63"
+    },
+    {
+      "id": "003",
+      "format": "yaml",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "3bee7f337948c26d4c293835cf3779a771dc81a4950ef325f3ad5d8be9d3b5b8",
+      "editedSha256": "722d8cd8b18ce05a164458999d82b294f90f18d3f9646a951bf6e68b73dc4a63"
+    },
+    {
+      "id": "004",
+      "format": "json",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "3ce0e1c75a73a378e07bac016c40260bb3d2c4cb0114e8b69bce59e832c670af",
+      "editedSha256": "bc7b98db1e117bae7568c449b53ec5d92688c1a6c442f1cc4149007e9a266a83"
+    },
+    {
+      "id": "004",
+      "format": "yaml",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "3ce0e1c75a73a378e07bac016c40260bb3d2c4cb0114e8b69bce59e832c670af",
+      "editedSha256": "bc7b98db1e117bae7568c449b53ec5d92688c1a6c442f1cc4149007e9a266a83"
+    },
+    {
+      "id": "005",
+      "format": "json",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "e76a6337b436b699b0a17841f7c032e83d6ce934c3a75497dd1a7af83a4a25f4",
+      "editedSha256": "b7ad5073947f0e7028a8bef33eb423b81ccd9b9aaf802cddc057e461fc809437"
+    },
+    {
+      "id": "005",
+      "format": "yaml",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "e76a6337b436b699b0a17841f7c032e83d6ce934c3a75497dd1a7af83a4a25f4",
+      "editedSha256": "b7ad5073947f0e7028a8bef33eb423b81ccd9b9aaf802cddc057e461fc809437"
+    },
+    {
+      "id": "006",
+      "format": "json",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "b00e2b3eaf6dcb27a5de9674227e295fc86df5ae3d1fb104d673c0c30743bdb4",
+      "editedSha256": "60148a276486e5260e893b39d7326d0936dd9332fb959606b957d5475d29bd45"
+    },
+    {
+      "id": "006",
+      "format": "yaml",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "b00e2b3eaf6dcb27a5de9674227e295fc86df5ae3d1fb104d673c0c30743bdb4",
+      "editedSha256": "60148a276486e5260e893b39d7326d0936dd9332fb959606b957d5475d29bd45"
+    },
+    {
+      "id": "007",
+      "format": "json",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "rejected",
+      "candidateNativeOutcome": "rejected",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "5ba603f36a4cd5b5eb80800b6885dd42db5f4fd32f9b36f67f47f7deb2ed215c",
+      "editedSha256": "8067a7227c00503a8a75f67c501b6a4ecbf9789ad9c73833ff3d5cb85c121fa5"
+    },
+    {
+      "id": "007",
+      "format": "yaml",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "rejected",
+      "candidateNativeOutcome": "rejected",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "5ba603f36a4cd5b5eb80800b6885dd42db5f4fd32f9b36f67f47f7deb2ed215c",
+      "editedSha256": "8067a7227c00503a8a75f67c501b6a4ecbf9789ad9c73833ff3d5cb85c121fa5"
+    },
+    {
+      "id": "008",
+      "format": "json",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "2e65ec7ee862193ba9693e9b63dbf47f0cde9e3b2dff2e1635c5ab3bbeba25f8",
+      "editedSha256": "2a6df46ced20b1c1d84664a489fc157d5cbd2f3b185e4a9b351bb9d6ddac939c"
+    },
+    {
+      "id": "008",
+      "format": "yaml",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "2e65ec7ee862193ba9693e9b63dbf47f0cde9e3b2dff2e1635c5ab3bbeba25f8",
+      "editedSha256": "2a6df46ced20b1c1d84664a489fc157d5cbd2f3b185e4a9b351bb9d6ddac939c"
+    },
+    {
+      "id": "009",
+      "format": "json",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "86de1d1f06239fdd14df5655e47b6c70659b590903d1b2d9520d7f42530c881e",
+      "editedSha256": "ca27f94ba07069f928c512bd2f7b606e30c55b518ebb5afc630ae43254e9ab01"
+    },
+    {
+      "id": "009",
+      "format": "yaml",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "86de1d1f06239fdd14df5655e47b6c70659b590903d1b2d9520d7f42530c881e",
+      "editedSha256": "ca27f94ba07069f928c512bd2f7b606e30c55b518ebb5afc630ae43254e9ab01"
+    },
+    {
+      "id": "010",
+      "format": "json",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "b32645d6ef5d8b28df8635958d6b92c31d9efe7428c479c21176dda0a0a3901e",
+      "editedSha256": "25a58fdd1df401319d0ec43142bfbcb06328056591e015a8a8d12d4f50ccfb91"
+    },
+    {
+      "id": "010",
+      "format": "yaml",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "b32645d6ef5d8b28df8635958d6b92c31d9efe7428c479c21176dda0a0a3901e",
+      "editedSha256": "25a58fdd1df401319d0ec43142bfbcb06328056591e015a8a8d12d4f50ccfb91"
+    }
+  ],
+  "limits": "Loader normalization/rejection evidence; no import resolution, induced schema, instance validation or generator execution"
+}

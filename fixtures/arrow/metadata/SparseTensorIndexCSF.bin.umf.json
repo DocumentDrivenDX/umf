@@ -1,0 +1,58 @@
+{
+  "rootType": "SparseTensor",
+  "value": {
+    "type": {
+      "type": "Int",
+      "value": {
+        "bitWidth": 64,
+        "is_signed": true
+      }
+    },
+    "shape": [
+      {
+        "size": "2"
+      },
+      {
+        "size": "2"
+      }
+    ],
+    "non_zero_length": "2",
+    "sparseIndex": {
+      "type": "SparseTensorIndexCSF",
+      "value": {
+        "indptrType": {
+          "bitWidth": 32,
+          "is_signed": true
+        },
+        "indptrBuffers": [
+          {
+            "offset": "0",
+            "length": "8"
+          }
+        ],
+        "indicesType": {
+          "bitWidth": 32,
+          "is_signed": true
+        },
+        "indicesBuffers": [
+          {
+            "offset": "0",
+            "length": "8"
+          },
+          {
+            "offset": "0",
+            "length": "8"
+          }
+        ],
+        "axisOrder": [
+          0,
+          1
+        ]
+      }
+    },
+    "data": {
+      "offset": "0",
+      "length": "16"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{"checkpointMetadata":{"version":10}}
+{"protocol":{"minReaderVersion":3,"minWriterVersion":7,"readerFeatures":["v2Checkpoint"],"writerFeatures":["v2Checkpoint"]}}
+{"metaData":{"id":"12345678-1234-1234-1234-123456789abc","format":{"provider":"parquet","options":{}},"schemaString":"{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}","partitionColumns":[],"configuration":{},"name":"renamed","description":"metadata replaced"}}
+{"txn":{"appId":"job","version":2}}
+{"txn":{"appId":"other","version":9223372036854775807}}
+{"sidecar":{"path":"part-0.parquet","sizeInBytes":4221,"modificationTime":0,"tags":{"fixture":"authored"}}}
+{"sidecar":{"path":"part-1.parquet","sizeInBytes":3887,"modificationTime":0,"tags":{"fixture":"authored"}}}

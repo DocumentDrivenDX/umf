@@ -1,0 +1,58 @@
+[
+  {
+    "rowGroup": 0,
+    "column": 0,
+    "offset": 4,
+    "headerBytes": 14,
+    "bodyOffset": 18,
+    "bodyBytes": 14,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "12",
+      "compressed_page_size": "14",
+      "dictionary_page_header": {
+        "num_values": "3",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "ffe0f505011f0afa00000000",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 0,
+    "offset": 32,
+    "headerBytes": 45,
+    "bodyOffset": 77,
+    "bodyBytes": 13,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "11",
+      "compressed_page_size": "13",
+      "data_page_header": {
+        "num_values": "5",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3",
+        "statistics": {
+          "max": {
+            "hex": "ffe0f505"
+          },
+          "min": {
+            "hex": "011f0afa"
+          },
+          "null_count": "2",
+          "max_value": {
+            "hex": "ffe0f505"
+          },
+          "min_value": {
+            "hex": "011f0afa"
+          }
+        }
+      }
+    },
+    "bodyHex": "03000000036a0002032400",
+    "checksum": "absent"
+  }
+]

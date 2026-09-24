@@ -1,0 +1,1832 @@
+{
+  "jars": {
+    "jsonschema": "47584feccfe5879ba438d6ab11a646f890bd606ff39c82849c75be1f642fb493",
+    "model": "816e2cbbf8a62895d484e481e1d7beb1e4e929dec0cfbdda8c160d69402f750b",
+    "utils": "1d89fa0624ebf8e0f3032cc6b8283ee58335d3ee43e1826b24b1e951b3bdf8d2"
+  },
+  "runtimeSha256": "84bcb5837178a2679789ae5e6eb34530acf37ed48db1ecf4fd378e7a52c81556",
+  "profile": "native-root-definition-2020-12",
+  "cases": [
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/default-values.smithy",
+      "rootShape": "smithy.example#Foo",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"bam\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"default\":[]},\"bar\":{\"type\":\"number\",\"default\":0},\"bat\":{\"allOf\":[{\"$ref\":\"#/$defs/TestEnum\"},{\"default\":\"FOO\"}]},\"baz\":{\"type\":\"string\",\"default\":\"\"}},\"$defs\":{\"TestEnum\":{\"type\":\"string\",\"enum\":[\"FOO\",\"BAR\"]}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"bam\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"default\":[]},\"bar\":{\"type\":\"number\",\"default\":0},\"bat\":{\"allOf\":[{\"$ref\":\"#/$defs/TestEnum\"},{\"default\":\"FOO\"}]},\"baz\":{\"type\":\"string\",\"default\":\"\"}},\"$defs\":{\"Foo\":{\"type\":\"object\",\"properties\":{\"bam\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"default\":[]},\"bar\":{\"type\":\"number\",\"default\":0},\"bat\":{\"allOf\":[{\"$ref\":\"#/$defs/TestEnum\"},{\"default\":\"FOO\"}]},\"baz\":{\"type\":\"string\",\"default\":\"\"}}},\"TestEnum\":{\"type\":\"string\",\"enum\":[\"FOO\",\"BAR\"]}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"bam\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"default\":[]},\"bar\":{\"type\":\"number\",\"default\":0},\"bat\":{\"allOf\":[{\"$ref\":\"#/$defs/TestEnum\"},{\"default\":\"FOO\"}]},\"baz\":{\"type\":\"string\",\"default\":\"\"}},\"$defs\":{\"Foo\":{\"type\":\"object\",\"properties\":{\"bam\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"default\":[]},\"bar\":{\"type\":\"number\",\"default\":0},\"bat\":{\"allOf\":[{\"$ref\":\"#/$defs/TestEnum\"},{\"default\":\"FOO\"}]},\"baz\":{\"type\":\"string\",\"default\":\"\"}}},\"TestEnum\":{\"type\":\"string\",\"enum\":[\"FOO\",\"BAR\"]}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/default-values.smithy",
+      "rootShape": "smithy.example#StringList",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"array\",\"items\":{\"type\":\"string\"}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"array\",\"items\":{\"type\":\"string\"},\"$defs\":{\"StringList\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"array\",\"items\":{\"type\":\"string\"},\"$defs\":{\"StringList\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/default-values.smithy",
+      "rootShape": "smithy.example#TestEnum",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"enum\":[\"FOO\",\"BAR\"]}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"enum\":[\"FOO\",\"BAR\"],\"$defs\":{\"TestEnum\":{\"type\":\"string\",\"enum\":[\"FOO\",\"BAR\"]}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"enum\":[\"FOO\",\"BAR\"],\"$defs\":{\"TestEnum\":{\"type\":\"string\",\"enum\":[\"FOO\",\"BAR\"]}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/int-enums.smithy",
+      "rootShape": "smithy.example#Foo",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"bar\":{\"$ref\":\"#/$defs/TestIntEnum\"}},\"$defs\":{\"TestIntEnum\":{\"type\":\"number\",\"enum\":[1,2]}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"bar\":{\"$ref\":\"#/$defs/TestIntEnum\"}},\"$defs\":{\"Foo\":{\"type\":\"object\",\"properties\":{\"bar\":{\"$ref\":\"#/$defs/TestIntEnum\"}}},\"TestIntEnum\":{\"type\":\"number\",\"enum\":[1,2]}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"bar\":{\"$ref\":\"#/$defs/TestIntEnum\"}},\"$defs\":{\"Foo\":{\"type\":\"object\",\"properties\":{\"bar\":{\"$ref\":\"#/$defs/TestIntEnum\"}}},\"TestIntEnum\":{\"type\":\"number\",\"enum\":[1,2]}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/int-enums.smithy",
+      "rootShape": "smithy.example#TestIntEnum",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"number\",\"enum\":[1,2]}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"number\",\"enum\":[1,2],\"$defs\":{\"TestIntEnum\":{\"type\":\"number\",\"enum\":[1,2]}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"number\",\"enum\":[1,2],\"$defs\":{\"TestIntEnum\":{\"type\":\"number\",\"enum\":[1,2]}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/integer-types.smithy",
+      "rootShape": "smithy.example#Integers",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"byte\":{\"type\":\"number\"},\"int\":{\"type\":\"number\"},\"long\":{\"type\":\"number\"},\"short\":{\"type\":\"number\"}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"byte\":{\"type\":\"number\"},\"int\":{\"type\":\"number\"},\"long\":{\"type\":\"number\"},\"short\":{\"type\":\"number\"}},\"$defs\":{\"Integers\":{\"type\":\"object\",\"properties\":{\"byte\":{\"type\":\"number\"},\"int\":{\"type\":\"number\"},\"long\":{\"type\":\"number\"},\"short\":{\"type\":\"number\"}}}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"byte\":{\"type\":\"number\"},\"int\":{\"type\":\"number\"},\"long\":{\"type\":\"number\"},\"short\":{\"type\":\"number\"}},\"$defs\":{\"Integers\":{\"type\":\"object\",\"properties\":{\"byte\":{\"type\":\"number\"},\"int\":{\"type\":\"number\"},\"long\":{\"type\":\"number\"},\"short\":{\"type\":\"number\"}}}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/member-documentation.smithy",
+      "rootShape": "smithy.example#Bar",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\"}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"$defs\":{\"Bar\":{\"type\":\"object\"}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"$defs\":{\"Bar\":{\"type\":\"object\"}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/member-documentation.smithy",
+      "rootShape": "smithy.example#Foo",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"bar\":{\"$ref\":\"#/$defs/Bar\"},\"foo\":{\"type\":\"string\",\"description\":\"simple docs\"}},\"$defs\":{\"Bar\":{\"type\":\"object\"}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"bar\":{\"$ref\":\"#/$defs/Bar\"},\"foo\":{\"type\":\"string\",\"description\":\"simple docs\"}},\"$defs\":{\"Bar\":{\"type\":\"object\"},\"Foo\":{\"type\":\"object\",\"properties\":{\"bar\":{\"$ref\":\"#/$defs/Bar\"},\"foo\":{\"type\":\"string\",\"description\":\"simple docs\"}}}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"bar\":{\"$ref\":\"#/$defs/Bar\"},\"foo\":{\"type\":\"string\",\"description\":\"simple docs\"}},\"$defs\":{\"Bar\":{\"type\":\"object\"},\"Foo\":{\"type\":\"object\",\"properties\":{\"bar\":{\"$ref\":\"#/$defs/Bar\"},\"foo\":{\"type\":\"string\",\"description\":\"simple docs\"}}}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/model-with-mixins.smithy",
+      "rootShape": "smithy.example#Mixin",
+      "error": "software.amazon.smithy.jsonschema.SmithyJsonSchemaException: Invalid member: (member: `smithy.example#Mixin$foo`)",
+      "agrees": true,
+      "targetRoundTrip": null,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_EMISSION_FAILED",
+          "classification": "unsupported",
+          "detail": "Error: Invalid member: (member: `smithy.example#Mixin$foo`)",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/model-with-mixins.smithy",
+      "rootShape": "smithy.example#UsesMixin",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"baz\":{\"type\":\"string\"},\"foo\":{\"type\":\"string\"}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"baz\":{\"type\":\"string\"},\"foo\":{\"type\":\"string\"}},\"$defs\":{\"UsesMixin\":{\"type\":\"object\",\"properties\":{\"baz\":{\"type\":\"string\"},\"foo\":{\"type\":\"string\"}}}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"baz\":{\"type\":\"string\"},\"foo\":{\"type\":\"string\"}},\"$defs\":{\"UsesMixin\":{\"type\":\"object\",\"properties\":{\"baz\":{\"type\":\"string\"},\"foo\":{\"type\":\"string\"}}}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/multiple-closures-with-conflicting-shapes.json",
+      "rootShape": "com.bar#ConflictString",
+      "error": "software.amazon.smithy.jsonschema.ConflictingShapeNameException: Shape (string: `com.foo#ConflictString`) conflicts with com.bar#ConflictString using a JSON schema pointer of #/$defs/ConflictString",
+      "agrees": true,
+      "targetRoundTrip": null,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_EMISSION_FAILED",
+          "classification": "unsupported",
+          "detail": "Error: Shape (string: `com.foo#ConflictString`) conflicts with com.bar#ConflictString using a JSON schema pointer of #/$defs/ConflictString",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/multiple-closures-with-conflicting-shapes.json",
+      "rootShape": "com.bar#StructureB",
+      "error": "software.amazon.smithy.jsonschema.ConflictingShapeNameException: Shape (string: `com.foo#ConflictString`) conflicts with com.bar#ConflictString using a JSON schema pointer of #/$defs/ConflictString",
+      "agrees": true,
+      "targetRoundTrip": null,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_EMISSION_FAILED",
+          "classification": "unsupported",
+          "detail": "Error: Shape (string: `com.foo#ConflictString`) conflicts with com.bar#ConflictString using a JSON schema pointer of #/$defs/ConflictString",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/multiple-closures-with-conflicting-shapes.json",
+      "rootShape": "com.foo#ConflictString",
+      "error": "software.amazon.smithy.jsonschema.ConflictingShapeNameException: Shape (string: `com.foo#ConflictString`) conflicts with com.bar#ConflictString using a JSON schema pointer of #/$defs/ConflictString",
+      "agrees": true,
+      "targetRoundTrip": null,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_EMISSION_FAILED",
+          "classification": "unsupported",
+          "detail": "Error: Shape (string: `com.foo#ConflictString`) conflicts with com.bar#ConflictString using a JSON schema pointer of #/$defs/ConflictString",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/multiple-closures-with-conflicting-shapes.json",
+      "rootShape": "com.foo#StructureA",
+      "error": "software.amazon.smithy.jsonschema.ConflictingShapeNameException: Shape (string: `com.foo#ConflictString`) conflicts with com.bar#ConflictString using a JSON schema pointer of #/$defs/ConflictString",
+      "agrees": true,
+      "targetRoundTrip": null,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_EMISSION_FAILED",
+          "classification": "unsupported",
+          "detail": "Error: Shape (string: `com.foo#ConflictString`) conflicts with com.bar#ConflictString using a JSON schema pointer of #/$defs/ConflictString",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/multiple-closures.json",
+      "rootShape": "com.foo#ReferencedA",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\"}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"$defs\":{\"ReferencedA\":{\"type\":\"object\"}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"$defs\":{\"ReferencedA\":{\"type\":\"object\"}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/multiple-closures.json",
+      "rootShape": "com.foo#ReferencedB",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\"}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"$defs\":{\"ReferencedB\":{\"type\":\"object\"}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"$defs\":{\"ReferencedB\":{\"type\":\"object\"}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/multiple-closures.json",
+      "rootShape": "com.foo#StructureA",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"a\":{\"$ref\":\"#/$defs/ReferencedA\"}},\"$defs\":{\"ReferencedA\":{\"type\":\"object\"}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"a\":{\"$ref\":\"#/$defs/ReferencedA\"}},\"$defs\":{\"ReferencedA\":{\"type\":\"object\"},\"StructureA\":{\"type\":\"object\",\"properties\":{\"a\":{\"$ref\":\"#/$defs/ReferencedA\"}}}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"a\":{\"$ref\":\"#/$defs/ReferencedA\"}},\"$defs\":{\"ReferencedA\":{\"type\":\"object\"},\"StructureA\":{\"type\":\"object\",\"properties\":{\"a\":{\"$ref\":\"#/$defs/ReferencedA\"}}}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/multiple-closures.json",
+      "rootShape": "com.foo#StructureB",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"a\":{\"$ref\":\"#/$defs/ReferencedB\"}},\"$defs\":{\"ReferencedB\":{\"type\":\"object\"}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"a\":{\"$ref\":\"#/$defs/ReferencedB\"}},\"$defs\":{\"ReferencedB\":{\"type\":\"object\"},\"StructureB\":{\"type\":\"object\",\"properties\":{\"a\":{\"$ref\":\"#/$defs/ReferencedB\"}}}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"a\":{\"$ref\":\"#/$defs/ReferencedB\"}},\"$defs\":{\"ReferencedB\":{\"type\":\"object\"},\"StructureB\":{\"type\":\"object\",\"properties\":{\"a\":{\"$ref\":\"#/$defs/ReferencedB\"}}}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/non-numeric-floats.json",
+      "rootShape": "example.smithy#MyOperationInput",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"doubleMember\":{\"type\":\"number\"},\"floatMember\":{\"type\":\"number\"}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"doubleMember\":{\"type\":\"number\"},\"floatMember\":{\"type\":\"number\"}},\"$defs\":{\"MyOperationInput\":{\"type\":\"object\",\"properties\":{\"doubleMember\":{\"type\":\"number\"},\"floatMember\":{\"type\":\"number\"}}}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"doubleMember\":{\"type\":\"number\"},\"floatMember\":{\"type\":\"number\"}},\"$defs\":{\"MyOperationInput\":{\"type\":\"object\",\"properties\":{\"doubleMember\":{\"type\":\"number\"},\"floatMember\":{\"type\":\"number\"}}}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/recursive.json",
+      "rootShape": "example.rest#Foo",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"bar\":{\"type\":\"string\"},\"foo\":{\"$ref\":\"#/$defs/Foo\"}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"bar\":{\"type\":\"string\"},\"foo\":{\"$ref\":\"#/$defs/Foo\"}},\"$defs\":{\"Foo\":{\"type\":\"object\",\"properties\":{\"bar\":{\"type\":\"string\"},\"foo\":{\"$ref\":\"#/$defs/Foo\"}}}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"bar\":{\"type\":\"string\"},\"foo\":{\"$ref\":\"#/$defs/Foo\"}},\"$defs\":{\"Foo\":{\"type\":\"object\",\"properties\":{\"bar\":{\"type\":\"string\"},\"foo\":{\"$ref\":\"#/$defs/Foo\"}}}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/service-renames.json",
+      "rootShape": "foo.example#Widget",
+      "error": "software.amazon.smithy.jsonschema.ConflictingShapeNameException: Shape (structure: `smithy.example#Widget`) conflicts with foo.example#Widget using a JSON schema pointer of #/$defs/Widget",
+      "agrees": true,
+      "targetRoundTrip": null,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_EMISSION_FAILED",
+          "classification": "unsupported",
+          "detail": "Error: Shape (structure: `smithy.example#Widget`) conflicts with foo.example#Widget using a JSON schema pointer of #/$defs/Widget",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/service-renames.json",
+      "rootShape": "smithy.example#GetSomethingOutput",
+      "error": "software.amazon.smithy.jsonschema.ConflictingShapeNameException: Shape (structure: `smithy.example#Widget`) conflicts with foo.example#Widget using a JSON schema pointer of #/$defs/Widget",
+      "agrees": true,
+      "targetRoundTrip": null,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_EMISSION_FAILED",
+          "classification": "unsupported",
+          "detail": "Error: Shape (structure: `smithy.example#Widget`) conflicts with foo.example#Widget using a JSON schema pointer of #/$defs/Widget",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/service-renames.json",
+      "rootShape": "smithy.example#Widget",
+      "error": "software.amazon.smithy.jsonschema.ConflictingShapeNameException: Shape (structure: `smithy.example#Widget`) conflicts with foo.example#Widget using a JSON schema pointer of #/$defs/Widget",
+      "agrees": true,
+      "targetRoundTrip": null,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_EMISSION_FAILED",
+          "classification": "unsupported",
+          "detail": "Error: Shape (structure: `smithy.example#Widget`) conflicts with foo.example#Widget using a JSON schema pointer of #/$defs/Widget",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/string-enums.smithy",
+      "rootShape": "smithy.example#Foo",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"bar\":{\"$ref\":\"#/$defs/TestEnum\"}},\"$defs\":{\"TestEnum\":{\"type\":\"string\",\"enum\":[\"Foo\",\"Bar\"],\"description\":\"This is a test enum\"}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"bar\":{\"$ref\":\"#/$defs/TestEnum\"}},\"$defs\":{\"Foo\":{\"type\":\"object\",\"properties\":{\"bar\":{\"$ref\":\"#/$defs/TestEnum\"}}},\"TestEnum\":{\"type\":\"string\",\"enum\":[\"Foo\",\"Bar\"],\"description\":\"This is a test enum\"}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"bar\":{\"$ref\":\"#/$defs/TestEnum\"}},\"$defs\":{\"Foo\":{\"type\":\"object\",\"properties\":{\"bar\":{\"$ref\":\"#/$defs/TestEnum\"}}},\"TestEnum\":{\"type\":\"string\",\"enum\":[\"Foo\",\"Bar\"],\"description\":\"This is a test enum\"}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/string-enums.smithy",
+      "rootShape": "smithy.example#TestEnum",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"enum\":[\"Foo\",\"Bar\"],\"description\":\"This is a test enum\"}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"enum\":[\"Foo\",\"Bar\"],\"description\":\"This is a test enum\",\"$defs\":{\"TestEnum\":{\"type\":\"string\",\"enum\":[\"Foo\",\"Bar\"],\"description\":\"This is a test enum\"}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"enum\":[\"Foo\",\"Bar\"],\"description\":\"This is a test enum\",\"$defs\":{\"TestEnum\":{\"type\":\"string\",\"enum\":[\"Foo\",\"Bar\"],\"description\":\"This is a test enum\"}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/test-service.json",
+      "rootShape": "example.rest#Blob",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\"}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"$defs\":{\"Blob\":{\"type\":\"string\"}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"$defs\":{\"Blob\":{\"type\":\"string\"}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/test-service.json",
+      "rootShape": "example.rest#CreateDocumentInput",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"abc\":{\"type\":\"string\",\"maxLength\":100,\"minLength\":1},\"def\":{\"type\":\"number\"},\"hij\":{\"$ref\":\"#/$defs/Map\"},\"query\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"description\":\"Query list member reference docs!\"},\"maxItems\":10,\"minItems\":0,\"description\":\"Query list docs!\"},\"stringDateTime\":{\"type\":\"string\",\"format\":\"date-time\"}},\"$defs\":{\"Map\":{\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\",\"pattern\":\"^[a-z]+$\"},\"propertyNames\":{\"type\":\"string\",\"maxLength\":10,\"minLength\":2}}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"abc\":{\"type\":\"string\",\"maxLength\":100,\"minLength\":1},\"def\":{\"type\":\"number\"},\"hij\":{\"$ref\":\"#/$defs/Map\"},\"query\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"description\":\"Query list member reference docs!\"},\"maxItems\":10,\"minItems\":0,\"description\":\"Query list docs!\"},\"stringDateTime\":{\"type\":\"string\",\"format\":\"date-time\"}},\"$defs\":{\"CreateDocumentInput\":{\"type\":\"object\",\"properties\":{\"abc\":{\"type\":\"string\",\"maxLength\":100,\"minLength\":1},\"def\":{\"type\":\"number\"},\"hij\":{\"$ref\":\"#/$defs/Map\"},\"query\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"description\":\"Query list member reference docs!\"},\"maxItems\":10,\"minItems\":0,\"description\":\"Query list docs!\"},\"stringDateTime\":{\"type\":\"string\",\"format\":\"date-time\"}}},\"Map\":{\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\",\"pattern\":\"^[a-z]+$\"},\"propertyNames\":{\"type\":\"string\",\"maxLength\":10,\"minLength\":2}}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"abc\":{\"type\":\"string\",\"maxLength\":100,\"minLength\":1},\"def\":{\"type\":\"number\"},\"hij\":{\"$ref\":\"#/$defs/Map\"},\"query\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"description\":\"Query list member reference docs!\"},\"maxItems\":10,\"minItems\":0,\"description\":\"Query list docs!\"},\"stringDateTime\":{\"type\":\"string\",\"format\":\"date-time\"}},\"$defs\":{\"CreateDocumentInput\":{\"type\":\"object\",\"properties\":{\"abc\":{\"type\":\"string\",\"maxLength\":100,\"minLength\":1},\"def\":{\"type\":\"number\"},\"hij\":{\"$ref\":\"#/$defs/Map\"},\"query\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"description\":\"Query list member reference docs!\"},\"maxItems\":10,\"minItems\":0,\"description\":\"Query list docs!\"},\"stringDateTime\":{\"type\":\"string\",\"format\":\"date-time\"}}},\"Map\":{\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\",\"pattern\":\"^[a-z]+$\"},\"propertyNames\":{\"type\":\"string\",\"maxLength\":10,\"minLength\":2}}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/test-service.json",
+      "rootShape": "example.rest#CreateDocumentOutput",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"baz\":{\"type\":\"string\"},\"foo\":{\"type\":\"string\"},\"list\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"maxItems\":10,\"minItems\":0},\"taggedUnion\":{\"$ref\":\"#/$defs/TaggedUnion\"},\"time\":{\"type\":\"string\",\"format\":\"date-time\"}},\"$defs\":{\"TaggedUnion\":{\"oneOf\":[{\"type\":\"object\",\"required\":[\"a\"],\"properties\":{\"a\":{\"type\":\"string\"}},\"title\":\"a\"},{\"type\":\"object\",\"required\":[\"b\"],\"properties\":{\"b\":{\"type\":\"string\"}},\"title\":\"b\"},{\"type\":\"object\",\"required\":[\"c\"],\"properties\":{\"c\":{\"$ref\":\"#/$defs/Unit\"}},\"title\":\"c\"}]},\"Unit\":{\"type\":\"object\"}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"baz\":{\"type\":\"string\"},\"foo\":{\"type\":\"string\"},\"list\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"maxItems\":10,\"minItems\":0},\"taggedUnion\":{\"$ref\":\"#/$defs/TaggedUnion\"},\"time\":{\"type\":\"string\",\"format\":\"date-time\"}},\"$defs\":{\"CreateDocumentOutput\":{\"type\":\"object\",\"properties\":{\"baz\":{\"type\":\"string\"},\"foo\":{\"type\":\"string\"},\"list\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"maxItems\":10,\"minItems\":0},\"taggedUnion\":{\"$ref\":\"#/$defs/TaggedUnion\"},\"time\":{\"type\":\"string\",\"format\":\"date-time\"}}},\"TaggedUnion\":{\"oneOf\":[{\"type\":\"object\",\"required\":[\"a\"],\"properties\":{\"a\":{\"type\":\"string\"}},\"title\":\"a\"},{\"type\":\"object\",\"required\":[\"b\"],\"properties\":{\"b\":{\"type\":\"string\"}},\"title\":\"b\"},{\"type\":\"object\",\"required\":[\"c\"],\"properties\":{\"c\":{\"$ref\":\"#/$defs/Unit\"}},\"title\":\"c\"}]},\"Unit\":{\"type\":\"object\"}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"baz\":{\"type\":\"string\"},\"foo\":{\"type\":\"string\"},\"list\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"maxItems\":10,\"minItems\":0},\"taggedUnion\":{\"$ref\":\"#/$defs/TaggedUnion\"},\"time\":{\"type\":\"string\",\"format\":\"date-time\"}},\"$defs\":{\"CreateDocumentOutput\":{\"type\":\"object\",\"properties\":{\"baz\":{\"type\":\"string\"},\"foo\":{\"type\":\"string\"},\"list\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"maxItems\":10,\"minItems\":0},\"taggedUnion\":{\"$ref\":\"#/$defs/TaggedUnion\"},\"time\":{\"type\":\"string\",\"format\":\"date-time\"}}},\"TaggedUnion\":{\"oneOf\":[{\"type\":\"object\",\"required\":[\"a\"],\"properties\":{\"a\":{\"type\":\"string\"}},\"title\":\"a\"},{\"type\":\"object\",\"required\":[\"b\"],\"properties\":{\"b\":{\"type\":\"string\"}},\"title\":\"b\"},{\"type\":\"object\",\"required\":[\"c\"],\"properties\":{\"c\":{\"$ref\":\"#/$defs/Unit\"}},\"title\":\"c\"}]},\"Unit\":{\"type\":\"object\"}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/test-service.json",
+      "rootShape": "example.rest#EnumString",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"enum\":[\"a\",\"c\"]}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"enum\":[\"a\",\"c\"],\"$defs\":{\"EnumString\":{\"type\":\"string\",\"enum\":[\"a\",\"c\"]}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"enum\":[\"a\",\"c\"],\"$defs\":{\"EnumString\":{\"type\":\"string\",\"enum\":[\"a\",\"c\"]}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/test-service.json",
+      "rootShape": "example.rest#Integer",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"number\"}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"number\",\"$defs\":{\"Integer\":{\"type\":\"number\"}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"number\",\"$defs\":{\"Integer\":{\"type\":\"number\"}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/test-service.json",
+      "rootShape": "example.rest#List",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"array\",\"items\":{\"type\":\"string\"},\"maxItems\":10,\"minItems\":0}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"array\",\"items\":{\"type\":\"string\"},\"maxItems\":10,\"minItems\":0,\"$defs\":{\"List\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"maxItems\":10,\"minItems\":0}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"array\",\"items\":{\"type\":\"string\"},\"maxItems\":10,\"minItems\":0,\"$defs\":{\"List\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"maxItems\":10,\"minItems\":0}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/test-service.json",
+      "rootShape": "example.rest#Map",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\",\"pattern\":\"^[a-z]+$\"},\"propertyNames\":{\"type\":\"string\",\"maxLength\":10,\"minLength\":2}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\",\"pattern\":\"^[a-z]+$\"},\"propertyNames\":{\"type\":\"string\",\"maxLength\":10,\"minLength\":2},\"$defs\":{\"Map\":{\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\",\"pattern\":\"^[a-z]+$\"},\"propertyNames\":{\"type\":\"string\",\"maxLength\":10,\"minLength\":2}}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\",\"pattern\":\"^[a-z]+$\"},\"propertyNames\":{\"type\":\"string\",\"maxLength\":10,\"minLength\":2},\"$defs\":{\"Map\":{\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\",\"pattern\":\"^[a-z]+$\"},\"propertyNames\":{\"type\":\"string\",\"maxLength\":10,\"minLength\":2}}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/test-service.json",
+      "rootShape": "example.rest#PutPayloadInput",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"required\":[\"path\"],\"properties\":{\"enum\":{\"$ref\":\"#/$defs/EnumString\"},\"body\":{\"type\":\"string\"},\"header\":{\"type\":\"string\"},\"path\":{\"type\":\"string\"},\"query\":{\"type\":\"number\"},\"timeQuery\":{\"type\":\"string\",\"format\":\"date-time\"}},\"$defs\":{\"EnumString\":{\"type\":\"string\",\"enum\":[\"a\",\"c\"]}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"required\":[\"path\"],\"properties\":{\"enum\":{\"$ref\":\"#/$defs/EnumString\"},\"body\":{\"type\":\"string\"},\"header\":{\"type\":\"string\"},\"path\":{\"type\":\"string\"},\"query\":{\"type\":\"number\"},\"timeQuery\":{\"type\":\"string\",\"format\":\"date-time\"}},\"$defs\":{\"EnumString\":{\"type\":\"string\",\"enum\":[\"a\",\"c\"]},\"PutPayloadInput\":{\"type\":\"object\",\"required\":[\"path\"],\"properties\":{\"enum\":{\"$ref\":\"#/$defs/EnumString\"},\"body\":{\"type\":\"string\"},\"header\":{\"type\":\"string\"},\"path\":{\"type\":\"string\"},\"query\":{\"type\":\"number\"},\"timeQuery\":{\"type\":\"string\",\"format\":\"date-time\"}}}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"required\":[\"path\"],\"properties\":{\"enum\":{\"$ref\":\"#/$defs/EnumString\"},\"body\":{\"type\":\"string\"},\"header\":{\"type\":\"string\"},\"path\":{\"type\":\"string\"},\"query\":{\"type\":\"number\"},\"timeQuery\":{\"type\":\"string\",\"format\":\"date-time\"}},\"$defs\":{\"EnumString\":{\"type\":\"string\",\"enum\":[\"a\",\"c\"]},\"PutPayloadInput\":{\"type\":\"object\",\"required\":[\"path\"],\"properties\":{\"enum\":{\"$ref\":\"#/$defs/EnumString\"},\"body\":{\"type\":\"string\"},\"header\":{\"type\":\"string\"},\"path\":{\"type\":\"string\"},\"query\":{\"type\":\"number\"},\"timeQuery\":{\"type\":\"string\",\"format\":\"date-time\"}}}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/test-service.json",
+      "rootShape": "example.rest#PutPayloadOutput",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"string\"},\"header\":{\"type\":\"string\"}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"string\"},\"header\":{\"type\":\"string\"}},\"$defs\":{\"PutPayloadOutput\":{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"string\"},\"header\":{\"type\":\"string\"}}}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"string\"},\"header\":{\"type\":\"string\"}},\"$defs\":{\"PutPayloadOutput\":{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"string\"},\"header\":{\"type\":\"string\"}}}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/test-service.json",
+      "rootShape": "example.rest#QueryList",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"array\",\"items\":{\"type\":\"string\",\"description\":\"Query list member reference docs!\"},\"maxItems\":10,\"minItems\":0,\"description\":\"Query list docs!\"}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"array\",\"items\":{\"type\":\"string\",\"description\":\"Query list member reference docs!\"},\"maxItems\":10,\"minItems\":0,\"description\":\"Query list docs!\",\"$defs\":{\"QueryList\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"description\":\"Query list member reference docs!\"},\"maxItems\":10,\"minItems\":0,\"description\":\"Query list docs!\"}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"array\",\"items\":{\"type\":\"string\",\"description\":\"Query list member reference docs!\"},\"maxItems\":10,\"minItems\":0,\"description\":\"Query list docs!\",\"$defs\":{\"QueryList\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"description\":\"Query list member reference docs!\"},\"maxItems\":10,\"minItems\":0,\"description\":\"Query list docs!\"}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/test-service.json",
+      "rootShape": "example.rest#TaggedUnion",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"oneOf\":[{\"type\":\"object\",\"required\":[\"a\"],\"properties\":{\"a\":{\"type\":\"string\"}},\"title\":\"a\"},{\"type\":\"object\",\"required\":[\"b\"],\"properties\":{\"b\":{\"type\":\"string\"}},\"title\":\"b\"},{\"type\":\"object\",\"required\":[\"c\"],\"properties\":{\"c\":{\"$ref\":\"#/$defs/Unit\"}},\"title\":\"c\"}],\"$defs\":{\"Unit\":{\"type\":\"object\"}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"oneOf\":[{\"type\":\"object\",\"required\":[\"a\"],\"properties\":{\"a\":{\"type\":\"string\"}},\"title\":\"a\"},{\"type\":\"object\",\"required\":[\"b\"],\"properties\":{\"b\":{\"type\":\"string\"}},\"title\":\"b\"},{\"type\":\"object\",\"required\":[\"c\"],\"properties\":{\"c\":{\"$ref\":\"#/$defs/Unit\"}},\"title\":\"c\"}],\"$defs\":{\"TaggedUnion\":{\"oneOf\":[{\"type\":\"object\",\"required\":[\"a\"],\"properties\":{\"a\":{\"type\":\"string\"}},\"title\":\"a\"},{\"type\":\"object\",\"required\":[\"b\"],\"properties\":{\"b\":{\"type\":\"string\"}},\"title\":\"b\"},{\"type\":\"object\",\"required\":[\"c\"],\"properties\":{\"c\":{\"$ref\":\"#/$defs/Unit\"}},\"title\":\"c\"}]},\"Unit\":{\"type\":\"object\"}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"oneOf\":[{\"type\":\"object\",\"required\":[\"a\"],\"properties\":{\"a\":{\"type\":\"string\"}},\"title\":\"a\"},{\"type\":\"object\",\"required\":[\"b\"],\"properties\":{\"b\":{\"type\":\"string\"}},\"title\":\"b\"},{\"type\":\"object\",\"required\":[\"c\"],\"properties\":{\"c\":{\"$ref\":\"#/$defs/Unit\"}},\"title\":\"c\"}],\"$defs\":{\"TaggedUnion\":{\"oneOf\":[{\"type\":\"object\",\"required\":[\"a\"],\"properties\":{\"a\":{\"type\":\"string\"}},\"title\":\"a\"},{\"type\":\"object\",\"required\":[\"b\"],\"properties\":{\"b\":{\"type\":\"string\"}},\"title\":\"b\"},{\"type\":\"object\",\"required\":[\"c\"],\"properties\":{\"c\":{\"$ref\":\"#/$defs/Unit\"}},\"title\":\"c\"}]},\"Unit\":{\"type\":\"object\"}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/test-service.json",
+      "rootShape": "example.rest#Timestamp",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"format\":\"date-time\"}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"format\":\"date-time\",\"$defs\":{\"Timestamp\":{\"type\":\"string\",\"format\":\"date-time\"}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"format\":\"date-time\",\"$defs\":{\"Timestamp\":{\"type\":\"string\",\"format\":\"date-time\"}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/test-service.json",
+      "rootShape": "smithy.example#StringDateTime",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"format\":\"date-time\"}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"format\":\"date-time\",\"$defs\":{\"StringDateTime\":{\"type\":\"string\",\"format\":\"date-time\"}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"format\":\"date-time\",\"$defs\":{\"StringDateTime\":{\"type\":\"string\",\"format\":\"date-time\"}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/title-added.smithy",
+      "rootShape": "smithy.example#Foo",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"bam\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"title\":\"A list of strings\",\"default\":[]},\"bar\":{\"type\":\"number\",\"default\":0},\"bat\":{\"allOf\":[{\"$ref\":\"#/$defs/TestEnum\"},{\"default\":\"FOO\"}]},\"baz\":{\"type\":\"string\",\"default\":\"\"}},\"title\":\"A structure\",\"$defs\":{\"TestEnum\":{\"type\":\"string\",\"enum\":[\"FOO\",\"BAR\"],\"title\":\"A Test Enum!\"}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"bam\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"title\":\"A list of strings\",\"default\":[]},\"bar\":{\"type\":\"number\",\"default\":0},\"bat\":{\"allOf\":[{\"$ref\":\"#/$defs/TestEnum\"},{\"default\":\"FOO\"}]},\"baz\":{\"type\":\"string\",\"default\":\"\"}},\"title\":\"A structure\",\"$defs\":{\"Foo\":{\"type\":\"object\",\"properties\":{\"bam\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"title\":\"A list of strings\",\"default\":[]},\"bar\":{\"type\":\"number\",\"default\":0},\"bat\":{\"allOf\":[{\"$ref\":\"#/$defs/TestEnum\"},{\"default\":\"FOO\"}]},\"baz\":{\"type\":\"string\",\"default\":\"\"}},\"title\":\"A structure\"},\"TestEnum\":{\"type\":\"string\",\"enum\":[\"FOO\",\"BAR\"],\"title\":\"A Test Enum!\"}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"bam\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"title\":\"A list of strings\",\"default\":[]},\"bar\":{\"type\":\"number\",\"default\":0},\"bat\":{\"allOf\":[{\"$ref\":\"#/$defs/TestEnum\"},{\"default\":\"FOO\"}]},\"baz\":{\"type\":\"string\",\"default\":\"\"}},\"title\":\"A structure\",\"$defs\":{\"Foo\":{\"type\":\"object\",\"properties\":{\"bam\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"title\":\"A list of strings\",\"default\":[]},\"bar\":{\"type\":\"number\",\"default\":0},\"bat\":{\"allOf\":[{\"$ref\":\"#/$defs/TestEnum\"},{\"default\":\"FOO\"}]},\"baz\":{\"type\":\"string\",\"default\":\"\"}},\"title\":\"A structure\"},\"TestEnum\":{\"type\":\"string\",\"enum\":[\"FOO\",\"BAR\"],\"title\":\"A Test Enum!\"}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/title-added.smithy",
+      "rootShape": "smithy.example#StringList",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"array\",\"items\":{\"type\":\"string\"},\"title\":\"A list of strings\"}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"array\",\"items\":{\"type\":\"string\"},\"title\":\"A list of strings\",\"$defs\":{\"StringList\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"title\":\"A list of strings\"}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"array\",\"items\":{\"type\":\"string\"},\"title\":\"A list of strings\",\"$defs\":{\"StringList\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"title\":\"A list of strings\"}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/jsonschema-upstream/title-added.smithy",
+      "rootShape": "smithy.example#TestEnum",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"enum\":[\"FOO\",\"BAR\"],\"title\":\"A Test Enum!\"}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"enum\":[\"FOO\",\"BAR\"],\"title\":\"A Test Enum!\",\"$defs\":{\"TestEnum\":{\"type\":\"string\",\"enum\":[\"FOO\",\"BAR\"],\"title\":\"A Test Enum!\"}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"enum\":[\"FOO\",\"BAR\"],\"title\":\"A Test Enum!\",\"$defs\":{\"TestEnum\":{\"type\":\"string\",\"enum\":[\"FOO\",\"BAR\"],\"title\":\"A Test Enum!\"}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/domain.json",
+      "rootShape": "sales#GetOrderInput",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"required\":[\"id\"],\"properties\":{\"id\":{\"type\":\"string\",\"minLength\":1}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"required\":[\"id\"],\"properties\":{\"id\":{\"type\":\"string\",\"minLength\":1}},\"$defs\":{\"GetOrderInput\":{\"type\":\"object\",\"required\":[\"id\"],\"properties\":{\"id\":{\"type\":\"string\",\"minLength\":1}}}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"required\":[\"id\"],\"properties\":{\"id\":{\"type\":\"string\",\"minLength\":1}},\"$defs\":{\"GetOrderInput\":{\"type\":\"object\",\"required\":[\"id\"],\"properties\":{\"id\":{\"type\":\"string\",\"minLength\":1}}}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/domain.json",
+      "rootShape": "sales#GetOrderOutput",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"order\":{\"$ref\":\"#/$defs/Order\"}},\"$defs\":{\"Order\":{\"type\":\"object\",\"required\":[\"id\"],\"properties\":{\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Order\"}},\"id\":{\"type\":\"string\",\"minLength\":1},\"total\":{\"type\":\"number\"}}}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"order\":{\"$ref\":\"#/$defs/Order\"}},\"$defs\":{\"GetOrderOutput\":{\"type\":\"object\",\"properties\":{\"order\":{\"$ref\":\"#/$defs/Order\"}}},\"Order\":{\"type\":\"object\",\"required\":[\"id\"],\"properties\":{\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Order\"}},\"id\":{\"type\":\"string\",\"minLength\":1},\"total\":{\"type\":\"number\"}}}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"properties\":{\"order\":{\"$ref\":\"#/$defs/Order\"}},\"$defs\":{\"GetOrderOutput\":{\"type\":\"object\",\"properties\":{\"order\":{\"$ref\":\"#/$defs/Order\"}}},\"Order\":{\"type\":\"object\",\"required\":[\"id\"],\"properties\":{\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Order\"}},\"id\":{\"type\":\"string\",\"minLength\":1},\"total\":{\"type\":\"number\"}}}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/domain.json",
+      "rootShape": "sales#Order",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"required\":[\"id\"],\"properties\":{\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Order\"}},\"id\":{\"type\":\"string\",\"minLength\":1},\"total\":{\"type\":\"number\"}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"required\":[\"id\"],\"properties\":{\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Order\"}},\"id\":{\"type\":\"string\",\"minLength\":1},\"total\":{\"type\":\"number\"}},\"$defs\":{\"Order\":{\"type\":\"object\",\"required\":[\"id\"],\"properties\":{\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Order\"}},\"id\":{\"type\":\"string\",\"minLength\":1},\"total\":{\"type\":\"number\"}}}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"required\":[\"id\"],\"properties\":{\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Order\"}},\"id\":{\"type\":\"string\",\"minLength\":1},\"total\":{\"type\":\"number\"}},\"$defs\":{\"Order\":{\"type\":\"object\",\"required\":[\"id\"],\"properties\":{\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Order\"}},\"id\":{\"type\":\"string\",\"minLength\":1},\"total\":{\"type\":\"number\"}}}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/domain.json",
+      "rootShape": "sales#OrderId",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"minLength\":1}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"minLength\":1,\"$defs\":{\"OrderId\":{\"type\":\"string\",\"minLength\":1}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"minLength\":1,\"$defs\":{\"OrderId\":{\"type\":\"string\",\"minLength\":1}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/domain.json",
+      "rootShape": "sales#Orders",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Order\"},\"$defs\":{\"Order\":{\"type\":\"object\",\"required\":[\"id\"],\"properties\":{\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Order\"}},\"id\":{\"type\":\"string\",\"minLength\":1},\"total\":{\"type\":\"number\"}}}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Order\"},\"$defs\":{\"Order\":{\"type\":\"object\",\"required\":[\"id\"],\"properties\":{\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Order\"}},\"id\":{\"type\":\"string\",\"minLength\":1},\"total\":{\"type\":\"number\"}}},\"Orders\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Order\"}}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Order\"},\"$defs\":{\"Order\":{\"type\":\"object\",\"required\":[\"id\"],\"properties\":{\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Order\"}},\"id\":{\"type\":\"string\",\"minLength\":1},\"total\":{\"type\":\"number\"}}},\"Orders\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Order\"}}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/emission.smithy",
+      "rootShape": "example#Choice",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"oneOf\":[{\"type\":\"object\",\"required\":[\"text\"],\"properties\":{\"text\":{\"type\":\"string\"}},\"title\":\"text\"},{\"type\":\"object\",\"required\":[\"count\"],\"properties\":{\"count\":{\"type\":\"number\"}},\"title\":\"count\"}]}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"oneOf\":[{\"type\":\"object\",\"required\":[\"text\"],\"properties\":{\"text\":{\"type\":\"string\"}},\"title\":\"text\"},{\"type\":\"object\",\"required\":[\"count\"],\"properties\":{\"count\":{\"type\":\"number\"}},\"title\":\"count\"}],\"$defs\":{\"Choice\":{\"oneOf\":[{\"type\":\"object\",\"required\":[\"text\"],\"properties\":{\"text\":{\"type\":\"string\"}},\"title\":\"text\"},{\"type\":\"object\",\"required\":[\"count\"],\"properties\":{\"count\":{\"type\":\"number\"}},\"title\":\"count\"}]}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"oneOf\":[{\"type\":\"object\",\"required\":[\"text\"],\"properties\":{\"text\":{\"type\":\"string\"}},\"title\":\"text\"},{\"type\":\"object\",\"required\":[\"count\"],\"properties\":{\"count\":{\"type\":\"number\"}},\"title\":\"count\"}],\"$defs\":{\"Choice\":{\"oneOf\":[{\"type\":\"object\",\"required\":[\"text\"],\"properties\":{\"text\":{\"type\":\"string\"}},\"title\":\"text\"},{\"type\":\"object\",\"required\":[\"count\"],\"properties\":{\"count\":{\"type\":\"number\"}},\"title\":\"count\"}]}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/emission.smithy",
+      "rootShape": "example#Input",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"required\":[\"id\"],\"properties\":{\"choice\":{\"$ref\":\"#/$defs/Choice\"},\"id\":{\"type\":\"string\",\"maxLength\":8,\"minLength\":1},\"labels\":{\"$ref\":\"#/$defs/Labels\"},\"score\":{\"type\":\"number\",\"maximum\":100,\"minimum\":0},\"state\":{\"$ref\":\"#/$defs/State\"}},\"$defs\":{\"Choice\":{\"oneOf\":[{\"type\":\"object\",\"required\":[\"text\"],\"properties\":{\"text\":{\"type\":\"string\"}},\"title\":\"text\"},{\"type\":\"object\",\"required\":[\"count\"],\"properties\":{\"count\":{\"type\":\"number\"}},\"title\":\"count\"}]},\"Labels\":{\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\"},\"propertyNames\":{\"type\":\"string\",\"maxLength\":8,\"minLength\":1}},\"State\":{\"type\":\"string\",\"enum\":[\"open\",\"closed\"]}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"required\":[\"id\"],\"properties\":{\"choice\":{\"$ref\":\"#/$defs/Choice\"},\"id\":{\"type\":\"string\",\"maxLength\":8,\"minLength\":1},\"labels\":{\"$ref\":\"#/$defs/Labels\"},\"score\":{\"type\":\"number\",\"maximum\":100,\"minimum\":0},\"state\":{\"$ref\":\"#/$defs/State\"}},\"$defs\":{\"Choice\":{\"oneOf\":[{\"type\":\"object\",\"required\":[\"text\"],\"properties\":{\"text\":{\"type\":\"string\"}},\"title\":\"text\"},{\"type\":\"object\",\"required\":[\"count\"],\"properties\":{\"count\":{\"type\":\"number\"}},\"title\":\"count\"}]},\"Input\":{\"type\":\"object\",\"required\":[\"id\"],\"properties\":{\"choice\":{\"$ref\":\"#/$defs/Choice\"},\"id\":{\"type\":\"string\",\"maxLength\":8,\"minLength\":1},\"labels\":{\"$ref\":\"#/$defs/Labels\"},\"score\":{\"type\":\"number\",\"maximum\":100,\"minimum\":0},\"state\":{\"$ref\":\"#/$defs/State\"}}},\"Labels\":{\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\"},\"propertyNames\":{\"type\":\"string\",\"maxLength\":8,\"minLength\":1}},\"State\":{\"type\":\"string\",\"enum\":[\"open\",\"closed\"]}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"required\":[\"id\"],\"properties\":{\"choice\":{\"$ref\":\"#/$defs/Choice\"},\"id\":{\"type\":\"string\",\"maxLength\":8,\"minLength\":1},\"labels\":{\"$ref\":\"#/$defs/Labels\"},\"score\":{\"type\":\"number\",\"maximum\":100,\"minimum\":0},\"state\":{\"$ref\":\"#/$defs/State\"}},\"$defs\":{\"Choice\":{\"oneOf\":[{\"type\":\"object\",\"required\":[\"text\"],\"properties\":{\"text\":{\"type\":\"string\"}},\"title\":\"text\"},{\"type\":\"object\",\"required\":[\"count\"],\"properties\":{\"count\":{\"type\":\"number\"}},\"title\":\"count\"}]},\"Input\":{\"type\":\"object\",\"required\":[\"id\"],\"properties\":{\"choice\":{\"$ref\":\"#/$defs/Choice\"},\"id\":{\"type\":\"string\",\"maxLength\":8,\"minLength\":1},\"labels\":{\"$ref\":\"#/$defs/Labels\"},\"score\":{\"type\":\"number\",\"maximum\":100,\"minimum\":0},\"state\":{\"$ref\":\"#/$defs/State\"}}},\"Labels\":{\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\"},\"propertyNames\":{\"type\":\"string\",\"maxLength\":8,\"minLength\":1}},\"State\":{\"type\":\"string\",\"enum\":[\"open\",\"closed\"]}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/emission.smithy",
+      "rootShape": "example#Key",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"maxLength\":8,\"minLength\":1}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"maxLength\":8,\"minLength\":1,\"$defs\":{\"Key\":{\"type\":\"string\",\"maxLength\":8,\"minLength\":1}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"maxLength\":8,\"minLength\":1,\"$defs\":{\"Key\":{\"type\":\"string\",\"maxLength\":8,\"minLength\":1}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/emission.smithy",
+      "rootShape": "example#Labels",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\"},\"propertyNames\":{\"type\":\"string\",\"maxLength\":8,\"minLength\":1}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\"},\"propertyNames\":{\"type\":\"string\",\"maxLength\":8,\"minLength\":1},\"$defs\":{\"Labels\":{\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\"},\"propertyNames\":{\"type\":\"string\",\"maxLength\":8,\"minLength\":1}}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\"},\"propertyNames\":{\"type\":\"string\",\"maxLength\":8,\"minLength\":1},\"$defs\":{\"Labels\":{\"type\":\"object\",\"additionalProperties\":{\"type\":\"string\"},\"propertyNames\":{\"type\":\"string\",\"maxLength\":8,\"minLength\":1}}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/emission.smithy",
+      "rootShape": "example#Score",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"number\",\"maximum\":100,\"minimum\":0}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"number\",\"maximum\":100,\"minimum\":0,\"$defs\":{\"Score\":{\"type\":\"number\",\"maximum\":100,\"minimum\":0}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"number\",\"maximum\":100,\"minimum\":0,\"$defs\":{\"Score\":{\"type\":\"number\",\"maximum\":100,\"minimum\":0}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/emission.smithy",
+      "rootShape": "example#State",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"enum\":[\"open\",\"closed\"]}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"enum\":[\"open\",\"closed\"],\"$defs\":{\"State\":{\"type\":\"string\",\"enum\":[\"open\",\"closed\"]}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"string\",\"enum\":[\"open\",\"closed\"],\"$defs\":{\"State\":{\"type\":\"string\",\"enum\":[\"open\",\"closed\"]}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/recursive-emission.smithy",
+      "rootShape": "recursive#Envelope",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"required\":[\"root\"],\"properties\":{\"root\":{\"$ref\":\"#/$defs/Node\"}},\"$defs\":{\"Node\":{\"type\":\"object\",\"required\":[\"name\"],\"properties\":{\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Node\"}},\"count\":{\"type\":\"number\",\"default\":9007199254740993},\"name\":{\"type\":\"string\"},\"snapshot\":{\"type\":\"string\",\"default\":\"{\\\"$ref\\\":\\\"#/$defs/Node\\\"}\"}}}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"required\":[\"root\"],\"properties\":{\"root\":{\"$ref\":\"#/$defs/Node\"}},\"$defs\":{\"Envelope\":{\"type\":\"object\",\"required\":[\"root\"],\"properties\":{\"root\":{\"$ref\":\"#/$defs/Node\"}}},\"Node\":{\"type\":\"object\",\"required\":[\"name\"],\"properties\":{\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Node\"}},\"count\":{\"type\":\"number\",\"default\":9007199254740993},\"name\":{\"type\":\"string\"},\"snapshot\":{\"type\":\"string\",\"default\":\"{\\\"$ref\\\":\\\"#/$defs/Node\\\"}\"}}}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"required\":[\"root\"],\"properties\":{\"root\":{\"$ref\":\"#/$defs/Node\"}},\"$defs\":{\"Envelope\":{\"type\":\"object\",\"required\":[\"root\"],\"properties\":{\"root\":{\"$ref\":\"#/$defs/Node\"}}},\"Node\":{\"type\":\"object\",\"required\":[\"name\"],\"properties\":{\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Node\"}},\"count\":{\"type\":\"number\",\"default\":9007199254740993},\"name\":{\"type\":\"string\"},\"snapshot\":{\"type\":\"string\",\"default\":\"{\\\"$ref\\\":\\\"#/$defs/Node\\\"}\"}}}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "JSON_SCHEMA_NUMERIC",
+          "classification": "not-enforced",
+          "detail": "Resource https://umf.invalid/emitted.json: native values retained but JavaScript validation unavailable: UmfError: Integer exceeds exact JavaScript range",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/recursive-emission.smithy",
+      "rootShape": "recursive#Node",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"required\":[\"name\"],\"properties\":{\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Node\"}},\"count\":{\"type\":\"number\",\"default\":9007199254740993},\"name\":{\"type\":\"string\"},\"snapshot\":{\"type\":\"string\",\"default\":\"{\\\"$ref\\\":\\\"#/$defs/Node\\\"}\"}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"required\":[\"name\"],\"properties\":{\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Node\"}},\"count\":{\"type\":\"number\",\"default\":9007199254740993},\"name\":{\"type\":\"string\"},\"snapshot\":{\"type\":\"string\",\"default\":\"{\\\"$ref\\\":\\\"#/$defs/Node\\\"}\"}},\"$defs\":{\"Node\":{\"type\":\"object\",\"required\":[\"name\"],\"properties\":{\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Node\"}},\"count\":{\"type\":\"number\",\"default\":9007199254740993},\"name\":{\"type\":\"string\"},\"snapshot\":{\"type\":\"string\",\"default\":\"{\\\"$ref\\\":\\\"#/$defs/Node\\\"}\"}}}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"required\":[\"name\"],\"properties\":{\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Node\"}},\"count\":{\"type\":\"number\",\"default\":9007199254740993},\"name\":{\"type\":\"string\"},\"snapshot\":{\"type\":\"string\",\"default\":\"{\\\"$ref\\\":\\\"#/$defs/Node\\\"}\"}},\"$defs\":{\"Node\":{\"type\":\"object\",\"required\":[\"name\"],\"properties\":{\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Node\"}},\"count\":{\"type\":\"number\",\"default\":9007199254740993},\"name\":{\"type\":\"string\"},\"snapshot\":{\"type\":\"string\",\"default\":\"{\\\"$ref\\\":\\\"#/$defs/Node\\\"}\"}}}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "JSON_SCHEMA_NUMERIC",
+          "classification": "not-enforced",
+          "detail": "Resource https://umf.invalid/emitted.json: native values retained but JavaScript validation unavailable: UmfError: Integer exceeds exact JavaScript range",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "file": "fixtures/smithy/recursive-emission.smithy",
+      "rootShape": "recursive#Nodes",
+      "schema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Node\"},\"$defs\":{\"Node\":{\"type\":\"object\",\"required\":[\"name\"],\"properties\":{\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Node\"}},\"count\":{\"type\":\"number\",\"default\":9007199254740993},\"name\":{\"type\":\"string\"},\"snapshot\":{\"type\":\"string\",\"default\":\"{\\\"$ref\\\":\\\"#/$defs/Node\\\"}\"}}}}}",
+      "adaptedSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Node\"},\"$defs\":{\"Node\":{\"type\":\"object\",\"required\":[\"name\"],\"properties\":{\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Node\"}},\"count\":{\"type\":\"number\",\"default\":9007199254740993},\"name\":{\"type\":\"string\"},\"snapshot\":{\"type\":\"string\",\"default\":\"{\\\"$ref\\\":\\\"#/$defs/Node\\\"}\"}}},\"Nodes\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Node\"}}}}",
+      "agrees": true,
+      "targetSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Node\"},\"$defs\":{\"Node\":{\"type\":\"object\",\"required\":[\"name\"],\"properties\":{\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Node\"}},\"count\":{\"type\":\"number\",\"default\":9007199254740993},\"name\":{\"type\":\"string\"},\"snapshot\":{\"type\":\"string\",\"default\":\"{\\\"$ref\\\":\\\"#/$defs/Node\\\"}\"}}},\"Nodes\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/Node\"}}}}\n",
+      "targetRoundTrip": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "",
+          "code": "SMITHY_UNREVIEWED_SEMANTICS",
+          "classification": "not-enforced",
+          "detail": "Native data-shape conversion does not preserve all traits, operations, resources, protocols or source-domain validation. This is not an instance converter.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_NATIVE_NUMERIC_MAPPING",
+          "classification": "representation-change",
+          "detail": "Native defaults map integer shapes to JSON number and do not guarantee native width/precision constraints; timestamps, blobs and unions use native JSON representation strategies.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SMITHY_ROOT_DEFINITION_ADDED",
+          "classification": "representation-change",
+          "detail": "The emitted root schema is also registered at the native converter root pointer. Original native output is retained separately. Instance-valued keywords are unchanged.",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "JSON_SCHEMA_NUMERIC",
+          "classification": "not-enforced",
+          "detail": "Resource https://umf.invalid/emitted.json: native values retained but JavaScript validation unavailable: UmfError: Integer exceeds exact JavaScript range",
+          "retainedInSource": true
+        }
+      ]
+    }
+  ],
+  "scope": "Every declared data-shape root in supplied upstream source resources plus authored domain; original expected-output files retained but use different converter configurations. Service-context mode compares every declared data root against every supplied service, including explicit out-of-closure rejections. JVM output equality is not a semantic equivalence claim."
+}

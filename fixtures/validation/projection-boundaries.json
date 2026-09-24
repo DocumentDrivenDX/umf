@@ -1,0 +1,26 @@
+{
+  "identifierCases": [
+    {
+      "kind": "tablespec",
+      "lineTerminators": 4,
+      "runtimeAndSchemaReject": true
+    },
+    {
+      "kind": "postgresql",
+      "lineTerminators": 4,
+      "runtimeAndSchemaReject": true
+    },
+    {
+      "kind": "sqlserver",
+      "lineTerminators": 4,
+      "runtimeAndSchemaReject": true
+    },
+    {
+      "kind": "parquet",
+      "lineTerminators": 4,
+      "runtimeAndSchemaReject": true
+    }
+  ],
+  "tableSpecNames": true,
+  "blockedChainChecksSecondPolicy": true
+}

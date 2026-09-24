@@ -1,0 +1,494 @@
+{
+  "oracle": "RDFLib 7.6.0",
+  "scope": "Explicit RDF type roles, anonymous role counts and edited subject presence; no OWL profile validation or reasoning",
+  "cases": [
+    {
+      "file": "declarations.ttl",
+      "variant": "original",
+      "format": "json",
+      "named": [
+        [
+          "https://example.org/Code",
+          "datatype"
+        ],
+        [
+          "https://example.org/Order",
+          "class"
+        ],
+        [
+          "https://example.org/Shared",
+          "annotationProperty"
+        ],
+        [
+          "https://example.org/Shared",
+          "class"
+        ],
+        [
+          "https://example.org/Shared",
+          "dataProperty"
+        ],
+        [
+          "https://example.org/Shared",
+          "datatype"
+        ],
+        [
+          "https://example.org/Shared",
+          "namedIndividual"
+        ],
+        [
+          "https://example.org/Shared",
+          "objectProperty"
+        ],
+        [
+          "https://example.org/alice",
+          "namedIndividual"
+        ],
+        [
+          "https://example.org/amount",
+          "dataProperty"
+        ],
+        [
+          "https://example.org/note",
+          "annotationProperty"
+        ],
+        [
+          "https://example.org/owns",
+          "objectProperty"
+        ]
+      ],
+      "anonymousKinds": [
+        "class",
+        "datatype",
+        "namedIndividual"
+      ],
+      "agrees": true,
+      "editObserved": true
+    },
+    {
+      "file": "declarations.ttl",
+      "variant": "original",
+      "format": "yaml",
+      "named": [
+        [
+          "https://example.org/Code",
+          "datatype"
+        ],
+        [
+          "https://example.org/Order",
+          "class"
+        ],
+        [
+          "https://example.org/Shared",
+          "annotationProperty"
+        ],
+        [
+          "https://example.org/Shared",
+          "class"
+        ],
+        [
+          "https://example.org/Shared",
+          "dataProperty"
+        ],
+        [
+          "https://example.org/Shared",
+          "datatype"
+        ],
+        [
+          "https://example.org/Shared",
+          "namedIndividual"
+        ],
+        [
+          "https://example.org/Shared",
+          "objectProperty"
+        ],
+        [
+          "https://example.org/alice",
+          "namedIndividual"
+        ],
+        [
+          "https://example.org/amount",
+          "dataProperty"
+        ],
+        [
+          "https://example.org/note",
+          "annotationProperty"
+        ],
+        [
+          "https://example.org/owns",
+          "objectProperty"
+        ]
+      ],
+      "anonymousKinds": [
+        "class",
+        "datatype",
+        "namedIndividual"
+      ],
+      "agrees": true,
+      "editObserved": true
+    },
+    {
+      "file": "declarations.ttl",
+      "variant": "edited",
+      "format": "json",
+      "named": [
+        [
+          "https://example.org/Code",
+          "datatype"
+        ],
+        [
+          "https://example.org/EditedDeclaration",
+          "class"
+        ],
+        [
+          "https://example.org/Order",
+          "class"
+        ],
+        [
+          "https://example.org/Shared",
+          "annotationProperty"
+        ],
+        [
+          "https://example.org/Shared",
+          "class"
+        ],
+        [
+          "https://example.org/Shared",
+          "dataProperty"
+        ],
+        [
+          "https://example.org/Shared",
+          "datatype"
+        ],
+        [
+          "https://example.org/Shared",
+          "namedIndividual"
+        ],
+        [
+          "https://example.org/Shared",
+          "objectProperty"
+        ],
+        [
+          "https://example.org/alice",
+          "namedIndividual"
+        ],
+        [
+          "https://example.org/amount",
+          "dataProperty"
+        ],
+        [
+          "https://example.org/note",
+          "annotationProperty"
+        ],
+        [
+          "https://example.org/owns",
+          "objectProperty"
+        ]
+      ],
+      "anonymousKinds": [
+        "class",
+        "datatype",
+        "namedIndividual"
+      ],
+      "agrees": true,
+      "editObserved": true
+    },
+    {
+      "file": "declarations.ttl",
+      "variant": "edited",
+      "format": "yaml",
+      "named": [
+        [
+          "https://example.org/Code",
+          "datatype"
+        ],
+        [
+          "https://example.org/EditedDeclaration",
+          "class"
+        ],
+        [
+          "https://example.org/Order",
+          "class"
+        ],
+        [
+          "https://example.org/Shared",
+          "annotationProperty"
+        ],
+        [
+          "https://example.org/Shared",
+          "class"
+        ],
+        [
+          "https://example.org/Shared",
+          "dataProperty"
+        ],
+        [
+          "https://example.org/Shared",
+          "datatype"
+        ],
+        [
+          "https://example.org/Shared",
+          "namedIndividual"
+        ],
+        [
+          "https://example.org/Shared",
+          "objectProperty"
+        ],
+        [
+          "https://example.org/alice",
+          "namedIndividual"
+        ],
+        [
+          "https://example.org/amount",
+          "dataProperty"
+        ],
+        [
+          "https://example.org/note",
+          "annotationProperty"
+        ],
+        [
+          "https://example.org/owns",
+          "objectProperty"
+        ]
+      ],
+      "anonymousKinds": [
+        "class",
+        "datatype",
+        "namedIndividual"
+      ],
+      "agrees": true,
+      "editObserved": true
+    },
+    {
+      "file": "authored.ttl",
+      "variant": "original",
+      "format": "json",
+      "named": [
+        [
+          "https://example.org/Order",
+          "class"
+        ],
+        [
+          "https://example.org/Order",
+          "namedIndividual"
+        ],
+        [
+          "https://example.org/orderId",
+          "dataProperty"
+        ]
+      ],
+      "anonymousKinds": [],
+      "agrees": true,
+      "editObserved": true
+    },
+    {
+      "file": "authored.ttl",
+      "variant": "original",
+      "format": "yaml",
+      "named": [
+        [
+          "https://example.org/Order",
+          "class"
+        ],
+        [
+          "https://example.org/Order",
+          "namedIndividual"
+        ],
+        [
+          "https://example.org/orderId",
+          "dataProperty"
+        ]
+      ],
+      "anonymousKinds": [],
+      "agrees": true,
+      "editObserved": true
+    },
+    {
+      "file": "authored.ttl",
+      "variant": "edited",
+      "format": "json",
+      "named": [
+        [
+          "https://example.org/EditedDeclaration",
+          "class"
+        ],
+        [
+          "https://example.org/Order",
+          "namedIndividual"
+        ],
+        [
+          "https://example.org/orderId",
+          "dataProperty"
+        ]
+      ],
+      "anonymousKinds": [],
+      "agrees": true,
+      "editObserved": true
+    },
+    {
+      "file": "authored.ttl",
+      "variant": "edited",
+      "format": "yaml",
+      "named": [
+        [
+          "https://example.org/EditedDeclaration",
+          "class"
+        ],
+        [
+          "https://example.org/Order",
+          "namedIndividual"
+        ],
+        [
+          "https://example.org/orderId",
+          "dataProperty"
+        ]
+      ],
+      "anonymousKinds": [],
+      "agrees": true,
+      "editObserved": true
+    },
+    {
+      "file": "primer-corrected.ttl",
+      "variant": "original",
+      "format": "json",
+      "named": [
+        [
+          "http://example.com/owl/families/Person",
+          "class"
+        ],
+        [
+          "http://example.com/owl/families/hasAge",
+          "dataProperty"
+        ],
+        [
+          "http://example.com/owl/families/hasWife",
+          "objectProperty"
+        ]
+      ],
+      "anonymousKinds": [
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "datatype",
+        "datatype"
+      ],
+      "agrees": true,
+      "editObserved": true
+    },
+    {
+      "file": "primer-corrected.ttl",
+      "variant": "original",
+      "format": "yaml",
+      "named": [
+        [
+          "http://example.com/owl/families/Person",
+          "class"
+        ],
+        [
+          "http://example.com/owl/families/hasAge",
+          "dataProperty"
+        ],
+        [
+          "http://example.com/owl/families/hasWife",
+          "objectProperty"
+        ]
+      ],
+      "anonymousKinds": [
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "datatype",
+        "datatype"
+      ],
+      "agrees": true,
+      "editObserved": true
+    },
+    {
+      "file": "primer-corrected.ttl",
+      "variant": "edited",
+      "format": "json",
+      "named": [
+        [
+          "http://example.com/owl/families/Person",
+          "class"
+        ],
+        [
+          "http://example.com/owl/families/hasAge",
+          "dataProperty"
+        ],
+        [
+          "https://example.org/EditedDeclaration",
+          "objectProperty"
+        ]
+      ],
+      "anonymousKinds": [
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "datatype",
+        "datatype"
+      ],
+      "agrees": true,
+      "editObserved": true
+    },
+    {
+      "file": "primer-corrected.ttl",
+      "variant": "edited",
+      "format": "yaml",
+      "named": [
+        [
+          "http://example.com/owl/families/Person",
+          "class"
+        ],
+        [
+          "http://example.com/owl/families/hasAge",
+          "dataProperty"
+        ],
+        [
+          "https://example.org/EditedDeclaration",
+          "objectProperty"
+        ]
+      ],
+      "anonymousKinds": [
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "class",
+        "datatype",
+        "datatype"
+      ],
+      "agrees": true,
+      "editObserved": true
+    }
+  ]
+}

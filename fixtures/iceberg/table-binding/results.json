@@ -1,0 +1,115 @@
+{
+  "provenance": "Authored variants of pinned TableMetadataV2ValidMinimal; nested struct binding and v3 unknown multi-source preservation",
+  "results": [
+    {
+      "id": "nested",
+      "path": "fixtures/iceberg/table-binding/nested.source.json",
+      "status": "roundtripped",
+      "binding": {
+        "status": "checked",
+        "complete": false,
+        "bindings": [
+          {
+            "fieldPath": "/partition-specs/0/fields/0",
+            "sourcePath": "/schemas/0/fields/0/type/fields/0",
+            "assessment": {
+              "sourceType": "long",
+              "transform": "identity",
+              "status": "compatible",
+              "complete": false,
+              "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+              "resultType": "long"
+            }
+          },
+          {
+            "fieldPath": "/sort-orders/0/fields/0",
+            "sourcePath": "/schemas/0/fields/1",
+            "assessment": {
+              "sourceType": "long",
+              "transform": "identity",
+              "status": "compatible",
+              "complete": false,
+              "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+              "resultType": "long"
+            }
+          },
+          {
+            "fieldPath": "/sort-orders/0/fields/1",
+            "sourcePath": "/schemas/0/fields/2",
+            "assessment": {
+              "sourceType": "long",
+              "transform": "bucket[4]",
+              "status": "compatible",
+              "complete": false,
+              "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+              "resultType": "int"
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "ICEBERG_TABLE_CONTEXT_INCOMPLETE",
+            "path": "",
+            "severity": "warning",
+            "message": "Only retained IDs and current selections checked. Expired parents, historical schemas, transforms, files and commits are not validated; absent main is not inserted."
+          },
+          {
+            "code": "ICEBERG_TABLE_TRANSFORM_INCOMPLETE",
+            "path": "",
+            "severity": "warning",
+            "message": "Current field/type binding only; version feature availability, history, value execution and safe evolution remain unchecked"
+          }
+        ]
+      }
+    },
+    {
+      "id": "multi",
+      "path": "fixtures/iceberg/table-binding/multi.source.json",
+      "status": "roundtripped",
+      "binding": {
+        "status": "blocked",
+        "complete": false,
+        "bindings": [
+          {
+            "fieldPath": "/sort-orders/0/fields/1",
+            "sourcePath": "/schemas/0/fields/2",
+            "assessment": {
+              "sourceType": "long",
+              "transform": "bucket[4]",
+              "status": "compatible",
+              "complete": false,
+              "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+              "resultType": "int"
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "ICEBERG_TABLE_CONTEXT_INCOMPLETE",
+            "path": "",
+            "severity": "warning",
+            "message": "Only retained IDs and current selections checked. Expired parents, historical schemas, transforms, files and commits are not validated; absent main is not inserted."
+          },
+          {
+            "code": "ICEBERG_TABLE_TRANSFORM",
+            "path": "/partition-specs/0/fields/0/source-ids",
+            "message": "Multi-source transform preserved; binding semantics unavailable",
+            "severity": "error"
+          },
+          {
+            "code": "ICEBERG_TABLE_TRANSFORM",
+            "path": "/sort-orders/0/fields/0/source-ids",
+            "message": "Multi-source transform preserved; binding semantics unavailable",
+            "severity": "error"
+          },
+          {
+            "code": "ICEBERG_TABLE_TRANSFORM_INCOMPLETE",
+            "path": "",
+            "severity": "warning",
+            "message": "Current field/type binding only; version feature availability, history, value execution and safe evolution remain unchecked"
+          }
+        ]
+      }
+    }
+  ]
+}

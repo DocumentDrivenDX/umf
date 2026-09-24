@@ -1,0 +1,752 @@
+{
+  "runtime": "PyArrow 21.0.0 native dictionary reads",
+  "cases": [
+    {
+      "id": "rle-0",
+      "width": 0,
+      "input": "1a",
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "padding": [],
+      "path": "fixtures/parquet/hybrid/rle-0.parquet"
+    },
+    {
+      "id": "packed-0",
+      "width": 0,
+      "input": "05",
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "padding": [
+        0,
+        0,
+        0
+      ],
+      "path": "fixtures/parquet/hybrid/packed-0.parquet"
+    },
+    {
+      "id": "mixed-0",
+      "width": 0,
+      "input": "1205",
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "padding": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "path": "fixtures/parquet/hybrid/mixed-0.parquet"
+    },
+    {
+      "id": "rle-1",
+      "width": 1,
+      "input": "1a01",
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "padding": [],
+      "path": "fixtures/parquet/hybrid/rle-1.parquet"
+    },
+    {
+      "id": "packed-1",
+      "width": 1,
+      "input": "05aaea",
+      "values": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "padding": [
+        1,
+        1,
+        1
+      ],
+      "path": "fixtures/parquet/hybrid/packed-1.parquet"
+    },
+    {
+      "id": "mixed-1",
+      "width": 1,
+      "input": "120105aafa",
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "padding": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "path": "fixtures/parquet/hybrid/mixed-1.parquet"
+    },
+    {
+      "id": "rle-2",
+      "width": 2,
+      "input": "1a03",
+      "values": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "padding": [],
+      "path": "fixtures/parquet/hybrid/rle-2.parquet"
+    },
+    {
+      "id": "packed-2",
+      "width": 2,
+      "input": "05e4e4e4fc",
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3,
+        0
+      ],
+      "padding": [
+        3,
+        3,
+        3
+      ],
+      "path": "fixtures/parquet/hybrid/packed-2.parquet"
+    },
+    {
+      "id": "mixed-2",
+      "width": 2,
+      "input": "120305e4e4e4ff",
+      "values": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2,
+        3,
+        0,
+        1,
+        2
+      ],
+      "padding": [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "path": "fixtures/parquet/hybrid/mixed-2.parquet"
+    },
+    {
+      "id": "rle-3",
+      "width": 3,
+      "input": "1a07",
+      "values": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "padding": [],
+      "path": "fixtures/parquet/hybrid/rle-3.parquet"
+    },
+    {
+      "id": "packed-3",
+      "width": 3,
+      "input": "0588c6fa88c6ff",
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "padding": [
+        7,
+        7,
+        7
+      ],
+      "path": "fixtures/parquet/hybrid/packed-3.parquet"
+    },
+    {
+      "id": "mixed-3",
+      "width": 3,
+      "input": "12070588c6fa88feff",
+      "values": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        0,
+        1,
+        2
+      ],
+      "padding": [
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "path": "fixtures/parquet/hybrid/mixed-3.parquet"
+    },
+    {
+      "id": "rle-4",
+      "width": 4,
+      "input": "1a0f",
+      "values": [
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15
+      ],
+      "padding": [],
+      "path": "fixtures/parquet/hybrid/rle-4.parquet"
+    },
+    {
+      "id": "packed-4",
+      "width": 4,
+      "input": "051032547698bafcff",
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "padding": [
+        15,
+        15,
+        15
+      ],
+      "path": "fixtures/parquet/hybrid/packed-4.parquet"
+    },
+    {
+      "id": "mixed-4",
+      "width": 4,
+      "input": "120f051032547698faffff",
+      "values": [
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "padding": [
+        15,
+        15,
+        15,
+        15,
+        15
+      ],
+      "path": "fixtures/parquet/hybrid/mixed-4.parquet"
+    },
+    {
+      "id": "rle-5",
+      "width": 5,
+      "input": "1a1f",
+      "values": [
+        31,
+        31,
+        31,
+        31,
+        31,
+        31,
+        31,
+        31,
+        31,
+        31,
+        31,
+        31,
+        31
+      ],
+      "padding": [],
+      "path": "fixtures/parquet/hybrid/rle-5.parquet"
+    },
+    {
+      "id": "packed-5",
+      "width": 5,
+      "input": "052088418a3928a9c5feff",
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "padding": [
+        31,
+        31,
+        31
+      ],
+      "path": "fixtures/parquet/hybrid/packed-5.parquet"
+    },
+    {
+      "id": "mixed-5",
+      "width": 5,
+      "input": "121f052088418a3928a9ffffff",
+      "values": [
+        31,
+        31,
+        31,
+        31,
+        31,
+        31,
+        31,
+        31,
+        31,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "padding": [
+        31,
+        31,
+        31,
+        31,
+        31
+      ],
+      "path": "fixtures/parquet/hybrid/mixed-5.parquet"
+    },
+    {
+      "id": "rle-6",
+      "width": 6,
+      "input": "1a3f",
+      "values": [
+        63,
+        63,
+        63,
+        63,
+        63,
+        63,
+        63,
+        63,
+        63,
+        63,
+        63,
+        63,
+        63
+      ],
+      "padding": [],
+      "path": "fixtures/parquet/hybrid/rle-6.parquet"
+    },
+    {
+      "id": "packed-6",
+      "width": 6,
+      "input": "0540200c44611c48a22cccffff",
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "padding": [
+        63,
+        63,
+        63
+      ],
+      "path": "fixtures/parquet/hybrid/packed-6.parquet"
+    },
+    {
+      "id": "mixed-6",
+      "width": 6,
+      "input": "123f0540200c44611c48a2fcffffff",
+      "values": [
+        63,
+        63,
+        63,
+        63,
+        63,
+        63,
+        63,
+        63,
+        63,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "padding": [
+        63,
+        63,
+        63,
+        63,
+        63
+      ],
+      "path": "fixtures/parquet/hybrid/mixed-6.parquet"
+    },
+    {
+      "id": "rle-7",
+      "width": 7,
+      "input": "1a7f",
+      "values": [
+        127,
+        127,
+        127,
+        127,
+        127,
+        127,
+        127,
+        127,
+        127,
+        127,
+        127,
+        127,
+        127
+      ],
+      "padding": [],
+      "path": "fixtures/parquet/hybrid/rle-7.parquet"
+    },
+    {
+      "id": "packed-7",
+      "width": 7,
+      "input": "058080604028180e888462c1f8ffff",
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "padding": [
+        127,
+        127,
+        127
+      ],
+      "path": "fixtures/parquet/hybrid/packed-7.parquet"
+    },
+    {
+      "id": "mixed-7",
+      "width": 7,
+      "input": "127f058080604028180e8884e2ffffffff",
+      "values": [
+        127,
+        127,
+        127,
+        127,
+        127,
+        127,
+        127,
+        127,
+        127,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "padding": [
+        127,
+        127,
+        127,
+        127,
+        127
+      ],
+      "path": "fixtures/parquet/hybrid/mixed-7.parquet"
+    },
+    {
+      "id": "rle-8",
+      "width": 8,
+      "input": "1aff",
+      "values": [
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255
+      ],
+      "padding": [],
+      "path": "fixtures/parquet/hybrid/rle-8.parquet"
+    },
+    {
+      "id": "packed-8",
+      "width": 8,
+      "input": "05000102030405060708090a0b0cffffff",
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "padding": [
+        255,
+        255,
+        255
+      ],
+      "path": "fixtures/parquet/hybrid/packed-8.parquet"
+    },
+    {
+      "id": "mixed-8",
+      "width": 8,
+      "input": "12ff05000102030405060708090affffffffff",
+      "values": [
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "padding": [
+        255,
+        255,
+        255,
+        255,
+        255
+      ],
+      "path": "fixtures/parquet/hybrid/mixed-8.parquet"
+    }
+  ]
+}

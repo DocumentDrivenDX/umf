@@ -1,0 +1,37 @@
+{
+  "recordedAt": "2026-09-21T18:52:29.195Z",
+  "command": "bun test tests",
+  "exitCode": 0,
+  "runtime": "bun test v1.3.14 (0d9b296a)",
+  "platform": "linux",
+  "architecture": "arm64",
+  "tests": 718,
+  "files": 176,
+  "passed": 718,
+  "failed": 0,
+  "assertions": 64038,
+  "duration": "938.97s",
+  "sourceFingerprint": {
+    "files": 555,
+    "sha256": "e0a151d4449dd50d2061f1942f8d9d992184a66c243033b2aa7989328ed74e4d",
+    "scope": "src, spec, tests, package/lock and TypeScript configs",
+    "verification": "Matched fingerprint captured during run and after completion",
+    "algorithm": "SHA-256 over sorted UTF-16 path order: UTF-8 path, NUL, file bytes, NUL"
+  },
+  "log": {
+    "path": "fixtures/validation/bun-full-suite.txt",
+    "sha256": "b88ed5c31082efae304c325e7e17070e340c5005af363a10e5e5c7d47d43b68b"
+  },
+  "additionalChecks": {
+    "typecheck": "passed",
+    "jsonSchemas": {
+      "passed": 165,
+      "failed": 0
+    },
+    "extensionPackages": {
+      "passed": 32,
+      "failed": 0
+    }
+  },
+  "scope": "All checked-in Bun tests under tests. Tests include fixture-based assertions and selected native execution; this is not a fresh run of every standalone native or browser oracle and does not establish completion of unimplemented requirements."
+}

@@ -1,0 +1,11 @@
+_:N7220b03836f14b47bfbcf83b3feb6d64 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/closed-002.test#MyShape> .
+_:N7220b03836f14b47bfbcf83b3feb6d64 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#ClosedConstraintComponent> .
+_:N7220b03836f14b47bfbcf83b3feb6d64 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N7220b03836f14b47bfbcf83b3feb6d64 <http://www.w3.org/ns/shacl#value> "4"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:Nd7ef381bf06f4aa5af3a16bce2196360 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N7220b03836f14b47bfbcf83b3feb6d64 <http://www.w3.org/ns/shacl#resultMessage> "Node ex:InvalidInstance1 is closed. It cannot have value: Literal(\"4\", datatype=xsd:integer)" .
+_:Nd7ef381bf06f4aa5af3a16bce2196360 <http://www.w3.org/ns/shacl#result> _:N7220b03836f14b47bfbcf83b3feb6d64 .
+_:N7220b03836f14b47bfbcf83b3feb6d64 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nd7ef381bf06f4aa5af3a16bce2196360 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N7220b03836f14b47bfbcf83b3feb6d64 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/node/closed-002.test#otherProperty> .
+_:N7220b03836f14b47bfbcf83b3feb6d64 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/closed-002.test#InvalidInstance1> .

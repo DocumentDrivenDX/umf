@@ -1,0 +1,2523 @@
+{
+  "revision": "fe6275b93fa4de7fc070d82ca8e14d633b2d25da",
+  "claim": "Native source graph round trips only; official validation reports are preserved but not executed",
+  "cases": [
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/complex/manifest.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/complex/manifest.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/complex/manifest.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/complex/manifest.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/complex/personexample.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/complex/personexample.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/complex/personexample.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/complex/personexample.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/complex/shacl-shacl-data-shapes.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/complex/shacl-shacl-data-shapes.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/complex/shacl-shacl-data-shapes.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/complex/shacl-shacl-data-shapes.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/complex/shacl-shacl.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/complex/shacl-shacl.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/complex/shacl-shacl.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/complex/shacl-shacl.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/manifest.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/manifest.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/manifest.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/manifest.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/misc/deactivated-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/misc/deactivated-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/misc/deactivated-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/misc/deactivated-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/misc/deactivated-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/misc/deactivated-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/misc/deactivated-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/misc/deactivated-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/misc/manifest.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/misc/manifest.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/misc/manifest.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/misc/manifest.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/misc/message-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/misc/message-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/misc/message-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/misc/message-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/misc/severity-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/misc/severity-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/misc/severity-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/misc/severity-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/misc/severity-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/misc/severity-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/misc/severity-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/misc/severity-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/and-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/and-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/and-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/and-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/and-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/and-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/and-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/and-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/class-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/class-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/class-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/class-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/class-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/class-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/class-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/class-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/class-003.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/class-003.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/class-003.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/class-003.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/closed-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/closed-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/closed-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/closed-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/closed-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/closed-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/closed-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/closed-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/datatype-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/datatype-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/datatype-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/datatype-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/datatype-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/datatype-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/datatype-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/datatype-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/disjoint-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/disjoint-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/disjoint-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/disjoint-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/equals-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/equals-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/equals-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/equals-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/hasValue-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/hasValue-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/hasValue-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/hasValue-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/in-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/in-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/in-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/in-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/languageIn-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/languageIn-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/languageIn-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/languageIn-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/manifest.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/manifest.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/manifest.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/manifest.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/maxExclusive-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/maxExclusive-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/maxExclusive-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/maxExclusive-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/maxInclusive-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/maxInclusive-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/maxInclusive-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/maxInclusive-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/maxLength-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/maxLength-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/maxLength-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/maxLength-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/minExclusive-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/minExclusive-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/minExclusive-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/minExclusive-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/minInclusive-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/minInclusive-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/minInclusive-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/minInclusive-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/minInclusive-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/minInclusive-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/minInclusive-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/minInclusive-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/minInclusive-003.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/minInclusive-003.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/minInclusive-003.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/minInclusive-003.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/minLength-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/minLength-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/minLength-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/minLength-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/node-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/node-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/node-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/node-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/nodeKind-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/nodeKind-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/nodeKind-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/nodeKind-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/not-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/not-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/not-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/not-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/not-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/not-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/not-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/not-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/or-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/or-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/or-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/or-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/pattern-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/pattern-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/pattern-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/pattern-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/pattern-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/pattern-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/pattern-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/pattern-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/qualified-001-data.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/qualified-001-data.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/qualified-001-data.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/qualified-001-data.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/qualified-001-shapes.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/qualified-001-shapes.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/qualified-001-shapes.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/qualified-001-shapes.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/qualified-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/qualified-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/qualified-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/qualified-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/xone-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/xone-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/xone-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/xone-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/xone-duplicate-data.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/xone-duplicate-data.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/xone-duplicate-data.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/xone-duplicate-data.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/xone-duplicate-shapes.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/xone-duplicate-shapes.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/xone-duplicate-shapes.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/xone-duplicate-shapes.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/node/xone-duplicate.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/xone-duplicate.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/xone-duplicate.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/node/xone-duplicate.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/path/manifest.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/manifest.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/manifest.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/manifest.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/path/path-alternative-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-alternative-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-alternative-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-alternative-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": [
+        {
+          "shape": {
+            "kind": "iri",
+            "value": "http://datashapes.org/sh/tests/core/path/path-alternative-001.test#TestShape"
+          },
+          "status": "compiled",
+          "path": {
+            "kind": "alternative",
+            "paths": [
+              {
+                "kind": "predicate",
+                "iri": "http://datashapes.org/sh/tests/core/path/path-alternative-001.test#property1"
+              },
+              {
+                "kind": "predicate",
+                "iri": "http://datashapes.org/sh/tests/core/path/path-alternative-001.test#property2"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/path/path-complex-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-complex-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-complex-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-complex-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": [
+        {
+          "shape": {
+            "kind": "iri",
+            "value": "http://datashapes.org/sh/tests/core/path/path-complex-001.test#TestShape"
+          },
+          "status": "compiled",
+          "path": {
+            "kind": "sequence",
+            "paths": [
+              {
+                "kind": "predicate",
+                "iri": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+              },
+              {
+                "kind": "zeroOrMore",
+                "path": {
+                  "kind": "predicate",
+                  "iri": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/path/path-complex-002-data.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-complex-002-data.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-complex-002-data.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-complex-002-data.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/path/path-complex-002-shapes.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-complex-002-shapes.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-complex-002-shapes.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-complex-002-shapes.ttl.yaml.ttl"
+        }
+      ],
+      "paths": [
+        {
+          "shape": {
+            "kind": "iri",
+            "value": "http://example.org/shacl/tests/s1"
+          },
+          "status": "compiled",
+          "path": {
+            "kind": "sequence",
+            "paths": [
+              {
+                "kind": "inverse",
+                "path": {
+                  "kind": "predicate",
+                  "iri": "http://example.org/shacl/tests/p"
+                }
+              },
+              {
+                "kind": "inverse",
+                "path": {
+                  "kind": "predicate",
+                  "iri": "http://example.org/shacl/tests/p"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "shape": {
+            "kind": "iri",
+            "value": "http://example.org/shacl/tests/s2"
+          },
+          "status": "compiled",
+          "path": {
+            "kind": "sequence",
+            "paths": [
+              {
+                "kind": "inverse",
+                "path": {
+                  "kind": "predicate",
+                  "iri": "http://example.org/shacl/tests/p"
+                }
+              },
+              {
+                "kind": "inverse",
+                "path": {
+                  "kind": "predicate",
+                  "iri": "http://example.org/shacl/tests/p"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/path/path-complex-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-complex-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-complex-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-complex-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/path/path-inverse-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-inverse-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-inverse-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-inverse-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": [
+        {
+          "shape": {
+            "kind": "iri",
+            "value": "http://datashapes.org/sh/tests/core/path/path-inverse-001.test#TestShape-P"
+          },
+          "status": "compiled",
+          "path": {
+            "kind": "inverse",
+            "path": {
+              "kind": "predicate",
+              "iri": "http://datashapes.org/sh/tests/core/path/path-inverse-001.test#child"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/path/path-oneOrMore-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-oneOrMore-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-oneOrMore-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-oneOrMore-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": [
+        {
+          "shape": {
+            "kind": "iri",
+            "value": "http://datashapes.org/sh/tests/core/path/path-oneOrMore-001.test#TestShape"
+          },
+          "status": "compiled",
+          "path": {
+            "kind": "oneOrMore",
+            "path": {
+              "kind": "predicate",
+              "iri": "http://datashapes.org/sh/tests/core/path/path-oneOrMore-001.test#child"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/path/path-sequence-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-sequence-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-sequence-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-sequence-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": [
+        {
+          "shape": {
+            "kind": "iri",
+            "value": "http://datashapes.org/sh/tests/core/path/path-sequence-001.test#TestShape"
+          },
+          "status": "compiled",
+          "path": {
+            "kind": "sequence",
+            "paths": [
+              {
+                "kind": "predicate",
+                "iri": "http://datashapes.org/sh/tests/core/path/path-sequence-001.test#property1"
+              },
+              {
+                "kind": "predicate",
+                "iri": "http://datashapes.org/sh/tests/core/path/path-sequence-001.test#property2"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/path/path-sequence-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-sequence-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-sequence-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-sequence-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": [
+        {
+          "shape": {
+            "kind": "iri",
+            "value": "http://datashapes.org/sh/tests/core/path/path-sequence-002.test#TestShape"
+          },
+          "status": "compiled",
+          "path": {
+            "kind": "sequence",
+            "paths": [
+              {
+                "kind": "predicate",
+                "iri": "http://datashapes.org/sh/tests/core/path/path-sequence-002.test#property1"
+              },
+              {
+                "kind": "predicate",
+                "iri": "http://datashapes.org/sh/tests/core/path/path-sequence-002.test#property2"
+              },
+              {
+                "kind": "predicate",
+                "iri": "http://datashapes.org/sh/tests/core/path/path-sequence-002.test#property3"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/path/path-sequence-duplicate-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-sequence-duplicate-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-sequence-duplicate-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-sequence-duplicate-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": [
+        {
+          "shape": {
+            "kind": "iri",
+            "value": "http://datashapes.org/sh/tests/core/path/path-sequence-duplicate-001.test#SP"
+          },
+          "status": "compiled",
+          "path": {
+            "kind": "sequence",
+            "paths": [
+              {
+                "kind": "predicate",
+                "iri": "http://datashapes.org/sh/tests/core/path/path-sequence-duplicate-001.test#p1"
+              },
+              {
+                "kind": "predicate",
+                "iri": "http://datashapes.org/sh/tests/core/path/path-sequence-duplicate-001.test#p2"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/path/path-strange-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-strange-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-strange-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-strange-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": [
+        {
+          "shape": {
+            "kind": "iri",
+            "value": "http://example.org/test#s1"
+          },
+          "status": "compiled",
+          "path": {
+            "kind": "sequence",
+            "paths": [
+              {
+                "kind": "predicate",
+                "iri": "http://example.org/test#p"
+              },
+              {
+                "kind": "predicate",
+                "iri": "http://example.org/test#q"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/path/path-strange-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-strange-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-strange-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-strange-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": [
+        {
+          "shape": {
+            "kind": "iri",
+            "value": "http://example.org/test#s1"
+          },
+          "status": "compiled",
+          "path": {
+            "kind": "sequence",
+            "paths": [
+              {
+                "kind": "predicate",
+                "iri": "http://example.org/test#p"
+              },
+              {
+                "kind": "predicate",
+                "iri": "http://example.org/test#q"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/path/path-unused-001-data.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-unused-001-data.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-unused-001-data.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-unused-001-data.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/path/path-unused-001-shapes.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-unused-001-shapes.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-unused-001-shapes.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-unused-001-shapes.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/path/path-unused-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-unused-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-unused-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-unused-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/path/path-zeroOrMore-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-zeroOrMore-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-zeroOrMore-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-zeroOrMore-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": [
+        {
+          "shape": {
+            "kind": "iri",
+            "value": "http://datashapes.org/sh/tests/core/path/path-zeroOrMore-001.test#TestShape"
+          },
+          "status": "compiled",
+          "path": {
+            "kind": "zeroOrMore",
+            "path": {
+              "kind": "predicate",
+              "iri": "http://datashapes.org/sh/tests/core/path/path-zeroOrMore-001.test#child"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/path/path-zeroOrOne-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-zeroOrOne-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-zeroOrOne-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/path/path-zeroOrOne-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": [
+        {
+          "shape": {
+            "kind": "iri",
+            "value": "http://datashapes.org/sh/tests/core/path/path-zeroOrOne-001.test#TestShape"
+          },
+          "status": "compiled",
+          "path": {
+            "kind": "zeroOrOne",
+            "path": {
+              "kind": "predicate",
+              "iri": "http://datashapes.org/sh/tests/core/path/path-zeroOrOne-001.test#child"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/and-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/and-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/and-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/and-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/class-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/class-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/class-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/class-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/datatype-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/datatype-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/datatype-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/datatype-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/datatype-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/datatype-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/datatype-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/datatype-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/datatype-003.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/datatype-003.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/datatype-003.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/datatype-003.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/datatype-ill-formed-data.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/datatype-ill-formed-data.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/datatype-ill-formed-data.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/datatype-ill-formed-data.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/datatype-ill-formed-shapes.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/datatype-ill-formed-shapes.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/datatype-ill-formed-shapes.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/datatype-ill-formed-shapes.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/datatype-ill-formed.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/datatype-ill-formed.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/datatype-ill-formed.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/datatype-ill-formed.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/disjoint-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/disjoint-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/disjoint-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/disjoint-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/equals-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/equals-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/equals-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/equals-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/hasValue-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/hasValue-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/hasValue-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/hasValue-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/in-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/in-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/in-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/in-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/languageIn-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/languageIn-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/languageIn-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/languageIn-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/lessThan-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/lessThan-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/lessThan-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/lessThan-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/lessThan-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/lessThan-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/lessThan-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/lessThan-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/lessThanOrEquals-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/lessThanOrEquals-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/lessThanOrEquals-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/lessThanOrEquals-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/manifest.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/manifest.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/manifest.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/manifest.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/maxCount-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/maxCount-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/maxCount-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/maxCount-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/maxCount-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/maxCount-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/maxCount-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/maxCount-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/maxExclusive-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/maxExclusive-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/maxExclusive-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/maxExclusive-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/maxInclusive-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/maxInclusive-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/maxInclusive-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/maxInclusive-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/maxLength-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/maxLength-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/maxLength-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/maxLength-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/minCount-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/minCount-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/minCount-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/minCount-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/minCount-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/minCount-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/minCount-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/minCount-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/minExclusive-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/minExclusive-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/minExclusive-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/minExclusive-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/minExclusive-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/minExclusive-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/minExclusive-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/minExclusive-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/minLength-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/minLength-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/minLength-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/minLength-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/node-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/node-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/node-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/node-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/node-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/node-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/node-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/node-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/nodeKind-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/nodeKind-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/nodeKind-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/nodeKind-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/not-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/not-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/not-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/not-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/or-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/or-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/or-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/or-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/or-datatypes-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/or-datatypes-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/or-datatypes-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/or-datatypes-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/pattern-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/pattern-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/pattern-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/pattern-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/pattern-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/pattern-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/pattern-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/pattern-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/property-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/property-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/property-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/property-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/qualifiedMinCountDisjoint-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/qualifiedMinCountDisjoint-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/qualifiedMinCountDisjoint-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/qualifiedMinCountDisjoint-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/qualifiedValueShape-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/qualifiedValueShape-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/qualifiedValueShape-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/qualifiedValueShape-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/qualifiedValueShapesDisjoint-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/qualifiedValueShapesDisjoint-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/qualifiedValueShapesDisjoint-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/qualifiedValueShapesDisjoint-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/uniqueLang-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/uniqueLang-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/uniqueLang-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/uniqueLang-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/uniqueLang-002-data.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/uniqueLang-002-data.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/uniqueLang-002-data.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/uniqueLang-002-data.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/uniqueLang-002-shapes.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/uniqueLang-002-shapes.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/uniqueLang-002-shapes.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/uniqueLang-002-shapes.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/property/uniqueLang-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/uniqueLang-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/uniqueLang-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/property/uniqueLang-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/manifest.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/manifest.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/targets/manifest.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/targets/manifest.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/multipleTargets-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/multipleTargets-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/targets/multipleTargets-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/targets/multipleTargets-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetClass-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetClass-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/targets/targetClass-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/targets/targetClass-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetClassImplicit-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetClassImplicit-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/targets/targetClassImplicit-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/targets/targetClassImplicit-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetNode-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetNode-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/targets/targetNode-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/targets/targetNode-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetObjectsOf-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetObjectsOf-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/targets/targetObjectsOf-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/targets/targetObjectsOf-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/validation-reports/manifest.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/validation-reports/manifest.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/validation-reports/manifest.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/validation-reports/manifest.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/validation-reports/shared-data.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/validation-reports/shared-data.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/validation-reports/shared-data.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/validation-reports/shared-data.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/validation-reports/shared-shapes.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/validation-reports/shared-shapes.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/validation-reports/shared-shapes.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/validation-reports/shared-shapes.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/core/validation-reports/shared.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/validation-reports/shared.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/validation-reports/shared.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/core/validation-reports/shared.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/manifest.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/manifest.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/manifest.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/manifest.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/component/manifest.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/component/manifest.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/component/manifest.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/component/manifest.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/component/nodeValidator-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/component/nodeValidator-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/component/nodeValidator-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/component/nodeValidator-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/component/optional-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/component/optional-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/component/optional-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/component/optional-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/component/propertyValidator-select-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/component/propertyValidator-select-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/component/propertyValidator-select-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/component/propertyValidator-select-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/component/validator-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/component/validator-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/component/validator-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/component/validator-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/manifest.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/manifest.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/manifest.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/manifest.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/node/manifest.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/node/manifest.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/node/manifest.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/node/manifest.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/node/prefixes-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/node/prefixes-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/node/prefixes-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/node/prefixes-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/node/sparql-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/node/sparql-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/node/sparql-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/node/sparql-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/node/sparql-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/node/sparql-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/node/sparql-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/node/sparql-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/node/sparql-003.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/node/sparql-003.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/node/sparql-003.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/node/sparql-003.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/pre-binding/manifest.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/pre-binding/manifest.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/manifest.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/manifest.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-003.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-003.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-003.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-003.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-004.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-004.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-004.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-004.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-005.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-005.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-005.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-005.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-006.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-006.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-006.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-006.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-007.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-007.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-007.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/pre-binding-007.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/pre-binding/shapesGraph-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/pre-binding/shapesGraph-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/shapesGraph-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/shapesGraph-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-002.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-002.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-002.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-002.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-003.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-003.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-003.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-003.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-004.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-004.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-004.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-004.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-005.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-005.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-005.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-005.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-006.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-006.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-006.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/pre-binding/unsupported-sparql-006.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/property/manifest.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/property/manifest.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/property/manifest.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/property/manifest.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    },
+    {
+      "path": "native/shacl/sources/data-shapes-test-suite/tests/sparql/property/sparql-001.ttl",
+      "baseIRI": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/sparql/property/sparql-001.ttl",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/property/sparql-001.ttl.json.ttl"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/shacl/corpus/data-shapes-test-suite/tests/sparql/property/sparql-001.ttl.yaml.ttl"
+        }
+      ],
+      "paths": []
+    }
+  ]
+}

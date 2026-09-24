@@ -1,0 +1,3252 @@
+{
+  "rdflib": "7.6.0",
+  "literalNormalization": false,
+  "results": [
+    {
+      "id": "IRI_subject",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "IRI_with_four_digit_numeric_escape",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "IRI_with_eight_digit_numeric_escape",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "IRI_with_all_punctuation",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "bareword_a_predicate",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "old_style_prefix",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "SPARQL_style_prefix",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "prefixed_IRI_predicate",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "prefixed_IRI_object",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "prefix_only_IRI",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "prefix_with_PN_CHARS_BASE_character_boundaries",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "prefix_with_non_leading_extras",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "default_namespace_IRI",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "prefix_reassigned_and_used",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "reserved_escaped_localName",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "percent_escaped_localName",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "HYPHEN_MINUS_in_localName",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "underscore_in_localName",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "localname_with_COLON",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "localName_with_assigned_nfc_bmp_PN_CHARS_BASE_character_boundaries",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "localName_with_assigned_nfc_PN_CHARS_BASE_character_boundaries",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "localName_with_nfc_PN_CHARS_BASE_character_boundaries",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "localName_with_leading_underscore",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "localName_with_leading_digit",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "localName_with_non_leading_extras",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "old_style_base",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "SPARQL_style_base",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "labeled_blank_node_subject",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "labeled_blank_node_object",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "labeled_blank_node_with_PN_CHARS_BASE_character_boundaries",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "labeled_blank_node_with_leading_underscore",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "labeled_blank_node_with_leading_digit",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "labeled_blank_node_with_non_leading_extras",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "anonymous_blank_node_subject",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "anonymous_blank_node_object",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "sole_blankNodePropertyList",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "blankNodePropertyList_as_subject",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "blankNodePropertyList_as_object",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "blankNodePropertyList_as_object_containing_objectList",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "blankNodePropertyList_as_object_containing_objectList_of_two_objects",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "blankNodePropertyList_with_multiple_triples",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "nested_blankNodePropertyLists",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "blankNodePropertyList_containing_collection",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "collection_subject",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "collection_object",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "empty_collection",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "nested_collection",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "first",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "last",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "LITERAL1",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "LITERAL1_ascii_boundaries",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "LITERAL1_with_UTF8_boundaries",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "LITERAL1_all_controls",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "LITERAL1_all_punctuation",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "LITERAL_LONG1",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "LITERAL_LONG1_ascii_boundaries",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "LITERAL_LONG1_with_UTF8_boundaries",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "LITERAL_LONG1_with_1_squote",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "LITERAL_LONG1_with_2_squotes",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "LITERAL2",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "LITERAL2_ascii_boundaries",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "LITERAL2_with_UTF8_boundaries",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "LITERAL_LONG2",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "LITERAL_LONG2_ascii_boundaries",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "LITERAL_LONG2_with_UTF8_boundaries",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "LITERAL_LONG2_with_1_squote",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "LITERAL_LONG2_with_2_squotes",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_CHARACTER_TABULATION",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_BACKSPACE",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_LINE_FEED",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_CARRIAGE_RETURN",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_FORM_FEED",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_REVERSE_SOLIDUS",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_escaped_CHARACTER_TABULATION",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_escaped_BACKSPACE",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_escaped_LINE_FEED",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_escaped_CARRIAGE_RETURN",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_escaped_FORM_FEED",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_numeric_escape4",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_numeric_escape8",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "IRIREF_datatype",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "prefixed_name_datatype",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "bareword_integer",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "bareword_decimal",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "bareword_double",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "double_lower_case_e",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "negative_numeric",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "positive_numeric",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": false,
+      "nativeSourceTriples": [
+        [
+          "<http://a.example/s>",
+          "<http://a.example/p>",
+          "\"1\"^^<http://www.w3.org/2001/XMLSchema#integer>"
+        ]
+      ],
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "numeric_with_leading_0",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": false,
+      "nativeSourceTriples": [
+        [
+          "<http://a.example/s>",
+          "<http://a.example/p>",
+          "\"1\"^^<http://www.w3.org/2001/XMLSchema#integer>"
+        ]
+      ],
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_true",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_false",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "langtagged_non_LONG",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "langtagged_LONG",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "lantag_with_subtag",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "objectList_with_two_objects",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "predicateObjectList_with_two_objectLists",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "predicateObjectList_with_blankNodePropertyList_as_object",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "repeated_semis_at_end",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "repeated_semis_not_at_end",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "comment_following_localName",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "number_sign_following_localName",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "comment_following_PNAME_NS",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "number_sign_following_PNAME_NS",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "LITERAL_LONG2_with_REVERSE_SOLIDUS",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-bad-LITERAL2_with_langtag_and_datatype",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "two_LITERAL_LONG2s",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "langtagged_LONG_with_subtag",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-file-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-file-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-file-03",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-uri-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-uri-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-uri-03",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-uri-04",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-base-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-base-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-base-03",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-base-04",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-prefix-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-prefix-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-prefix-03",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-prefix-04",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-prefix-05",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-prefix-06",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-prefix-07",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-prefix-08",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-prefix-09",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-string-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-string-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-string-03",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-string-04",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-string-05",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-string-06",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-string-07",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-string-08",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-string-09",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-string-10",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-string-11",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-str-esc-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-str-esc-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-str-esc-03",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-pname-esc-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-pname-esc-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-pname-esc-03",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-bnode-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-bnode-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-bnode-03",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-bnode-04",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-bnode-05",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-bnode-06",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-bnode-07",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-bnode-08",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-bnode-09",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-bnode-10",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-number-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-number-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-number-03",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": false,
+      "nativeSourceTriples": [
+        [
+          "<https://w3c.github.io/rdf-tests/rdf/rdf11/rdf-turtle/s>",
+          "<https://w3c.github.io/rdf-tests/rdf/rdf11/rdf-turtle/p>",
+          "\"123\"^^<http://www.w3.org/2001/XMLSchema#integer>"
+        ]
+      ],
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-number-04",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-number-05",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": false,
+      "nativeSourceTriples": [
+        [
+          "<https://w3c.github.io/rdf-tests/rdf/rdf11/rdf-turtle/s>",
+          "<https://w3c.github.io/rdf-tests/rdf/rdf11/rdf-turtle/p>",
+          "\"0.1\"^^<http://www.w3.org/2001/XMLSchema#decimal>"
+        ]
+      ],
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-number-06",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-number-07",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": false,
+      "nativeSourceTriples": [
+        [
+          "<https://w3c.github.io/rdf-tests/rdf/rdf11/rdf-turtle/s>",
+          "<https://w3c.github.io/rdf-tests/rdf/rdf11/rdf-turtle/p>",
+          "\"123.0\"^^<http://www.w3.org/2001/XMLSchema#decimal>"
+        ]
+      ],
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-number-08",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-number-09",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-number-10",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-number-11",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-number-12",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-number-13",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": false,
+      "nativeSourceTriples": [
+        [
+          "<http://example/s>",
+          "<http://example/p>",
+          "\"0.7\"^^<http://www.w3.org/2001/XMLSchema#decimal>"
+        ]
+      ],
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-datatypes-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-datatypes-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-kw-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-kw-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-syntax-kw-03",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-struct-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-struct-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-struct-03",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-struct-04",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-struct-05",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-eval-lists-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "turtle-eval-lists-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-eval-lists-03",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-eval-lists-04",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "turtle-eval-lists-05",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-eval-lists-06",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-bad-uri-01",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-uri-02",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-uri-03",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-uri-04",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-uri-05",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-uri-escape-01",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-uri-escape-02",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-uri-escape-03",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-uri-escape-04",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-prefix-01",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-prefix-02",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-prefix-03",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-prefix-04",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-prefix-05",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-base-01",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-base-02",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-base-03",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-bnode-01",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-bnode-02",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-struct-01",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-struct-02",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-struct-03",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-struct-04",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-struct-05",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-struct-06",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-struct-07",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-kw-01",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-kw-02",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-kw-03",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-kw-04",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-kw-05",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-n3-extras-01",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-n3-extras-02",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-n3-extras-03",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-n3-extras-04",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-n3-extras-05",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-n3-extras-06",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-n3-extras-07",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-n3-extras-08",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-n3-extras-09",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-n3-extras-10",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-n3-extras-11",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-n3-extras-12",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-n3-extras-13",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-numeric-escape-01",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-numeric-escape-02",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-numeric-escape-03",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-numeric-escape-04",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-numeric-escape-05",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-numeric-escape-06",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-numeric-escape-07",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-numeric-escape-08",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-numeric-escape-09",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-numeric-escape-10",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-struct-08",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-struct-09",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-struct-10",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-struct-11",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-struct-12",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-struct-13",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-struct-14",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-struct-15",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-struct-16",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-struct-17",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-lang-01",
+      "native": "rejected",
+      "error": "ValueError"
+    },
+    {
+      "id": "turtle-syntax-bad-esc-01",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-esc-02",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-esc-03",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-esc-04",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-pname-01",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-pname-02",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-pname-03",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-string-01",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-string-02",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-string-03",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-string-04",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-string-05",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-string-06",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-string-07",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-num-01",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-num-02",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-num-03",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-num-04",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-num-05",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-eval-struct-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "turtle-eval-struct-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "turtle-subm-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "turtle-subm-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "turtle-subm-03",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "turtle-subm-04",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "turtle-subm-05",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "turtle-subm-06",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "turtle-subm-07",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "turtle-subm-08",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-subm-09",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "turtle-subm-10",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-subm-11",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": false,
+      "nativeSourceTriples": [
+        [
+          "<http://example.org/res1>",
+          "<http://example.org/prop1>",
+          "\"0\"^^<http://www.w3.org/2001/XMLSchema#integer>"
+        ],
+        [
+          "<http://example.org/res2>",
+          "<http://example.org/prop2>",
+          "\"0\"^^<http://www.w3.org/2001/XMLSchema#integer>"
+        ],
+        [
+          "<http://example.org/res3>",
+          "<http://example.org/prop3>",
+          "\"1\"^^<http://www.w3.org/2001/XMLSchema#integer>"
+        ],
+        [
+          "<http://example.org/res4>",
+          "<http://example.org/prop4>",
+          "\"2\"^^<http://www.w3.org/2001/XMLSchema#integer>"
+        ],
+        [
+          "<http://example.org/res5>",
+          "<http://example.org/prop5>",
+          "\"4\"^^<http://www.w3.org/2001/XMLSchema#integer>"
+        ]
+      ],
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-subm-12",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-subm-13",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-subm-14",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "turtle-subm-15",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-subm-16",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-subm-17",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-subm-18",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-subm-19",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-subm-20",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-subm-21",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-subm-22",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-subm-23",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "turtle-subm-24",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "turtle-subm-25",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "turtle-subm-26",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "turtle-subm-27",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-bad-blank-label-dot-end",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-ln-dash-start",
+      "native": "accepted-negative"
+    },
+    {
+      "id": "turtle-syntax-bad-ln-escape-start",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-ln-escape",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-missing-ns-dot-end",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-missing-ns-dot-start",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-ns-dot-end",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-ns-dot-start",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-bad-number-dot-in-anon",
+      "native": "rejected",
+      "error": "BadSyntax"
+    },
+    {
+      "id": "turtle-syntax-blank-label",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-ln-colons",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-ln-dots",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "turtle-syntax-ns-dots",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": true,
+      "officialExpectedGraph": false,
+      "edits": []
+    },
+    {
+      "id": "IRI-resolution-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": false,
+      "nativeSourceTriples": [
+        [
+          "<urn:ex:s001>",
+          "<urn:ex:p>",
+          "<g:h>"
+        ],
+        [
+          "<urn:ex:s002>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/g>"
+        ],
+        [
+          "<urn:ex:s003>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/g>"
+        ],
+        [
+          "<urn:ex:s004>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/g/>"
+        ],
+        [
+          "<urn:ex:s005>",
+          "<urn:ex:p>",
+          "<http://a/g>"
+        ],
+        [
+          "<urn:ex:s006>",
+          "<urn:ex:p>",
+          "<http://g>"
+        ],
+        [
+          "<urn:ex:s007>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/?y>"
+        ],
+        [
+          "<urn:ex:s008>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/g?y>"
+        ],
+        [
+          "<urn:ex:s009>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d;p?q#s>"
+        ],
+        [
+          "<urn:ex:s010>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/g#s>"
+        ],
+        [
+          "<urn:ex:s011>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/g?y#s>"
+        ],
+        [
+          "<urn:ex:s012>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/;x>"
+        ],
+        [
+          "<urn:ex:s013>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/g;x>"
+        ],
+        [
+          "<urn:ex:s014>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/g;x?y#s>"
+        ],
+        [
+          "<urn:ex:s015>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d;p?q>"
+        ],
+        [
+          "<urn:ex:s016>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/>"
+        ],
+        [
+          "<urn:ex:s017>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/>"
+        ],
+        [
+          "<urn:ex:s018>",
+          "<urn:ex:p>",
+          "<http://a/bb/>"
+        ],
+        [
+          "<urn:ex:s019>",
+          "<urn:ex:p>",
+          "<http://a/bb/>"
+        ],
+        [
+          "<urn:ex:s020>",
+          "<urn:ex:p>",
+          "<http://a/bb/g>"
+        ],
+        [
+          "<urn:ex:s021>",
+          "<urn:ex:p>",
+          "<http://a/>"
+        ],
+        [
+          "<urn:ex:s022>",
+          "<urn:ex:p>",
+          "<http://a/>"
+        ],
+        [
+          "<urn:ex:s023>",
+          "<urn:ex:p>",
+          "<http://a/g>"
+        ],
+        [
+          "<urn:ex:s024>",
+          "<urn:ex:p>",
+          "<http://a/g>"
+        ],
+        [
+          "<urn:ex:s025>",
+          "<urn:ex:p>",
+          "<http://a/g>"
+        ],
+        [
+          "<urn:ex:s026>",
+          "<urn:ex:p>",
+          "<http://a/./g>"
+        ],
+        [
+          "<urn:ex:s027>",
+          "<urn:ex:p>",
+          "<http://a/../g>"
+        ],
+        [
+          "<urn:ex:s028>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/g.>"
+        ],
+        [
+          "<urn:ex:s029>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/.g>"
+        ],
+        [
+          "<urn:ex:s030>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/g..>"
+        ],
+        [
+          "<urn:ex:s031>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/..g>"
+        ],
+        [
+          "<urn:ex:s032>",
+          "<urn:ex:p>",
+          "<http://a/bb/g>"
+        ],
+        [
+          "<urn:ex:s033>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/g/.>"
+        ],
+        [
+          "<urn:ex:s034>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/g/./h>"
+        ],
+        [
+          "<urn:ex:s035>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/g/../h>"
+        ],
+        [
+          "<urn:ex:s036>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/g;x=1/./y>"
+        ],
+        [
+          "<urn:ex:s037>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/g;x=1/../y>"
+        ],
+        [
+          "<urn:ex:s038>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/g?y/./x>"
+        ],
+        [
+          "<urn:ex:s039>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/g?y/../x>"
+        ],
+        [
+          "<urn:ex:s040>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/g#s/./x>"
+        ],
+        [
+          "<urn:ex:s041>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/g#s/../x>"
+        ]
+      ],
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "IRI-resolution-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": false,
+      "nativeSourceTriples": [
+        [
+          "<urn:ex:s043>",
+          "<urn:ex:p>",
+          "<g:h>"
+        ],
+        [
+          "<urn:ex:s044>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/g>"
+        ],
+        [
+          "<urn:ex:s045>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/g>"
+        ],
+        [
+          "<urn:ex:s046>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/g/>"
+        ],
+        [
+          "<urn:ex:s047>",
+          "<urn:ex:p>",
+          "<http://a/g>"
+        ],
+        [
+          "<urn:ex:s048>",
+          "<urn:ex:p>",
+          "<http://g>"
+        ],
+        [
+          "<urn:ex:s049>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/?y>"
+        ],
+        [
+          "<urn:ex:s050>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/g?y>"
+        ],
+        [
+          "<urn:ex:s051>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/#s>"
+        ],
+        [
+          "<urn:ex:s052>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/g#s>"
+        ],
+        [
+          "<urn:ex:s053>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/g?y#s>"
+        ],
+        [
+          "<urn:ex:s054>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/;x>"
+        ],
+        [
+          "<urn:ex:s055>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/g;x>"
+        ],
+        [
+          "<urn:ex:s056>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/g;x?y#s>"
+        ],
+        [
+          "<urn:ex:s057>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/>"
+        ],
+        [
+          "<urn:ex:s058>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/>"
+        ],
+        [
+          "<urn:ex:s059>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/>"
+        ],
+        [
+          "<urn:ex:s060>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/>"
+        ],
+        [
+          "<urn:ex:s061>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/>"
+        ],
+        [
+          "<urn:ex:s062>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/g>"
+        ],
+        [
+          "<urn:ex:s063>",
+          "<urn:ex:p>",
+          "<http://a/bb/>"
+        ],
+        [
+          "<urn:ex:s064>",
+          "<urn:ex:p>",
+          "<http://a/bb/>"
+        ],
+        [
+          "<urn:ex:s065>",
+          "<urn:ex:p>",
+          "<http://a/bb/g>"
+        ],
+        [
+          "<urn:ex:s066>",
+          "<urn:ex:p>",
+          "<http://a/g>"
+        ],
+        [
+          "<urn:ex:s067>",
+          "<urn:ex:p>",
+          "<http://a/g>"
+        ],
+        [
+          "<urn:ex:s068>",
+          "<urn:ex:p>",
+          "<http://a/./g>"
+        ],
+        [
+          "<urn:ex:s069>",
+          "<urn:ex:p>",
+          "<http://a/../g>"
+        ],
+        [
+          "<urn:ex:s070>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/g.>"
+        ],
+        [
+          "<urn:ex:s071>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/.g>"
+        ],
+        [
+          "<urn:ex:s072>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/g..>"
+        ],
+        [
+          "<urn:ex:s073>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/..g>"
+        ],
+        [
+          "<urn:ex:s074>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/g>"
+        ],
+        [
+          "<urn:ex:s075>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/g/.>"
+        ],
+        [
+          "<urn:ex:s076>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/g/./h>"
+        ],
+        [
+          "<urn:ex:s077>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/g/../h>"
+        ],
+        [
+          "<urn:ex:s078>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/g;x=1/./y>"
+        ],
+        [
+          "<urn:ex:s079>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/g;x=1/../y>"
+        ],
+        [
+          "<urn:ex:s080>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/g?y/./x>"
+        ],
+        [
+          "<urn:ex:s081>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/g?y/../x>"
+        ],
+        [
+          "<urn:ex:s082>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/g#s/./x>"
+        ],
+        [
+          "<urn:ex:s083>",
+          "<urn:ex:p>",
+          "<http://a/bb/ccc/d/g#s/../x>"
+        ]
+      ],
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "IRI-resolution-07",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": false,
+      "nativeSourceTriples": [
+        [
+          "<urn:ex:s253>",
+          "<urn:ex:p>",
+          "<g:h>"
+        ],
+        [
+          "<urn:ex:s254>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/g>"
+        ],
+        [
+          "<urn:ex:s255>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/g>"
+        ],
+        [
+          "<urn:ex:s256>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/g/>"
+        ],
+        [
+          "<urn:ex:s257>",
+          "<urn:ex:p>",
+          "<file:///g>"
+        ],
+        [
+          "<urn:ex:s258>",
+          "<urn:ex:p>",
+          "<file://g>"
+        ],
+        [
+          "<urn:ex:s259>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/?y>"
+        ],
+        [
+          "<urn:ex:s260>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/g?y>"
+        ],
+        [
+          "<urn:ex:s261>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/d;p?q#s>"
+        ],
+        [
+          "<urn:ex:s262>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/g#s>"
+        ],
+        [
+          "<urn:ex:s263>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/g?y#s>"
+        ],
+        [
+          "<urn:ex:s264>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/;x>"
+        ],
+        [
+          "<urn:ex:s265>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/g;x>"
+        ],
+        [
+          "<urn:ex:s266>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/g;x?y#s>"
+        ],
+        [
+          "<urn:ex:s267>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/d;p?q>"
+        ],
+        [
+          "<urn:ex:s268>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/>"
+        ],
+        [
+          "<urn:ex:s269>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/>"
+        ],
+        [
+          "<urn:ex:s270>",
+          "<urn:ex:p>",
+          "<file:///a/bb/>"
+        ],
+        [
+          "<urn:ex:s271>",
+          "<urn:ex:p>",
+          "<file:///a/bb/>"
+        ],
+        [
+          "<urn:ex:s272>",
+          "<urn:ex:p>",
+          "<file:///a/bb/g>"
+        ],
+        [
+          "<urn:ex:s273>",
+          "<urn:ex:p>",
+          "<file:///a/>"
+        ],
+        [
+          "<urn:ex:s274>",
+          "<urn:ex:p>",
+          "<file:///a/>"
+        ],
+        [
+          "<urn:ex:s275>",
+          "<urn:ex:p>",
+          "<file:///a/g>"
+        ],
+        [
+          "<urn:ex:s276>",
+          "<urn:ex:p>",
+          "<file:///g>"
+        ],
+        [
+          "<urn:ex:s277>",
+          "<urn:ex:p>",
+          "<file:///g>"
+        ],
+        [
+          "<urn:ex:s278>",
+          "<urn:ex:p>",
+          "<file:///./g>"
+        ],
+        [
+          "<urn:ex:s279>",
+          "<urn:ex:p>",
+          "<file:///../g>"
+        ],
+        [
+          "<urn:ex:s280>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/g.>"
+        ],
+        [
+          "<urn:ex:s281>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/.g>"
+        ],
+        [
+          "<urn:ex:s282>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/g..>"
+        ],
+        [
+          "<urn:ex:s283>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/..g>"
+        ],
+        [
+          "<urn:ex:s284>",
+          "<urn:ex:p>",
+          "<file:///a/bb/g>"
+        ],
+        [
+          "<urn:ex:s285>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/g/.>"
+        ],
+        [
+          "<urn:ex:s286>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/g/./h>"
+        ],
+        [
+          "<urn:ex:s287>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/g/../h>"
+        ],
+        [
+          "<urn:ex:s288>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/g;x=1/./y>"
+        ],
+        [
+          "<urn:ex:s289>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/g;x=1/../y>"
+        ],
+        [
+          "<urn:ex:s290>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/g?y/./x>"
+        ],
+        [
+          "<urn:ex:s291>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/g?y/../x>"
+        ],
+        [
+          "<urn:ex:s292>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/g#s/./x>"
+        ],
+        [
+          "<urn:ex:s293>",
+          "<urn:ex:p>",
+          "<file:///a/bb/ccc/g#s/../x>"
+        ],
+        [
+          "<urn:ex:s294>",
+          "<urn:ex:p>",
+          "<http:g>"
+        ]
+      ],
+      "officialExpectedGraph": true,
+      "edits": []
+    },
+    {
+      "id": "IRI-resolution-08",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "nativeSourceIsomorphic": false,
+      "nativeSourceTriples": [
+        [
+          "<urn:ex:s295>",
+          "<urn:ex:p>",
+          "<http://abc/def/>"
+        ],
+        [
+          "<urn:ex:s296>",
+          "<urn:ex:p>",
+          "<http://abc/def/.?a=b>"
+        ],
+        [
+          "<urn:ex:s297>",
+          "<urn:ex:p>",
+          "<http://abc/def/#a=b>"
+        ],
+        [
+          "<urn:ex:s298>",
+          "<urn:ex:p>",
+          "<http://abc/>"
+        ],
+        [
+          "<urn:ex:s299>",
+          "<urn:ex:p>",
+          "<http://abc/def/..?a=b>"
+        ],
+        [
+          "<urn:ex:s300>",
+          "<urn:ex:p>",
+          "<http://abc/#a=b>"
+        ],
+        [
+          "<urn:ex:s301>",
+          "<urn:ex:p>",
+          "<http://ab//de//xyz>"
+        ],
+        [
+          "<urn:ex:s302>",
+          "<urn:ex:p>",
+          "<http://ab//de//xyz>"
+        ],
+        [
+          "<urn:ex:s303>",
+          "<urn:ex:p>",
+          "<http://ab//de/xyz>"
+        ],
+        [
+          "<urn:ex:s304>",
+          "<urn:ex:p>",
+          "<http://abc/d:f/xyz>"
+        ],
+        [
+          "<urn:ex:s305>",
+          "<urn:ex:p>",
+          "<http://abc/d:f/xyz>"
+        ],
+        [
+          "<urn:ex:s306>",
+          "<urn:ex:p>",
+          "<http://abc/xyz>"
+        ]
+      ],
+      "officialExpectedGraph": true,
+      "edits": []
+    }
+  ]
+}

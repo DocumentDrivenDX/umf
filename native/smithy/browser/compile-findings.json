@@ -1,0 +1,17 @@
+{
+  "smithyModel": "1.73.0",
+  "teaVM": "0.15.0",
+  "command": "mvn -q -f native/smithy/browser/unmodified-pom.xml process-classes",
+  "exitCode": 1,
+  "missingJavaRuntimeSurfaces": [
+    "Class java.util.StringJoiner was not found",
+    "Method java.lang.Class.getGenericSuperclass()Ljava/lang/reflect/Type; was not found",
+    "Method java.lang.Class.getResource(Ljava/lang/String;)Ljava/net/URL; was not found",
+    "Method java.lang.reflect.Method.getParameters()[Ljava/lang/reflect/Parameter; was not found",
+    "Method java.util.Collection.parallelStream()Ljava/util/stream/Stream; was not found",
+    "Method java.util.Collections.unmodifiableSortedSet(Ljava/util/SortedSet;)Ljava/util/SortedSet; was not found",
+    "Method java.util.List.parallelStream()Ljava/util/stream/Stream; was not found"
+  ],
+  "conclusion": "Direct Java-to-JavaScript compilation does not produce a usable Smithy assembler. Runtime substitutions/reflection/resource support require additional work; not a shipped browser capability.",
+  "scope": "Unmodified native dependencies precede project compatibility classes in this baseline configuration."
+}

@@ -1,0 +1,4610 @@
+{
+  "policy": {
+    "id": "avro-record",
+    "recordName": "SqlRecord",
+    "namespace": "example.sales",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "fields": {
+      "id": {
+        "name": "id",
+        "representation": "value"
+      },
+      "flag": {
+        "name": "flag",
+        "representation": "value"
+      },
+      "tiny": {
+        "name": "tiny",
+        "representation": "value"
+      },
+      "small": {
+        "name": "small",
+        "representation": "value"
+      },
+      "ordinary": {
+        "name": "ordinary",
+        "representation": "value"
+      },
+      "exact": {
+        "name": "exact",
+        "representation": "value"
+      },
+      "numeric_value": {
+        "name": "numeric_value",
+        "representation": "value"
+      },
+      "cash": {
+        "name": "cash",
+        "representation": "value"
+      },
+      "small_cash": {
+        "name": "small_cash",
+        "representation": "value"
+      },
+      "approximate": {
+        "name": "approximate",
+        "representation": "value"
+      },
+      "single": {
+        "name": "single",
+        "representation": "value"
+      },
+      "words": {
+        "name": "words",
+        "representation": "value"
+      },
+      "unicode_words": {
+        "name": "unicode_words",
+        "representation": "value"
+      },
+      "unlimited": {
+        "name": "unlimited",
+        "representation": "value"
+      },
+      "fixed_text": {
+        "name": "fixed_text",
+        "representation": "value"
+      },
+      "unicode_fixed": {
+        "name": "unicode_fixed",
+        "representation": "value"
+      },
+      "bytes": {
+        "name": "bytes",
+        "representation": "value"
+      },
+      "fixed_bytes": {
+        "name": "fixed_bytes",
+        "representation": "value"
+      },
+      "version_stamp": {
+        "name": "version_stamp",
+        "representation": "value"
+      },
+      "day": {
+        "name": "day",
+        "representation": "value"
+      },
+      "clock": {
+        "name": "clock",
+        "representation": "sql-text"
+      },
+      "local_stamp": {
+        "name": "local_stamp",
+        "representation": "sql-text"
+      },
+      "instant": {
+        "name": "instant",
+        "representation": "sql-text"
+      },
+      "legacy_stamp": {
+        "name": "legacy_stamp",
+        "representation": "sql-text"
+      },
+      "small_stamp": {
+        "name": "small_stamp",
+        "representation": "sql-text"
+      },
+      "amount": {
+        "name": "amount",
+        "representation": "value"
+      },
+      "identifier": {
+        "name": "identifier",
+        "representation": "sql-text"
+      },
+      "document": {
+        "name": "document",
+        "representation": "sql-text"
+      },
+      "variant": {
+        "name": "variant",
+        "representation": "sql-text"
+      },
+      "computed": {
+        "name": "computed",
+        "representation": "value"
+      }
+    },
+    "lossPolicy": "allow-reported-loss"
+  },
+  "result": {
+    "status": "projected",
+    "source": {
+      "umf": "0.1.0",
+      "id": "sqlserver-avro",
+      "vocabularies": {
+        "umf.sqlserver": {
+          "version": "0.1.0"
+        }
+      },
+      "extensions": {
+        "umf.sqlserver": {
+          "profile": "sqlserver-catalog-v1",
+          "root": {
+            "kind": "object",
+            "members": {
+              "profile": {
+                "kind": "string",
+                "value": "sqlserver-catalog-v1"
+              },
+              "state": {
+                "kind": "string",
+                "value": "captured"
+              },
+              "serverVersion": {
+                "kind": "string",
+                "value": "16.0.4295.3"
+              },
+              "query": {
+                "kind": "string",
+                "value": "SET NOCOUNT ON;\nSELECT 'sqlserver-catalog-v1' AS profile, 'captured' AS state,\n CONVERT(nvarchar(128),SERVERPROPERTY('ProductVersion')) AS serverVersion,\n 'native/sqlserver/catalog.sql' AS query,\n JSON_QUERY((SELECT SCHEMA_NAME(t.schema_id) AS [schema],t.name,\n  JSON_QUERY((SELECT c.name,c.column_id,c.system_type_id,c.user_type_id,\n   SCHEMA_NAME(ty.schema_id) AS type_schema,ty.name AS type_name,bt.name AS base_type_name,\n   ty.is_user_defined,ty.is_assembly_type,c.max_length,c.precision,c.scale,\n   c.is_nullable,c.is_identity,c.is_computed,c.collation_name,\n   OBJECT_DEFINITION(c.default_object_id) AS default_definition,cc.definition AS computed_definition,\n   CONVERT(nvarchar(128),ic.seed_value) AS identity_seed,\n   CONVERT(nvarchar(128),ic.increment_value) AS identity_increment,\n   CONVERT(nvarchar(max),ep.value) AS description\n   FROM sys.columns c JOIN sys.types ty ON ty.user_type_id=c.user_type_id\n   LEFT JOIN sys.types bt ON bt.user_type_id=c.system_type_id AND bt.system_type_id=bt.user_type_id\n   LEFT JOIN sys.computed_columns cc ON cc.object_id=c.object_id AND cc.column_id=c.column_id\n   LEFT JOIN sys.identity_columns ic ON ic.object_id=c.object_id AND ic.column_id=c.column_id\n   LEFT JOIN sys.extended_properties ep ON ep.class=1 AND ep.major_id=c.object_id AND ep.minor_id=c.column_id AND ep.name=N'MS_Description'\n   WHERE c.object_id=t.object_id ORDER BY c.column_id FOR JSON PATH,INCLUDE_NULL_VALUES)) AS columns\n  FROM sys.tables t WHERE t.is_ms_shipped=0 ORDER BY SCHEMA_NAME(t.schema_id),t.name\n  FOR JSON PATH,INCLUDE_NULL_VALUES)) AS tables\nFOR JSON PATH,WITHOUT_ARRAY_WRAPPER,INCLUDE_NULL_VALUES;\n"
+              },
+              "tables": {
+                "kind": "array",
+                "items": [
+                  {
+                    "kind": "object",
+                    "members": {
+                      "schema": {
+                        "kind": "string",
+                        "value": "sales"
+                      },
+                      "name": {
+                        "kind": "string",
+                        "value": "LegacyTimestamp"
+                      },
+                      "columns": {
+                        "kind": "array",
+                        "items": [
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "id"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "1"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "56"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "56"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "int"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "int"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "4"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "10"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "version_stamp"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "2"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "189"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "189"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "timestamp"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "timestamp"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "8"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "kind": "object",
+                    "members": {
+                      "schema": {
+                        "kind": "string",
+                        "value": "sales"
+                      },
+                      "name": {
+                        "kind": "string",
+                        "value": "Types"
+                      },
+                      "columns": {
+                        "kind": "array",
+                        "items": [
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "id"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "1"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "127"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "127"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "bigint"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "bigint"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "8"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "19"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "string",
+                                "value": "9007199254740993"
+                              },
+                              "identity_increment": {
+                                "kind": "string",
+                                "value": "1"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "flag"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "2"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "104"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "104"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "bit"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "bit"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "1"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "1"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "string",
+                                "value": "((1))"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "tiny"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "3"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "48"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "48"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "tinyint"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "tinyint"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "1"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "3"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "small"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "4"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "52"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "52"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "smallint"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "smallint"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "2"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "5"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "ordinary"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "5"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "56"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "56"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "int"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "int"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "4"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "10"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "exact"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "6"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "106"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "106"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "decimal"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "decimal"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "17"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "38"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "9"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "string",
+                                "value": "Exact decimal amount"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "numeric_value"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "7"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "108"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "108"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "numeric"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "numeric"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "13"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "20"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "3"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "cash"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "8"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "60"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "60"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "money"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "money"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "8"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "19"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "4"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "small_cash"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "9"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "122"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "122"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "smallmoney"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "smallmoney"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "4"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "10"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "4"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "approximate"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "10"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "62"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "62"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "float"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "float"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "8"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "53"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "single"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "11"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "59"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "59"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "real"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "real"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "4"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "24"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "words"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "12"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "167"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "167"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "varchar"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "varchar"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "40"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "string",
+                                "value": "Latin1_General_100_BIN2"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "unicode_words"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "13"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "231"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "231"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "nvarchar"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "nvarchar"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "80"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "string",
+                                "value": "SQL_Latin1_General_CP1_CI_AS"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "unlimited"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "14"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "231"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "231"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "nvarchar"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "nvarchar"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "-1"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "string",
+                                "value": "SQL_Latin1_General_CP1_CI_AS"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "fixed_text"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "15"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "175"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "175"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "char"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "char"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "4"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "string",
+                                "value": "SQL_Latin1_General_CP1_CI_AS"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "unicode_fixed"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "16"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "239"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "239"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "nchar"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "nchar"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "8"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "string",
+                                "value": "SQL_Latin1_General_CP1_CI_AS"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "bytes"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "17"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "165"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "165"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "varbinary"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "varbinary"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "-1"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "fixed_bytes"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "18"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "173"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "173"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "binary"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "binary"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "8"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "version_stamp"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "19"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "189"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "189"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "timestamp"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "timestamp"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "8"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "day"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "20"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "40"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "40"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "date"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "date"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "3"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "10"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "clock"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "21"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "41"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "41"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "time"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "time"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "5"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "16"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "7"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "local_stamp"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "22"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "42"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "42"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "datetime2"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "datetime2"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "8"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "27"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "7"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "instant"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "23"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "43"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "43"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "datetimeoffset"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "datetimeoffset"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "10"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "34"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "7"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "legacy_stamp"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "24"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "61"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "61"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "datetime"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "datetime"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "8"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "23"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "3"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "small_stamp"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "25"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "58"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "58"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "smalldatetime"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "smalldatetime"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "4"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "16"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "amount"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "26"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "106"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "257"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sales"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "Amount"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "decimal"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "9"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "18"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "4"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "identifier"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "27"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "36"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "36"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "uniqueidentifier"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "uniqueidentifier"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "16"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "document"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "28"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "241"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "241"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "xml"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "xml"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "-1"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "variant"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "29"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "98"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "98"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "sql_variant"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "sql_variant"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "8016"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "null"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "computed"
+                              },
+                              "column_id": {
+                                "kind": "number",
+                                "value": "30"
+                              },
+                              "system_type_id": {
+                                "kind": "number",
+                                "value": "56"
+                              },
+                              "user_type_id": {
+                                "kind": "number",
+                                "value": "56"
+                              },
+                              "type_schema": {
+                                "kind": "string",
+                                "value": "sys"
+                              },
+                              "type_name": {
+                                "kind": "string",
+                                "value": "int"
+                              },
+                              "base_type_name": {
+                                "kind": "string",
+                                "value": "int"
+                              },
+                              "is_user_defined": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_assembly_type": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "max_length": {
+                                "kind": "number",
+                                "value": "4"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "10"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "is_nullable": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "is_identity": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "is_computed": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "collation_name": {
+                                "kind": "null"
+                              },
+                              "default_definition": {
+                                "kind": "null"
+                              },
+                              "computed_definition": {
+                                "kind": "string",
+                                "value": "([ordinary]+(1))"
+                              },
+                              "identity_seed": {
+                                "kind": "null"
+                              },
+                              "identity_increment": {
+                                "kind": "null"
+                              },
+                              "description": {
+                                "kind": "null"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "modules": [
+        {
+          "id": "sqlserver.columns",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "/tables/0/columns/0",
+              "name": "id",
+              "scalarType": "integer",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/0/columns/1",
+              "name": "version_stamp",
+              "scalarType": "binary",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/0",
+              "name": "id",
+              "scalarType": "integer",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/1",
+              "name": "flag",
+              "scalarType": "boolean",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/2",
+              "name": "tiny",
+              "scalarType": "integer",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/3",
+              "name": "small",
+              "scalarType": "integer",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/4",
+              "name": "ordinary",
+              "scalarType": "integer",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/5",
+              "name": "exact",
+              "description": "Exact decimal amount",
+              "scalarType": "decimal",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/6",
+              "name": "numeric_value",
+              "scalarType": "decimal",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/7",
+              "name": "cash",
+              "scalarType": "decimal",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/8",
+              "name": "small_cash",
+              "scalarType": "decimal",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/9",
+              "name": "approximate",
+              "scalarType": "float",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/10",
+              "name": "single",
+              "scalarType": "float",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/11",
+              "name": "words",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/12",
+              "name": "unicode_words",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/13",
+              "name": "unlimited",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/14",
+              "name": "fixed_text",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/15",
+              "name": "unicode_fixed",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/16",
+              "name": "bytes",
+              "scalarType": "binary",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/17",
+              "name": "fixed_bytes",
+              "scalarType": "binary",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/18",
+              "name": "version_stamp",
+              "scalarType": "binary",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/19",
+              "name": "day",
+              "scalarType": "date",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/20",
+              "name": "clock",
+              "scalarType": "time",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/21",
+              "name": "local_stamp",
+              "scalarType": "timestamp",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/22",
+              "name": "instant",
+              "scalarType": "timestamp",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/23",
+              "name": "legacy_stamp",
+              "scalarType": "timestamp",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/24",
+              "name": "small_stamp",
+              "scalarType": "timestamp",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/25",
+              "name": "amount",
+              "scalarType": "decimal",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/26",
+              "name": "identifier",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/27",
+              "name": "document",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/28",
+              "name": "variant",
+              "extensions": {}
+            },
+            {
+              "id": "/tables/1/columns/29",
+              "name": "computed",
+              "scalarType": "integer",
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    },
+    "policy": {
+      "id": "avro-record",
+      "recordName": "SqlRecord",
+      "namespace": "example.sales",
+      "table": {
+        "schema": "sales",
+        "name": "Types"
+      },
+      "fields": {
+        "id": {
+          "name": "id",
+          "representation": "value"
+        },
+        "flag": {
+          "name": "flag",
+          "representation": "value"
+        },
+        "tiny": {
+          "name": "tiny",
+          "representation": "value"
+        },
+        "small": {
+          "name": "small",
+          "representation": "value"
+        },
+        "ordinary": {
+          "name": "ordinary",
+          "representation": "value"
+        },
+        "exact": {
+          "name": "exact",
+          "representation": "value"
+        },
+        "numeric_value": {
+          "name": "numeric_value",
+          "representation": "value"
+        },
+        "cash": {
+          "name": "cash",
+          "representation": "value"
+        },
+        "small_cash": {
+          "name": "small_cash",
+          "representation": "value"
+        },
+        "approximate": {
+          "name": "approximate",
+          "representation": "value"
+        },
+        "single": {
+          "name": "single",
+          "representation": "value"
+        },
+        "words": {
+          "name": "words",
+          "representation": "value"
+        },
+        "unicode_words": {
+          "name": "unicode_words",
+          "representation": "value"
+        },
+        "unlimited": {
+          "name": "unlimited",
+          "representation": "value"
+        },
+        "fixed_text": {
+          "name": "fixed_text",
+          "representation": "value"
+        },
+        "unicode_fixed": {
+          "name": "unicode_fixed",
+          "representation": "value"
+        },
+        "bytes": {
+          "name": "bytes",
+          "representation": "value"
+        },
+        "fixed_bytes": {
+          "name": "fixed_bytes",
+          "representation": "value"
+        },
+        "version_stamp": {
+          "name": "version_stamp",
+          "representation": "value"
+        },
+        "day": {
+          "name": "day",
+          "representation": "value"
+        },
+        "clock": {
+          "name": "clock",
+          "representation": "sql-text"
+        },
+        "local_stamp": {
+          "name": "local_stamp",
+          "representation": "sql-text"
+        },
+        "instant": {
+          "name": "instant",
+          "representation": "sql-text"
+        },
+        "legacy_stamp": {
+          "name": "legacy_stamp",
+          "representation": "sql-text"
+        },
+        "small_stamp": {
+          "name": "small_stamp",
+          "representation": "sql-text"
+        },
+        "amount": {
+          "name": "amount",
+          "representation": "value"
+        },
+        "identifier": {
+          "name": "identifier",
+          "representation": "sql-text"
+        },
+        "document": {
+          "name": "document",
+          "representation": "sql-text"
+        },
+        "variant": {
+          "name": "variant",
+          "representation": "sql-text"
+        },
+        "computed": {
+          "name": "computed",
+          "representation": "value"
+        }
+      },
+      "lossPolicy": "allow-reported-loss"
+    },
+    "issues": [
+      {
+        "path": "",
+        "code": "SQLSERVER_CAPTURE_SCOPE",
+        "classification": "not-enforced",
+        "detail": "Permission-limited table/column observations; server correspondence and complete native semantics are unverified",
+        "retainedInSource": true
+      },
+      {
+        "path": "",
+        "code": "SCHEMA_ONLY",
+        "classification": "representation-change",
+        "detail": "Schema projection only: SQL/native row values require a separate explicit encoder; source UMF remains required for fidelity",
+        "retainedInSource": true
+      },
+      {
+        "path": "/table",
+        "code": "DATABASE_SEMANTICS",
+        "classification": "not-enforced",
+        "detail": "Keys, checks, foreign keys, permissions, triggers, indexes and other database semantics are not enforced by this Avro record and may be outside the capture",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/keys",
+        "code": "CONSTRAINT_COVERAGE_UNAVAILABLE",
+        "classification": "not-enforced",
+        "detail": "Native keys were not captured; absence of observations does not imply absence of constraints",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/foreign_keys",
+        "code": "CONSTRAINT_COVERAGE_UNAVAILABLE",
+        "classification": "not-enforced",
+        "detail": "Native foreign_keys were not captured; absence of observations does not imply absence of constraints",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/checks",
+        "code": "CONSTRAINT_COVERAGE_UNAVAILABLE",
+        "classification": "not-enforced",
+        "detail": "Native checks were not captured; absence of observations does not imply absence of constraints",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/0",
+        "code": "GENERATED_BEHAVIOR",
+        "classification": "not-enforced",
+        "detail": "Identity, computed or rowversion generation is not performed by an Avro writer",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/1",
+        "code": "SQL_DEFAULT",
+        "classification": "not-enforced",
+        "detail": "SQL defaults do not become Avro reader defaults or make writer fields optional",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/2",
+        "code": "INTEGER_RANGE",
+        "classification": "not-enforced",
+        "detail": "Avro int admits values outside the native tinyint/smallint range",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/3",
+        "code": "INTEGER_RANGE",
+        "classification": "not-enforced",
+        "detail": "Avro int admits values outside the native tinyint/smallint range",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/7",
+        "code": "MONEY_RANGE",
+        "classification": "not-enforced",
+        "detail": "Decimal precision/scale does not enforce the narrower native money/smallmoney range",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/8",
+        "code": "MONEY_RANGE",
+        "classification": "not-enforced",
+        "detail": "Decimal precision/scale does not enforce the narrower native money/smallmoney range",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/9",
+        "code": "NONFINITE_VALUES",
+        "classification": "not-enforced",
+        "detail": "Avro floating types admit non-finite values that are not SQL Server numeric values",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/10",
+        "code": "NONFINITE_VALUES",
+        "classification": "not-enforced",
+        "detail": "Avro floating types admit non-finite values that are not SQL Server numeric values",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/11",
+        "code": "TEXT_REFINEMENTS",
+        "classification": "not-enforced",
+        "detail": "Native byte/character limits, code page, collation and fixed-width padding are not enforced by Avro string",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/12",
+        "code": "TEXT_REFINEMENTS",
+        "classification": "not-enforced",
+        "detail": "Native byte/character limits, code page, collation and fixed-width padding are not enforced by Avro string",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/13",
+        "code": "TEXT_REFINEMENTS",
+        "classification": "not-enforced",
+        "detail": "Native byte/character limits, code page, collation and fixed-width padding are not enforced by Avro string",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/14",
+        "code": "TEXT_REFINEMENTS",
+        "classification": "not-enforced",
+        "detail": "Native byte/character limits, code page, collation and fixed-width padding are not enforced by Avro string",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/15",
+        "code": "TEXT_REFINEMENTS",
+        "classification": "not-enforced",
+        "detail": "Native byte/character limits, code page, collation and fixed-width padding are not enforced by Avro string",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/16",
+        "code": "BINARY_LENGTH",
+        "classification": "not-enforced",
+        "detail": "Native varbinary/image length semantics are not enforced by Avro bytes",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/18",
+        "code": "GENERATED_BEHAVIOR",
+        "classification": "not-enforced",
+        "detail": "Identity, computed or rowversion generation is not performed by an Avro writer",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/19",
+        "code": "DATE_RANGE",
+        "classification": "not-enforced",
+        "detail": "Avro date does not enforce the SQL Server year range",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/20",
+        "code": "SQL_TEXT_REPRESENTATION",
+        "classification": "representation-change",
+        "detail": "Native text is an explicit application encoding; formatting/session choices, type tags, XML validation and native lexical constraints are not preserved by Avro string",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/21",
+        "code": "SQL_TEXT_REPRESENTATION",
+        "classification": "representation-change",
+        "detail": "Native text is an explicit application encoding; formatting/session choices, type tags, XML validation and native lexical constraints are not preserved by Avro string",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/22",
+        "code": "SQL_TEXT_REPRESENTATION",
+        "classification": "representation-change",
+        "detail": "Native text is an explicit application encoding; formatting/session choices, type tags, XML validation and native lexical constraints are not preserved by Avro string",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/23",
+        "code": "SQL_TEXT_REPRESENTATION",
+        "classification": "representation-change",
+        "detail": "Native text is an explicit application encoding; formatting/session choices, type tags, XML validation and native lexical constraints are not preserved by Avro string",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/24",
+        "code": "SQL_TEXT_REPRESENTATION",
+        "classification": "representation-change",
+        "detail": "Native text is an explicit application encoding; formatting/session choices, type tags, XML validation and native lexical constraints are not preserved by Avro string",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/25",
+        "code": "ALIAS_IDENTITY",
+        "classification": "annotation-only",
+        "detail": "Native alias identity and any bound rules/defaults remain in the source",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/26",
+        "code": "SQL_TEXT_REPRESENTATION",
+        "classification": "representation-change",
+        "detail": "Native text is an explicit application encoding; formatting/session choices, type tags, XML validation and native lexical constraints are not preserved by Avro string",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/27",
+        "code": "SQL_TEXT_REPRESENTATION",
+        "classification": "representation-change",
+        "detail": "Native text is an explicit application encoding; formatting/session choices, type tags, XML validation and native lexical constraints are not preserved by Avro string",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/28",
+        "code": "SQL_TEXT_REPRESENTATION",
+        "classification": "representation-change",
+        "detail": "Native text is an explicit application encoding; formatting/session choices, type tags, XML validation and native lexical constraints are not preserved by Avro string",
+        "retainedInSource": true
+      },
+      {
+        "path": "/tables/1/columns/29",
+        "code": "GENERATED_BEHAVIOR",
+        "classification": "not-enforced",
+        "detail": "Identity, computed or rowversion generation is not performed by an Avro writer",
+        "retainedInSource": true
+      }
+    ],
+    "mappings": [
+      {
+        "sourcePath": "/tables/1/columns/0",
+        "column": "id",
+        "field": "id",
+        "representation": "value"
+      },
+      {
+        "sourcePath": "/tables/1/columns/1",
+        "column": "flag",
+        "field": "flag",
+        "representation": "value"
+      },
+      {
+        "sourcePath": "/tables/1/columns/2",
+        "column": "tiny",
+        "field": "tiny",
+        "representation": "value"
+      },
+      {
+        "sourcePath": "/tables/1/columns/3",
+        "column": "small",
+        "field": "small",
+        "representation": "value"
+      },
+      {
+        "sourcePath": "/tables/1/columns/4",
+        "column": "ordinary",
+        "field": "ordinary",
+        "representation": "value"
+      },
+      {
+        "sourcePath": "/tables/1/columns/5",
+        "column": "exact",
+        "field": "exact",
+        "representation": "value"
+      },
+      {
+        "sourcePath": "/tables/1/columns/6",
+        "column": "numeric_value",
+        "field": "numeric_value",
+        "representation": "value"
+      },
+      {
+        "sourcePath": "/tables/1/columns/7",
+        "column": "cash",
+        "field": "cash",
+        "representation": "value"
+      },
+      {
+        "sourcePath": "/tables/1/columns/8",
+        "column": "small_cash",
+        "field": "small_cash",
+        "representation": "value"
+      },
+      {
+        "sourcePath": "/tables/1/columns/9",
+        "column": "approximate",
+        "field": "approximate",
+        "representation": "value"
+      },
+      {
+        "sourcePath": "/tables/1/columns/10",
+        "column": "single",
+        "field": "single",
+        "representation": "value"
+      },
+      {
+        "sourcePath": "/tables/1/columns/11",
+        "column": "words",
+        "field": "words",
+        "representation": "value"
+      },
+      {
+        "sourcePath": "/tables/1/columns/12",
+        "column": "unicode_words",
+        "field": "unicode_words",
+        "representation": "value"
+      },
+      {
+        "sourcePath": "/tables/1/columns/13",
+        "column": "unlimited",
+        "field": "unlimited",
+        "representation": "value"
+      },
+      {
+        "sourcePath": "/tables/1/columns/14",
+        "column": "fixed_text",
+        "field": "fixed_text",
+        "representation": "value"
+      },
+      {
+        "sourcePath": "/tables/1/columns/15",
+        "column": "unicode_fixed",
+        "field": "unicode_fixed",
+        "representation": "value"
+      },
+      {
+        "sourcePath": "/tables/1/columns/16",
+        "column": "bytes",
+        "field": "bytes",
+        "representation": "value"
+      },
+      {
+        "sourcePath": "/tables/1/columns/17",
+        "column": "fixed_bytes",
+        "field": "fixed_bytes",
+        "representation": "value"
+      },
+      {
+        "sourcePath": "/tables/1/columns/18",
+        "column": "version_stamp",
+        "field": "version_stamp",
+        "representation": "value"
+      },
+      {
+        "sourcePath": "/tables/1/columns/19",
+        "column": "day",
+        "field": "day",
+        "representation": "value"
+      },
+      {
+        "sourcePath": "/tables/1/columns/20",
+        "column": "clock",
+        "field": "clock",
+        "representation": "sql-text"
+      },
+      {
+        "sourcePath": "/tables/1/columns/21",
+        "column": "local_stamp",
+        "field": "local_stamp",
+        "representation": "sql-text"
+      },
+      {
+        "sourcePath": "/tables/1/columns/22",
+        "column": "instant",
+        "field": "instant",
+        "representation": "sql-text"
+      },
+      {
+        "sourcePath": "/tables/1/columns/23",
+        "column": "legacy_stamp",
+        "field": "legacy_stamp",
+        "representation": "sql-text"
+      },
+      {
+        "sourcePath": "/tables/1/columns/24",
+        "column": "small_stamp",
+        "field": "small_stamp",
+        "representation": "sql-text"
+      },
+      {
+        "sourcePath": "/tables/1/columns/25",
+        "column": "amount",
+        "field": "amount",
+        "representation": "value"
+      },
+      {
+        "sourcePath": "/tables/1/columns/26",
+        "column": "identifier",
+        "field": "identifier",
+        "representation": "sql-text"
+      },
+      {
+        "sourcePath": "/tables/1/columns/27",
+        "column": "document",
+        "field": "document",
+        "representation": "sql-text"
+      },
+      {
+        "sourcePath": "/tables/1/columns/28",
+        "column": "variant",
+        "field": "variant",
+        "representation": "sql-text"
+      },
+      {
+        "sourcePath": "/tables/1/columns/29",
+        "column": "computed",
+        "field": "computed",
+        "representation": "value"
+      }
+    ],
+    "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"SqlRecord\",\n  \"namespace\": \"example.sales\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"long\"\n    },\n    {\n      \"name\": \"flag\",\n      \"type\": \"boolean\"\n    },\n    {\n      \"name\": \"tiny\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"small\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"ordinary\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    },\n    {\n      \"name\": \"exact\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 38,\n          \"scale\": 9\n        }\n      ],\n      \"doc\": \"Exact decimal amount\"\n    },\n    {\n      \"name\": \"numeric_value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 20,\n          \"scale\": 3\n        }\n      ]\n    },\n    {\n      \"name\": \"cash\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 19,\n          \"scale\": 4\n        }\n      ]\n    },\n    {\n      \"name\": \"small_cash\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 10,\n          \"scale\": 4\n        }\n      ]\n    },\n    {\n      \"name\": \"approximate\",\n      \"type\": [\n        \"null\",\n        \"double\"\n      ]\n    },\n    {\n      \"name\": \"single\",\n      \"type\": [\n        \"null\",\n        \"float\"\n      ]\n    },\n    {\n      \"name\": \"words\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"unicode_words\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"unlimited\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"fixed_text\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"unicode_fixed\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"bytes\",\n      \"type\": [\n        \"null\",\n        \"bytes\"\n      ]\n    },\n    {\n      \"name\": \"fixed_bytes\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"fixed\",\n          \"name\": \"SqlRecord_field_17\",\n          \"size\": 8\n        }\n      ]\n    },\n    {\n      \"name\": \"version_stamp\",\n      \"type\": {\n        \"type\": \"fixed\",\n        \"name\": \"SqlRecord_field_18\",\n        \"size\": 8\n      }\n    },\n    {\n      \"name\": \"day\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"int\",\n          \"logicalType\": \"date\"\n        }\n      ]\n    },\n    {\n      \"name\": \"clock\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"local_stamp\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"instant\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"legacy_stamp\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"small_stamp\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"amount\",\n      \"type\": {\n        \"type\": \"bytes\",\n        \"logicalType\": \"decimal\",\n        \"precision\": 18,\n        \"scale\": 4\n      }\n    },\n    {\n      \"name\": \"identifier\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"document\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"variant\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"computed\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    }\n  ]\n}\n",
+    "target": {
+      "umf": "0.1.0",
+      "id": "avro-record",
+      "vocabularies": {
+        "umf.avro": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "schema",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "schema",
+              "extensions": {
+                "umf.avro": {
+                  "version": "1.12.0",
+                  "root": {
+                    "kind": "object",
+                    "members": {
+                      "type": {
+                        "kind": "string",
+                        "value": "record"
+                      },
+                      "name": {
+                        "kind": "string",
+                        "value": "SqlRecord"
+                      },
+                      "namespace": {
+                        "kind": "string",
+                        "value": "example.sales"
+                      },
+                      "fields": {
+                        "kind": "array",
+                        "items": [
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "id"
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "long"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "flag"
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "boolean"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "tiny"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "int"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "small"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "int"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "ordinary"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "int"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "exact"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "bytes"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "decimal"
+                                      },
+                                      "precision": {
+                                        "kind": "number",
+                                        "value": "38"
+                                      },
+                                      "scale": {
+                                        "kind": "number",
+                                        "value": "9"
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              "doc": {
+                                "kind": "string",
+                                "value": "Exact decimal amount"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "numeric_value"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "bytes"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "decimal"
+                                      },
+                                      "precision": {
+                                        "kind": "number",
+                                        "value": "20"
+                                      },
+                                      "scale": {
+                                        "kind": "number",
+                                        "value": "3"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "cash"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "bytes"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "decimal"
+                                      },
+                                      "precision": {
+                                        "kind": "number",
+                                        "value": "19"
+                                      },
+                                      "scale": {
+                                        "kind": "number",
+                                        "value": "4"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "small_cash"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "bytes"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "decimal"
+                                      },
+                                      "precision": {
+                                        "kind": "number",
+                                        "value": "10"
+                                      },
+                                      "scale": {
+                                        "kind": "number",
+                                        "value": "4"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "approximate"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "double"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "single"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "float"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "words"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "unicode_words"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "unlimited"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "fixed_text"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "unicode_fixed"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "bytes"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "bytes"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "fixed_bytes"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "fixed"
+                                      },
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "SqlRecord_field_17"
+                                      },
+                                      "size": {
+                                        "kind": "number",
+                                        "value": "8"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "version_stamp"
+                              },
+                              "type": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "fixed"
+                                  },
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "SqlRecord_field_18"
+                                  },
+                                  "size": {
+                                    "kind": "number",
+                                    "value": "8"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "day"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "int"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "date"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "clock"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "local_stamp"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "instant"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "legacy_stamp"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "small_stamp"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "amount"
+                              },
+                              "type": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "bytes"
+                                  },
+                                  "logicalType": {
+                                    "kind": "string",
+                                    "value": "decimal"
+                                  },
+                                  "precision": {
+                                    "kind": "number",
+                                    "value": "18"
+                                  },
+                                  "scale": {
+                                    "kind": "number",
+                                    "value": "4"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "identifier"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "document"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "variant"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "computed"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "int"
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "avro.fields",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "[null,\"/fields/0\"]",
+              "name": "id",
+              "scalarType": "integer",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/1\"]",
+              "name": "flag",
+              "scalarType": "boolean",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/2\"]",
+              "name": "tiny",
+              "scalarType": "integer",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/3\"]",
+              "name": "small",
+              "scalarType": "integer",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/4\"]",
+              "name": "ordinary",
+              "scalarType": "integer",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/5\"]",
+              "name": "exact",
+              "description": "Exact decimal amount",
+              "scalarType": "decimal",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/6\"]",
+              "name": "numeric_value",
+              "scalarType": "decimal",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/7\"]",
+              "name": "cash",
+              "scalarType": "decimal",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/8\"]",
+              "name": "small_cash",
+              "scalarType": "decimal",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/9\"]",
+              "name": "approximate",
+              "scalarType": "float",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/10\"]",
+              "name": "single",
+              "scalarType": "float",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/11\"]",
+              "name": "words",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/12\"]",
+              "name": "unicode_words",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/13\"]",
+              "name": "unlimited",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/14\"]",
+              "name": "fixed_text",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/15\"]",
+              "name": "unicode_fixed",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/16\"]",
+              "name": "bytes",
+              "scalarType": "binary",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/17\"]",
+              "name": "fixed_bytes",
+              "scalarType": "binary",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/18\"]",
+              "name": "version_stamp",
+              "scalarType": "binary",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/19\"]",
+              "name": "day",
+              "scalarType": "date",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/20\"]",
+              "name": "clock",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/21\"]",
+              "name": "local_stamp",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/22\"]",
+              "name": "instant",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/23\"]",
+              "name": "legacy_stamp",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/24\"]",
+              "name": "small_stamp",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/25\"]",
+              "name": "amount",
+              "scalarType": "decimal",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/26\"]",
+              "name": "identifier",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/27\"]",
+              "name": "document",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/28\"]",
+              "name": "variant",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/29\"]",
+              "name": "computed",
+              "scalarType": "integer",
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "exports": [
+    {
+      "format": "json",
+      "schema": "{\"type\":\"record\",\"name\":\"SqlRecord\",\"namespace\":\"example.sales\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"},{\"name\":\"flag\",\"type\":\"boolean\"},{\"name\":\"tiny\",\"type\":[\"null\",\"int\"]},{\"name\":\"small\",\"type\":[\"null\",\"int\"]},{\"name\":\"ordinary\",\"type\":[\"null\",\"int\"]},{\"name\":\"exact\",\"type\":[\"null\",{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":38,\"scale\":9}],\"doc\":\"Exact decimal amount\"},{\"name\":\"numeric_value\",\"type\":[\"null\",{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":20,\"scale\":3}]},{\"name\":\"cash\",\"type\":[\"null\",{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":19,\"scale\":4}]},{\"name\":\"small_cash\",\"type\":[\"null\",{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":10,\"scale\":4}]},{\"name\":\"approximate\",\"type\":[\"null\",\"double\"]},{\"name\":\"single\",\"type\":[\"null\",\"float\"]},{\"name\":\"words\",\"type\":[\"null\",\"string\"]},{\"name\":\"unicode_words\",\"type\":[\"null\",\"string\"]},{\"name\":\"unlimited\",\"type\":[\"null\",\"string\"]},{\"name\":\"fixed_text\",\"type\":[\"null\",\"string\"]},{\"name\":\"unicode_fixed\",\"type\":[\"null\",\"string\"]},{\"name\":\"bytes\",\"type\":[\"null\",\"bytes\"]},{\"name\":\"fixed_bytes\",\"type\":[\"null\",{\"type\":\"fixed\",\"name\":\"SqlRecord_field_17\",\"size\":8}]},{\"name\":\"version_stamp\",\"type\":{\"type\":\"fixed\",\"name\":\"SqlRecord_field_18\",\"size\":8}},{\"name\":\"day\",\"type\":[\"null\",{\"type\":\"int\",\"logicalType\":\"date\"}]},{\"name\":\"clock\",\"type\":[\"null\",\"string\"]},{\"name\":\"local_stamp\",\"type\":[\"null\",\"string\"]},{\"name\":\"instant\",\"type\":[\"null\",\"string\"]},{\"name\":\"legacy_stamp\",\"type\":[\"null\",\"string\"]},{\"name\":\"small_stamp\",\"type\":[\"null\",\"string\"]},{\"name\":\"amount\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":18,\"scale\":4}},{\"name\":\"identifier\",\"type\":[\"null\",\"string\"]},{\"name\":\"document\",\"type\":[\"null\",\"string\"]},{\"name\":\"variant\",\"type\":[\"null\",\"string\"]},{\"name\":\"computed\",\"type\":[\"null\",\"int\"]}]}\n"
+    },
+    {
+      "format": "yaml",
+      "schema": "{\"type\":\"record\",\"name\":\"SqlRecord\",\"namespace\":\"example.sales\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"},{\"name\":\"flag\",\"type\":\"boolean\"},{\"name\":\"tiny\",\"type\":[\"null\",\"int\"]},{\"name\":\"small\",\"type\":[\"null\",\"int\"]},{\"name\":\"ordinary\",\"type\":[\"null\",\"int\"]},{\"name\":\"exact\",\"type\":[\"null\",{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":38,\"scale\":9}],\"doc\":\"Exact decimal amount\"},{\"name\":\"numeric_value\",\"type\":[\"null\",{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":20,\"scale\":3}]},{\"name\":\"cash\",\"type\":[\"null\",{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":19,\"scale\":4}]},{\"name\":\"small_cash\",\"type\":[\"null\",{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":10,\"scale\":4}]},{\"name\":\"approximate\",\"type\":[\"null\",\"double\"]},{\"name\":\"single\",\"type\":[\"null\",\"float\"]},{\"name\":\"words\",\"type\":[\"null\",\"string\"]},{\"name\":\"unicode_words\",\"type\":[\"null\",\"string\"]},{\"name\":\"unlimited\",\"type\":[\"null\",\"string\"]},{\"name\":\"fixed_text\",\"type\":[\"null\",\"string\"]},{\"name\":\"unicode_fixed\",\"type\":[\"null\",\"string\"]},{\"name\":\"bytes\",\"type\":[\"null\",\"bytes\"]},{\"name\":\"fixed_bytes\",\"type\":[\"null\",{\"type\":\"fixed\",\"name\":\"SqlRecord_field_17\",\"size\":8}]},{\"name\":\"version_stamp\",\"type\":{\"type\":\"fixed\",\"name\":\"SqlRecord_field_18\",\"size\":8}},{\"name\":\"day\",\"type\":[\"null\",{\"type\":\"int\",\"logicalType\":\"date\"}]},{\"name\":\"clock\",\"type\":[\"null\",\"string\"]},{\"name\":\"local_stamp\",\"type\":[\"null\",\"string\"]},{\"name\":\"instant\",\"type\":[\"null\",\"string\"]},{\"name\":\"legacy_stamp\",\"type\":[\"null\",\"string\"]},{\"name\":\"small_stamp\",\"type\":[\"null\",\"string\"]},{\"name\":\"amount\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":18,\"scale\":4}},{\"name\":\"identifier\",\"type\":[\"null\",\"string\"]},{\"name\":\"document\",\"type\":[\"null\",\"string\"]},{\"name\":\"variant\",\"type\":[\"null\",\"string\"]},{\"name\":\"computed\",\"type\":[\"null\",\"int\"]}]}\n"
+    }
+  ]
+}

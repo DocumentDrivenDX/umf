@@ -1,0 +1,11 @@
+<urn:graph:schema> { <urn:example:Order> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> . }
+<urn:graph:schema> { <urn:example:Order> <http://www.w3.org/2000/01/rdf-schema#label> "Order"@en-gb . }
+<urn:graph:schema> { <urn:example:Order> <http://www.w3.org/2000/01/rdf-schema#label> "Order"@en-gb . }
+_:schemaGraph { _:shape <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> . }
+_:schemaGraph { _:shape <http://www.w3.org/ns/shacl#targetClass> <urn:example:Order> . }
+_:schemaGraph { _:shape <http://www.w3.org/ns/shacl#property> _:property . }
+_:schemaGraph { _:property <http://www.w3.org/ns/shacl#path> <urn:example:amount> . }
+_:schemaGraph { _:property <http://www.w3.org/ns/shacl#minCount> "1"^^<http://www.w3.org/2001/XMLSchema#integer> . }
+<urn:example:sample> <urn:example:amount> "001.2300"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+<urn:example:sample> <urn:example:identifier> "18446744073709551615"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<urn:example:sample> <urn:example:future> "opaque lexical form"^^<urn:datatype:future> .

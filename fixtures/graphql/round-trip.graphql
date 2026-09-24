@@ -1,0 +1,24 @@
+# Original UMF fixture; this comment must survive an untouched round trip.
+"""Shopping API with native GraphQL semantics."""
+schema { query: Query mutation: Mutation }
+extend schema { subscription: Subscription }
+directive @tag(label: String!, options: Options = { enabled: true, weights: [1.5, 2.0], count: 2, note: null, mode: FAST }) repeatable on OBJECT | SCALAR | INPUT_OBJECT | ENUM | UNION | INTERFACE | FIELD_DEFINITION
+scalar Money @specifiedBy(url: "https://example.test/scalars/money")
+extend scalar Money @tag(label: "currency")
+interface Node { id: ID! }
+interface Named implements Node { id: ID! }
+extend interface Named { name: String! }
+type Product implements Node & Named @tag(label: "sales") @tag(label: "catalog") { id: ID! name: String! price: Money! }
+extend type Product { oldName: String @deprecated(reason: "Use name") }
+type Customer implements Node { id: ID! }
+union Search = Product
+extend union Search = Customer
+enum Mode { FAST }
+extend enum Mode { SLOW }
+input Options { enabled: Boolean = true weights: [Float!] count: Int note: String mode: Mode }
+input Selector @oneOf { id: ID name: String }
+input Filter { term: String }
+extend input Filter { limit: Int = 10 }
+type Query { node(id: ID!): Node search(filter: Filter = {limit: 10}): [Search!]! product(selector: Selector!): Product }
+type Mutation { rename(id: ID!, name: String!): Product }
+type Subscription { changed: Product! }

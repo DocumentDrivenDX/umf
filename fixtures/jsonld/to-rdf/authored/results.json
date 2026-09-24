@@ -1,0 +1,3014 @@
+{
+  "results": [
+    {
+      "id": "basic",
+      "source": "{\"@context\": {\"p\": \"urn:p\"}, \"@id\": \"urn:s\", \"p\": \"hello\"}",
+      "options": {
+        "id": "basic-rdf",
+        "lossPolicy": "report"
+      },
+      "blocked": false,
+      "inputs": {
+        "id": "basic",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/basic.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/basic.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "hello",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    },
+    {
+      "id": "list",
+      "source": "{\"@id\": \"urn:s\", \"urn:p\": {\"@list\": [\"a\", \"b\"]}}",
+      "options": {
+        "id": "list-rdf",
+        "lossPolicy": "report"
+      },
+      "blocked": false,
+      "inputs": {
+        "id": "list",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/list.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/list.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "b0"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b0"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "a",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b0"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "b1"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b1"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "b",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b1"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    },
+    {
+      "id": "index-report",
+      "source": "{\"@id\": \"urn:s\", \"urn:p\": {\"@value\": \"v\", \"@index\": \"a\"}}",
+      "options": {
+        "id": "index-report-rdf",
+        "lossPolicy": "report"
+      },
+      "blocked": false,
+      "inputs": {
+        "id": "index-report",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_INDEX",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF conversion omits JSON-LD @index annotations; complete source retained in report"
+        },
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/index-report.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/index-report.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "v",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    },
+    {
+      "id": "index-reject",
+      "source": "{\"@id\": \"urn:s\", \"urn:p\": {\"@value\": \"v\", \"@index\": \"a\"}}",
+      "options": {
+        "id": "index-reject-rdf",
+        "lossPolicy": "reject"
+      },
+      "blocked": true,
+      "inputs": {
+        "id": "index-reject",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_INDEX",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF conversion omits JSON-LD @index annotations; complete source retained in report"
+        },
+        {
+          "code": "JSONLD_TO_RDF_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: RDF conversion omits JSON-LD @index annotations; complete source retained in report"
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "empty-report",
+      "source": "{\"@id\": \"urn:g\", \"@graph\": []}",
+      "options": {
+        "id": "empty-report-rdf",
+        "lossPolicy": "report"
+      },
+      "blocked": false,
+      "inputs": {
+        "id": "empty-report",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_EMPTY_GRAPH",
+          "path": "",
+          "severity": "warning",
+          "message": "N-Quads conversion omits empty named graph inventory; complete source retained in report"
+        },
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/empty-report.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/empty-report.yaml.nq"
+        }
+      ],
+      "quads": []
+    },
+    {
+      "id": "empty-reject",
+      "source": "{\"@id\": \"urn:g\", \"@graph\": []}",
+      "options": {
+        "id": "empty-reject-rdf",
+        "lossPolicy": "reject"
+      },
+      "blocked": true,
+      "inputs": {
+        "id": "empty-reject",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_EMPTY_GRAPH",
+          "path": "",
+          "severity": "warning",
+          "message": "N-Quads conversion omits empty named graph inventory; complete source retained in report"
+        },
+        {
+          "code": "JSONLD_TO_RDF_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: N-Quads conversion omits empty named graph inventory; complete source retained in report"
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "direction-report",
+      "source": "{\"@id\": \"urn:s\", \"urn:p\": {\"@value\": \"v\", \"@direction\": \"rtl\"}}",
+      "options": {
+        "id": "direction-report-rdf",
+        "lossPolicy": "report"
+      },
+      "blocked": false,
+      "inputs": {
+        "id": "direction-report",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "rdfDirection not set: rdfDirection not set for @direction."
+        },
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/direction-report.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/direction-report.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "v",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    },
+    {
+      "id": "direction-reject",
+      "source": "{\"@id\": \"urn:s\", \"urn:p\": {\"@value\": \"v\", \"@direction\": \"rtl\"}}",
+      "options": {
+        "id": "direction-reject-rdf",
+        "lossPolicy": "reject"
+      },
+      "blocked": true,
+      "inputs": {
+        "id": "direction-reject",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "rdfDirection not set: rdfDirection not set for @direction."
+        },
+        {
+          "code": "JSONLD_TO_RDF_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: rdfDirection not set: rdfDirection not set for @direction."
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "direction-i18n",
+      "source": "{\"@id\": \"urn:s\", \"urn:p\": {\"@value\": \"v\", \"@language\": \"en\", \"@direction\": \"rtl\"}}",
+      "options": {
+        "id": "direction-i18n-rdf",
+        "lossPolicy": "report",
+        "rdfDirection": "i18n-datatype"
+      },
+      "blocked": false,
+      "inputs": {
+        "id": "direction-i18n",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/direction-i18n.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/direction-i18n.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "v",
+            "datatype": "https://www.w3.org/ns/i18n#en_rtl"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    },
+    {
+      "id": "direction-compound",
+      "source": "{\"@id\": \"urn:s\", \"urn:p\": {\"@value\": \"v\", \"@direction\": \"rtl\"}}",
+      "options": {
+        "id": "direction-compound-rdf",
+        "lossPolicy": "report",
+        "rdfDirection": "compound-literal"
+      },
+      "blocked": false,
+      "roundtrip": [
+        {
+          "@id": "urn:s",
+          "urn:p": [
+            {
+              "@value": "v",
+              "@direction": "rtl"
+            }
+          ]
+        }
+      ],
+      "inputs": {
+        "id": "direction-compound",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/direction-compound.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/direction-compound.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "b0"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b0"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#direction"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "rtl",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b0"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "v",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    },
+    {
+      "id": "exact-integer",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":9007199254740993}",
+      "options": {
+        "id": "exact-integer-rdf",
+        "lossPolicy": "report"
+      },
+      "blocked": true,
+      "inputs": {
+        "id": "exact-integer",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: Exact number cannot yet be converted safely to RDF; source retained"
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "rounded-double",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":0.12345678901234567}",
+      "options": {
+        "id": "rounded-double-rdf",
+        "lossPolicy": "report"
+      },
+      "blocked": true,
+      "inputs": {
+        "id": "rounded-double",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: Exact number cannot yet be converted safely to RDF; source retained"
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "opaque-json",
+      "source": "{\"@id\": \"urn:s\", \"urn:p\": {\"@type\": \"@json\", \"@value\": {\"@index\": \"data\", \"@graph\": [], \"a\": [2, 1]}}}",
+      "options": {
+        "id": "opaque-json-rdf",
+        "lossPolicy": "reject"
+      },
+      "blocked": false,
+      "inputs": {
+        "id": "opaque-json",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/opaque-json.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/opaque-json.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "{\"@graph\":[],\"@index\":\"data\",\"a\":[2,1]}",
+            "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#JSON"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    },
+    {
+      "id": "exact-json",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":{\"@type\":\"@json\",\"@value\":{\"n\":9007199254740993}}}",
+      "options": {
+        "id": "exact-json-rdf",
+        "lossPolicy": "report"
+      },
+      "blocked": true,
+      "inputs": {
+        "id": "exact-json",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: Exact number cannot yet be converted safely to RDF; source retained"
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "missing-context",
+      "source": "{\"@context\": \"https://example.org/missing\", \"p\": \"v\"}",
+      "options": {
+        "id": "missing-context-rdf",
+        "lossPolicy": "report"
+      },
+      "blocked": true,
+      "inputs": {
+        "id": "missing-context",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_CONTEXT_MISSING",
+          "path": "",
+          "severity": "error",
+          "message": "No supplied context for https://example.org/missing"
+        },
+        {
+          "code": "JSONLD_EXPANSION_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.InvalidUrl: Dereferencing a URL did not result in a valid JSON-LD object. Possible causes are an inaccessible URL perhaps due to a same-origin policy (ensure the server uses CORS if you are using client-side JavaScript), too many redirects, a non-JSON response, or more than one HTTP Link Header was provided for a remote context. URL: \"https://example.org/missing\"."
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "typed-double-precision",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":{\"@type\":\"http://www.w3.org/2001/XMLSchema#double\",\"@value\":\"9007199254740993\"}}",
+      "options": {
+        "id": "typed-double-rdf",
+        "lossPolicy": "report"
+      },
+      "blocked": false,
+      "expectedValues": [
+        "9007199254740993"
+      ],
+      "inputs": {
+        "id": "typed-double-precision",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/typed-double-precision.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/typed-double-precision.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "9007199254740993",
+            "datatype": "http://www.w3.org/2001/XMLSchema#double"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    },
+    {
+      "id": "compound-language",
+      "source": "{\"@id\": \"urn:s\", \"urn:p\": {\"@value\": \"hi\", \"@direction\": \"ltr\", \"@language\": \"EN-us\"}}",
+      "options": {
+        "id": "compound-language-rdf",
+        "lossPolicy": "reject",
+        "rdfDirection": "compound-literal"
+      },
+      "blocked": false,
+      "roundtrip": [
+        {
+          "@id": "urn:s",
+          "urn:p": [
+            {
+              "@value": "hi",
+              "@direction": "ltr",
+              "@language": "en-us"
+            }
+          ]
+        }
+      ],
+      "inputs": {
+        "id": "compound-language",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/compound-language.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/compound-language.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "b0"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b0"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#direction"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "ltr",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b0"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#language"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "en-us",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b0"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "hi",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    },
+    {
+      "id": "compound-list",
+      "source": "{\"@id\": \"urn:s\", \"urn:p\": {\"@list\": [{\"@value\": \"a\", \"@direction\": \"rtl\"}, {\"@value\": \"b\", \"@direction\": \"ltr\"}]}}",
+      "options": {
+        "id": "compound-list-rdf",
+        "lossPolicy": "reject",
+        "rdfDirection": "compound-literal"
+      },
+      "blocked": false,
+      "roundtrip": [
+        {
+          "@id": "urn:s",
+          "urn:p": [
+            {
+              "@list": [
+                {
+                  "@value": "a",
+                  "@direction": "rtl"
+                },
+                {
+                  "@value": "b",
+                  "@direction": "ltr"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "inputs": {
+        "id": "compound-list",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/compound-list.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/compound-list.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "b0"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b0"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "b1"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b0"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "b2"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b1"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#direction"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "rtl",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b1"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "a",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b2"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "b3"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b2"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b3"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#direction"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "ltr",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b3"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "b",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    },
+    {
+      "id": "compound-graph",
+      "source": "{\"@id\": \"urn:g\", \"@graph\": [{\"@id\": \"urn:s\", \"urn:p\": {\"@value\": \"v\", \"@direction\": \"rtl\", \"@language\": \"en\"}}]}",
+      "options": {
+        "id": "compound-graph-rdf",
+        "lossPolicy": "reject",
+        "rdfDirection": "compound-literal"
+      },
+      "blocked": false,
+      "roundtrip": [
+        {
+          "@id": "urn:g",
+          "@graph": [
+            {
+              "@id": "urn:s",
+              "urn:p": [
+                {
+                  "@value": "v",
+                  "@direction": "rtl",
+                  "@language": "en"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "inputs": {
+        "id": "compound-graph",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/compound-graph.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/compound-graph.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "b0"
+          },
+          "graph": {
+            "kind": "iri",
+            "value": "urn:g"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b0"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#direction"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "rtl",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "iri",
+            "value": "urn:g"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b0"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#language"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "en",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "iri",
+            "value": "urn:g"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b0"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "v",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "iri",
+            "value": "urn:g"
+          }
+        }
+      ]
+    },
+    {
+      "id": "compound-distinct",
+      "source": "{\"@id\": \"urn:s\", \"urn:p\": [{\"@value\": \"same\", \"@direction\": \"rtl\"}, {\"@value\": \"same\", \"@direction\": \"ltr\"}]}",
+      "options": {
+        "id": "compound-distinct-rdf",
+        "lossPolicy": "reject",
+        "rdfDirection": "compound-literal"
+      },
+      "blocked": false,
+      "roundtrip": [
+        {
+          "@id": "urn:s",
+          "urn:p": [
+            {
+              "@value": "same",
+              "@direction": "rtl"
+            },
+            {
+              "@value": "same",
+              "@direction": "ltr"
+            }
+          ]
+        }
+      ],
+      "inputs": {
+        "id": "compound-distinct",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/compound-distinct.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/compound-distinct.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "b0"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "b1"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b0"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#direction"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "rtl",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b0"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "same",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b1"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#direction"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "ltr",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b1"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#value"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "same",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    },
+    {
+      "id": "invalid-subject",
+      "source": "{\"@id\": \"urn:bad<>\", \"urn:p\": {\"@list\": [\"a\"]}}",
+      "options": {
+        "id": "invalid-subject-rdf",
+        "lossPolicy": "report"
+      },
+      "blocked": false,
+      "quadCount": 0,
+      "inputs": {
+        "id": "invalid-subject",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_TERM",
+          "path": "",
+          "severity": "warning",
+          "message": "Omitting malformed RDF IRI: urn:bad<>"
+        },
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/invalid-subject.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/invalid-subject.yaml.nq"
+        }
+      ],
+      "quads": []
+    },
+    {
+      "id": "invalid-graph",
+      "source": "{\"@id\": \"urn:g##bad\", \"@graph\": [{\"@id\": \"urn:s\", \"urn:p\": {\"@list\": [\"a\"]}}]}",
+      "options": {
+        "id": "invalid-graph-rdf",
+        "lossPolicy": "report"
+      },
+      "blocked": false,
+      "quadCount": 0,
+      "inputs": {
+        "id": "invalid-graph",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_TERM",
+          "path": "",
+          "severity": "warning",
+          "message": "Omitting malformed RDF IRI: urn:g##bad"
+        },
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/invalid-graph.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/invalid-graph.yaml.nq"
+        }
+      ],
+      "quads": []
+    },
+    {
+      "id": "invalid-list",
+      "source": "{\"@id\": \"urn:s\", \"urn:p\": {\"@list\": [{\"@id\": \"urn:bad<>\"}, \"good\"]}}",
+      "options": {
+        "id": "invalid-list-rdf",
+        "lossPolicy": "report"
+      },
+      "blocked": false,
+      "quadCount": 4,
+      "inputs": {
+        "id": "invalid-list",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_TERM",
+          "path": "",
+          "severity": "warning",
+          "message": "Omitting malformed RDF IRI: urn:bad<>"
+        },
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/invalid-list.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/invalid-list.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "b0"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b0"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "b1"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b1"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "good",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "b1"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    },
+    {
+      "id": "invalid-datatype",
+      "source": "{\"@id\": \"urn:s\", \"urn:p\": {\"@type\": \"urn:type%Q0\", \"@value\": \"v\"}}",
+      "options": {
+        "id": "invalid-datatype-rdf",
+        "lossPolicy": "report"
+      },
+      "blocked": false,
+      "quadCount": 0,
+      "inputs": {
+        "id": "invalid-datatype",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_TERM",
+          "path": "",
+          "severity": "warning",
+          "message": "Omitting malformed RDF IRI: urn:type%Q0"
+        },
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/invalid-datatype.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/invalid-datatype.yaml.nq"
+        }
+      ],
+      "quads": []
+    },
+    {
+      "id": "invalid-language",
+      "source": "{\"@id\": \"urn:s\", \"urn:p\": {\"@language\": \"en-a-aaa-a-bbb\", \"@value\": \"v\"}}",
+      "options": {
+        "id": "invalid-language-rdf",
+        "lossPolicy": "report"
+      },
+      "blocked": false,
+      "quadCount": 0,
+      "inputs": {
+        "id": "invalid-language",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_TERM",
+          "path": "",
+          "severity": "warning",
+          "message": "Omitting malformed RDF language tag: en-a-aaa-a-bbb"
+        },
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/invalid-language.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/invalid-language.yaml.nq"
+        }
+      ],
+      "quads": []
+    },
+    {
+      "id": "fragment-report",
+      "source": "{\"@id\": \"urn:s\", \"urn:p##bad\": \"v\"}",
+      "options": {
+        "id": "fragment-report-rdf",
+        "lossPolicy": "report"
+      },
+      "blocked": false,
+      "quadCount": 0,
+      "inputs": {
+        "id": "fragment-report",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_TERM",
+          "path": "",
+          "severity": "warning",
+          "message": "Omitting malformed RDF IRI: urn:p##bad"
+        },
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/fragment-report.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/fragment-report.yaml.nq"
+        }
+      ],
+      "quads": []
+    },
+    {
+      "id": "fragment-reject",
+      "source": "{\"@id\": \"urn:s\", \"urn:p##bad\": \"v\"}",
+      "options": {
+        "id": "fragment-reject-rdf",
+        "lossPolicy": "reject"
+      },
+      "blocked": true,
+      "quadCount": null,
+      "inputs": {
+        "id": "fragment-reject",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_TERM",
+          "path": "",
+          "severity": "warning",
+          "message": "Omitting malformed RDF IRI: urn:p##bad"
+        },
+        {
+          "code": "JSONLD_TO_RDF_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: Omitting malformed RDF IRI: urn:p##bad"
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "valid-terms",
+      "source": "{\"@id\": \"http://[::1]/\\u00e9\", \"urn:p\": [{\"@language\": \"i-klingon\", \"@value\": \"v\"}, {\"@language\": \"x-private\", \"@value\": \"w\"}]}",
+      "options": {
+        "id": "valid-terms-rdf",
+        "lossPolicy": "reject"
+      },
+      "blocked": false,
+      "quadCount": 2,
+      "inputs": {
+        "id": "valid-terms",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/valid-terms.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/valid-terms.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://[::1]/é"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "v",
+            "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+            "language": "i-klingon"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://[::1]/é"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "w",
+            "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+            "language": "x-private"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    },
+    {
+      "id": "unicode-nbsp",
+      "source": "{\"@context\": {\"p\": \"urn:p/ \", \"v\": {\"@id\": \"urn:value\", \"@type\": \"urn:type/ \"}}, \"@id\": \"urn:g/ \", \"@graph\": [{\"@id\": \"urn:s/ \", \"p\": {\"@id\": \"urn:o/ \"}, \"v\": \"value\"}]}",
+      "options": {
+        "id": "unicode-nbsp-rdf",
+        "lossPolicy": "reject"
+      },
+      "blocked": false,
+      "quadCount": 2,
+      "roundtrip": [
+        {
+          "@id": "urn:g/ ",
+          "@graph": [
+            {
+              "@id": "urn:s/ ",
+              "urn:p/ ": [
+                {
+                  "@id": "urn:o/ "
+                }
+              ],
+              "urn:value": [
+                {
+                  "@type": "urn:type/ ",
+                  "@value": "value"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "inputs": {
+        "id": "unicode-nbsp",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/unicode-nbsp.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/unicode-nbsp.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s/ "
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p/ "
+          },
+          "object": {
+            "kind": "iri",
+            "value": "urn:o/ "
+          },
+          "graph": {
+            "kind": "iri",
+            "value": "urn:g/ "
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s/ "
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:value"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "value",
+            "datatype": "urn:type/ "
+          },
+          "graph": {
+            "kind": "iri",
+            "value": "urn:g/ "
+          }
+        }
+      ]
+    },
+    {
+      "id": "unicode-em-space",
+      "source": "{\"@context\": {\"p\": \"urn:p/ \", \"v\": {\"@id\": \"urn:value\", \"@type\": \"urn:type/ \"}}, \"@id\": \"urn:g/ \", \"@graph\": [{\"@id\": \"urn:s/ \", \"p\": {\"@id\": \"urn:o/ \"}, \"v\": \"value\"}]}",
+      "options": {
+        "id": "unicode-em-space-rdf",
+        "lossPolicy": "reject"
+      },
+      "blocked": false,
+      "quadCount": 2,
+      "roundtrip": [
+        {
+          "@id": "urn:g/ ",
+          "@graph": [
+            {
+              "@id": "urn:s/ ",
+              "urn:p/ ": [
+                {
+                  "@id": "urn:o/ "
+                }
+              ],
+              "urn:value": [
+                {
+                  "@type": "urn:type/ ",
+                  "@value": "value"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "inputs": {
+        "id": "unicode-em-space",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/unicode-em-space.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/unicode-em-space.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s/ "
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p/ "
+          },
+          "object": {
+            "kind": "iri",
+            "value": "urn:o/ "
+          },
+          "graph": {
+            "kind": "iri",
+            "value": "urn:g/ "
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s/ "
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:value"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "value",
+            "datatype": "urn:type/ "
+          },
+          "graph": {
+            "kind": "iri",
+            "value": "urn:g/ "
+          }
+        }
+      ]
+    },
+    {
+      "id": "unicode-line-separator",
+      "source": "{\"@context\": {\"p\": \"urn:p/ \", \"v\": {\"@id\": \"urn:value\", \"@type\": \"urn:type/ \"}}, \"@id\": \"urn:g/ \", \"@graph\": [{\"@id\": \"urn:s/ \", \"p\": {\"@id\": \"urn:o/ \"}, \"v\": \"value\"}]}",
+      "options": {
+        "id": "unicode-line-separator-rdf",
+        "lossPolicy": "reject"
+      },
+      "blocked": false,
+      "quadCount": 2,
+      "roundtrip": [
+        {
+          "@id": "urn:g/ ",
+          "@graph": [
+            {
+              "@id": "urn:s/ ",
+              "urn:p/ ": [
+                {
+                  "@id": "urn:o/ "
+                }
+              ],
+              "urn:value": [
+                {
+                  "@type": "urn:type/ ",
+                  "@value": "value"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "inputs": {
+        "id": "unicode-line-separator",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/unicode-line-separator.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/unicode-line-separator.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s/ "
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p/ "
+          },
+          "object": {
+            "kind": "iri",
+            "value": "urn:o/ "
+          },
+          "graph": {
+            "kind": "iri",
+            "value": "urn:g/ "
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s/ "
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:value"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "value",
+            "datatype": "urn:type/ "
+          },
+          "graph": {
+            "kind": "iri",
+            "value": "urn:g/ "
+          }
+        }
+      ]
+    },
+    {
+      "id": "unicode-ideographic-space",
+      "source": "{\"@context\": {\"p\": \"urn:p/　\", \"v\": {\"@id\": \"urn:value\", \"@type\": \"urn:type/　\"}}, \"@id\": \"urn:g/　\", \"@graph\": [{\"@id\": \"urn:s/　\", \"p\": {\"@id\": \"urn:o/　\"}, \"v\": \"value\"}]}",
+      "options": {
+        "id": "unicode-ideographic-space-rdf",
+        "lossPolicy": "reject"
+      },
+      "blocked": false,
+      "quadCount": 2,
+      "roundtrip": [
+        {
+          "@id": "urn:g/　",
+          "@graph": [
+            {
+              "@id": "urn:s/　",
+              "urn:p/　": [
+                {
+                  "@id": "urn:o/　"
+                }
+              ],
+              "urn:value": [
+                {
+                  "@type": "urn:type/　",
+                  "@value": "value"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "inputs": {
+        "id": "unicode-ideographic-space",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/unicode-ideographic-space.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/unicode-ideographic-space.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s/　"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p/　"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "urn:o/　"
+          },
+          "graph": {
+            "kind": "iri",
+            "value": "urn:g/　"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s/　"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:value"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "value",
+            "datatype": "urn:type/　"
+          },
+          "graph": {
+            "kind": "iri",
+            "value": "urn:g/　"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ascii-space-reject",
+      "source": "{\"@id\": \"urn:s\", \"urn:p\": {\"@id\": \"urn:o/ \"}}",
+      "options": {
+        "id": "ascii-rdf",
+        "lossPolicy": "reject"
+      },
+      "blocked": true,
+      "inputs": {
+        "id": "ascii-space-reject",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "relative @id reference: Relative @id reference found."
+        },
+        {
+          "code": "JSONLD_EXPANSION_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: relative @id reference"
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "binary-integer",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":9007199254740993}",
+      "options": {
+        "id": "binary-integer-rdf",
+        "lossPolicy": "report",
+        "numericPolicy": "binary64"
+      },
+      "blocked": false,
+      "expectedValues": [
+        "9007199254740992"
+      ],
+      "numberLoss": true,
+      "inputs": {
+        "id": "binary-integer",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_NUMBER_LOSS",
+          "path": "/0/urn:p/0/@value",
+          "severity": "warning",
+          "message": "Expanded numeric token 9007199254740993 converts to binary64 JSON 9007199254740992; exact source retained"
+        },
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/binary-integer.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/binary-integer.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "9007199254740992",
+            "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    },
+    {
+      "id": "binary-integer-reject",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":9007199254740993}",
+      "options": {
+        "id": "binary-integer-reject-rdf",
+        "lossPolicy": "reject",
+        "numericPolicy": "binary64"
+      },
+      "blocked": true,
+      "numberLoss": true,
+      "inputs": {
+        "id": "binary-integer-reject",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_NUMBER_LOSS",
+          "path": "/0/urn:p/0/@value",
+          "severity": "warning",
+          "message": "Expanded numeric token 9007199254740993 converts to binary64 JSON 9007199254740992; exact source retained"
+        },
+        {
+          "code": "JSONLD_TO_RDF_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: Expanded numeric token 9007199254740993 converts to binary64 JSON 9007199254740992; exact source retained"
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "binary-zero",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":-0}",
+      "options": {
+        "id": "binary-zero-rdf",
+        "lossPolicy": "report",
+        "numericPolicy": "binary64"
+      },
+      "blocked": false,
+      "expectedValues": [
+        "0"
+      ],
+      "numberLoss": true,
+      "inputs": {
+        "id": "binary-zero",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_NUMBER_LOSS",
+          "path": "/0/urn:p/0/@value",
+          "severity": "warning",
+          "message": "Expanded numeric token -0 converts to binary64 JSON 0; exact source retained"
+        },
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/binary-zero.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/binary-zero.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "0",
+            "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    },
+    {
+      "id": "binary-underflow",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":1e-400}",
+      "options": {
+        "id": "binary-underflow-rdf",
+        "lossPolicy": "report",
+        "numericPolicy": "binary64"
+      },
+      "blocked": false,
+      "expectedValues": [
+        "0"
+      ],
+      "numberLoss": true,
+      "inputs": {
+        "id": "binary-underflow",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_NUMBER_LOSS",
+          "path": "/0/urn:p/0/@value",
+          "severity": "warning",
+          "message": "Expanded numeric token 1e-400 converts to binary64 JSON 0; exact source retained"
+        },
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/binary-underflow.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/binary-underflow.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "0",
+            "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    },
+    {
+      "id": "binary-overflow",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":1e400}",
+      "options": {
+        "id": "binary-overflow-rdf",
+        "lossPolicy": "report",
+        "numericPolicy": "binary64"
+      },
+      "blocked": true,
+      "inputs": {
+        "id": "binary-overflow",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: Numeric overflow cannot be represented as a finite JSON number; source retained"
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "strict-small",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":1e-7}",
+      "options": {
+        "id": "strict-small-rdf",
+        "lossPolicy": "reject",
+        "numericPolicy": "strict"
+      },
+      "blocked": false,
+      "expectedValues": [
+        "1.0E-7"
+      ],
+      "inputs": {
+        "id": "strict-small",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/strict-small.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/strict-small.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "1.0E-7",
+            "datatype": "http://www.w3.org/2001/XMLSchema#double"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    },
+    {
+      "id": "double-string",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":{\"@type\":\"http://www.w3.org/2001/XMLSchema#double\",\"@value\":\"001.2300\"}}",
+      "options": {
+        "id": "double-string-rdf",
+        "lossPolicy": "reject",
+        "numericPolicy": "strict"
+      },
+      "blocked": false,
+      "expectedValues": [
+        "001.2300"
+      ],
+      "inputs": {
+        "id": "double-string",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/double-string.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/double-string.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "001.2300",
+            "datatype": "http://www.w3.org/2001/XMLSchema#double"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    },
+    {
+      "id": "double-nonfinite",
+      "source": "{\"@id\": \"urn:s\", \"urn:p\": [{\"@type\": \"http://www.w3.org/2001/XMLSchema#double\", \"@value\": \"INF\"}, {\"@type\": \"http://www.w3.org/2001/XMLSchema#double\", \"@value\": \"-INF\"}, {\"@type\": \"http://www.w3.org/2001/XMLSchema#double\", \"@value\": \"NaN\"}, {\"@type\": \"http://www.w3.org/2001/XMLSchema#double\", \"@value\": \"bad\"}]}",
+      "options": {
+        "id": "double-nonfinite-rdf",
+        "lossPolicy": "reject",
+        "numericPolicy": "strict"
+      },
+      "blocked": false,
+      "expectedValues": [
+        "INF",
+        "-INF",
+        "NaN",
+        "bad"
+      ],
+      "inputs": {
+        "id": "double-nonfinite",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/double-nonfinite.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/double-nonfinite.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "-INF",
+            "datatype": "http://www.w3.org/2001/XMLSchema#double"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "INF",
+            "datatype": "http://www.w3.org/2001/XMLSchema#double"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "NaN",
+            "datatype": "http://www.w3.org/2001/XMLSchema#double"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "bad",
+            "datatype": "http://www.w3.org/2001/XMLSchema#double"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    },
+    {
+      "id": "binary-forced-double",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":{\"@type\":\"http://www.w3.org/2001/XMLSchema#double\",\"@value\":1000000000000000100}}",
+      "options": {
+        "id": "binary-forced-double-rdf",
+        "lossPolicy": "report",
+        "numericPolicy": "binary64"
+      },
+      "blocked": false,
+      "expectedValues": [
+        "1.0E18"
+      ],
+      "numberLoss": true,
+      "inputs": {
+        "id": "binary-forced-double",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_NUMBER_LOSS",
+          "path": "/0/urn:p/0/@value",
+          "severity": "warning",
+          "message": "Expanded numeric token 1000000000000000100 rounds during RDF double serialization to 1.000000000000000e+18; exact source retained"
+        },
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/binary-forced-double.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/binary-forced-double.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "1.0E18",
+            "datatype": "http://www.w3.org/2001/XMLSchema#double"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    },
+    {
+      "id": "binary-large-integer",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":1000000000000000100}",
+      "options": {
+        "id": "binary-large-integer-rdf",
+        "lossPolicy": "report",
+        "numericPolicy": "binary64"
+      },
+      "blocked": false,
+      "expectedValues": [
+        "1000000000000000128"
+      ],
+      "numberLoss": true,
+      "inputs": {
+        "id": "binary-large-integer",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_NUMBER_LOSS",
+          "path": "/0/urn:p/0/@value",
+          "severity": "warning",
+          "message": "Expanded numeric token 1000000000000000100 rounds during RDF integer serialization to 1000000000000000128; exact source retained"
+        },
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/binary-large-integer.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/binary-large-integer.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "1000000000000000128",
+            "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    },
+    {
+      "id": "strict-large-integer",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":1000000000000000100}",
+      "options": {
+        "id": "strict-large-integer-rdf",
+        "lossPolicy": "report",
+        "numericPolicy": "strict"
+      },
+      "blocked": true,
+      "inputs": {
+        "id": "strict-large-integer",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: Native RDF integer conversion would round the value; source retained"
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "binary-json",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":{\"@type\":\"@json\",\"@value\":{\"a\":[333333333.33333329,-0,1e-400]}}}",
+      "options": {
+        "id": "binary-json-rdf",
+        "lossPolicy": "report",
+        "numericPolicy": "binary64"
+      },
+      "blocked": false,
+      "expectedValues": [
+        "{\"a\":[333333333.3333333,0,0]}"
+      ],
+      "numberLoss": true,
+      "inputs": {
+        "id": "binary-json",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_NUMBER_LOSS",
+          "path": "/0/urn:p/0/@value/a/0",
+          "severity": "warning",
+          "message": "Expanded numeric token 333333333.33333329 converts to binary64 JSON 333333333.3333333; exact source retained"
+        },
+        {
+          "code": "JSONLD_RDF_NUMBER_LOSS",
+          "path": "/0/urn:p/0/@value/a/1",
+          "severity": "warning",
+          "message": "Expanded numeric token -0 converts to binary64 JSON 0; exact source retained"
+        },
+        {
+          "code": "JSONLD_RDF_NUMBER_LOSS",
+          "path": "/0/urn:p/0/@value/a/2",
+          "severity": "warning",
+          "message": "Expanded numeric token 1e-400 converts to binary64 JSON 0; exact source retained"
+        },
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/binary-json.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/binary-json.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "{\"a\":[333333333.3333333,0,0]}",
+            "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#JSON"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    },
+    {
+      "id": "binary-json-reject",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":{\"@type\":\"@json\",\"@value\":{\"n\":333333333.33333329}}}",
+      "options": {
+        "id": "binary-json-reject-rdf",
+        "lossPolicy": "reject",
+        "numericPolicy": "binary64"
+      },
+      "blocked": true,
+      "numberLoss": true,
+      "inputs": {
+        "id": "binary-json-reject",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_NUMBER_LOSS",
+          "path": "/0/urn:p/0/@value/n",
+          "severity": "warning",
+          "message": "Expanded numeric token 333333333.33333329 converts to binary64 JSON 333333333.3333333; exact source retained"
+        },
+        {
+          "code": "JSONLD_TO_RDF_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: Expanded numeric token 333333333.33333329 converts to binary64 JSON 333333333.3333333; exact source retained"
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "strict-small-rounding",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":1e-21}",
+      "options": {
+        "id": "strict-small-rounding-rdf",
+        "lossPolicy": "report",
+        "numericPolicy": "strict"
+      },
+      "blocked": true,
+      "inputs": {
+        "id": "strict-small-rounding",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_TO_RDF_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: Native RDF double conversion would round the value; source retained"
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "binary-small-rounding",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":1e-21}",
+      "options": {
+        "id": "binary-small-rounding-rdf",
+        "lossPolicy": "report",
+        "numericPolicy": "binary64"
+      },
+      "blocked": false,
+      "expectedValues": [
+        "9.999999999999999E-22"
+      ],
+      "numberLoss": true,
+      "inputs": {
+        "id": "binary-small-rounding",
+        "baseIRI": "https://example.org/"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_NUMBER_LOSS",
+          "path": "/0/urn:p/0/@value",
+          "severity": "warning",
+          "message": "Expanded numeric token 1e-21 rounds during RDF double serialization to 9.999999999999999e-22; exact source retained"
+        },
+        {
+          "code": "JSONLD_TO_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/to-rdf/authored/binary-small-rounding.json.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/to-rdf/authored/binary-small-rounding.yaml.nq"
+        }
+      ],
+      "quads": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "9.999999999999999E-22",
+            "datatype": "http://www.w3.org/2001/XMLSchema#double"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ]
+    }
+  ]
+}

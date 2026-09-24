@@ -1,0 +1,29 @@
+{
+  "package": "@libpg-query/parser",
+  "version": "17.6.10",
+  "observedPostgresqlVersion": 170004,
+  "artifacts": [
+    {
+      "path": "package.json",
+      "sha256": "37042242bf555ee0d34e481277e13ece4f84f8d89f26983b270878b3cde4d7d8"
+    },
+    {
+      "path": "wasm/libpg-query.wasm",
+      "sha256": "21c450200169e2e884a9bcc40122f682304e83b14a4e677fc767b8e53c2f93c1"
+    },
+    {
+      "path": "wasm/libpg-query.js",
+      "sha256": "08e69bc6f646aa0f16312b1429305e113bb3a98d05b8e3433b6efe2292414446"
+    },
+    {
+      "path": "proto.js",
+      "sha256": "80e80bd0c710c25a5cd2c217d33e38c62fbeef4edbd8ac834c848d21a887eb43"
+    }
+  ],
+  "adapter": {
+    "strategy": "Descriptor-directed nested message construction; Boolean.create bypasses the defective Boolean.fromObject; no global codec patch",
+    "sourceSha256": "a88fea4cf15c9c3c3f0ad1f0a36d8f5de42a42ce8ea9712499f609beee3ea751",
+    "schemaSha256": "aa3d3b50bc04edbc3ab3430e113ee8710edb1c10ff5cee15d4bcc7b16d9a9039"
+  },
+  "scope": "Pinned package artifacts and observed raw parser version, not source-build reproducibility or PostgreSQL catalog compatibility"
+}

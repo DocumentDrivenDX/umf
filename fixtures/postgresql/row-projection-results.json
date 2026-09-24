@@ -1,0 +1,321 @@
+[
+  {
+    "relation": "orders",
+    "schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "urn:test:postgresql:rows:orders",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "total": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Exact amount — café"
+        },
+        "details": {}
+      },
+      "required": [
+        "id",
+        "total",
+        "details"
+      ],
+      "additionalProperties": false
+    },
+    "sql": "SELECT (SELECT pg_catalog.json_object_agg(v.key,v.value ORDER BY v.ordinal) FROM (VALUES (0,E'id',pg_catalog.to_json(r.\"id\"::text)),(1,E'total',pg_catalog.to_json(r.\"total\"::text)),(2,E'details',pg_catalog.to_json(r.\"details\"))) AS v(ordinal,key,value)) AS row FROM \"sales\".\"orders\" AS r;",
+    "issues": [
+      {
+        "path": "",
+        "code": "POSTGRESQL_CATALOG_SCOPE",
+        "classification": "not-enforced",
+        "detail": "Observed metadata is limited to the declared query/profile; server state and reconstruction correspondence are not verified",
+        "retainedInSource": true
+      },
+      {
+        "path": "",
+        "code": "POSTGRESQL_ROW_ONLY",
+        "classification": "not-enforced",
+        "detail": "Read-row shape only. Catalog correspondence, defaults, generated expressions, domain/check/key/foreign-key constraints, privileges, policies, triggers, ordering and database state remain authoritative in PostgreSQL; no INSERT validation or SQL execution is performed.",
+        "retainedInSource": true
+      },
+      {
+        "path": "/columns/external_id",
+        "code": "POSTGRESQL_COLUMN_OMITTED",
+        "classification": "not-enforced",
+        "detail": "Native column is omitted from the selected read-row representation",
+        "retainedInSource": true
+      },
+      {
+        "path": "/columns/state",
+        "code": "POSTGRESQL_COLUMN_OMITTED",
+        "classification": "not-enforced",
+        "detail": "Native column is omitted from the selected read-row representation",
+        "retainedInSource": true
+      },
+      {
+        "path": "/columns/tags",
+        "code": "POSTGRESQL_COLUMN_OMITTED",
+        "classification": "not-enforced",
+        "detail": "Native column is omitted from the selected read-row representation",
+        "retainedInSource": true
+      },
+      {
+        "path": "/columns/created_at",
+        "code": "POSTGRESQL_COLUMN_OMITTED",
+        "classification": "not-enforced",
+        "detail": "Native column is omitted from the selected read-row representation",
+        "retainedInSource": true
+      },
+      {
+        "path": "/columns/subtotal",
+        "code": "POSTGRESQL_COLUMN_OMITTED",
+        "classification": "not-enforced",
+        "detail": "Native column is omitted from the selected read-row representation",
+        "retainedInSource": true
+      },
+      {
+        "path": "/columns/id",
+        "code": "POSTGRESQL_TEXT_ENCODING",
+        "classification": "representation-change",
+        "detail": "Uses the server native text output/cast; native type structure, lexical/domain constraints and session-dependent formatting are not portable JSON validation.",
+        "retainedInSource": true
+      },
+      {
+        "path": "/columns/total",
+        "code": "POSTGRESQL_TEXT_ENCODING",
+        "classification": "representation-change",
+        "detail": "Uses the server native text output/cast; native type structure, lexical/domain constraints and session-dependent formatting are not portable JSON validation.",
+        "retainedInSource": true
+      },
+      {
+        "path": "/columns/details",
+        "code": "POSTGRESQL_JSON_VALUE",
+        "classification": "representation-change",
+        "detail": "SQL NULL and JSON null share an output representation; JSON Schema does not preserve duplicate object keys or guarantee exact client parsing of embedded numbers.",
+        "retainedInSource": true
+      }
+    ],
+    "observations": [
+      {
+        "database": "source",
+        "rows": [
+          "{ \"id\" : \"9007199254740993\", \"total\" : \"9007199254740993.123456789\", \"details\" : {\"exact\": 9007199254740993} }"
+        ]
+      },
+      {
+        "database": "regenerated",
+        "rows": [
+          "{ \"id\" : \"9007199254740993\", \"total\" : \"9007199254740993.123456789\", \"details\" : {\"exact\": 9007199254740993} }"
+        ]
+      },
+      {
+        "database": "restored",
+        "rows": [
+          "{ \"id\" : \"9007199254740993\", \"total\" : \"9007199254740993.123456789\", \"details\" : {\"exact\": 9007199254740993} }"
+        ]
+      }
+    ]
+  },
+  {
+    "relation": "order_lines",
+    "schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "urn:test:postgresql:rows:order_lines",
+      "type": "object",
+      "properties": {
+        "line_no": {
+          "type": "integer",
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        "quantity": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": -2147483648,
+              "maximum": 2147483647
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "line_no",
+        "quantity"
+      ],
+      "additionalProperties": false
+    },
+    "sql": "SELECT (SELECT pg_catalog.json_object_agg(v.key,v.value ORDER BY v.ordinal) FROM (VALUES (0,E'line_no',pg_catalog.to_json(r.\"line_no\")),(1,E'quantity',pg_catalog.to_json(r.\"quantity\"))) AS v(ordinal,key,value)) AS row FROM \"sales\".\"order_lines\" AS r;",
+    "issues": [
+      {
+        "path": "",
+        "code": "POSTGRESQL_CATALOG_SCOPE",
+        "classification": "not-enforced",
+        "detail": "Observed metadata is limited to the declared query/profile; server state and reconstruction correspondence are not verified",
+        "retainedInSource": true
+      },
+      {
+        "path": "",
+        "code": "POSTGRESQL_ROW_ONLY",
+        "classification": "not-enforced",
+        "detail": "Read-row shape only. Catalog correspondence, defaults, generated expressions, domain/check/key/foreign-key constraints, privileges, policies, triggers, ordering and database state remain authoritative in PostgreSQL; no INSERT validation or SQL execution is performed.",
+        "retainedInSource": true
+      },
+      {
+        "path": "/columns/order_id",
+        "code": "POSTGRESQL_COLUMN_OMITTED",
+        "classification": "not-enforced",
+        "detail": "Native column is omitted from the selected read-row representation",
+        "retainedInSource": true
+      }
+    ],
+    "observations": [
+      {
+        "database": "source",
+        "rows": [
+          "{ \"line_no\" : 1, \"quantity\" : 2 }"
+        ]
+      },
+      {
+        "database": "regenerated",
+        "rows": [
+          "{ \"line_no\" : 1, \"quantity\" : 2 }"
+        ]
+      },
+      {
+        "database": "restored",
+        "rows": [
+          "{ \"line_no\" : 1, \"quantity\" : 2 }"
+        ]
+      }
+    ]
+  },
+  {
+    "relation": "row_encodings",
+    "schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "urn:test:postgresql:rows:row_encodings",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": -2147483648,
+          "maximum": 2147483647
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "optional_flag": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nullable_json": {},
+        "required_json": {},
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "small_value": {
+          "type": "integer",
+          "minimum": -32768,
+          "maximum": 32767
+        }
+      },
+      "required": [
+        "id",
+        "active",
+        "optional_flag",
+        "nullable_json",
+        "required_json",
+        "label",
+        "small_value"
+      ],
+      "additionalProperties": false
+    },
+    "sql": "SELECT (SELECT pg_catalog.json_object_agg(v.key,v.value ORDER BY v.ordinal) FROM (VALUES (0,E'id',pg_catalog.to_json(r.\"id\")),(1,E'active',pg_catalog.to_json(r.\"active\")),(2,E'optional_flag',pg_catalog.to_json(r.\"optional_flag\")),(3,E'nullable_json',pg_catalog.to_json(r.\"nullable_json\")),(4,E'required_json',pg_catalog.to_json(r.\"required_json\")),(5,E'label',pg_catalog.to_json(r.\"label\"::text)),(6,E'small_value',pg_catalog.to_json(r.\"small_value\"))) AS v(ordinal,key,value)) AS row FROM \"sales\".\"row_encodings\" AS r;",
+    "issues": [
+      {
+        "path": "",
+        "code": "POSTGRESQL_CATALOG_SCOPE",
+        "classification": "not-enforced",
+        "detail": "Observed metadata is limited to the declared query/profile; server state and reconstruction correspondence are not verified",
+        "retainedInSource": true
+      },
+      {
+        "path": "",
+        "code": "POSTGRESQL_ROW_ONLY",
+        "classification": "not-enforced",
+        "detail": "Read-row shape only. Catalog correspondence, defaults, generated expressions, domain/check/key/foreign-key constraints, privileges, policies, triggers, ordering and database state remain authoritative in PostgreSQL; no INSERT validation or SQL execution is performed.",
+        "retainedInSource": true
+      },
+      {
+        "path": "/columns/nullable_json",
+        "code": "POSTGRESQL_JSON_VALUE",
+        "classification": "representation-change",
+        "detail": "SQL NULL and JSON null share an output representation; JSON Schema does not preserve duplicate object keys or guarantee exact client parsing of embedded numbers.",
+        "retainedInSource": true
+      },
+      {
+        "path": "/columns/required_json",
+        "code": "POSTGRESQL_JSON_VALUE",
+        "classification": "representation-change",
+        "detail": "SQL NULL and JSON null share an output representation; JSON Schema does not preserve duplicate object keys or guarantee exact client parsing of embedded numbers.",
+        "retainedInSource": true
+      },
+      {
+        "path": "/columns/label",
+        "code": "POSTGRESQL_TEXT_ENCODING",
+        "classification": "representation-change",
+        "detail": "Uses the server native text output/cast; native type structure, lexical/domain constraints and session-dependent formatting are not portable JSON validation.",
+        "retainedInSource": true
+      }
+    ],
+    "observations": [
+      {
+        "database": "source",
+        "rows": [
+          "{ \"id\" : 1, \"active\" : true, \"optional_flag\" : false, \"nullable_json\" : null, \"required_json\" : null, \"label\" : null, \"small_value\" : -32768 }",
+          "{ \"id\" : 2, \"active\" : false, \"optional_flag\" : null, \"nullable_json\" : null, \"required_json\" : {}, \"label\" : \"café\", \"small_value\" : 32767 }",
+          "{ \"id\" : 3, \"active\" : true, \"optional_flag\" : true, \"nullable_json\" : {\"flag\": false}, \"required_json\" : false, \"label\" : \"\", \"small_value\" : 0 }"
+        ]
+      },
+      {
+        "database": "regenerated",
+        "rows": [
+          "{ \"id\" : 1, \"active\" : true, \"optional_flag\" : false, \"nullable_json\" : null, \"required_json\" : null, \"label\" : null, \"small_value\" : -32768 }",
+          "{ \"id\" : 2, \"active\" : false, \"optional_flag\" : null, \"nullable_json\" : null, \"required_json\" : {}, \"label\" : \"café\", \"small_value\" : 32767 }",
+          "{ \"id\" : 3, \"active\" : true, \"optional_flag\" : true, \"nullable_json\" : {\"flag\": false}, \"required_json\" : false, \"label\" : \"\", \"small_value\" : 0 }"
+        ]
+      },
+      {
+        "database": "restored",
+        "rows": [
+          "{ \"id\" : 1, \"active\" : true, \"optional_flag\" : false, \"nullable_json\" : null, \"required_json\" : null, \"label\" : null, \"small_value\" : -32768 }",
+          "{ \"id\" : 2, \"active\" : false, \"optional_flag\" : null, \"nullable_json\" : null, \"required_json\" : {}, \"label\" : \"café\", \"small_value\" : 32767 }",
+          "{ \"id\" : 3, \"active\" : true, \"optional_flag\" : true, \"nullable_json\" : {\"flag\": false}, \"required_json\" : false, \"label\" : \"\", \"small_value\" : 0 }"
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,5 @@
+import {importIcebergSchema,exportIcebergSchema,readDocument,writeDocument,proposeIcebergNodeEdit} from '../src';
+const base='fixtures/iceberg/',m=await Bun.file(base+'manifest.json').json(),results=[];
+for(const c of m.cases){const raw=await Bun.file(c.path).text();let error:string|undefined;try{const source=importIcebergSchema(raw,{id:c.id});if(!c.umfValid)throw Error('Unexpected UMF acceptance');for(const format of ['json','yaml'] as const){const text=exportIcebergSchema(readDocument(writeDocument(source,format),format));await Bun.write(base+c.id+'.'+format+'.roundtrip.json',text);}results.push({id:c.id,status:'roundtripped'});}catch(e){error=(e as Error).message;if(c.umfValid)throw e;results.push({id:c.id,status:'rejected',error});}}
+const original=importIcebergSchema(await Bun.file(base+'nested.json').text(),{id:'edit'}),edited=proposeIcebergNodeEdit(original,'/fields/1/type/fields/0/name','"renamed"');await Bun.write(base+'edited.json',exportIcebergSchema(edited.document));
+await Bun.write(base+'results.json',JSON.stringify({results},null,2)+'\n');console.log({cases:results.length,roundtripped:results.filter(r=>r.status==='roundtripped').length});

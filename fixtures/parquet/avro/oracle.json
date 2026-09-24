@@ -1,0 +1,182 @@
+{
+  "pyarrow": "21.0.0",
+  "avro": "1.12.0",
+  "fastavro": "1.12.2",
+  "cases": [
+    {
+      "row": 0,
+      "format": "json",
+      "bytes": 113,
+      "normalizedValuesAgree": true
+    },
+    {
+      "row": 0,
+      "format": "yaml",
+      "bytes": 113,
+      "normalizedValuesAgree": true
+    },
+    {
+      "row": 1,
+      "format": "json",
+      "bytes": 16,
+      "normalizedValuesAgree": true
+    },
+    {
+      "row": 1,
+      "format": "yaml",
+      "bytes": 16,
+      "normalizedValuesAgree": true
+    },
+    {
+      "row": 2,
+      "format": "json",
+      "bytes": 13,
+      "normalizedValuesAgree": true
+    },
+    {
+      "row": 2,
+      "format": "yaml",
+      "bytes": 13,
+      "normalizedValuesAgree": true
+    }
+  ],
+  "corpus": [
+    {
+      "family": "logical",
+      "id": "decimal32",
+      "schemasAccepted": true
+    },
+    {
+      "family": "logical",
+      "id": "decimal64",
+      "schemasAccepted": true
+    },
+    {
+      "family": "logical",
+      "id": "decimal-fixed",
+      "schemasAccepted": true
+    },
+    {
+      "family": "logical",
+      "id": "decimal-legacy-default",
+      "schemasAccepted": true
+    },
+    {
+      "family": "logical",
+      "id": "decimal-legacy-conflict",
+      "schemasAccepted": true
+    },
+    {
+      "family": "logical",
+      "id": "uint32",
+      "schemasAccepted": true
+    },
+    {
+      "family": "logical",
+      "id": "int8",
+      "schemasAccepted": true
+    },
+    {
+      "family": "logical",
+      "id": "timestamp-local",
+      "schemasAccepted": true
+    },
+    {
+      "family": "logical",
+      "id": "time-ms",
+      "schemasAccepted": true
+    },
+    {
+      "family": "logical",
+      "id": "time-nanos",
+      "schemasAccepted": true
+    },
+    {
+      "family": "logical",
+      "id": "string",
+      "schemasAccepted": true
+    },
+    {
+      "family": "logical",
+      "id": "uuid",
+      "schemasAccepted": true
+    },
+    {
+      "family": "logical",
+      "id": "float16",
+      "schemasAccepted": true
+    },
+    {
+      "family": "logical",
+      "id": "date",
+      "schemasAccepted": true
+    },
+    {
+      "family": "logical",
+      "id": "interval",
+      "schemasAccepted": true
+    },
+    {
+      "family": "containers",
+      "id": "list-three-element",
+      "schemasAccepted": true
+    },
+    {
+      "family": "containers",
+      "id": "list-three-renamed",
+      "schemasAccepted": true
+    },
+    {
+      "family": "containers",
+      "id": "list-primitive",
+      "schemasAccepted": true
+    },
+    {
+      "family": "containers",
+      "id": "list-tuple",
+      "schemasAccepted": true
+    },
+    {
+      "family": "containers",
+      "id": "list-array",
+      "schemasAccepted": true
+    },
+    {
+      "family": "containers",
+      "id": "list-items_tuple",
+      "schemasAccepted": true
+    },
+    {
+      "family": "containers",
+      "id": "list-nested-repeated",
+      "schemasAccepted": true
+    },
+    {
+      "family": "containers",
+      "id": "map-canonical",
+      "schemasAccepted": true
+    },
+    {
+      "family": "containers",
+      "id": "map-legacy-outer",
+      "schemasAccepted": true
+    },
+    {
+      "family": "containers",
+      "id": "map-renamed",
+      "schemasAccepted": true
+    },
+    {
+      "family": "containers",
+      "id": "map-key-only",
+      "schemasAccepted": true
+    }
+  ],
+  "warnings": [
+    "Logical type uuid requires literal type string, not fixed.",
+    "Unknown local-timestamp-micros, using long.",
+    "Unknown timestamp-nanos, using long."
+  ],
+  "targetAcceptsNativeIntegerRangeViolations": true,
+  "scope": "Schema/value evidence with explicitly authored oracle conversion of uint64, map entries and temporal carriers. No general library row encoder. Python local timestamp APIs normalized only for the declared field."
+}

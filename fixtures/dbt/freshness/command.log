@@ -1,0 +1,27 @@
+18:10:54  Running with dbt=1.10.0
+18:10:54  Registered adapter: duckdb=1.9.3
+18:10:54  Found 4 sources, 429 macros
+18:10:54  
+18:10:54  Concurrency: 1 threads (target='dev')
+18:10:54  
+18:10:54  1 of 4 START freshness of synthetic.broken ..................................... [RUN]
+18:10:54  1 of 4 ERROR freshness of synthetic.broken ..................................... [ERROR in 0.04s]
+18:10:54  2 of 4 START freshness of synthetic.expired .................................... [RUN]
+18:10:54  2 of 4 ERROR STALE freshness of synthetic.expired .............................. [ERROR STALE in 0.01s]
+18:10:54  3 of 4 START freshness of synthetic.recent ..................................... [RUN]
+18:10:54  3 of 4 PASS freshness of synthetic.recent ...................................... [PASS in 0.01s]
+18:10:54  4 of 4 START freshness of synthetic.stale ...................................... [RUN]
+18:10:54  4 of 4 WARN freshness of synthetic.stale ....................................... [WARN in 0.01s]
+18:10:54  
+18:10:54  Finished running 4 sources in 0 hours 0 minutes and 0.08 seconds (0.08s).
+18:10:54  
+18:10:54    Runtime Error in source broken (models/sources.yml)
+  Catalog Error: Scalar Function with name umf_missing_fixture_function does not exist!
+  Did you mean "isfinite"?
+  
+  LINE 3:     select umf_missing_fixture_function()
+                     ^
+18:10:54  
+18:10:54  Failure in source expired (models/sources.yml)
+18:10:54    Status: error
+18:10:54  Done.

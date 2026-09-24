@@ -1,0 +1,170 @@
+{
+  "umf": "0.1.0",
+  "id": "cpp-21.0.0/generated_custom_metadata.stream/message/0",
+  "vocabularies": {
+    "umf.arrow.flatbuffer": {
+      "version": "0.1.0"
+    }
+  },
+  "modules": [
+    {
+      "id": "metadata",
+      "namespace": "",
+      "elements": [
+        {
+          "id": "root",
+          "extensions": {
+            "umf.arrow.flatbuffer": {
+              "profile": "arrow-flatbuffer-model",
+              "model": {
+                "rootType": "Message",
+                "value": {
+                  "version": "V5",
+                  "header": {
+                    "type": "Schema",
+                    "value": {
+                      "fields": [
+                        {
+                          "name": "sort_of_pandas",
+                          "nullable": true,
+                          "type": {
+                            "type": "Int",
+                            "value": {
+                              "bitWidth": 8,
+                              "is_signed": true
+                            }
+                          },
+                          "children": [],
+                          "custom_metadata": [
+                            {
+                              "key": "pandas",
+                              "value": "{}"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "lots_of_meta",
+                          "nullable": true,
+                          "type": {
+                            "type": "Int",
+                            "value": {
+                              "bitWidth": 8,
+                              "is_signed": true
+                            }
+                          },
+                          "children": [],
+                          "custom_metadata": [
+                            {
+                              "key": "a",
+                              "value": "{}"
+                            },
+                            {
+                              "key": "b",
+                              "value": "{}"
+                            },
+                            {
+                              "key": "c",
+                              "value": "{}"
+                            },
+                            {
+                              "key": "d",
+                              "value": "{}"
+                            },
+                            {
+                              "key": "..",
+                              "value": "{}"
+                            },
+                            {
+                              "key": "w",
+                              "value": "{}"
+                            },
+                            {
+                              "key": "x",
+                              "value": "{}"
+                            },
+                            {
+                              "key": "y",
+                              "value": "{}"
+                            },
+                            {
+                              "key": "z",
+                              "value": "{}"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "unregistered_extension",
+                          "nullable": true,
+                          "type": {
+                            "type": "Int",
+                            "value": {
+                              "bitWidth": 8,
+                              "is_signed": true
+                            }
+                          },
+                          "children": [],
+                          "custom_metadata": [
+                            {
+                              "key": "ARROW:extension:name",
+                              "value": "!nonexistent"
+                            },
+                            {
+                              "key": "ARROW:extension:metadata",
+                              "value": ""
+                            },
+                            {
+                              "key": "ARROW:integration:allow_unregistered_extension",
+                              "value": "true"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "list_with_odd_values",
+                          "nullable": true,
+                          "type": {
+                            "type": "List",
+                            "value": {}
+                          },
+                          "children": [
+                            {
+                              "name": "item",
+                              "nullable": true,
+                              "type": {
+                                "type": "Int",
+                                "value": {
+                                  "bitWidth": 32,
+                                  "is_signed": true
+                                }
+                              },
+                              "children": [],
+                              "custom_metadata": [
+                                {
+                                  "key": "odd_values",
+                                  "value": "{}"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ],
+                      "custom_metadata": [
+                        {
+                          "key": "schema_custom_0",
+                          "value": "{}"
+                        },
+                        {
+                          "key": "schema_custom_1",
+                          "value": "{}"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

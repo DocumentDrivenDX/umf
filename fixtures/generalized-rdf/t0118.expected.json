@@ -1,0 +1,176 @@
+[
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "value": "b0"
+    },
+    "predicate": {
+      "termType": "NamedNode",
+      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+    },
+    "object": {
+      "termType": "BlankNode",
+      "value": "b0"
+    },
+    "graph": {
+      "termType": "DefaultGraph",
+      "value": ""
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "value": "b0"
+    },
+    "predicate": {
+      "termType": "BlankNode",
+      "value": "b0"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "plain value",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#string"
+      }
+    },
+    "graph": {
+      "termType": "DefaultGraph",
+      "value": ""
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "value": "b0"
+    },
+    "predicate": {
+      "termType": "BlankNode",
+      "value": "b0"
+    },
+    "object": {
+      "termType": "NamedNode",
+      "value": "https://w3c.github.io/json-ld-api/tests/toRdf/relativeIri"
+    },
+    "graph": {
+      "termType": "DefaultGraph",
+      "value": ""
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "value": "b0"
+    },
+    "predicate": {
+      "termType": "BlankNode",
+      "value": "b0"
+    },
+    "object": {
+      "termType": "BlankNode",
+      "value": "b0"
+    },
+    "graph": {
+      "termType": "DefaultGraph",
+      "value": ""
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "value": "b0"
+    },
+    "predicate": {
+      "termType": "BlankNode",
+      "value": "b0"
+    },
+    "object": {
+      "termType": "BlankNode",
+      "value": "b1"
+    },
+    "graph": {
+      "termType": "DefaultGraph",
+      "value": ""
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "value": "b0"
+    },
+    "predicate": {
+      "termType": "BlankNode",
+      "value": "b0"
+    },
+    "object": {
+      "termType": "BlankNode",
+      "value": "b2"
+    },
+    "graph": {
+      "termType": "DefaultGraph",
+      "value": ""
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "value": "b0"
+    },
+    "predicate": {
+      "termType": "BlankNode",
+      "value": "b0"
+    },
+    "object": {
+      "termType": "BlankNode",
+      "value": "b3"
+    },
+    "graph": {
+      "termType": "DefaultGraph",
+      "value": ""
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "value": "b1"
+    },
+    "predicate": {
+      "termType": "BlankNode",
+      "value": "b0"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "term",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#string"
+      }
+    },
+    "graph": {
+      "termType": "DefaultGraph",
+      "value": ""
+    }
+  },
+  {
+    "subject": {
+      "termType": "BlankNode",
+      "value": "b2"
+    },
+    "predicate": {
+      "termType": "BlankNode",
+      "value": "b0"
+    },
+    "object": {
+      "termType": "Literal",
+      "value": "termId",
+      "datatype": {
+        "termType": "NamedNode",
+        "value": "http://www.w3.org/2001/XMLSchema#string"
+      }
+    },
+    "graph": {
+      "termType": "DefaultGraph",
+      "value": ""
+    }
+  }
+]

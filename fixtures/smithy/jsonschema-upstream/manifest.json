@@ -1,0 +1,137 @@
+{
+  "repository": "https://github.com/smithy-lang/smithy",
+  "commit": "dd2d50a93db313ee21b41916af158442e14669e1",
+  "selection": "Every resource in smithy-jsonschema test resource directory, plus LICENSE. Expected schemas retained; profiles differ and must not be assumed equivalent.",
+  "files": [
+    {
+      "file": "default-values-disabled.jsonschema.v07.json",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/default-values-disabled.jsonschema.v07.json",
+      "sha256": "de0f808e8beaa4324ebffc67999d605fd0d2915b804d25342cb2387b1090eb38"
+    },
+    {
+      "file": "default-values.jsonschema.v07.json",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/default-values.jsonschema.v07.json",
+      "sha256": "0a8f3db36ad1e3cfb37a4c8d347ff5be3aeddf949ece1e413800ead44fdd1e4c"
+    },
+    {
+      "file": "default-values.smithy",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/default-values.smithy",
+      "sha256": "69ba2adcf00d23adcb0b3e1c3a3c4417ded476b71ef1b3ec2622f0550d25803f"
+    },
+    {
+      "file": "int-enums-disabled.jsonschema.v07.json",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/int-enums-disabled.jsonschema.v07.json",
+      "sha256": "df178682bba53c8dd154c02ba8a7d709b55253621c5a9208674df2d89d97c956"
+    },
+    {
+      "file": "int-enums.jsonschema.v07.json",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/int-enums.jsonschema.v07.json",
+      "sha256": "7728cd243813ebc3ea3a83a7b50e56330d4f079fa10ffd3d688357a59627fb0d"
+    },
+    {
+      "file": "int-enums.smithy",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/int-enums.smithy",
+      "sha256": "1406b85fcf44e9c0e6d3ef0d1541ad99cff61295f33b154002c2f50713c283df"
+    },
+    {
+      "file": "integer-types.jsonschema.v07.json",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/integer-types.jsonschema.v07.json",
+      "sha256": "127045dfe6f0df72e421ff236e4693892bf2fc9d1dcfba351131c5b2c862df6a"
+    },
+    {
+      "file": "integer-types.smithy",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/integer-types.smithy",
+      "sha256": "a5ce0e3b21b2163c87364adaf15a669354ef84fae04f6228ba39493e6c1180e2"
+    },
+    {
+      "file": "member-documentation.jsonschema.json",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/member-documentation.jsonschema.json",
+      "sha256": "31d7163f16f10ddfd311cb647ca9dd8cd5fb4f9da1fb415f428b62d5e9053c45"
+    },
+    {
+      "file": "member-documentation.smithy",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/member-documentation.smithy",
+      "sha256": "0b16713e6cfc06bdb01adac45c0de62c69c7ad6b8e4fe95cccd48d34b12c6859"
+    },
+    {
+      "file": "model-with-mixins.smithy",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/model-with-mixins.smithy",
+      "sha256": "1d23df5428ebba030f37a43a13635cdb56f39c186e6dfd8971b7f351087c0698"
+    },
+    {
+      "file": "multiple-closures-with-conflicting-shapes.json",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/multiple-closures-with-conflicting-shapes.json",
+      "sha256": "9faaf3d01b600607c0e29ccfc65986c405230cf78a10eda20375e5fb1e3fd081"
+    },
+    {
+      "file": "multiple-closures.json",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/multiple-closures.json",
+      "sha256": "6c5fb137c95b4e66f7f998326126031b1f8f4378312725851d3b451af6b4d525"
+    },
+    {
+      "file": "non-numeric-floats.json",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/non-numeric-floats.json",
+      "sha256": "b3cf962a6158f5119de2d53a4777438431848fe0cfdd109bc690c94262350f33"
+    },
+    {
+      "file": "non-numeric-floats.jsonschema.v07.json",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/non-numeric-floats.jsonschema.v07.json",
+      "sha256": "957fabf8955f8b1685baae2563358554c10d5210f2659c5cfddd3d38f2c904f8"
+    },
+    {
+      "file": "recursive.json",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/recursive.json",
+      "sha256": "058cf214efbad59999434b8575dd65445e5319094b5a0c848119ddbccd6bac04"
+    },
+    {
+      "file": "service-renames.json",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/service-renames.json",
+      "sha256": "63075547410f81a694b50d427745e82e25e6ab92bc5defda6bb457b8e27a4b55"
+    },
+    {
+      "file": "string-enums-one-of.jsonschema.v07.json",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/string-enums-one-of.jsonschema.v07.json",
+      "sha256": "649a2eb67bf596866d9637743bce46908ca51a7f5540ff4d5a3b748df5d85b2c"
+    },
+    {
+      "file": "string-enums.jsonschema.v07.json",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/string-enums.jsonschema.v07.json",
+      "sha256": "2a68ae04052f7d005e5d83d50873e09918d027c6881ecc68b7900280e4d6a194"
+    },
+    {
+      "file": "string-enums.smithy",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/string-enums.smithy",
+      "sha256": "4e324a8bc73b530bb0dcda9fd447f1be779fa654e2cfe2bee977f3d9afd9d76f"
+    },
+    {
+      "file": "test-service.json",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/test-service.json",
+      "sha256": "fc10aded09a77ab59a7f050fe2b0f95ed7e4c7500c0152ffad116c7919a34f72"
+    },
+    {
+      "file": "test-service.jsonschema.v07.json",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/test-service.jsonschema.v07.json",
+      "sha256": "bfb9b422a073aceaa1dcf12f1443d24dc3d3dcf9478245a9ef89d80d3efe4e30"
+    },
+    {
+      "file": "test-service.jsonschema.v2020.json",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/test-service.jsonschema.v2020.json",
+      "sha256": "4bc12e78d3f80cb04f522c37cff7061c286c4cb0371daa981bb80bc757426919"
+    },
+    {
+      "file": "title-added.jsonschema.v07.json",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/title-added.jsonschema.v07.json",
+      "sha256": "722cadc4fa219cdb7c0f0f819fc2ea1e8c05b9d4a6cced9354d7db0460acc08e"
+    },
+    {
+      "file": "title-added.smithy",
+      "upstreamPath": "smithy-jsonschema/src/test/resources/software/amazon/smithy/jsonschema/title-added.smithy",
+      "sha256": "f3b42eb9b349357630c02bcba64f55dcb6a866be7bd16906994657cc5c1ec821"
+    },
+    {
+      "file": "LICENSE",
+      "upstreamPath": "LICENSE",
+      "sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b12257 .
+_:report <http://www.w3.org/ns/shacl#result> _:b12258 .
+_:report <http://www.w3.org/ns/shacl#result> _:b12259 .
+_:report <http://www.w3.org/ns/shacl#result> _:b12260 .
+_:report <http://www.w3.org/ns/shacl#result> _:b12261 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b12257 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b12257 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b12257 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxLengthConstraintComponent> .
+_:b12257 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxLength-001.test#TestShape> .
+_:b12257 <http://www.w3.org/ns/shacl#focusNode> _:s_e_000062000033000034000032000033000036 .
+_:b12257 <http://www.w3.org/ns/shacl#value> _:s_e_000062000033000034000032000033000036 .
+_:b12257 <http://www.w3.org/ns/shacl#resultMessage> "Value has more than 4 characters" .
+_:s_e_000062000033000034000032000033000036 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://datashapes.org/sh/tests/core/node/maxLength-001.test#TestClass> .
+_:b12258 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b12258 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b12258 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxLengthConstraintComponent> .
+_:b12258 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxLength-001.test#TestShape> .
+_:b12258 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/maxLength-001.test#John> .
+_:b12258 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/maxLength-001.test#John> .
+_:b12258 <http://www.w3.org/ns/shacl#resultMessage> "Value has more than 4 characters" .
+_:b12259 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b12259 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b12259 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxLengthConstraintComponent> .
+_:b12259 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxLength-001.test#TestShape> .
+_:b12259 <http://www.w3.org/ns/shacl#focusNode> "12345"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:b12259 <http://www.w3.org/ns/shacl#value> "12345"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:b12259 <http://www.w3.org/ns/shacl#resultMessage> "Value has more than 4 characters" .
+_:b12260 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b12260 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b12260 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxLengthConstraintComponent> .
+_:b12260 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxLength-001.test#TestShape> .
+_:b12260 <http://www.w3.org/ns/shacl#focusNode> "2017-03-29"^^<http://www.w3.org/2001/XMLSchema#date> .
+_:b12260 <http://www.w3.org/ns/shacl#value> "2017-03-29"^^<http://www.w3.org/2001/XMLSchema#date> .
+_:b12260 <http://www.w3.org/ns/shacl#resultMessage> "Value has more than 4 characters" .
+_:b12261 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b12261 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b12261 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxLengthConstraintComponent> .
+_:b12261 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxLength-001.test#TestShape> .
+_:b12261 <http://www.w3.org/ns/shacl#focusNode> "Hello" .
+_:b12261 <http://www.w3.org/ns/shacl#value> "Hello" .
+_:b12261 <http://www.w3.org/ns/shacl#resultMessage> "Value has more than 4 characters" .

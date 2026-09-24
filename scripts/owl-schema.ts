@@ -1,0 +1,12 @@
+export {};
+const rdf=await Bun.file('spec/extensions/rdf/schema.json').json();
+const schema={...rdf,$id:'urn:umf:owl:0.1.0',properties:{...rdf.properties,owlVersion:{const:'2'}},required:[...rdf.required,'owlVersion']};
+const term=rdf.properties.quads.items.properties.object,node=rdf.properties.quads.items.properties.subject;
+const headers={$schema:rdf.$schema,$id:'urn:umf:owl:headers:0.1.0',type:'array',items:{type:'object',required:['node','versionIRIs','imports'],properties:{node,versionIRIs:{type:'array',items:term},imports:{type:'array',items:term}},additionalProperties:false}};
+const manifest={id:'umf.owl',version:'0.1.0',coreVersion:'0.1.0',description:'OWL 2 RDF-mapped ontology graph preservation and declared headers',schema,semantics:'CONTRACT-029; RDF graph fidelity only; OWL axiom validation and reasoning unimplemented',scopes:['element'],capabilities:{validation:'semantic',directions:['import','export'],native:{system:'OWL',version:'OWL 2 Second Edition 2012-12-11',subset:'Turtle RDF graph preservation and explicit ontology headers; no OWL validity, profiles, imports execution or entailment claim'},evidence:['tests/owl/annotations.test.ts','fixtures/owl/annotations-oracle.json','fixtures/owl/annotation-case-oracle.json','fixtures/owl/annotation-case-browser.json','tests/owl/expressions.test.ts','fixtures/owl/expression-oracle.json','tests/owl/roundtrip.test.ts','fixtures/owl/oracle-results.json','fixtures/owl/browser-results.json']}};
+manifest.capabilities.evidence.push('tests/owl/axioms.test.ts','fixtures/owl/special-oracle.json','fixtures/owl/special-browser.json');
+manifest.capabilities.evidence.push('tests/owl/declarations.test.ts','fixtures/owl/declarations-oracle.json','fixtures/owl/declarations-browser.json');
+manifest.capabilities.evidence.push('tests/owl/list-axioms.test.ts','fixtures/owl/list-axioms-oracle.json','fixtures/owl/list-axioms-browser.json');
+manifest.description='OWL 2 RDF graph preservation and local ontology metadata views';
+manifest.capabilities.native.subset='Turtle RDF graph preservation; explicit headers/declarations, local expressions, axiom annotations, negative/n-ary assertions and chain/key/disjoint-union lists. No complete structural OWL mapping, validity, profile, import execution or entailment claim';
+for(const [file,value] of Object.entries({'schema.json':schema,'headers-schema.json':headers,'package.json':manifest}))await Bun.write('spec/extensions/owl/'+file,JSON.stringify(value,null,2)+'\n');

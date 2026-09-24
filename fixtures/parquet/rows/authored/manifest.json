@@ -1,0 +1,73 @@
+{
+  "runtime": "PyArrow 21.0.0 positive shared-row cases",
+  "cases": [
+    {
+      "id": "valid-shared-optional",
+      "path": "fixtures/parquet/rows/authored/valid-shared-optional.parquet",
+      "status": "assembled",
+      "nativeRows": [
+        {
+          "g": {
+            "c0": 1,
+            "c1": 2
+          }
+        },
+        {
+          "g": null
+        }
+      ]
+    },
+    {
+      "id": "optional-presence-conflict",
+      "path": "fixtures/parquet/rows/authored/optional-presence-conflict.parquet",
+      "status": "blocked",
+      "nativeRows": null
+    },
+    {
+      "id": "valid-repeated",
+      "path": "fixtures/parquet/rows/authored/valid-repeated.parquet",
+      "status": "assembled",
+      "nativeRows": [
+        {
+          "g": [
+            {
+              "c0": 1,
+              "c1": 3
+            },
+            {
+              "c0": 2,
+              "c1": 4
+            }
+          ]
+        },
+        {
+          "g": []
+        }
+      ]
+    },
+    {
+      "id": "repeated-cardinality-conflict",
+      "path": "fixtures/parquet/rows/authored/repeated-cardinality-conflict.parquet",
+      "status": "blocked",
+      "nativeRows": null
+    },
+    {
+      "id": "empty-presence-conflict",
+      "path": "fixtures/parquet/rows/authored/empty-presence-conflict.parquet",
+      "status": "blocked",
+      "nativeRows": null
+    },
+    {
+      "id": "continuation-after-empty",
+      "path": "fixtures/parquet/rows/authored/continuation-after-empty.parquet",
+      "status": "blocked",
+      "nativeRows": null
+    },
+    {
+      "id": "node-budget",
+      "path": "fixtures/parquet/rows/authored/node-budget.parquet",
+      "status": "blocked",
+      "nativeRows": null
+    }
+  ]
+}

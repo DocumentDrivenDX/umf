@@ -1,0 +1,309 @@
+{
+  "cases": 14,
+  "results": [
+    {
+      "id": "valid",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "stale",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        },
+        {
+          "code": "SPARK_COLLATION_UNRESOLVED",
+          "path": "/fields/0/metadata/__COLLATIONS/old",
+          "message": "Path does not resolve within this field through known array/map types; native parsing may discard the annotation",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "non-string",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        },
+        {
+          "code": "SPARK_COLLATION_TARGET",
+          "path": "/fields/0/metadata/__COLLATIONS/x",
+          "message": "Collation path targets a non-string schema node; native parsers may reject it",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "value-number",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        },
+        {
+          "code": "SPARK_COLLATION_VALUE",
+          "path": "/fields/0/metadata/__COLLATIONS/x",
+          "message": "Native collation annotation is not a string; JVM may ignore it while Python rejects it",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "map-null",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        },
+        {
+          "code": "SPARK_COLLATION_MAP",
+          "path": "/fields/0/metadata/__COLLATIONS",
+          "message": "Native collation metadata must be a path-to-string map; JVM may ignore this value while Python rejects it",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "map-array",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        },
+        {
+          "code": "SPARK_COLLATION_MAP",
+          "path": "/fields/0/metadata/__COLLATIONS",
+          "message": "Native collation metadata must be a path-to-string map; JVM may ignore this value while Python rejects it",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "bad-provider",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        },
+        {
+          "code": "SPARK_COLLATION_PROVIDER",
+          "path": "/fields/0/metadata/__COLLATIONS/x",
+          "message": "Expected a Spark 4.0.1 provider-qualified collation name; provider/name validity requires native verification",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "missing-provider",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        },
+        {
+          "code": "SPARK_COLLATION_PROVIDER",
+          "path": "/fields/0/metadata/__COLLATIONS/x",
+          "message": "Expected a Spark 4.0.1 provider-qualified collation name; provider/name validity requires native verification",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "unknown-name",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "empty-generated",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        },
+        {
+          "code": "SPARK_COLLATION_UNRESOLVED",
+          "path": "/fields/0/metadata/__COLLATIONS/.element",
+          "message": "Path does not resolve within this field through known array/map types; native parsing may discard the annotation",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "empty-parser",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "dotted",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "array-target",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        },
+        {
+          "code": "SPARK_COLLATION_TARGET",
+          "path": "/fields/0/metadata/__COLLATIONS/x",
+          "message": "Collation path targets a non-string schema node; native parsers may reject it",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "child-owned",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/type/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        },
+        {
+          "code": "SPARK_COLLATION_UNRESOLVED",
+          "path": "/fields/0/metadata/__COLLATIONS/parent.child",
+          "message": "Path does not resolve within this field through known array/map types; native parsing may discard the annotation",
+          "severity": "warning"
+        }
+      ]
+    }
+  ]
+}

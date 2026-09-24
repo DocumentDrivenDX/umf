@@ -1,0 +1,17 @@
+{
+  "image": "mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090",
+  "serverVersion": "16.0.4295.3",
+  "tables": 2,
+  "columns": 32,
+  "nativeDdlReplay": true,
+  "umfRecoveries": 2,
+  "behavior": {
+    "exactIdentity": "9007199254740993",
+    "computed": 7,
+    "rowversionChanged": true,
+    "rowversionBytes": 8
+  },
+  "querySha256": "77d183e25dc329820b19aec94307b125e4139ba1dccd1411e46387ad1d8b3f74",
+  "ddlSha256": "e842409841214b8ce9a63d1d87244d47fae815892f9df1e98164484a9863037e",
+  "scope": "Authored DDL replay and bounded catalog/behavior checks; not arbitrary DDL reconstruction or complete catalog coverage"
+}

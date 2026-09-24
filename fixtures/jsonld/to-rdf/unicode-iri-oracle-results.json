@@ -1,0 +1,82 @@
+{
+  "processor": "PyLD 2.0.4",
+  "comparison": "RDFLib 7.6.0 raw parse attempts plus equivalent Unicode-escaped N-Quads terms; no blank nodes expected; literal normalization disabled",
+  "results": [
+    {
+      "id": "unicode-nbsp",
+      "exports": [],
+      "native": "rejected",
+      "error": "('Could not expand input before serialization to RDF.',)\nType: jsonld.RdfError\nCause: ('Invalid JSON-LD syntax; @context @id value must be an absolute IRI, a blank node identifier, or a keyword.',)\nType: jsonld.SyntaxError\nCode: invalid IRI mapping\nDetails: {'context': {'p': 'urn:p/\\xa0', 'v': {'@id': 'urn:value', '@type': 'urn:type/\\xa0'}}, 'iri': 'urn:p/\\xa0'}  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 1219, in to_rdf\n    expanded = self.expand(input_, options)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 870, in expand\n    expanded = self._expand(active_ctx, None, document, options,\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 2302, in _expand\n    active_ctx = self._process_context(\n                 ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 3288, in _process_context\n    self._create_term_definition(rval, ctx, k, defined, options,\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 5174, in _create_term_definition\n    raise JsonLdError(\n",
+      "expectedPath": "fixtures/jsonld/to-rdf/unicode-nbsp.expected.nq",
+      "expectedComparisons": [
+        {
+          "format": "json",
+          "rawError": "Invalid line (Failed to eat <([^:]+:[^\\s\"<>]*)> at <urn:s/\u00a0> <urn:p/\u00a0> <urn:o/\u00a0> <urn:g/\u00a0> .):\n'<urn:s/\\xa0> <urn:p/\\xa0> <urn:o/\\xa0> <urn:g/\\xa0> .'",
+          "escapedTermsEqual": true
+        },
+        {
+          "format": "yaml",
+          "rawError": "Invalid line (Failed to eat <([^:]+:[^\\s\"<>]*)> at <urn:s/\u00a0> <urn:p/\u00a0> <urn:o/\u00a0> <urn:g/\u00a0> .):\n'<urn:s/\\xa0> <urn:p/\\xa0> <urn:o/\\xa0> <urn:g/\\xa0> .'",
+          "escapedTermsEqual": true
+        }
+      ]
+    },
+    {
+      "id": "unicode-em-space",
+      "exports": [],
+      "native": "rejected",
+      "error": "('Could not expand input before serialization to RDF.',)\nType: jsonld.RdfError\nCause: ('Invalid JSON-LD syntax; @context @id value must be an absolute IRI, a blank node identifier, or a keyword.',)\nType: jsonld.SyntaxError\nCode: invalid IRI mapping\nDetails: {'context': {'p': 'urn:p/\\u2003', 'v': {'@id': 'urn:value', '@type': 'urn:type/\\u2003'}}, 'iri': 'urn:p/\\u2003'}  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 1219, in to_rdf\n    expanded = self.expand(input_, options)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 870, in expand\n    expanded = self._expand(active_ctx, None, document, options,\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 2302, in _expand\n    active_ctx = self._process_context(\n                 ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 3288, in _process_context\n    self._create_term_definition(rval, ctx, k, defined, options,\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 5174, in _create_term_definition\n    raise JsonLdError(\n",
+      "expectedPath": "fixtures/jsonld/to-rdf/unicode-em-space.expected.nq",
+      "expectedComparisons": [
+        {
+          "format": "json",
+          "rawError": "Invalid line (Failed to eat <([^:]+:[^\\s\"<>]*)> at <urn:s/\u2003> <urn:p/\u2003> <urn:o/\u2003> <urn:g/\u2003> .):\n'<urn:s/\\u2003> <urn:p/\\u2003> <urn:o/\\u2003> <urn:g/\\u2003> .'",
+          "escapedTermsEqual": true
+        },
+        {
+          "format": "yaml",
+          "rawError": "Invalid line (Failed to eat <([^:]+:[^\\s\"<>]*)> at <urn:s/\u2003> <urn:p/\u2003> <urn:o/\u2003> <urn:g/\u2003> .):\n'<urn:s/\\u2003> <urn:p/\\u2003> <urn:o/\\u2003> <urn:g/\\u2003> .'",
+          "escapedTermsEqual": true
+        }
+      ]
+    },
+    {
+      "id": "unicode-line-separator",
+      "exports": [],
+      "native": "rejected",
+      "error": "('Could not expand input before serialization to RDF.',)\nType: jsonld.RdfError\nCause: ('Invalid JSON-LD syntax; @context @id value must be an absolute IRI, a blank node identifier, or a keyword.',)\nType: jsonld.SyntaxError\nCode: invalid IRI mapping\nDetails: {'context': {'p': 'urn:p/\\u2028', 'v': {'@id': 'urn:value', '@type': 'urn:type/\\u2028'}}, 'iri': 'urn:p/\\u2028'}  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 1219, in to_rdf\n    expanded = self.expand(input_, options)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 870, in expand\n    expanded = self._expand(active_ctx, None, document, options,\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 2302, in _expand\n    active_ctx = self._process_context(\n                 ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 3288, in _process_context\n    self._create_term_definition(rval, ctx, k, defined, options,\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 5174, in _create_term_definition\n    raise JsonLdError(\n",
+      "expectedPath": "fixtures/jsonld/to-rdf/unicode-line-separator.expected.nq",
+      "expectedComparisons": [
+        {
+          "format": "json",
+          "rawError": "Invalid line (Failed to eat <([^:]+:[^\\s\"<>]*)> at <urn:s/\u2028> <urn:p/\u2028> <urn:o/\u2028> <urn:g/\u2028> .):\n'<urn:s/\\u2028> <urn:p/\\u2028> <urn:o/\\u2028> <urn:g/\\u2028> .'",
+          "escapedTermsEqual": true
+        },
+        {
+          "format": "yaml",
+          "rawError": "Invalid line (Failed to eat <([^:]+:[^\\s\"<>]*)> at <urn:s/\u2028> <urn:p/\u2028> <urn:o/\u2028> <urn:g/\u2028> .):\n'<urn:s/\\u2028> <urn:p/\\u2028> <urn:o/\\u2028> <urn:g/\\u2028> .'",
+          "escapedTermsEqual": true
+        }
+      ]
+    },
+    {
+      "id": "unicode-ideographic-space",
+      "exports": [],
+      "native": "rejected",
+      "error": "('Could not expand input before serialization to RDF.',)\nType: jsonld.RdfError\nCause: ('Invalid JSON-LD syntax; @context @id value must be an absolute IRI, a blank node identifier, or a keyword.',)\nType: jsonld.SyntaxError\nCode: invalid IRI mapping\nDetails: {'context': {'p': 'urn:p/\\u3000', 'v': {'@id': 'urn:value', '@type': 'urn:type/\\u3000'}}, 'iri': 'urn:p/\\u3000'}  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 1219, in to_rdf\n    expanded = self.expand(input_, options)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 870, in expand\n    expanded = self._expand(active_ctx, None, document, options,\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 2302, in _expand\n    active_ctx = self._process_context(\n                 ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 3288, in _process_context\n    self._create_term_definition(rval, ctx, k, defined, options,\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 5174, in _create_term_definition\n    raise JsonLdError(\n",
+      "expectedPath": "fixtures/jsonld/to-rdf/unicode-ideographic-space.expected.nq",
+      "expectedComparisons": [
+        {
+          "format": "json",
+          "rawError": "Invalid line (Failed to eat <([^:]+:[^\\s\"<>]*)> at <urn:s/\u3000> <urn:p/\u3000> <urn:o/\u3000> <urn:g/\u3000> .):\n'<urn:s/\\u3000> <urn:p/\\u3000> <urn:o/\\u3000> <urn:g/\\u3000> .'",
+          "escapedTermsEqual": true
+        },
+        {
+          "format": "yaml",
+          "rawError": "Invalid line (Failed to eat <([^:]+:[^\\s\"<>]*)> at <urn:s/\u3000> <urn:p/\u3000> <urn:o/\u3000> <urn:g/\u3000> .):\n'<urn:s/\\u3000> <urn:p/\\u3000> <urn:o/\\u3000> <urn:g/\\u3000> .'",
+          "escapedTermsEqual": true
+        }
+      ]
+    }
+  ]
+}

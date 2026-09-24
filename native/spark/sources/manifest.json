@@ -1,0 +1,52 @@
+{
+  "repository": "https://github.com/apache/spark",
+  "tag": "v4.0.1",
+  "commit": "29434ea766b0fc3c3bf6eaadb43a8f931133649e",
+  "files": [
+    {
+      "path": "types.py",
+      "source": "python/pyspark/sql/types.py",
+      "sha256": "1566ade6dcf2d9e7c7cdd8bd1fe0f4b6026584a58e2faed9322faf77e0ab260a"
+    },
+    {
+      "path": "DataType.scala",
+      "source": "sql/api/src/main/scala/org/apache/spark/sql/types/DataType.scala",
+      "sha256": "fa0f59838759c7de8a75ef8a739687d55fc1d88f8893b2cda431f19de614d6f9"
+    },
+    {
+      "path": "StructField.scala",
+      "source": "sql/api/src/main/scala/org/apache/spark/sql/types/StructField.scala",
+      "sha256": "dc1c95e90619d92f157b0c21f41e29e26dbe31dd9c75fb60b4d377793609c32b"
+    },
+    {
+      "path": "Metadata.scala",
+      "source": "sql/api/src/main/scala/org/apache/spark/sql/types/Metadata.scala",
+      "sha256": "3177d61f97c36b7e9023afba9dca922c3e310b3a5c2f2e733c52e6c255f65f4c"
+    },
+    {
+      "path": "LICENSE",
+      "source": "LICENSE",
+      "sha256": "c2adf48f12e044a7755b0a12d6c9679b394d3e345934cd668db7c13a9eb22ff1"
+    },
+    {
+      "path": "NOTICE",
+      "source": "NOTICE",
+      "sha256": "9346e8e0a1e21cb45ac792b75ca4d3adfd858bc57dd6627e47714c761e917a0d"
+    },
+    {
+      "path": "test_types.py",
+      "source": "python/pyspark/sql/tests/test_types.py",
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    {
+      "path": "DecimalType.scala",
+      "source": "sql/api/src/main/scala/org/apache/spark/sql/types/DecimalType.scala",
+      "sha256": "949e68bbc470bb0c32499bab72b78dc1200c6998b02a26ff4a3f6bcb825e4eb8"
+    },
+    {
+      "path": "pandas-types.py",
+      "source": "python/pyspark/sql/pandas/types.py",
+      "sha256": "6fdf6959ef20e47abfac1ac707f25cf4ca6bf6d774761a4bd8074e02fd80ea7a"
+    }
+  ]
+}

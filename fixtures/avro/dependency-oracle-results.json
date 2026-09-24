@@ -1,0 +1,20 @@
+{
+  "versions": {
+    "avro": "1.12.0",
+    "fastavro": "1.12.2"
+  },
+  "results": [
+    {
+      "tool": "apache",
+      "roundTrip": true,
+      "dependencyEdit": true,
+      "staleValueRejected": true
+    },
+    {
+      "tool": "fastavro",
+      "roundTrip": true,
+      "dependencyEdit": true,
+      "staleValueRejected": true
+    }
+  ]
+}

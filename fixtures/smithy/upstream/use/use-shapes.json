@@ -1,0 +1,28 @@
+{
+    "smithy": "2.0",
+    "shapes": {
+        "smithy.example#MyList": {
+            "type": "list",
+            "member": {
+                "target": "smithy.api#String"
+            }
+        },
+        "smithy.example#Struct": {
+            "type": "structure",
+            "members": {
+                "a": {
+                    "target": "smithy.api#Integer"
+                },
+                "b": {
+                    "target": "smithy.api#Long"
+                }
+            }
+        },
+        "smithy.example#Widgets": {
+            "type": "list",
+            "member": {
+                "target": "foo.example#Widget"
+            }
+        }
+    }
+}

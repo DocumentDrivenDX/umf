@@ -931,3 +931,10 @@ serialization and independent CHECK-association evidence. Chromium verifies both
 recovery directions and scoped association behavior. Full compatibility refresh
 and binding acceptance remain next; see the
 [composition record](../../fixtures/validation/facets-sqlserver-composition-evidence.json).
+
+
+Avro facets now expose experimental public classification and authored projection
+with retained ideal/native recovery. Versioned scope, counterexamples and current
+acceptance status are recorded in the
+[Avro facet evidence](04-build/evidence/avro-facet-discovery.md). Parquet facets,
+the separate facet admission/delivery gate and Key remain required.

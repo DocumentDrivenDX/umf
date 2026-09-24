@@ -1,0 +1,83 @@
+{
+  "umf": "0.1.0",
+  "id": "1.0.0-littleendian/generated_dictionary_unsigned.stream/message/0",
+  "vocabularies": {
+    "umf.arrow.flatbuffer": {
+      "version": "0.1.0"
+    }
+  },
+  "modules": [
+    {
+      "id": "metadata",
+      "namespace": "",
+      "elements": [
+        {
+          "id": "root",
+          "extensions": {
+            "umf.arrow.flatbuffer": {
+              "profile": "arrow-flatbuffer-model",
+              "model": {
+                "rootType": "Message",
+                "value": {
+                  "version": "V5",
+                  "header": {
+                    "type": "Schema",
+                    "value": {
+                      "fields": [
+                        {
+                          "name": "f0",
+                          "nullable": true,
+                          "type": {
+                            "type": "Utf8",
+                            "value": {}
+                          },
+                          "dictionary": {
+                            "indexType": {
+                              "bitWidth": 8
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f1",
+                          "nullable": true,
+                          "type": {
+                            "type": "Utf8",
+                            "value": {}
+                          },
+                          "dictionary": {
+                            "id": "1",
+                            "indexType": {
+                              "bitWidth": 16
+                            }
+                          },
+                          "children": []
+                        },
+                        {
+                          "name": "f2",
+                          "nullable": true,
+                          "type": {
+                            "type": "Utf8",
+                            "value": {}
+                          },
+                          "dictionary": {
+                            "id": "2",
+                            "indexType": {
+                              "bitWidth": 32
+                            }
+                          },
+                          "children": []
+                        }
+                      ],
+                      "custom_metadata": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

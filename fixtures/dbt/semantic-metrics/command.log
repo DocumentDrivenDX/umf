@@ -1,0 +1,16 @@
+18:26:58  Running with dbt=1.10.0
+18:26:58  Registered adapter: duckdb=1.9.3
+18:26:59  [WARNING]: Time spines without YAML configuration are in the process of
+deprecation. Please add YAML configuration for your 'metricflow_time_spine'
+model. See documentation on MetricFlow time spines:
+https://docs.getdbt.com/docs/build/metricflow-time-spine and behavior change
+documentation:
+https://docs.getdbt.com/reference/global-configs/behavior-changes.
+18:26:59  Performance info: /home/erik/Projects/umf/.cache/dbt-semantic-metrics-target/perf_info.json
+18:26:59  [WARNING][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- MFTimespineWithoutYamlConfigurationDeprecation: 1 occurrence
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.

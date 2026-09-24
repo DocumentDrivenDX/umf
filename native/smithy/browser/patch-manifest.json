@@ -1,0 +1,73 @@
+{
+  "smithy": "1.73.0",
+  "changes": [
+    {
+      "file": "software/amazon/smithy/model/knowledge/TopDownIndex.java",
+      "originalSha256": "65fe8b92ead7bb77a8c0734b398b8ddab683dfe80c9d10f9290597195f342150",
+      "patchedSha256": "21d5aad2f00d6a3017cced1ab73c8a0fdc6c117fed789136d3daf0af2574f517"
+    },
+    {
+      "file": "software/amazon/smithy/model/loader/IdlTokenizer.java",
+      "originalSha256": "154f0ea31d2525addbc6d32ff07cfa4c22a1bcb484c948912dc079139827780f",
+      "patchedSha256": "b9743bff89d778f9116d97eff941f306a12a5032c5a25ad6da56259ed8e0bde5"
+    },
+    {
+      "file": "software/amazon/smithy/model/loader/LoaderShapeMap.java",
+      "originalSha256": "0e95fc58f1d3db7795d34ae2edbe6410fd735a7f8b49ae643d01fe144d769c68",
+      "patchedSha256": "a94e998e167246887766b1d808ce65519be52c75d8b6f53d489ecf26f72ffbde"
+    },
+    {
+      "file": "software/amazon/smithy/model/loader/ModelValidator.java",
+      "originalSha256": "6f417de95e0b954669703ceb90621b8aab798fa7fe47a0cf4ac80235567fe353",
+      "patchedSha256": "ea9456612236cabbc6c618487f511bdb36a7d509e878389ee62ad8804929effb"
+    },
+    {
+      "file": "software/amazon/smithy/model/loader/Prelude.java",
+      "originalSha256": "2362d8eed39a94e73c66a6f5e6acd6239177e96ad7a68add43558e328b903241",
+      "patchedSha256": "1f3d9aa3dcfd4f3e6180f0fafb9dd4a498ecfc7ad7bfe3a145672866ee799c6b"
+    },
+    {
+      "file": "software/amazon/smithy/model/node/DefaultNodeDeserializers.java",
+      "originalSha256": "530852a1244b70115c79e10635344b99b35f03132ae7f0b66d46903b5b190407",
+      "patchedSha256": "ba78f206acc89b1ca629291fa319879c0a6bb9775e0985260ce856897ac1db7b"
+    },
+    {
+      "file": "software/amazon/smithy/model/selector/WrappedSelector.java",
+      "originalSha256": "f8a0f48e2eadc435fd5c736c0d1182dda20a0b91a0e9b2d420345549bb0cc63c",
+      "patchedSha256": "fe4e21f5e08f3ff796b15531092a2818cab1ea75a3d663b46fbab9457270ee59"
+    },
+    {
+      "file": "software/amazon/smithy/model/validation/ValidationUtils.java",
+      "originalSha256": "4c0d4587f3a193624ff2dcf488a46765488c23df312fec995c868b7c4936085b",
+      "patchedSha256": "a3d77e38aaf2ad19db07198cd58f8c6cf08cde3cf80d73eac246d43b18e6be0b"
+    },
+    {
+      "file": "software/amazon/smithy/model/validation/validators/NoInlineDocumentSupportValidator.java",
+      "originalSha256": "168133ab5bbd7326b945d55bba9d18d353e3b108702f4a4b3421bd5edc7dca96",
+      "patchedSha256": "795ebc6038e501372e41f172430a0859263611052f139f47885de9a0bf449130"
+    },
+    {
+      "file": "software/amazon/smithy/model/validation/validators/PatternTraitValidator.java",
+      "originalSha256": "563e2aec18656e105adab6fac4f9b6cd2bdeecd571d20ebd1eef49f7c1d5a0ba",
+      "patchedSha256": "8978ecd949973f1e0c31ca610229ea348ae721427d397f676e335f0e10b3ed7c"
+    },
+    {
+      "file": "software/amazon/smithy/model/validation/validators/ShapeRecursionValidator.java",
+      "originalSha256": "c9f95fa7de5962ebb04b3451d3302808c2eb333a77fe9a6fdd0dbb4701e0f60e",
+      "patchedSha256": "dae20605e3f38ecb283a77597000236546fe6979c7ba1f79a5dcd1d979f33628"
+    },
+    {
+      "file": "software/amazon/smithy/model/validation/validators/StreamingTraitValidator.java",
+      "originalSha256": "57970d9e94b48776d6eee2dcb5b0ae350ceb8a45ae7b1757b670d0280d70eb06",
+      "patchedSha256": "3f851b3e71767ba8253f0626267e1403fded5ca0acb5811b82795449ae90dc8b"
+    },
+    {
+      "artifact": "smithy-utils",
+      "file": "software/amazon/smithy/utils/SimpleParser.java",
+      "originalSha256": "5a3dd920e8b442847bee41d1efea696aed0111c80a46411ee72e730491a54ba0",
+      "patchedSha256": "0d6f402b84da6f1afa445b11b726f3539771e54a65d33571f64896bb053b2edf"
+    }
+  ],
+  "preludeSha256": "df7ef323c2bf7bf107bacb0e3438d7c862f36bce1beab3a9b9a7242db1fab0c8",
+  "remainingUnsupported": "Generic superclass reflection throws explicitly; no validation is disabled"
+}

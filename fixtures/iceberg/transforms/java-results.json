@@ -1,0 +1,681 @@
+[ {
+  "sourceType" : "boolean",
+  "transform" : "identity",
+  "nativeCompatible" : true,
+  "nativeResultType" : "boolean"
+}, {
+  "sourceType" : "boolean",
+  "transform" : "void",
+  "nativeCompatible" : true,
+  "nativeResultType" : "boolean"
+}, {
+  "sourceType" : "boolean",
+  "transform" : "bucket[16]",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Cannot bucket by type: boolean"
+}, {
+  "sourceType" : "boolean",
+  "transform" : "truncate[4]",
+  "nativeCompatible" : false,
+  "nativeError" : "UnsupportedOperationException: Cannot truncate type: boolean"
+}, {
+  "sourceType" : "boolean",
+  "transform" : "year",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: boolean"
+}, {
+  "sourceType" : "boolean",
+  "transform" : "month",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: boolean"
+}, {
+  "sourceType" : "boolean",
+  "transform" : "day",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: boolean"
+}, {
+  "sourceType" : "boolean",
+  "transform" : "hour",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: boolean"
+}, {
+  "sourceType" : "int",
+  "transform" : "identity",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "int",
+  "transform" : "void",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "int",
+  "transform" : "bucket[16]",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "int",
+  "transform" : "truncate[4]",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "int",
+  "transform" : "year",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: int"
+}, {
+  "sourceType" : "int",
+  "transform" : "month",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: int"
+}, {
+  "sourceType" : "int",
+  "transform" : "day",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: int"
+}, {
+  "sourceType" : "int",
+  "transform" : "hour",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: int"
+}, {
+  "sourceType" : "long",
+  "transform" : "identity",
+  "nativeCompatible" : true,
+  "nativeResultType" : "long"
+}, {
+  "sourceType" : "long",
+  "transform" : "void",
+  "nativeCompatible" : true,
+  "nativeResultType" : "long"
+}, {
+  "sourceType" : "long",
+  "transform" : "bucket[16]",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "long",
+  "transform" : "truncate[4]",
+  "nativeCompatible" : true,
+  "nativeResultType" : "long"
+}, {
+  "sourceType" : "long",
+  "transform" : "year",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: long"
+}, {
+  "sourceType" : "long",
+  "transform" : "month",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: long"
+}, {
+  "sourceType" : "long",
+  "transform" : "day",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: long"
+}, {
+  "sourceType" : "long",
+  "transform" : "hour",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: long"
+}, {
+  "sourceType" : "float",
+  "transform" : "identity",
+  "nativeCompatible" : true,
+  "nativeResultType" : "float"
+}, {
+  "sourceType" : "float",
+  "transform" : "void",
+  "nativeCompatible" : true,
+  "nativeResultType" : "float"
+}, {
+  "sourceType" : "float",
+  "transform" : "bucket[16]",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Cannot bucket by type: float"
+}, {
+  "sourceType" : "float",
+  "transform" : "truncate[4]",
+  "nativeCompatible" : false,
+  "nativeError" : "UnsupportedOperationException: Cannot truncate type: float"
+}, {
+  "sourceType" : "float",
+  "transform" : "year",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: float"
+}, {
+  "sourceType" : "float",
+  "transform" : "month",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: float"
+}, {
+  "sourceType" : "float",
+  "transform" : "day",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: float"
+}, {
+  "sourceType" : "float",
+  "transform" : "hour",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: float"
+}, {
+  "sourceType" : "double",
+  "transform" : "identity",
+  "nativeCompatible" : true,
+  "nativeResultType" : "double"
+}, {
+  "sourceType" : "double",
+  "transform" : "void",
+  "nativeCompatible" : true,
+  "nativeResultType" : "double"
+}, {
+  "sourceType" : "double",
+  "transform" : "bucket[16]",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Cannot bucket by type: double"
+}, {
+  "sourceType" : "double",
+  "transform" : "truncate[4]",
+  "nativeCompatible" : false,
+  "nativeError" : "UnsupportedOperationException: Cannot truncate type: double"
+}, {
+  "sourceType" : "double",
+  "transform" : "year",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: double"
+}, {
+  "sourceType" : "double",
+  "transform" : "month",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: double"
+}, {
+  "sourceType" : "double",
+  "transform" : "day",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: double"
+}, {
+  "sourceType" : "double",
+  "transform" : "hour",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: double"
+}, {
+  "sourceType" : "decimal(12, 2)",
+  "transform" : "identity",
+  "nativeCompatible" : true,
+  "nativeResultType" : "decimal(12, 2)"
+}, {
+  "sourceType" : "decimal(12, 2)",
+  "transform" : "void",
+  "nativeCompatible" : true,
+  "nativeResultType" : "decimal(12, 2)"
+}, {
+  "sourceType" : "decimal(12, 2)",
+  "transform" : "bucket[16]",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "decimal(12, 2)",
+  "transform" : "truncate[4]",
+  "nativeCompatible" : true,
+  "nativeResultType" : "decimal(12, 2)"
+}, {
+  "sourceType" : "decimal(12, 2)",
+  "transform" : "year",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: decimal(12, 2)"
+}, {
+  "sourceType" : "decimal(12, 2)",
+  "transform" : "month",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: decimal(12, 2)"
+}, {
+  "sourceType" : "decimal(12, 2)",
+  "transform" : "day",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: decimal(12, 2)"
+}, {
+  "sourceType" : "decimal(12, 2)",
+  "transform" : "hour",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: decimal(12, 2)"
+}, {
+  "sourceType" : "date",
+  "transform" : "identity",
+  "nativeCompatible" : true,
+  "nativeResultType" : "date"
+}, {
+  "sourceType" : "date",
+  "transform" : "void",
+  "nativeCompatible" : true,
+  "nativeResultType" : "date"
+}, {
+  "sourceType" : "date",
+  "transform" : "bucket[16]",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "date",
+  "transform" : "truncate[4]",
+  "nativeCompatible" : false,
+  "nativeError" : "UnsupportedOperationException: Cannot truncate type: date"
+}, {
+  "sourceType" : "date",
+  "transform" : "year",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "date",
+  "transform" : "month",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "date",
+  "transform" : "day",
+  "nativeCompatible" : true,
+  "nativeResultType" : "date"
+}, {
+  "sourceType" : "date",
+  "transform" : "hour",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: date"
+}, {
+  "sourceType" : "time",
+  "transform" : "identity",
+  "nativeCompatible" : true,
+  "nativeResultType" : "time"
+}, {
+  "sourceType" : "time",
+  "transform" : "void",
+  "nativeCompatible" : true,
+  "nativeResultType" : "time"
+}, {
+  "sourceType" : "time",
+  "transform" : "bucket[16]",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "time",
+  "transform" : "truncate[4]",
+  "nativeCompatible" : false,
+  "nativeError" : "UnsupportedOperationException: Cannot truncate type: time"
+}, {
+  "sourceType" : "time",
+  "transform" : "year",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: time"
+}, {
+  "sourceType" : "time",
+  "transform" : "month",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: time"
+}, {
+  "sourceType" : "time",
+  "transform" : "day",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: time"
+}, {
+  "sourceType" : "time",
+  "transform" : "hour",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: time"
+}, {
+  "sourceType" : "timestamp",
+  "transform" : "identity",
+  "nativeCompatible" : true,
+  "nativeResultType" : "timestamp"
+}, {
+  "sourceType" : "timestamp",
+  "transform" : "void",
+  "nativeCompatible" : true,
+  "nativeResultType" : "timestamp"
+}, {
+  "sourceType" : "timestamp",
+  "transform" : "bucket[16]",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "timestamp",
+  "transform" : "truncate[4]",
+  "nativeCompatible" : false,
+  "nativeError" : "UnsupportedOperationException: Cannot truncate type: timestamp"
+}, {
+  "sourceType" : "timestamp",
+  "transform" : "year",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "timestamp",
+  "transform" : "month",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "timestamp",
+  "transform" : "day",
+  "nativeCompatible" : true,
+  "nativeResultType" : "date"
+}, {
+  "sourceType" : "timestamp",
+  "transform" : "hour",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "timestamptz",
+  "transform" : "identity",
+  "nativeCompatible" : true,
+  "nativeResultType" : "timestamptz"
+}, {
+  "sourceType" : "timestamptz",
+  "transform" : "void",
+  "nativeCompatible" : true,
+  "nativeResultType" : "timestamptz"
+}, {
+  "sourceType" : "timestamptz",
+  "transform" : "bucket[16]",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "timestamptz",
+  "transform" : "truncate[4]",
+  "nativeCompatible" : false,
+  "nativeError" : "UnsupportedOperationException: Cannot truncate type: timestamptz"
+}, {
+  "sourceType" : "timestamptz",
+  "transform" : "year",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "timestamptz",
+  "transform" : "month",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "timestamptz",
+  "transform" : "day",
+  "nativeCompatible" : true,
+  "nativeResultType" : "date"
+}, {
+  "sourceType" : "timestamptz",
+  "transform" : "hour",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "timestamp_ns",
+  "transform" : "identity",
+  "nativeCompatible" : true,
+  "nativeResultType" : "timestamp_ns"
+}, {
+  "sourceType" : "timestamp_ns",
+  "transform" : "void",
+  "nativeCompatible" : true,
+  "nativeResultType" : "timestamp_ns"
+}, {
+  "sourceType" : "timestamp_ns",
+  "transform" : "bucket[16]",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "timestamp_ns",
+  "transform" : "truncate[4]",
+  "nativeCompatible" : false,
+  "nativeError" : "UnsupportedOperationException: Cannot truncate type: timestamp_ns"
+}, {
+  "sourceType" : "timestamp_ns",
+  "transform" : "year",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "timestamp_ns",
+  "transform" : "month",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "timestamp_ns",
+  "transform" : "day",
+  "nativeCompatible" : true,
+  "nativeResultType" : "date"
+}, {
+  "sourceType" : "timestamp_ns",
+  "transform" : "hour",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "timestamptz_ns",
+  "transform" : "identity",
+  "nativeCompatible" : true,
+  "nativeResultType" : "timestamptz_ns"
+}, {
+  "sourceType" : "timestamptz_ns",
+  "transform" : "void",
+  "nativeCompatible" : true,
+  "nativeResultType" : "timestamptz_ns"
+}, {
+  "sourceType" : "timestamptz_ns",
+  "transform" : "bucket[16]",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "timestamptz_ns",
+  "transform" : "truncate[4]",
+  "nativeCompatible" : false,
+  "nativeError" : "UnsupportedOperationException: Cannot truncate type: timestamptz_ns"
+}, {
+  "sourceType" : "timestamptz_ns",
+  "transform" : "year",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "timestamptz_ns",
+  "transform" : "month",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "timestamptz_ns",
+  "transform" : "day",
+  "nativeCompatible" : true,
+  "nativeResultType" : "date"
+}, {
+  "sourceType" : "timestamptz_ns",
+  "transform" : "hour",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "string",
+  "transform" : "identity",
+  "nativeCompatible" : true,
+  "nativeResultType" : "string"
+}, {
+  "sourceType" : "string",
+  "transform" : "void",
+  "nativeCompatible" : true,
+  "nativeResultType" : "string"
+}, {
+  "sourceType" : "string",
+  "transform" : "bucket[16]",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "string",
+  "transform" : "truncate[4]",
+  "nativeCompatible" : true,
+  "nativeResultType" : "string"
+}, {
+  "sourceType" : "string",
+  "transform" : "year",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: string"
+}, {
+  "sourceType" : "string",
+  "transform" : "month",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: string"
+}, {
+  "sourceType" : "string",
+  "transform" : "day",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: string"
+}, {
+  "sourceType" : "string",
+  "transform" : "hour",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: string"
+}, {
+  "sourceType" : "uuid",
+  "transform" : "identity",
+  "nativeCompatible" : true,
+  "nativeResultType" : "uuid"
+}, {
+  "sourceType" : "uuid",
+  "transform" : "void",
+  "nativeCompatible" : true,
+  "nativeResultType" : "uuid"
+}, {
+  "sourceType" : "uuid",
+  "transform" : "bucket[16]",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "uuid",
+  "transform" : "truncate[4]",
+  "nativeCompatible" : false,
+  "nativeError" : "UnsupportedOperationException: Cannot truncate type: uuid"
+}, {
+  "sourceType" : "uuid",
+  "transform" : "year",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: uuid"
+}, {
+  "sourceType" : "uuid",
+  "transform" : "month",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: uuid"
+}, {
+  "sourceType" : "uuid",
+  "transform" : "day",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: uuid"
+}, {
+  "sourceType" : "uuid",
+  "transform" : "hour",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: uuid"
+}, {
+  "sourceType" : "fixed[8]",
+  "transform" : "identity",
+  "nativeCompatible" : true,
+  "nativeResultType" : "fixed[8]"
+}, {
+  "sourceType" : "fixed[8]",
+  "transform" : "void",
+  "nativeCompatible" : true,
+  "nativeResultType" : "fixed[8]"
+}, {
+  "sourceType" : "fixed[8]",
+  "transform" : "bucket[16]",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "fixed[8]",
+  "transform" : "truncate[4]",
+  "nativeCompatible" : false,
+  "nativeError" : "UnsupportedOperationException: Cannot truncate type: fixed[8]"
+}, {
+  "sourceType" : "fixed[8]",
+  "transform" : "year",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: fixed[8]"
+}, {
+  "sourceType" : "fixed[8]",
+  "transform" : "month",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: fixed[8]"
+}, {
+  "sourceType" : "fixed[8]",
+  "transform" : "day",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: fixed[8]"
+}, {
+  "sourceType" : "fixed[8]",
+  "transform" : "hour",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: fixed[8]"
+}, {
+  "sourceType" : "binary",
+  "transform" : "identity",
+  "nativeCompatible" : true,
+  "nativeResultType" : "binary"
+}, {
+  "sourceType" : "binary",
+  "transform" : "void",
+  "nativeCompatible" : true,
+  "nativeResultType" : "binary"
+}, {
+  "sourceType" : "binary",
+  "transform" : "bucket[16]",
+  "nativeCompatible" : true,
+  "nativeResultType" : "int"
+}, {
+  "sourceType" : "binary",
+  "transform" : "truncate[4]",
+  "nativeCompatible" : true,
+  "nativeResultType" : "binary"
+}, {
+  "sourceType" : "binary",
+  "transform" : "year",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: binary"
+}, {
+  "sourceType" : "binary",
+  "transform" : "month",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: binary"
+}, {
+  "sourceType" : "binary",
+  "transform" : "day",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: binary"
+}, {
+  "sourceType" : "binary",
+  "transform" : "hour",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: binary"
+}, {
+  "sourceType" : "variant",
+  "transform" : "identity",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type for identity: variant"
+}, {
+  "sourceType" : "variant",
+  "transform" : "void",
+  "nativeCompatible" : true,
+  "nativeResultType" : "variant"
+}, {
+  "sourceType" : "variant",
+  "transform" : "bucket[16]",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Cannot bucket by type: variant"
+}, {
+  "sourceType" : "variant",
+  "transform" : "truncate[4]",
+  "nativeCompatible" : false,
+  "nativeError" : "UnsupportedOperationException: Cannot truncate type: variant"
+}, {
+  "sourceType" : "variant",
+  "transform" : "year",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: variant"
+}, {
+  "sourceType" : "variant",
+  "transform" : "month",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: variant"
+}, {
+  "sourceType" : "variant",
+  "transform" : "day",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: variant"
+}, {
+  "sourceType" : "variant",
+  "transform" : "hour",
+  "nativeCompatible" : false,
+  "nativeError" : "IllegalArgumentException: Unsupported type: variant"
+} ]

@@ -1,0 +1,1487 @@
+{
+  "commit": "9ff285c88565f0f6abc855918c6a342e70e4909c",
+  "cases": 182,
+  "renamed": 179,
+  "results": [
+    {
+      "path": "0.14.1/generated_datetime.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "0.14.1/generated_datetime.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "0.14.1/generated_decimal.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "mismatch",
+      "renameStatus": "blocked",
+      "reason": "Complete known framing and matching footer declarations are required",
+      "diagnostics": [
+        {
+          "code": "ARROW_IPC_FOOTER_VERSION",
+          "path": "/footer/version",
+          "message": "Footer and schema-message metadata versions differ",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "0.14.1/generated_decimal.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "0.14.1/generated_dictionary.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "0.14.1/generated_dictionary.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "0.14.1/generated_interval.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "0.14.1/generated_interval.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "0.14.1/generated_map.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "0.14.1/generated_map.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "0.14.1/generated_nested.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "0.14.1/generated_nested.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "0.14.1/generated_primitive.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "0.14.1/generated_primitive.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "0.14.1/generated_primitive_no_batches.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "mismatch",
+      "renameStatus": "blocked",
+      "reason": "Complete known framing and matching footer declarations are required",
+      "diagnostics": [
+        {
+          "code": "ARROW_IPC_FOOTER_VERSION",
+          "path": "/footer/version",
+          "message": "Footer and schema-message metadata versions differ",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "0.14.1/generated_primitive_no_batches.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "0.14.1/generated_primitive_zerolength.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "mismatch",
+      "renameStatus": "blocked",
+      "reason": "Complete known framing and matching footer declarations are required",
+      "diagnostics": [
+        {
+          "code": "ARROW_IPC_FOOTER_VERSION",
+          "path": "/footer/version",
+          "message": "Footer and schema-message metadata versions differ",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "path": "0.14.1/generated_primitive_zerolength.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "0.17.1/generated_union.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "0.17.1/generated_union.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_custom_metadata.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_custom_metadata.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_datetime.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_datetime.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_decimal.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_decimal.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_decimal256.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_decimal256.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_dictionary.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_dictionary.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_dictionary_unsigned.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_dictionary_unsigned.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_duplicate_fieldnames.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_duplicate_fieldnames.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_extension.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_extension.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_interval.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_interval.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_map.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_map.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_map_non_canonical.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_map_non_canonical.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_nested.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_nested.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_nested_dictionary.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_nested_dictionary.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_nested_large_offsets.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_nested_large_offsets.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_null.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_null.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_null_trivial.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_null_trivial.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive_large_offsets.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive_large_offsets.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive_no_batches.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive_no_batches.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive_zerolength.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive_zerolength.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_recursive_nested.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_recursive_nested.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_union.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-bigendian/generated_union.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_custom_metadata.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_custom_metadata.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_datetime.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_datetime.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_decimal.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_decimal.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_decimal256.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_decimal256.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_dictionary.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_dictionary.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_dictionary_unsigned.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_dictionary_unsigned.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_duplicate_fieldnames.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_duplicate_fieldnames.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_extension.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_extension.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_interval.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_interval.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_map.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_map.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_map_non_canonical.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_map_non_canonical.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_nested.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_nested.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_nested_dictionary.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_nested_dictionary.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_nested_large_offsets.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_nested_large_offsets.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_null.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_null.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_null_trivial.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_null_trivial.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive_large_offsets.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive_large_offsets.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive_no_batches.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive_no_batches.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive_zerolength.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive_zerolength.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_recursive_nested.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_recursive_nested.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_union.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "1.0.0-littleendian/generated_union.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "2.0.0-compression/generated_lz4.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "2.0.0-compression/generated_lz4.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "2.0.0-compression/generated_uncompressible_lz4.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "2.0.0-compression/generated_uncompressible_lz4.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "2.0.0-compression/generated_uncompressible_zstd.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "2.0.0-compression/generated_uncompressible_zstd.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "2.0.0-compression/generated_zstd.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "2.0.0-compression/generated_zstd.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "4.0.0-shareddict/generated_shared_dict.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "4.0.0-shareddict/generated_shared_dict.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary_no_batches.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary_no_batches.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary_view.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary_view.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary_zerolength.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary_zerolength.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_custom_metadata.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_custom_metadata.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_datetime.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_datetime.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal256.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal256.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal32.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal32.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal64.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal64.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_dictionary.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_dictionary.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_dictionary_unsigned.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_dictionary_unsigned.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_duplicate_fieldnames.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_duplicate_fieldnames.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_duration.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_duration.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_extension.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_extension.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_interval.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_interval.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_interval_mdn.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_interval_mdn.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_large_binary.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_large_binary.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_list_view.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_list_view.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_map.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_map.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_map_non_canonical.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_map_non_canonical.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_nested.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_nested.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_nested_dictionary.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_nested_dictionary.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_nested_large_offsets.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_nested_large_offsets.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_null.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_null.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_null_trivial.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_null_trivial.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_primitive.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_primitive.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_primitive_no_batches.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_primitive_no_batches.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_primitive_zerolength.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_primitive_zerolength.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_recursive_nested.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_recursive_nested.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_run_end_encoded.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_run_end_encoded.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_union.arrow_file",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "matched",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    },
+    {
+      "path": "cpp-21.0.0/generated_union.stream",
+      "capture": "exact-json-yaml",
+      "framed": true,
+      "footerChecks": "not-applicable",
+      "renameStatus": "renamed",
+      "diagnostics": []
+    }
+  ]
+}

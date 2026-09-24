@@ -1,0 +1,37 @@
+{
+  "rootType": "Schema",
+  "value": {
+    "endianness": "Big",
+    "fields": [
+      {
+        "name": "value",
+        "type": {
+          "type": "Utf8",
+          "value": {}
+        },
+        "dictionary": {
+          "id": "9223372036854775807",
+          "indexType": {
+            "bitWidth": 32,
+            "is_signed": true
+          },
+          "isOrdered": true
+        }
+      }
+    ],
+    "custom_metadata": [
+      {
+        "key": "duplicate",
+        "value": "first"
+      },
+      {
+        "key": "duplicate",
+        "value": "second"
+      }
+    ],
+    "features": [
+      "DICTIONARY_REPLACEMENT",
+      "COMPRESSED_BODY"
+    ]
+  }
+}

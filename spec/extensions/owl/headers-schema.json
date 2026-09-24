@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:owl:headers:0.1.0",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "node",
+      "versionIRIs",
+      "imports"
+    ],
+    "properties": {
+      "node": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "iri"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "value"
+            ],
+            "additionalProperties": true
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "blank"
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "kind",
+              "value"
+            ],
+            "additionalProperties": true
+          }
+        ]
+      },
+      "versionIRIs": {
+        "type": "array",
+        "items": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "iri"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "kind",
+                "value"
+              ],
+              "additionalProperties": true
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "blank"
+                },
+                "value": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "kind",
+                "value"
+              ],
+              "additionalProperties": true
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "literal"
+                },
+                "value": {
+                  "type": "string"
+                },
+                "datatype": {
+                  "type": "string"
+                },
+                "language": {
+                  "type": "string",
+                  "pattern": "^[a-z]+(?:-[a-z0-9]+)*$"
+                }
+              },
+              "required": [
+                "kind",
+                "value",
+                "datatype"
+              ],
+              "additionalProperties": true
+            }
+          ]
+        }
+      },
+      "imports": {
+        "type": "array",
+        "items": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "iri"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "kind",
+                "value"
+              ],
+              "additionalProperties": true
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "blank"
+                },
+                "value": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "kind",
+                "value"
+              ],
+              "additionalProperties": true
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "literal"
+                },
+                "value": {
+                  "type": "string"
+                },
+                "datatype": {
+                  "type": "string"
+                },
+                "language": {
+                  "type": "string",
+                  "pattern": "^[a-z]+(?:-[a-z0-9]+)*$"
+                }
+              },
+              "required": [
+                "kind",
+                "value",
+                "datatype"
+              ],
+              "additionalProperties": true
+            }
+          ]
+        }
+      }
+    },
+    "additionalProperties": false
+  }
+}

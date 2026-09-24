@@ -1,0 +1,13 @@
+import {chromium} from 'playwright';
+const base='fixtures/parquet/transforms/',report=await Bun.file(base+'results.json').json(),cases=[];for(const c of report.results)cases.push({...c,bytes:Array.from(new Uint8Array(await Bun.file(c.path).arrayBuffer())),wire:Array.from(new Uint8Array(await Bun.file(base+'wire/'+c.id+'.compact').arrayBuffer()))});
+const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/parquet-transform-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
+const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/parquet-transform-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Parquet transforms</title>');}});let browser;
+try{browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();await page.goto('http://127.0.0.1:'+server.port);const result=await page.evaluate(async({cases,additions})=>{
+ const path='/umf.js',u=await import(path);let wireFiles=0,transformed=0,blocked=0;
+ for(const c of cases){const source=u.captureParquet(Uint8Array.from(c.bytes),{id:c.id}),wire=u.encodeParquetWire(u.decodeParquetFooter(source).value);if(JSON.stringify(Array.from(wire))!==JSON.stringify(c.wire))throw Error('Wire mismatch '+c.id);wireFiles++;if(c.wireOnly)continue;
+  const r=u.appendParquetKeyValueMetadata(source,additions);if(r.status!=='transformed')throw Error('Edit rejected '+c.id);const bytes=u.exportParquetCapture(r.output),hash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)),b=>b.toString(16).padStart(2,'0')).join('');if(hash!==c.outputSha256||r.unchangedPrefixBytes!==c.unchangedPrefixBytes)throw Error('Edited output mismatch');
+  if(JSON.stringify(Array.from(u.exportParquetCapture(source)))!==JSON.stringify(c.bytes))throw Error('Source mutated');
+  if(u.appendParquetKeyValueMetadata(r.output,additions).status!=='blocked')throw Error('Duplicate replacement accepted');blocked++;transformed++;
+ }
+ return {wireFiles,transformed,blocked,nodeGlobalsAbsent:!('process' in globalThis)&&!('Buffer' in globalThis)};
+ },{cases,additions:report.additions});if(result.wireFiles!==40||result.transformed!==39||result.blocked!==39||!result.nodeGlobalsAbsent)throw Error('Browser baseline changed');await Bun.write(base+'browser-results.json',JSON.stringify({...result,browser:browser.version()},null,2)+'\n');console.log(result);}finally{await browser?.close();server.stop(true);}

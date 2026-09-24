@@ -1,0 +1,45 @@
+{
+  "runtime": "dbt Core 1.10.0 FreshnessExecutionResultArtifact; jsonschema 4.25.1 without format checker",
+  "results": [
+    {
+      "id": "sources",
+      "format": "json",
+      "schemaValid": true,
+      "nativeParserEqual": true,
+      "onlyDiagnosticChanged": true,
+      "roundtripSha256": "b122f0e58cdbb3bb114a21d6bb24964575e4a0309bccc125800b8e7259c246ff",
+      "editedSha256": "1898bbd321624b1a3cab77e5acaf8b9f0d46a5614487dac7c78f5e81b84f67f1"
+    },
+    {
+      "id": "sources",
+      "format": "yaml",
+      "schemaValid": true,
+      "nativeParserEqual": true,
+      "onlyDiagnosticChanged": true,
+      "roundtripSha256": "b122f0e58cdbb3bb114a21d6bb24964575e4a0309bccc125800b8e7259c246ff",
+      "editedSha256": "1898bbd321624b1a3cab77e5acaf8b9f0d46a5614487dac7c78f5e81b84f67f1"
+    },
+    {
+      "id": "runner-results",
+      "format": "json",
+      "schemaValid": true,
+      "nativeParserEqual": true,
+      "onlyDiagnosticChanged": true,
+      "roundtripSha256": "1cfdc558c5ad58a256bb4fd9ff3f5b45e51ccbe75dd1cf1e301e9b7d6a0403b2",
+      "editedSha256": "fefb3eaf4a491cde3c2ac46eeb487fa7fd8537cd147324ddccfd99139ae3ef49"
+    },
+    {
+      "id": "runner-results",
+      "format": "yaml",
+      "schemaValid": true,
+      "nativeParserEqual": true,
+      "onlyDiagnosticChanged": true,
+      "roundtripSha256": "1cfdc558c5ad58a256bb4fd9ff3f5b45e51ccbe75dd1cf1e301e9b7d6a0403b2",
+      "editedSha256": "fefb3eaf4a491cde3c2ac46eeb487fa7fd8537cd147324ddccfd99139ae3ef49"
+    }
+  ],
+  "nativeEmitterOmission": [
+    "source.umf_freshness.synthetic.broken"
+  ],
+  "limits": "Runtime reconstruction is not the emitted sources.json; no automatic freshness classification in UMF"
+}

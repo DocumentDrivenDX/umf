@@ -1,0 +1,361 @@
+[
+  {
+    "name": "type",
+    "native": {
+      "openapi": "3.1.2",
+      "info": {
+        "title": "Schemas",
+        "version": "1"
+      },
+      "components": {
+        "schemas": {
+          "Value": {
+            "type": "wrong"
+          }
+        }
+      }
+    },
+    "accepted": false,
+    "diagnostics": []
+  },
+  {
+    "name": "bound",
+    "native": {
+      "openapi": "3.1.2",
+      "info": {
+        "title": "Schemas",
+        "version": "1"
+      },
+      "components": {
+        "schemas": {
+          "Value": {
+            "minimum": "wrong"
+          }
+        }
+      }
+    },
+    "accepted": false,
+    "diagnostics": []
+  },
+  {
+    "name": "nested",
+    "native": {
+      "openapi": "3.1.2",
+      "info": {
+        "title": "Schemas",
+        "version": "1"
+      },
+      "components": {
+        "schemas": {
+          "Value": {
+            "properties": {
+              "value": {
+                "type": "wrong"
+              }
+            }
+          }
+        }
+      }
+    },
+    "accepted": false,
+    "diagnostics": []
+  },
+  {
+    "name": "discriminator",
+    "native": {
+      "openapi": "3.1.2",
+      "info": {
+        "title": "Schemas",
+        "version": "1"
+      },
+      "components": {
+        "schemas": {
+          "Value": {
+            "discriminator": {
+              "propertyName": 7
+            }
+          }
+        }
+      }
+    },
+    "accepted": false,
+    "diagnostics": []
+  },
+  {
+    "name": "xml",
+    "native": {
+      "openapi": "3.1.2",
+      "info": {
+        "title": "Schemas",
+        "version": "1"
+      },
+      "components": {
+        "schemas": {
+          "Value": {
+            "xml": {
+              "wrapped": "wrong"
+            }
+          }
+        }
+      }
+    },
+    "accepted": false,
+    "diagnostics": []
+  },
+  {
+    "name": "examples",
+    "native": {
+      "openapi": "3.1.2",
+      "info": {
+        "title": "Schemas",
+        "version": "1"
+      },
+      "components": {
+        "schemas": {
+          "Value": {
+            "type": "object",
+            "examples": [
+              {
+                "type": "wrong",
+                "schema": {
+                  "type": "wrong"
+                }
+              }
+            ],
+            "default": {
+              "type": "wrong"
+            }
+          }
+        }
+      }
+    },
+    "accepted": true,
+    "diagnostics": [
+      {
+        "code": "OPENAPI_VALIDATION_LIMIT",
+        "path": "/root",
+        "message": "Pinned official-schema checks do not prove reference resolution, URI formats, security execution, parameter serialization or all normative prose rules; known 3.1/3.2 embedded dialect keyword syntax is checked, while instances, unknown dialects and referenced resource contexts remain incomplete; legacy schemas check their declared Schema Object subset; extension content remains source-owned",
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "name": "nested-custom",
+    "native": {
+      "openapi": "3.1.2",
+      "info": {
+        "title": "Schemas",
+        "version": "1"
+      },
+      "components": {
+        "schemas": {
+          "Value": {
+            "properties": {
+              "value": {
+                "$schema": "https://unknown.test/dialect",
+                "type": "wrong"
+              }
+            }
+          }
+        }
+      }
+    },
+    "accepted": true,
+    "diagnostics": [
+      {
+        "code": "OPENAPI_SCHEMA_DIALECT",
+        "path": "/components/schemas/Value/properties/value",
+        "severity": "warning",
+        "message": "Unknown dialect retained without applying another dialect: https://unknown.test/dialect"
+      },
+      {
+        "code": "OPENAPI_VALIDATION_LIMIT",
+        "path": "/root",
+        "message": "Pinned official-schema checks do not prove reference resolution, URI formats, security execution, parameter serialization or all normative prose rules; known 3.1/3.2 embedded dialect keyword syntax is checked, while instances, unknown dialects and referenced resource contexts remain incomplete; legacy schemas check their declared Schema Object subset; extension content remains source-owned",
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "name": "custom-default",
+    "native": {
+      "openapi": "3.1.2",
+      "info": {
+        "title": "Schemas",
+        "version": "1"
+      },
+      "components": {
+        "schemas": {
+          "Value": {
+            "type": "wrong"
+          }
+        }
+      },
+      "jsonSchemaDialect": "https://unknown.test/dialect"
+    },
+    "accepted": true,
+    "diagnostics": [
+      {
+        "code": "OPENAPI_SCHEMA_DIALECT",
+        "path": "/components/schemas/Value",
+        "severity": "warning",
+        "message": "Unknown dialect retained without applying another dialect: https://unknown.test/dialect"
+      },
+      {
+        "code": "OPENAPI_VALIDATION_LIMIT",
+        "path": "/root",
+        "message": "Pinned official-schema checks do not prove reference resolution, URI formats, security execution, parameter serialization or all normative prose rules; known 3.1/3.2 embedded dialect keyword syntax is checked, while instances, unknown dialects and referenced resource contexts remain incomplete; legacy schemas check their declared Schema Object subset; extension content remains source-owned",
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "name": "explicit-standard",
+    "native": {
+      "openapi": "3.1.2",
+      "info": {
+        "title": "Schemas",
+        "version": "1"
+      },
+      "components": {
+        "schemas": {
+          "Value": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "wrong"
+          }
+        }
+      },
+      "jsonSchemaDialect": "https://unknown.test/dialect"
+    },
+    "accepted": false,
+    "diagnostics": []
+  },
+  {
+    "name": "dependency-custom",
+    "native": {
+      "openapi": "3.1.2",
+      "info": {
+        "title": "Schemas",
+        "version": "1"
+      },
+      "components": {
+        "schemas": {
+          "Value": {
+            "dependencies": {
+              "value": {
+                "$schema": "https://unknown.test/dialect",
+                "type": "wrong"
+              }
+            }
+          }
+        }
+      }
+    },
+    "accepted": true,
+    "diagnostics": [
+      {
+        "code": "OPENAPI_SCHEMA_DIALECT",
+        "path": "/components/schemas/Value/dependencies/value",
+        "severity": "warning",
+        "message": "Unknown dialect retained without applying another dialect: https://unknown.test/dialect"
+      },
+      {
+        "code": "OPENAPI_VALIDATION_LIMIT",
+        "path": "/root",
+        "message": "Pinned official-schema checks do not prove reference resolution, URI formats, security execution, parameter serialization or all normative prose rules; known 3.1/3.2 embedded dialect keyword syntax is checked, while instances, unknown dialects and referenced resource contexts remain incomplete; legacy schemas check their declared Schema Object subset; extension content remains source-owned",
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "name": "oneof",
+    "native": {
+      "openapi": "3.1.2",
+      "info": {
+        "title": "Schemas",
+        "version": "1"
+      },
+      "components": {
+        "schemas": {
+          "Value": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "accepted": true,
+    "diagnostics": [
+      {
+        "code": "OPENAPI_VALIDATION_LIMIT",
+        "path": "/root",
+        "message": "Pinned official-schema checks do not prove reference resolution, URI formats, security execution, parameter serialization or all normative prose rules; known 3.1/3.2 embedded dialect keyword syntax is checked, while instances, unknown dialects and referenced resource contexts remain incomplete; legacy schemas check their declared Schema Object subset; extension content remains source-owned",
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "name": "boolean",
+    "native": {
+      "openapi": "3.1.2",
+      "info": {
+        "title": "Schemas",
+        "version": "1"
+      },
+      "components": {
+        "schemas": {
+          "Value": false
+        }
+      }
+    },
+    "accepted": true,
+    "diagnostics": [
+      {
+        "code": "OPENAPI_VALIDATION_LIMIT",
+        "path": "/root",
+        "message": "Pinned official-schema checks do not prove reference resolution, URI formats, security execution, parameter serialization or all normative prose rules; known 3.1/3.2 embedded dialect keyword syntax is checked, while instances, unknown dialects and referenced resource contexts remain incomplete; legacy schemas check their declared Schema Object subset; extension content remains source-owned",
+        "severity": "warning"
+      }
+    ]
+  },
+  {
+    "name": "data-extensions",
+    "native": {
+      "openapi": "3.1.2",
+      "info": {
+        "title": "Literal",
+        "version": "1"
+      },
+      "paths": {
+        "x-metadata": {
+          "get": {
+            "requestBody": {
+              "content": {
+                "a/b": {
+                  "schema": {
+                    "type": "wrong"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "accepted": true,
+    "diagnostics": [
+      {
+        "code": "OPENAPI_VALIDATION_LIMIT",
+        "path": "/root",
+        "message": "Pinned official-schema checks do not prove reference resolution, URI formats, security execution, parameter serialization or all normative prose rules; known 3.1/3.2 embedded dialect keyword syntax is checked, while instances, unknown dialects and referenced resource contexts remain incomplete; legacy schemas check their declared Schema Object subset; extension content remains source-owned",
+        "severity": "warning"
+      }
+    ]
+  }
+]

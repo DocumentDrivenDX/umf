@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "count": {"type": "integer", "minimum": 0, "default": 9},
+    "note": {"type": ["string", "null"]},
+    "tags": {"type": "array", "items": {"type": "string"}, "uniqueItems": true, "minItems": 1},
+    "choice": {"type": "string", "oneOf": [{"const": "A"}, {"const": "B"}]},
+    "ratio": {"type": "number"}
+  },
+  "required": ["id"],
+  "additionalProperties": false
+}

@@ -1,0 +1,20 @@
+_:Ne35867316553439685644bf9ad9196f1 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nbd8091144c3442b3937227f3d8adf040 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/node-002.test#PersonShape-address> .
+_:Ne35867316553439685644bf9ad9196f1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Ne35867316553439685644bf9ad9196f1 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/node-002.test#postalCode> .
+_:Nbd8091144c3442b3937227f3d8adf040 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/property/node-002.test#RetosAddress> .
+_:Ne35867316553439685644bf9ad9196f1 <http://www.w3.org/ns/shacl#value> "5678"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:Nbd8091144c3442b3937227f3d8adf040 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeConstraintComponent> .
+_:Nbd8091144c3442b3937227f3d8adf040 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/node-002.test#Reto> .
+_:Nc4b2f1440b394935a64c5cc45ed0bc1d <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Nbd8091144c3442b3937227f3d8adf040 <http://www.w3.org/ns/shacl#resultMessage> "Value does not conform to Shape ex:AddressShape. See details for more information." .
+_:Nbd8091144c3442b3937227f3d8adf040 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/node-002.test#address> .
+_:Nbd8091144c3442b3937227f3d8adf040 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Ne35867316553439685644bf9ad9196f1 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/node-002.test#AddressShape-postalCode> .
+_:Nbd8091144c3442b3937227f3d8adf040 <http://www.w3.org/ns/shacl#detail> _:Ne35867316553439685644bf9ad9196f1 .
+_:Nbd8091144c3442b3937227f3d8adf040 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nc4b2f1440b394935a64c5cc45ed0bc1d <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Ne35867316553439685644bf9ad9196f1 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/node-002.test#RetosAddress> .
+_:Ne35867316553439685644bf9ad9196f1 <http://www.w3.org/ns/shacl#resultMessage> "Value is not Literal with datatype xsd:string" .
+_:Ne35867316553439685644bf9ad9196f1 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:Nc4b2f1440b394935a64c5cc45ed0bc1d <http://www.w3.org/ns/shacl#result> _:Nbd8091144c3442b3937227f3d8adf040 .

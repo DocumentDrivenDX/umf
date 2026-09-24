@@ -1,0 +1,38 @@
+{
+  "image": "mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090",
+  "version": "16.0.4295.3",
+  "tables": 5,
+  "indexes": 9,
+  "nativeDdlReplay": true,
+  "emptyDatabase": true,
+  "umfRecoveries": 2,
+  "behaviors": [
+    {
+      "database": "umf_source",
+      "filteredDuplicateRejected": true,
+      "enteringFilterRejected": true,
+      "nullsOutsideFilterAccepted": true,
+      "observations": {
+        "items": 5,
+        "disabled_duplicates": 2,
+        "columnstore_rows": 2,
+        "partitions": 3
+      }
+    },
+    {
+      "database": "umf_replayed",
+      "filteredDuplicateRejected": true,
+      "enteringFilterRejected": true,
+      "nullsOutsideFilterAccepted": true,
+      "observations": {
+        "items": 5,
+        "disabled_duplicates": 2,
+        "columnstore_rows": 2,
+        "partitions": 3
+      }
+    }
+  ],
+  "querySha256": "b3ca9cb2c83de28ae69efeb6eaf27a25bac50caf9a654e2af04157e089028b33",
+  "ddlSha256": "fe17d9ce9df818b7342a4a0d6ea850caac5855a1be200e6b4c8c3c94cb3c80a9",
+  "scope": "Authored rowstore, filtered/disabled unique, covering, ordered columnstore, heap and partitioned index observations; no arbitrary DDL reconstruction or full physical catalog claim"
+}

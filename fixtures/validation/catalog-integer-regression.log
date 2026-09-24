@@ -1,0 +1,84 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/postgresql/native.test.ts:
+(pass) US-015-AC1: PostgreSQL DDL source and native AST survive UMF and native round trips [857.73ms]
+(pass) US-015-AC2: native candidate edits propagate without modifying the original source [84.95ms]
+(pass) US-015-AC3: unknown AST and representation fields cannot disappear through Protobuf or deparse [68.30ms]
+(pass) US-015-AC3: typed AST schema covers native samples, unions and known field types without stripping unknowns [35.93ms]
+(pass) US-015-AC3: typed Boolean construction repairs the wrapper without hiding raw codec loss [152.30ms]
+(pass) US-015-AC2: Boolean candidate edit uses the native false representation [78.10ms]
+
+tests/postgresql/catalog.test.ts:
+(pass) US-015-AC6: captured PostgreSQL metadata, exact unknowns and reconstruction archives survive both UMF formats [1075.39ms]
+(pass) US-015-AC6: candidate edits cannot expose stale reconstruction SQL as synchronized [905.06ms]
+(pass) US-015-AC6: ambiguity and unknown representation data are preserved and reported [281.21ms]
+(pass) US-015-AC6: unsupported minor-version evidence and conflicting capture state cannot overclaim readiness [171.14ms]
+(pass) US-015-AC7: v1 captures remain readable while v2 requires its additional native object families [278.08ms]
+(pass) US-015-AC8: dependency identities distinguish native objects and preserve copied edges [206.77ms]
+
+tests/postgresql/projection.test.ts:
+(pass) US-015-AC9: explicit PostgreSQL row encodings produce a qualified JSON Schema and quoted query [103.69ms]
+(pass) US-015-AC9: strict policy, unsafe encodings and edited metadata block projection [446.93ms]
+(pass) US-015-AC9: generated SQL quotes identifiers and keys instead of interpolating executable fragments [176.53ms]
+(pass) US-015-AC9: projection result schema distinguishes blocked results from executable results [131.24ms]
+(pass) US-015-AC9: boolean, smallint and SQL/JSON null encodings retain their distinct contracts [80.67ms]
+
+tests/postgresql/metadata.test.ts:
+(pass) CONTRACT-015 catalog identities drive core families without flattening native meaning [837.79ms]
+(pass) CONTRACT-015 legacy captures do not guess types and field metadata cannot be lost [658.91ms]
+
+tests/postgresql/avro-projection.test.ts:
+(pass) CONTRACT-034 PostgreSQL captured columns project with explicit restricted domains and native recovery [914.33ms]
+(pass) CONTRACT-034 numeric typmods are decoded without truncation or inventing unconstrained precision [1889.36ms]
+(pass) CONTRACT-034 unsupported mappings, ambiguity, stale metadata and modified captures block [3091.98ms]
+
+tests/postgresql/declarations.test.ts:
+(pass) CONTRACT-015 raw DDL exposes copied declarations without resolving search_path, LIKE or ALTER state [385.92ms]
+(pass) CONTRACT-015 DDL type inventory respects native edits, unknown type syntax, foreign tables and version guards [205.58ms]
+
+tests/postgresql/edit-preservation.test.ts:
+(pass) CONTRACT-015 candidate edits cannot erase unknown tagged representation content [2461.08ms]
+
+tests/postgresql/ddl-edits.test.ts:
+(pass) US-015-AC12 edited native DDL evidence binds current proposals and fresh catalog recovery [496.63ms]
+
+tests/postgresql/integer-tokens.test.ts:
+(pass) CONTRACT-015 exact catalog integers prevent false scalar classification through rounding [4071.24ms]
+
+tests/sqlserver/catalog.test.ts:
+(pass) CONTRACT-031 SQL Server catalog recovery retains exact native qualifiers and core families [198.89ms]
+(pass) CONTRACT-031 copied candidate edits synchronize metadata and cannot lose attachments [315.72ms]
+(pass) CONTRACT-031 malformed captures reject and future type identities remain unclassified [101.17ms]
+
+tests/sqlserver/avro-projection.test.ts:
+(pass) CONTRACT-032 all captured SQL Server fixture columns project with explicit representations and fidelity issues [245.70ms]
+(pass) CONTRACT-032 authored precision and fixed-width boundaries are enforced before projection [317.19ms]
+(pass) CONTRACT-032 unsupported precision, source state and bindings cannot masquerade as value equivalence [899.74ms]
+
+tests/sqlserver/constraints.test.ts:
+(pass) CONTRACT-031 v2 constraints retain ordering, actions, trust, disabled state and exact unknown content [151.22ms]
+(pass) CONTRACT-031 old coverage, malformed sections, duplicate observations and edits remain explicit [294.54ms]
+
+tests/sqlserver/constraint-projection.test.ts:
+(pass) CONTRACT-032 every captured SQL Server constraint has a source-addressable projection loss [602.24ms]
+(pass) CONTRACT-032 uncaptured v1 constraints never masquerade as an unconstrained table [105.56ms]
+
+tests/sqlserver/indexes.test.ts:
+(pass) CONTRACT-031 index observations preserve physical ordering, filter and enforcement state [225.75ms]
+(pass) CONTRACT-031 v3 requires observations; older, unavailable and unknown index semantics stay qualified [419.47ms]
+(pass) CONTRACT-032 index-specific losses accompany SQL Server to Avro projection [465.79ms]
+
+tests/sqlserver/ddl.test.ts:
+(pass) CONTRACT-037 native captures lower deterministically with explicit source-addressable losses [673.32ms]
+(pass) CONTRACT-037 unsupported observations never produce partial DDL; candidate edits require explicit policy [620.90ms]
+(pass) CONTRACT-037 identifiers and unknown metadata retain their boundaries [43.40ms]
+(pass) CONTRACT-037 native evidence matches current generation and records declared physical losses [255.30ms]
+(pass) CONTRACT-037 copied edits survive native DDL execution without changing original captures [1664.82ms]
+
+tests/sqlserver/integer-tokens.test.ts:
+(pass) CONTRACT-031 declared catalog integers cannot be rounded into valid native identities or qualifiers [2409.55ms]
+
+ 46 pass
+ 0 fail
+ 804 expect() calls
+Ran 46 tests across 16 files. [31.21s]

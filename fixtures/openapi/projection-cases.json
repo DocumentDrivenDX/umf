@@ -1,0 +1,826 @@
+{
+  "tree": {
+    "$id": "https://example.test/tree",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "minLength": 1
+      },
+      "children": {
+        "type": "array",
+        "items": {
+          "$ref": "#"
+        }
+      },
+      "status": {
+        "$ref": "status#state"
+      },
+      "kind": {
+        "enum": [
+          "leaf",
+          "branch"
+        ]
+      }
+    },
+    "required": [
+      "name"
+    ],
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "kind": {
+              "const": "branch"
+            }
+          },
+          "required": [
+            "kind"
+          ]
+        },
+        "then": {
+          "required": [
+            "children"
+          ]
+        }
+      }
+    ],
+    "unevaluatedProperties": false,
+    "description": "A tree",
+    "xml": {
+      "name": "tree"
+    },
+    "examples": [
+      {
+        "$ref": "literal-not-a-reference"
+      }
+    ]
+  },
+  "status": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://example.test/status",
+    "$anchor": "state",
+    "enum": [
+      "open",
+      "closed"
+    ]
+  },
+  "result": {
+    "status": "projected",
+    "source": {
+      "umf": "0.1.0",
+      "id": "source",
+      "vocabularies": {
+        "umf.openapi": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "schema",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "schema",
+              "extensions": {
+                "umf.openapi": {
+                  "profile": "openapi-json-yaml-0.1",
+                  "root": {
+                    "kind": "object",
+                    "members": {
+                      "openapi": {
+                        "kind": "string",
+                        "value": "3.1.2"
+                      },
+                      "info": {
+                        "kind": "object",
+                        "members": {
+                          "title": {
+                            "kind": "string",
+                            "value": "Projection"
+                          },
+                          "version": {
+                            "kind": "string",
+                            "value": "1"
+                          }
+                        }
+                      },
+                      "components": {
+                        "kind": "object",
+                        "members": {
+                          "schemas": {
+                            "kind": "object",
+                            "members": {
+                              "Tree": {
+                                "kind": "object",
+                                "members": {
+                                  "$id": {
+                                    "kind": "string",
+                                    "value": "https://example.test/tree"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "object"
+                                  },
+                                  "properties": {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "string"
+                                          },
+                                          "minLength": {
+                                            "kind": "number",
+                                            "value": "1"
+                                          }
+                                        }
+                                      },
+                                      "children": {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "array"
+                                          },
+                                          "items": {
+                                            "kind": "object",
+                                            "members": {
+                                              "$ref": {
+                                                "kind": "string",
+                                                "value": "#"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "status": {
+                                        "kind": "object",
+                                        "members": {
+                                          "$ref": {
+                                            "kind": "string",
+                                            "value": "status#state"
+                                          }
+                                        }
+                                      },
+                                      "kind": {
+                                        "kind": "object",
+                                        "members": {
+                                          "enum": {
+                                            "kind": "array",
+                                            "items": [
+                                              {
+                                                "kind": "string",
+                                                "value": "leaf"
+                                              },
+                                              {
+                                                "kind": "string",
+                                                "value": "branch"
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "required": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "name"
+                                      }
+                                    ]
+                                  },
+                                  "allOf": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "if": {
+                                            "kind": "object",
+                                            "members": {
+                                              "properties": {
+                                                "kind": "object",
+                                                "members": {
+                                                  "kind": {
+                                                    "kind": "object",
+                                                    "members": {
+                                                      "const": {
+                                                        "kind": "string",
+                                                        "value": "branch"
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              },
+                                              "required": {
+                                                "kind": "array",
+                                                "items": [
+                                                  {
+                                                    "kind": "string",
+                                                    "value": "kind"
+                                                  }
+                                                ]
+                                              }
+                                            }
+                                          },
+                                          "then": {
+                                            "kind": "object",
+                                            "members": {
+                                              "required": {
+                                                "kind": "array",
+                                                "items": [
+                                                  {
+                                                    "kind": "string",
+                                                    "value": "children"
+                                                  }
+                                                ]
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "unevaluatedProperties": {
+                                    "kind": "boolean",
+                                    "value": false
+                                  },
+                                  "description": {
+                                    "kind": "string",
+                                    "value": "A tree"
+                                  },
+                                  "xml": {
+                                    "kind": "object",
+                                    "members": {
+                                      "name": {
+                                        "kind": "string",
+                                        "value": "tree"
+                                      }
+                                    }
+                                  },
+                                  "examples": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "$ref": {
+                                            "kind": "string",
+                                            "value": "literal-not-a-reference"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "originalSource": "{\"openapi\":\"3.1.2\",\"info\":{\"title\":\"Projection\",\"version\":\"1\"},\"components\":{\"schemas\":{\"Tree\":{\"$id\":\"https://example.test/tree\",\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\",\"minLength\":1},\"children\":{\"type\":\"array\",\"items\":{\"$ref\":\"#\"}},\"status\":{\"$ref\":\"status#state\"},\"kind\":{\"enum\":[\"leaf\",\"branch\"]}},\"required\":[\"name\"],\"allOf\":[{\"if\":{\"properties\":{\"kind\":{\"const\":\"branch\"}},\"required\":[\"kind\"]},\"then\":{\"required\":[\"children\"]}}],\"unevaluatedProperties\":false,\"description\":\"A tree\",\"xml\":{\"name\":\"tree\"},\"examples\":[{\"$ref\":\"literal-not-a-reference\"}]}}}}",
+                  "originalFormat": "json",
+                  "baseUri": "https://example.test/api.json",
+                  "resources": [
+                    {
+                      "uri": "https://example.test/status",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "$schema": {
+                            "kind": "string",
+                            "value": "https://json-schema.org/draft/2020-12/schema"
+                          },
+                          "$id": {
+                            "kind": "string",
+                            "value": "https://example.test/status"
+                          },
+                          "$anchor": {
+                            "kind": "string",
+                            "value": "state"
+                          },
+                          "enum": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "string",
+                                "value": "open"
+                              },
+                              {
+                                "kind": "string",
+                                "value": "closed"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "originalSource": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"$id\":\"https://example.test/status\",\"$anchor\":\"state\",\"enum\":[\"open\",\"closed\"]}",
+                      "originalFormat": "json"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "policy": {
+      "id": "projected",
+      "schemaId": "https://example.test/projected",
+      "pointer": "/components/schemas/Tree",
+      "schemaResources": [
+        "https://example.test/status"
+      ],
+      "usage": "schema-only",
+      "lossPolicy": "allow-reported-loss"
+    },
+    "issues": [
+      {
+        "path": "/components/schemas/Tree/xml",
+        "code": "OPENAPI_ANNOTATION",
+        "classification": "not-enforced",
+        "detail": "OpenAPI annotation/extension is retained in source and omitted from generic JSON validation",
+        "retainedInSource": true
+      },
+      {
+        "path": "",
+        "code": "SCHEMA_IDENTITY",
+        "classification": "representation-change",
+        "detail": "Static schema identities and references are rewritten into target definitions; original identities remain in source and mappings",
+        "retainedInSource": true
+      },
+      {
+        "path": "",
+        "code": "SCHEMA_ONLY",
+        "classification": "not-enforced",
+        "detail": "JSON instance constraints do not implement operations, HTTP serialization, authorization, request/response direction, defaults insertion or API runtime behavior",
+        "retainedInSource": true
+      },
+      {
+        "path": "/modules/0/elements/0/extensions/umf.json-schema/$defs/schema_0/unevaluatedProperties",
+        "code": "JSON_SCHEMA_VALIDATOR_LIMIT",
+        "classification": "not-enforced",
+        "detail": "Pinned JavaScript oracle has known failures for this construct; native meaning retained, full semantic evaluation not certified",
+        "retainedInSource": true
+      }
+    ],
+    "mappings": [
+      {
+        "retrievalUri": "https://example.test/api.json",
+        "sourcePointer": "/components/schemas/Tree",
+        "targetPointer": "/$defs/schema_0"
+      },
+      {
+        "retrievalUri": "https://example.test/api.json",
+        "sourcePointer": "/components/schemas/Tree/properties/name",
+        "targetPointer": "/$defs/schema_1"
+      },
+      {
+        "retrievalUri": "https://example.test/api.json",
+        "sourcePointer": "/components/schemas/Tree/properties/children",
+        "targetPointer": "/$defs/schema_2"
+      },
+      {
+        "retrievalUri": "https://example.test/api.json",
+        "sourcePointer": "/components/schemas/Tree/properties/children/items",
+        "targetPointer": "/$defs/schema_3"
+      },
+      {
+        "retrievalUri": "https://example.test/api.json",
+        "sourcePointer": "/components/schemas/Tree/properties/status",
+        "targetPointer": "/$defs/schema_4"
+      },
+      {
+        "retrievalUri": "https://example.test/status",
+        "sourcePointer": "",
+        "targetPointer": "/$defs/schema_5"
+      },
+      {
+        "retrievalUri": "https://example.test/api.json",
+        "sourcePointer": "/components/schemas/Tree/properties/kind",
+        "targetPointer": "/$defs/schema_6"
+      },
+      {
+        "retrievalUri": "https://example.test/api.json",
+        "sourcePointer": "/components/schemas/Tree/allOf/0",
+        "targetPointer": "/$defs/schema_7"
+      },
+      {
+        "retrievalUri": "https://example.test/api.json",
+        "sourcePointer": "/components/schemas/Tree/allOf/0/if",
+        "targetPointer": "/$defs/schema_8"
+      },
+      {
+        "retrievalUri": "https://example.test/api.json",
+        "sourcePointer": "/components/schemas/Tree/allOf/0/if/properties/kind",
+        "targetPointer": "/$defs/schema_9"
+      },
+      {
+        "retrievalUri": "https://example.test/api.json",
+        "sourcePointer": "/components/schemas/Tree/allOf/0/then",
+        "targetPointer": "/$defs/schema_10"
+      },
+      {
+        "retrievalUri": "https://example.test/api.json",
+        "sourcePointer": "/components/schemas/Tree/unevaluatedProperties",
+        "targetPointer": "/$defs/schema_11"
+      }
+    ],
+    "nativeSchema": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"$id\":\"https://example.test/projected\",\"$ref\":\"#/$defs/schema_0\",\"$defs\":{\"schema_1\":{\"type\":\"string\",\"minLength\":1},\"schema_3\":{\"$ref\":\"#/$defs/schema_0\"},\"schema_2\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/schema_3\"}},\"schema_5\":{\"enum\":[\"open\",\"closed\"]},\"schema_4\":{\"$ref\":\"#/$defs/schema_5\"},\"schema_6\":{\"enum\":[\"leaf\",\"branch\"]},\"schema_9\":{\"const\":\"branch\"},\"schema_8\":{\"properties\":{\"kind\":{\"$ref\":\"#/$defs/schema_9\"}},\"required\":[\"kind\"]},\"schema_10\":{\"required\":[\"children\"]},\"schema_7\":{\"if\":{\"$ref\":\"#/$defs/schema_8\"},\"then\":{\"$ref\":\"#/$defs/schema_10\"}},\"schema_11\":false,\"schema_0\":{\"type\":\"object\",\"properties\":{\"name\":{\"$ref\":\"#/$defs/schema_1\"},\"children\":{\"$ref\":\"#/$defs/schema_2\"},\"status\":{\"$ref\":\"#/$defs/schema_4\"},\"kind\":{\"$ref\":\"#/$defs/schema_6\"}},\"required\":[\"name\"],\"allOf\":[{\"$ref\":\"#/$defs/schema_7\"}],\"unevaluatedProperties\":{\"$ref\":\"#/$defs/schema_11\"},\"description\":\"A tree\",\"examples\":[{\"$ref\":\"literal-not-a-reference\"}]}}}",
+    "target": {
+      "umf": "0.1.0",
+      "id": "projected",
+      "vocabularies": {
+        "umf.json-schema": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "schema",
+          "namespace": "https://example.test/projected",
+          "elements": [
+            {
+              "id": "schema",
+              "extensions": {
+                "umf.json-schema": {
+                  "dialect": "https://json-schema.org/draft/2020-12/schema",
+                  "baseUri": "https://example.test/projected",
+                  "root": {
+                    "kind": "object",
+                    "members": {
+                      "$schema": {
+                        "kind": "string",
+                        "value": "https://json-schema.org/draft/2020-12/schema"
+                      },
+                      "$id": {
+                        "kind": "string",
+                        "value": "https://example.test/projected"
+                      },
+                      "$ref": {
+                        "kind": "string",
+                        "value": "#/$defs/schema_0"
+                      },
+                      "$defs": {
+                        "kind": "object",
+                        "members": {
+                          "schema_1": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "string"
+                              },
+                              "minLength": {
+                                "kind": "number",
+                                "value": "1"
+                              }
+                            }
+                          },
+                          "schema_3": {
+                            "kind": "object",
+                            "members": {
+                              "$ref": {
+                                "kind": "string",
+                                "value": "#/$defs/schema_0"
+                              }
+                            }
+                          },
+                          "schema_2": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "array"
+                              },
+                              "items": {
+                                "kind": "object",
+                                "members": {
+                                  "$ref": {
+                                    "kind": "string",
+                                    "value": "#/$defs/schema_3"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "schema_5": {
+                            "kind": "object",
+                            "members": {
+                              "enum": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "open"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "closed"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "schema_4": {
+                            "kind": "object",
+                            "members": {
+                              "$ref": {
+                                "kind": "string",
+                                "value": "#/$defs/schema_5"
+                              }
+                            }
+                          },
+                          "schema_6": {
+                            "kind": "object",
+                            "members": {
+                              "enum": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "leaf"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "branch"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "schema_9": {
+                            "kind": "object",
+                            "members": {
+                              "const": {
+                                "kind": "string",
+                                "value": "branch"
+                              }
+                            }
+                          },
+                          "schema_8": {
+                            "kind": "object",
+                            "members": {
+                              "properties": {
+                                "kind": "object",
+                                "members": {
+                                  "kind": {
+                                    "kind": "object",
+                                    "members": {
+                                      "$ref": {
+                                        "kind": "string",
+                                        "value": "#/$defs/schema_9"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "required": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "kind"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "schema_10": {
+                            "kind": "object",
+                            "members": {
+                              "required": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "children"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "schema_7": {
+                            "kind": "object",
+                            "members": {
+                              "if": {
+                                "kind": "object",
+                                "members": {
+                                  "$ref": {
+                                    "kind": "string",
+                                    "value": "#/$defs/schema_8"
+                                  }
+                                }
+                              },
+                              "then": {
+                                "kind": "object",
+                                "members": {
+                                  "$ref": {
+                                    "kind": "string",
+                                    "value": "#/$defs/schema_10"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "schema_11": {
+                            "kind": "boolean",
+                            "value": false
+                          },
+                          "schema_0": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "object"
+                              },
+                              "properties": {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "object",
+                                    "members": {
+                                      "$ref": {
+                                        "kind": "string",
+                                        "value": "#/$defs/schema_1"
+                                      }
+                                    }
+                                  },
+                                  "children": {
+                                    "kind": "object",
+                                    "members": {
+                                      "$ref": {
+                                        "kind": "string",
+                                        "value": "#/$defs/schema_2"
+                                      }
+                                    }
+                                  },
+                                  "status": {
+                                    "kind": "object",
+                                    "members": {
+                                      "$ref": {
+                                        "kind": "string",
+                                        "value": "#/$defs/schema_4"
+                                      }
+                                    }
+                                  },
+                                  "kind": {
+                                    "kind": "object",
+                                    "members": {
+                                      "$ref": {
+                                        "kind": "string",
+                                        "value": "#/$defs/schema_6"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "required": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "name"
+                                  }
+                                ]
+                              },
+                              "allOf": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "$ref": {
+                                        "kind": "string",
+                                        "value": "#/$defs/schema_7"
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              "unevaluatedProperties": {
+                                "kind": "object",
+                                "members": {
+                                  "$ref": {
+                                    "kind": "string",
+                                    "value": "#/$defs/schema_11"
+                                  }
+                                }
+                              },
+                              "description": {
+                                "kind": "string",
+                                "value": "A tree"
+                              },
+                              "examples": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "$ref": {
+                                        "kind": "string",
+                                        "value": "literal-not-a-reference"
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "resources": {}
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "roundTripped": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"$id\":\"https://example.test/projected\",\"$ref\":\"#/$defs/schema_0\",\"$defs\":{\"schema_1\":{\"type\":\"string\",\"minLength\":1},\"schema_3\":{\"$ref\":\"#/$defs/schema_0\"},\"schema_2\":{\"type\":\"array\",\"items\":{\"$ref\":\"#/$defs/schema_3\"}},\"schema_5\":{\"enum\":[\"open\",\"closed\"]},\"schema_4\":{\"$ref\":\"#/$defs/schema_5\"},\"schema_6\":{\"enum\":[\"leaf\",\"branch\"]},\"schema_9\":{\"const\":\"branch\"},\"schema_8\":{\"properties\":{\"kind\":{\"$ref\":\"#/$defs/schema_9\"}},\"required\":[\"kind\"]},\"schema_10\":{\"required\":[\"children\"]},\"schema_7\":{\"if\":{\"$ref\":\"#/$defs/schema_8\"},\"then\":{\"$ref\":\"#/$defs/schema_10\"}},\"schema_11\":false,\"schema_0\":{\"type\":\"object\",\"properties\":{\"name\":{\"$ref\":\"#/$defs/schema_1\"},\"children\":{\"$ref\":\"#/$defs/schema_2\"},\"status\":{\"$ref\":\"#/$defs/schema_4\"},\"kind\":{\"$ref\":\"#/$defs/schema_6\"}},\"required\":[\"name\"],\"allOf\":[{\"$ref\":\"#/$defs/schema_7\"}],\"unevaluatedProperties\":{\"$ref\":\"#/$defs/schema_11\"},\"description\":\"A tree\",\"examples\":[{\"$ref\":\"literal-not-a-reference\"}]}}}\n",
+  "vectors": [
+    {
+      "value": {
+        "name": "a"
+      },
+      "valid": true
+    },
+    {
+      "value": {
+        "name": ""
+      },
+      "valid": false
+    },
+    {
+      "value": {},
+      "valid": false
+    },
+    {
+      "value": {
+        "name": "a",
+        "children": [
+          {
+            "name": "b"
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "value": {
+        "name": "a",
+        "children": [
+          {}
+        ]
+      },
+      "valid": false
+    },
+    {
+      "value": {
+        "name": "a",
+        "status": "open"
+      },
+      "valid": true
+    },
+    {
+      "value": {
+        "name": "a",
+        "status": "other"
+      },
+      "valid": false
+    },
+    {
+      "value": {
+        "name": "a",
+        "extra": true
+      },
+      "valid": false
+    },
+    {
+      "value": {
+        "name": "a",
+        "kind": "branch"
+      },
+      "valid": false
+    },
+    {
+      "value": {
+        "name": "a",
+        "kind": "branch",
+        "children": []
+      },
+      "valid": true
+    }
+  ]
+}

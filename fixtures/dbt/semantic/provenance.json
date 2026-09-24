@@ -1,0 +1,91 @@
+{
+  "command": [
+    "/home/erik/Projects/umf/.cache/dbt-venv/bin/dbt",
+    "parse",
+    "--no-partial-parse",
+    "--project-dir",
+    "/home/erik/Projects/umf/native/dbt/rich-project",
+    "--profiles-dir",
+    "/home/erik/Projects/umf/native/dbt/rich-project",
+    "--target-path",
+    "/home/erik/Projects/umf/.cache/dbt-semantic-target",
+    "--log-path",
+    "/home/erik/Projects/umf/.cache/dbt-semantic-logs"
+  ],
+  "exitCode": 0,
+  "scope": "Native dbt parse of synthetic project; no SQL or MetricFlow execution",
+  "files": [
+    {
+      "path": "native/dbt/rich-project/analyses/order_audit.sql",
+      "sha256": "6451b3698b4a8bf8ca96f94ed2d87e91ebb56a2e5308cd1b7c177dc37a838b81"
+    },
+    {
+      "path": "native/dbt/rich-project/dbt_project.yml",
+      "sha256": "edf54d1a6de9d458ca376f2ece0dd41e6e1f29d7802ed9069c5c7eee2709a93c"
+    },
+    {
+      "path": "native/dbt/rich-project/macros/fixture_label.sql",
+      "sha256": "ef42af6574b2e977ca8a9aa8919b778cc9318a0274787f423e6c4cf1d888c481"
+    },
+    {
+      "path": "native/dbt/rich-project/models/disabled.sql",
+      "sha256": "3709edd36d803a43b51b8db603c3c9834215ea289b1cc8b1580f595d4103a1c0"
+    },
+    {
+      "path": "native/dbt/rich-project/models/docs.md",
+      "sha256": "3f77446e87d4c0d5474c40aec9d92fa6f078483412982aadb5197f16943cbfa3"
+    },
+    {
+      "path": "native/dbt/rich-project/models/metadata.yml",
+      "sha256": "77e1f0aec731651824a1b59c20a6cf8659d8ff2143124e588f56b54b4523f5fc"
+    },
+    {
+      "path": "native/dbt/rich-project/models/metricflow_time_spine.sql",
+      "sha256": "bb71bcbc3b28d6846dabb3b2f7e65397fd4eb7cd7cb4e794f2c16c2246eecf68"
+    },
+    {
+      "path": "native/dbt/rich-project/models/order_events.sql",
+      "sha256": "99458e4b7268e6201757caa96f6cd520f5a2d63cd07026ae0ac2db51e99f8912"
+    },
+    {
+      "path": "native/dbt/rich-project/models/order_totals.sql",
+      "sha256": "f3ceb620cdeeaa07a39e11c7ec627a462dde7eb3a40c36c6bcc967ed5f403daa"
+    },
+    {
+      "path": "native/dbt/rich-project/models/schema.yml",
+      "sha256": "154685abee0c903ce216ecf60063d6b36acee9f0ca4cd4ada97e74c5d9ef18f6"
+    },
+    {
+      "path": "native/dbt/rich-project/profiles.yml",
+      "sha256": "c3059c76db02a584240989d09d8ae1ff8b5595f088c679bd24b08be679763437"
+    },
+    {
+      "path": "native/dbt/rich-project/seeds/orders.csv",
+      "sha256": "fcde59d7f51aad037c8c0cca42e61e99cbec9cae1706a06736b025369869c113"
+    },
+    {
+      "path": "native/dbt/rich-project/selectors.yml",
+      "sha256": "98f112b871782b7d8d51f3607fc300a8818c302b3b7b7022207b3a70c82c08fb"
+    },
+    {
+      "path": "native/dbt/rich-project/snapshots/order_history.sql",
+      "sha256": "d7e019282bfa1836f46dbc3cfd5737b73b7c2ff116f39aa97f706f4583bcc334"
+    },
+    {
+      "path": "fixtures/dbt/semantic/semantic-manifest.json",
+      "sha256": "c56abd814722225ed4fba03ed6f2c50e8f56478ed3e133d63dd8e1440fe1ec90"
+    },
+    {
+      "path": "fixtures/dbt/semantic/manifest.json",
+      "sha256": "0b19b8b93bfb9fd492a462056f40272b98443cd7f7b3da81e0480e26a212f543"
+    },
+    {
+      "path": "fixtures/dbt/semantic/command.log",
+      "sha256": "00238fbb26d72055e749bc1079f03367009f4263f3c755edac9ba0a45b8c4043"
+    },
+    {
+      "path": "native/dbt/oracle-requirements.txt",
+      "sha256": "4d47968c46440c839ba8abf847902ab5069ceda478c4674bf3312d81f54d6675"
+    }
+  ]
+}

@@ -1,0 +1,2427 @@
+umf: 0.1.0
+id: primer-corrected
+vocabularies:
+  umf.owl:
+    version: 0.1.0
+modules:
+  - id: dataset
+    namespace: ""
+    elements:
+      - id: dataset
+        extensions:
+          umf.owl:
+            profile: rdf11-turtle
+            baseIRI: https://example.org/
+            blankNodeScope: primer-corrected
+            quads:
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Ontology
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#imports
+                object:
+                  kind: iri
+                  value: http://example.org/otherOntologies/families.owl
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasSpouse
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#SymmetricProperty
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasRelative
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#ReflexiveProperty
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/parentOf
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#IrreflexiveProperty
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasAncestor
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#TransitiveProperty
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasHusband
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#FunctionalProperty
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasHusband
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#InverseFunctionalProperty
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasWife
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#ObjectProperty
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasWife
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2000/01/rdf-schema#domain
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Man
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasWife
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2000/01/rdf-schema#range
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Woman
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasWife
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2000/01/rdf-schema#subPropertyOf
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/hasSpouse
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasSon
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#propertyDisjointWith
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/hasDaughter
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasFather
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2000/01/rdf-schema#subPropertyOf
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/hasParent
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasParent
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#inverseOf
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/hasChild
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasParent
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#propertyDisjointWith
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/hasSpouse
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_0
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/hasParent
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_0
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: blank
+                  value: g_1
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_1
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/hasParent
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_1
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#nil
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasGrandparent
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#propertyChainAxiom
+                object:
+                  kind: blank
+                  value: g_0
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_2
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/hasFather
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_2
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: blank
+                  value: g_3
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_3
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/hasBrother
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_3
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#nil
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasUncle
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#propertyChainAxiom
+                object:
+                  kind: blank
+                  value: g_2
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasAge
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#equivalentProperty
+                object:
+                  kind: iri
+                  value: http://example.org/otherOntologies/families/age
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasAge
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#DatatypeProperty
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasAge
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#FunctionalProperty
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasAge
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2000/01/rdf-schema#domain
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Person
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasAge
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2000/01/rdf-schema#range
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2001/XMLSchema#nonNegativeInteger
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasChild
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#equivalentProperty
+                object:
+                  kind: iri
+                  value: http://example.org/otherOntologies/families/child
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasChild
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#AsymmetricProperty
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/Woman
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2000/01/rdf-schema#subClassOf
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Person
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/Mother
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2000/01/rdf-schema#subClassOf
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Woman
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_4
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Class
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_5
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Woman
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_5
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: blank
+                  value: g_6
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_6
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Parent
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_6
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#nil
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_4
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#intersectionOf
+                object:
+                  kind: blank
+                  value: g_5
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/Mother
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#equivalentClass
+                object:
+                  kind: blank
+                  value: g_4
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/Person
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Class
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/Person
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#equivalentClass
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Human
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/Person
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2000/01/rdf-schema#comment
+                object:
+                  kind: literal
+                  value: Represents the set of all people.
+                  datatype: http://www.w3.org/2001/XMLSchema#string
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_7
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/hasSSN
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_7
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#nil
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/Person
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#hasKey
+                object:
+                  kind: blank
+                  value: g_7
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/hasSSN
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#DataProperty
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_8
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Class
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_9
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Mother
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_9
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: blank
+                  value: g_10
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_10
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Father
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_10
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#nil
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_8
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#unionOf
+                object:
+                  kind: blank
+                  value: g_9
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/Parent
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#equivalentClass
+                object:
+                  kind: blank
+                  value: g_8
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_11
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Restriction
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_11
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#onProperty
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/hasChild
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_11
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#someValuesFrom
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Person
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/Parent
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#equivalentClass
+                object:
+                  kind: blank
+                  value: g_11
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_12
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Class
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_13
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Man
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_13
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: blank
+                  value: g_14
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_14
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Parent
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_14
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#nil
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_12
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#intersectionOf
+                object:
+                  kind: blank
+                  value: g_13
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/Grandfather
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2000/01/rdf-schema#subClassOf
+                object:
+                  kind: blank
+                  value: g_12
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_15
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Class
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_16
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: blank
+                  value: g_17
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_17
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Restriction
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_17
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#onProperty
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/hasChild
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_17
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#allValuesFrom
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/HappyPerson
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_16
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: blank
+                  value: g_18
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_18
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: blank
+                  value: g_19
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_19
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Restriction
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_19
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#onProperty
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/hasChild
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_19
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#someValuesFrom
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/HappyPerson
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_18
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#nil
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_15
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#intersectionOf
+                object:
+                  kind: blank
+                  value: g_16
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/HappyPerson
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#equivalentClass
+                object:
+                  kind: blank
+                  value: g_15
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_20
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Restriction
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_20
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#onProperty
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/hasParent
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_20
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#hasValue
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/John
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/JohnsChildren
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#equivalentClass
+                object:
+                  kind: blank
+                  value: g_20
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_21
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Restriction
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_21
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#onProperty
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/loves
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_21
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#hasSelf
+                object:
+                  kind: literal
+                  value: "true"
+                  datatype: http://www.w3.org/2001/XMLSchema#boolean
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/NarcisticPerson
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#equivalentClass
+                object:
+                  kind: blank
+                  value: g_21
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_22
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Class
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_23
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Bill
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_23
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: blank
+                  value: g_24
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_24
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/John
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_24
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: blank
+                  value: g_25
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_25
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Mary
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_25
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#nil
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_22
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#oneOf
+                object:
+                  kind: blank
+                  value: g_23
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/MyBirthdayGuests
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#equivalentClass
+                object:
+                  kind: blank
+                  value: g_22
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_26
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Restriction
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_27
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#inverseOf
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/hasChild
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_26
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#onProperty
+                object:
+                  kind: blank
+                  value: g_27
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_26
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#allValuesFrom
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Dead
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/Orphan
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#equivalentClass
+                object:
+                  kind: blank
+                  value: g_26
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_28
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Restriction
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_28
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#onProperty
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/hasAge
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_29
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2000/01/rdf-schema#Datatype
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_29
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#onDatatype
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2001/XMLSchema#integer
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_30
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: blank
+                  value: g_31
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_31
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2001/XMLSchema#minExclusive
+                object:
+                  kind: literal
+                  value: "12"
+                  datatype: http://www.w3.org/2001/XMLSchema#integer
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_30
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: blank
+                  value: g_32
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_32
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: blank
+                  value: g_33
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_33
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2001/XMLSchema#maxInclusive
+                object:
+                  kind: literal
+                  value: "19"
+                  datatype: http://www.w3.org/2001/XMLSchema#integer
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_32
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#nil
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_29
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#withRestrictions
+                object:
+                  kind: blank
+                  value: g_30
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_28
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#someValuesFrom
+                object:
+                  kind: blank
+                  value: g_29
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/Teenager
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2000/01/rdf-schema#subClassOf
+                object:
+                  kind: blank
+                  value: g_28
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/Man
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2000/01/rdf-schema#subClassOf
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Person
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_34
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Axiom
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_34
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#annotatedSource
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Man
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_34
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#annotatedProperty
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2000/01/rdf-schema#subClassOf
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_34
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#annotatedTarget
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Person
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_34
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2000/01/rdf-schema#comment
+                object:
+                  kind: literal
+                  value: States that every man is a person.
+                  datatype: http://www.w3.org/2001/XMLSchema#string
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/Adult
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#equivalentClass
+                object:
+                  kind: iri
+                  value: http://example.org/otherOntologies/families/Grownup
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_35
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Class
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_36
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Man
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_36
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: blank
+                  value: g_37
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_37
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Parent
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_37
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#nil
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_35
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#intersectionOf
+                object:
+                  kind: blank
+                  value: g_36
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/Father
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2000/01/rdf-schema#subClassOf
+                object:
+                  kind: blank
+                  value: g_35
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_38
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Class
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_39
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Person
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_39
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: blank
+                  value: g_40
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_40
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: blank
+                  value: g_41
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_41
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#complementOf
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Parent
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_40
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#nil
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_38
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#intersectionOf
+                object:
+                  kind: blank
+                  value: g_39
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/ChildlessPerson
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#equivalentClass
+                object:
+                  kind: blank
+                  value: g_38
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_42
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Class
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_43
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Person
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_43
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: blank
+                  value: g_44
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_44
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: blank
+                  value: g_45
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_46
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Restriction
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_47
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#inverseOf
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/hasParent
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_46
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#onProperty
+                object:
+                  kind: blank
+                  value: g_47
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_46
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#someValuesFrom
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Thing
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_45
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#complementOf
+                object:
+                  kind: blank
+                  value: g_46
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_44
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#nil
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_42
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#intersectionOf
+                object:
+                  kind: blank
+                  value: g_43
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/ChildlessPerson
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#subClassOf
+                object:
+                  kind: blank
+                  value: g_42
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_48
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Class
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_49
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: blank
+                  value: g_50
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_50
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Class
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_51
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Mary
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_51
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: blank
+                  value: g_52
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_52
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Bill
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_52
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: blank
+                  value: g_53
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_53
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Meg
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_53
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#nil
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_50
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#oneOf
+                object:
+                  kind: blank
+                  value: g_51
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_49
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: blank
+                  value: g_54
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_54
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Female
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_54
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#nil
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_48
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#intersectionOf
+                object:
+                  kind: blank
+                  value: g_49
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_55
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Class
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_56
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Parent
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_56
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: blank
+                  value: g_57
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_57
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: blank
+                  value: g_58
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_58
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Restriction
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_58
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#maxCardinality
+                object:
+                  kind: literal
+                  value: "1"
+                  datatype: http://www.w3.org/2001/XMLSchema#nonNegativeInteger
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_58
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#onProperty
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/hasChild
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_57
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: blank
+                  value: g_59
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_59
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: blank
+                  value: g_60
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_60
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#Restriction
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_60
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#onProperty
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/hasChild
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_60
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#allValuesFrom
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Female
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_59
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#nil
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_55
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#intersectionOf
+                object:
+                  kind: blank
+                  value: g_56
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_48
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2000/01/rdf-schema#subClassOf
+                object:
+                  kind: blank
+                  value: g_55
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_61
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#AllDisjointClasses
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_62
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Mother
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_62
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: blank
+                  value: g_63
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_63
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Father
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_63
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: blank
+                  value: g_64
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_64
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/YoungChild
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_64
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#nil
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_61
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#members
+                object:
+                  kind: blank
+                  value: g_62
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_65
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#AllDisjointClasses
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_66
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Woman
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_66
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: blank
+                  value: g_67
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_67
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: iri
+                  value: http://example.com/owl/families/Man
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_67
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#nil
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_65
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#members
+                object:
+                  kind: blank
+                  value: g_66
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_68
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#type
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2000/01/rdf-schema#Datatype
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_68
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#onDatatype
+                object:
+                  kind: iri
+                  value: http://www.w3.org/2001/XMLSchema#integer
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_69
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: blank
+                  value: g_70
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_70
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2001/XMLSchema#minInclusive
+                object:
+                  kind: literal
+                  value: "0"
+                  datatype: http://www.w3.org/2001/XMLSchema#integer
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_69
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: blank
+                  value: g_71
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_71
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#first
+                object:
+                  kind: blank
+                  value: g_72
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_72
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2001/XMLSchema#maxInclusive
+                object:
+                  kind: literal
+                  value: "150"
+                  datatype: http://www.w3.org/2001/XMLSchema#integer
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_71
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#rest
+                object:
+                  kind: iri
+                  value: http://www.w3.org/1999/02/22-rdf-syntax-ns#nil
+                graph:
+                  kind: default
+              - subject:
+                  kind: blank
+                  value: g_68
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#withRestrictions
+                object:
+                  kind: blank
+                  value: g_69
+                graph:
+                  kind: default
+              - subject:
+                  kind: iri
+                  value: http://example.com/owl/families/personAge
+                predicate:
+                  kind: iri
+                  value: http://www.w3.org/2002/07/owl#equivalentClass
+                object:
+                  kind: blank
+                  value: g_68
+                graph:
+                  kind: default
+            originalSource: |+
+              @prefix : <http://example.com/owl/families/> .
+              @prefix otherOnt: <http://example.org/otherOntologies/families/> .
+              @prefix owl: <http://www.w3.org/2002/07/owl#> .
+              @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+              @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+              @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+              <http://example.com/owl/families> 
+                   rdf:type owl:Ontology ;
+                   owl:imports <http://example.org/otherOntologies/families.owl> .
+
+              :hasSpouse    rdf:type  owl:SymmetricProperty .
+              :hasRelative  rdf:type  owl:ReflexiveProperty .
+              :parentOf     rdf:type  owl:IrreflexiveProperty .
+              :hasAncestor  rdf:type  owl:TransitiveProperty .
+
+              :hasHusband   rdf:type  owl:FunctionalProperty .
+              :hasHusband   rdf:type  owl:InverseFunctionalProperty .
+
+              :hasWife rdf:type           owl:ObjectProperty .
+              :hasWife rdfs:domain        :Man ;
+                       rdfs:range         :Woman .
+              :hasWife rdfs:subPropertyOf :hasSpouse .
+
+              :hasSon     owl:propertyDisjointWith  :hasDaughter.
+              :hasFather  rdfs:subPropertyOf        :hasParent.
+               
+              :hasParent owl:inverseOf             :hasChild .
+              :hasParent owl:propertyDisjointWith  :hasSpouse .
+
+              :hasGrandparent  owl:propertyChainAxiom  ( :hasParent  :hasParent ) .
+              :hasUncle        owl:propertyChainAxiom  ( :hasFather  :hasBrother ) .
+
+              :hasAge  owl:equivalentProperty  otherOnt:age .
+              :hasAge  rdf:type                owl:DatatypeProperty .
+              :hasAge  rdf:type                owl:FunctionalProperty .
+              :hasAge  rdfs:domain             :Person ;
+                       rdfs:range              xsd:nonNegativeInteger .
+
+              :hasChild  owl:equivalentProperty  otherOnt:child .
+              :hasChild  rdf:type                owl:AsymmetricProperty .
+
+              :Woman   rdfs:subClassOf :Person .
+
+              :Mother  rdfs:subClassOf :Woman .
+              :Mother  owl:equivalentClass  [
+                rdf:type            owl:Class ;
+                owl:intersectionOf  ( :Woman :Parent ) 
+              ] .
+
+              :Person  rdf:type            owl:Class .
+              :Person  owl:equivalentClass :Human .
+              :Person  rdfs:comment        "Represents the set of all people."^^xsd:string .
+              :Person  owl:hasKey          ( :hasSSN ) .
+              :hasSSN  rdf:type            owl:DataProperty .
+              :Parent  owl:equivalentClass [
+                rdf:type     owl:Class ;
+                owl:unionOf  ( :Mother :Father )
+              ] .
+
+              :Parent  owl:equivalentClass  [
+                rdf:type            owl:Restriction ;
+                owl:onProperty      :hasChild ;
+                owl:someValuesFrom  :Person
+              ] .
+
+              :Grandfather  rdfs:subClassOf  [
+                rdf:type            owl:Class ;
+                owl:intersectionOf  ( :Man  :Parent )
+              ] .
+
+              :HappyPerson
+                  owl:equivalentClass  [
+                    rdf:type            owl:Class ;
+                    owl:intersectionOf  ( [ rdf:type            owl:Restriction ;
+                                            owl:onProperty      :hasChild ;
+                                            owl:allValuesFrom   :HappyPerson      ]
+                                          [ rdf:type            owl:Restriction ;
+                                            owl:onProperty      :hasChild ;
+                                            owl:someValuesFrom  :HappyPerson      ]
+                                        )
+                  ] .
+
+              :JohnsChildren  owl:equivalentClass  [
+                rdf:type        owl:Restriction ;
+                owl:onProperty  :hasParent ;
+                owl:hasValue    :John
+              ] .
+
+              :NarcisticPerson owl:equivalentClass  [
+                rdf:type        owl:Restriction ;
+                owl:onProperty  :loves ;
+                owl:hasSelf     "true"^^xsd:boolean
+              ] .
+
+              :MyBirthdayGuests  owl:equivalentClass  [
+                rdf:type   owl:Class ;
+                owl:oneOf  ( :Bill  :John  :Mary )
+              ] .
+              :Orphan  owl:equivalentClass  [
+                rdf:type           owl:Restriction ;
+                owl:onProperty     [ owl:inverseOf  :hasChild ] ;
+                owl:allValuesFrom  :Dead 
+              ] .
+
+              :Teenager  rdfs:subClassOf
+                    [ rdf:type             owl:Restriction ;
+                      owl:onProperty       :hasAge ;
+                      owl:someValuesFrom
+                       [ rdf:type             rdfs:Datatype ;
+                         owl:onDatatype       xsd:integer ;
+                         owl:withRestrictions (  [ xsd:minExclusive     "12"^^xsd:integer ]
+                                                 [ xsd:maxInclusive     "19"^^xsd:integer ]
+                         )
+                       ]
+                    ] .
+
+              :Man rdfs:subClassOf        :Person .
+              []   rdf:type               owl:Axiom ;
+                   owl:annotatedSource    :Man ;
+                   owl:annotatedProperty  rdfs:subClassOf ;
+                   owl:annotatedTarget    :Person ;
+                   rdfs:comment           "States that every man is a person."^^xsd:string .
+
+              :Adult owl:equivalentClass otherOnt:Grownup .
+
+              :Father rdfs:subClassOf  [
+                rdf:type            owl:Class ;
+                owl:intersectionOf  ( :Man  :Parent )
+              ] .
+
+              :ChildlessPerson      owl:equivalentClass  [
+                rdf:type            owl:Class ;
+                owl:intersectionOf  ( :Person  [ owl:complementOf  :Parent ] ) 
+              ] .
+              :ChildlessPerson      owl:subClassOf  [
+                rdf:type            owl:Class ;
+                owl:intersectionOf  ( :Person
+                                      [ owl:complementOf  [
+                                          rdf:type            owl:Restriction ;
+                                          owl:onProperty      [ owl:inverseOf  :hasParent ] ;
+                                          owl:someValuesFrom  owl:Thing
+                                        ]
+                                      ]
+                                    )
+              ] .
+
+              []  rdf:type            owl:Class ;
+                  owl:intersectionOf  ( [ rdf:type   owl:Class ;
+                                          owl:oneOf  ( :Mary  :Bill  :Meg ) ]
+                                        :Female 
+                                      ) ;
+                  rdfs:subClassOf     [
+                    rdf:type            owl:Class ;
+                    owl:intersectionOf  ( :Parent  
+                                          [ rdf:type            owl:Restriction ;
+                                            owl:maxCardinality  "1"^^xsd:nonNegativeInteger ;
+                                            owl:onProperty      :hasChild ]
+                                          [ rdf:type           owl:Restriction ;
+                                            owl:onProperty     :hasChild ;
+                                            owl:allValuesFrom  :Female ]
+                                        )
+                  ] .
+
+              [] rdf:type     owl:AllDisjointClasses ;
+                 owl:members  ( :Mother  :Father  :YoungChild ) .
+
+              [] rdf:type     owl:AllDisjointClasses ;
+                 owl:members  ( :Woman  :Man ) .
+
+              :personAge  owl:equivalentClass
+               [ rdf:type       rdfs:Datatype;
+                 owl:onDatatype xsd:integer;
+                 owl:withRestrictions (
+                    [ xsd:minInclusive "0"^^xsd:integer ]
+                    [ xsd:maxInclusive "150"^^xsd:integer ] 
+                 )
+               ] .
+
+            owlVersion: "2"

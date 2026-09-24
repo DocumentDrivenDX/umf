@@ -1,0 +1,546 @@
+[
+  {
+    "sourceType": "boolean",
+    "transform": "identity"
+  },
+  {
+    "sourceType": "boolean",
+    "transform": "void"
+  },
+  {
+    "sourceType": "boolean",
+    "transform": "bucket[16]"
+  },
+  {
+    "sourceType": "boolean",
+    "transform": "truncate[4]"
+  },
+  {
+    "sourceType": "boolean",
+    "transform": "year"
+  },
+  {
+    "sourceType": "boolean",
+    "transform": "month"
+  },
+  {
+    "sourceType": "boolean",
+    "transform": "day"
+  },
+  {
+    "sourceType": "boolean",
+    "transform": "hour"
+  },
+  {
+    "sourceType": "int",
+    "transform": "identity"
+  },
+  {
+    "sourceType": "int",
+    "transform": "void"
+  },
+  {
+    "sourceType": "int",
+    "transform": "bucket[16]"
+  },
+  {
+    "sourceType": "int",
+    "transform": "truncate[4]"
+  },
+  {
+    "sourceType": "int",
+    "transform": "year"
+  },
+  {
+    "sourceType": "int",
+    "transform": "month"
+  },
+  {
+    "sourceType": "int",
+    "transform": "day"
+  },
+  {
+    "sourceType": "int",
+    "transform": "hour"
+  },
+  {
+    "sourceType": "long",
+    "transform": "identity"
+  },
+  {
+    "sourceType": "long",
+    "transform": "void"
+  },
+  {
+    "sourceType": "long",
+    "transform": "bucket[16]"
+  },
+  {
+    "sourceType": "long",
+    "transform": "truncate[4]"
+  },
+  {
+    "sourceType": "long",
+    "transform": "year"
+  },
+  {
+    "sourceType": "long",
+    "transform": "month"
+  },
+  {
+    "sourceType": "long",
+    "transform": "day"
+  },
+  {
+    "sourceType": "long",
+    "transform": "hour"
+  },
+  {
+    "sourceType": "float",
+    "transform": "identity"
+  },
+  {
+    "sourceType": "float",
+    "transform": "void"
+  },
+  {
+    "sourceType": "float",
+    "transform": "bucket[16]"
+  },
+  {
+    "sourceType": "float",
+    "transform": "truncate[4]"
+  },
+  {
+    "sourceType": "float",
+    "transform": "year"
+  },
+  {
+    "sourceType": "float",
+    "transform": "month"
+  },
+  {
+    "sourceType": "float",
+    "transform": "day"
+  },
+  {
+    "sourceType": "float",
+    "transform": "hour"
+  },
+  {
+    "sourceType": "double",
+    "transform": "identity"
+  },
+  {
+    "sourceType": "double",
+    "transform": "void"
+  },
+  {
+    "sourceType": "double",
+    "transform": "bucket[16]"
+  },
+  {
+    "sourceType": "double",
+    "transform": "truncate[4]"
+  },
+  {
+    "sourceType": "double",
+    "transform": "year"
+  },
+  {
+    "sourceType": "double",
+    "transform": "month"
+  },
+  {
+    "sourceType": "double",
+    "transform": "day"
+  },
+  {
+    "sourceType": "double",
+    "transform": "hour"
+  },
+  {
+    "sourceType": "decimal(12, 2)",
+    "transform": "identity"
+  },
+  {
+    "sourceType": "decimal(12, 2)",
+    "transform": "void"
+  },
+  {
+    "sourceType": "decimal(12, 2)",
+    "transform": "bucket[16]"
+  },
+  {
+    "sourceType": "decimal(12, 2)",
+    "transform": "truncate[4]"
+  },
+  {
+    "sourceType": "decimal(12, 2)",
+    "transform": "year"
+  },
+  {
+    "sourceType": "decimal(12, 2)",
+    "transform": "month"
+  },
+  {
+    "sourceType": "decimal(12, 2)",
+    "transform": "day"
+  },
+  {
+    "sourceType": "decimal(12, 2)",
+    "transform": "hour"
+  },
+  {
+    "sourceType": "date",
+    "transform": "identity"
+  },
+  {
+    "sourceType": "date",
+    "transform": "void"
+  },
+  {
+    "sourceType": "date",
+    "transform": "bucket[16]"
+  },
+  {
+    "sourceType": "date",
+    "transform": "truncate[4]"
+  },
+  {
+    "sourceType": "date",
+    "transform": "year"
+  },
+  {
+    "sourceType": "date",
+    "transform": "month"
+  },
+  {
+    "sourceType": "date",
+    "transform": "day"
+  },
+  {
+    "sourceType": "date",
+    "transform": "hour"
+  },
+  {
+    "sourceType": "time",
+    "transform": "identity"
+  },
+  {
+    "sourceType": "time",
+    "transform": "void"
+  },
+  {
+    "sourceType": "time",
+    "transform": "bucket[16]"
+  },
+  {
+    "sourceType": "time",
+    "transform": "truncate[4]"
+  },
+  {
+    "sourceType": "time",
+    "transform": "year"
+  },
+  {
+    "sourceType": "time",
+    "transform": "month"
+  },
+  {
+    "sourceType": "time",
+    "transform": "day"
+  },
+  {
+    "sourceType": "time",
+    "transform": "hour"
+  },
+  {
+    "sourceType": "timestamp",
+    "transform": "identity"
+  },
+  {
+    "sourceType": "timestamp",
+    "transform": "void"
+  },
+  {
+    "sourceType": "timestamp",
+    "transform": "bucket[16]"
+  },
+  {
+    "sourceType": "timestamp",
+    "transform": "truncate[4]"
+  },
+  {
+    "sourceType": "timestamp",
+    "transform": "year"
+  },
+  {
+    "sourceType": "timestamp",
+    "transform": "month"
+  },
+  {
+    "sourceType": "timestamp",
+    "transform": "day"
+  },
+  {
+    "sourceType": "timestamp",
+    "transform": "hour"
+  },
+  {
+    "sourceType": "timestamptz",
+    "transform": "identity"
+  },
+  {
+    "sourceType": "timestamptz",
+    "transform": "void"
+  },
+  {
+    "sourceType": "timestamptz",
+    "transform": "bucket[16]"
+  },
+  {
+    "sourceType": "timestamptz",
+    "transform": "truncate[4]"
+  },
+  {
+    "sourceType": "timestamptz",
+    "transform": "year"
+  },
+  {
+    "sourceType": "timestamptz",
+    "transform": "month"
+  },
+  {
+    "sourceType": "timestamptz",
+    "transform": "day"
+  },
+  {
+    "sourceType": "timestamptz",
+    "transform": "hour"
+  },
+  {
+    "sourceType": "timestamp_ns",
+    "transform": "identity"
+  },
+  {
+    "sourceType": "timestamp_ns",
+    "transform": "void"
+  },
+  {
+    "sourceType": "timestamp_ns",
+    "transform": "bucket[16]"
+  },
+  {
+    "sourceType": "timestamp_ns",
+    "transform": "truncate[4]"
+  },
+  {
+    "sourceType": "timestamp_ns",
+    "transform": "year"
+  },
+  {
+    "sourceType": "timestamp_ns",
+    "transform": "month"
+  },
+  {
+    "sourceType": "timestamp_ns",
+    "transform": "day"
+  },
+  {
+    "sourceType": "timestamp_ns",
+    "transform": "hour"
+  },
+  {
+    "sourceType": "timestamptz_ns",
+    "transform": "identity"
+  },
+  {
+    "sourceType": "timestamptz_ns",
+    "transform": "void"
+  },
+  {
+    "sourceType": "timestamptz_ns",
+    "transform": "bucket[16]"
+  },
+  {
+    "sourceType": "timestamptz_ns",
+    "transform": "truncate[4]"
+  },
+  {
+    "sourceType": "timestamptz_ns",
+    "transform": "year"
+  },
+  {
+    "sourceType": "timestamptz_ns",
+    "transform": "month"
+  },
+  {
+    "sourceType": "timestamptz_ns",
+    "transform": "day"
+  },
+  {
+    "sourceType": "timestamptz_ns",
+    "transform": "hour"
+  },
+  {
+    "sourceType": "string",
+    "transform": "identity"
+  },
+  {
+    "sourceType": "string",
+    "transform": "void"
+  },
+  {
+    "sourceType": "string",
+    "transform": "bucket[16]"
+  },
+  {
+    "sourceType": "string",
+    "transform": "truncate[4]"
+  },
+  {
+    "sourceType": "string",
+    "transform": "year"
+  },
+  {
+    "sourceType": "string",
+    "transform": "month"
+  },
+  {
+    "sourceType": "string",
+    "transform": "day"
+  },
+  {
+    "sourceType": "string",
+    "transform": "hour"
+  },
+  {
+    "sourceType": "uuid",
+    "transform": "identity"
+  },
+  {
+    "sourceType": "uuid",
+    "transform": "void"
+  },
+  {
+    "sourceType": "uuid",
+    "transform": "bucket[16]"
+  },
+  {
+    "sourceType": "uuid",
+    "transform": "truncate[4]"
+  },
+  {
+    "sourceType": "uuid",
+    "transform": "year"
+  },
+  {
+    "sourceType": "uuid",
+    "transform": "month"
+  },
+  {
+    "sourceType": "uuid",
+    "transform": "day"
+  },
+  {
+    "sourceType": "uuid",
+    "transform": "hour"
+  },
+  {
+    "sourceType": "fixed[8]",
+    "transform": "identity"
+  },
+  {
+    "sourceType": "fixed[8]",
+    "transform": "void"
+  },
+  {
+    "sourceType": "fixed[8]",
+    "transform": "bucket[16]"
+  },
+  {
+    "sourceType": "fixed[8]",
+    "transform": "truncate[4]"
+  },
+  {
+    "sourceType": "fixed[8]",
+    "transform": "year"
+  },
+  {
+    "sourceType": "fixed[8]",
+    "transform": "month"
+  },
+  {
+    "sourceType": "fixed[8]",
+    "transform": "day"
+  },
+  {
+    "sourceType": "fixed[8]",
+    "transform": "hour"
+  },
+  {
+    "sourceType": "binary",
+    "transform": "identity"
+  },
+  {
+    "sourceType": "binary",
+    "transform": "void"
+  },
+  {
+    "sourceType": "binary",
+    "transform": "bucket[16]"
+  },
+  {
+    "sourceType": "binary",
+    "transform": "truncate[4]"
+  },
+  {
+    "sourceType": "binary",
+    "transform": "year"
+  },
+  {
+    "sourceType": "binary",
+    "transform": "month"
+  },
+  {
+    "sourceType": "binary",
+    "transform": "day"
+  },
+  {
+    "sourceType": "binary",
+    "transform": "hour"
+  },
+  {
+    "sourceType": "variant",
+    "transform": "identity"
+  },
+  {
+    "sourceType": "variant",
+    "transform": "void"
+  },
+  {
+    "sourceType": "variant",
+    "transform": "bucket[16]"
+  },
+  {
+    "sourceType": "variant",
+    "transform": "truncate[4]"
+  },
+  {
+    "sourceType": "variant",
+    "transform": "year"
+  },
+  {
+    "sourceType": "variant",
+    "transform": "month"
+  },
+  {
+    "sourceType": "variant",
+    "transform": "day"
+  },
+  {
+    "sourceType": "variant",
+    "transform": "hour"
+  }
+]

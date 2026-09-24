@@ -1,0 +1,532 @@
+{
+  "oracle": "PySHACL",
+  "version": "0.30.1",
+  "rdflib": "7.6.0",
+  "results": [
+    {
+      "id": "large-adjacent-minInclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "large-adjacent-minExclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "large-adjacent-maxInclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "large-adjacent-maxExclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "large-adjacent-lessThan",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "large-adjacent-lessThanOrEquals",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "large-reversed-minInclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "large-reversed-minExclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "large-reversed-maxInclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "large-reversed-maxExclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "large-reversed-lessThan",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "large-reversed-lessThanOrEquals",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "negative-minInclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "negative-minExclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "negative-maxInclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "negative-maxExclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "negative-lessThan",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "negative-lessThanOrEquals",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "fraction-minInclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "fraction-minExclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "fraction-maxInclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "fraction-maxExclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "fraction-lessThan",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "fraction-lessThanOrEquals",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "spelling-minInclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "spelling-minExclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "spelling-maxInclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "spelling-maxExclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "spelling-lessThan",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "spelling-lessThanOrEquals",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "zero-minInclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "zero-minExclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "zero-maxInclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "zero-maxExclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "zero-lessThan",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "zero-lessThanOrEquals",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "overflow-minInclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "overflow-minExclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "overflow-maxInclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "overflow-maxExclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "overflow-lessThan",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "overflow-lessThanOrEquals",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "underflow-minInclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "underflow-minExclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "underflow-maxInclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "underflow-maxExclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "underflow-lessThan",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "underflow-lessThanOrEquals",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "long-minInclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "long-minExclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "long-maxInclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "long-maxExclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "long-lessThan",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "long-lessThanOrEquals",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "whitespace-minInclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "whitespace-minExclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "whitespace-maxInclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "whitespace-maxExclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "whitespace-lessThan",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "whitespace-lessThanOrEquals",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "datatype-int-60",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "datatype-int-61",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "datatype-int-62",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "datatype-int-63",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "datatype-long-64",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "datatype-long-65",
+      "conforms": true,
+      "expected": false,
+      "equal": false,
+      "resultCount": 0
+    },
+    {
+      "id": "datatype-unsignedLong-66",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "datatype-unsignedLong-67",
+      "conforms": true,
+      "expected": false,
+      "equal": false,
+      "resultCount": 0
+    },
+    {
+      "id": "datatype-decimal-68",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "datatype-decimal-69",
+      "conforms": true,
+      "expected": false,
+      "equal": false,
+      "resultCount": 0
+    },
+    {
+      "id": "datatype-integer-70",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "datatype-decimal-71",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "datatype-decimal-72",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "datatype-integer-73",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "datatype-integer-74",
+      "conforms": true,
+      "expected": false,
+      "equal": false,
+      "resultCount": 0
+    }
+  ]
+}

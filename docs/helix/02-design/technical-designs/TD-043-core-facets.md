@@ -924,3 +924,21 @@ and explicit scalar-item selection within containers. Reuse prior carrier code
 only through a separately qualified facet profile; do not silently widen the
 accepted 0.4.0 Cardinality APIs to 0.5.0. Parquet facets remain unimplemented;
 this subsection changes neither core semantics nor the current acceptance state.
+
+
+### Avro public integration and qualification boundary
+
+The later public projection/composition checkpoint supersedes the internal-only
+checkpoint above: classify/verify/native-recover and project/ideal-recover APIs
+are exported, with operation schemas and an import/export extension package.
+The public Chromium matrix covers 558 projection cases, 388 emitted targets and
+170 refusals. Composition recovers 776 ideal and 776 native representations;
+238 facet comparisons match directly, including 162 facetless controls and only
+76 nonempty authored facet sets. The other 150 cases retain explicit residuals.
+
+The [Avro evidence record](../../04-build/evidence/avro-facet-discovery.md) owns
+current binding qualification status. Native codec evidence, browser evidence,
+compatibility regression and refreshed prior concept gates are all required
+before acceptance. A package description or a direct facet comparison alone
+cannot satisfy that gate. Parquet, facet admission/delivery and Key remain
+separate work; native equivalence is unclaimed.

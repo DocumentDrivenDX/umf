@@ -1,0 +1,26 @@
+_:N19d325b62cab444d9da8939046203518 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LanguageInConstraintComponent> .
+_:N19d325b62cab444d9da8939046203518 <http://www.w3.org/ns/shacl#focusNode> <http://www.w3.org/2000/01/rdf-schema#Resource> .
+_:Nadc86da05aea473488377f1a8d484515 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/languageIn-001.test#TestShape> .
+_:N19d325b62cab444d9da8939046203518 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/languageIn-001.test#TestShape> .
+_:N19d325b62cab444d9da8939046203518 <http://www.w3.org/ns/shacl#resultMessage> "String language is not in ( Literal(\"en\") Literal(\"fr\") )" .
+_:Nb8257fd784b243f18c3a3487d6e4f4a9 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/languageIn-001.test#TestShape> .
+_:Nadc86da05aea473488377f1a8d484515 <http://www.w3.org/ns/shacl#focusNode> "Plain String" .
+_:Nb8c418839a5f4ee5bd1d74f2378ebf8c <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Nb8257fd784b243f18c3a3487d6e4f4a9 <http://www.w3.org/ns/shacl#resultMessage> "String language is not in ( Literal(\"en\") Literal(\"fr\") )" .
+_:Nb8c418839a5f4ee5bd1d74f2378ebf8c <http://www.w3.org/ns/shacl#result> _:N19d325b62cab444d9da8939046203518 .
+_:Nb8c418839a5f4ee5bd1d74f2378ebf8c <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Nb8257fd784b243f18c3a3487d6e4f4a9 <http://www.w3.org/ns/shacl#focusNode> "Deutsch"@de .
+_:N19d325b62cab444d9da8939046203518 <http://www.w3.org/ns/shacl#value> <http://www.w3.org/2000/01/rdf-schema#Resource> .
+_:Nb8257fd784b243f18c3a3487d6e4f4a9 <http://www.w3.org/ns/shacl#value> "Deutsch"@de .
+_:Nadc86da05aea473488377f1a8d484515 <http://www.w3.org/ns/shacl#resultMessage> "String language is not in ( Literal(\"en\") Literal(\"fr\") )" .
+_:Nadc86da05aea473488377f1a8d484515 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nb8c418839a5f4ee5bd1d74f2378ebf8c <http://www.w3.org/ns/shacl#result> _:Nadc86da05aea473488377f1a8d484515 .
+_:Nb8c418839a5f4ee5bd1d74f2378ebf8c <http://www.w3.org/ns/shacl#result> _:Nb8257fd784b243f18c3a3487d6e4f4a9 .
+_:Nb8257fd784b243f18c3a3487d6e4f4a9 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LanguageInConstraintComponent> .
+_:Nadc86da05aea473488377f1a8d484515 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nb8257fd784b243f18c3a3487d6e4f4a9 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nadc86da05aea473488377f1a8d484515 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LanguageInConstraintComponent> .
+_:Nb8257fd784b243f18c3a3487d6e4f4a9 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N19d325b62cab444d9da8939046203518 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nadc86da05aea473488377f1a8d484515 <http://www.w3.org/ns/shacl#value> "Plain String" .
+_:N19d325b62cab444d9da8939046203518 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .

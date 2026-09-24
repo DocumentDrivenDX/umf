@@ -1,0 +1,24 @@
+_:N686e96ef45954f05b4386fa75a513f13 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinCountConstraintComponent> .
+_:N1e342ce6d44d4a73987d3ee56a6adc4f <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N3e12d5fd5c244bedb3b7e4fce2ad13d5 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N1e342ce6d44d4a73987d3ee56a6adc4f <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N686e96ef45954f05b4386fa75a513f13 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/path/path-sequence-002.test#InvalidResource1> .
+_:N3e12d5fd5c244bedb3b7e4fce2ad13d5 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinCountConstraintComponent> .
+_:N53e238e48a0f4eeca460808697ca2aa9 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:n07923a3f0a7145718acd10202e64dccfb1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://datashapes.org/sh/tests/core/path/path-sequence-002.test#property1> .
+_:N3e12d5fd5c244bedb3b7e4fce2ad13d5 <http://www.w3.org/ns/shacl#resultMessage> "Less than 1 values on ex:InvalidResource2->( ex:property1 ex:property2 ex:property3 )" .
+_:N0679a5e2483f4a1d89eb60813dae25f8 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://datashapes.org/sh/tests/core/path/path-sequence-002.test#property2> .
+_:N3e12d5fd5c244bedb3b7e4fce2ad13d5 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/path/path-sequence-002.test#TestShape> .
+_:N0679a5e2483f4a1d89eb60813dae25f8 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:N53e238e48a0f4eeca460808697ca2aa9 .
+_:N686e96ef45954f05b4386fa75a513f13 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N686e96ef45954f05b4386fa75a513f13 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/path/path-sequence-002.test#TestShape> .
+_:N686e96ef45954f05b4386fa75a513f13 <http://www.w3.org/ns/shacl#resultMessage> "Less than 1 values on ex:InvalidResource1->( ex:property1 ex:property2 ex:property3 )" .
+_:N1e342ce6d44d4a73987d3ee56a6adc4f <http://www.w3.org/ns/shacl#result> _:N686e96ef45954f05b4386fa75a513f13 .
+_:n07923a3f0a7145718acd10202e64dccfb1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:N0679a5e2483f4a1d89eb60813dae25f8 .
+_:N1e342ce6d44d4a73987d3ee56a6adc4f <http://www.w3.org/ns/shacl#result> _:N3e12d5fd5c244bedb3b7e4fce2ad13d5 .
+_:N686e96ef45954f05b4386fa75a513f13 <http://www.w3.org/ns/shacl#resultPath> _:n07923a3f0a7145718acd10202e64dccfb1 .
+_:N686e96ef45954f05b4386fa75a513f13 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N53e238e48a0f4eeca460808697ca2aa9 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://datashapes.org/sh/tests/core/path/path-sequence-002.test#property3> .
+_:N3e12d5fd5c244bedb3b7e4fce2ad13d5 <http://www.w3.org/ns/shacl#resultPath> _:n07923a3f0a7145718acd10202e64dccfb1 .
+_:N3e12d5fd5c244bedb3b7e4fce2ad13d5 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/path/path-sequence-002.test#InvalidResource2> .
+_:N3e12d5fd5c244bedb3b7e4fce2ad13d5 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .

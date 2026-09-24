@@ -1,0 +1,10 @@
+import {chromium} from 'playwright';
+const base='fixtures/odcs/relationships/',cases=[];for(const c of (await Bun.file(base+'results.json').json()).results)cases.push({...c,raw:await Bun.file(base+c.id+'.json').text(),expectedReport:await Bun.file(base+c.id+'.json.report.json').json()});
+const build=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/odcs-relationship-browser',naming:'umf.js',target:'browser',format:'esm'});if(!build.success)throw Error(build.logs.join('\n'));
+const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/odcs-relationship-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>ODCS relationships</title>');}});let browser;
+try{browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();await page.goto('http://127.0.0.1:'+server.port);
+ const result=await page.evaluate(async(cases)=>{const path='/umf.js',u=await import(path);let comparisons=0;
+ for(const c of cases){const d=u.importOdcsDocument(c.raw,{id:c.id,format:'json'});for(const f of ['json','yaml']){const r=u.inspectOdcsRelationships(u.readDocument(u.writeDocument(d,f),f));if(u.exportOdcsDocument(r.source)!==c.raw||r.complete!==false||r.status!==c.expected)throw Error('Source/status differs');if(JSON.stringify(r.relationships)!==JSON.stringify(c.expectedReport.relationships)||JSON.stringify(r.diagnostics)!==JSON.stringify(c.expectedReport.diagnostics))throw Error('Pairs/diagnostics differ');comparisons++;}}
+ return {comparisons,nodeGlobalsAbsent:!('process' in globalThis)&&!('Buffer' in globalThis),scope:'Local endpoint pairing only; no data enforcement'};
+ },cases);if(result.comparisons!==18||!result.nodeGlobalsAbsent)throw Error('Browser baseline changed');await Bun.write(base+'browser-results.json',JSON.stringify({...result,browser:browser.version()},null,2)+'\n');console.log(result);
+}finally{await browser?.close();server.stop(true);}

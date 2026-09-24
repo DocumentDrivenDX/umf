@@ -1,0 +1,47 @@
+{
+  "chainHops": 2,
+  "targetMatches": true,
+  "outerDescriptionOverride": true,
+  "wrongRoleRejected": true,
+  "roles": [
+    {
+      "kind": "parameter",
+      "validTargetAccepted": true,
+      "scalarTargetRejected": true
+    },
+    {
+      "kind": "header",
+      "validTargetAccepted": true,
+      "scalarTargetRejected": true
+    },
+    {
+      "kind": "response",
+      "validTargetAccepted": true,
+      "scalarTargetRejected": true
+    },
+    {
+      "kind": "request-body",
+      "validTargetAccepted": true,
+      "scalarTargetRejected": true
+    },
+    {
+      "kind": "example",
+      "validTargetAccepted": true,
+      "scalarTargetRejected": true
+    },
+    {
+      "kind": "link",
+      "validTargetAccepted": true,
+      "scalarTargetRejected": true
+    },
+    {
+      "kind": "security-scheme",
+      "validTargetAccepted": true,
+      "scalarTargetRejected": true
+    }
+  ],
+  "limits": [
+    "Supplied-file Reference Object chain only; caller-declared role",
+    "No source-role inference, nested-reference closure, Schema Object scope or runtime evaluation"
+  ]
+}

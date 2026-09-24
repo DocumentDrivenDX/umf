@@ -1,0 +1,376 @@
+{
+  "commit": "8c27801dc8d42ccc00997f25c0b8f45f8d4a233e",
+  "versions": {
+    "avro": "1.12.0",
+    "fastavro": "1.12.2"
+  },
+  "files": 20,
+  "metadataRetained": 20,
+  "apacheAccepted": 19,
+  "fastavroAccepted": 19,
+  "binaryPassed": 19,
+  "results": [
+    {
+      "path": "share/test/schemas/FooBarSpecificRecord.avsc",
+      "retained": true,
+      "browserComplete": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "binary": {
+        "status": "passed",
+        "bytes": 25,
+        "sha256": "cc891093ac849d9865808cfbc7d2f1db6a1a7672f6fc17acd8e4dd37d7850c8a"
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "path": "share/test/schemas/RecordWithRequiredFields.avsc",
+      "retained": true,
+      "browserComplete": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "binary": {
+        "status": "passed",
+        "bytes": 10,
+        "sha256": "4ec4b9a51bdd012a689c851f3bfddaa969f156843c2e7f241bf9efc339e060cd"
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "path": "share/test/schemas/interop.avsc",
+      "retained": true,
+      "browserComplete": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "binary": {
+        "status": "passed",
+        "bytes": 88,
+        "sha256": "4edd85e6cc8ef3b010d05b88ffeee90821bb45fbd16a6486905bbcf38e19e251"
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "path": "share/test/schemas/reserved.avsc",
+      "retained": true,
+      "browserComplete": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "binary": {
+        "status": "passed",
+        "bytes": 1,
+        "sha256": "e52d9c508c502347344d8c07ad91cbd6068afc75ff6292f062a09ca381c89e71"
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "path": "share/test/schemas/weather.avsc",
+      "retained": true,
+      "browserComplete": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "binary": {
+        "status": "passed",
+        "bytes": 11,
+        "sha256": "704e0111bf9bd821fb831a6d78e609686c240ea7a6c69699527dce3ac5c349d3"
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/SchemaBuilder.avsc",
+      "retained": true,
+      "browserComplete": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "binary": {
+        "status": "passed",
+        "bytes": 207,
+        "sha256": "0cde51c14b0ae7f5df3aa80b600686b228a0d43c0efff433f5a8b98915c1a1d1"
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/TestRecordWithLogicalTypes.avsc",
+      "retained": true,
+      "browserComplete": false,
+      "apache": {
+        "accepted": true,
+        "warnings": [
+          "Unknown big-decimal, using bytes."
+        ]
+      },
+      "binary": {
+        "status": "passed",
+        "bytes": 32,
+        "sha256": "092517367f497275e65c22744e7295afe9bad6bb6a0ca27a6b8cc55fb09557a1"
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/TestRecordWithMapsAndArrays.avsc",
+      "retained": true,
+      "browserComplete": false,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "binary": {
+        "status": "passed",
+        "bytes": 44,
+        "sha256": "4b9b144eb8726a9e7b7ea1bdc2a0fd65e1e85342ae7b7c88d3f515b4d496bd24"
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/TestUnionRecord.avsc",
+      "retained": true,
+      "browserComplete": false,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "binary": {
+        "status": "passed",
+        "bytes": 1,
+        "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/multipleFile/ApplicationEvent.avsc",
+      "retained": true,
+      "browserComplete": false,
+      "apache": {
+        "accepted": false,
+        "error": "Type property \"['null', {'type': 'array', 'items': 'model.DocumentInfo'}]\" not a valid Avro schema: Union item must be a valid Avro schema: Items schema (model.DocumentInfo) not a valid Avro schema: Could not make an Avro Schema object from model.DocumentInfo (known names: dict_keys(['model.ApplicationEvent']))"
+      },
+      "fastavro": {
+        "accepted": false,
+        "error": "model.DocumentInfo"
+      }
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/multipleFile/DocumentInfo.avsc",
+      "retained": true,
+      "browserComplete": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "binary": {
+        "status": "passed",
+        "bytes": 18,
+        "sha256": "37b24d7e45a363b1f658ad86cfd83fe3366364b4ff2c9217929196f70d288837"
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/multipleFile/MyResponse.avsc",
+      "retained": true,
+      "browserComplete": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "binary": {
+        "status": "passed",
+        "bytes": 1,
+        "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/foo.Bar.avsc",
+      "retained": true,
+      "browserComplete": false,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "binary": {
+        "status": "passed",
+        "bytes": 10,
+        "sha256": "4ec4b9a51bdd012a689c851f3bfddaa969f156843c2e7f241bf9efc339e060cd"
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/full_record_v1.avsc",
+      "retained": true,
+      "browserComplete": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "binary": {
+        "status": "passed",
+        "bytes": 17,
+        "sha256": "cdf478192fbb011ac7cc91ac5497b12f182051f1d837e82e3ec9238d011e583a"
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/full_record_v2.avsc",
+      "retained": true,
+      "browserComplete": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "binary": {
+        "status": "passed",
+        "bytes": 36,
+        "sha256": "ada9ac3d612b5924f5a238670e1538818a34e02a5303eeb54e2f0588af913fee"
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/logical-uuid.avsc",
+      "retained": true,
+      "browserComplete": false,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "binary": {
+        "status": "passed",
+        "bytes": 53,
+        "sha256": "46e46169be5cbe9f2e9ca933dc12fa1a7f240e1b9c967aa712da0e8ca0a9ba32"
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/logical_types_with_multiple_fields.avsc",
+      "retained": true,
+      "browserComplete": false,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "binary": {
+        "status": "passed",
+        "bytes": 25,
+        "sha256": "ceb333e3f830705429230874f250b664a192ba78040903691b504e5082804218"
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/regression_error_field_in_record.avsc",
+      "retained": true,
+      "browserComplete": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "binary": {
+        "status": "passed",
+        "bytes": 2,
+        "sha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7"
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/simple_record.avsc",
+      "retained": true,
+      "browserComplete": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "binary": {
+        "status": "passed",
+        "bytes": 2,
+        "sha256": "7a2a7c0a81d1bd595dff09b918f8ecb5b5e8493654a4f83496956ed8eb017674"
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/union_and_fixed_fields.avsc",
+      "retained": true,
+      "browserComplete": false,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "binary": {
+        "status": "passed",
+        "bytes": 31,
+        "sha256": "f4834a876e9f9eea4ce7fbc41b43af40ea3e87c520e66baadaf20bcbefd8a564"
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    }
+  ],
+  "limits": [
+    "One generated finite datum per independently parsed schema, not exhaustive instance conformance",
+    "Multi-file schema references have no external resolver in this profile",
+    "Parser rejections and logical-type warnings remain recorded"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "modelSha256": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b",
+  "mappingSha256": "eaa36bcbd96d2b09d22161c5200a2be6a0788d7fd5ee46292d62428bb24cbbe7",
+  "cases": [
+    {
+      "id": "authored",
+      "sourceModelAgrees": true,
+      "columns": 12
+    },
+    {
+      "id": "providers",
+      "sourceModelAgrees": true,
+      "columns": 4
+    }
+  ],
+  "helpers": {
+    "dateStringHelper": "StringType()",
+    "dateObjectHelper": "DateType()",
+    "integerHelper": "IntegerType()",
+    "floatHelper": "FloatType()",
+    "embeddingHelper": "ArrayType(FloatType(), True)"
+  },
+  "scope": "Pinned source-model preservation and native helper observations; no pipeline execution or data-value conversion."
+}

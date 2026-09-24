@@ -1,0 +1,1285 @@
+{
+  "profile": "umf-numeric-2",
+  "cases": [
+    {
+      "id": "float-double-minInclusive",
+      "shapesPath": "fixtures/shacl/float/float-double-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/float-double-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/float-double-minInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "float-double-minExclusive",
+      "shapesPath": "fixtures/shacl/float/float-double-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/float-double-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/float-double-minExclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "float-double-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/float-double-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/float-double-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/float-double-maxInclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "float-double-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/float-double-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/float-double-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/float-double-maxExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "float-double-lessThan",
+      "shapesPath": "fixtures/shacl/float/float-double-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/float-double-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/float-double-lessThan.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "float-double-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/float-double-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/float-double-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/float-double-lessThanOrEquals.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "double-float-minInclusive",
+      "shapesPath": "fixtures/shacl/float/double-float-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/double-float-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/double-float-minInclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "double-float-minExclusive",
+      "shapesPath": "fixtures/shacl/float/double-float-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/double-float-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/double-float-minExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "double-float-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/double-float-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/double-float-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/double-float-maxInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "double-float-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/double-float-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/double-float-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/double-float-maxExclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "double-float-lessThan",
+      "shapesPath": "fixtures/shacl/float/double-float-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/double-float-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/double-float-lessThan.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "double-float-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/double-float-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/double-float-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/double-float-lessThanOrEquals.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "integer-float-minInclusive",
+      "shapesPath": "fixtures/shacl/float/integer-float-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/integer-float-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/integer-float-minInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "integer-float-minExclusive",
+      "shapesPath": "fixtures/shacl/float/integer-float-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/integer-float-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/integer-float-minExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "integer-float-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/integer-float-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/integer-float-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/integer-float-maxInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "integer-float-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/integer-float-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/integer-float-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/integer-float-maxExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "integer-float-lessThan",
+      "shapesPath": "fixtures/shacl/float/integer-float-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/integer-float-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/integer-float-lessThan.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "integer-float-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/integer-float-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/integer-float-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/integer-float-lessThanOrEquals.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "integer-double-minInclusive",
+      "shapesPath": "fixtures/shacl/float/integer-double-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/integer-double-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/integer-double-minInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "integer-double-minExclusive",
+      "shapesPath": "fixtures/shacl/float/integer-double-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/integer-double-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/integer-double-minExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "integer-double-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/integer-double-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/integer-double-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/integer-double-maxInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "integer-double-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/integer-double-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/integer-double-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/integer-double-maxExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "integer-double-lessThan",
+      "shapesPath": "fixtures/shacl/float/integer-double-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/integer-double-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/integer-double-lessThan.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "integer-double-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/integer-double-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/integer-double-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/integer-double-lessThanOrEquals.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "even-tie-minInclusive",
+      "shapesPath": "fixtures/shacl/float/even-tie-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/even-tie-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/even-tie-minInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "even-tie-minExclusive",
+      "shapesPath": "fixtures/shacl/float/even-tie-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/even-tie-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/even-tie-minExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "even-tie-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/even-tie-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/even-tie-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/even-tie-maxInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "even-tie-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/even-tie-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/even-tie-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/even-tie-maxExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "even-tie-lessThan",
+      "shapesPath": "fixtures/shacl/float/even-tie-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/even-tie-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/even-tie-lessThan.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "even-tie-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/even-tie-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/even-tie-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/even-tie-lessThanOrEquals.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "above-tie-minInclusive",
+      "shapesPath": "fixtures/shacl/float/above-tie-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/above-tie-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/above-tie-minInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "above-tie-minExclusive",
+      "shapesPath": "fixtures/shacl/float/above-tie-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/above-tie-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/above-tie-minExclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "above-tie-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/above-tie-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/above-tie-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/above-tie-maxInclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "above-tie-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/above-tie-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/above-tie-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/above-tie-maxExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "above-tie-lessThan",
+      "shapesPath": "fixtures/shacl/float/above-tie-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/above-tie-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/above-tie-lessThan.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "above-tie-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/above-tie-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/above-tie-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/above-tie-lessThanOrEquals.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "odd-tie-minInclusive",
+      "shapesPath": "fixtures/shacl/float/odd-tie-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/odd-tie-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/odd-tie-minInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "odd-tie-minExclusive",
+      "shapesPath": "fixtures/shacl/float/odd-tie-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/odd-tie-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/odd-tie-minExclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "odd-tie-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/odd-tie-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/odd-tie-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/odd-tie-maxInclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "odd-tie-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/odd-tie-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/odd-tie-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/odd-tie-maxExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "odd-tie-lessThan",
+      "shapesPath": "fixtures/shacl/float/odd-tie-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/odd-tie-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/odd-tie-lessThan.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "odd-tie-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/odd-tie-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/odd-tie-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/odd-tie-lessThanOrEquals.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "negative-above-tie-minInclusive",
+      "shapesPath": "fixtures/shacl/float/negative-above-tie-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/negative-above-tie-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/negative-above-tie-minInclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "negative-above-tie-minExclusive",
+      "shapesPath": "fixtures/shacl/float/negative-above-tie-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/negative-above-tie-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/negative-above-tie-minExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "negative-above-tie-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/negative-above-tie-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/negative-above-tie-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/negative-above-tie-maxInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "negative-above-tie-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/negative-above-tie-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/negative-above-tie-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/negative-above-tie-maxExclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "negative-above-tie-lessThan",
+      "shapesPath": "fixtures/shacl/float/negative-above-tie-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/negative-above-tie-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/negative-above-tie-lessThan.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "negative-above-tie-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/negative-above-tie-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/negative-above-tie-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/negative-above-tie-lessThanOrEquals.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "subnormal-tie-minInclusive",
+      "shapesPath": "fixtures/shacl/float/subnormal-tie-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/subnormal-tie-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/subnormal-tie-minInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "subnormal-tie-minExclusive",
+      "shapesPath": "fixtures/shacl/float/subnormal-tie-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/subnormal-tie-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/subnormal-tie-minExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "subnormal-tie-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/subnormal-tie-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/subnormal-tie-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/subnormal-tie-maxInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "subnormal-tie-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/subnormal-tie-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/subnormal-tie-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/subnormal-tie-maxExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "subnormal-tie-lessThan",
+      "shapesPath": "fixtures/shacl/float/subnormal-tie-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/subnormal-tie-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/subnormal-tie-lessThan.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "subnormal-tie-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/subnormal-tie-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/subnormal-tie-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/subnormal-tie-lessThanOrEquals.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "subnormal-above-minInclusive",
+      "shapesPath": "fixtures/shacl/float/subnormal-above-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/subnormal-above-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/subnormal-above-minInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "subnormal-above-minExclusive",
+      "shapesPath": "fixtures/shacl/float/subnormal-above-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/subnormal-above-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/subnormal-above-minExclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "subnormal-above-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/subnormal-above-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/subnormal-above-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/subnormal-above-maxInclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "subnormal-above-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/subnormal-above-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/subnormal-above-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/subnormal-above-maxExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "subnormal-above-lessThan",
+      "shapesPath": "fixtures/shacl/float/subnormal-above-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/subnormal-above-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/subnormal-above-lessThan.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "subnormal-above-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/subnormal-above-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/subnormal-above-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/subnormal-above-lessThanOrEquals.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "float-underflow-minInclusive",
+      "shapesPath": "fixtures/shacl/float/float-underflow-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/float-underflow-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/float-underflow-minInclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "float-underflow-minExclusive",
+      "shapesPath": "fixtures/shacl/float/float-underflow-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/float-underflow-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/float-underflow-minExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "float-underflow-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/float-underflow-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/float-underflow-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/float-underflow-maxInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "float-underflow-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/float-underflow-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/float-underflow-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/float-underflow-maxExclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "float-underflow-lessThan",
+      "shapesPath": "fixtures/shacl/float/float-underflow-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/float-underflow-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/float-underflow-lessThan.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "float-underflow-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/float-underflow-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/float-underflow-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/float-underflow-lessThanOrEquals.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "double-underflow-minInclusive",
+      "shapesPath": "fixtures/shacl/float/double-underflow-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/double-underflow-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/double-underflow-minInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "double-underflow-minExclusive",
+      "shapesPath": "fixtures/shacl/float/double-underflow-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/double-underflow-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/double-underflow-minExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "double-underflow-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/double-underflow-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/double-underflow-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/double-underflow-maxInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "double-underflow-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/double-underflow-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/double-underflow-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/double-underflow-maxExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "double-underflow-lessThan",
+      "shapesPath": "fixtures/shacl/float/double-underflow-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/double-underflow-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/double-underflow-lessThan.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "double-underflow-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/double-underflow-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/double-underflow-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/double-underflow-lessThanOrEquals.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "float-overflow-minInclusive",
+      "shapesPath": "fixtures/shacl/float/float-overflow-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/float-overflow-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/float-overflow-minInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "float-overflow-minExclusive",
+      "shapesPath": "fixtures/shacl/float/float-overflow-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/float-overflow-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/float-overflow-minExclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "float-overflow-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/float-overflow-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/float-overflow-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/float-overflow-maxInclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "float-overflow-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/float-overflow-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/float-overflow-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/float-overflow-maxExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "float-overflow-lessThan",
+      "shapesPath": "fixtures/shacl/float/float-overflow-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/float-overflow-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/float-overflow-lessThan.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "float-overflow-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/float-overflow-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/float-overflow-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/float-overflow-lessThanOrEquals.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "decimal-overflow-minInclusive",
+      "shapesPath": "fixtures/shacl/float/decimal-overflow-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/decimal-overflow-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/decimal-overflow-minInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "decimal-overflow-minExclusive",
+      "shapesPath": "fixtures/shacl/float/decimal-overflow-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/decimal-overflow-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/decimal-overflow-minExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "decimal-overflow-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/decimal-overflow-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/decimal-overflow-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/decimal-overflow-maxInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "decimal-overflow-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/decimal-overflow-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/decimal-overflow-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/decimal-overflow-maxExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "decimal-overflow-lessThan",
+      "shapesPath": "fixtures/shacl/float/decimal-overflow-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/decimal-overflow-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/decimal-overflow-lessThan.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "decimal-overflow-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/decimal-overflow-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/decimal-overflow-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/decimal-overflow-lessThanOrEquals.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "overflow-tie-minInclusive",
+      "shapesPath": "fixtures/shacl/float/overflow-tie-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/overflow-tie-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/overflow-tie-minInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "overflow-tie-minExclusive",
+      "shapesPath": "fixtures/shacl/float/overflow-tie-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/overflow-tie-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/overflow-tie-minExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "overflow-tie-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/overflow-tie-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/overflow-tie-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/overflow-tie-maxInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "overflow-tie-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/overflow-tie-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/overflow-tie-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/overflow-tie-maxExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "overflow-tie-lessThan",
+      "shapesPath": "fixtures/shacl/float/overflow-tie-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/overflow-tie-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/overflow-tie-lessThan.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "overflow-tie-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/overflow-tie-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/overflow-tie-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/overflow-tie-lessThanOrEquals.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "below-overflow-tie-minInclusive",
+      "shapesPath": "fixtures/shacl/float/below-overflow-tie-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/below-overflow-tie-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/below-overflow-tie-minInclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "below-overflow-tie-minExclusive",
+      "shapesPath": "fixtures/shacl/float/below-overflow-tie-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/below-overflow-tie-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/below-overflow-tie-minExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "below-overflow-tie-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/below-overflow-tie-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/below-overflow-tie-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/below-overflow-tie-maxInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "below-overflow-tie-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/below-overflow-tie-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/below-overflow-tie-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/below-overflow-tie-maxExclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "below-overflow-tie-lessThan",
+      "shapesPath": "fixtures/shacl/float/below-overflow-tie-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/below-overflow-tie-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/below-overflow-tie-lessThan.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "below-overflow-tie-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/below-overflow-tie-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/below-overflow-tie-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/below-overflow-tie-lessThanOrEquals.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "infinities-minInclusive",
+      "shapesPath": "fixtures/shacl/float/infinities-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/infinities-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/infinities-minInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "infinities-minExclusive",
+      "shapesPath": "fixtures/shacl/float/infinities-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/infinities-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/infinities-minExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "infinities-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/infinities-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/infinities-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/infinities-maxInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "infinities-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/infinities-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/infinities-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/infinities-maxExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "infinities-lessThan",
+      "shapesPath": "fixtures/shacl/float/infinities-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/infinities-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/infinities-lessThan.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "infinities-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/infinities-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/infinities-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/infinities-lessThanOrEquals.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "negative-infinity-minInclusive",
+      "shapesPath": "fixtures/shacl/float/negative-infinity-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/negative-infinity-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/negative-infinity-minInclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "negative-infinity-minExclusive",
+      "shapesPath": "fixtures/shacl/float/negative-infinity-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/negative-infinity-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/negative-infinity-minExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "negative-infinity-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/negative-infinity-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/negative-infinity-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/negative-infinity-maxInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "negative-infinity-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/negative-infinity-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/negative-infinity-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/negative-infinity-maxExclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "negative-infinity-lessThan",
+      "shapesPath": "fixtures/shacl/float/negative-infinity-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/negative-infinity-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/negative-infinity-lessThan.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "negative-infinity-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/negative-infinity-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/negative-infinity-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/negative-infinity-lessThanOrEquals.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "nan-left-minInclusive",
+      "shapesPath": "fixtures/shacl/float/nan-left-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/nan-left-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/nan-left-minInclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "nan-left-minExclusive",
+      "shapesPath": "fixtures/shacl/float/nan-left-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/nan-left-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/nan-left-minExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "nan-left-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/nan-left-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/nan-left-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/nan-left-maxInclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "nan-left-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/nan-left-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/nan-left-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/nan-left-maxExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "nan-left-lessThan",
+      "shapesPath": "fixtures/shacl/float/nan-left-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/nan-left-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/nan-left-lessThan.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "nan-left-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/nan-left-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/nan-left-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/nan-left-lessThanOrEquals.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "nan-right-minInclusive",
+      "shapesPath": "fixtures/shacl/float/nan-right-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/nan-right-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/nan-right-minInclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "nan-right-minExclusive",
+      "shapesPath": "fixtures/shacl/float/nan-right-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/nan-right-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/nan-right-minExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "nan-right-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/nan-right-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/nan-right-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/nan-right-maxInclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "nan-right-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/nan-right-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/nan-right-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/nan-right-maxExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "nan-right-lessThan",
+      "shapesPath": "fixtures/shacl/float/nan-right-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/nan-right-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/nan-right-lessThan.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "nan-right-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/nan-right-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/nan-right-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/nan-right-lessThanOrEquals.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "nan-both-minInclusive",
+      "shapesPath": "fixtures/shacl/float/nan-both-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/nan-both-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/nan-both-minInclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "nan-both-minExclusive",
+      "shapesPath": "fixtures/shacl/float/nan-both-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/nan-both-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/nan-both-minExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "nan-both-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/nan-both-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/nan-both-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/nan-both-maxInclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "nan-both-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/nan-both-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/nan-both-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/nan-both-maxExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "nan-both-lessThan",
+      "shapesPath": "fixtures/shacl/float/nan-both-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/nan-both-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/nan-both-lessThan.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "nan-both-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/nan-both-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/nan-both-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/nan-both-lessThanOrEquals.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "signed-zero-minInclusive",
+      "shapesPath": "fixtures/shacl/float/signed-zero-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/signed-zero-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/signed-zero-minInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "signed-zero-minExclusive",
+      "shapesPath": "fixtures/shacl/float/signed-zero-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/signed-zero-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/signed-zero-minExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "signed-zero-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/signed-zero-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/signed-zero-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/signed-zero-maxInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "signed-zero-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/signed-zero-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/signed-zero-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/signed-zero-maxExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "signed-zero-lessThan",
+      "shapesPath": "fixtures/shacl/float/signed-zero-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/signed-zero-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/signed-zero-lessThan.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "signed-zero-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/signed-zero-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/signed-zero-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/signed-zero-lessThanOrEquals.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "huge-exponent-minInclusive",
+      "shapesPath": "fixtures/shacl/float/huge-exponent-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/huge-exponent-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/huge-exponent-minInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "huge-exponent-minExclusive",
+      "shapesPath": "fixtures/shacl/float/huge-exponent-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/huge-exponent-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/huge-exponent-minExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "huge-exponent-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/huge-exponent-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/huge-exponent-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/huge-exponent-maxInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "huge-exponent-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/huge-exponent-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/huge-exponent-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/huge-exponent-maxExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "huge-exponent-lessThan",
+      "shapesPath": "fixtures/shacl/float/huge-exponent-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/huge-exponent-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/huge-exponent-lessThan.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "huge-exponent-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/huge-exponent-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/huge-exponent-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/huge-exponent-lessThanOrEquals.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "tiny-exponent-minInclusive",
+      "shapesPath": "fixtures/shacl/float/tiny-exponent-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/tiny-exponent-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/tiny-exponent-minInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "tiny-exponent-minExclusive",
+      "shapesPath": "fixtures/shacl/float/tiny-exponent-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/tiny-exponent-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/tiny-exponent-minExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "tiny-exponent-maxInclusive",
+      "shapesPath": "fixtures/shacl/float/tiny-exponent-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/tiny-exponent-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/tiny-exponent-maxInclusive.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "tiny-exponent-maxExclusive",
+      "shapesPath": "fixtures/shacl/float/tiny-exponent-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/tiny-exponent-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/float/tiny-exponent-maxExclusive.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "tiny-exponent-lessThan",
+      "shapesPath": "fixtures/shacl/float/tiny-exponent-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/tiny-exponent-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/float/tiny-exponent-lessThan.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "tiny-exponent-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/float/tiny-exponent-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/tiny-exponent-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/float/tiny-exponent-lessThanOrEquals.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "datatype-float-144",
+      "shapesPath": "fixtures/shacl/float/datatype-float-144.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/datatype-float-144.data.ttl",
+      "reportPath": "fixtures/shacl/float/datatype-float-144.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "datatype-float-145",
+      "shapesPath": "fixtures/shacl/float/datatype-float-145.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/datatype-float-145.data.ttl",
+      "reportPath": "fixtures/shacl/float/datatype-float-145.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "datatype-float-146",
+      "shapesPath": "fixtures/shacl/float/datatype-float-146.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/datatype-float-146.data.ttl",
+      "reportPath": "fixtures/shacl/float/datatype-float-146.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "datatype-float-147",
+      "shapesPath": "fixtures/shacl/float/datatype-float-147.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/datatype-float-147.data.ttl",
+      "reportPath": "fixtures/shacl/float/datatype-float-147.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "datatype-float-148",
+      "shapesPath": "fixtures/shacl/float/datatype-float-148.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/datatype-float-148.data.ttl",
+      "reportPath": "fixtures/shacl/float/datatype-float-148.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "datatype-float-149",
+      "shapesPath": "fixtures/shacl/float/datatype-float-149.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/datatype-float-149.data.ttl",
+      "reportPath": "fixtures/shacl/float/datatype-float-149.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "datatype-float-150",
+      "shapesPath": "fixtures/shacl/float/datatype-float-150.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/datatype-float-150.data.ttl",
+      "reportPath": "fixtures/shacl/float/datatype-float-150.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "datatype-float-151",
+      "shapesPath": "fixtures/shacl/float/datatype-float-151.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/datatype-float-151.data.ttl",
+      "reportPath": "fixtures/shacl/float/datatype-float-151.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "datatype-double-152",
+      "shapesPath": "fixtures/shacl/float/datatype-double-152.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/datatype-double-152.data.ttl",
+      "reportPath": "fixtures/shacl/float/datatype-double-152.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "datatype-double-153",
+      "shapesPath": "fixtures/shacl/float/datatype-double-153.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/datatype-double-153.data.ttl",
+      "reportPath": "fixtures/shacl/float/datatype-double-153.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "datatype-double-154",
+      "shapesPath": "fixtures/shacl/float/datatype-double-154.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/datatype-double-154.data.ttl",
+      "reportPath": "fixtures/shacl/float/datatype-double-154.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "datatype-double-155",
+      "shapesPath": "fixtures/shacl/float/datatype-double-155.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/datatype-double-155.data.ttl",
+      "reportPath": "fixtures/shacl/float/datatype-double-155.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "datatype-double-156",
+      "shapesPath": "fixtures/shacl/float/datatype-double-156.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/datatype-double-156.data.ttl",
+      "reportPath": "fixtures/shacl/float/datatype-double-156.nq",
+      "expected": true,
+      "conforms": true
+    },
+    {
+      "id": "datatype-double-157",
+      "shapesPath": "fixtures/shacl/float/datatype-double-157.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/datatype-double-157.data.ttl",
+      "reportPath": "fixtures/shacl/float/datatype-double-157.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "datatype-double-158",
+      "shapesPath": "fixtures/shacl/float/datatype-double-158.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/datatype-double-158.data.ttl",
+      "reportPath": "fixtures/shacl/float/datatype-double-158.nq",
+      "expected": false,
+      "conforms": false
+    },
+    {
+      "id": "datatype-double-159",
+      "shapesPath": "fixtures/shacl/float/datatype-double-159.shapes.ttl",
+      "dataPath": "fixtures/shacl/float/datatype-double-159.data.ttl",
+      "reportPath": "fixtures/shacl/float/datatype-double-159.nq",
+      "expected": false,
+      "conforms": false
+    }
+  ]
+}

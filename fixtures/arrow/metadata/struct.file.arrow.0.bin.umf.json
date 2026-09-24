@@ -1,0 +1,56 @@
+{
+  "rootType": "Message",
+  "value": {
+    "version": "V5",
+    "header": {
+      "type": "Schema",
+      "value": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "type": "Struct_",
+              "value": {}
+            },
+            "children": [
+              {
+                "name": "x",
+                "nullable": true,
+                "type": {
+                  "type": "Int",
+                  "value": {
+                    "bitWidth": 32,
+                    "is_signed": true
+                  }
+                },
+                "children": []
+              },
+              {
+                "name": "label",
+                "nullable": true,
+                "type": {
+                  "type": "Utf8",
+                  "value": {}
+                },
+                "children": []
+              }
+            ],
+            "custom_metadata": [
+              {
+                "key": "field-note",
+                "value": "preserve"
+              }
+            ]
+          }
+        ],
+        "custom_metadata": [
+          {
+            "key": "schema-note",
+            "value": "café"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+@prefix ex: <https://example.org/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+ex:a a ex:Leaf ; ex:p ex:b, "value" .
+ex:Leaf rdfs:subClassOf ex:Middle .
+ex:Middle rdfs:subClassOf ex:Root, ex:Leaf .
+ex:b a ex:Root .
+ex:notTarget a ex:ShapeOnlySub .
+ex:c a ex:Implicit .
+ex:Implicit rdfs:subClassOf ex:Root .

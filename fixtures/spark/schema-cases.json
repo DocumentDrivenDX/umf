@@ -1,0 +1,347 @@
+[
+  {
+    "id": "atomic-string",
+    "input": "string"
+  },
+  {
+    "id": "atomic-binary",
+    "input": "binary"
+  },
+  {
+    "id": "atomic-boolean",
+    "input": "boolean"
+  },
+  {
+    "id": "atomic-decimal",
+    "input": "decimal"
+  },
+  {
+    "id": "atomic-float",
+    "input": "float"
+  },
+  {
+    "id": "atomic-double",
+    "input": "double"
+  },
+  {
+    "id": "atomic-byte",
+    "input": "byte"
+  },
+  {
+    "id": "atomic-short",
+    "input": "short"
+  },
+  {
+    "id": "atomic-integer",
+    "input": "integer"
+  },
+  {
+    "id": "atomic-long",
+    "input": "long"
+  },
+  {
+    "id": "atomic-date",
+    "input": "date"
+  },
+  {
+    "id": "atomic-timestamp",
+    "input": "timestamp"
+  },
+  {
+    "id": "atomic-timestamp_ntz",
+    "input": "timestamp_ntz"
+  },
+  {
+    "id": "atomic-void",
+    "input": "void"
+  },
+  {
+    "id": "atomic-variant",
+    "input": "variant"
+  },
+  {
+    "id": "atomic-interval",
+    "input": "interval"
+  },
+  {
+    "id": "spelling-16",
+    "input": "decimal(10,2)"
+  },
+  {
+    "id": "spelling-17",
+    "input": "decimal(38,18)"
+  },
+  {
+    "id": "spelling-18",
+    "input": "decimal(10,-2)"
+  },
+  {
+    "id": "spelling-19",
+    "input": "decimal(39,0)"
+  },
+  {
+    "id": "spelling-20",
+    "input": "decimal(2,3)"
+  },
+  {
+    "id": "spelling-21",
+    "input": "char(5)"
+  },
+  {
+    "id": "spelling-22",
+    "input": "varchar(20)"
+  },
+  {
+    "id": "spelling-23",
+    "input": "char(0)"
+  },
+  {
+    "id": "spelling-24",
+    "input": "string collate UTF8_LCASE"
+  },
+  {
+    "id": "spelling-25",
+    "input": "string collate UNKNOWN_COLLATION"
+  },
+  {
+    "id": "spelling-26",
+    "input": "interval year"
+  },
+  {
+    "id": "spelling-27",
+    "input": "interval year to month"
+  },
+  {
+    "id": "spelling-28",
+    "input": "interval month"
+  },
+  {
+    "id": "spelling-29",
+    "input": "interval day"
+  },
+  {
+    "id": "spelling-30",
+    "input": "interval day to second"
+  },
+  {
+    "id": "spelling-31",
+    "input": "interval hour to minute"
+  },
+  {
+    "id": "spelling-32",
+    "input": "interval second"
+  },
+  {
+    "id": "spelling-33",
+    "input": "interval month to year"
+  },
+  {
+    "id": "spelling-34",
+    "input": "future_type"
+  },
+  {
+    "id": "array",
+    "input": {
+      "type": "array",
+      "elementType": "long",
+      "containsNull": false
+    }
+  },
+  {
+    "id": "array-default",
+    "input": {
+      "type": "array",
+      "elementType": "string"
+    }
+  },
+  {
+    "id": "map",
+    "input": {
+      "type": "map",
+      "keyType": "string",
+      "valueType": "integer",
+      "valueContainsNull": false
+    }
+  },
+  {
+    "id": "map-default",
+    "input": {
+      "type": "map",
+      "keyType": "string",
+      "valueType": "integer"
+    }
+  },
+  {
+    "id": "atomic-object",
+    "input": {
+      "type": "integer"
+    }
+  },
+  {
+    "id": "unknown-property",
+    "input": {
+      "type": "struct",
+      "fields": [],
+      "future": {
+        "keep": true
+      }
+    }
+  },
+  {
+    "id": "field-defaults",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "x",
+          "type": "string"
+        }
+      ]
+    }
+  },
+  {
+    "id": "field-unknown",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "x",
+          "type": "integer",
+          "nullable": true,
+          "metadata": {},
+          "future": true
+        }
+      ]
+    }
+  },
+  {
+    "id": "duplicate-names",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "same",
+          "type": "integer",
+          "nullable": false,
+          "metadata": {}
+        },
+        {
+          "name": "same",
+          "type": "string",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "exact-metadata",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "x",
+          "type": "long",
+          "nullable": true,
+          "metadata": {
+            "large": 9223372036854775807,
+            "nested": {
+              "note": "café"
+            },
+            "array": [
+              1,
+              2
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "mixed-metadata",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "x",
+          "type": "long",
+          "nullable": true,
+          "metadata": {
+            "mixed": [
+              1,
+              "a"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "collated-field",
+    "input": {
+      "fields": [
+        {
+          "metadata": {
+            "__COLLATIONS": {
+              "name": "spark.UTF8_LCASE"
+            }
+          },
+          "name": "name",
+          "nullable": true,
+          "type": "string"
+        }
+      ],
+      "type": "struct"
+    }
+  },
+  {
+    "id": "collated-array",
+    "input": {
+      "fields": [
+        {
+          "metadata": {
+            "__COLLATIONS": {
+              "values.element": "spark.UTF8_LCASE"
+            }
+          },
+          "name": "values",
+          "nullable": true,
+          "type": {
+            "containsNull": true,
+            "elementType": "string",
+            "type": "array"
+          }
+        }
+      ],
+      "type": "struct"
+    }
+  },
+  {
+    "id": "nested",
+    "input": {
+      "fields": [
+        {
+          "metadata": {},
+          "name": "items",
+          "nullable": false,
+          "type": {
+            "containsNull": true,
+            "elementType": {
+              "fields": [
+                {
+                  "metadata": {},
+                  "name": "cost",
+                  "nullable": false,
+                  "type": "decimal(18,4)"
+                }
+              ],
+              "type": "struct"
+            },
+            "type": "array"
+          }
+        }
+      ],
+      "type": "struct"
+    }
+  }
+]

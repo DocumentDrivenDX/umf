@@ -1,0 +1,191 @@
+{
+  "umf": "0.1.0",
+  "id": "cpp-21.0.0/generated_union.arrow_file/message/0",
+  "vocabularies": {
+    "umf.arrow.flatbuffer": {
+      "version": "0.1.0"
+    }
+  },
+  "modules": [
+    {
+      "id": "metadata",
+      "namespace": "",
+      "elements": [
+        {
+          "id": "root",
+          "extensions": {
+            "umf.arrow.flatbuffer": {
+              "profile": "arrow-flatbuffer-model",
+              "model": {
+                "rootType": "Message",
+                "value": {
+                  "version": "V5",
+                  "header": {
+                    "type": "Schema",
+                    "value": {
+                      "fields": [
+                        {
+                          "name": "sparse_1",
+                          "nullable": true,
+                          "type": {
+                            "type": "Union",
+                            "value": {
+                              "typeIds": [
+                                5,
+                                7
+                              ]
+                            }
+                          },
+                          "children": [
+                            {
+                              "name": "f1",
+                              "nullable": true,
+                              "type": {
+                                "type": "Int",
+                                "value": {
+                                  "bitWidth": 32,
+                                  "is_signed": true
+                                }
+                              },
+                              "children": []
+                            },
+                            {
+                              "name": "f2",
+                              "nullable": true,
+                              "type": {
+                                "type": "Utf8",
+                                "value": {}
+                              },
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "dense_1",
+                          "nullable": true,
+                          "type": {
+                            "type": "Union",
+                            "value": {
+                              "mode": "Dense",
+                              "typeIds": [
+                                10,
+                                20
+                              ]
+                            }
+                          },
+                          "children": [
+                            {
+                              "name": "f1",
+                              "nullable": true,
+                              "type": {
+                                "type": "Int",
+                                "value": {
+                                  "bitWidth": 16,
+                                  "is_signed": true
+                                }
+                              },
+                              "children": []
+                            },
+                            {
+                              "name": "f2",
+                              "nullable": true,
+                              "type": {
+                                "type": "Binary",
+                                "value": {}
+                              },
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "sparse_2",
+                          "type": {
+                            "type": "Union",
+                            "value": {
+                              "typeIds": [
+                                5,
+                                7
+                              ]
+                            }
+                          },
+                          "children": [
+                            {
+                              "name": "f1",
+                              "type": {
+                                "type": "FloatingPoint",
+                                "value": {
+                                  "precision": "SINGLE"
+                                }
+                              },
+                              "children": []
+                            },
+                            {
+                              "name": "f2",
+                              "nullable": true,
+                              "type": {
+                                "type": "Bool",
+                                "value": {}
+                              },
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "dense_2",
+                          "type": {
+                            "type": "Union",
+                            "value": {
+                              "mode": "Dense",
+                              "typeIds": [
+                                42,
+                                43,
+                                44
+                              ]
+                            }
+                          },
+                          "children": [
+                            {
+                              "name": "f1",
+                              "type": {
+                                "type": "Int",
+                                "value": {
+                                  "bitWidth": 8
+                                }
+                              },
+                              "children": []
+                            },
+                            {
+                              "name": "f2",
+                              "nullable": true,
+                              "type": {
+                                "type": "Int",
+                                "value": {
+                                  "bitWidth": 16
+                                }
+                              },
+                              "children": []
+                            },
+                            {
+                              "name": "f3",
+                              "nullable": true,
+                              "type": {
+                                "type": "Null",
+                                "value": {}
+                              },
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "custom_metadata": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

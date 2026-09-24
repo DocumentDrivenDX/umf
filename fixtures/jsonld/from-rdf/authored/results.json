@@ -1,0 +1,549 @@
+{
+  "results": [
+    {
+      "id": "exact-native",
+      "source": "<urn:s> <urn:p> \"9007199254740993\"^^<http://www.w3.org/2001/XMLSchema#integer> .\n<urn:s> <urn:p> \"333333333.33333329\"^^<http://www.w3.org/2001/XMLSchema#double> .\n<urn:s> <urn:p> \"-0.0\"^^<http://www.w3.org/2001/XMLSchema#double> .\n",
+      "options": {
+        "id": "exact-native-jsonld",
+        "baseIRI": "https://example.org/source",
+        "lossPolicy": "report",
+        "useNativeTypes": true
+      },
+      "expected": "[{\"@id\":\"urn:s\",\"urn:p\":[{\"@value\":9007199254740993},{\"@value\":333333333.33333329},{\"@value\":-0.0}]}]",
+      "edit": {
+        "index": 0,
+        "value": "9007199254740995"
+      },
+      "editedExpected": "[{\"@id\":\"urn:s\",\"urn:p\":[{\"@value\":9007199254740995},{\"@value\":333333333.33333329},{\"@value\":-0.0}]}]",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_NATIVE_TYPES",
+          "path": "",
+          "severity": "warning",
+          "message": "Native scalar conversion may change RDF datatype and lexical representation; the full RDF source is retained in this report."
+        },
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/authored/exact-native.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/authored/exact-native.yaml.jsonld"
+        }
+      ],
+      "edits": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/authored/exact-native.edited.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/authored/exact-native.edited.yaml.jsonld"
+        }
+      ]
+    },
+    {
+      "id": "typed-lexical",
+      "source": "<urn:s> <urn:p> \"0001\"^^<http://www.w3.org/2001/XMLSchema#integer> .\n<urn:s> <urn:p> \"1e400\"^^<http://www.w3.org/2001/XMLSchema#double> .\n",
+      "expected": "[{\"@id\": \"urn:s\", \"urn:p\": [{\"@type\": \"http://www.w3.org/2001/XMLSchema#integer\", \"@value\": \"0001\"}, {\"@type\": \"http://www.w3.org/2001/XMLSchema#double\", \"@value\": \"1e400\"}]}]",
+      "options": {
+        "id": "typed-lexical-jsonld",
+        "baseIRI": "https://example.org/source",
+        "lossPolicy": "report"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/authored/typed-lexical.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/authored/typed-lexical.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "nonfinite-typed",
+      "source": "<urn:s> <urn:p> \"1e400\"^^<http://www.w3.org/2001/XMLSchema#double> .\n<urn:s> <urn:p> \"NaN\"^^<http://www.w3.org/2001/XMLSchema#double> .\n<urn:s> <urn:p> \"+INF\"^^<http://www.w3.org/2001/XMLSchema#double> .\n",
+      "options": {
+        "id": "nonfinite-typed-jsonld",
+        "baseIRI": "https://example.org/source",
+        "lossPolicy": "report",
+        "useNativeTypes": true
+      },
+      "expected": "[{\"@id\": \"urn:s\", \"urn:p\": [{\"@type\": \"http://www.w3.org/2001/XMLSchema#double\", \"@value\": \"1e400\"}, {\"@type\": \"http://www.w3.org/2001/XMLSchema#double\", \"@value\": \"NaN\"}, {\"@type\": \"http://www.w3.org/2001/XMLSchema#double\", \"@value\": \"+INF\"}]}]",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_NATIVE_TYPES",
+          "path": "",
+          "severity": "warning",
+          "message": "Native scalar conversion may change RDF datatype and lexical representation; the full RDF source is retained in this report."
+        },
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/authored/nonfinite-typed.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/authored/nonfinite-typed.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "exact-json",
+      "source": "<urn:s> <urn:p> \"{\\\"n\\\":9007199254740993,\\\"a\\\":[1e400,-0],\\\"@language\\\":\\\"EN\\\"}\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#JSON> .\n",
+      "expected": "[{\"@id\":\"urn:s\",\"urn:p\":[{\"@type\":\"@json\",\"@value\":{\"n\":9007199254740993,\"a\":[1e400,-0],\"@language\":\"EN\"}}]}]",
+      "options": {
+        "id": "exact-json-jsonld",
+        "baseIRI": "https://example.org/source",
+        "lossPolicy": "report"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/authored/exact-json.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/authored/exact-json.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "direction-native",
+      "source": "<urn:s> <urn:p> \"hello\"^^<https://www.w3.org/ns/i18n#en_rtl> .\n",
+      "options": {
+        "id": "direction-native-jsonld",
+        "baseIRI": "https://example.org/source",
+        "lossPolicy": "report",
+        "useNativeTypes": true,
+        "rdfDirection": "i18n-datatype"
+      },
+      "expected": "[{\"@id\":\"urn:s\",\"urn:p\":[{\"@value\":\"hello\",\"@language\":\"en\",\"@direction\":\"rtl\"}]}]",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/authored/direction-native.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/authored/direction-native.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "empty-graph",
+      "syntax": "trig",
+      "source": "GRAPH <urn:empty> {} <urn:empty> <urn:p> \"v\" .",
+      "expected": "[{\"@id\":\"urn:empty\",\"urn:p\":[{\"@value\":\"v\"}],\"@graph\":[]}]",
+      "oracleInput": "<urn:empty> <urn:p> \"v\" .\n",
+      "options": {
+        "id": "empty-graph-jsonld",
+        "baseIRI": "https://example.org/source",
+        "lossPolicy": "report"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/authored/empty-graph.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/authored/empty-graph.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "loss-reject",
+      "source": "<urn:s> <urn:p> \"1\"^^<http://www.w3.org/2001/XMLSchema#integer> .\n",
+      "options": {
+        "id": "loss-reject-jsonld",
+        "baseIRI": "https://example.org/source",
+        "lossPolicy": "reject",
+        "useNativeTypes": true
+      },
+      "blocked": true,
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_NATIVE_TYPES",
+          "path": "",
+          "severity": "warning",
+          "message": "Native scalar conversion may change RDF datatype and lexical representation; the full RDF source is retained in this report."
+        },
+        {
+          "code": "JSONLD_FROM_RDF_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: Native scalar conversion may change RDF datatype and lexical representation; the full RDF source is retained in this report."
+        }
+      ],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "normalized-comments",
+      "source": "# comment contains \"quoted\" and (text)\n<urn:s> <urn:p> \"v\"^^<http://www.w3.org/2001/XMLSchema#string> .\n",
+      "expected": "[{\"@id\":\"urn:s\",\"urn:p\":[{\"@value\":\"v\"}]}]",
+      "options": {
+        "id": "normalized-comments-jsonld",
+        "baseIRI": "https://example.org/source",
+        "lossPolicy": "report"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/authored/normalized-comments.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/authored/normalized-comments.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "bad-json",
+      "source": "<urn:s> <urn:p> \"{\\\"n\\\":}\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#JSON> .\n",
+      "blocked": true,
+      "options": {
+        "id": "bad-json-jsonld",
+        "baseIRI": "https://example.org/source",
+        "lossPolicy": "report"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: Invalid native JSON"
+        }
+      ],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "compound-shared",
+      "source": "<urn:s> <urn:p> _:cl .\n<urn:t> <urn:p> _:cl .\n_:cl <http://www.w3.org/1999/02/22-rdf-syntax-ns#value> \"hello\" .\n_:cl <http://www.w3.org/1999/02/22-rdf-syntax-ns#direction> \"rtl\" .\n",
+      "options": {
+        "id": "compound-shared-jsonld",
+        "baseIRI": "https://example.org/source",
+        "lossPolicy": "report",
+        "rdfDirection": "compound-literal"
+      },
+      "expected": "[{\"@id\": \"_:cl\", \"http://www.w3.org/1999/02/22-rdf-syntax-ns#value\": [{\"@value\": \"hello\"}], \"http://www.w3.org/1999/02/22-rdf-syntax-ns#direction\": [{\"@value\": \"rtl\"}]}, {\"@id\": \"urn:s\", \"urn:p\": [{\"@id\": \"_:cl\"}]}, {\"@id\": \"urn:t\", \"urn:p\": [{\"@id\": \"_:cl\"}]}]",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/authored/compound-shared.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/authored/compound-shared.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "compound-extra-report",
+      "source": "<urn:s> <urn:p> _:cl .\n_:cl <http://www.w3.org/1999/02/22-rdf-syntax-ns#value> \"hello\" .\n_:cl <http://www.w3.org/1999/02/22-rdf-syntax-ns#direction> \"rtl\" .\n_:cl <urn:extra> \"archived\" .\n",
+      "options": {
+        "id": "compound-extra-report-jsonld",
+        "baseIRI": "https://example.org/source",
+        "lossPolicy": "report",
+        "rdfDirection": "compound-literal"
+      },
+      "expected": "[{\"@id\":\"urn:s\",\"urn:p\":[{\"@value\":\"hello\",\"@direction\":\"rtl\"}]}]",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "compound literal additional properties: Compound literal conversion omits additional node properties."
+        },
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/authored/compound-extra-report.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/authored/compound-extra-report.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "compound-extra-reject",
+      "source": "<urn:s> <urn:p> _:cl .\n_:cl <http://www.w3.org/1999/02/22-rdf-syntax-ns#value> \"hello\" .\n_:cl <http://www.w3.org/1999/02/22-rdf-syntax-ns#direction> \"rtl\" .\n_:cl <urn:extra> \"archived\" .\n",
+      "options": {
+        "id": "compound-extra-reject-jsonld",
+        "baseIRI": "https://example.org/source",
+        "lossPolicy": "reject",
+        "rdfDirection": "compound-literal"
+      },
+      "blocked": true,
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "compound literal additional properties: Compound literal conversion omits additional node properties."
+        },
+        {
+          "code": "JSONLD_FROM_RDF_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: compound literal additional properties: Compound literal conversion omits additional node properties."
+        }
+      ],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "compound-invalid",
+      "source": "<urn:s> <urn:p> _:cl .\n_:cl <http://www.w3.org/1999/02/22-rdf-syntax-ns#value> \"hello\" .\n_:cl <http://www.w3.org/1999/02/22-rdf-syntax-ns#direction> \"up\" .\n",
+      "options": {
+        "id": "compound-invalid-jsonld",
+        "baseIRI": "https://example.org/source",
+        "lossPolicy": "report",
+        "rdfDirection": "compound-literal"
+      },
+      "blocked": true,
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.InvalidCompoundLiteral: Invalid compound literal direction."
+        }
+      ],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "compound-list",
+      "source": "<urn:s> <urn:p> _:l .\n_:l <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:cl .\n_:l <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .\n_:cl <http://www.w3.org/1999/02/22-rdf-syntax-ns#value> \"hello\" .\n_:cl <http://www.w3.org/1999/02/22-rdf-syntax-ns#direction> \"rtl\" .\n",
+      "options": {
+        "id": "compound-list-jsonld",
+        "baseIRI": "https://example.org/source",
+        "lossPolicy": "report",
+        "rdfDirection": "compound-literal"
+      },
+      "expected": "[{\"@id\":\"urn:s\",\"urn:p\":[{\"@list\":[{\"@value\":\"hello\",\"@direction\":\"rtl\"}]}]}]",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/authored/compound-list.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/authored/compound-list.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "json-10-typed",
+      "source": "<urn:s> <urn:p> \"{\\\"n\\\":9007199254740993,\\\"a\\\":[1e400,-0],\\\"@language\\\":\\\"EN\\\"}\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#JSON> .\n",
+      "options": {
+        "id": "json-10-typed-jsonld",
+        "baseIRI": "https://example.org/source",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.0"
+      },
+      "expected": "[{\"@id\": \"urn:s\", \"urn:p\": [{\"@type\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#JSON\", \"@value\": \"{\\\"n\\\":9007199254740993,\\\"a\\\":[1e400,-0],\\\"@language\\\":\\\"EN\\\"}\"}]}]",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/authored/json-10-typed.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/authored/json-10-typed.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "direction-invalid",
+      "source": "<urn:s> <urn:p> \"v\"^^<https://www.w3.org/ns/i18n#en_up> .\n",
+      "options": {
+        "id": "direction-invalid-jsonld",
+        "baseIRI": "https://example.org/source",
+        "lossPolicy": "report",
+        "rdfDirection": "i18n-datatype"
+      },
+      "blocked": true,
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: Direction datatype must encode one language and ltr or rtl; RDF source retained without a candidate"
+        }
+      ],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "direction-extra",
+      "source": "<urn:s> <urn:p> \"v\"^^<https://www.w3.org/ns/i18n#en_rtl_extra> .\n",
+      "options": {
+        "id": "direction-extra-jsonld",
+        "baseIRI": "https://example.org/source",
+        "lossPolicy": "report",
+        "rdfDirection": "i18n-datatype"
+      },
+      "blocked": true,
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: Direction datatype must encode one language and ltr or rtl; RDF source retained without a candidate"
+        }
+      ],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "direction-opaque",
+      "source": "<urn:s> <urn:p> \"v\"^^<https://www.w3.org/ns/i18n#en_up> .\n",
+      "expected": "[{\"@id\": \"urn:s\", \"urn:p\": [{\"@type\": \"https://www.w3.org/ns/i18n#en_up\", \"@value\": \"v\"}]}]",
+      "options": {
+        "id": "direction-opaque-jsonld",
+        "baseIRI": "https://example.org/source",
+        "lossPolicy": "report"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/authored/direction-opaque.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/authored/direction-opaque.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    }
+  ]
+}

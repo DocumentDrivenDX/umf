@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://umf.dev/extensions/iceberg-table/0.1.0/context.schema.json",
+  "title": "Bounded Iceberg current-reference inspection",
+  "type": "object",
+  "required": ["status", "complete", "scope", "resolved", "diagnostics"],
+  "additionalProperties": false,
+  "properties": {
+    "status": {"enum": ["checked", "blocked"]},
+    "complete": {"const": false},
+    "scope": {"const": "iceberg-v1-v3-current-references"},
+    "resolved": {"type": "object", "additionalProperties": {"type": "string"}},
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code", "path", "message", "severity"],
+        "additionalProperties": false,
+        "properties": {
+          "code": {"type": "string"},
+          "path": {"type": "string"},
+          "message": {"type": "string"},
+          "severity": {"enum": ["warning", "error"]}
+        }
+      }
+    }
+  }
+}

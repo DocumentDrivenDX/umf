@@ -1,0 +1,604 @@
+{
+  "cases": [
+    {
+      "mode": "monolithic",
+      "result": {
+        "status": "projected",
+        "source": {
+          "umf": "0.1.0",
+          "id": "monolithic",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "renamed"
+                  },
+                  "primary_key": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "string",
+                        "value": "id"
+                      },
+                      {
+                        "kind": "string",
+                        "value": "context"
+                      }
+                    ]
+                  },
+                  "context_column": {
+                    "kind": "string",
+                    "value": "context"
+                  },
+                  "future/~": {
+                    "kind": "object",
+                    "members": {
+                      "exact": {
+                        "kind": "number",
+                        "value": "9007199254740993"
+                      }
+                    }
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "id"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "INTEGER"
+                          },
+                          "nullable": {
+                            "kind": "object",
+                            "members": {
+                              "sales": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "support": {
+                                "kind": "boolean",
+                                "value": true
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "context"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "VARCHAR"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"source\",\"primary_key\":[\"id\"],\"context_column\":\"context\",\"future/~\":{\"exact\":9007199254740993},\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\",\"nullable\":{\"sales\":false,\"support\":true}},{\"name\":\"context\",\"data_type\":\"VARCHAR\",\"nullable\":false}]}",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "renamed",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "id",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:1",
+                  "name": "context",
+                  "scalarType": "string",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "id": "target",
+          "recordName": "Target",
+          "namespace": "example",
+          "context": "sales",
+          "lossPolicy": "allow-reported-loss",
+          "fields": {
+            "id": {
+              "name": "id",
+              "representation": "int32",
+              "nullable": "source"
+            }
+          }
+        },
+        "issues": [
+          {
+            "path": "",
+            "code": "TABLESPEC_EXECUTION",
+            "classification": "not-enforced",
+            "detail": "Native Pydantic validation/coercion, constraints, relationships, derivations, pipelines and split-loader migrations are not executed by this schema projection",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "SCHEMA_ONLY",
+            "classification": "representation-change",
+            "detail": "Native values require a separate encoder; the copied source UMF remains required for native meaning",
+            "retainedInSource": true
+          },
+          {
+            "path": "/version",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/table_name",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/primary_key",
+            "code": "PRIMARY_KEY_NOT_ENFORCED",
+            "classification": "not-enforced",
+            "detail": "Avro record schemas do not enforce native table primary-key membership or uniqueness",
+            "retainedInSource": true
+          },
+          {
+            "path": "/context_column",
+            "code": "CONTEXT_DISPATCH_NOT_ENFORCED",
+            "classification": "not-enforced",
+            "detail": "The policy selects a schema context; Avro does not dispatch validation from the native context column for each row",
+            "retainedInSource": true
+          },
+          {
+            "path": "/future~1~0",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/1",
+            "code": "COLUMN_OMITTED",
+            "classification": "not-enforced",
+            "detail": "Native column omitted by explicit field selection",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/0/nullable",
+            "code": "CONTEXT_SELECTED",
+            "classification": "annotation-only",
+            "detail": "Only the selected context is represented; other context meanings remain in source",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/0",
+            "code": "INTEGER_PROFILE",
+            "classification": "not-enforced",
+            "detail": "Selected integer width is a binding choice; the pinned Spark helper uses 32 bits and other execution rules remain source-owned",
+            "retainedInSource": true
+          }
+        ],
+        "mappings": [
+          {
+            "index": 0,
+            "column": "id",
+            "field": "id",
+            "representation": "int32",
+            "nullable": false
+          }
+        ],
+        "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Target\",\n  \"namespace\": \"example\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"int\"\n    }\n  ]\n}\n",
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Target"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "example"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "id"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "int"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "id",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "mode": "split",
+      "result": {
+        "status": "projected",
+        "source": {
+          "umf": "0.1.0",
+          "id": "split",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "renamed"
+                  },
+                  "primary_key": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "string",
+                        "value": "id"
+                      },
+                      {
+                        "kind": "string",
+                        "value": "context"
+                      }
+                    ]
+                  },
+                  "context_column": {
+                    "kind": "string",
+                    "value": "context"
+                  },
+                  "future/~": {
+                    "kind": "object",
+                    "members": {
+                      "exact": {
+                        "kind": "number",
+                        "value": "9007199254740993"
+                      }
+                    }
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "id"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "INTEGER"
+                          },
+                          "nullable": {
+                            "kind": "object",
+                            "members": {
+                              "sales": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "support": {
+                                "kind": "boolean",
+                                "value": true
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "context"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "VARCHAR"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"source\",\"primary_key\":[\"id\"],\"context_column\":\"context\",\"future/~\":{\"exact\":9007199254740993},\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\",\"nullable\":{\"sales\":false,\"support\":true}},{\"name\":\"context\",\"data_type\":\"VARCHAR\",\"nullable\":false}]}",
+              "originalFormat": "json",
+              "splitFiles": {
+                "table.yaml": "{\"version\":\"1.0\",\"table_name\":\"source\",\"primary_key\":[\"id\"],\"context_column\":\"context\",\"future/~\":{\"exact\":9007199254740993},\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\",\"nullable\":{\"sales\":false,\"support\":true}},{\"name\":\"context\",\"data_type\":\"VARCHAR\",\"nullable\":false}]}",
+                "columns/01-id.yaml": "{\"column\":{\"name\":\"id\",\"data_type\":\"INTEGER\",\"nullable\":{\"sales\":false,\"support\":true}}}",
+                "columns/02-context.yaml": "{\"column\":{\"name\":\"context\",\"data_type\":\"VARCHAR\",\"nullable\":false}}",
+                "notes.txt": "keep"
+              }
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "renamed",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "id",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:1",
+                  "name": "context",
+                  "scalarType": "string",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "id": "target",
+          "recordName": "Target",
+          "namespace": "example",
+          "context": "sales",
+          "lossPolicy": "allow-reported-loss",
+          "fields": {
+            "id": {
+              "name": "id",
+              "representation": "int32",
+              "nullable": "source"
+            }
+          }
+        },
+        "issues": [
+          {
+            "path": "",
+            "code": "TABLESPEC_EXECUTION",
+            "classification": "not-enforced",
+            "detail": "Native Pydantic validation/coercion, constraints, relationships, derivations, pipelines and split-loader migrations are not executed by this schema projection",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "SCHEMA_ONLY",
+            "classification": "representation-change",
+            "detail": "Native values require a separate encoder; the copied source UMF remains required for native meaning",
+            "retainedInSource": true
+          },
+          {
+            "path": "/version",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/table_name",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/primary_key",
+            "code": "PRIMARY_KEY_NOT_ENFORCED",
+            "classification": "not-enforced",
+            "detail": "Avro record schemas do not enforce native table primary-key membership or uniqueness",
+            "retainedInSource": true
+          },
+          {
+            "path": "/context_column",
+            "code": "CONTEXT_DISPATCH_NOT_ENFORCED",
+            "classification": "not-enforced",
+            "detail": "The policy selects a schema context; Avro does not dispatch validation from the native context column for each row",
+            "retainedInSource": true
+          },
+          {
+            "path": "/future~1~0",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/1",
+            "code": "COLUMN_OMITTED",
+            "classification": "not-enforced",
+            "detail": "Native column omitted by explicit field selection",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/0/nullable",
+            "code": "CONTEXT_SELECTED",
+            "classification": "annotation-only",
+            "detail": "Only the selected context is represented; other context meanings remain in source",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/0",
+            "code": "INTEGER_PROFILE",
+            "classification": "not-enforced",
+            "detail": "Selected integer width is a binding choice; the pinned Spark helper uses 32 bits and other execution rules remain source-owned",
+            "retainedInSource": true
+          }
+        ],
+        "mappings": [
+          {
+            "index": 0,
+            "column": "id",
+            "field": "id",
+            "representation": "int32",
+            "nullable": false
+          }
+        ],
+        "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Target\",\n  \"namespace\": \"example\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"int\"\n    }\n  ]\n}\n",
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Target"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "example"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "id"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "int"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "id",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

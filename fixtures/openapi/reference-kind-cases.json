@@ -1,0 +1,362 @@
+[
+  {
+    "kind": "parameter",
+    "target": {
+      "name": "id",
+      "in": "query",
+      "schema": {
+        "type": "string"
+      }
+    },
+    "result": {
+      "kind": "parameter",
+      "target": {
+        "uri": "https://example.test/target.json",
+        "pointer": "",
+        "node": {
+          "kind": "object",
+          "members": {
+            "name": {
+              "kind": "string",
+              "value": "id"
+            },
+            "in": {
+              "kind": "string",
+              "value": "query"
+            },
+            "schema": {
+              "kind": "object",
+              "members": {
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "chain": [
+        {
+          "uri": "https://example.test/root.json",
+          "pointer": "/components/parameters/Start",
+          "reference": {
+            "kind": "object",
+            "members": {
+              "$ref": {
+                "kind": "string",
+                "value": "target.json"
+              }
+            }
+          }
+        }
+      ],
+      "effectiveAnnotations": {},
+      "complete": false,
+      "limitations": [
+        "The caller declares the Reference Object role; source position is not inferred",
+        "Nested references and embedded schema/dialect scopes are not resolved by this operation",
+        "Object syntax validation does not implement HTTP serialization, authorization or runtime behavior"
+      ]
+    }
+  },
+  {
+    "kind": "header",
+    "target": {
+      "schema": {
+        "type": "string"
+      }
+    },
+    "result": {
+      "kind": "header",
+      "target": {
+        "uri": "https://example.test/target.json",
+        "pointer": "",
+        "node": {
+          "kind": "object",
+          "members": {
+            "schema": {
+              "kind": "object",
+              "members": {
+                "type": {
+                  "kind": "string",
+                  "value": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "chain": [
+        {
+          "uri": "https://example.test/root.json",
+          "pointer": "/components/headers/Start",
+          "reference": {
+            "kind": "object",
+            "members": {
+              "$ref": {
+                "kind": "string",
+                "value": "target.json"
+              }
+            }
+          }
+        }
+      ],
+      "effectiveAnnotations": {},
+      "complete": false,
+      "limitations": [
+        "The caller declares the Reference Object role; source position is not inferred",
+        "Nested references and embedded schema/dialect scopes are not resolved by this operation",
+        "Object syntax validation does not implement HTTP serialization, authorization or runtime behavior"
+      ]
+    }
+  },
+  {
+    "kind": "response",
+    "target": {
+      "description": "OK"
+    },
+    "result": {
+      "kind": "response",
+      "target": {
+        "uri": "https://example.test/target.json",
+        "pointer": "",
+        "node": {
+          "kind": "object",
+          "members": {
+            "description": {
+              "kind": "string",
+              "value": "OK"
+            }
+          }
+        }
+      },
+      "chain": [
+        {
+          "uri": "https://example.test/root.json",
+          "pointer": "/components/responses/Start",
+          "reference": {
+            "kind": "object",
+            "members": {
+              "$ref": {
+                "kind": "string",
+                "value": "target.json"
+              }
+            }
+          }
+        }
+      ],
+      "effectiveAnnotations": {
+        "description": "OK"
+      },
+      "complete": false,
+      "limitations": [
+        "The caller declares the Reference Object role; source position is not inferred",
+        "Nested references and embedded schema/dialect scopes are not resolved by this operation",
+        "Object syntax validation does not implement HTTP serialization, authorization or runtime behavior"
+      ]
+    }
+  },
+  {
+    "kind": "request-body",
+    "target": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "result": {
+      "kind": "request-body",
+      "target": {
+        "uri": "https://example.test/target.json",
+        "pointer": "",
+        "node": {
+          "kind": "object",
+          "members": {
+            "content": {
+              "kind": "object",
+              "members": {
+                "application/json": {
+                  "kind": "object",
+                  "members": {
+                    "schema": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "chain": [
+        {
+          "uri": "https://example.test/root.json",
+          "pointer": "/components/requestBodies/Start",
+          "reference": {
+            "kind": "object",
+            "members": {
+              "$ref": {
+                "kind": "string",
+                "value": "target.json"
+              }
+            }
+          }
+        }
+      ],
+      "effectiveAnnotations": {},
+      "complete": false,
+      "limitations": [
+        "The caller declares the Reference Object role; source position is not inferred",
+        "Nested references and embedded schema/dialect scopes are not resolved by this operation",
+        "Object syntax validation does not implement HTTP serialization, authorization or runtime behavior"
+      ]
+    }
+  },
+  {
+    "kind": "example",
+    "target": {
+      "value": 7
+    },
+    "result": {
+      "kind": "example",
+      "target": {
+        "uri": "https://example.test/target.json",
+        "pointer": "",
+        "node": {
+          "kind": "object",
+          "members": {
+            "value": {
+              "kind": "number",
+              "value": "7"
+            }
+          }
+        }
+      },
+      "chain": [
+        {
+          "uri": "https://example.test/root.json",
+          "pointer": "/components/examples/Start",
+          "reference": {
+            "kind": "object",
+            "members": {
+              "$ref": {
+                "kind": "string",
+                "value": "target.json"
+              }
+            }
+          }
+        }
+      ],
+      "effectiveAnnotations": {},
+      "complete": false,
+      "limitations": [
+        "The caller declares the Reference Object role; source position is not inferred",
+        "Nested references and embedded schema/dialect scopes are not resolved by this operation",
+        "Object syntax validation does not implement HTTP serialization, authorization or runtime behavior"
+      ]
+    }
+  },
+  {
+    "kind": "link",
+    "target": {
+      "operationId": "targetOperation"
+    },
+    "result": {
+      "kind": "link",
+      "target": {
+        "uri": "https://example.test/target.json",
+        "pointer": "",
+        "node": {
+          "kind": "object",
+          "members": {
+            "operationId": {
+              "kind": "string",
+              "value": "targetOperation"
+            }
+          }
+        }
+      },
+      "chain": [
+        {
+          "uri": "https://example.test/root.json",
+          "pointer": "/components/links/Start",
+          "reference": {
+            "kind": "object",
+            "members": {
+              "$ref": {
+                "kind": "string",
+                "value": "target.json"
+              }
+            }
+          }
+        }
+      ],
+      "effectiveAnnotations": {},
+      "complete": false,
+      "limitations": [
+        "The caller declares the Reference Object role; source position is not inferred",
+        "Nested references and embedded schema/dialect scopes are not resolved by this operation",
+        "Object syntax validation does not implement HTTP serialization, authorization or runtime behavior"
+      ]
+    }
+  },
+  {
+    "kind": "security-scheme",
+    "target": {
+      "type": "http",
+      "scheme": "bearer"
+    },
+    "result": {
+      "kind": "security-scheme",
+      "target": {
+        "uri": "https://example.test/target.json",
+        "pointer": "",
+        "node": {
+          "kind": "object",
+          "members": {
+            "type": {
+              "kind": "string",
+              "value": "http"
+            },
+            "scheme": {
+              "kind": "string",
+              "value": "bearer"
+            }
+          }
+        }
+      },
+      "chain": [
+        {
+          "uri": "https://example.test/root.json",
+          "pointer": "/components/securitySchemes/Start",
+          "reference": {
+            "kind": "object",
+            "members": {
+              "$ref": {
+                "kind": "string",
+                "value": "target.json"
+              }
+            }
+          }
+        }
+      ],
+      "effectiveAnnotations": {},
+      "complete": false,
+      "limitations": [
+        "The caller declares the Reference Object role; source position is not inferred",
+        "Nested references and embedded schema/dialect scopes are not resolved by this operation",
+        "Object syntax validation does not implement HTTP serialization, authorization or runtime behavior"
+      ]
+    }
+  }
+]

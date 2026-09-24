@@ -1,0 +1,620 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:delta-log:actions:0.1.0",
+  "description": "Preservation grammar for known Delta action fields. Unknown fields/actions remain opaque. int64 format requires exact signed 64-bit integer validation in addition to generic JSON Schema validation. No commit, feature, URI, embedded-statistics or state validation.",
+  "type": "object",
+  "minProperties": 1,
+  "maxProperties": 1,
+  "properties": {
+    "add": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "partitionValues": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "dataChange": {
+          "type": "boolean"
+        },
+        "stats": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "deletionVector": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "storageType": {
+                  "enum": [
+                    "u",
+                    "i",
+                    "p"
+                  ]
+                },
+                "pathOrInlineDv": {
+                  "type": "string"
+                },
+                "offset": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": -2147483648,
+                      "maximum": 2147483647
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "sizeInBytes": {
+                  "type": "integer",
+                  "minimum": -2147483648,
+                  "maximum": 2147483647
+                },
+                "cardinality": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "required": [
+                "storageType",
+                "pathOrInlineDv",
+                "sizeInBytes",
+                "cardinality"
+              ],
+              "additionalProperties": true
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "baseRowId": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "format": "int64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "defaultRowCommitVersion": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "format": "int64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "modificationTime": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "clusteringProvider": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "partitionValues",
+        "size",
+        "modificationTime",
+        "dataChange"
+      ],
+      "additionalProperties": true
+    },
+    "remove": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "partitionValues": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "size": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "format": "int64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dataChange": {
+          "type": "boolean"
+        },
+        "stats": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "deletionVector": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "storageType": {
+                  "enum": [
+                    "u",
+                    "i",
+                    "p"
+                  ]
+                },
+                "pathOrInlineDv": {
+                  "type": "string"
+                },
+                "offset": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": -2147483648,
+                      "maximum": 2147483647
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "sizeInBytes": {
+                  "type": "integer",
+                  "minimum": -2147483648,
+                  "maximum": 2147483647
+                },
+                "cardinality": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "required": [
+                "storageType",
+                "pathOrInlineDv",
+                "sizeInBytes",
+                "cardinality"
+              ],
+              "additionalProperties": true
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "baseRowId": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "format": "int64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "defaultRowCommitVersion": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "format": "int64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "deletionTimestamp": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "format": "int64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "extendedFileMetadata": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "dataChange"
+      ],
+      "additionalProperties": true
+    },
+    "cdc": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "partitionValues": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "size": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "dataChange": {
+          "const": false
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "partitionValues",
+        "size",
+        "dataChange"
+      ],
+      "additionalProperties": true
+    },
+    "txn": {
+      "type": "object",
+      "properties": {
+        "appId": {
+          "type": "string"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "lastUpdated": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "format": "int64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "appId",
+        "version"
+      ],
+      "additionalProperties": true
+    },
+    "protocol": {
+      "type": "object",
+      "properties": {
+        "minReaderVersion": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "minWriterVersion": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "readerFeatures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "writerFeatures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "minReaderVersion",
+        "minWriterVersion"
+      ],
+      "additionalProperties": true
+    },
+    "metaData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "format": {
+          "type": "object",
+          "properties": {
+            "provider": {
+              "type": "string"
+            },
+            "options": {
+              "type": "object",
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          },
+          "required": [
+            "provider"
+          ],
+          "additionalProperties": true
+        },
+        "schemaString": {
+          "type": "string"
+        },
+        "partitionColumns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "configuration": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "createdTime": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "format": "int64"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "format",
+        "schemaString",
+        "partitionColumns",
+        "configuration"
+      ],
+      "additionalProperties": true
+    },
+    "commitInfo": {},
+    "domainMetadata": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string"
+        },
+        "configuration": {
+          "type": "string"
+        },
+        "removed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "domain",
+        "configuration",
+        "removed"
+      ],
+      "additionalProperties": true
+    },
+    "sidecar": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sizeInBytes": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "modificationTime": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "sizeInBytes",
+        "modificationTime"
+      ],
+      "additionalProperties": true
+    },
+    "checkpointMetadata": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "version"
+      ],
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

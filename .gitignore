@@ -1,0 +1,14 @@
+node_modules/
+dist/
+coverage/
+.playwright/
+.venv/
+
+.cache/
+
+native/smithy/browser/target/
+
+# Local generated Python caches and stale DDx lock guards
+__pycache__/
+*.pyc
+.ddx/*.stale-break.lock

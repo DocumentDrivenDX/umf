@@ -1,0 +1,241 @@
+{
+  "system": "Apache Iceberg",
+  "version": "1.11.0",
+  "commit": "6976e020b894f6a6777704df2b8c4458cb291ae9",
+  "files": [
+    {
+      "path": "core/src/test/resources/TableMetadataPartitionStatisticsFiles.json",
+      "sha256": "ab2017fb30aeb9a27a1c4a8a384732ec03e3bc87cbb30370c2a1f46e3808856f",
+      "source": "https://raw.githubusercontent.com/apache/iceberg/6976e020b894f6a6777704df2b8c4458cb291ae9/core/src/test/resources/TableMetadataPartitionStatisticsFiles.json"
+    },
+    {
+      "path": "core/src/test/resources/TableMetadataStatisticsFiles.json",
+      "sha256": "37422f9bba95447bfe1604d49faabdf7dda882c4f3a642de29181a65a8f42e5b",
+      "source": "https://raw.githubusercontent.com/apache/iceberg/6976e020b894f6a6777704df2b8c4458cb291ae9/core/src/test/resources/TableMetadataStatisticsFiles.json"
+    },
+    {
+      "path": "core/src/test/resources/TableMetadataUnsupportedVersion.json",
+      "sha256": "25a5108004532f081da1e0e823f64f300192917f5cf6d6ebbae8ed9658462531",
+      "source": "https://raw.githubusercontent.com/apache/iceberg/6976e020b894f6a6777704df2b8c4458cb291ae9/core/src/test/resources/TableMetadataUnsupportedVersion.json"
+    },
+    {
+      "path": "core/src/test/resources/TableMetadataV1MissingSchemaType.json",
+      "sha256": "acaebd6195a0ecab80bb9aacf977814517ffea83460a4ed8efd695657eda1265",
+      "source": "https://raw.githubusercontent.com/apache/iceberg/6976e020b894f6a6777704df2b8c4458cb291ae9/core/src/test/resources/TableMetadataV1MissingSchemaType.json"
+    },
+    {
+      "path": "core/src/test/resources/TableMetadataV1Valid.json",
+      "sha256": "3cf9ab3d20da58b63a2336c3d3e47555bfe8b087c6c1eeda86fe365126b93558",
+      "source": "https://raw.githubusercontent.com/apache/iceberg/6976e020b894f6a6777704df2b8c4458cb291ae9/core/src/test/resources/TableMetadataV1Valid.json"
+    },
+    {
+      "path": "core/src/test/resources/TableMetadataV2CurrentSchemaNotFound.json",
+      "sha256": "2b9a48914f028fad4d1ac6dbd3b85e085c6e8ef381b2397c5331739e9ad13b38",
+      "source": "https://raw.githubusercontent.com/apache/iceberg/6976e020b894f6a6777704df2b8c4458cb291ae9/core/src/test/resources/TableMetadataV2CurrentSchemaNotFound.json"
+    },
+    {
+      "path": "core/src/test/resources/TableMetadataV2MissingLastPartitionId.json",
+      "sha256": "5bb08f44ecb63e1c54ceda1286f74835db57d54260a25afe1d5e4015e5ba48e6",
+      "source": "https://raw.githubusercontent.com/apache/iceberg/6976e020b894f6a6777704df2b8c4458cb291ae9/core/src/test/resources/TableMetadataV2MissingLastPartitionId.json"
+    },
+    {
+      "path": "core/src/test/resources/TableMetadataV2MissingPartitionSpecs.json",
+      "sha256": "254b6622536e1cabda8389fbdad7863ab4a1fa3e388060884c5c16e988a51784",
+      "source": "https://raw.githubusercontent.com/apache/iceberg/6976e020b894f6a6777704df2b8c4458cb291ae9/core/src/test/resources/TableMetadataV2MissingPartitionSpecs.json"
+    },
+    {
+      "path": "core/src/test/resources/TableMetadataV2MissingSchemas.json",
+      "sha256": "f9ff49480553c0d41f4446a1fd2e8cfbb26ad99fbc85db27cb23352a9cba0d2d",
+      "source": "https://raw.githubusercontent.com/apache/iceberg/6976e020b894f6a6777704df2b8c4458cb291ae9/core/src/test/resources/TableMetadataV2MissingSchemas.json"
+    },
+    {
+      "path": "core/src/test/resources/TableMetadataV2MissingSortOrder.json",
+      "sha256": "18eb09b3b806bd1173b9eba63ccd4e494a09cb5cd87ab6a8fa3442e5e39fdcb9",
+      "source": "https://raw.githubusercontent.com/apache/iceberg/6976e020b894f6a6777704df2b8c4458cb291ae9/core/src/test/resources/TableMetadataV2MissingSortOrder.json"
+    },
+    {
+      "path": "core/src/test/resources/TableMetadataV2Valid.json",
+      "sha256": "5218e13f623ce46ebf5bace0f2278b2ee812f1c629b384c39df07c5828056bd8",
+      "source": "https://raw.githubusercontent.com/apache/iceberg/6976e020b894f6a6777704df2b8c4458cb291ae9/core/src/test/resources/TableMetadataV2Valid.json"
+    },
+    {
+      "path": "core/src/test/resources/TableMetadataV2ValidMinimal.json",
+      "sha256": "13f80ed2c3bb8b38b29dd33c9aa6aa4fbc2a01545851990edff3996dccc080a3",
+      "source": "https://raw.githubusercontent.com/apache/iceberg/6976e020b894f6a6777704df2b8c4458cb291ae9/core/src/test/resources/TableMetadataV2ValidMinimal.json"
+    },
+    {
+      "path": "core/src/test/resources/TableMetadataV3ValidMinimal.json",
+      "sha256": "0c5c20c42c7ad58c00a064e37dff67d8ba9c38c1ea9177ed7e4c752b6a47de29",
+      "source": "https://raw.githubusercontent.com/apache/iceberg/6976e020b894f6a6777704df2b8c4458cb291ae9/core/src/test/resources/TableMetadataV3ValidMinimal.json"
+    },
+    {
+      "path": "core/src/test/resources/org/apache/iceberg/view/ValidViewMetadata.json",
+      "sha256": "9621c8aea1d887d55255d37f55e4523f50ecc16ee50ebd37ff436f803df3eb9b",
+      "source": "https://raw.githubusercontent.com/apache/iceberg/6976e020b894f6a6777704df2b8c4458cb291ae9/core/src/test/resources/org/apache/iceberg/view/ValidViewMetadata.json"
+    },
+    {
+      "path": "core/src/test/resources/org/apache/iceberg/view/ViewMetadataInvalidCurrentSchema.json",
+      "sha256": "fc59c817505d312d410a6304ad1ad3899225045a6f8b89a1251cf0cf691c4a9b",
+      "source": "https://raw.githubusercontent.com/apache/iceberg/6976e020b894f6a6777704df2b8c4458cb291ae9/core/src/test/resources/org/apache/iceberg/view/ViewMetadataInvalidCurrentSchema.json"
+    },
+    {
+      "path": "core/src/test/resources/org/apache/iceberg/view/ViewMetadataInvalidCurrentVersion.json",
+      "sha256": "fcb992d3055497469c4652199293f5c3af2eaec50c79c3e55d5893e107214665",
+      "source": "https://raw.githubusercontent.com/apache/iceberg/6976e020b894f6a6777704df2b8c4458cb291ae9/core/src/test/resources/org/apache/iceberg/view/ViewMetadataInvalidCurrentVersion.json"
+    },
+    {
+      "path": "core/src/test/resources/org/apache/iceberg/view/ViewMetadataMissingCurrentVersion.json",
+      "sha256": "67fb0e7ffe1820e447fbd985c6be7021c682fad98bac043bbf9fb79a60b0b203",
+      "source": "https://raw.githubusercontent.com/apache/iceberg/6976e020b894f6a6777704df2b8c4458cb291ae9/core/src/test/resources/org/apache/iceberg/view/ViewMetadataMissingCurrentVersion.json"
+    },
+    {
+      "path": "core/src/test/resources/org/apache/iceberg/view/ViewMetadataMissingLocation.json",
+      "sha256": "1c5d9411abd396024fa67763eaf38842f634f24906a34741e96987b079ad36df",
+      "source": "https://raw.githubusercontent.com/apache/iceberg/6976e020b894f6a6777704df2b8c4458cb291ae9/core/src/test/resources/org/apache/iceberg/view/ViewMetadataMissingLocation.json"
+    },
+    {
+      "path": "core/src/test/resources/org/apache/iceberg/view/ViewMetadataMultipleSQLsForDialect.json",
+      "sha256": "9bf417f2003245be19730221cb3ac87d9180f3d9b49451da265089611f3e92b6",
+      "source": "https://raw.githubusercontent.com/apache/iceberg/6976e020b894f6a6777704df2b8c4458cb291ae9/core/src/test/resources/org/apache/iceberg/view/ViewMetadataMultipleSQLsForDialect.json"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "af1ae2fcde9b5d0bc5fd9a4c77bb5470b30eebe6ec4376a1afcb904a2544f4a7",
+      "source": "https://raw.githubusercontent.com/apache/iceberg/6976e020b894f6a6777704df2b8c4458cb291ae9/LICENSE"
+    },
+    {
+      "path": "NOTICE",
+      "sha256": "e0fb343939d21224979dd95cbca333c0592bdbc76912c6a8455f5926d5e6a072",
+      "source": "https://raw.githubusercontent.com/apache/iceberg/6976e020b894f6a6777704df2b8c4458cb291ae9/NOTICE"
+    }
+  ],
+  "schemas": [
+    {
+      "id": "schema-0",
+      "path": "core/src/test/resources/TableMetadataPartitionStatisticsFiles.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "cc9b0f67eac88398f70e43ffec4a3cafcaf8970e98a21a0d20add12001b0cc5b"
+    },
+    {
+      "id": "schema-1",
+      "path": "core/src/test/resources/TableMetadataStatisticsFiles.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "cc9b0f67eac88398f70e43ffec4a3cafcaf8970e98a21a0d20add12001b0cc5b"
+    },
+    {
+      "id": "schema-2",
+      "path": "core/src/test/resources/TableMetadataUnsupportedVersion.json",
+      "pointer": "/schema",
+      "canonicalSchemaSha256": "534108c731cbb65c01b50a3f1722d06d54d0de34ffcf71b20202262856718b96"
+    },
+    {
+      "id": "schema-3",
+      "path": "core/src/test/resources/TableMetadataV1MissingSchemaType.json",
+      "pointer": "/schema",
+      "canonicalSchemaSha256": "6d65b269522bf3df2a9c78e41e680c107ab217a912293478faf76331f2b7145c"
+    },
+    {
+      "id": "schema-4",
+      "path": "core/src/test/resources/TableMetadataV1Valid.json",
+      "pointer": "/schema",
+      "canonicalSchemaSha256": "534108c731cbb65c01b50a3f1722d06d54d0de34ffcf71b20202262856718b96"
+    },
+    {
+      "id": "schema-5",
+      "path": "core/src/test/resources/TableMetadataV2CurrentSchemaNotFound.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "cc9b0f67eac88398f70e43ffec4a3cafcaf8970e98a21a0d20add12001b0cc5b"
+    },
+    {
+      "id": "schema-6",
+      "path": "core/src/test/resources/TableMetadataV2CurrentSchemaNotFound.json",
+      "pointer": "/schemas/1",
+      "canonicalSchemaSha256": "6a7fd753c2df41fcd944693c9ef4463b85166d1c1a712ed1fc3c509d9a5f7faf"
+    },
+    {
+      "id": "schema-7",
+      "path": "core/src/test/resources/TableMetadataV2MissingLastPartitionId.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "11f610263921159c4ecaf12a33eb9ef45773ee7a6160becdd0f92af9093cfbf2"
+    },
+    {
+      "id": "schema-8",
+      "path": "core/src/test/resources/TableMetadataV2MissingPartitionSpecs.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "11f610263921159c4ecaf12a33eb9ef45773ee7a6160becdd0f92af9093cfbf2"
+    },
+    {
+      "id": "schema-9",
+      "path": "core/src/test/resources/TableMetadataV2MissingSchemas.json",
+      "pointer": "/schema",
+      "canonicalSchemaSha256": "534108c731cbb65c01b50a3f1722d06d54d0de34ffcf71b20202262856718b96"
+    },
+    {
+      "id": "schema-10",
+      "path": "core/src/test/resources/TableMetadataV2MissingSortOrder.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "11f610263921159c4ecaf12a33eb9ef45773ee7a6160becdd0f92af9093cfbf2"
+    },
+    {
+      "id": "schema-11",
+      "path": "core/src/test/resources/TableMetadataV2Valid.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "cc9b0f67eac88398f70e43ffec4a3cafcaf8970e98a21a0d20add12001b0cc5b"
+    },
+    {
+      "id": "schema-12",
+      "path": "core/src/test/resources/TableMetadataV2Valid.json",
+      "pointer": "/schemas/1",
+      "canonicalSchemaSha256": "ecfcb638fc5b4f4013d4ea582682ad2679c2367246b13cf4c2a7e1769538f2c1"
+    },
+    {
+      "id": "schema-13",
+      "path": "core/src/test/resources/TableMetadataV2ValidMinimal.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "11f610263921159c4ecaf12a33eb9ef45773ee7a6160becdd0f92af9093cfbf2"
+    },
+    {
+      "id": "schema-14",
+      "path": "core/src/test/resources/TableMetadataV3ValidMinimal.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "19fd3bf0149c718535c899d4f4bfcbfe76606707c382ef718ceb979e4d518650"
+    },
+    {
+      "id": "schema-15",
+      "path": "core/src/test/resources/org/apache/iceberg/view/ValidViewMetadata.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "11f610263921159c4ecaf12a33eb9ef45773ee7a6160becdd0f92af9093cfbf2"
+    },
+    {
+      "id": "schema-16",
+      "path": "core/src/test/resources/org/apache/iceberg/view/ViewMetadataInvalidCurrentSchema.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "6a7fd753c2df41fcd944693c9ef4463b85166d1c1a712ed1fc3c509d9a5f7faf"
+    },
+    {
+      "id": "schema-17",
+      "path": "core/src/test/resources/org/apache/iceberg/view/ViewMetadataInvalidCurrentVersion.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "6a7fd753c2df41fcd944693c9ef4463b85166d1c1a712ed1fc3c509d9a5f7faf"
+    },
+    {
+      "id": "schema-18",
+      "path": "core/src/test/resources/org/apache/iceberg/view/ViewMetadataMissingCurrentVersion.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "6a7fd753c2df41fcd944693c9ef4463b85166d1c1a712ed1fc3c509d9a5f7faf"
+    },
+    {
+      "id": "schema-19",
+      "path": "core/src/test/resources/org/apache/iceberg/view/ViewMetadataMissingLocation.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "6a7fd753c2df41fcd944693c9ef4463b85166d1c1a712ed1fc3c509d9a5f7faf"
+    },
+    {
+      "id": "schema-20",
+      "path": "core/src/test/resources/org/apache/iceberg/view/ViewMetadataMultipleSQLsForDialect.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "11f610263921159c4ecaf12a33eb9ef45773ee7a6160becdd0f92af9093cfbf2"
+    }
+  ],
+  "distinctSchemaCount": 7
+}

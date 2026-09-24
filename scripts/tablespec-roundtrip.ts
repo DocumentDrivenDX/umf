@@ -1,0 +1,9 @@
+import {importTableSpec,exportTableSpec,editTableSpecColumn,readDocument,writeDocument} from '../src';
+const cases=[{id:'providers',format:'yaml' as const,input:await Bun.file('native/tablespec/sources/examples/providers.yaml').text()},...['BOOLEAN','INTEGER','DECIMAL','FLOAT','VARCHAR','TEXT','CHAR','DATE','DATETIME','TIMESTAMP','EMBEDDING'].map(data_type=>({id:data_type,format:'json' as const,input:JSON.stringify({version:'1.0',table_name:'sample',columns:[{name:'value',data_type,nullable:false,...(data_type==='DECIMAL'?{precision:18,scale:4}:{}),...(data_type==='VARCHAR'?{length:80}:{}),...(data_type==='EMBEDDING'?{dimension:3}:{})}]})}))];
+const results=[];for(const c of cases){const d=importTableSpec(c.input,{id:c.id,format:c.format});results.push({...c,scalars:d.modules[0]!.elements.map(e=>e.scalarType??null),exports:['json','yaml'].map(format=>({format,text:exportTableSpec(readDocument(writeDocument(d,format as 'json'|'yaml'),format as 'json'|'yaml'))}))});}
+const originalInput=JSON.stringify({version:'1.0',table_name:'edited',columns:[{name:'value',data_type:'INTEGER',nullable:false,future:'retained'}]});
+const changes={data_type:{kind:'string' as const,value:'DECIMAL'},precision:{kind:'number' as const,value:'18'},scale:{kind:'number' as const,value:'4'}};
+const edited=editTableSpecColumn(importTableSpec(originalInput,{id:'edited',format:'json'}),0,changes);
+const expected=JSON.parse(originalInput);Object.assign(expected.columns[0],{data_type:'DECIMAL',precision:18,scale:4});
+results.push({id:'edited',format:'json',input:JSON.stringify(expected),originalInput,changes,scalars:['decimal'],exports:['json','yaml'].map(format=>({format,text:exportTableSpec(readDocument(writeDocument(edited,format as 'json'|'yaml'),format as 'json'|'yaml'))}))} as typeof results[number]);
+await Bun.write('fixtures/tablespec/roundtrip.json',JSON.stringify({results},null,2)+'\n');

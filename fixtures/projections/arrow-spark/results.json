@@ -1,0 +1,2092 @@
+{
+  "cases": 66,
+  "projected": 46,
+  "results": [
+    {
+      "id": "fixed-binary",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_BINARY_LAYOUT_LOSS",
+          "classification": "loss",
+          "detail": "Spark binary does not retain fixed size or large-offset layout",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "fixed-binary",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_BINARY_LAYOUT_LOSS",
+          "classification": "loss",
+          "detail": "Spark binary does not retain fixed size or large-offset layout",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "zero-binary",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_BINARY_LAYOUT_LOSS",
+          "classification": "loss",
+          "detail": "Spark binary does not retain fixed size or large-offset layout",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "zero-binary",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_BINARY_LAYOUT_LOSS",
+          "classification": "loss",
+          "detail": "Spark binary does not retain fixed size or large-offset layout",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "large-list",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_LIST_LAYOUT_LOSS",
+          "classification": "loss",
+          "detail": "Spark array does not retain large offsets or fixed list length",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/children/0/nullable",
+          "code": "ARROW_ELEMENT_NULLABILITY_LOSS",
+          "classification": "loss",
+          "detail": "Native Spark recovery widens array element nullability",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/children/0/name",
+          "code": "ARROW_CHILD_NAME_LOSS",
+          "classification": "loss",
+          "detail": "Spark array has no named element field",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "large-list",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_LIST_LAYOUT_LOSS",
+          "classification": "loss",
+          "detail": "Spark array does not retain large offsets or fixed list length",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/children/0/nullable",
+          "code": "ARROW_ELEMENT_NULLABILITY_LOSS",
+          "classification": "loss",
+          "detail": "Native Spark recovery widens array element nullability",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/children/0/name",
+          "code": "ARROW_CHILD_NAME_LOSS",
+          "classification": "loss",
+          "detail": "Spark array has no named element field",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "fixed-list",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_LIST_LAYOUT_LOSS",
+          "classification": "loss",
+          "detail": "Spark array does not retain large offsets or fixed list length",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/children/0/nullable",
+          "code": "ARROW_ELEMENT_NULLABILITY_LOSS",
+          "classification": "loss",
+          "detail": "Native Spark recovery widens array element nullability",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/children/0/name",
+          "code": "ARROW_CHILD_NAME_LOSS",
+          "classification": "loss",
+          "detail": "Spark array has no named element field",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "fixed-list",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_LIST_LAYOUT_LOSS",
+          "classification": "loss",
+          "detail": "Spark array does not retain large offsets or fixed list length",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/children/0/nullable",
+          "code": "ARROW_ELEMENT_NULLABILITY_LOSS",
+          "classification": "loss",
+          "detail": "Native Spark recovery widens array element nullability",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/children/0/name",
+          "code": "ARROW_CHILD_NAME_LOSS",
+          "classification": "loss",
+          "detail": "Spark array has no named element field",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "zero-list",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_LIST_LAYOUT_LOSS",
+          "classification": "loss",
+          "detail": "Spark array does not retain large offsets or fixed list length",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/children/0/name",
+          "code": "ARROW_CHILD_NAME_LOSS",
+          "classification": "loss",
+          "detail": "Spark array has no named element field",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "zero-list",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_LIST_LAYOUT_LOSS",
+          "classification": "loss",
+          "detail": "Spark array does not retain large offsets or fixed list length",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/children/0/name",
+          "code": "ARROW_CHILD_NAME_LOSS",
+          "classification": "loss",
+          "detail": "Spark array has no named element field",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "dictionary",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/dictionary",
+          "code": "ARROW_DICTIONARY_LOSS",
+          "classification": "loss",
+          "detail": "Dictionary identity, index encoding and ordering are not represented in Spark value type",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "dictionary",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/dictionary",
+          "code": "ARROW_DICTIONARY_LOSS",
+          "classification": "loss",
+          "detail": "Dictionary identity, index encoding and ordering are not represented in Spark value type",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "dictionary-list",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/dictionary",
+          "code": "ARROW_DICTIONARY_LOSS",
+          "classification": "loss",
+          "detail": "Dictionary identity, index encoding and ordering are not represented in Spark value type",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/children/0/name",
+          "code": "ARROW_CHILD_NAME_LOSS",
+          "classification": "loss",
+          "detail": "Spark array has no named element field",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "dictionary-list",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/dictionary",
+          "code": "ARROW_DICTIONARY_LOSS",
+          "classification": "loss",
+          "detail": "Dictionary identity, index encoding and ordering are not represented in Spark value type",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/children/0/name",
+          "code": "ARROW_CHILD_NAME_LOSS",
+          "classification": "loss",
+          "detail": "Spark array has no named element field",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "uint64",
+      "preferTimestampNtz": false,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Unsigned or unsupported integer width",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "uint64",
+      "preferTimestampNtz": true,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Unsigned or unsupported integer width",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "float16",
+      "preferTimestampNtz": false,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Half precision has no verified Spark mapping",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "float16",
+      "preferTimestampNtz": true,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Half precision has no verified Spark mapping",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "date64",
+      "preferTimestampNtz": false,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Only date32 is mapped by the pinned native conversion",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "date64",
+      "preferTimestampNtz": true,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Only date32 is mapped by the pinned native conversion",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "time32",
+      "preferTimestampNtz": false,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/type/value/unit",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Unknown Arrow property cannot be lowered",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Unsupported Arrow type Time",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "time32",
+      "preferTimestampNtz": true,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/type/value/unit",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Unknown Arrow property cannot be lowered",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Unsupported Arrow type Time",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "time64",
+      "preferTimestampNtz": false,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/type/value/unit",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Unknown Arrow property cannot be lowered",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/type/value/bitWidth",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Unknown Arrow property cannot be lowered",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Unsupported Arrow type Time",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "time64",
+      "preferTimestampNtz": true,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/type/value/unit",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Unknown Arrow property cannot be lowered",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/type/value/bitWidth",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Unknown Arrow property cannot be lowered",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Unsupported Arrow type Time",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "decimal32",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_DECIMAL_WIDTH_LOSS",
+          "classification": "loss",
+          "detail": "Spark decimal does not retain the Arrow physical decimal width",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "decimal32",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_DECIMAL_WIDTH_LOSS",
+          "classification": "loss",
+          "detail": "Spark decimal does not retain the Arrow physical decimal width",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "decimal64",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_DECIMAL_WIDTH_LOSS",
+          "classification": "loss",
+          "detail": "Spark decimal does not retain the Arrow physical decimal width",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "decimal64",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_DECIMAL_WIDTH_LOSS",
+          "classification": "loss",
+          "detail": "Spark decimal does not retain the Arrow physical decimal width",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "decimal256-small",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_DECIMAL_WIDTH_LOSS",
+          "classification": "loss",
+          "detail": "Spark decimal does not retain the Arrow physical decimal width",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "decimal256-small",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_DECIMAL_WIDTH_LOSS",
+          "classification": "loss",
+          "detail": "Spark decimal does not retain the Arrow physical decimal width",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "decimal256-large",
+      "preferTimestampNtz": false,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Decimal width/range/configuration outside verified Spark target",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "decimal256-large",
+      "preferTimestampNtz": true,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Decimal width/range/configuration outside verified Spark target",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "decimal-negative",
+      "preferTimestampNtz": false,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Decimal width/range/configuration outside verified Spark target",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "decimal-negative",
+      "preferTimestampNtz": true,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Decimal width/range/configuration outside verified Spark target",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "list-view",
+      "preferTimestampNtz": false,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/children",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Scalar Arrow type has unexpected children",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "list-view",
+      "preferTimestampNtz": true,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/children",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Scalar Arrow type has unexpected children",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "run-end",
+      "preferTimestampNtz": false,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/children",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Scalar Arrow type has unexpected children",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "run-end",
+      "preferTimestampNtz": true,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/children",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Scalar Arrow type has unexpected children",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "sorted-map",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_MAP_ORDER_LOSS",
+          "classification": "loss",
+          "detail": "Spark map does not retain keysSorted",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "sorted-map",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_MAP_ORDER_LOSS",
+          "classification": "loss",
+          "detail": "Spark map does not retain keysSorted",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "union",
+      "preferTimestampNtz": false,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/type/value/mode",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Unknown Arrow property cannot be lowered",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/type/value/typeIds",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Unknown Arrow property cannot be lowered",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/children",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Scalar Arrow type has unexpected children",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "union",
+      "preferTimestampNtz": true,
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/type/value/mode",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Unknown Arrow property cannot be lowered",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/type/value/typeIds",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Unknown Arrow property cannot be lowered",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/children",
+          "code": "ARROW_SPARK_UNSUPPORTED",
+          "classification": "unsupported",
+          "detail": "Scalar Arrow type has unexpected children",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "timestamp-s",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMESTAMP_UNIT_LOSS",
+          "classification": "loss",
+          "detail": "Spark timestamp is microsecond-based; data conversion may lose precision or require scaling",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMESTAMP_INTERPRETATION",
+          "classification": "representation-change",
+          "detail": "Timezone-free timestamp recovery follows the explicit preferTimestampNtz choice",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "timestamp-s",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMESTAMP_UNIT_LOSS",
+          "classification": "loss",
+          "detail": "Spark timestamp is microsecond-based; data conversion may lose precision or require scaling",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMESTAMP_INTERPRETATION",
+          "classification": "representation-change",
+          "detail": "Timezone-free timestamp recovery follows the explicit preferTimestampNtz choice",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "zoned-s",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMESTAMP_UNIT_LOSS",
+          "classification": "loss",
+          "detail": "Spark timestamp is microsecond-based; data conversion may lose precision or require scaling",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMEZONE_LOSS",
+          "classification": "loss",
+          "detail": "Spark timestamp does not retain Arrow timezone label",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "zoned-s",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMESTAMP_UNIT_LOSS",
+          "classification": "loss",
+          "detail": "Spark timestamp is microsecond-based; data conversion may lose precision or require scaling",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMEZONE_LOSS",
+          "classification": "loss",
+          "detail": "Spark timestamp does not retain Arrow timezone label",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "duration-s",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_DURATION_INTERPRETATION",
+          "classification": "representation-change",
+          "detail": "Arrow duration lowers to Spark day-to-second interval; Arrow unit is not retained",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "duration-s",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_DURATION_INTERPRETATION",
+          "classification": "representation-change",
+          "detail": "Arrow duration lowers to Spark day-to-second interval; Arrow unit is not retained",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "timestamp-ms",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMESTAMP_UNIT_LOSS",
+          "classification": "loss",
+          "detail": "Spark timestamp is microsecond-based; data conversion may lose precision or require scaling",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMESTAMP_INTERPRETATION",
+          "classification": "representation-change",
+          "detail": "Timezone-free timestamp recovery follows the explicit preferTimestampNtz choice",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "timestamp-ms",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMESTAMP_UNIT_LOSS",
+          "classification": "loss",
+          "detail": "Spark timestamp is microsecond-based; data conversion may lose precision or require scaling",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMESTAMP_INTERPRETATION",
+          "classification": "representation-change",
+          "detail": "Timezone-free timestamp recovery follows the explicit preferTimestampNtz choice",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "zoned-ms",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMESTAMP_UNIT_LOSS",
+          "classification": "loss",
+          "detail": "Spark timestamp is microsecond-based; data conversion may lose precision or require scaling",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMEZONE_LOSS",
+          "classification": "loss",
+          "detail": "Spark timestamp does not retain Arrow timezone label",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "zoned-ms",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMESTAMP_UNIT_LOSS",
+          "classification": "loss",
+          "detail": "Spark timestamp is microsecond-based; data conversion may lose precision or require scaling",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMEZONE_LOSS",
+          "classification": "loss",
+          "detail": "Spark timestamp does not retain Arrow timezone label",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "duration-ms",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_DURATION_INTERPRETATION",
+          "classification": "representation-change",
+          "detail": "Arrow duration lowers to Spark day-to-second interval; Arrow unit is not retained",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "duration-ms",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_DURATION_INTERPRETATION",
+          "classification": "representation-change",
+          "detail": "Arrow duration lowers to Spark day-to-second interval; Arrow unit is not retained",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "timestamp-us",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMESTAMP_INTERPRETATION",
+          "classification": "representation-change",
+          "detail": "Timezone-free timestamp recovery follows the explicit preferTimestampNtz choice",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "timestamp-us",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMESTAMP_INTERPRETATION",
+          "classification": "representation-change",
+          "detail": "Timezone-free timestamp recovery follows the explicit preferTimestampNtz choice",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "zoned-us",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMEZONE_LOSS",
+          "classification": "loss",
+          "detail": "Spark timestamp does not retain Arrow timezone label",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "zoned-us",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMEZONE_LOSS",
+          "classification": "loss",
+          "detail": "Spark timestamp does not retain Arrow timezone label",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "duration-us",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_DURATION_INTERPRETATION",
+          "classification": "representation-change",
+          "detail": "Arrow duration lowers to Spark day-to-second interval; Arrow unit is not retained",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "duration-us",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_DURATION_INTERPRETATION",
+          "classification": "representation-change",
+          "detail": "Arrow duration lowers to Spark day-to-second interval; Arrow unit is not retained",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "timestamp-ns",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMESTAMP_UNIT_LOSS",
+          "classification": "loss",
+          "detail": "Spark timestamp is microsecond-based; data conversion may lose precision or require scaling",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMESTAMP_INTERPRETATION",
+          "classification": "representation-change",
+          "detail": "Timezone-free timestamp recovery follows the explicit preferTimestampNtz choice",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "timestamp-ns",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMESTAMP_UNIT_LOSS",
+          "classification": "loss",
+          "detail": "Spark timestamp is microsecond-based; data conversion may lose precision or require scaling",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMESTAMP_INTERPRETATION",
+          "classification": "representation-change",
+          "detail": "Timezone-free timestamp recovery follows the explicit preferTimestampNtz choice",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "zoned-ns",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMESTAMP_UNIT_LOSS",
+          "classification": "loss",
+          "detail": "Spark timestamp is microsecond-based; data conversion may lose precision or require scaling",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMEZONE_LOSS",
+          "classification": "loss",
+          "detail": "Spark timestamp does not retain Arrow timezone label",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "zoned-ns",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMESTAMP_UNIT_LOSS",
+          "classification": "loss",
+          "detail": "Spark timestamp is microsecond-based; data conversion may lose precision or require scaling",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_TIMEZONE_LOSS",
+          "classification": "loss",
+          "detail": "Spark timestamp does not retain Arrow timezone label",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "duration-ns",
+      "preferTimestampNtz": false,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_DURATION_INTERPRETATION",
+          "classification": "representation-change",
+          "detail": "Arrow duration lowers to Spark day-to-second interval; Arrow unit is not retained",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "id": "duration-ns",
+      "preferTimestampNtz": true,
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/value/header/value/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0/custom_metadata",
+          "code": "ARROW_METADATA_LOSS",
+          "classification": "loss",
+          "detail": "Arrow metadata remains only in retained source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/value/header/value/fields/0",
+          "code": "ARROW_DURATION_INTERPRETATION",
+          "classification": "representation-change",
+          "detail": "Arrow duration lowers to Spark day-to-second interval; Arrow unit is not retained",
+          "retainedInSource": true
+        }
+      ]
+    }
+  ]
+}

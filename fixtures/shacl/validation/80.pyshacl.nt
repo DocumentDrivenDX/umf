@@ -1,0 +1,11 @@
+_:Nea3a0c8d288d4f5b8e5dd435104375d0 <http://www.w3.org/ns/shacl#result> _:N140427fc60f5485b95725bdd1c9618ad .
+_:N140427fc60f5485b95725bdd1c9618ad <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N140427fc60f5485b95725bdd1c9618ad <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N140427fc60f5485b95725bdd1c9618ad <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#OrConstraintComponent> .
+_:N140427fc60f5485b95725bdd1c9618ad <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/or-001.test#InvalidResource1> .
+_:N140427fc60f5485b95725bdd1c9618ad <http://www.w3.org/ns/shacl#resultMessage> "Node Literal(\"true\" = True, datatype=xsd:boolean) must conform to one or more shapes in [ sh:datatype xsd:string ] , [ sh:class ex:Address ]" .
+_:Nea3a0c8d288d4f5b8e5dd435104375d0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Nea3a0c8d288d4f5b8e5dd435104375d0 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N140427fc60f5485b95725bdd1c9618ad <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/or-001.test#AddressShape-address> .
+_:N140427fc60f5485b95725bdd1c9618ad <http://www.w3.org/ns/shacl#value> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N140427fc60f5485b95725bdd1c9618ad <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/or-001.test#address> .

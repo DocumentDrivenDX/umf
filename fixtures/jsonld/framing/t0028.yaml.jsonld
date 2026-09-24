@@ -1,0 +1,1 @@
+{"@context":{"ex":"http://example.org/"},"@id":"ex:Sub1","@reverse":{"ex:includes":{"@id":"ex:Sub2","@type":"ex:Type2","ex:includes":{"@id":"ex:Sub1"}}},"@type":"ex:Type1"}

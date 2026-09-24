@@ -1,0 +1,212 @@
+{
+  "repository": "linkml/linkml-model",
+  "release": "v1.11.0",
+  "commit": "051e945bb8d64ffd60639c666615ace88d561e2f",
+  "files": [
+    {
+      "path": "native/linkml/sources/LICENSE",
+      "upstreamPath": "LICENSE",
+      "sha256": "36ffd9dc085d529a7e60e1276d73ae5a030b020313e6c5408593a6ae2af39673"
+    },
+    {
+      "path": "native/linkml/sources/pyproject.toml",
+      "upstreamPath": "pyproject.toml",
+      "sha256": "e46487ff88578a00e15ab46bcff2cc1d800437f2710b4b0f605b9a80d0f61b90"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/__init__.py",
+      "upstreamPath": "linkml_model/__init__.py",
+      "sha256": "dcfea651e39c7921022cc18d88a49e02e306df0a882f90762ee85b6129216d5e"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/annotations.py",
+      "upstreamPath": "linkml_model/annotations.py",
+      "sha256": "cfc0e5127c19f661db57782a759e14bbdaa85ae432a678e15114de3062e1333a"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/array.py",
+      "upstreamPath": "linkml_model/array.py",
+      "sha256": "6d8bc440c50017afb7f987a70b09b89cdf6f9ca0fa9f7e542ec8032d0b746e4c"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/datasets.py",
+      "upstreamPath": "linkml_model/datasets.py",
+      "sha256": "f3a31440876fa66ed016a77dab4530c2d714f914e851d580f48ae4a963b7a4eb"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/extensions.py",
+      "upstreamPath": "linkml_model/extensions.py",
+      "sha256": "5b9729ac96c39b6b8edf43e7be1eab10a6d65dd48a1269c0e1c45919d95b7f85"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/linkml_files.py",
+      "upstreamPath": "linkml_model/linkml_files.py",
+      "sha256": "12f701ca4e8cf720afb0d57e06201361ee845b7351fde9d70251dcc1b7fee76a"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/mappings.py",
+      "upstreamPath": "linkml_model/mappings.py",
+      "sha256": "467fce799e6bf8dabed3caa321a72667116124b412aa5da3ea6586d90f1fd18a"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/meta.py",
+      "upstreamPath": "linkml_model/meta.py",
+      "sha256": "034e4da91dfae8b85de9617f4939d044acad4fa40f24730d0a20614a6c333102"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/types.py",
+      "upstreamPath": "linkml_model/types.py",
+      "sha256": "098d4830730fd5f13b9a7b6985af4e8d83d9176301a49953fa0f2f3a85d3292b"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/units.py",
+      "upstreamPath": "linkml_model/units.py",
+      "sha256": "891481857dbf6b5619605ec9a99a141baf962d536da7b1e1df08a09d65cf02de"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/validation.py",
+      "upstreamPath": "linkml_model/validation.py",
+      "sha256": "92e771c4c3248efeb8b206172efc56903ead6702ec765f7752b2a90b8abd63c6"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/annotations.yaml",
+      "upstreamPath": "linkml_model/model/schema/annotations.yaml",
+      "sha256": "ac3ddb343ed896e1327bcc5edc3ad2b90d6d2a288e4c66a14780a9a024195523"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/array.yaml",
+      "upstreamPath": "linkml_model/model/schema/array.yaml",
+      "sha256": "ee2293dc03eb4c4b2432af0e01f876b928f2c256a1a1de83a91b168623022f7a"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/datasets.yaml",
+      "upstreamPath": "linkml_model/model/schema/datasets.yaml",
+      "sha256": "b5e5645bae812b729a778faf098f6adef58cd968183c7183c8506ff2834a7a0c"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/extended_types.yaml",
+      "upstreamPath": "linkml_model/model/schema/extended_types.yaml",
+      "sha256": "c75c881d9ef27c1a9862e1e3a8a849dc1f40d1f35f589a3b52ab6dceb860d17c"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/extensions.yaml",
+      "upstreamPath": "linkml_model/model/schema/extensions.yaml",
+      "sha256": "c48fb79aa4ad851403b169eb2bcb942127ee783b5d64267f756b96c86150d7c8"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/mappings.yaml",
+      "upstreamPath": "linkml_model/model/schema/mappings.yaml",
+      "sha256": "b1ce39b3bcb62f264f8ecd548be75d9f47a81738f6a8c4285c7f537d9a97d75f"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/meta.yaml",
+      "upstreamPath": "linkml_model/model/schema/meta.yaml",
+      "sha256": "00bf58ab4fd81c775d996db6bd49c48d7d23627ced6ff38b6d5eea289ac1e6db"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/types.yaml",
+      "upstreamPath": "linkml_model/model/schema/types.yaml",
+      "sha256": "1c79b264397bec0eadb404d22e9b163458f1b889809b3b482ecc39c98743fe00"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/units.yaml",
+      "upstreamPath": "linkml_model/model/schema/units.yaml",
+      "sha256": "08df6c6f9d841f71af8b17ed0de7f397acca9ebd1cfa6e29e914dbadf1a3e4e6"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/validation.yaml",
+      "upstreamPath": "linkml_model/model/schema/validation.yaml",
+      "sha256": "ce16bf42a6f7d10c3cddce3910348fa6cc9cf77f14f4b176839305d4be0ae57b"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/jsonschema/annotations.schema.json",
+      "upstreamPath": "linkml_model/jsonschema/annotations.schema.json",
+      "sha256": "8b1697162d8023230eb81fa4156946863b9e710d282464bbc1e915c9294832a9"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/jsonschema/datasets.schema.json",
+      "upstreamPath": "linkml_model/jsonschema/datasets.schema.json",
+      "sha256": "b4a79661ec9c3c437e1ba721882cefb4b9ace435e28f65bc6a082db67a3a2c5d"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/jsonschema/extensions.schema.json",
+      "upstreamPath": "linkml_model/jsonschema/extensions.schema.json",
+      "sha256": "e565bd59fb9e84141952ab181edd6eb04a72cc98aeada2504570165d1cce10c8"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/jsonschema/mappings.schema.json",
+      "upstreamPath": "linkml_model/jsonschema/mappings.schema.json",
+      "sha256": "507c607d4686cd7914c9fd7683632497cb4996c4efc45d5b4b8b72bde9a31a77"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/jsonschema/meta.schema.json",
+      "upstreamPath": "linkml_model/jsonschema/meta.schema.json",
+      "sha256": "0d8856011752877f4d82e630c7cfbe89a452b42ef3a4474eaa88a4daa3f46f93"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/jsonschema/types.schema.json",
+      "upstreamPath": "linkml_model/jsonschema/types.schema.json",
+      "sha256": "429068527e7ba4103f352d1c4a0676e7851be53c4f1859347a7bf4d5f1d3cd58"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/jsonschema/units.schema.json",
+      "upstreamPath": "linkml_model/jsonschema/units.schema.json",
+      "sha256": "3406bc0f4500a23a5ecd51581b02ca547d8328298f6ef8a8826066a2a76da1e9"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/jsonschema/validation.schema.json",
+      "upstreamPath": "linkml_model/jsonschema/validation.schema.json",
+      "sha256": "910293992f344db7d6257313f86f847376c3fb8d6dc7c728ce6bbe3065ddac23"
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-array-1.yaml",
+      "upstreamPath": "tests/input/examples/schema_definition-array-1.yaml",
+      "sha256": "2cb1dc0dac29f36864e92f7d7375c0caf203773107f4716553188fe0d86d30b2"
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-array-2.yaml",
+      "upstreamPath": "tests/input/examples/schema_definition-array-2.yaml",
+      "sha256": "faeaa9a9f45cd1e0a192e65e67653219dac1739dea16beda2fbbbcbaf47f0165"
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-dynamic-enums.yaml",
+      "upstreamPath": "tests/input/examples/schema_definition-dynamic-enums.yaml",
+      "sha256": "d8f042ecc19114a05daaa8d53ad5f4b5aee00deb3108a02095daa2a45b6ad8a1"
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-enum_bindings-1.yaml",
+      "upstreamPath": "tests/input/examples/schema_definition-enum_bindings-1.yaml",
+      "sha256": "9795b5cd3e90ea530becb1c1c328a83cb1d4fd6ca2538d366138aab138cc9161"
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-implements.yaml",
+      "upstreamPath": "tests/input/examples/schema_definition-implements.yaml",
+      "sha256": "2da5b90e5cc3b1623f4039c10950e2c1692bae837d49543a5a798301df3c6489"
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-instantiates.yaml",
+      "upstreamPath": "tests/input/examples/schema_definition-instantiates.yaml",
+      "sha256": "1eaced143f1b3a3e300af89bc7097ac4f1dfb1dcc1b0968b8936276bf9973d27"
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-multivalued-in-any-of.yaml",
+      "upstreamPath": "tests/input/examples/schema_definition-multivalued-in-any-of.yaml",
+      "sha256": "1791ca01d22ef2619ca423985a6600d87eec7e7c9befac8247cf01d329e05c20"
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-native-array-1.yaml",
+      "upstreamPath": "tests/input/examples/schema_definition-native-array-1.yaml",
+      "sha256": "5dc48af7074b622d46ad266d7ad4c5102bf34b78ad67d3f0a8dda569b60b3eb6"
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-native-array-rgb.yaml",
+      "upstreamPath": "tests/input/examples/schema_definition-native-array-rgb.yaml",
+      "sha256": "ebe2e643378aa47059b4414ba42f2745c416e1e5dd886b340023ab11e31d9a98"
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-type_mappings-1.yaml",
+      "upstreamPath": "tests/input/examples/schema_definition-type_mappings-1.yaml",
+      "sha256": "6b29c89de9447252acce2e7c49e5254d4cc574909d8881aa8a245bb8a13dcbf1"
+    }
+  ]
+}

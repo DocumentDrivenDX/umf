@@ -1,0 +1,7 @@
+@prefix ex: <https://example.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+ex:a ex:p ex:b, ex:c .
+ex:b ex:p ex:a ; ex:q "hello"@en, "9007199254740993"^^xsd:integer .
+ex:c ex:p ex:c ; ex:q ex:d .
+ex:d ex:q ex:a .
+ex:b ex:q "hello"@en .

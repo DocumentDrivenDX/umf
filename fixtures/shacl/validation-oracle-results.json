@@ -1,0 +1,890 @@
+{
+  "oracle": "PySHACL",
+  "version": "0.30.1",
+  "rdflib": "7.6.0",
+  "claim": "Conforms boolean only; detailed report equivalence not yet assessed",
+  "results": [
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/complex/personexample",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 4,
+      "reportPath": "fixtures/shacl/validation/0.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/complex/shacl-shacl",
+      "status": "evaluated",
+      "conforms": true,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 0,
+      "reportPath": "fixtures/shacl/validation/1.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/misc/deactivated-001",
+      "status": "evaluated",
+      "conforms": true,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 0,
+      "reportPath": "fixtures/shacl/validation/2.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/misc/deactivated-002",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/3.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/misc/message-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/4.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/misc/severity-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/5.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/misc/severity-002",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/6.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/and-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/7.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/and-002",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/8.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/class-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/9.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/class-002",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/10.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/class-003",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 5,
+      "reportPath": "fixtures/shacl/validation/11.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/closed-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/12.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/closed-002",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/13.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/datatype-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 3,
+      "reportPath": "fixtures/shacl/validation/14.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/datatype-002",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/15.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/disjoint-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/16.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/equals-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/17.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/hasValue-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/18.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/in-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/19.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/languageIn-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 3,
+      "reportPath": "fixtures/shacl/validation/20.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/maxExclusive-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 6,
+      "reportPath": "fixtures/shacl/validation/21.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/maxInclusive-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 4,
+      "reportPath": "fixtures/shacl/validation/22.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/maxLength-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 5,
+      "reportPath": "fixtures/shacl/validation/23.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/minExclusive-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 6,
+      "reportPath": "fixtures/shacl/validation/24.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/minInclusive-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/25.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/minInclusive-002",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 3,
+      "reportPath": "fixtures/shacl/validation/26.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/minInclusive-003",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 4,
+      "reportPath": "fixtures/shacl/validation/27.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/minLength-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 4,
+      "reportPath": "fixtures/shacl/validation/28.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/node-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/29.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/nodeKind-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/30.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/not-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/31.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/not-002",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/32.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/or-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/33.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/pattern-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 4,
+      "reportPath": "fixtures/shacl/validation/34.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/pattern-002",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/35.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/qualified-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/36.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/xone-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/37.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/xone-duplicate",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/38.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-alternative-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/39.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-complex-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/40.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-complex-002",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 4,
+      "reportPath": "fixtures/shacl/validation/41.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-inverse-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/42.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-oneOrMore-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/43.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-sequence-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/44.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-sequence-002",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/45.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-sequence-duplicate-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/46.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-strange-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/47.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-strange-002",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/48.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-unused-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/49.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-zeroOrMore-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/50.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-zeroOrOne-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/51.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/and-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 3,
+      "reportPath": "fixtures/shacl/validation/52.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/class-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/53.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/datatype-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/54.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/datatype-002",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/55.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/datatype-003",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/56.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/datatype-ill-formed",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 3,
+      "reportPath": "fixtures/shacl/validation/57.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/disjoint-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/58.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/equals-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 5,
+      "reportPath": "fixtures/shacl/validation/59.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/hasValue-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/60.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/in-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/61.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/languageIn-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 3,
+      "reportPath": "fixtures/shacl/validation/62.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/lessThan-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 3,
+      "reportPath": "fixtures/shacl/validation/63.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/lessThan-002",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 4,
+      "reportPath": "fixtures/shacl/validation/64.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/lessThanOrEquals-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/65.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/maxCount-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/66.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/maxCount-002",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/67.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/maxExclusive-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 3,
+      "reportPath": "fixtures/shacl/validation/68.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/maxInclusive-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/69.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/maxLength-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/70.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/minCount-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/71.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/minCount-002",
+      "status": "evaluated",
+      "conforms": true,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 0,
+      "reportPath": "fixtures/shacl/validation/72.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/minExclusive-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/73.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/minExclusive-002",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/74.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/minLength-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/75.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/node-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/76.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/node-002",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/77.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/nodeKind-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 27,
+      "reportPath": "fixtures/shacl/validation/78.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/not-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/79.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/or-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/80.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/or-datatypes-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 3,
+      "reportPath": "fixtures/shacl/validation/81.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/pattern-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/82.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/pattern-002",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/83.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/property-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/84.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/qualifiedMinCountDisjoint-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/85.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/qualifiedValueShape-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/86.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/qualifiedValueShapesDisjoint-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/87.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/uniqueLang-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 3,
+      "reportPath": "fixtures/shacl/validation/88.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/uniqueLang-002",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": false,
+      "engineEqual": false,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/89.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/multipleTargets-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/90.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetClass-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/91.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetClassImplicit-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/92.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetNode-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/93.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetObjectsOf-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/94.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-001",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 1,
+      "reportPath": "fixtures/shacl/validation/95.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-002",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/96.pyshacl.nt"
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/validation-reports/shared",
+      "status": "evaluated",
+      "conforms": false,
+      "expectedEqual": true,
+      "engineEqual": true,
+      "resultCount": 2,
+      "reportPath": "fixtures/shacl/validation/97.pyshacl.nt"
+    }
+  ]
+}

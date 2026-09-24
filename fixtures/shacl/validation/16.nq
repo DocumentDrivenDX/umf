@@ -1,0 +1,10 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b10636 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b10636 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b10636 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b10636 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DisjointConstraintComponent> .
+_:b10636 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/disjoint-001.test#TestShape> .
+_:b10636 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/disjoint-001.test#InvalidResource1> .
+_:b10636 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/disjoint-001.test#InvalidResource1> .
+_:b10636 <http://www.w3.org/ns/shacl#resultMessage> "Value node must not also be one of the values of <http://datashapes.org/sh/tests/core/node/disjoint-001.test#property>" .

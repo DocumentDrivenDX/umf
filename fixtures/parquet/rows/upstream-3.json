@@ -1,0 +1,344 @@
+[
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 27,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 50,
+        "name": "metaData",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 51,
+              "name": "id",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "65626666636637622d626632352d343237662d613931612d643461306432376562626566"
+                }
+              }
+            },
+            {
+              "index": 52,
+              "name": "name",
+              "value": null
+            },
+            {
+              "index": 53,
+              "name": "description",
+              "value": null
+            },
+            {
+              "index": 54,
+              "name": "format",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 55,
+                    "name": "provider",
+                    "value": {
+                      "kind": "physical",
+                      "value": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "70617271756574"
+                      }
+                    }
+                  },
+                  {
+                    "index": 56,
+                    "name": "options",
+                    "value": {
+                      "kind": "record",
+                      "fields": [
+                        {
+                          "index": 57,
+                          "name": "key_value",
+                          "value": {
+                            "kind": "repeated",
+                            "items": []
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 60,
+              "name": "schemaString",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a226964222c2274797065223a22696e7465676572222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d"
+                }
+              }
+            },
+            {
+              "index": 61,
+              "name": "partitionColumns",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 62,
+                    "name": "list",
+                    "value": {
+                      "kind": "repeated",
+                      "items": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 64,
+              "name": "createdTime",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "1742252106422"
+                }
+              }
+            },
+            {
+              "index": 65,
+              "name": "configuration",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 66,
+                    "name": "key_value",
+                    "value": {
+                      "kind": "repeated",
+                      "items": [
+                        {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 67,
+                              "name": "key",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "64656c74612e666561747572652e636174616c6f676f776e6564"
+                                }
+                              }
+                            },
+                            {
+                              "index": 68,
+                              "name": "value",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "737570706f72746564"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 69,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 78,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 27,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 50,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 69,
+        "name": "protocol",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 70,
+              "name": "minReaderVersion",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT32",
+                  "value": "3"
+                }
+              }
+            },
+            {
+              "index": 71,
+              "name": "minWriterVersion",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT32",
+                  "value": "7"
+                }
+              }
+            },
+            {
+              "index": 72,
+              "name": "readerFeatures",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 73,
+                    "name": "list",
+                    "value": {
+                      "kind": "repeated",
+                      "items": [
+                        {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 74,
+                              "name": "element",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "636174616c6f674f776e6564"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 75,
+              "name": "writerFeatures",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 76,
+                    "name": "list",
+                    "value": {
+                      "kind": "repeated",
+                      "items": [
+                        {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 77,
+                              "name": "element",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "636174616c6f674f776e6564"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 77,
+                              "name": "element",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "696e76617269616e7473"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 77,
+                              "name": "element",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "617070656e644f6e6c79"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 78,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  }
+]

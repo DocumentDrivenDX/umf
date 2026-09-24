@@ -1,0 +1,87 @@
+{
+  "repository": "https://github.com/smithy-lang/smithy",
+  "commit": "dd2d50a93db313ee21b41916af158442e14669e1",
+  "selection": "All files in selector/cases subtree, plus LICENSE. Embedded selectorTests retain expected results.",
+  "files": [
+    {
+      "file": "attribute-existence.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/selector/cases/attribute-existence.smithy",
+      "sha256": "f9f7f9e832f4de8d2308a73c91296a82144773558d47ce2165f564811b7534c1"
+    },
+    {
+      "file": "functions.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/selector/cases/functions.smithy",
+      "sha256": "1c7e8dfd2baca65782e4c40e40f4e76678a9e29985d7bbf61f9babde946ddb04"
+    },
+    {
+      "file": "id-attribute.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/selector/cases/id-attribute.smithy",
+      "sha256": "0ab9f4f5a5fec5e778b18126644642a86d4debd19e8f0df83345a966c92e9fee"
+    },
+    {
+      "file": "in-function.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/selector/cases/in-function.smithy",
+      "sha256": "2f697d1ce60732b75f03ea924a1a1a0e595ad60fcfcc78dd544beeba2a2232bf"
+    },
+    {
+      "file": "neighbors.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/selector/cases/neighbors.smithy",
+      "sha256": "5bd76c32cbbd196c086ac862c5da5fb68c7f8353be9c7eceab6fdf14b2a57447"
+    },
+    {
+      "file": "node-attributes.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/selector/cases/node-attributes.smithy",
+      "sha256": "4d7bd493e3fcfdd4ce0135d9e3704ae530a088b9c6c75fa71b4f8d77354c973b"
+    },
+    {
+      "file": "numeric-comparators.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/selector/cases/numeric-comparators.smithy",
+      "sha256": "f88da1885ebf6d603e1a79ce3fa3c79cd6161e474a62c176102d8fd75ed77908"
+    },
+    {
+      "file": "projection-attributes.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/selector/cases/projection-attributes.smithy",
+      "sha256": "e68d17036b8310ad0eb1e2c40c73ef1a9f9baffe2fda00846917d99ecd867bee"
+    },
+    {
+      "file": "recursive-function.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/selector/cases/recursive-function.smithy",
+      "sha256": "df2b11c94f1eaa99fd8404c2579e19de46621da2c1aff8f3d193f03a1149c444"
+    },
+    {
+      "file": "root-function.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/selector/cases/root-function.smithy",
+      "sha256": "d7c90e536004b317f83150ce1aee9af38117ae63959e014d1c0c950915d2a7be"
+    },
+    {
+      "file": "scope-attribute.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/selector/cases/scope-attribute.smithy",
+      "sha256": "d30aa17491ac09b8a596de380ae313ae268cef85738502b98f905ecad9428206"
+    },
+    {
+      "file": "service-attribute.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/selector/cases/service-attribute.smithy",
+      "sha256": "b93400aec04a17b9269b21e9cb8d04a271f55a3046dcbc4d0585c51c6621bb79"
+    },
+    {
+      "file": "string-comparators.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/selector/cases/string-comparators.smithy",
+      "sha256": "bc1fb32752a40edc4c78a5685b015a5dda447acea3d70d8635434d0f47219ab2"
+    },
+    {
+      "file": "trait-attributes.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/selector/cases/trait-attributes.smithy",
+      "sha256": "b3c8ea1d1499800a0152c21b80bedd8ab48eab1cf7304470326c276c11086edf"
+    },
+    {
+      "file": "variables.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/selector/cases/variables.smithy",
+      "sha256": "a84580b1f46ee7a6253fbfe60ee8e7397af6f3ae979a4bb3c2ee372fe12d56ed"
+    },
+    {
+      "file": "LICENSE",
+      "upstreamPath": "LICENSE",
+      "sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b"
+    }
+  ]
+}

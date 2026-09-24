@@ -1,0 +1,18 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix ex: <https://example.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+ex:and owl:intersectionOf (ex:A ex:B) ; ex:unknown "keep" .
+ex:or owl:unionOf (ex:A ex:B ex:A) .
+ex:not owl:complementOf ex:A .
+ex:enum owl:oneOf (ex:alice ex:bob) .
+ex:dataEnum owl:oneOf ("01"^^xsd:integer "1"^^xsd:integer) .
+ex:notData owl:datatypeComplementOf xsd:integer .
+ex:inverse owl:inverseOf ex:parent .
+ex:some a owl:Restriction ; owl:onProperty ex:child ; owl:someValuesFrom ex:A .
+ex:all a owl:Restriction ; owl:onProperty ex:child ; owl:allValuesFrom ex:B .
+ex:value a owl:Restriction ; owl:onProperty ex:age ; owl:hasValue "001"^^xsd:integer .
+ex:self a owl:Restriction ; owl:onProperty ex:knows ; owl:hasSelf true .
+ex:cardinality a owl:Restriction ; owl:onProperty ex:child ; owl:qualifiedCardinality "9007199254740993"^^xsd:nonNegativeInteger ; owl:onClass ex:A .
+ex:data a owl:Restriction ; owl:onProperty ex:age ; owl:minQualifiedCardinality 1 ; owl:onDataRange xsd:integer .
+ex:tuple a owl:Restriction ; owl:onProperties (ex:start ex:end) ; owl:allValuesFrom ex:orderedPair .
+ex:range owl:onDatatype xsd:integer ; owl:withRestrictions ([xsd:minInclusive "01"^^xsd:integer] [xsd:maxExclusive "100"^^xsd:integer]) .

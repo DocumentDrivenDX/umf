@@ -1,0 +1,105 @@
+{
+  "pyarrow": "21.0.0",
+  "avro": "1.12.0",
+  "fastavro": "1.12.2",
+  "sourceSha256": "c843cf1af4f38000e1decea464516dbc29329586fd27ee6cc85ddf3f2e9da6fd",
+  "cases": [
+    {
+      "file": "stored.parquet",
+      "row": 0,
+      "engine": "apache",
+      "bytes": 15,
+      "sourceDurationValueType": "timedelta",
+      "targetDurationValueType": "int",
+      "sourceTimezone": "America/New_York",
+      "targetTimestamp": "1970-01-01T00:00:00+00:00",
+      "sameInstant": true,
+      "sourceListType": "large_list<element: int32>"
+    },
+    {
+      "file": "stored.parquet",
+      "row": 0,
+      "engine": "fastavro",
+      "bytes": 15,
+      "sourceDurationValueType": "timedelta",
+      "targetDurationValueType": "int",
+      "sourceTimezone": "America/New_York",
+      "targetTimestamp": "1970-01-01T00:00:00+00:00",
+      "sameInstant": true,
+      "sourceListType": "large_list<element: int32>"
+    },
+    {
+      "file": "stored.parquet",
+      "row": 1,
+      "engine": "apache",
+      "bytes": 10,
+      "sourceDurationValueType": "NoneType",
+      "targetDurationValueType": "NoneType",
+      "sourceTimezone": "America/New_York",
+      "targetTimestamp": "1970-01-01T00:00:01.234567+00:00",
+      "sameInstant": true,
+      "sourceListType": "large_list<element: int32>"
+    },
+    {
+      "file": "stored.parquet",
+      "row": 1,
+      "engine": "fastavro",
+      "bytes": 10,
+      "sourceDurationValueType": "NoneType",
+      "targetDurationValueType": "NoneType",
+      "sourceTimezone": "America/New_York",
+      "targetTimestamp": "1970-01-01T00:00:01.234567+00:00",
+      "sameInstant": true,
+      "sourceListType": "large_list<element: int32>"
+    },
+    {
+      "file": "physical-only.parquet",
+      "row": 0,
+      "engine": "apache",
+      "bytes": 15,
+      "sourceDurationValueType": "int",
+      "targetDurationValueType": "int",
+      "sourceTimezone": "UTC",
+      "targetTimestamp": "1970-01-01T00:00:00+00:00",
+      "sameInstant": true,
+      "sourceListType": "list<element: int32>"
+    },
+    {
+      "file": "physical-only.parquet",
+      "row": 0,
+      "engine": "fastavro",
+      "bytes": 15,
+      "sourceDurationValueType": "int",
+      "targetDurationValueType": "int",
+      "sourceTimezone": "UTC",
+      "targetTimestamp": "1970-01-01T00:00:00+00:00",
+      "sameInstant": true,
+      "sourceListType": "list<element: int32>"
+    },
+    {
+      "file": "physical-only.parquet",
+      "row": 1,
+      "engine": "apache",
+      "bytes": 10,
+      "sourceDurationValueType": "NoneType",
+      "targetDurationValueType": "NoneType",
+      "sourceTimezone": "UTC",
+      "targetTimestamp": "1970-01-01T00:00:01.234567+00:00",
+      "sameInstant": true,
+      "sourceListType": "list<element: int32>"
+    },
+    {
+      "file": "physical-only.parquet",
+      "row": 1,
+      "engine": "fastavro",
+      "bytes": 10,
+      "sourceDurationValueType": "NoneType",
+      "targetDurationValueType": "NoneType",
+      "sourceTimezone": "UTC",
+      "targetTimestamp": "1970-01-01T00:00:01.234567+00:00",
+      "sameInstant": true,
+      "sourceListType": "list<element: int32>"
+    }
+  ],
+  "scope": "Authored duration carrier binding gives identical target bytes while source duration/list/timezone meanings differ. Native Avro recovers the instant in UTC, not the original named timezone. No general row converter or embedded/physical equivalence claim."
+}

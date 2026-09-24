@@ -1,0 +1,1 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> . @prefix ex: <https://example.org/> . @prefix xsd: <http://www.w3.org/2001/XMLSchema#> . ex:s ex:p ex:o . _:axiom a owl:Axiom ; owl:annotatedProperty ex:p ; owl:annotatedTarget ex:o ; ex:note "keep" .

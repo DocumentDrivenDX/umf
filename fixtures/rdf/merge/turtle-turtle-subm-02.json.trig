@@ -1,0 +1,7 @@
+<http://example.org/base1#a> <http://example.org/base1#b> <http://example.org/base1#c> .
+<http://example.org/base2#a> <http://example.org/base2#b> <http://example.org/base2#c> .
+<http://example.org/base1#a> <http://example.org/base2#a> <http://example.org/base3#a> .
+_:m_1_0 <urn:example:related> <urn:example:resource> .
+<urn:example:populated> { _:m_1_0 <urn:example:label> "Original label" . }
+<urn:example:empty> {}
+_:m_1_0 {}

@@ -1,0 +1,163 @@
+{
+  "id": "umf.spark",
+  "version": "0.1.0",
+  "coreVersion": "0.1.0",
+  "description": "Exact Spark DataType/StructType JSON with preserved metadata and native interpretation limits",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:spark:0.1.0",
+    "type": "object",
+    "properties": {
+      "profile": {
+        "const": "spark-datatype-json"
+      },
+      "root": {
+        "$ref": "#/$defs/node"
+      }
+    },
+    "required": [
+      "profile",
+      "root"
+    ],
+    "additionalProperties": true,
+    "$defs": {
+      "node": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "const": "null"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "boolean"
+              },
+              "value": {
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "number"
+              },
+              "value": {
+                "type": "string",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "items"
+            ],
+            "properties": {
+              "kind": {
+                "const": "array"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "members"
+            ],
+            "properties": {
+              "kind": {
+                "const": "object"
+              },
+              "members": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "semantics": "CONTRACT-017. Source JSON is authoritative; no native parser normalization, UDT execution or engine/configuration validity is implied. Unknown properties/types and exact numeric tokens survive.",
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "semantic",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "Apache Spark DataType schema JSON",
+      "version": "4.0.1 grammar baseline; Python and JVM evidence separately qualified",
+      "subset": "Known array/map/struct shape validation, exact source preservation and candidate edits. Atomic names/parameters and UDT declarations retain interpretation limits; no JVM/browser execution, DDL or data coercion claim."
+    },
+    "evidence": [
+      "tests/spark/schema.test.ts",
+      "fixtures/spark/capability-results.json",
+      "fixtures/spark/umf-oracle-results.json",
+      "fixtures/spark/browser-results.json",
+      "tests/spark/rename.test.ts",
+      "fixtures/spark/rename-oracle-results.json",
+      "tests/spark/upstream.test.ts",
+      "fixtures/spark/upstream-oracle-results.json",
+      "tests/spark/metadata.test.ts",
+      "fixtures/spark/metadata-oracle-results.json",
+      "tests/spark/collations.test.ts",
+      "fixtures/spark/collation-oracle-results.json",
+      "tests/spark/parameters.test.ts",
+      "fixtures/spark/parameter-oracle-results.json",
+      "tests/spark/projection.test.ts",
+      "tests/spark/reverse-projection.test.ts",
+      "fixtures/projections/spark-arrow/projection-oracle-results.json",
+      "fixtures/projections/spark-arrow/reverse-oracle-results.json",
+      "tests/spark/arrow-origin.test.ts",
+      "fixtures/projections/arrow-spark/oracle-results.json",
+      "tests/spark/upstream-projection.test.ts",
+      "fixtures/projections/arrow-spark-upstream/oracle-results.json"
+    ]
+  }
+}

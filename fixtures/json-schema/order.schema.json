@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.test/order",
+  "type": "object",
+  "title": "Order",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number",
+      "minimum": 0
+    },
+    "lines": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Line"
+      }
+    }
+  },
+  "required": [
+    "id",
+    "lines"
+  ],
+  "$defs": {
+    "Line": {
+      "type": "object",
+      "properties": {
+        "sku": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "sku",
+        "quantity"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

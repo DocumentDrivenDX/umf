@@ -1,0 +1,3242 @@
+{
+  "cases": [
+    {
+      "family": "logical",
+      "id": "decimal32",
+      "source": "fixtures/parquet/logical/decimal32.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 9,\n          \"scale\": 2\n        }\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+          "classification": "not-enforced",
+          "detail": "Corresponding legacy annotation is absent; source remains unchanged",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "DECIMAL_CARRIER",
+          "classification": "representation-change",
+          "detail": "Physical integer or fixed/variable decimal carrier requires exact Avro decimal bytes encoding",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "decimal32-over",
+      "source": "fixtures/parquet/logical/decimal32-over.parquet",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_CONFLICT",
+          "classification": "not-enforced",
+          "detail": "Decimal precision exceeds integer physical capacity",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+          "classification": "not-enforced",
+          "detail": "Corresponding legacy annotation is absent; source remains unchanged",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "decimal64",
+      "source": "fixtures/parquet/logical/decimal64.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 18,\n          \"scale\": 2\n        }\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+          "classification": "not-enforced",
+          "detail": "Corresponding legacy annotation is absent; source remains unchanged",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "DECIMAL_CARRIER",
+          "classification": "representation-change",
+          "detail": "Physical integer or fixed/variable decimal carrier requires exact Avro decimal bytes encoding",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "decimal64-over",
+      "source": "fixtures/parquet/logical/decimal64-over.parquet",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_CONFLICT",
+          "classification": "not-enforced",
+          "detail": "Decimal precision exceeds integer physical capacity",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+          "classification": "not-enforced",
+          "detail": "Corresponding legacy annotation is absent; source remains unchanged",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "decimal-fixed",
+      "source": "fixtures/parquet/logical/decimal-fixed.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 38,\n          \"scale\": 9\n        }\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+          "classification": "not-enforced",
+          "detail": "Corresponding legacy annotation is absent; source remains unchanged",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "DECIMAL_CARRIER",
+          "classification": "representation-change",
+          "detail": "Physical integer or fixed/variable decimal carrier requires exact Avro decimal bytes encoding",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "decimal-fixed-over",
+      "source": "fixtures/parquet/logical/decimal-fixed-over.parquet",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_CONFLICT",
+          "classification": "not-enforced",
+          "detail": "Decimal precision exceeds fixed-byte physical capacity",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+          "classification": "not-enforced",
+          "detail": "Corresponding legacy annotation is absent; source remains unchanged",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "decimal-scale-negative",
+      "source": "fixtures/parquet/logical/decimal-scale-negative.parquet",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_CONFLICT",
+          "classification": "not-enforced",
+          "detail": "Decimal precision must be positive and scale between zero and precision",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+          "classification": "not-enforced",
+          "detail": "Corresponding legacy annotation is absent; source remains unchanged",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "decimal-scale-over",
+      "source": "fixtures/parquet/logical/decimal-scale-over.parquet",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_CONFLICT",
+          "classification": "not-enforced",
+          "detail": "Decimal precision must be positive and scale between zero and precision",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+          "classification": "not-enforced",
+          "detail": "Corresponding legacy annotation is absent; source remains unchanged",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "decimal-legacy-default",
+      "source": "fixtures/parquet/logical/decimal-legacy-default.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 5,\n          \"scale\": 0\n        }\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "DECIMAL_CARRIER",
+          "classification": "representation-change",
+          "detail": "Physical integer or fixed/variable decimal carrier requires exact Avro decimal bytes encoding",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "decimal-legacy-missing",
+      "source": "fixtures/parquet/logical/decimal-legacy-missing.parquet",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_CONFLICT",
+          "classification": "not-enforced",
+          "detail": "Decimal precision must be positive and scale between zero and precision",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "decimal-legacy-conflict",
+      "source": "fixtures/parquet/logical/decimal-legacy-conflict.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"bytes\",\n          \"logicalType\": \"decimal\",\n          \"precision\": 5,\n          \"scale\": 2\n        }\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1/precision",
+          "code": "PARQUET_LEGACY_ANNOTATION_CONFLICT",
+          "classification": "not-enforced",
+          "detail": "Legacy decimal parameter differs from authoritative logical annotation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1/scale",
+          "code": "PARQUET_LEGACY_ANNOTATION_CONFLICT",
+          "classification": "not-enforced",
+          "detail": "Legacy decimal parameter differs from authoritative logical annotation",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "DECIMAL_CARRIER",
+          "classification": "representation-change",
+          "detail": "Physical integer or fixed/variable decimal carrier requires exact Avro decimal bytes encoding",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "uint32",
+      "source": "fixtures/parquet/logical/uint32.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        \"long\"\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+          "classification": "not-enforced",
+          "detail": "Corresponding legacy annotation is absent; source remains unchanged",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "INTEGER_DOMAIN",
+          "classification": "not-enforced",
+          "detail": "Target admits values outside native signed/unsigned width; uint64 requires exact decimal encoding",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "uint32-wrong",
+      "source": "fixtures/parquet/logical/uint32-wrong.parquet",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_CONFLICT",
+          "classification": "not-enforced",
+          "detail": "INTEGER is incompatible with this physical type",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+          "classification": "not-enforced",
+          "detail": "Corresponding legacy annotation is absent; source remains unchanged",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "int8",
+      "source": "fixtures/parquet/logical/int8.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        \"int\"\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+          "classification": "not-enforced",
+          "detail": "Corresponding legacy annotation is absent; source remains unchanged",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "INTEGER_DOMAIN",
+          "classification": "not-enforced",
+          "detail": "Target admits values outside native signed/unsigned width; uint64 requires exact decimal encoding",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "int-bits",
+      "source": "fixtures/parquet/logical/int-bits.parquet",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_CONFLICT",
+          "classification": "not-enforced",
+          "detail": "Integer bitWidth must be 8, 16, 32 or 64",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "timestamp-local",
+      "source": "fixtures/parquet/logical/timestamp-local.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"local-timestamp-micros\"\n        }\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+          "classification": "not-enforced",
+          "detail": "Corresponding legacy annotation is absent; source remains unchanged",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "TEMPORAL_INTERPRETATION",
+          "classification": "not-enforced",
+          "detail": "Native UTC-adjustment, time-of-day bounds and target runtime range/annotation support require a value encoder; no units are rounded",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "timestamp-wrong",
+      "source": "fixtures/parquet/logical/timestamp-wrong.parquet",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_CONFLICT",
+          "classification": "not-enforced",
+          "detail": "TIMESTAMP is incompatible with this physical type",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+          "classification": "not-enforced",
+          "detail": "Corresponding legacy annotation is absent; source remains unchanged",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "time-ms",
+      "source": "fixtures/parquet/logical/time-ms.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"int\",\n          \"logicalType\": \"time-millis\"\n        }\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+          "classification": "not-enforced",
+          "detail": "Corresponding legacy annotation is absent; source remains unchanged",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "TEMPORAL_INTERPRETATION",
+          "classification": "not-enforced",
+          "detail": "Native UTC-adjustment, time-of-day bounds and target runtime range/annotation support require a value encoder; no units are rounded",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "time-us-wrong",
+      "source": "fixtures/parquet/logical/time-us-wrong.parquet",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_CONFLICT",
+          "classification": "not-enforced",
+          "detail": "TIME is incompatible with this physical type",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+          "classification": "not-enforced",
+          "detail": "Corresponding legacy annotation is absent; source remains unchanged",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "time-nanos",
+      "source": "fixtures/parquet/logical/time-nanos.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        \"long\"\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "TIME_NANOS",
+          "classification": "representation-change",
+          "detail": "Avro has no time-nanos logical type: long retains nanoseconds with unit and time-of-day bounds remaining in source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "TEMPORAL_INTERPRETATION",
+          "classification": "not-enforced",
+          "detail": "Native UTC-adjustment, time-of-day bounds and target runtime range/annotation support require a value encoder; no units are rounded",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "string",
+      "source": "fixtures/parquet/logical/string.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+          "classification": "not-enforced",
+          "detail": "Corresponding legacy annotation is absent; source remains unchanged",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "string-wrong",
+      "source": "fixtures/parquet/logical/string-wrong.parquet",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_CONFLICT",
+          "classification": "not-enforced",
+          "detail": "STRING is incompatible with this physical type",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+          "classification": "not-enforced",
+          "detail": "Corresponding legacy annotation is absent; source remains unchanged",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "uuid",
+      "source": "fixtures/parquet/logical/uuid.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"fixed\",\n          \"name\": \"ParquetRecord_fixed_1\",\n          \"size\": 16,\n          \"logicalType\": \"uuid\"\n        }\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "UUID_RUNTIME_SUPPORT",
+          "classification": "not-enforced",
+          "detail": "Avro 1.12 permits fixed UUID, but some runtimes interpret only string UUID; verify the selected consumer",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "uuid-wrong",
+      "source": "fixtures/parquet/logical/uuid-wrong.parquet",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_CONFLICT",
+          "classification": "not-enforced",
+          "detail": "UUID requires byte length 16",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "float16",
+      "source": "fixtures/parquet/logical/float16.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        \"float\"\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "FLOAT16_WIDTH",
+          "classification": "representation-change",
+          "detail": "Half-float bytes require decoding; Avro float widens the value domain and does not preserve NaN payload bits",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "float16-wrong",
+      "source": "fixtures/parquet/logical/float16-wrong.parquet",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_CONFLICT",
+          "classification": "not-enforced",
+          "detail": "FLOAT16 requires byte length 2",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "date",
+      "source": "fixtures/parquet/logical/date.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"int\",\n          \"logicalType\": \"date\"\n        }\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+          "classification": "not-enforced",
+          "detail": "Corresponding legacy annotation is absent; source remains unchanged",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "date-wrong",
+      "source": "fixtures/parquet/logical/date-wrong.parquet",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_CONFLICT",
+          "classification": "not-enforced",
+          "detail": "DATE is incompatible with this physical type",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+          "classification": "not-enforced",
+          "detail": "Corresponding legacy annotation is absent; source remains unchanged",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "interval",
+      "source": "fixtures/parquet/logical/interval.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"fixed\",\n          \"name\": \"ParquetRecord_fixed_1\",\n          \"size\": 12\n        }\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "INTERVAL_MEANING",
+          "classification": "not-enforced",
+          "detail": "Raw 12-byte carrier retains native components; interval interpretation and arithmetic remain in source",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "logical",
+      "id": "interval-wrong",
+      "source": "fixtures/parquet/logical/interval-wrong.parquet",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_CONFLICT",
+          "classification": "not-enforced",
+          "detail": "INTERVAL requires byte length 12",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "containers",
+      "id": "list-three-element",
+      "source": "fixtures/parquet/containers/list-three-element.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"items\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": [\n            \"null\",\n            \"int\"\n          ]\n        }\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Nested layout and value rules remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "LIST_LAYOUT",
+          "classification": "representation-change",
+          "detail": "Native LIST wrappers and repetition levels lower to an Avro array; source layout remains in the capture",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "containers",
+      "id": "list-three-renamed",
+      "source": "fixtures/parquet/containers/list-three-renamed.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"items\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": \"int\"\n        }\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Nested layout and value rules remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "LIST_LAYOUT",
+          "classification": "representation-change",
+          "detail": "Native LIST wrappers and repetition levels lower to an Avro array; source layout remains in the capture",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "containers",
+      "id": "list-primitive",
+      "source": "fixtures/parquet/containers/list-primitive.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"items\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": \"int\"\n        }\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Nested layout and value rules remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "LIST_LAYOUT",
+          "classification": "representation-change",
+          "detail": "Native LIST wrappers and repetition levels lower to an Avro array; source layout remains in the capture",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "containers",
+      "id": "list-tuple",
+      "source": "fixtures/parquet/containers/list-tuple.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"items\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"record\",\n            \"name\": \"ParquetRecord_record_2\",\n            \"fields\": [\n              {\n                \"name\": \"a\",\n                \"type\": \"int\"\n              },\n              {\n                \"name\": \"b\",\n                \"type\": [\n                  \"null\",\n                  \"int\"\n                ]\n              }\n            ]\n          }\n        }\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Nested layout and value rules remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "LIST_LAYOUT",
+          "classification": "representation-change",
+          "detail": "Native LIST wrappers and repetition levels lower to an Avro array; source layout remains in the capture",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "containers",
+      "id": "list-array",
+      "source": "fixtures/parquet/containers/list-array.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"items\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"record\",\n            \"name\": \"ParquetRecord_record_2\",\n            \"fields\": [\n              {\n                \"name\": \"a\",\n                \"type\": [\n                  \"null\",\n                  \"int\"\n                ]\n              }\n            ]\n          }\n        }\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Nested layout and value rules remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "LIST_LAYOUT",
+          "classification": "representation-change",
+          "detail": "Native LIST wrappers and repetition levels lower to an Avro array; source layout remains in the capture",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "containers",
+      "id": "list-items_tuple",
+      "source": "fixtures/parquet/containers/list-items_tuple.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"items\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"record\",\n            \"name\": \"ParquetRecord_record_2\",\n            \"fields\": [\n              {\n                \"name\": \"a\",\n                \"type\": [\n                  \"null\",\n                  \"int\"\n                ]\n              }\n            ]\n          }\n        }\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Nested layout and value rules remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "LIST_LAYOUT",
+          "classification": "representation-change",
+          "detail": "Native LIST wrappers and repetition levels lower to an Avro array; source layout remains in the capture",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "containers",
+      "id": "list-nested-repeated",
+      "source": "fixtures/parquet/containers/list-nested-repeated.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"items\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"array\",\n            \"items\": \"int\"\n          }\n        }\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Nested layout and value rules remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/2",
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Nested layout and value rules remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/2",
+          "code": "LIST_LAYOUT",
+          "classification": "representation-change",
+          "detail": "Native LIST wrappers and repetition levels lower to an Avro array; source layout remains in the capture",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "LIST_LAYOUT",
+          "classification": "representation-change",
+          "detail": "Native LIST wrappers and repetition levels lower to an Avro array; source layout remains in the capture",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "containers",
+      "id": "list-wrong-child-repetition",
+      "source": "fixtures/parquet/containers/list-wrong-child-repetition.parquet",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Nested layout and value rules remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_CONTAINER_STRUCTURE",
+          "classification": "not-enforced",
+          "detail": "Container requires exactly one repeated child",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "containers",
+      "id": "list-two-children",
+      "source": "fixtures/parquet/containers/list-two-children.parquet",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Nested layout and value rules remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_CONTAINER_STRUCTURE",
+          "classification": "not-enforced",
+          "detail": "Container requires exactly one repeated child",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "containers",
+      "id": "list-repeated-outer",
+      "source": "fixtures/parquet/containers/list-repeated-outer.parquet",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Nested layout and value rules remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_CONTAINER_STRUCTURE",
+          "classification": "not-enforced",
+          "detail": "Repeated LIST must be an element of another two-level LIST",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "containers",
+      "id": "map-canonical",
+      "source": "fixtures/parquet/containers/map-canonical.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"mapping\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"record\",\n            \"name\": \"ParquetRecord_entry_1\",\n            \"fields\": [\n              {\n                \"name\": \"key\",\n                \"type\": \"int\"\n              },\n              {\n                \"name\": \"value\",\n                \"type\": [\n                  \"null\",\n                  \"int\"\n                ]\n              }\n            ]\n          }\n        }\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Nested layout and value rules remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/2",
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Nested layout and value rules remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "MAP_ENTRY_ARRAY",
+          "classification": "representation-change",
+          "detail": "Explicit ordered key/value entry array supports non-string keys and retains duplicates; Parquet last-value map semantics and key equality require a separate consumer",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "containers",
+      "id": "map-legacy-outer",
+      "source": "fixtures/parquet/containers/map-legacy-outer.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"mapping\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"record\",\n            \"name\": \"ParquetRecord_entry_1\",\n            \"fields\": [\n              {\n                \"name\": \"key\",\n                \"type\": \"int\"\n              },\n              {\n                \"name\": \"value\",\n                \"type\": [\n                  \"null\",\n                  \"int\"\n                ]\n              }\n            ]\n          }\n        }\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Nested layout and value rules remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/2",
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Nested layout and value rules remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "MAP_ENTRY_ARRAY",
+          "classification": "representation-change",
+          "detail": "Explicit ordered key/value entry array supports non-string keys and retains duplicates; Parquet last-value map semantics and key equality require a separate consumer",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "containers",
+      "id": "map-renamed",
+      "source": "fixtures/parquet/containers/map-renamed.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"mapping\",\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"record\",\n          \"name\": \"ParquetRecord_entry_1\",\n          \"fields\": [\n            {\n              \"name\": \"key\",\n              \"type\": \"int\"\n            },\n            {\n              \"name\": \"value\",\n              \"type\": \"int\"\n            }\n          ]\n        }\n      }\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Nested layout and value rules remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "MAP_ENTRY_ARRAY",
+          "classification": "representation-change",
+          "detail": "Explicit ordered key/value entry array supports non-string keys and retains duplicates; Parquet last-value map semantics and key equality require a separate consumer",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "containers",
+      "id": "map-key-only",
+      "source": "fixtures/parquet/containers/map-key-only.parquet",
+      "status": "projected",
+      "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"ParquetRecord\",\n  \"namespace\": \"example.parquet\",\n  \"fields\": [\n    {\n      \"name\": \"mapping\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"record\",\n            \"name\": \"ParquetRecord_entry_1\",\n            \"fields\": [\n              {\n                \"name\": \"key\",\n                \"type\": \"int\"\n              },\n              {\n                \"name\": \"value\",\n                \"type\": \"null\"\n              }\n            ]\n          }\n        }\n      ]\n    }\n  ]\n}\n",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Nested layout and value rules remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "MAP_ENTRY_ARRAY",
+          "classification": "representation-change",
+          "detail": "Explicit ordered key/value entry array supports non-string keys and retains duplicates; Parquet last-value map semantics and key equality require a separate consumer",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "containers",
+      "id": "map-nullable-key",
+      "source": "fixtures/parquet/containers/map-nullable-key.parquet",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Nested layout and value rules remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_CONTAINER_STRUCTURE",
+          "classification": "not-enforced",
+          "detail": "Map key must be required",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "containers",
+      "id": "map-repeated-value",
+      "source": "fixtures/parquet/containers/map-repeated-value.parquet",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Nested layout and value rules remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_CONTAINER_STRUCTURE",
+          "classification": "not-enforced",
+          "detail": "Map value cannot be repeated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "containers",
+      "id": "map-extra-field",
+      "source": "fixtures/parquet/containers/map-extra-field.parquet",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Nested layout and value rules remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_CONTAINER_STRUCTURE",
+          "classification": "not-enforced",
+          "detail": "Map entry must be a group with a key and optional value",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "family": "containers",
+      "id": "map-repeated-outer",
+      "source": "fixtures/parquet/containers/map-repeated-outer.parquet",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Nested layout and value rules remain unverified",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        },
+        {
+          "path": "/schema/1",
+          "code": "PARQUET_CONTAINER_STRUCTURE",
+          "classification": "not-enforced",
+          "detail": "MAP cannot have repeated outer repetition",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,485 @@
+{
+  "results": [
+    {
+      "id": "precise-duplicates",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":[9007199254740993,9007199254740993.0,9007199254740992,333333333.33333329,333333333.333333290,333333333.3333333,1e400,10e399,1e-400,10e-401]}",
+      "expected": "[{\"@id\":\"urn:s\",\"urn:p\":[{\"@value\":9007199254740993},{\"@value\":9007199254740992},{\"@value\":333333333.33333329},{\"@value\":333333333.3333333},{\"@value\":1e400},{\"@value\":1e-400}]}]",
+      "edit": {
+        "pointer": "/urn:p/1",
+        "text": "9007199254740994"
+      },
+      "editedExpected": "[{\"@id\":\"urn:s\",\"urn:p\":[{\"@value\":9007199254740993},{\"@value\":9007199254740994},{\"@value\":9007199254740992},{\"@value\":333333333.33333329},{\"@value\":333333333.3333333},{\"@value\":1e400},{\"@value\":1e-400}]}]",
+      "inputs": {
+        "id": "precise-duplicates",
+        "baseIRI": "https://example.org/source"
+      },
+      "options": {
+        "lossPolicy": "report"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/authored/precise-duplicates.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/authored/precise-duplicates.yaml.jsonld"
+        }
+      ],
+      "edits": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/authored/precise-duplicates.edited.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/authored/precise-duplicates.edited.yaml.jsonld"
+        }
+      ]
+    },
+    {
+      "id": "signed-zero",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":[-0,0,-0.0]}",
+      "expected": "[{\"@id\":\"urn:s\",\"urn:p\":[{\"@value\":-0},{\"@value\":0}]}]",
+      "inputs": {
+        "id": "signed-zero",
+        "baseIRI": "https://example.org/source"
+      },
+      "options": {
+        "lossPolicy": "report"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/authored/signed-zero.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/authored/signed-zero.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "ordered-list",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":{\"@list\":[9007199254740993,9007199254740993,1e400,1e-400]}}",
+      "expected": "[{\"@id\":\"urn:s\",\"urn:p\":[{\"@list\":[{\"@value\":9007199254740993},{\"@value\":9007199254740993},{\"@value\":1e400},{\"@value\":1e-400}]}]}]",
+      "inputs": {
+        "id": "ordered-list",
+        "baseIRI": "https://example.org/source"
+      },
+      "options": {
+        "lossPolicy": "report"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/authored/ordered-list.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/authored/ordered-list.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "direction-distinction",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":[{\"@value\":\"text\",\"@direction\":\"ltr\"},{\"@value\":\"text\",\"@direction\":\"rtl\"}]}",
+      "expected": "[{\"@id\":\"urn:s\",\"urn:p\":[{\"@value\":\"text\",\"@direction\":\"ltr\"},{\"@value\":\"text\",\"@direction\":\"rtl\"}]}]",
+      "inputs": {
+        "id": "direction-distinction",
+        "baseIRI": "https://example.org/source"
+      },
+      "options": {
+        "lossPolicy": "report"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/authored/direction-distinction.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/authored/direction-distinction.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "opaque-json",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":[{\"@type\":\"@json\",\"@value\":{\"a\":[9007199254740993,1e400],\"@language\":\"EN\"}},{\"@type\":\"@json\",\"@value\":{\"@language\":\"EN\",\"a\":[9007199254740993.0,10e399]}},{\"@type\":\"@json\",\"@value\":{\"a\":[1e400,9007199254740993],\"@language\":\"EN\"}}]}",
+      "expected": "[{\"@id\":\"urn:s\",\"urn:p\":[{\"@type\":\"@json\",\"@value\":{\"a\":[9007199254740993,1e400],\"@language\":\"EN\"}},{\"@type\":\"@json\",\"@value\":{\"a\":[1e400,9007199254740993],\"@language\":\"EN\"}}]}]",
+      "inputs": {
+        "id": "opaque-json",
+        "baseIRI": "https://example.org/source"
+      },
+      "options": {
+        "lossPolicy": "report"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/authored/opaque-json.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/authored/opaque-json.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "compact-exact",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":[9007199254740993,9007199254740993.0]}",
+      "options": {
+        "lossPolicy": "report",
+        "context": "{\"p\":\"urn:p\"}"
+      },
+      "expected": "{\"@context\":{\"p\":\"urn:p\"},\"@graph\":[{\"@id\":\"urn:s\",\"p\":9007199254740993}]}",
+      "inputs": {
+        "id": "compact-exact",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/authored/compact-exact.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/authored/compact-exact.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "compact-array",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":[1e400,10e399]}",
+      "options": {
+        "lossPolicy": "report",
+        "context": "{\"p\":\"urn:p\"}",
+        "compactArrays": false
+      },
+      "expected": "{\"@context\":{\"p\":\"urn:p\"},\"@graph\":[{\"@id\":\"urn:s\",\"p\":[1e400]}]}",
+      "inputs": {
+        "id": "compact-array",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/authored/compact-array.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/authored/compact-array.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "remote-target",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":\"v\"}",
+      "options": {
+        "lossPolicy": "report",
+        "context": "\"https://example.org/target\""
+      },
+      "inputs": {
+        "id": "remote-target",
+        "baseIRI": "https://example.org/source",
+        "contexts": [
+          {
+            "url": "https://example.org/target",
+            "text": "{\"@context\":{\"p\":\"urn:p\"}}"
+          }
+        ]
+      },
+      "expected": "{\"@context\":\"https://example.org/target\",\"@graph\":[{\"@id\":\"urn:s\",\"p\":\"v\"}]}",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "resourcesUsed": [
+        "https://example.org/target"
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/authored/remote-target.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/authored/remote-target.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "named-graph",
+      "source": "[{\"@id\":\"urn:g\",\"@graph\":[{\"@id\":\"urn:s\",\"urn:p\":\"a\"}]},{\"@id\":\"urn:g\",\"@graph\":[{\"@id\":\"urn:s\",\"urn:q\":\"b\"}]}]",
+      "expected": "[{\"@id\":\"urn:g\",\"@graph\":[{\"@id\":\"urn:s\",\"urn:p\":[{\"@value\":\"a\"}],\"urn:q\":[{\"@value\":\"b\"}]}]}]",
+      "inputs": {
+        "id": "named-graph",
+        "baseIRI": "https://example.org/source"
+      },
+      "options": {
+        "lossPolicy": "report"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/authored/named-graph.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/authored/named-graph.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "blank-reverse",
+      "source": "{\"@id\":\"urn:s\",\"@reverse\":{\"urn:p\":{\"urn:q\":\"value\"}}}",
+      "expected": "[{\"@id\":\"_:b0\",\"urn:p\":[{\"@id\":\"urn:s\"}],\"urn:q\":[{\"@value\":\"value\"}]}]",
+      "inputs": {
+        "id": "blank-reverse",
+        "baseIRI": "https://example.org/source"
+      },
+      "options": {
+        "lossPolicy": "report"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/authored/blank-reverse.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/authored/blank-reverse.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "conflicting-index",
+      "source": "[{\"@id\":\"urn:s\",\"@index\":\"a\",\"urn:p\":\"x\"},{\"@id\":\"urn:s\",\"@index\":\"b\",\"urn:p\":\"y\"}]",
+      "blocked": true,
+      "inputs": {
+        "id": "conflicting-index",
+        "baseIRI": "https://example.org/source"
+      },
+      "options": {
+        "lossPolicy": "report"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid JSON-LD syntax; conflicting @index property detected."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "missing-target",
+      "source": "{\"urn:p\":\"x\"}",
+      "options": {
+        "lossPolicy": "report",
+        "context": "\"https://example.org/missing\""
+      },
+      "blocked": true,
+      "inputs": {
+        "id": "missing-target",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_CONTEXT_MISSING",
+          "path": "",
+          "severity": "error",
+          "message": "No supplied context for https://example.org/missing"
+        },
+        {
+          "code": "JSONLD_FLATTEN_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.InvalidUrl: Dereferencing a URL did not result in a valid JSON-LD object. Possible causes are an inaccessible URL perhaps due to a same-origin policy (ensure the server uses CORS if you are using client-side JavaScript), too many redirects, a non-JSON response, or more than one HTTP Link Header was provided for a remote context. URL: \"https://example.org/missing\"."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "loss-reject",
+      "source": "{\"urn:p\":\"x\",\"unmapped\":\"kept\"}",
+      "options": {
+        "lossPolicy": "reject"
+      },
+      "blocked": true,
+      "inputs": {
+        "id": "loss-reject",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "invalid property: Dropping property that did not expand into an absolute IRI or keyword."
+        },
+        {
+          "code": "JSONLD_FLATTEN_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: invalid property"
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "expand-context-once",
+      "source": "{\"@id\":\"\",\"p\":\"v\"}",
+      "inputs": {
+        "id": "expand-context-once",
+        "baseIRI": "https://example.org/source",
+        "expandContext": "{\"@base\":null,\"p\":\"urn:p\"}"
+      },
+      "expected": "[{\"@id\":\"\",\"urn:p\":[{\"@value\":\"v\"}]}]",
+      "options": {
+        "lossPolicy": "report"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "relative @id reference: Relative @id reference found."
+        },
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/authored/expand-context-once.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/authored/expand-context-once.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    }
+  ]
+}

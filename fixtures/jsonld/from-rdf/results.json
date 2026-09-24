@@ -1,0 +1,1892 @@
+{
+  "cases": [
+    {
+      "id": "t0001",
+      "path": "native/jsonld/sources/fromRdf/0001-in.nq",
+      "options": {
+        "id": "t0001-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0001-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0001-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0001.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0001.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0002",
+      "path": "native/jsonld/sources/fromRdf/0002-in.nq",
+      "options": {
+        "id": "t0002-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0002-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0002-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0002.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0002.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0003",
+      "path": "native/jsonld/sources/fromRdf/0003-in.nq",
+      "options": {
+        "id": "t0003-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0003-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0003-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0003.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0003.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0004",
+      "path": "native/jsonld/sources/fromRdf/0004-in.nq",
+      "options": {
+        "id": "t0004-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0004-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0004-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0004.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0004.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0005",
+      "path": "native/jsonld/sources/fromRdf/0005-in.nq",
+      "options": {
+        "id": "t0005-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0005-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0005-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0005.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0005.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0006",
+      "path": "native/jsonld/sources/fromRdf/0006-in.nq",
+      "options": {
+        "id": "t0006-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0006-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0006-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0006.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0006.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0007",
+      "path": "native/jsonld/sources/fromRdf/0007-in.nq",
+      "options": {
+        "id": "t0007-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0007-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0007-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0007.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0007.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0008",
+      "path": "native/jsonld/sources/fromRdf/0008-in.nq",
+      "options": {
+        "id": "t0008-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0008-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.0",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0008-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0008.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0008.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0009",
+      "path": "native/jsonld/sources/fromRdf/0009-in.nq",
+      "options": {
+        "id": "t0009-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0009-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0009-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0009.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0009.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0010",
+      "path": "native/jsonld/sources/fromRdf/0010-in.nq",
+      "options": {
+        "id": "t0010-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0010-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0010-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0010.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0010.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0011",
+      "path": "native/jsonld/sources/fromRdf/0011-in.nq",
+      "options": {
+        "id": "t0011-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0011-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0011-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0011.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0011.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0012",
+      "path": "native/jsonld/sources/fromRdf/0012-in.nq",
+      "options": {
+        "id": "t0012-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0012-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0012-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0012.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0012.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0013",
+      "path": "native/jsonld/sources/fromRdf/0013-in.nq",
+      "options": {
+        "id": "t0013-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0013-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0013-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0013.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0013.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0014",
+      "path": "native/jsonld/sources/fromRdf/0014-in.nq",
+      "options": {
+        "id": "t0014-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0014-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0014-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0014.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0014.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0015",
+      "path": "native/jsonld/sources/fromRdf/0015-in.nq",
+      "options": {
+        "id": "t0015-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0015-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0015-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0015.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0015.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0016",
+      "path": "native/jsonld/sources/fromRdf/0016-in.nq",
+      "options": {
+        "id": "t0016-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0016-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0016-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0016.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0016.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0017",
+      "path": "native/jsonld/sources/fromRdf/0017-in.nq",
+      "options": {
+        "id": "t0017-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0017-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0017-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0017.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0017.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0018",
+      "path": "native/jsonld/sources/fromRdf/0018-in.nq",
+      "options": {
+        "id": "t0018-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0018-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": true,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0018-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_NATIVE_TYPES",
+          "path": "",
+          "severity": "warning",
+          "message": "Native scalar conversion may change RDF datatype and lexical representation; the full RDF source is retained in this report."
+        },
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0018.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0018.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0019",
+      "path": "native/jsonld/sources/fromRdf/0019-in.nq",
+      "options": {
+        "id": "t0019-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0019-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": true,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0019-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0019.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0019.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0020",
+      "path": "native/jsonld/sources/fromRdf/0020-in.nq",
+      "options": {
+        "id": "t0020-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0020-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0020-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0020.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0020.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0021",
+      "path": "native/jsonld/sources/fromRdf/0021-in.nq",
+      "options": {
+        "id": "t0021-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0021-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0021-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0021.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0021.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0022",
+      "path": "native/jsonld/sources/fromRdf/0022-in.nq",
+      "options": {
+        "id": "t0022-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0022-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0022-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0022.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0022.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0023",
+      "path": "native/jsonld/sources/fromRdf/0023-in.nq",
+      "options": {
+        "id": "t0023-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0023-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0023-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0023.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0023.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0024",
+      "path": "native/jsonld/sources/fromRdf/0024-in.nq",
+      "options": {
+        "id": "t0024-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0024-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0024-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0024.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0024.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0025",
+      "path": "native/jsonld/sources/fromRdf/0025-in.nq",
+      "options": {
+        "id": "t0025-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0025-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0025-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0025.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0025.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0026",
+      "path": "native/jsonld/sources/fromRdf/0026-in.nq",
+      "options": {
+        "id": "t0026-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0026-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0026-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0026.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0026.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0027",
+      "path": "native/jsonld/sources/fromRdf/0027-in.nq",
+      "options": {
+        "id": "t0027-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0027-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": true,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0027-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_NATIVE_TYPES",
+          "path": "",
+          "severity": "warning",
+          "message": "Native scalar conversion may change RDF datatype and lexical representation; the full RDF source is retained in this report."
+        },
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0027.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0027.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0028",
+      "path": "native/jsonld/sources/fromRdf/0028-in.nq",
+      "options": {
+        "id": "t0028-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/0028-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": true,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/0028-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_RDF_NATIVE_TYPES",
+          "path": "",
+          "severity": "warning",
+          "message": "Native scalar conversion may change RDF datatype and lexical representation; the full RDF source is retained in this report."
+        },
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/t0028.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/t0028.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tdi01",
+      "path": "native/jsonld/sources/fromRdf/di01-in.nq",
+      "options": {
+        "id": "tdi01-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/di01-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/di01-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tdi01.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tdi01.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tdi02",
+      "path": "native/jsonld/sources/fromRdf/di02-in.nq",
+      "options": {
+        "id": "tdi02-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/di02-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/di02-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tdi02.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tdi02.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tdi03",
+      "path": "native/jsonld/sources/fromRdf/di03-in.nq",
+      "options": {
+        "id": "tdi03-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/di03-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/di03-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tdi03.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tdi03.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tdi04",
+      "path": "native/jsonld/sources/fromRdf/di04-in.nq",
+      "options": {
+        "id": "tdi04-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/di04-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/di04-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tdi04.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tdi04.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tdi05",
+      "path": "native/jsonld/sources/fromRdf/di05-in.nq",
+      "options": {
+        "id": "tdi05-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/di05-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": "i18n-datatype"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/di05-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tdi05.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tdi05.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tdi06",
+      "path": "native/jsonld/sources/fromRdf/di06-in.nq",
+      "options": {
+        "id": "tdi06-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/di06-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": "i18n-datatype"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/di06-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tdi06.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tdi06.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tdi07",
+      "path": "native/jsonld/sources/fromRdf/di07-in.nq",
+      "options": {
+        "id": "tdi07-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/di07-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": "i18n-datatype"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/di07-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tdi07.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tdi07.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tdi08",
+      "path": "native/jsonld/sources/fromRdf/di08-in.nq",
+      "options": {
+        "id": "tdi08-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/di08-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": "i18n-datatype"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/di08-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tdi08.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tdi08.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tdi09",
+      "path": "native/jsonld/sources/fromRdf/di09-in.nq",
+      "options": {
+        "id": "tdi09-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/di09-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": "compound-literal"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/di09-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tdi09.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tdi09.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tdi10",
+      "path": "native/jsonld/sources/fromRdf/di10-in.nq",
+      "options": {
+        "id": "tdi10-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/di10-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": "compound-literal"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/di10-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tdi10.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tdi10.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tdi11",
+      "path": "native/jsonld/sources/fromRdf/di11-in.nq",
+      "options": {
+        "id": "tdi11-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/di11-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": "compound-literal"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/di11-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tdi11.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tdi11.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tdi12",
+      "path": "native/jsonld/sources/fromRdf/di12-in.nq",
+      "options": {
+        "id": "tdi12-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/di12-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": "compound-literal"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/di12-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tdi12.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tdi12.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tjs01",
+      "path": "native/jsonld/sources/fromRdf/js01-in.nq",
+      "options": {
+        "id": "tjs01-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/js01-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/js01-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tjs01.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tjs01.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tjs02",
+      "path": "native/jsonld/sources/fromRdf/js02-in.nq",
+      "options": {
+        "id": "tjs02-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/js02-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/js02-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tjs02.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tjs02.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tjs03",
+      "path": "native/jsonld/sources/fromRdf/js03-in.nq",
+      "options": {
+        "id": "tjs03-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/js03-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/js03-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tjs03.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tjs03.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tjs04",
+      "path": "native/jsonld/sources/fromRdf/js04-in.nq",
+      "options": {
+        "id": "tjs04-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/js04-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/js04-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tjs04.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tjs04.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tjs05",
+      "path": "native/jsonld/sources/fromRdf/js05-in.nq",
+      "options": {
+        "id": "tjs05-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/js05-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/js05-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tjs05.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tjs05.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tjs06",
+      "path": "native/jsonld/sources/fromRdf/js06-in.nq",
+      "options": {
+        "id": "tjs06-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/js06-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/js06-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tjs06.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tjs06.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tjs07",
+      "path": "native/jsonld/sources/fromRdf/js07-in.nq",
+      "options": {
+        "id": "tjs07-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/js07-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/js07-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tjs07.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tjs07.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tjs08",
+      "path": "native/jsonld/sources/fromRdf/js08-in.nq",
+      "options": {
+        "id": "tjs08-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/js08-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": false,
+      "expectedError": "invalid JSON literal",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: Invalid native JSON"
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "tjs09",
+      "path": "native/jsonld/sources/fromRdf/js09-in.nq",
+      "options": {
+        "id": "tjs09-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/js09-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": false,
+      "expectedError": "invalid JSON literal",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: Invalid native JSON"
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "tjs10",
+      "path": "native/jsonld/sources/fromRdf/js10-in.nq",
+      "options": {
+        "id": "tjs10-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/js10-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/js10-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tjs10.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tjs10.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tjs11",
+      "path": "native/jsonld/sources/fromRdf/js11-in.nq",
+      "options": {
+        "id": "tjs11-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/js11-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/js11-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tjs11.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tjs11.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tli01",
+      "path": "native/jsonld/sources/fromRdf/li01-in.nq",
+      "options": {
+        "id": "tli01-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/li01-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/li01-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tli01.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tli01.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tli02",
+      "path": "native/jsonld/sources/fromRdf/li02-in.nq",
+      "options": {
+        "id": "tli02-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/li02-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/li02-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tli02.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tli02.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tli03",
+      "path": "native/jsonld/sources/fromRdf/li03-in.nq",
+      "options": {
+        "id": "tli03-jsonld",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/fromRdf/li03-in.nq",
+        "lossPolicy": "report",
+        "processingMode": "json-ld-1.1",
+        "useNativeTypes": false,
+        "useRdfType": false,
+        "rdfDirection": null
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/fromRdf/li03-out.jsonld",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FROM_RDF",
+          "path": "",
+          "severity": "warning",
+          "message": "JSON-LD projection retains the complete RDF source in this report. Lists, rdf:type, datatype representation and blank labels follow selected conversion options. Empty named graphs remain explicit; no ontology or cross-document identity equivalence is asserted."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/from-rdf/tli03.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/from-rdf/tli03.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    }
+  ]
+}

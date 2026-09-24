@@ -1,0 +1,253 @@
+[
+  {
+    "add": null,
+    "metaData": null,
+    "protocol": {
+      "minReaderVersion": 1,
+      "minWriterVersion": 2
+    },
+    "remove": null,
+    "txn": null
+  },
+  {
+    "add": null,
+    "metaData": {
+      "configuration": {},
+      "createdTime": {
+        "$int64": "1709986334419"
+      },
+      "description": null,
+      "format": {
+        "options": {},
+        "provider": "parquet"
+      },
+      "id": "98c9faeb-7940-43eb-9898-50b2a99c0a7e",
+      "name": null,
+      "partitionColumns": [],
+      "schemaString": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"price\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"sold\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"deleted\",\"type\":\"boolean\",\"nullable\":true,\"metadata\":{}}]}"
+    },
+    "protocol": null,
+    "remove": null,
+    "txn": null
+  },
+  {
+    "add": {
+      "dataChange": false,
+      "deletionVector": null,
+      "modificationTime": {
+        "$int64": "1709986423962"
+      },
+      "partitionValues": {},
+      "path": "part-00001-bea93a33-9112-41a5-aca6-c2d1f2c43873-c000.snappy.parquet",
+      "size": {
+        "$int64": "1432"
+      },
+      "stats": "{\"numRecords\":5,\"minValues\":{\"id\":\"1\",\"sold\":0,\"deleted\":false,\"price\":0},\"maxValues\":{\"deleted\":false,\"id\":\"5\",\"price\":4,\"sold\":4},\"nullCount\":{\"id\":0,\"price\":0,\"sold\":0,\"deleted\":0}}",
+      "stats_parsed": {
+        "maxValues": {
+          "deleted": false,
+          "id": "5",
+          "price": {
+            "$int64": "4"
+          },
+          "sold": 4
+        },
+        "minValues": {
+          "deleted": false,
+          "id": "1",
+          "price": {
+            "$int64": "0"
+          },
+          "sold": 0
+        },
+        "nullCount": {
+          "deleted": {
+            "$int64": "0"
+          },
+          "id": {
+            "$int64": "0"
+          },
+          "price": {
+            "$int64": "0"
+          },
+          "sold": {
+            "$int64": "0"
+          }
+        },
+        "numRecords": {
+          "$int64": "5"
+        }
+      },
+      "tags": {}
+    },
+    "metaData": null,
+    "protocol": null,
+    "remove": null,
+    "txn": null
+  },
+  {
+    "add": {
+      "dataChange": false,
+      "deletionVector": null,
+      "modificationTime": {
+        "$int64": "1709986423857"
+      },
+      "partitionValues": {},
+      "path": "part-00001-6791b37e-f318-4d2b-87a0-89be205c338b-c000.snappy.parquet",
+      "size": {
+        "$int64": "1432"
+      },
+      "stats": "{\"numRecords\":5,\"minValues\":{\"deleted\":false,\"price\":0,\"id\":\"1\",\"sold\":0},\"maxValues\":{\"sold\":4,\"id\":\"5\",\"price\":4,\"deleted\":false},\"nullCount\":{\"id\":0,\"price\":0,\"sold\":0,\"deleted\":0}}",
+      "stats_parsed": {
+        "maxValues": {
+          "deleted": false,
+          "id": "5",
+          "price": {
+            "$int64": "4"
+          },
+          "sold": 4
+        },
+        "minValues": {
+          "deleted": false,
+          "id": "1",
+          "price": {
+            "$int64": "0"
+          },
+          "sold": 0
+        },
+        "nullCount": {
+          "deleted": {
+            "$int64": "0"
+          },
+          "id": {
+            "$int64": "0"
+          },
+          "price": {
+            "$int64": "0"
+          },
+          "sold": {
+            "$int64": "0"
+          }
+        },
+        "numRecords": {
+          "$int64": "5"
+        }
+      },
+      "tags": {}
+    },
+    "metaData": null,
+    "protocol": null,
+    "remove": null,
+    "txn": null
+  },
+  {
+    "add": {
+      "dataChange": false,
+      "deletionVector": null,
+      "modificationTime": {
+        "$int64": "1709986334474"
+      },
+      "partitionValues": {},
+      "path": "part-00001-fed6d112-d244-4c54-810d-25ba3f0a4016-c000.snappy.parquet",
+      "size": {
+        "$int64": "1432"
+      },
+      "stats": "{\"numRecords\":5,\"minValues\":{\"deleted\":false,\"price\":0,\"id\":\"1\",\"sold\":0},\"maxValues\":{\"price\":4,\"id\":\"5\",\"sold\":4,\"deleted\":false},\"nullCount\":{\"id\":0,\"sold\":0,\"deleted\":0,\"price\":0}}",
+      "stats_parsed": {
+        "maxValues": {
+          "deleted": false,
+          "id": "5",
+          "price": {
+            "$int64": "4"
+          },
+          "sold": 4
+        },
+        "minValues": {
+          "deleted": false,
+          "id": "1",
+          "price": {
+            "$int64": "0"
+          },
+          "sold": 0
+        },
+        "nullCount": {
+          "deleted": {
+            "$int64": "0"
+          },
+          "id": {
+            "$int64": "0"
+          },
+          "price": {
+            "$int64": "0"
+          },
+          "sold": {
+            "$int64": "0"
+          }
+        },
+        "numRecords": {
+          "$int64": "5"
+        }
+      },
+      "tags": {}
+    },
+    "metaData": null,
+    "protocol": null,
+    "remove": null,
+    "txn": null
+  },
+  {
+    "add": {
+      "dataChange": false,
+      "deletionVector": null,
+      "modificationTime": {
+        "$int64": "1709986334424"
+      },
+      "partitionValues": {},
+      "path": "part-00001-9c90a84d-6999-463c-bd2d-f68333e6d03d-c000.snappy.parquet",
+      "size": {
+        "$int64": "1432"
+      },
+      "stats": "{\"numRecords\":5,\"minValues\":{\"deleted\":false,\"id\":\"1\",\"sold\":0,\"price\":0},\"maxValues\":{\"price\":4,\"id\":\"5\",\"deleted\":false,\"sold\":4},\"nullCount\":{\"deleted\":0,\"id\":0,\"price\":0,\"sold\":0}}",
+      "stats_parsed": {
+        "maxValues": {
+          "deleted": false,
+          "id": "5",
+          "price": {
+            "$int64": "4"
+          },
+          "sold": 4
+        },
+        "minValues": {
+          "deleted": false,
+          "id": "1",
+          "price": {
+            "$int64": "0"
+          },
+          "sold": 0
+        },
+        "nullCount": {
+          "deleted": {
+            "$int64": "0"
+          },
+          "id": {
+            "$int64": "0"
+          },
+          "price": {
+            "$int64": "0"
+          },
+          "sold": {
+            "$int64": "0"
+          }
+        },
+        "numRecords": {
+          "$int64": "5"
+        }
+      },
+      "tags": {}
+    },
+    "metaData": null,
+    "protocol": null,
+    "remove": null,
+    "txn": null
+  }
+]

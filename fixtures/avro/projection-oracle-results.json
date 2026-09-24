@@ -1,0 +1,36 @@
+{
+  "vectors": [
+    {
+      "name": "valid",
+      "avroAccepted": true,
+      "jsonSchemaAccepted": true,
+      "requiredIssue": null
+    },
+    {
+      "name": "long-overflow",
+      "avroAccepted": false,
+      "jsonSchemaAccepted": true,
+      "requiredIssue": "LONG_ENCODING"
+    },
+    {
+      "name": "int-overflow",
+      "avroAccepted": false,
+      "jsonSchemaAccepted": false,
+      "requiredIssue": null
+    },
+    {
+      "name": "bad-enum",
+      "avroAccepted": false,
+      "jsonSchemaAccepted": false,
+      "requiredIssue": null
+    },
+    {
+      "name": "short-fixed",
+      "avroAccepted": false,
+      "jsonSchemaAccepted": false,
+      "requiredIssue": null
+    }
+  ],
+  "negativeControl": "Removing LONG_ENCODING makes fidelity check fail",
+  "scope": "Five explicitly mapped instance vectors; not arbitrary Avro instance conversion"
+}

@@ -1,0 +1,1147 @@
+{
+  "commit": "90b904ede68627c2450007034d9724c043f1a66b",
+  "files": 307,
+  "cases": 141,
+  "schemas": 77,
+  "contexts": 64,
+  "rejected": [
+    {
+      "id": "76",
+      "path": "crates/test/tests/data/delta-live-table/_delta_log/00000000000000000000.json",
+      "kind": "context",
+      "message": "[{\"code\":\"DELTA_TABLE_UNVERIFIED\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Supplied metadata/protocol context is not a reconciled snapshot; reader/writer support and safe evolution remain unverified\"},{\"code\":\"DELTA_TABLE_STRUCTURE\",\"path\":\"/metaData\",\"message\":\"must have required property 'schemaString'\",\"severity\":\"error\"}]"
+    }
+  ],
+  "parsing": [],
+  "results": [
+    {
+      "id": "0",
+      "kind": "schema",
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "1",
+      "kind": "context",
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":1},\"metaData\":{\"id\":\"5f54ef5f-e511-4114-b6e5-f6c206c068b6\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1742317261939}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "2",
+      "kind": "schema",
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "3",
+      "kind": "context",
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":1},\"metaData\":{\"id\":\"5f54ef5f-e511-4114-b6e5-f6c206c068b6\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1742317261939}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "4",
+      "kind": "schema",
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "5",
+      "kind": "context",
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":1},\"metaData\":{\"id\":\"5f54ef5f-e511-4114-b6e5-f6c206c068b6\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1742317261939}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "6",
+      "kind": "schema",
+      "path": "crates/core/tests/data_err_logs/table_d/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "7",
+      "kind": "context",
+      "path": "crates/core/tests/data_err_logs/table_d/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"catalogOwned\"],\"writerFeatures\":[\"catalogOwned\",\"invariants\",\"appendOnly\"]},\"metaData\":{\"id\":\"ebffcf7b-bf25-427f-a91a-d4a0d27ebbef\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"createdTime\":1742252106422,\"configuration\":{\"delta.feature.catalogowned\":\"supported\"}}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "8",
+      "kind": "schema",
+      "path": "crates/core/tests/data_err_logs/table_e/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "9",
+      "kind": "context",
+      "path": "crates/core/tests/data_err_logs/table_e/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"catalogOwned\"],\"writerFeatures\":[\"catalogOwned\",\"appendOnly\",\"invariants\"]},\"metaData\":{\"id\":\"7998c165-cb06-408d-bba0-e5c4e532ba21\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"createdTime\":1742317196814,\"configuration\":{\"delta.feature.catalogowned\":\"supported\"}}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "10",
+      "kind": "schema",
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "11",
+      "kind": "context",
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"catalogOwned\"],\"writerFeatures\":[\"catalogOwned\",\"invariants\",\"appendOnly\"]},\"metaData\":{\"id\":\"f8d0b1b0-efb8-4323-9c35-69d18d2eebc9\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"createdTime\":1742317795464,\"configuration\":{\"delta.feature.catalogowned\":\"supported\"}}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "12",
+      "kind": "schema",
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "13",
+      "kind": "context",
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":1},\"metaData\":{\"id\":\"5f54ef5f-e511-4114-b6e5-f6c206c068b6\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1742317261939}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "14",
+      "kind": "schema",
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "15",
+      "kind": "context",
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":1},\"metaData\":{\"id\":\"5f54ef5f-e511-4114-b6e5-f6c206c068b6\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1742317261939}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "16",
+      "kind": "schema",
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000009999.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "17",
+      "kind": "context",
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000009999.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"catalogOwned\"],\"writerFeatures\":[\"catalogOwned\",\"invariants\",\"appendOnly\"]},\"metaData\":{\"id\":\"ebffcf7b-bf25-427f-a91a-d4a0d27ebbef\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"createdTime\":1742252106422,\"configuration\":{\"delta.feature.catalogowned\":\"supported\"}}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "18",
+      "kind": "schema",
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "19",
+      "kind": "context",
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":1},\"metaData\":{\"id\":\"5f54ef5f-e511-4114-b6e5-f6c206c068b6\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1742317261939}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "20",
+      "kind": "schema",
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000009999.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "21",
+      "kind": "context",
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000009999.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"catalogOwned\"],\"writerFeatures\":[\"catalogOwned\",\"appendOnly\",\"invariants\"]},\"metaData\":{\"id\":\"7998c165-cb06-408d-bba0-e5c4e532ba21\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"createdTime\":1742317196814,\"configuration\":{\"delta.feature.catalogowned\":\"supported\"}}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "22",
+      "kind": "schema",
+      "path": "crates/test/tests/data/COVID-19_NYT/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"date\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"county\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"state\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"fips\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"cases\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"deaths\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "23",
+      "kind": "context",
+      "path": "crates/test/tests/data/COVID-19_NYT/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"7245fd1d-8a6d-4988-af72-92a95b646511\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"date\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"county\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"state\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"fips\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"cases\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"deaths\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1619121484605}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "24",
+      "kind": "schema",
+      "path": "crates/test/tests/data/cdc_ict_table/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"birthyear\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"age\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "25",
+      "kind": "context",
+      "path": "crates/test/tests/data/cdc_ict_table/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":7,\"writerFeatures\":[\"inCommitTimestamp\",\"changeDataFeed\",\"invariants\",\"appendOnly\"]},\"metaData\":{\"id\":\"76cd2cf5-ee8f-487e-8725-785a2c6bbb07\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"name\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"birthyear\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"age\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[\"birthyear\"],\"configuration\":{\"delta.enableChangeDataFeed\":\"true\",\"delta.enableInCommitTimestamps\":\"true\"},\"createdTime\":1783874203198}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "26",
+      "kind": "schema",
+      "path": "crates/test/tests/data/cdf-table-non-partitioned/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"birthday\",\"type\":\"date\",\"nullable\":true,\"metadata\":{}},{\"name\":\"long_field\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"boolean_field\",\"type\":\"boolean\",\"nullable\":true,\"metadata\":{}},{\"name\":\"double_field\",\"type\":\"double\",\"nullable\":true,\"metadata\":{}},{\"name\":\"smallint_field\",\"type\":\"short\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "27",
+      "kind": "context",
+      "path": "crates/test/tests/data/cdf-table-non-partitioned/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":4},\"metaData\":{\"id\":\"bb0fdeb2-76dd-4f5e-b1ea-845ecec8fa7e\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"name\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"birthday\\\",\\\"type\\\":\\\"date\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"long_field\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"boolean_field\\\",\\\"type\\\":\\\"boolean\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"double_field\\\",\\\"type\\\":\\\"double\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"smallint_field\\\",\\\"type\\\":\\\"short\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{\"delta.enableChangeDataFeed\":\"true\"},\"createdTime\":1713110303902}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "28",
+      "kind": "schema",
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"comment\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "29",
+      "kind": "context",
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"deletionVectors\"],\"writerFeatures\":[\"deletionVectors\",\"changeDataFeed\"]},\"metaData\":{\"id\":\"10650643-391b-4516-989b-f44387edb108\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"comment\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{\"delta.enableChangeDataFeed\":\"true\",\"delta.enableDeletionVectors\":\"true\"},\"createdTime\":1734070069752}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "30",
+      "kind": "schema",
+      "path": "crates/test/tests/data/cdf-table/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"birthday\",\"type\":\"date\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "31",
+      "kind": "context",
+      "path": "crates/test/tests/data/cdf-table/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":4},\"metaData\":{\"id\":\"d38a7090-96be-4b1b-b20f-b85ad8ae1a38\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"name\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"birthday\\\",\\\"type\\\":\\\"date\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[\"birthday\"],\"configuration\":{\"delta.enableChangeDataFeed\":\"true\"},\"createdTime\":1703265016759}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "32",
+      "kind": "schema",
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{\"delta.identity.step\":1,\"delta.identity.allowExplicitInsert\":false,\"delta.identity.start\":1}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"created_at\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "33",
+      "kind": "context",
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"v2Checkpoint\"],\"writerFeatures\":[\"v2Checkpoint\",\"identityColumns\",\"appendOnly\",\"invariants\"]},\"metaData\":{\"id\":\"1060c65c-e4aa-4d98-80d7-3eb9bd52ee29\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{\\\"delta.identity.step\\\":1,\\\"delta.identity.allowExplicitInsert\\\":false,\\\"delta.identity.start\\\":1}},{\\\"name\\\":\\\"name\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"created_at\\\",\\\"type\\\":\\\"timestamp\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{\"delta.checkpoint.writeStatsAsStruct\":\"true\",\"delta.checkpointPolicy\":\"v2\"},\"createdTime\":1754750593201}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "34",
+      "kind": "schema",
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000001.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{\"delta.identity.highWaterMark\":10,\"delta.identity.step\":1,\"delta.identity.allowExplicitInsert\":false,\"delta.identity.start\":1}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"created_at\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "35",
+      "kind": "schema",
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000002.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{\"delta.identity.highWaterMark\":11,\"delta.identity.step\":1,\"delta.identity.allowExplicitInsert\":false,\"delta.identity.start\":1}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"created_at\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "36",
+      "kind": "schema",
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000003.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{\"delta.identity.highWaterMark\":21,\"delta.identity.step\":1,\"delta.identity.allowExplicitInsert\":false,\"delta.identity.start\":1}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"created_at\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "37",
+      "kind": "schema",
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000004.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{\"delta.identity.highWaterMark\":22,\"delta.identity.step\":1,\"delta.identity.allowExplicitInsert\":false,\"delta.identity.start\":1}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"created_at\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "38",
+      "kind": "schema",
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000005.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{\"delta.identity.highWaterMark\":22,\"delta.identity.step\":1,\"delta.identity.allowExplicitInsert\":false,\"delta.identity.start\":1}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"created_at\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "39",
+      "kind": "schema",
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000006.checkpoint.f5ee283b-37c7-46af-b64c-8f77c6a5c43a.json",
+      "line": 4,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{\"delta.identity.highWaterMark\":32,\"delta.identity.step\":1,\"delta.identity.allowExplicitInsert\":false,\"delta.identity.start\":1}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"created_at\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "40",
+      "kind": "context",
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000006.checkpoint.f5ee283b-37c7-46af-b64c-8f77c6a5c43a.json",
+      "line": 4,
+      "text": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"v2Checkpoint\"],\"writerFeatures\":[\"v2Checkpoint\",\"identityColumns\",\"appendOnly\",\"invariants\"]},\"metaData\":{\"id\":\"1060c65c-e4aa-4d98-80d7-3eb9bd52ee29\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{\\\"delta.identity.highWaterMark\\\":32,\\\"delta.identity.step\\\":1,\\\"delta.identity.allowExplicitInsert\\\":false,\\\"delta.identity.start\\\":1}},{\\\"name\\\":\\\"name\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"created_at\\\",\\\"type\\\":\\\"timestamp\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{\"delta.checkpoint.writeStatsAsStruct\":\"true\",\"delta.checkpointPolicy\":\"v2\",\"delta.checkpointInterval\":\"2\"},\"createdTime\":1754750593201}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "41",
+      "kind": "schema",
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000006.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{\"delta.identity.highWaterMark\":32,\"delta.identity.step\":1,\"delta.identity.allowExplicitInsert\":false,\"delta.identity.start\":1}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"created_at\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "42",
+      "kind": "schema",
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000007.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{\"delta.identity.highWaterMark\":33,\"delta.identity.step\":1,\"delta.identity.allowExplicitInsert\":false,\"delta.identity.start\":1}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"created_at\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "43",
+      "kind": "schema",
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000008.checkpoint.e5ac4dc4-be27-4106-8a55-609707487f83.json",
+      "line": 4,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{\"delta.identity.highWaterMark\":43,\"delta.identity.step\":1,\"delta.identity.allowExplicitInsert\":false,\"delta.identity.start\":1}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"created_at\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "44",
+      "kind": "context",
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000008.checkpoint.e5ac4dc4-be27-4106-8a55-609707487f83.json",
+      "line": 4,
+      "text": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"v2Checkpoint\"],\"writerFeatures\":[\"v2Checkpoint\",\"identityColumns\",\"appendOnly\",\"invariants\"]},\"metaData\":{\"id\":\"1060c65c-e4aa-4d98-80d7-3eb9bd52ee29\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{\\\"delta.identity.highWaterMark\\\":43,\\\"delta.identity.step\\\":1,\\\"delta.identity.allowExplicitInsert\\\":false,\\\"delta.identity.start\\\":1}},{\\\"name\\\":\\\"name\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"created_at\\\",\\\"type\\\":\\\"timestamp\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{\"delta.checkpoint.writeStatsAsStruct\":\"true\",\"delta.checkpointPolicy\":\"v2\",\"delta.checkpointInterval\":\"2\"},\"createdTime\":1754750593201}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "45",
+      "kind": "schema",
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000008.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{\"delta.identity.highWaterMark\":43,\"delta.identity.step\":1,\"delta.identity.allowExplicitInsert\":false,\"delta.identity.start\":1}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"created_at\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "46",
+      "kind": "schema",
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000009.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{\"delta.identity.highWaterMark\":44,\"delta.identity.step\":1,\"delta.identity.allowExplicitInsert\":false,\"delta.identity.start\":1}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"created_at\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "47",
+      "kind": "schema",
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"some_struct\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"some_struct_member\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"some_struct_timestamp\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"value\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"ts\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}},{\"name\":\"date\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "48",
+      "kind": "context",
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"853536c9-0abe-4e66-9732-1718e542e6aa\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"some_struct\\\",\\\"type\\\":{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"some_struct_member\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"some_struct_timestamp\\\",\\\"type\\\":\\\"timestamp\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]},\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"value\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"ts\\\",\\\"type\\\":\\\"timestamp\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"date\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[\"date\"],\"configuration\":{},\"createdTime\":1627668675432}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "49",
+      "kind": "schema",
+      "path": "crates/test/tests/data/concurrent_workers/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"value\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "50",
+      "kind": "context",
+      "path": "crates/test/tests/data/concurrent_workers/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":1},\"metaData\":{\"id\":\"22ef18ba-191c-4c36-a606-3dad5cdf3830\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"value\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1564524294376}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "51",
+      "kind": "schema",
+      "path": "crates/test/tests/data/delta-0.2.0/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"value\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "52",
+      "kind": "context",
+      "path": "crates/test/tests/data/delta-0.2.0/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"22ef18ba-191c-4c36-a606-3dad5cdf3830\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"value\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1564524294376}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "53",
+      "kind": "schema",
+      "path": "crates/test/tests/data/delta-0.8-empty/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"column\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "54",
+      "kind": "context",
+      "path": "crates/test/tests/data/delta-0.8-empty/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"6af44890-613d-41fb-8629-1a49fa87d6d7\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"column\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1622445539346}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "55",
+      "kind": "schema",
+      "path": "crates/test/tests/data/delta-0.8.0-date/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"date\",\"type\":\"date\",\"nullable\":true,\"metadata\":{}},{\"name\":\"dayOfYear\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "56",
+      "kind": "context",
+      "path": "crates/test/tests/data/delta-0.8.0-date/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"dc34d06d-ee89-443b-a8b6-ad831a60693b\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"date\\\",\\\"type\\\":\\\"date\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"dayOfYear\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1616789902890}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "57",
+      "kind": "schema",
+      "path": "crates/test/tests/data/delta-0.8.0-null-partition/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"k\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"v\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "58",
+      "kind": "context",
+      "path": "crates/test/tests/data/delta-0.8.0-null-partition/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"4c831cf5-cd89-40af-9828-c1de38c23b2a\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"k\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"v\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[\"k\"],\"configuration\":{},\"createdTime\":1627990373830}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "59",
+      "kind": "schema",
+      "path": "crates/test/tests/data/delta-0.8.0-numeric-partition/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"y\",\"type\":\"double\",\"nullable\":true,\"metadata\":{}},{\"name\":\"z\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "60",
+      "kind": "context",
+      "path": "crates/test/tests/data/delta-0.8.0-numeric-partition/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"9d0bff21-770d-4ade-9f45-737651e3dea6\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"x\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"y\\\",\\\"type\\\":\\\"double\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"z\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[\"x\",\"y\"],\"configuration\":{},\"createdTime\":1635213602350}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "61",
+      "kind": "schema",
+      "path": "crates/test/tests/data/delta-0.8.0-partitioned/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"value\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"year\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"month\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"day\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "62",
+      "kind": "context",
+      "path": "crates/test/tests/data/delta-0.8.0-partitioned/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"fe5a3c11-30d4-4dd7-b115-a1c121e66a4e\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"value\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"year\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"month\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"day\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[\"year\",\"month\",\"day\"],\"configuration\":{},\"createdTime\":1615555644515}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "63",
+      "kind": "schema",
+      "path": "crates/test/tests/data/delta-0.8.0-special-partition/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"y\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "64",
+      "kind": "context",
+      "path": "crates/test/tests/data/delta-0.8.0-special-partition/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"b108ae95-23bd-45af-99a7-00b0f2d43c74\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"x\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"y\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[\"x\"],\"configuration\":{},\"createdTime\":1631873468392}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "65",
+      "kind": "schema",
+      "path": "crates/test/tests/data/delta-0.8.0/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"value\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "66",
+      "kind": "context",
+      "path": "crates/test/tests/data/delta-0.8.0/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"c48a3abf-ea47-498b-b173-52ce534e8dab\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"value\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1615043767476}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "67",
+      "kind": "schema",
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"integer\",\"type\":\"integer\",\"nullable\":false,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "68",
+      "kind": "context",
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"8d3d2b8a-f091-4d7d-8a37-432a9beaf17b\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"integer\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":false,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{\"delta.checkpoint.writeStatsAsJson\":\"false\",\"delta.checkpoint.writeStatsAsStruct\":\"true\"},\"createdTime\":1666652369483}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "69",
+      "kind": "schema",
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000001.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"integer\",\"type\":\"integer\",\"nullable\":false,\"metadata\":{}},{\"name\":\"null\",\"type\":\"boolean\",\"nullable\":true,\"metadata\":{}},{\"name\":\"boolean\",\"type\":\"boolean\",\"nullable\":true,\"metadata\":{}},{\"name\":\"double\",\"type\":\"double\",\"nullable\":true,\"metadata\":{}},{\"name\":\"decimal\",\"type\":\"decimal(8,5)\",\"nullable\":true,\"metadata\":{}},{\"name\":\"string\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"binary\",\"type\":\"binary\",\"nullable\":true,\"metadata\":{}},{\"name\":\"date\",\"type\":\"date\",\"nullable\":true,\"metadata\":{}},{\"name\":\"timestamp\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}},{\"name\":\"struct\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"struct_element\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"map\",\"type\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"string\",\"valueContainsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"array\",\"type\":{\"type\":\"array\",\"elementType\":\"string\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"nested_struct\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"struct_element\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"nested_struct_element\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"struct_of_array_of_map\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"struct_element\",\"type\":{\"type\":\"array\",\"elementType\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"string\",\"valueContainsNull\":true},\"containsNull\":true},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "70",
+      "kind": "schema",
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000010.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"integer\",\"type\":\"integer\",\"nullable\":false,\"metadata\":{}},{\"name\":\"null\",\"type\":\"boolean\",\"nullable\":true,\"metadata\":{}},{\"name\":\"boolean\",\"type\":\"boolean\",\"nullable\":true,\"metadata\":{}},{\"name\":\"double\",\"type\":\"double\",\"nullable\":true,\"metadata\":{}},{\"name\":\"decimal\",\"type\":\"decimal(8,5)\",\"nullable\":true,\"metadata\":{}},{\"name\":\"string\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"binary\",\"type\":\"binary\",\"nullable\":true,\"metadata\":{}},{\"name\":\"date\",\"type\":\"date\",\"nullable\":true,\"metadata\":{}},{\"name\":\"timestamp\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}},{\"name\":\"struct\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"struct_element\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"map\",\"type\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"string\",\"valueContainsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"array\",\"type\":{\"type\":\"array\",\"elementType\":\"string\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"nested_struct\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"struct_element\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"nested_struct_element\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"struct_of_array_of_map\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"struct_element\",\"type\":{\"type\":\"array\",\"elementType\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"string\",\"valueContainsNull\":true},\"containsNull\":true},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"new_column\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "71",
+      "kind": "schema",
+      "path": "crates/test/tests/data/delta-2.2.0-partitioned-types/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"c1\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"c2\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"c3\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "72",
+      "kind": "context",
+      "path": "crates/test/tests/data/delta-2.2.0-partitioned-types/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"aff5cb91-8cd9-4195-aef9-446908507302\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"c1\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"c2\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"c3\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[\"c1\",\"c2\"],\"configuration\":{},\"createdTime\":1670892997849}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "73",
+      "kind": "schema",
+      "path": "crates/test/tests/data/delta-checkpoint-stats-optional/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"integer\",\"type\":\"integer\",\"nullable\":false,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "74",
+      "kind": "context",
+      "path": "crates/test/tests/data/delta-checkpoint-stats-optional/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"8d3d2b8a-f091-4d7d-8a37-432a9beaf17b\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"integer\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":false,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{\"delta.checkpoint.writeStatsAsJson\":\"false\",\"delta.checkpoint.writeStatsAsStruct\":\"true\"},\"createdTime\":1666652369483}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "75",
+      "kind": "schema",
+      "path": "crates/test/tests/data/delta-checkpoint-stats-optional/_delta_log/00000000000000000001.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"integer\",\"type\":\"integer\",\"nullable\":false,\"metadata\":{}},{\"name\":\"null\",\"type\":\"boolean\",\"nullable\":true,\"metadata\":{}},{\"name\":\"boolean\",\"type\":\"boolean\",\"nullable\":true,\"metadata\":{}},{\"name\":\"double\",\"type\":\"double\",\"nullable\":true,\"metadata\":{}},{\"name\":\"decimal\",\"type\":\"decimal(8,5)\",\"nullable\":true,\"metadata\":{}},{\"name\":\"string\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"binary\",\"type\":\"binary\",\"nullable\":true,\"metadata\":{}},{\"name\":\"date\",\"type\":\"date\",\"nullable\":true,\"metadata\":{}},{\"name\":\"timestamp\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}},{\"name\":\"struct\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"struct_element\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"map\",\"type\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"string\",\"valueContainsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"array\",\"type\":{\"type\":\"array\",\"elementType\":\"string\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"nested_struct\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"struct_element\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"nested_struct_element\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"struct_of_array_of_map\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"struct_element\",\"type\":{\"type\":\"array\",\"elementType\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"string\",\"valueContainsNull\":true},\"containsNull\":true},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "76",
+      "kind": "context",
+      "path": "crates/test/tests/data/delta-live-table/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"ac0a0120-970e-4d8c-ae92-b5244b055d6e\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1681798577757}}",
+      "status": "rejected",
+      "message": "[{\"code\":\"DELTA_TABLE_UNVERIFIED\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Supplied metadata/protocol context is not a reconciled snapshot; reader/writer support and safe evolution remain unverified\"},{\"code\":\"DELTA_TABLE_STRUCTURE\",\"path\":\"/metaData\",\"message\":\"must have required property 'schemaString'\",\"severity\":\"error\"}]"
+    },
+    {
+      "id": "77",
+      "kind": "schema",
+      "path": "crates/test/tests/data/delta-live-table/_delta_log/00000000000000000001.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"sherpa_user_id\",\"type\":\"decimal(38,0)\",\"nullable\":true,\"metadata\":{}},{\"name\":\"enabled\",\"type\":\"boolean\",\"nullable\":true,\"metadata\":{}},{\"name\":\"last_login\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}},{\"name\":\"first_name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"last_name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"full_name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"email\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"job_title\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"hire_date\",\"type\":\"date\",\"nullable\":true,\"metadata\":{}},{\"name\":\"skypoint_delta_index\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "78",
+      "kind": "context",
+      "path": "crates/test/tests/data/delta-live-table/_delta_log/00000000000000000001.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":2,\"minWriterVersion\":5},\"metaData\":{\"id\":\"ac0a0120-970e-4d8c-ae92-b5244b055d6e\",\"name\":\"SnowflakeTest_Snowflake_DTL_SHERPA_USER_TABLE\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"sherpa_user_id\\\",\\\"type\\\":\\\"decimal(38,0)\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"enabled\\\",\\\"type\\\":\\\"boolean\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"last_login\\\",\\\"type\\\":\\\"timestamp\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"first_name\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"last_name\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"full_name\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"email\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"job_title\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"hire_date\\\",\\\"type\\\":\\\"date\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"skypoint_delta_index\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{\"pipelines.pipelineId\":\"5c7b47e9-12d6-4986-a601-6716734281ce\",\"pipelines.autoOptimize.managed\":\"false\",\"pipelines.metastore.tableName\":\"automation_retailsandbox.SnowflakeTest_Snowflake_DTL_SHERPA_USER_TABLE\"},\"createdTime\":1681798577757}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "79",
+      "kind": "schema",
+      "path": "crates/test/tests/data/delta-stats-optional/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"integer\",\"type\":\"integer\",\"nullable\":false,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "80",
+      "kind": "context",
+      "path": "crates/test/tests/data/delta-stats-optional/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"8d3d2b8a-f091-4d7d-8a37-432a9beaf17b\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"integer\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":false,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{\"delta.checkpoint.writeStatsAsJson\":\"false\",\"delta.checkpoint.writeStatsAsStruct\":\"true\"},\"createdTime\":1666652369483}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "81",
+      "kind": "schema",
+      "path": "crates/test/tests/data/delta-stats-optional/_delta_log/00000000000000000001.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"integer\",\"type\":\"integer\",\"nullable\":false,\"metadata\":{}},{\"name\":\"null\",\"type\":\"boolean\",\"nullable\":true,\"metadata\":{}},{\"name\":\"boolean\",\"type\":\"boolean\",\"nullable\":true,\"metadata\":{}},{\"name\":\"double\",\"type\":\"double\",\"nullable\":true,\"metadata\":{}},{\"name\":\"decimal\",\"type\":\"decimal(8,5)\",\"nullable\":true,\"metadata\":{}},{\"name\":\"string\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"binary\",\"type\":\"binary\",\"nullable\":true,\"metadata\":{}},{\"name\":\"date\",\"type\":\"date\",\"nullable\":true,\"metadata\":{}},{\"name\":\"timestamp\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}},{\"name\":\"struct\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"struct_element\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"map\",\"type\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"string\",\"valueContainsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"array\",\"type\":{\"type\":\"array\",\"elementType\":\"string\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"nested_struct\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"struct_element\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"nested_struct_element\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"struct_of_array_of_map\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"struct_element\",\"type\":{\"type\":\"array\",\"elementType\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"string\",\"valueContainsNull\":true},\"containsNull\":true},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "82",
+      "kind": "schema",
+      "path": "crates/test/tests/data/golden/data-reader-array-primitives/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"as_array_int\",\"type\":{\"type\":\"array\",\"elementType\":\"integer\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"as_array_long\",\"type\":{\"type\":\"array\",\"elementType\":\"long\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"as_array_byte\",\"type\":{\"type\":\"array\",\"elementType\":\"byte\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"as_array_short\",\"type\":{\"type\":\"array\",\"elementType\":\"short\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"as_array_boolean\",\"type\":{\"type\":\"array\",\"elementType\":\"boolean\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"as_array_float\",\"type\":{\"type\":\"array\",\"elementType\":\"float\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"as_array_double\",\"type\":{\"type\":\"array\",\"elementType\":\"double\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"as_array_string\",\"type\":{\"type\":\"array\",\"elementType\":\"string\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"as_array_binary\",\"type\":{\"type\":\"array\",\"elementType\":\"binary\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"as_array_big_decimal\",\"type\":{\"type\":\"array\",\"elementType\":\"decimal(1,0)\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "83",
+      "kind": "context",
+      "path": "crates/test/tests/data/golden/data-reader-array-primitives/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"caaa1362-3717-449b-ab9b-f7d8d536018d\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"as_array_int\\\",\\\"type\\\":{\\\"type\\\":\\\"array\\\",\\\"elementType\\\":\\\"integer\\\",\\\"containsNull\\\":true},\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"as_array_long\\\",\\\"type\\\":{\\\"type\\\":\\\"array\\\",\\\"elementType\\\":\\\"long\\\",\\\"containsNull\\\":true},\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"as_array_byte\\\",\\\"type\\\":{\\\"type\\\":\\\"array\\\",\\\"elementType\\\":\\\"byte\\\",\\\"containsNull\\\":true},\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"as_array_short\\\",\\\"type\\\":{\\\"type\\\":\\\"array\\\",\\\"elementType\\\":\\\"short\\\",\\\"containsNull\\\":true},\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"as_array_boolean\\\",\\\"type\\\":{\\\"type\\\":\\\"array\\\",\\\"elementType\\\":\\\"boolean\\\",\\\"containsNull\\\":true},\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"as_array_float\\\",\\\"type\\\":{\\\"type\\\":\\\"array\\\",\\\"elementType\\\":\\\"float\\\",\\\"containsNull\\\":true},\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"as_array_double\\\",\\\"type\\\":{\\\"type\\\":\\\"array\\\",\\\"elementType\\\":\\\"double\\\",\\\"containsNull\\\":true},\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"as_array_string\\\",\\\"type\\\":{\\\"type\\\":\\\"array\\\",\\\"elementType\\\":\\\"string\\\",\\\"containsNull\\\":true},\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"as_array_binary\\\",\\\"type\\\":{\\\"type\\\":\\\"array\\\",\\\"elementType\\\":\\\"binary\\\",\\\"containsNull\\\":true},\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"as_array_big_decimal\\\",\\\"type\\\":{\\\"type\\\":\\\"array\\\",\\\"elementType\\\":\\\"decimal(1,0)\\\",\\\"containsNull\\\":true},\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1603724037970}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "84",
+      "kind": "schema",
+      "path": "crates/test/tests/data/http_requests/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"date\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"ClientIP\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"ClientRequestHost\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"ClientRequestMethod\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"ClientRequestURI\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"EdgeEndTimestamp\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}},{\"name\":\"EdgeResponseBytes\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"EdgeResponseStatus\",\"type\":\"short\",\"nullable\":true,\"metadata\":{}},{\"name\":\"EdgeStartTimestamp\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "85",
+      "kind": "context",
+      "path": "crates/test/tests/data/http_requests/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":1},\"metaData\":{\"id\":\"1c863a88-7231-4ffc-a24b-3bbfad87d80a\",\"name\":\"http_requests\",\"description\":\"\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"date\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"ClientIP\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"ClientRequestHost\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"ClientRequestMethod\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"ClientRequestURI\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"EdgeEndTimestamp\\\",\\\"type\\\":\\\"timestamp\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"EdgeResponseBytes\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"EdgeResponseStatus\\\",\\\"type\\\":\\\"short\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"EdgeStartTimestamp\\\",\\\"type\\\":\\\"timestamp\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[\"date\"],\"createdTime\":1681604880998,\"configuration\":{}}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "86",
+      "kind": "schema",
+      "path": "crates/test/tests/data/issue-2152/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"ID_D_DATE\",\"type\":\"long\",\"nullable\":true,\"metadata\":{\"delta.identity.start\":1,\"delta.identity.step\":1,\"delta.identity.allowExplicitInsert\":false}},{\"name\":\"TXT_DateKey\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "87",
+      "kind": "context",
+      "path": "crates/test/tests/data/issue-2152/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":6},\"metaData\":{\"id\":\"7791991a-60e9-4a8f-bff0-ccffec779dc4\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"ID_D_DATE\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{\\\"delta.identity.start\\\":1,\\\"delta.identity.step\\\":1,\\\"delta.identity.allowExplicitInsert\\\":false}},{\\\"name\\\":\\\"TXT_DateKey\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1706770085202}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "88",
+      "kind": "schema",
+      "path": "crates/test/tests/data/issue_1374/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"timestamp\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}},{\"name\":\"temperature\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"date\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "89",
+      "kind": "context",
+      "path": "crates/test/tests/data/issue_1374/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":1},\"metaData\":{\"id\":\"d5ad9276-c21f-474e-bfa8-996099dce265\",\"name\":null,\"description\":null,\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"timestamp\\\",\\\"type\\\":\\\"timestamp\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"temperature\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"date\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[\"date\"],\"createdTime\":1684886484991,\"configuration\":{}}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "90",
+      "kind": "schema",
+      "path": "crates/test/tests/data/latest_not_checkpointed/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"letter\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"int\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"date\",\"type\":\"date\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "91",
+      "kind": "context",
+      "path": "crates/test/tests/data/latest_not_checkpointed/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"84b09beb-329c-4b5e-b493-f58c6c78b8fd\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"letter\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"int\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"date\\\",\\\"type\\\":\\\"date\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{\"delta.checkpointInterval\":\"2\"},\"createdTime\":1674611455081}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "92",
+      "kind": "schema",
+      "path": "crates/test/tests/data/partition-type-primitives/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"value\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"year\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"is_active\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"event_date\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"category\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "93",
+      "kind": "context",
+      "path": "crates/test/tests/data/partition-type-primitives/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"427e2608-1911-4efb-9d5b-fa84ae9da619\",\"name\":null,\"description\":null,\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"value\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"year\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"is_active\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"event_date\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"category\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[\"year\",\"is_active\",\"event_date\",\"category\"],\"createdTime\":1753206988093,\"configuration\":{}}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "94",
+      "kind": "schema",
+      "path": "crates/test/tests/data/python-0.25.5-checkpoint/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "95",
+      "kind": "context",
+      "path": "crates/test/tests/data/python-0.25.5-checkpoint/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"5d650ad7-a5bc-41ef-942d-8cb1911e929f\",\"name\":null,\"description\":null,\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"x\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"createdTime\":1753290963616,\"configuration\":{}}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "96",
+      "kind": "schema",
+      "path": "crates/test/tests/data/simple_commit/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"value\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "97",
+      "kind": "context",
+      "path": "crates/test/tests/data/simple_commit/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"22ef18ba-191c-4c36-a606-3dad5cdf3830\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"value\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1564524294376}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "98",
+      "kind": "schema",
+      "path": "crates/test/tests/data/simple_table/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "99",
+      "kind": "context",
+      "path": "crates/test/tests/data/simple_table/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"5fba94ed-9794-4965-ba6e-6ee3c0d22af9\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1587968585495}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "100",
+      "kind": "schema",
+      "path": "crates/test/tests/data/simple_table_features/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "101",
+      "kind": "context",
+      "path": "crates/test/tests/data/simple_table_features/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":5,\"minWriterVersion\":7,\"readerFeatures\":[\"columnMapping\",\"blahabl\",\"deletionVectors\",\"timestampNtz\",\"v2Checkpoint\"],\"writerFeatures\":[\"appendOnly\",\"invariants\",\"checkConstraints\",\"changeDataFeed\",\"generatedColumns\",\"columnMapping\",\"identityColumns\",\"deletionVectors\",\"rowTracking\",\"timestampNtz\",\"domainMetadata\",\"v2Checkpoint\",\"icebergCompatV1\"]},\"metaData\":{\"id\":\"5fba94ed-9794-4965-ba6e-6ee3c0d22af9\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1587968585495}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "102",
+      "kind": "schema",
+      "path": "crates/test/tests/data/simple_table_with_cdc/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "103",
+      "kind": "context",
+      "path": "crates/test/tests/data/simple_table_with_cdc/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":4},\"metaData\":{\"id\":\"abd7ff9d-5fac-48fb-8d13-06c3ce1811ac\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"name\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{\"description\":\"CDC test Table\",\"delta.enableChangeDataFeed\":\"true\"},\"createdTime\":1671962429466}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "104",
+      "kind": "schema",
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"version\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "105",
+      "kind": "context",
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"cf3741a3-5f93-434f-99ac-9a4bebcdf06c\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"version\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1615751699422}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "106",
+      "kind": "schema",
+      "path": "crates/test/tests/data/spark-shredded-variant-preview-delta/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"v\",\"type\":\"variant\",\"nullable\":true,\"metadata\":{}},{\"name\":\"array_of_variants\",\"type\":{\"type\":\"array\",\"elementType\":\"variant\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"struct_of_variants\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"v\",\"type\":\"variant\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"map_of_variants\",\"type\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"variant\",\"valueContainsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"array_of_struct_of_variants\",\"type\":{\"type\":\"array\",\"elementType\":{\"type\":\"struct\",\"fields\":[{\"name\":\"v\",\"type\":\"variant\",\"nullable\":true,\"metadata\":{}}]},\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"struct_of_array_of_variants\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"v\",\"type\":{\"type\":\"array\",\"elementType\":\"variant\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "107",
+      "kind": "context",
+      "path": "crates/test/tests/data/spark-shredded-variant-preview-delta/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"variantShredding-preview\",\"variantType\"],\"writerFeatures\":[\"variantShredding-preview\",\"variantType\",\"appendOnly\",\"invariants\"]},\"metaData\":{\"id\":\"757b2255-cffd-4165-90b4-b491beb21ba1\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"v\\\",\\\"type\\\":\\\"variant\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"array_of_variants\\\",\\\"type\\\":{\\\"type\\\":\\\"array\\\",\\\"elementType\\\":\\\"variant\\\",\\\"containsNull\\\":true},\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"struct_of_variants\\\",\\\"type\\\":{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"v\\\",\\\"type\\\":\\\"variant\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]},\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"map_of_variants\\\",\\\"type\\\":{\\\"type\\\":\\\"map\\\",\\\"keyType\\\":\\\"string\\\",\\\"valueType\\\":\\\"variant\\\",\\\"valueContainsNull\\\":true},\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"array_of_struct_of_variants\\\",\\\"type\\\":{\\\"type\\\":\\\"array\\\",\\\"elementType\\\":{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"v\\\",\\\"type\\\":\\\"variant\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]},\\\"containsNull\\\":true},\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"struct_of_array_of_variants\\\",\\\"type\\\":{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"v\\\",\\\"type\\\":{\\\"type\\\":\\\"array\\\",\\\"elementType\\\":\\\"variant\\\",\\\"containsNull\\\":true},\\\"nullable\\\":true,\\\"metadata\\\":{}}]},\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{\"delta.enableVariantShredding\":\"true\",\"delta.checkpointInterval\":\"2\"},\"createdTime\":1747170231449}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "108",
+      "kind": "schema",
+      "path": "crates/test/tests/data/spark-variant-checkpoint/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"v\",\"type\":\"variant\",\"nullable\":true,\"metadata\":{}},{\"name\":\"array_of_variants\",\"type\":{\"type\":\"array\",\"elementType\":\"variant\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"struct_of_variants\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"v\",\"type\":\"variant\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"map_of_variants\",\"type\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"variant\",\"valueContainsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"array_of_struct_of_variants\",\"type\":{\"type\":\"array\",\"elementType\":{\"type\":\"struct\",\"fields\":[{\"name\":\"v\",\"type\":\"variant\",\"nullable\":true,\"metadata\":{}}]},\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"struct_of_array_of_variants\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"v\",\"type\":{\"type\":\"array\",\"elementType\":\"variant\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "109",
+      "kind": "context",
+      "path": "crates/test/tests/data/spark-variant-checkpoint/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"variantType-preview\"],\"writerFeatures\":[\"variantType-preview\",\"appendOnly\",\"invariants\"]},\"metaData\":{\"id\":\"d7eb0848-b002-4e0b-9d8d-dd335c90946f\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"v\\\",\\\"type\\\":\\\"variant\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"array_of_variants\\\",\\\"type\\\":{\\\"type\\\":\\\"array\\\",\\\"elementType\\\":\\\"variant\\\",\\\"containsNull\\\":true},\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"struct_of_variants\\\",\\\"type\\\":{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"v\\\",\\\"type\\\":\\\"variant\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]},\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"map_of_variants\\\",\\\"type\\\":{\\\"type\\\":\\\"map\\\",\\\"keyType\\\":\\\"string\\\",\\\"valueType\\\":\\\"variant\\\",\\\"valueContainsNull\\\":true},\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"array_of_struct_of_variants\\\",\\\"type\\\":{\\\"type\\\":\\\"array\\\",\\\"elementType\\\":{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"v\\\",\\\"type\\\":\\\"variant\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]},\\\"containsNull\\\":true},\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"struct_of_array_of_variants\\\",\\\"type\\\":{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"v\\\",\\\"type\\\":{\\\"type\\\":\\\"array\\\",\\\"elementType\\\":\\\"variant\\\",\\\"containsNull\\\":true},\\\"nullable\\\":true,\\\"metadata\\\":{}}]},\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{\"delta.checkpointInterval\":\"2\"},\"createdTime\":1723768495302}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "110",
+      "kind": "schema",
+      "path": "crates/test/tests/data/spark-variant-stable-feature-checkpoint/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"v\",\"type\":\"variant\",\"nullable\":true,\"metadata\":{}},{\"name\":\"array_of_variants\",\"type\":{\"type\":\"array\",\"elementType\":\"variant\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"struct_of_variants\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"v\",\"type\":\"variant\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"map_of_variants\",\"type\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"variant\",\"valueContainsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"array_of_struct_of_variants\",\"type\":{\"type\":\"array\",\"elementType\":{\"type\":\"struct\",\"fields\":[{\"name\":\"v\",\"type\":\"variant\",\"nullable\":true,\"metadata\":{}}]},\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"struct_of_array_of_variants\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"v\",\"type\":{\"type\":\"array\",\"elementType\":\"variant\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "111",
+      "kind": "context",
+      "path": "crates/test/tests/data/spark-variant-stable-feature-checkpoint/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"variantType\"],\"writerFeatures\":[\"variantType\",\"appendOnly\",\"invariants\"]},\"metaData\":{\"id\":\"f1448d1b-cd82-48a2-ba5e-cffcb9fa9239\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"v\\\",\\\"type\\\":\\\"variant\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"array_of_variants\\\",\\\"type\\\":{\\\"type\\\":\\\"array\\\",\\\"elementType\\\":\\\"variant\\\",\\\"containsNull\\\":true},\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"struct_of_variants\\\",\\\"type\\\":{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"v\\\",\\\"type\\\":\\\"variant\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]},\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"map_of_variants\\\",\\\"type\\\":{\\\"type\\\":\\\"map\\\",\\\"keyType\\\":\\\"string\\\",\\\"valueType\\\":\\\"variant\\\",\\\"valueContainsNull\\\":true},\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"array_of_struct_of_variants\\\",\\\"type\\\":{\\\"type\\\":\\\"array\\\",\\\"elementType\\\":{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"v\\\",\\\"type\\\":\\\"variant\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]},\\\"containsNull\\\":true},\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"struct_of_array_of_variants\\\",\\\"type\\\":{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"v\\\",\\\"type\\\":{\\\"type\\\":\\\"array\\\",\\\"elementType\\\":\\\"variant\\\",\\\"containsNull\\\":true},\\\"nullable\\\":true,\\\"metadata\\\":{}}]},\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1734924468826}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "112",
+      "kind": "schema",
+      "path": "crates/test/tests/data/table-with-dv-small/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"value\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "113",
+      "kind": "context",
+      "path": "crates/test/tests/data/table-with-dv-small/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"deletionVectors\"],\"writerFeatures\":[\"deletionVectors\"]},\"metaData\":{\"id\":\"testId\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"value\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{\"delta.enableDeletionVectors\":\"true\",\"delta.columnMapping.mode\":\"none\"},\"createdTime\":1677811175819}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "114",
+      "kind": "schema",
+      "path": "crates/test/tests/data/table-without-dv-small/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"value\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "115",
+      "kind": "context",
+      "path": "crates/test/tests/data/table-without-dv-small/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"6524c99f-9a76-4ea1-8ad4-e428a7e065d7\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"value\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1678020184802}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "116",
+      "kind": "schema",
+      "path": "crates/test/tests/data/table_failed_last_checkpoint_update/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"price\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"sold\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"deleted\",\"type\":\"boolean\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "117",
+      "kind": "context",
+      "path": "crates/test/tests/data/table_failed_last_checkpoint_update/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"98c9faeb-7940-43eb-9898-50b2a99c0a7e\",\"name\":null,\"description\":null,\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"price\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"sold\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"deleted\\\",\\\"type\\\":\\\"boolean\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"createdTime\":1709986334419,\"configuration\":{}}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "118",
+      "kind": "schema",
+      "path": "crates/test/tests/data/table_with_column_mapping/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"Company Very Short\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"delta.columnMapping.id\":1,\"delta.columnMapping.physicalName\":\"col-173b4db9-b5ad-427f-9e75-516aae37fbbb\"}},{\"name\":\"Super Name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"delta.columnMapping.id\":2,\"delta.columnMapping.physicalName\":\"col-3877fd94-0973-4941-ac6b-646849a1ff65\"}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "119",
+      "kind": "context",
+      "path": "crates/test/tests/data/table_with_column_mapping/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":2,\"minWriterVersion\":5},\"metaData\":{\"id\":\"592de637-dd77-4aaa-af00-97d723a7f1f1\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"Company Very Short\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{\\\"delta.columnMapping.id\\\":1,\\\"delta.columnMapping.physicalName\\\":\\\"col-173b4db9-b5ad-427f-9e75-516aae37fbbb\\\"}},{\\\"name\\\":\\\"Super Name\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{\\\"delta.columnMapping.id\\\":2,\\\"delta.columnMapping.physicalName\\\":\\\"col-3877fd94-0973-4941-ac6b-646849a1ff65\\\"}}]}\",\"partitionColumns\":[\"Company Very Short\"],\"configuration\":{\"delta.columnMapping.mode\":\"name\",\"delta.autoOptimize.optimizeWrite\":\"true\",\"delta.columnMapping.maxColumnId\":\"2\",\"delta.targetFileSize\":\"33554432\",\"delta.tuneFileSizesForRewrites\":\"true\"},\"createdTime\":1699946083038}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "120",
+      "kind": "schema",
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"address\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"age\",\"type\":\"double\",\"nullable\":true,\"metadata\":{}},{\"name\":\"company\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"nbr\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"phone_number\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "121",
+      "kind": "context",
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000000.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"bc4dc621-70d1-4392-86c0-fb1cf9d0f04a\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"address\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"age\\\",\\\"type\\\":\\\"double\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"company\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"name\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"nbr\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"phone_number\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{\"delta.autoOptimize.optimizeWrite\":\"true\",\"delta.targetFileSize\":\"33554432\",\"delta.tuneFileSizesForRewrites\":\"true\"},\"createdTime\":1690885055727}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "122",
+      "kind": "schema",
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000001.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"address\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"age\",\"type\":\"double\",\"nullable\":true,\"metadata\":{}},{\"name\":\"company\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"nbr\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"phone_number\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "123",
+      "kind": "context",
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000001.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[],\"writerFeatures\":[\"appendOnly\",\"invariants\"]},\"metaData\":{\"id\":\"bc4dc621-70d1-4392-86c0-fb1cf9d0f04a\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"address\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"age\\\",\\\"type\\\":\\\"double\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"company\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"name\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"nbr\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"phone_number\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{\"delta.autoOptimize.optimizeWrite\":\"true\",\"delta.targetFileSize\":\"33554432\",\"delta.tuneFileSizesForRewrites\":\"true\"},\"createdTime\":1690885055727}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "124",
+      "kind": "schema",
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000002.json",
+      "line": 3,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"address\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"age\",\"type\":\"double\",\"nullable\":true,\"metadata\":{}},{\"name\":\"company\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"nbr\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"phone_number\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "125",
+      "kind": "context",
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000002.json",
+      "line": 3,
+      "text": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"deletionVectors\"],\"writerFeatures\":[\"deletionVectors\",\"appendOnly\",\"invariants\"]},\"metaData\":{\"id\":\"bc4dc621-70d1-4392-86c0-fb1cf9d0f04a\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"address\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"age\\\",\\\"type\\\":\\\"double\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"company\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"name\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"nbr\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"phone_number\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{\"delta.enableDeletionVectors\":\"true\",\"delta.autoOptimize.optimizeWrite\":\"true\",\"delta.targetFileSize\":\"33554432\",\"delta.tuneFileSizesForRewrites\":\"true\"},\"createdTime\":1690885055727}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "126",
+      "kind": "schema",
+      "path": "crates/test/tests/data/table_with_edge_timestamps/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"BIG_DATE\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}},{\"name\":\"NORMAL_DATE\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}},{\"name\":\"SOME_VALUE\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "127",
+      "kind": "context",
+      "path": "crates/test/tests/data/table_with_edge_timestamps/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"79114423-cab8-4cf9-ad3c-c769a7c3d23b\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"BIG_DATE\\\",\\\"type\\\":\\\"timestamp\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"NORMAL_DATE\\\",\\\"type\\\":\\\"timestamp\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"SOME_VALUE\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1649083091859}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "128",
+      "kind": "schema",
+      "path": "crates/test/tests/data/table_with_liquid_clustering/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "129",
+      "kind": "context",
+      "path": "crates/test/tests/data/table_with_liquid_clustering/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"deletionVectors\"],\"writerFeatures\":[\"domainMetadata\",\"deletionVectors\",\"rowTracking\",\"liquid\"]},\"metaData\":{\"id\":\"6ca3020b-3cd9-4048-82e3-1417a0abb98f\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{\"delta.liquid.clusteringColumns\":\"id\",\"delta.enableDeletionVectors\":\"true\",\"delta.checkpoint.writeStatsAsStruct\":\"true\",\"delta.enableRowTracking\":\"true\",\"delta.checkpoint.writeStatsAsJson\":\"false\",\"delta.rowTracking.materializedRowCommitVersionColumnName\":\"_row-commit-version-col-2f60dcc1-9e36-4424-95e7-799b707e4ddb\",\"delta.rowTracking.materializedRowIdColumnName\":\"_row-id-col-4cbc7924-f662-4db1-aa59-22c23f59eb5d\"},\"createdTime\":1694758256009}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "130",
+      "kind": "schema",
+      "path": "crates/test/tests/data/table_with_null_stats_in_notnull_struct/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"s\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"l\",\"type\":\"long\",\"nullable\":false,\"metadata\":{}},{\"name\":\"b\",\"type\":\"boolean\",\"nullable\":false,\"metadata\":{}}]},\"nullable\":false,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "131",
+      "kind": "context",
+      "path": "crates/test/tests/data/table_with_null_stats_in_notnull_struct/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"e849a43f-42e1-404e-b13d-224d85eb7573\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"s\\\",\\\"type\\\":{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"l\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":false,\\\"metadata\\\":{}},{\\\"name\\\":\\\"b\\\",\\\"type\\\":\\\"boolean\\\",\\\"nullable\\\":false,\\\"metadata\\\":{}}]},\\\"nullable\\\":false,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"createdTime\":1711560767211}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "132",
+      "kind": "schema",
+      "path": "crates/test/tests/data/table_with_partitioning_mapping/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"description\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "133",
+      "kind": "context",
+      "path": "crates/test/tests/data/table_with_partitioning_mapping/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"deletionVectors\"],\"writerFeatures\":[\"deletionVectors\"]},\"metaData\":{\"id\":\"a637547f-55b4-43c3-9ae5-d3e1fb5db183\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"description\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[\"id\"],\"configuration\":{\"delta.enableDeletionVectors\":\"true\"},\"createdTime\":1742865147114}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "134",
+      "kind": "schema",
+      "path": "crates/test/tests/data/table_with_partitioning_mapping/_delta_log/00000000000000000002.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{\"delta.columnMapping.id\":1,\"delta.columnMapping.physicalName\":\"id\"}},{\"name\":\"description\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"delta.columnMapping.id\":2,\"delta.columnMapping.physicalName\":\"description\"}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "135",
+      "kind": "context",
+      "path": "crates/test/tests/data/table_with_partitioning_mapping/_delta_log/00000000000000000002.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"deletionVectors\",\"columnMapping\"],\"writerFeatures\":[\"deletionVectors\",\"checkConstraints\",\"generatedColumns\",\"invariants\",\"changeDataFeed\",\"appendOnly\",\"columnMapping\"]},\"metaData\":{\"id\":\"a637547f-55b4-43c3-9ae5-d3e1fb5db183\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"integer\\\",\\\"nullable\\\":true,\\\"metadata\\\":{\\\"delta.columnMapping.id\\\":1,\\\"delta.columnMapping.physicalName\\\":\\\"id\\\"}},{\\\"name\\\":\\\"description\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{\\\"delta.columnMapping.id\\\":2,\\\"delta.columnMapping.physicalName\\\":\\\"description\\\"}}]}\",\"partitionColumns\":[\"id\"],\"configuration\":{\"delta.enableDeletionVectors\":\"true\",\"delta.columnMapping.mode\":\"name\",\"delta.columnMapping.maxColumnId\":\"2\"},\"createdTime\":1742865147114}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "136",
+      "kind": "schema",
+      "path": "crates/test/tests/data/table_with_partitioning_mapping/_delta_log/00000000000000000003.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"newid\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{\"delta.columnMapping.id\":1,\"delta.columnMapping.physicalName\":\"id\"}},{\"name\":\"description\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"delta.columnMapping.id\":2,\"delta.columnMapping.physicalName\":\"description\"}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "137",
+      "kind": "schema",
+      "path": "crates/test/tests/data/v2-classic-checkpoint-json/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "138",
+      "kind": "context",
+      "path": "crates/test/tests/data/v2-classic-checkpoint-json/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"v2Checkpoint\"],\"writerFeatures\":[\"v2Checkpoint\",\"appendOnly\",\"invariants\"]},\"metaData\":{\"id\":\"29ef2045-59c5-4cf7-9d5d-2ba47e971d32\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{\"delta.checkpointPolicy\":\"v2\"},\"createdTime\":1739313200623}}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "139",
+      "kind": "schema",
+      "path": "crates/test/tests/data/with_checkpoint_no_last_checkpoint/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"letter\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"int\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"date\",\"type\":\"date\",\"nullable\":true,\"metadata\":{}}]}",
+      "status": "round-tripped"
+    },
+    {
+      "id": "140",
+      "kind": "context",
+      "path": "crates/test/tests/data/with_checkpoint_no_last_checkpoint/_delta_log/00000000000000000000.json",
+      "line": 2,
+      "text": "{\"protocol\":{\"minReaderVersion\":1,\"minWriterVersion\":2},\"metaData\":{\"id\":\"84b09beb-329c-4b5e-b493-f58c6c78b8fd\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"letter\\\",\\\"type\\\":\\\"string\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"int\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}},{\\\"name\\\":\\\"date\\\",\\\"type\\\":\\\"date\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{\"delta.checkpointInterval\":\"2\"},\"createdTime\":1674611455081}}",
+      "status": "round-tripped"
+    }
+  ]
+}

@@ -1,0 +1,247 @@
+{
+  "results": [
+    {
+      "id": "iri-keyword-alias",
+      "mode": "10",
+      "status": "candidate",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/legacy/iri-keyword-alias.10.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/legacy/iri-keyword-alias.10.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "iri-keyword-alias",
+      "mode": "11",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_EXPANSION_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid JSON-LD syntax; term in form of IRI must expand to definition."
+        }
+      ]
+    },
+    {
+      "id": "compact-redefinition",
+      "mode": "10",
+      "status": "candidate",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/legacy/compact-redefinition.10.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/legacy/compact-redefinition.10.yaml.jsonld"
+        }
+      ],
+      "edits": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/legacy/compact-redefinition.10.json.edited.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/legacy/compact-redefinition.10.yaml.edited.jsonld"
+        }
+      ]
+    },
+    {
+      "id": "compact-redefinition",
+      "mode": "11",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_EXPANSION_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid JSON-LD syntax; term in form of IRI must expand to definition."
+        }
+      ]
+    },
+    {
+      "id": "blank-prefix",
+      "mode": "10",
+      "status": "candidate",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/legacy/blank-prefix.10.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/legacy/blank-prefix.10.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "blank-prefix",
+      "mode": "11",
+      "status": "candidate",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/legacy/blank-prefix.11.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/legacy/blank-prefix.11.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "object-prefix",
+      "mode": "10",
+      "status": "candidate",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/legacy/object-prefix.10.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/legacy/object-prefix.10.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "object-prefix",
+      "mode": "11",
+      "status": "candidate",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/legacy/object-prefix.11.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/legacy/object-prefix.11.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "prefix-without-delimiter",
+      "mode": "10",
+      "status": "candidate",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/legacy/prefix-without-delimiter.10.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/legacy/prefix-without-delimiter.10.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "prefix-without-delimiter",
+      "mode": "11",
+      "status": "candidate",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/legacy/prefix-without-delimiter.11.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/legacy/prefix-without-delimiter.11.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "null-prefix",
+      "mode": "10",
+      "status": "candidate",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/legacy/null-prefix.10.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/legacy/null-prefix.10.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "null-prefix",
+      "mode": "11",
+      "status": "candidate",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/legacy/null-prefix.11.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/legacy/null-prefix.11.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "absolute-not-prefix",
+      "mode": "10",
+      "status": "candidate",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/legacy/absolute-not-prefix.10.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/legacy/absolute-not-prefix.10.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "absolute-not-prefix",
+      "mode": "11",
+      "status": "candidate",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/legacy/absolute-not-prefix.11.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/legacy/absolute-not-prefix.11.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "opaque-blank-context",
+      "mode": "11",
+      "status": "candidate",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/legacy/opaque-blank-context.11.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/legacy/opaque-blank-context.11.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    }
+  ]
+}

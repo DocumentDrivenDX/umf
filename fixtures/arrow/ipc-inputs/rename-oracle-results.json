@@ -1,0 +1,119 @@
+{
+  "oracle": "pyarrow 21.0.0",
+  "cases": [
+    {
+      "file": "int64.stream.arrow",
+      "rows": 6,
+      "expectedName": "renamed_field_with_a_longer_name",
+      "dataAndMetadataEqualExceptName": true
+    },
+    {
+      "file": "int64.file.arrow",
+      "rows": 6,
+      "expectedName": "renamed_field_with_a_longer_name",
+      "dataAndMetadataEqualExceptName": true
+    },
+    {
+      "file": "dictionary.stream.arrow",
+      "rows": 6,
+      "expectedName": "renamed_field_with_a_longer_name",
+      "dataAndMetadataEqualExceptName": true
+    },
+    {
+      "file": "dictionary.file.arrow",
+      "rows": 6,
+      "expectedName": "renamed_field_with_a_longer_name",
+      "dataAndMetadataEqualExceptName": true
+    },
+    {
+      "file": "list.stream.arrow",
+      "rows": 6,
+      "expectedName": "renamed_field_with_a_longer_name",
+      "dataAndMetadataEqualExceptName": true
+    },
+    {
+      "file": "list.file.arrow",
+      "rows": 6,
+      "expectedName": "renamed_field_with_a_longer_name",
+      "dataAndMetadataEqualExceptName": true
+    },
+    {
+      "file": "struct.stream.arrow",
+      "rows": 6,
+      "expectedName": "renamed_field_with_a_longer_name",
+      "dataAndMetadataEqualExceptName": true
+    },
+    {
+      "file": "struct.file.arrow",
+      "rows": 6,
+      "expectedName": "renamed_field_with_a_longer_name",
+      "dataAndMetadataEqualExceptName": true
+    },
+    {
+      "file": "map.stream.arrow",
+      "rows": 6,
+      "expectedName": "renamed_field_with_a_longer_name",
+      "dataAndMetadataEqualExceptName": true
+    },
+    {
+      "file": "map.file.arrow",
+      "rows": 6,
+      "expectedName": "renamed_field_with_a_longer_name",
+      "dataAndMetadataEqualExceptName": true
+    },
+    {
+      "file": "union.stream.arrow",
+      "rows": 6,
+      "expectedName": "renamed_field_with_a_longer_name",
+      "dataAndMetadataEqualExceptName": true
+    },
+    {
+      "file": "union.file.arrow",
+      "rows": 6,
+      "expectedName": "renamed_field_with_a_longer_name",
+      "dataAndMetadataEqualExceptName": true
+    },
+    {
+      "file": "listview.stream.arrow",
+      "rows": 6,
+      "expectedName": "renamed_field_with_a_longer_name",
+      "dataAndMetadataEqualExceptName": true
+    },
+    {
+      "file": "listview.file.arrow",
+      "rows": 6,
+      "expectedName": "renamed_field_with_a_longer_name",
+      "dataAndMetadataEqualExceptName": true
+    },
+    {
+      "file": "largelistview.stream.arrow",
+      "rows": 6,
+      "expectedName": "renamed_field_with_a_longer_name",
+      "dataAndMetadataEqualExceptName": true
+    },
+    {
+      "file": "largelistview.file.arrow",
+      "rows": 6,
+      "expectedName": "renamed_field_with_a_longer_name",
+      "dataAndMetadataEqualExceptName": true
+    },
+    {
+      "file": "runendencoded.stream.arrow",
+      "rows": 6,
+      "expectedName": "renamed_field_with_a_longer_name",
+      "dataAndMetadataEqualExceptName": true
+    },
+    {
+      "file": "runendencoded.file.arrow",
+      "rows": 6,
+      "expectedName": "renamed_field_with_a_longer_name",
+      "dataAndMetadataEqualExceptName": true
+    },
+    {
+      "file": "int64.legacy.arrow",
+      "rows": 6,
+      "expectedName": "renamed_field_with_a_longer_name",
+      "dataAndMetadataEqualExceptName": true
+    }
+  ]
+}

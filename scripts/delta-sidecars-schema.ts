@@ -1,0 +1,12 @@
+export {};
+const schema=await Bun.file('spec/extensions/delta-log/reconciliation.schema.json').json(),object=(properties:any,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:false}),array=(items:any)=>({type:'array',items}),row={type:'integer',minimum:1},index={type:'integer',minimum:0};
+schema.$id='urn:umf:delta-log:sidecar-reconciliation:0.1.0';schema.required.push('checkpoint','sidecars');
+schema.properties.sidecars=array(object({path:{type:'string'},source:{$ref:'urn:umf:core:0.1.0'}}));schema.properties.derivedCheckpoint=schema.properties.checkpoint;
+schema.properties.origins=array(object({line:row,checkpointLine:row,sidecar:index,row},['line','checkpointLine']));
+schema.properties.origins.items.dependentRequired={sidecar:['row'],row:['sidecar']};
+schema.properties.omittedNullFields=array(object({sidecar:index,row,path:{type:'string'}}));
+const projection=await Bun.file('spec/extensions/delta-log/parquet-actions.schema.json').json();Object.assign(schema.$defs,projection.$defs);schema.properties.scalarConversions=array(object({...projection.properties.scalarConversions.items.properties,sidecar:index}));
+schema.allOf.push({if:{properties:{status:{const:'reconciled'}}},then:{required:['derivedCheckpoint','origins','omittedNullFields','scalarConversions']}});
+schema.dependentRequired={scalarConversions:['derivedCheckpoint','origins','omittedNullFields'],derivedCheckpoint:['origins','omittedNullFields'],origins:['derivedCheckpoint','omittedNullFields'],omittedNullFields:['derivedCheckpoint','origins']};
+for(const k of ['derivedCheckpoint','origins','omittedNullFields','scalarConversions'])schema.dependentRequired[k]=['derivedCheckpoint','origins','omittedNullFields','scalarConversions'].filter(x=>x!==k);
+await Bun.write('spec/extensions/delta-log/sidecar-reconciliation.schema.json',JSON.stringify(schema,null,2)+'\n');

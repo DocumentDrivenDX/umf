@@ -1,0 +1,109 @@
+{
+  "sourceRoot": "/home/erik/Projects/tablespec",
+  "commit": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+  "scope": "Local source snapshot for TableSpec schema ingestion; not an implemented adapter or compatibility claim",
+  "files": [
+    {
+      "path": "native/tablespec/sources/LICENSE",
+      "upstreamPath": "LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "worktreeStatus": ""
+    },
+    {
+      "path": "native/tablespec/sources/examples/providers.yaml",
+      "upstreamPath": "examples/providers.yaml",
+      "sha256": "d88a5076031afd12a1d953c0107dac339859c8e88d66de53d4dd7f34f5cdb3f8",
+      "worktreeStatus": ""
+    },
+    {
+      "path": "native/tablespec/sources/examples/synthea/umfs/providers/columns/GENDER.yaml",
+      "upstreamPath": "examples/synthea/umfs/providers/columns/GENDER.yaml",
+      "sha256": "7c1953ab3300460919f84f7f81c31088d458351f7e5474f2fb2a0cebc5153595",
+      "worktreeStatus": ""
+    },
+    {
+      "path": "native/tablespec/sources/examples/synthea/umfs/providers/columns/Id.yaml",
+      "upstreamPath": "examples/synthea/umfs/providers/columns/Id.yaml",
+      "sha256": "24adc19e810ff8ae5c72b8c88980869ab6457c5a388ca32e4e5e295c1850f70d",
+      "worktreeStatus": ""
+    },
+    {
+      "path": "native/tablespec/sources/examples/synthea/umfs/providers/columns/NAME.yaml",
+      "upstreamPath": "examples/synthea/umfs/providers/columns/NAME.yaml",
+      "sha256": "df6d2b18dbd7c9a792d5ead0e81d991b13f280c3f2187a2baaf97da4f5617af9",
+      "worktreeStatus": ""
+    },
+    {
+      "path": "native/tablespec/sources/examples/synthea/umfs/providers/columns/ORGANIZATION.yaml",
+      "upstreamPath": "examples/synthea/umfs/providers/columns/ORGANIZATION.yaml",
+      "sha256": "33eae4f4f3fd1630ee753ea8d1850f15bc5dd739254b7ff0133813c2aaa1b5e4",
+      "worktreeStatus": ""
+    },
+    {
+      "path": "native/tablespec/sources/examples/synthea/umfs/providers/columns/SPECIALITY.yaml",
+      "upstreamPath": "examples/synthea/umfs/providers/columns/SPECIALITY.yaml",
+      "sha256": "383aac3ec261187bedf12c8b9901b8c03444c382e451df997d2cbdb396495e02",
+      "worktreeStatus": ""
+    },
+    {
+      "path": "native/tablespec/sources/examples/synthea/umfs/providers/table.yaml",
+      "upstreamPath": "examples/synthea/umfs/providers/table.yaml",
+      "sha256": "96954af2775001f5e5596f830385e4fe8fcc415c9a43782014f3868460fbc776",
+      "worktreeStatus": ""
+    },
+    {
+      "path": "native/tablespec/sources/pyproject.toml",
+      "upstreamPath": "pyproject.toml",
+      "sha256": "04679004a5690502b9f01e8180e16263aa0f95a3f8bff212aeab0d8c3ea5f910",
+      "worktreeStatus": ""
+    },
+    {
+      "path": "native/tablespec/sources/src/tablespec/models/umf.py",
+      "upstreamPath": "src/tablespec/models/umf.py",
+      "sha256": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b",
+      "worktreeStatus": ""
+    },
+    {
+      "path": "native/tablespec/sources/src/tablespec/schemas/umf.schema.json",
+      "upstreamPath": "src/tablespec/schemas/umf.schema.json",
+      "sha256": "d5b90026a2d82013a9586b2521b398690c722ca66df7a2663106d6d26778902b",
+      "worktreeStatus": ""
+    },
+    {
+      "path": "native/tablespec/sources/src/tablespec/type_mappings.py",
+      "upstreamPath": "src/tablespec/type_mappings.py",
+      "sha256": "eaa36bcbd96d2b09d22161c5200a2be6a0788d7fd5ee46292d62428bb24cbbe7",
+      "worktreeStatus": ""
+    },
+    {
+      "path": "native/tablespec/sources/src/tablespec/umf_loader.py",
+      "upstreamPath": "src/tablespec/umf_loader.py",
+      "sha256": "1b133536ef2abede237889b3be07e3197cf1a33ba00b0b80bfc2a388ed2efefa",
+      "worktreeStatus": ""
+    },
+    {
+      "path": "native/tablespec/sources/src/tablespec/umf_validator.py",
+      "upstreamPath": "src/tablespec/umf_validator.py",
+      "sha256": "d1c59403361903fdffe2787a4aaf9d40e7aba86d6723b5dd4278d1232ef1c145",
+      "worktreeStatus": ""
+    },
+    {
+      "path": "native/tablespec/sources/tests/unit/test_umf_loader.py",
+      "upstreamPath": "tests/unit/test_umf_loader.py",
+      "sha256": "9f39055e7fcf46a37011e6a1cf0178a28b747bef55f58d7a92a422d3d2f90fc6",
+      "worktreeStatus": ""
+    },
+    {
+      "path": "native/tablespec/sources/tests/unit/test_umf_models.py",
+      "upstreamPath": "tests/unit/test_umf_models.py",
+      "sha256": "80b4587721c060c913a1a073f705a7c9ed742351a3384b8223c2ec5c1c48b6ca",
+      "worktreeStatus": ""
+    },
+    {
+      "path": "native/tablespec/sources/tests/unit/test_umf_validator.py",
+      "upstreamPath": "tests/unit/test_umf_validator.py",
+      "sha256": "c6cf51ae211d723d4c1d3178820da30ff0001c3c4aac2ffc8e63dd84b6bf716a",
+      "worktreeStatus": ""
+    }
+  ]
+}

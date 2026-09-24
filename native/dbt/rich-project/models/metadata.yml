@@ -1,0 +1,74 @@
+version: 2
+groups:
+  - name: finance
+    owner:
+      name: Synthetic owner
+      email: owner@example.invalid
+sources:
+  - name: seed_alias
+    schema: main
+    description: Metadata alias for the local synthetic seed.
+    tables:
+      - name: orders
+        columns:
+          - name: amount
+            description: "{{ doc('amount_meaning') }}"
+exposures:
+  - name: totals_dashboard
+    type: dashboard
+    maturity: low
+    description: Synthetic totals dashboard metadata.
+    depends_on:
+      - ref('order_totals')
+    owner:
+      name: Synthetic owner
+      email: owner@example.invalid
+semantic_models:
+  - name: orders_semantic
+    description: Synthetic order semantics.
+    model: ref('order_events')
+    defaults:
+      agg_time_dimension: ordered_at
+    entities:
+      - name: order
+        type: primary
+        expr: order_id
+      - name: customer
+        type: foreign
+        expr: customer_id
+    dimensions:
+      - name: ordered_at
+        type: time
+        type_params:
+          time_granularity: day
+    measures:
+      - name: amount_sum
+        agg: sum
+        expr: amount
+metrics:
+  - name: total_amount
+    label: Total amount
+    description: Sum of synthetic signed amounts.
+    type: simple
+    type_params:
+      measure: amount_sum
+saved_queries:
+  - name: daily_totals
+    description: Synthetic daily amount query.
+    query_params:
+      metrics: [total_amount]
+      group_by: ["TimeDimension('metric_time', 'DAY')"]
+unit_tests:
+  - name: totals_include_adjustments
+    description: Signed values aggregate per customer.
+    model: order_totals
+    given:
+      - input: ref('orders')
+        rows:
+          - {order_id: 1, customer_id: 10, amount: 12.50}
+          - {order_id: 2, customer_id: 10, amount: -2.50}
+          - {order_id: 3, customer_id: 20, amount: 0.00}
+    expect:
+      rows:
+        - {customer_id: 10, total_amount: 10.00}
+        - {customer_id: 20, total_amount: 0.00}

@@ -1,0 +1,10 @@
+import {createHash} from 'node:crypto';
+import {join} from 'node:path';
+const root='node_modules/@typespec/compiler';
+const files:Record<string,string>={};
+for await(const path of new Bun.Glob('lib/**/*.tsp').scan(root))files['/compiler/'+path]=await Bun.file(join(root,path)).text();
+files['/compiler/package.json']=await Bun.file(join(root,'package.json')).text();
+await Bun.write('spec/extensions/typespec/standard-library.json',JSON.stringify(files,null,2)+'\n');
+await Bun.write('spec/extensions/typespec/LICENSE.typespec',await Bun.file(join(root,'LICENSE')).text());
+const pkg=await Bun.file(join(root,'package.json')).json();
+await Bun.write('spec/extensions/typespec/standard-manifest.json',JSON.stringify({package:pkg.name,version:pkg.version,source:'https://www.npmjs.com/package/@typespec/compiler/v/'+pkg.version,license:'MIT',files:Object.fromEntries(Object.entries(files).map(([path,text])=>[path,createHash('sha256').update(text).digest('hex')]))},null,2)+'\n');

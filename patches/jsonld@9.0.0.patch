@@ -1,0 +1,561 @@
+diff --git a/node_modules/jsonld/.bun-tag-260e9a584e07aa92 b/.bun-tag-260e9a584e07aa92
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/jsonld/.bun-tag-30d2e4584fca5d69 b/.bun-tag-30d2e4584fca5d69
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/jsonld/.bun-tag-43880cefe2271fda b/.bun-tag-43880cefe2271fda
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/jsonld/.bun-tag-4586bdd0349f85ae b/.bun-tag-4586bdd0349f85ae
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/jsonld/.bun-tag-45b0ab73726cd8a4 b/.bun-tag-45b0ab73726cd8a4
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/jsonld/.bun-tag-60772ce8c7bbcd70 b/.bun-tag-60772ce8c7bbcd70
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/jsonld/.bun-tag-65fa8815efc120 b/.bun-tag-65fa8815efc120
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/jsonld/.bun-tag-68c76fdea16b6ca0 b/.bun-tag-68c76fdea16b6ca0
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/jsonld/.bun-tag-69cc1c8cb13feef5 b/.bun-tag-69cc1c8cb13feef5
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/jsonld/.bun-tag-9b718078feac69dd b/.bun-tag-9b718078feac69dd
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/jsonld/.bun-tag-ab4ef7d4f6601e74 b/.bun-tag-ab4ef7d4f6601e74
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/jsonld/.bun-tag-b35de8128f98056c b/.bun-tag-b35de8128f98056c
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/jsonld/.bun-tag-d8ef4285b8467184 b/.bun-tag-d8ef4285b8467184
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/jsonld/.bun-tag-eaf5264ff06c8c06 b/.bun-tag-eaf5264ff06c8c06
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/node_modules/jsonld/.bun-tag-ff9ff4c07b8e1efc b/.bun-tag-ff9ff4c07b8e1efc
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/lib/compact.js b/lib/compact.js
+index 8fd82eac6f018aa26f15e75df677aa13dfcf2215..7aec9b4d4047ebcc47137d042bcb29cb1633eeff 100644
+--- a/lib/compact.js
++++ b/lib/compact.js
+@@ -556,27 +556,30 @@ api.compact = async ({
+           } else if(container.includes('@index')) {
+             const indexKey = _getContextValue(
+               activeCtx, itemActiveProperty, '@index') || '@index';
++            const expandedIndex = _expandIri(activeCtx, indexKey, {vocab: true}, options);
+             const containerKey = api.compactIri(
+-              {activeCtx, iri: indexKey, relativeTo: {vocab: true}});
++              {activeCtx, iri: expandedIndex,
++                value: indexKey === '@index' ? null : (expandedItem[expandedIndex] || [])[0],
++                relativeTo: {vocab: true}});
+             if(indexKey === '@index') {
+               key = expandedItem['@index'];
+               delete compactedItem[containerKey];
+             } else {
+               let others;
+-              [key, ...others] = _asArray(compactedItem[indexKey] || []);
++              [key, ...others] = _asArray(compactedItem[containerKey] ?? []);
+               if(!_isString(key)) {
+                 // Will use @none if it isn't a string.
+                 key = null;
+               } else {
+                 switch(others.length) {
+                   case 0:
+-                    delete compactedItem[indexKey];
++                    delete compactedItem[containerKey];
+                     break;
+                   case 1:
+-                    compactedItem[indexKey] = others[0];
++                    compactedItem[containerKey] = options.compactArrays ? others[0] : others;
+                     break;
+                   default:
+-                    compactedItem[indexKey] = others;
++                    compactedItem[containerKey] = others;
+                     break;
+                 }
+               }
+@@ -620,7 +623,7 @@ api.compact = async ({
+           }
+ 
+           // if compacting this value which has no key, index on @none
+-          if(!key) {
++          if(key === null || key === undefined) {
+             key = api.compactIri({activeCtx, iri: '@none',
+               relativeTo: {vocab: true}});
+           }
+@@ -628,7 +631,7 @@ api.compact = async ({
+           // based on the container type
+           _addValue(
+             mapObject, key, compactedItem, {
+-              propertyIsArray: container.includes('@set')
++              propertyIsArray: !options.compactArrays || container.includes('@set')
+             });
+         } else {
+           // use an array if: compactArrays flag is false,
+diff --git a/lib/context.js b/lib/context.js
+index f9fdcc842752a1240f417d4386496c6f7da420ba..99397dbdc06e208f1051d7ff3ab9c758848c8263 100644
+--- a/lib/context.js
++++ b/lib/context.js
+@@ -690,7 +690,8 @@ api.createTermDefinition = ({
+       }
+ 
+       // if term has the form of an IRI it must map the same
+-      if(term.match(/(?::[^:])|\//)) {
++      if(api.processingMode(activeCtx, 1.1) &&
++        term.match(/(?::[^:])|\//)) {
+         const termDefined = new Map(defined).set(term, true);
+         const termIri = _expandIri(
+           activeCtx, term, {vocab: true, base: false},
+@@ -706,9 +707,9 @@ api.createTermDefinition = ({
+ 
+       mapping['@id'] = id;
+       // indicate if this term may be used as a compact IRI prefix
+-      mapping._prefix = (simpleTerm &&
+-        !mapping._termHasColon &&
+-        id.match(/[:\/\?#\[\]@]$/) !== null);
++      mapping._prefix = !mapping._termHasColon &&
++        (api.processingMode(activeCtx, 1.0) ||
++          (simpleTerm && id.match(/[:\/\?#\[\]@]$/) !== null));
+     }
+   }
+ 
+diff --git a/lib/expand.js b/lib/expand.js
+index dc52fc680e5a75ef80c36a0cba8b55f58bc21a2c..77a232827059fc570ba6deae4b04e5c55daad1a6 100644
+--- a/lib/expand.js
++++ b/lib/expand.js
+@@ -485,6 +485,19 @@ async function _expandObject({
+     // expand property
+     const expandedProperty = _expandIri(activeCtx, key, {vocab: true}, options);
+ 
++    // Validate framing flags before null expansion or unmatched branches can
++    // hide malformed values. @default expansion disables isFrame; JSON
++    // literals are copied without recursing into their data members.
++    if(options.isFrame && ['@embed', '@explicit', '@requireAll', '@omitDefault'].includes(expandedProperty)) {
++      const flags = _isArray(value) ? value : [value];
++      if(flags.length !== 1 || (expandedProperty === '@embed' ?
++        typeof flags[0] !== 'string' && typeof flags[0] !== 'boolean' :
++        typeof flags[0] !== 'boolean')) {
++        throw new JsonLdError('Invalid frame flag value.', 'jsonld.SyntaxError',
++          {code: expandedProperty === '@embed' ? 'invalid @embed value' : 'invalid frame', value});
++      }
++    }
++
+     // drop non-absolute IRI keys that aren't keywords
+     if(expandedProperty === null ||
+       !(_isAbsoluteIri(expandedProperty) || _isKeyword(expandedProperty))) {
+@@ -1015,17 +1028,29 @@ async function _expandObject({
+ 
+   // expand each nested key
+   for(const key of nests) {
++    // UMF: nesting aliases can carry a property-scoped context.
++    let nestedCtx = activeCtx;
++    const scopedContext = _getContextValue(activeCtx, key, '@context');
++    if(!_isUndefined(scopedContext)) {
++      nestedCtx = await _processContext({
++        activeCtx,
++        localCtx: scopedContext,
++        propagate: true,
++        overrideProtected: true,
++        options
++      });
++    }
+     const nestedValues = _isArray(element[key]) ? element[key] : [element[key]];
+     for(const nv of nestedValues) {
+       if(!_isObject(nv) || Object.keys(nv).some(k =>
+-        _expandIri(activeCtx, k, {vocab: true}, options) === '@value')) {
++        _expandIri(nestedCtx, k, {vocab: true}, options) === '@value')) {
+         throw new JsonLdError(
+           'Invalid JSON-LD syntax; nested value must be a node object.',
+           'jsonld.SyntaxError',
+           {code: 'invalid @nest value', value: nv});
+       }
+       await _expandObject({
+-        activeCtx,
++        activeCtx: nestedCtx,
+         activeProperty,
+         expandedActiveProperty,
+         element: nv,
+@@ -1120,7 +1145,10 @@ function _expandValue({activeCtx, activeProperty, value, options}) {
+     }
+   }
+   // do conversion of values that aren't basic JSON types to strings
+-  if(!['boolean', 'number', 'string'].includes(typeof value)) {
++  if(!['boolean', 'number', 'string'].includes(typeof value) &&
++    !(value && Object.isFrozen(value) &&
++      Object.prototype.toString.call(value) === '[object Number]' &&
++      value[Symbol.for('umf.jsonld.exact-number')] === true)) {
+     value = value.toString();
+   }
+   rval['@value'] = value;
+diff --git a/lib/frame.js b/lib/frame.js
+index 5244d04ef059dc6fbdf9797175feb706cb1d09d7..8eccbd16bfdcde0d76cf88b59052d3d005934108 100644
+--- a/lib/frame.js
++++ b/lib/frame.js
+@@ -27,6 +27,7 @@ module.exports = api;
+  * @return the framed output.
+  */
+ api.frameMergedOrDefault = (input, frame, options) => {
++  _validateFrameFlags(frame, options);
+   // create framing state
+   const state = {
+     options,
+@@ -416,6 +417,34 @@ function _createsCircularReference(subjectToEmbed, graph, subjectStack) {
+  *
+  * @return the flag value.
+  */
++function _validateFrameFlags(value, options) {
++  if(types.isArray(value)) {
++    value.forEach(v => _validateFrameFlags(v, options));
++    return;
++  }
++  if(!types.isObject(value)) { return; }
++  _validateFrame([value]);
++  for(const flag of ['@embed', '@explicit', '@requireAll', '@omitDefault']) {
++    if(!(flag in value)) { continue; }
++    const values = value[flag];
++    if(!types.isArray(values) || values.length !== 1 ||
++      (flag !== '@embed' && typeof values[0] !== 'boolean')) {
++      throw new JsonLdError('Invalid frame flag value.', 'jsonld.SyntaxError',
++        {code: flag === '@embed' ? 'invalid @embed value' : 'invalid frame', frame: value});
++    }
++  }
++  const embed = _getFrameFlag(value, options, 'embed');
++  if(embed === '@link' || (options.is11 && (embed === '@first' || embed === '@last'))) {
++    throw new JsonLdError('Invalid value of @embed for processing mode.',
++      'jsonld.SyntaxError', {code: 'invalid @embed value', frame: value});
++  }
++  for(const [key, child] of Object.entries(value)) {
++    if(!['@value', '@default', '@id', '@type', '@language', '@direction'].includes(key)) {
++      _validateFrameFlags(child, options);
++    }
++  }
++}
++
+ function _getFrameFlag(frame, options, name) {
+   const flag = '@' + name;
+   let rval = (flag in frame ? frame[flag][0] : options[name]);
+@@ -795,7 +824,7 @@ function _valueMatch(pattern, value) {
+   const v1 = value['@value'];
+   const t1 = value['@type'];
+   const l1 = value['@language'];
+-  const v2 = pattern['@value'] ?
++  const v2 = Object.prototype.hasOwnProperty.call(pattern, '@value') ?
+     (types.isArray(pattern['@value']) ?
+       pattern['@value'] : [pattern['@value']]) :
+     [];
+@@ -811,7 +840,9 @@ function _valueMatch(pattern, value) {
+   if(v2.length === 0 && t2.length === 0 && l2.length === 0) {
+     return true;
+   }
+-  if(!(v2.includes(v1) || types.isEmptyObject(v2[0]))) {
++  if(!(v2.some(v => util.compareValues(
++    {'@value': v1, '@type': t1}, {'@value': v, '@type': t1})) ||
++    types.isEmptyObject(v2[0]))) {
+     return false;
+   }
+   if(!(!t1 && t2.length === 0 || t2.includes(t1) || t1 &&
+diff --git a/lib/fromRdf.js b/lib/fromRdf.js
+--- a/lib/fromRdf.js
++++ b/lib/fromRdf.js
+@@ -62,12 +62,7 @@
+   const graphMap = {'@default': defaultGraph};
+   const referencedOnce = {};
+   if(rdfDirection) {
+-    if(rdfDirection === 'compound-literal') {
+-      throw new JsonLdError(
+-        'Unsupported rdfDirection value.',
+-        'jsonld.InvalidRdfDirection',
+-        {value: rdfDirection});
+-    } else if(rdfDirection !== 'i18n-datatype') {
++    if(!['compound-literal', 'i18n-datatype'].includes(rdfDirection)) {
+       throw new JsonLdError(
+         'Unknown rdfDirection value.',
+         'jsonld.InvalidRdfDirection',
+@@ -90,7 +85,7 @@
+ 
+     // get subject, predicate, object
+     const s = _nodeId(quad.subject);
+-    const p = quad.predicate.value;
++    const p = _nodeId(quad.predicate);
+     const o = quad.object;
+ 
+     if(!(s in nodeMap)) {
+@@ -155,7 +150,7 @@
+ 
+       // get subject, predicate, object
+       const s = triple.subject.value;
+-      const p = triple.predicate.value;
++      const p = _nodeId(triple.predicate);
+       const o = triple.object;
+ 
+       if(!(s in nodeMap)) {
+@@ -209,6 +204,45 @@
+   for(const name in graphMap) {
+     const graphObject = graphMap[name];
+ 
++    if(rdfDirection === 'compound-literal') {
++      const rdf = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
++      for(const [cl, clNode] of Object.entries(graphObject)) {
++        if(!cl.startsWith('_:') || !(rdf + 'direction' in clNode) ||
++          !types.isObject(referencedOnce[cl])) { continue; }
++        const one = (key, optional = false) => {
++          const values = clNode[rdf + key];
++          if(optional && values === undefined) { return undefined; }
++          if(!Array.isArray(values) || values.length !== 1 ||
++            Object.keys(values[0]).length !== 1 || typeof values[0]['@value'] !== 'string') {
++            throw new JsonLdError('Invalid compound literal property.',
++              'jsonld.InvalidCompoundLiteral', {code: 'invalid compound literal', property: key});
++          }
++          return values[0]['@value'];
++        };
++        const value = one('value'), language = one('language', true), direction = one('direction');
++        if(language !== undefined && !REGEX_BCP47.test(language)) {
++          throw new JsonLdError('Invalid compound literal language.',
++            'jsonld.InvalidCompoundLiteral', {code: 'invalid language-tagged string'});
++        }
++        if(!['ltr', 'rtl'].includes(direction)) {
++          throw new JsonLdError('Invalid compound literal direction.',
++            'jsonld.InvalidCompoundLiteral', {code: 'invalid base direction'});
++        }
++        if(Object.keys(clNode).some(k => !['@id', rdf + 'value', rdf + 'language', rdf + 'direction'].includes(k)) && options.eventHandler) {
++          _handleEvent({event: {type: ['JsonLdEvent'], code: 'compound literal additional properties',
++            level: 'warning', message: 'Compound literal conversion omits additional node properties.',
++            details: {id: cl}}, options});
++        }
++        const reference = referencedOnce[cl];
++        for(const item of reference.node[reference.property]) {
++          if(item['@id'] !== cl) { continue; }
++          delete item['@id']; item['@value'] = value; item['@direction'] = direction;
++          if(language !== undefined) { item['@language'] = language; }
++        }
++        delete graphObject[cl];
++      }
++    }
++
+     // no @lists to be converted, continue
+     if(!(RDF_NIL in graphObject)) {
+       continue;
+@@ -256,6 +290,13 @@
+         }
+       }
+ 
++      if(options.processingMode === 'json-ld-1.0' && property === RDF_FIRST) {
++        if(head['@id'] === RDF_NIL) { continue; }
++        head = graphObject[head['@id']][RDF_REST][0];
++        list.pop();
++        listNodes.pop();
++      }
++
+       // transform list into @list object
+       delete head['@id'];
+       head['@list'] = list.reverse();
+@@ -307,6 +348,11 @@
+   const nodeId = _nodeId(o);
+   if(nodeId) {
+     return {'@id': nodeId};
++  }
++
++  if(!o.language && options.umfRdfLiteral) {
++    const converted = options.umfRdfLiteral(o, useNativeTypes);
++    if(converted !== undefined) { return converted; }
+   }
+ 
+   // convert literal to JSON-LD
+@@ -348,7 +394,7 @@
+       }
+     }
+     // use native types for certain xsd types
+-    if(useNativeTypes) {
++    if(useNativeTypes && [XSD_BOOLEAN, XSD_DOUBLE, XSD_INTEGER, XSD_STRING].includes(type)) {
+       if(type === XSD_BOOLEAN) {
+         if(rval['@value'] === 'true' || rval['@value'] === '1') {
+           rval['@value'] = true;
+diff --git a/lib/jsonld.js b/lib/jsonld.js
+index b420e42da9c78c5a93b66e4588338398cce4dc73..e55d0f763165f77d314e28e42a132d59c0ef8f10 100644
+--- a/lib/jsonld.js
++++ b/lib/jsonld.js
+@@ -475,7 +475,7 @@ jsonld.frame = async function(input, frame, options) {
+   // default graph, otherwise, the merged graph
+   const frameKeys = Object.keys(frame)
+     .map(key => _expandIri(activeCtx, key, {vocab: true}));
+-  opts.merged = !frameKeys.includes('@graph');
++  opts.merged = !options.frameDefault && !frameKeys.includes('@graph');
+   opts.is11 = _processingMode(activeCtx, 1.1);
+ 
+   // do framing
+diff --git a/lib/util.js b/lib/util.js
+index 57bf9f74a0e7aad5d01d3fbc15accc338c7c61e0..ce39adefc85db9319b3d0ec1d27283cb640fc683 100644
+--- a/lib/util.js
++++ b/lib/util.js
+@@ -39,6 +39,11 @@ api.REGEX_KEYWORD = REGEX_KEYWORD;
+  */
+ api.clone = function(value) {
+   if(value && typeof value === 'object') {
++    // UMF exact expansion scalars are immutable boxed numbers, never strings.
++    if(types.isNumber(value) && Object.isFrozen(value) &&
++      value[Symbol.for('umf.jsonld.exact-number')] === true) {
++      return value;
++    }
+     let rval;
+     if(types.isArray(value)) {
+       rval = [];
+@@ -373,6 +378,28 @@ api.relabelBlankNodes = (input, options) => {
+  *
+  * @return true if v1 and v2 are considered equal, false if not.
+  */
++function equalJsonValue(a, b) {
++  if(equalNumericValue(a, b)) { return true; }
++  if(!a || !b || typeof a !== 'object' || typeof b !== 'object' ||
++    a instanceof Number || b instanceof Number) { return false; }
++  if(Array.isArray(a) !== Array.isArray(b)) { return false; }
++  const keys = Object.keys(a);
++  return keys.length === Object.keys(b).length &&
++    keys.every(k => Object.prototype.hasOwnProperty.call(b, k) &&
++      equalJsonValue(a[k], b[k]));
++}
++
++function equalNumericValue(a, b) {
++  const key = Symbol.for('umf.jsonld.number-equals');
++  if(a instanceof Number && Object.isFrozen(a) && typeof a[key] === 'function') {
++    return a[key](b);
++  }
++  if(b instanceof Number && Object.isFrozen(b) && typeof b[key] === 'function') {
++    return b[key](a);
++  }
++  return a === b;
++}
++
+ api.compareValues = (v1, v2) => {
+   // 1. equal primitives
+   if(v1 === v2) {
+@@ -381,9 +408,11 @@ api.compareValues = (v1, v2) => {
+ 
+   // 2. equal @values
+   if(graphTypes.isValue(v1) && graphTypes.isValue(v2) &&
+-    v1['@value'] === v2['@value'] &&
++    (v1['@type'] === '@json' ? equalJsonValue(v1['@value'], v2['@value']) :
++      equalNumericValue(v1['@value'], v2['@value'])) &&
+     v1['@type'] === v2['@type'] &&
+     v1['@language'] === v2['@language'] &&
++    v1['@direction'] === v2['@direction'] &&
+     v1['@index'] === v2['@index']) {
+     return true;
+   }
+diff --git a/lib/toRdf.js b/lib/toRdf.js
+--- a/lib/toRdf.js
++++ b/lib/toRdf.js
+@@ -82,10 +82,11 @@
+       }
+       continue;
+     }
++    if(options.umfRdfTerm && !options.umfRdfTerm(graphTerm)) continue;
+     _graphToRDF(dataset, nodeMap[graphName], graphTerm, issuer, options);
+   }
+ 
+-  return dataset;
++  return dataset.filter(quad => quad.object !== null);
+ };
+ 
+ /**
+@@ -134,6 +135,8 @@
+           }
+           continue;
+         }
++
++        if(options.umfRdfTerm && !options.umfRdfTerm(subject)) continue;
+ 
+         // RDF predicate
+         const predicate = _makeTerm(property);
+@@ -179,6 +182,8 @@
+           continue;
+         }
+ 
++        if(options.umfRdfTerm && !options.umfRdfTerm(predicate)) continue;
++
+         // convert list, value or node object to triple
+         const object = _objectToRDF(
+           item, issuer, dataset, graphTerm, options.rdfDirection, options);
+@@ -290,6 +295,11 @@
+     let value = item['@value'];
+     const datatype = item['@type'] || null;
+ 
++    if(options.umfRdfLanguage && '@language' in item &&
++      !options.umfRdfLanguage(item['@language'])) return null;
++    if(datatype && datatype !== '@json' && options.umfRdfTerm &&
++      !options.umfRdfTerm({termType: 'NamedNode', value: datatype})) return null;
++
+     // convert to XSD/JSON datatypes as appropriate
+     if(datatype === '@json') {
+       object.value = jsonCanonicalize(value);
+@@ -297,10 +307,8 @@
+     } else if(types.isBoolean(value)) {
+       object.value = value.toString();
+       object.datatype.value = datatype || XSD_BOOLEAN;
+-    } else if(types.isDouble(value) || datatype === XSD_DOUBLE) {
+-      if(!types.isDouble(value)) {
+-        value = parseFloat(value);
+-      }
++    } else if(types.isNumber(value) &&
++      (value % 1 !== 0 || Math.abs(value) >= 1e21 || datatype === XSD_DOUBLE)) {
+       // canonical double representation
+       object.value = value.toExponential(15).replace(/(\d)0*e\+?/, '$1E');
+       object.datatype.value = datatype || XSD_DOUBLE;
+@@ -314,10 +322,23 @@
+       object.datatype.value = datatype;
+       object.value = value;
+     } else if('@direction' in item && rdfDirection === 'compound-literal') {
+-      throw new JsonLdError(
+-        'Unsupported rdfDirection value.',
+-        'jsonld.InvalidRdfDirection',
+-        {value: rdfDirection});
++      // A fresh compound literal belongs to the same graph as its reference.
++      object = _makeTerm(issuer.getId());
++      const components = [['value', value], ['direction', item['@direction']]];
++      if('@language' in item) {
++        components.push(['language', item['@language'].toLowerCase()]);
++      }
++      for(const [name, lexical] of components) {
++        dataset.push({
++          subject: object,
++          predicate: _makeTerm('http://www.w3.org/1999/02/22-rdf-syntax-ns#' + name),
++          object: {
++            termType: 'Literal', value: lexical,
++            datatype: {termType: 'NamedNode', value: XSD_STRING}
++          },
++          graph: graphTerm
++        });
++      }
+     } else if('@direction' in item && rdfDirection) {
+       throw new JsonLdError(
+         'Unknown rdfDirection value.',
+@@ -397,6 +418,7 @@
+     return null;
+   }
+ 
++  if(options.umfRdfTerm && !options.umfRdfTerm(object)) return null;
+   return object;
+ }
+ 
+diff --git a/lib/url.js b/lib/url.js
+--- a/lib/url.js
++++ b/lib/url.js
+@@ -277,7 +277,9 @@
+ // http://jmrware.com/articles/2009/uri_regexp/URI_regex.html
+ 
+ // regex to check for absolute IRI (starting scheme and ':') or blank node IRI
+-const isAbsoluteRegex = /^([A-Za-z][A-Za-z0-9+-.]*|_):[^\s]*$/;
++// Unicode spaces in RFC 3987 UCSCHAR are not ASCII whitespace. This is
++// classification only; full RDF IRI validation is performed separately.
++const isAbsoluteRegex = /^([A-Za-z][A-Za-z0-9+-.]*|_):[^\u0009-\u000d\u0020]*(?![\s\S])/;
+ 
+ /**
+  * Returns true if the given value is an absolute IRI or blank node IRI, false

@@ -1,0 +1,18 @@
+_:N8886b024d9ce4fceabb23ef93d1200f2 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N208de97b74934858b7af3699e6856573 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N8886b024d9ce4fceabb23ef93d1200f2 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#EqualsConstraintComponent> .
+_:N208de97b74934858b7af3699e6856573 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/equals-001.test#SomeValue> .
+_:N208de97b74934858b7af3699e6856573 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N8886b024d9ce4fceabb23ef93d1200f2 <http://www.w3.org/ns/shacl#resultMessage> "Value of ex:InvalidResource2->ex:property != ex:InvalidResource2" .
+_:N8886b024d9ce4fceabb23ef93d1200f2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N208de97b74934858b7af3699e6856573 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/equals-001.test#InvalidResource1> .
+_:N8886b024d9ce4fceabb23ef93d1200f2 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/equals-001.test#InvalidResource2> .
+_:N386b34f79dd74d85a842f74a5b501ec7 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N386b34f79dd74d85a842f74a5b501ec7 <http://www.w3.org/ns/shacl#result> _:N208de97b74934858b7af3699e6856573 .
+_:N386b34f79dd74d85a842f74a5b501ec7 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N8886b024d9ce4fceabb23ef93d1200f2 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/equals-001.test#TestShape> .
+_:N208de97b74934858b7af3699e6856573 <http://www.w3.org/ns/shacl#resultMessage> "Value of ex:InvalidResource1->ex:property != ex:SomeValue" .
+_:N208de97b74934858b7af3699e6856573 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#EqualsConstraintComponent> .
+_:N208de97b74934858b7af3699e6856573 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/equals-001.test#TestShape> .
+_:N386b34f79dd74d85a842f74a5b501ec7 <http://www.w3.org/ns/shacl#result> _:N8886b024d9ce4fceabb23ef93d1200f2 .
+_:N8886b024d9ce4fceabb23ef93d1200f2 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/equals-001.test#InvalidResource2> .

@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:delta:table-context:0.1.0",
+  "type": "object",
+  "properties": {
+    "protocol": {
+      "type": "object",
+      "properties": {
+        "minReaderVersion": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "minWriterVersion": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "readerFeatures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "writerFeatures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "minReaderVersion",
+        "minWriterVersion"
+      ],
+      "additionalProperties": true
+    },
+    "metaData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "format": {
+          "type": "object",
+          "properties": {
+            "provider": {
+              "type": "string"
+            },
+            "options": {
+              "type": "object",
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          },
+          "required": [
+            "provider"
+          ],
+          "additionalProperties": true
+        },
+        "schemaString": {
+          "type": "string"
+        },
+        "partitionColumns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "configuration": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "createdTime": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "format",
+        "schemaString",
+        "partitionColumns",
+        "configuration"
+      ],
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "protocol",
+    "metaData"
+  ],
+  "additionalProperties": true
+}

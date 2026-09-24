@@ -1,0 +1,442 @@
+{
+  "results": [
+    {
+      "id": "schema-0",
+      "path": "core/src/test/resources/TableMetadataPartitionStatisticsFiles.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "cc9b0f67eac88398f70e43ffec4a3cafcaf8970e98a21a0d20add12001b0cc5b",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        }
+      ],
+      "edit": {
+        "fieldId": 1,
+        "from": "x",
+        "to": "x_umf"
+      }
+    },
+    {
+      "id": "schema-1",
+      "path": "core/src/test/resources/TableMetadataStatisticsFiles.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "cc9b0f67eac88398f70e43ffec4a3cafcaf8970e98a21a0d20add12001b0cc5b",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        }
+      ],
+      "edit": {
+        "fieldId": 1,
+        "from": "x",
+        "to": "x_umf"
+      }
+    },
+    {
+      "id": "schema-2",
+      "path": "core/src/test/resources/TableMetadataUnsupportedVersion.json",
+      "pointer": "/schema",
+      "canonicalSchemaSha256": "534108c731cbb65c01b50a3f1722d06d54d0de34ffcf71b20202262856718b96",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        },
+        {
+          "code": "ICEBERG_SCHEMA_ID_CONTEXT",
+          "path": "",
+          "message": "Missing schema-id is retained; table format version determines whether it is required",
+          "severity": "warning"
+        }
+      ],
+      "edit": {
+        "fieldId": 1,
+        "from": "x",
+        "to": "x_umf"
+      }
+    },
+    {
+      "id": "schema-3",
+      "path": "core/src/test/resources/TableMetadataV1MissingSchemaType.json",
+      "pointer": "/schema",
+      "canonicalSchemaSha256": "6d65b269522bf3df2a9c78e41e680c107ab217a912293478faf76331f2b7145c",
+      "status": "rejected",
+      "error": "[{\"code\":\"ICEBERG_CONTEXT_UNVERIFIED\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support\"},{\"code\":\"ICEBERG_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'type'\",\"severity\":\"error\"}]"
+    },
+    {
+      "id": "schema-4",
+      "path": "core/src/test/resources/TableMetadataV1Valid.json",
+      "pointer": "/schema",
+      "canonicalSchemaSha256": "534108c731cbb65c01b50a3f1722d06d54d0de34ffcf71b20202262856718b96",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        },
+        {
+          "code": "ICEBERG_SCHEMA_ID_CONTEXT",
+          "path": "",
+          "message": "Missing schema-id is retained; table format version determines whether it is required",
+          "severity": "warning"
+        }
+      ],
+      "edit": {
+        "fieldId": 1,
+        "from": "x",
+        "to": "x_umf"
+      }
+    },
+    {
+      "id": "schema-5",
+      "path": "core/src/test/resources/TableMetadataV2CurrentSchemaNotFound.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "cc9b0f67eac88398f70e43ffec4a3cafcaf8970e98a21a0d20add12001b0cc5b",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        }
+      ],
+      "edit": {
+        "fieldId": 1,
+        "from": "x",
+        "to": "x_umf"
+      }
+    },
+    {
+      "id": "schema-6",
+      "path": "core/src/test/resources/TableMetadataV2CurrentSchemaNotFound.json",
+      "pointer": "/schemas/1",
+      "canonicalSchemaSha256": "6a7fd753c2df41fcd944693c9ef4463b85166d1c1a712ed1fc3c509d9a5f7faf",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        }
+      ],
+      "edit": {
+        "fieldId": 1,
+        "from": "x",
+        "to": "x_umf"
+      }
+    },
+    {
+      "id": "schema-7",
+      "path": "core/src/test/resources/TableMetadataV2MissingLastPartitionId.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "11f610263921159c4ecaf12a33eb9ef45773ee7a6160becdd0f92af9093cfbf2",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        }
+      ],
+      "edit": {
+        "fieldId": 1,
+        "from": "x",
+        "to": "x_umf"
+      }
+    },
+    {
+      "id": "schema-8",
+      "path": "core/src/test/resources/TableMetadataV2MissingPartitionSpecs.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "11f610263921159c4ecaf12a33eb9ef45773ee7a6160becdd0f92af9093cfbf2",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        }
+      ],
+      "edit": {
+        "fieldId": 1,
+        "from": "x",
+        "to": "x_umf"
+      }
+    },
+    {
+      "id": "schema-9",
+      "path": "core/src/test/resources/TableMetadataV2MissingSchemas.json",
+      "pointer": "/schema",
+      "canonicalSchemaSha256": "534108c731cbb65c01b50a3f1722d06d54d0de34ffcf71b20202262856718b96",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        },
+        {
+          "code": "ICEBERG_SCHEMA_ID_CONTEXT",
+          "path": "",
+          "message": "Missing schema-id is retained; table format version determines whether it is required",
+          "severity": "warning"
+        }
+      ],
+      "edit": {
+        "fieldId": 1,
+        "from": "x",
+        "to": "x_umf"
+      }
+    },
+    {
+      "id": "schema-10",
+      "path": "core/src/test/resources/TableMetadataV2MissingSortOrder.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "11f610263921159c4ecaf12a33eb9ef45773ee7a6160becdd0f92af9093cfbf2",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        }
+      ],
+      "edit": {
+        "fieldId": 1,
+        "from": "x",
+        "to": "x_umf"
+      }
+    },
+    {
+      "id": "schema-11",
+      "path": "core/src/test/resources/TableMetadataV2Valid.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "cc9b0f67eac88398f70e43ffec4a3cafcaf8970e98a21a0d20add12001b0cc5b",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        }
+      ],
+      "edit": {
+        "fieldId": 1,
+        "from": "x",
+        "to": "x_umf"
+      }
+    },
+    {
+      "id": "schema-12",
+      "path": "core/src/test/resources/TableMetadataV2Valid.json",
+      "pointer": "/schemas/1",
+      "canonicalSchemaSha256": "ecfcb638fc5b4f4013d4ea582682ad2679c2367246b13cf4c2a7e1769538f2c1",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        }
+      ],
+      "edit": {
+        "fieldId": 1,
+        "from": "x",
+        "to": "x_umf"
+      }
+    },
+    {
+      "id": "schema-13",
+      "path": "core/src/test/resources/TableMetadataV2ValidMinimal.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "11f610263921159c4ecaf12a33eb9ef45773ee7a6160becdd0f92af9093cfbf2",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        }
+      ],
+      "edit": {
+        "fieldId": 1,
+        "from": "x",
+        "to": "x_umf"
+      }
+    },
+    {
+      "id": "schema-14",
+      "path": "core/src/test/resources/TableMetadataV3ValidMinimal.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "19fd3bf0149c718535c899d4f4bfcbfe76606707c382ef718ceb979e4d518650",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        },
+        {
+          "code": "ICEBERG_DEFAULT_UNVERIFIED",
+          "path": "/fields/0/initial-default",
+          "message": "Default retained exactly; type encoding and historical execution require separate checks",
+          "severity": "warning"
+        },
+        {
+          "code": "ICEBERG_DEFAULT_UNVERIFIED",
+          "path": "/fields/0/write-default",
+          "message": "Default retained exactly; type encoding and historical execution require separate checks",
+          "severity": "warning"
+        }
+      ],
+      "edit": {
+        "fieldId": 1,
+        "from": "x",
+        "to": "x_umf"
+      }
+    },
+    {
+      "id": "schema-15",
+      "path": "core/src/test/resources/org/apache/iceberg/view/ValidViewMetadata.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "11f610263921159c4ecaf12a33eb9ef45773ee7a6160becdd0f92af9093cfbf2",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        }
+      ],
+      "edit": {
+        "fieldId": 1,
+        "from": "x",
+        "to": "x_umf"
+      }
+    },
+    {
+      "id": "schema-16",
+      "path": "core/src/test/resources/org/apache/iceberg/view/ViewMetadataInvalidCurrentSchema.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "6a7fd753c2df41fcd944693c9ef4463b85166d1c1a712ed1fc3c509d9a5f7faf",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        }
+      ],
+      "edit": {
+        "fieldId": 1,
+        "from": "x",
+        "to": "x_umf"
+      }
+    },
+    {
+      "id": "schema-17",
+      "path": "core/src/test/resources/org/apache/iceberg/view/ViewMetadataInvalidCurrentVersion.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "6a7fd753c2df41fcd944693c9ef4463b85166d1c1a712ed1fc3c509d9a5f7faf",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        }
+      ],
+      "edit": {
+        "fieldId": 1,
+        "from": "x",
+        "to": "x_umf"
+      }
+    },
+    {
+      "id": "schema-18",
+      "path": "core/src/test/resources/org/apache/iceberg/view/ViewMetadataMissingCurrentVersion.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "6a7fd753c2df41fcd944693c9ef4463b85166d1c1a712ed1fc3c509d9a5f7faf",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        }
+      ],
+      "edit": {
+        "fieldId": 1,
+        "from": "x",
+        "to": "x_umf"
+      }
+    },
+    {
+      "id": "schema-19",
+      "path": "core/src/test/resources/org/apache/iceberg/view/ViewMetadataMissingLocation.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "6a7fd753c2df41fcd944693c9ef4463b85166d1c1a712ed1fc3c509d9a5f7faf",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        }
+      ],
+      "edit": {
+        "fieldId": 1,
+        "from": "x",
+        "to": "x_umf"
+      }
+    },
+    {
+      "id": "schema-20",
+      "path": "core/src/test/resources/org/apache/iceberg/view/ViewMetadataMultipleSQLsForDialect.json",
+      "pointer": "/schemas/0",
+      "canonicalSchemaSha256": "11f610263921159c4ecaf12a33eb9ef45773ee7a6160becdd0f92af9093cfbf2",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        }
+      ],
+      "edit": {
+        "fieldId": 1,
+        "from": "x",
+        "to": "x_umf"
+      }
+    }
+  ]
+}

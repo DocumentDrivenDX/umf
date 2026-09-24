@@ -1,0 +1,43 @@
+{
+  "avro": "1.12.0",
+  "fastavro": "1.12.2",
+  "cases": [
+    {
+      "unknownVocabulary": false,
+      "orderId": "A-\u96ea",
+      "bytes": 8,
+      "binaryAndValuesAgree": true
+    },
+    {
+      "unknownVocabulary": false,
+      "orderId": "B",
+      "bytes": 8,
+      "binaryAndValuesAgree": true
+    },
+    {
+      "unknownVocabulary": false,
+      "orderId": "C",
+      "bytes": 8,
+      "binaryAndValuesAgree": true
+    },
+    {
+      "unknownVocabulary": true,
+      "orderId": "A-\u96ea",
+      "bytes": 8,
+      "binaryAndValuesAgree": true
+    },
+    {
+      "unknownVocabulary": true,
+      "orderId": "B",
+      "bytes": 8,
+      "binaryAndValuesAgree": true
+    },
+    {
+      "unknownVocabulary": true,
+      "orderId": "C",
+      "bytes": 8,
+      "binaryAndValuesAgree": true
+    }
+  ],
+  "scope": "Independent DTO JSON Schema validation, declared rename and two Avro binary codecs; no TableSpec row or DDD invariant enforcement"
+}

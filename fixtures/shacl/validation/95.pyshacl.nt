@@ -1,0 +1,10 @@
+_:Ne2db95295c7d43a3923ff6912aac7e09 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N2864f02aff194912bba0be6f7ad2d697 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-001.test#InvalidInstance1> .
+_:N2864f02aff194912bba0be6f7ad2d697 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-001.test#TestShape-myProperty> .
+_:N2864f02aff194912bba0be6f7ad2d697 <http://www.w3.org/ns/shacl#resultMessage> "More than 1 values on ex:InvalidInstance1->ex:myProperty" .
+_:N2864f02aff194912bba0be6f7ad2d697 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxCountConstraintComponent> .
+_:Ne2db95295c7d43a3923ff6912aac7e09 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N2864f02aff194912bba0be6f7ad2d697 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N2864f02aff194912bba0be6f7ad2d697 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-001.test#myProperty> .
+_:N2864f02aff194912bba0be6f7ad2d697 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Ne2db95295c7d43a3923ff6912aac7e09 <http://www.w3.org/ns/shacl#result> _:N2864f02aff194912bba0be6f7ad2d697 .

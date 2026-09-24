@@ -1,0 +1,43 @@
+{
+  "version": "3.2.12",
+  "lineage": "GraphQL-core is a port of GraphQL.js; independent process/runtime, shared algorithm ancestry",
+  "queries": [
+    {
+      "query": "{ __type(name:\"Product\") { name fields(includeDeprecated:true) { name isDeprecated deprecationReason type { kind name ofType { kind name } } } } }",
+      "accepted": true,
+      "sameResult": true
+    },
+    {
+      "query": "{ product(selector:{id:\"p\"}) { id } }",
+      "accepted": true,
+      "sameResult": true
+    },
+    {
+      "query": "{ product(selector:{id:\"p\",name:\"x\"}) { id } }",
+      "accepted": false,
+      "sameResult": true
+    },
+    {
+      "query": "{ product(selector:{id:null}) { id } }",
+      "accepted": false,
+      "sameResult": true
+    },
+    {
+      "query": "{ search(filter:{limit:\"wrong\"}) { __typename } }",
+      "accepted": false,
+      "sameResult": true
+    },
+    {
+      "query": "{ node { id } }",
+      "accepted": false,
+      "sameResult": true
+    },
+    {
+      "query": "{ missing }",
+      "accepted": false,
+      "sameResult": true
+    }
+  ],
+  "editedDefaultBehavior": true,
+  "scope": "Authored SDL, introspection, validation/coercion and one default-resolver behavior; no custom directive or scalar implementation"
+}

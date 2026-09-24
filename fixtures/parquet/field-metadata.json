@@ -1,0 +1,1080 @@
+{
+  "results": [
+    {
+      "id": "decimal32",
+      "path": "fixtures/parquet/logical/decimal32.parquet",
+      "exported": "fixtures/parquet/field-exports/decimal32.parquet",
+      "view": {
+        "status": "checked",
+        "complete": false,
+        "fields": [
+          {
+            "index": 1,
+            "path": [
+              "value"
+            ],
+            "definitionLevel": 1,
+            "repetitionLevel": 0,
+            "nativeField": {
+              "type": "1",
+              "repetition_type": "1",
+              "name": "value",
+              "logicalType": {
+                "DECIMAL": {
+                  "scale": "2",
+                  "precision": "9"
+                }
+              }
+            },
+            "element": {
+              "id": "schema:1",
+              "name": "value",
+              "scalarType": "decimal",
+              "extensions": {}
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "PARQUET_UNINTERPRETED",
+            "path": "",
+            "severity": "warning",
+            "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+          },
+          {
+            "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+          },
+          {
+            "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+          },
+          {
+            "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+          },
+          {
+            "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+            "path": "/schema/1",
+            "severity": "warning",
+            "message": "Corresponding legacy annotation is absent; source remains unchanged"
+          },
+          {
+            "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering"
+          }
+        ]
+      }
+    },
+    {
+      "id": "decimal64",
+      "path": "fixtures/parquet/logical/decimal64.parquet",
+      "exported": "fixtures/parquet/field-exports/decimal64.parquet",
+      "view": {
+        "status": "checked",
+        "complete": false,
+        "fields": [
+          {
+            "index": 1,
+            "path": [
+              "value"
+            ],
+            "definitionLevel": 1,
+            "repetitionLevel": 0,
+            "nativeField": {
+              "type": "2",
+              "repetition_type": "1",
+              "name": "value",
+              "logicalType": {
+                "DECIMAL": {
+                  "scale": "2",
+                  "precision": "18"
+                }
+              }
+            },
+            "element": {
+              "id": "schema:1",
+              "name": "value",
+              "scalarType": "decimal",
+              "extensions": {}
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "PARQUET_UNINTERPRETED",
+            "path": "",
+            "severity": "warning",
+            "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+          },
+          {
+            "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+          },
+          {
+            "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+          },
+          {
+            "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+          },
+          {
+            "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+            "path": "/schema/1",
+            "severity": "warning",
+            "message": "Corresponding legacy annotation is absent; source remains unchanged"
+          },
+          {
+            "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering"
+          }
+        ]
+      }
+    },
+    {
+      "id": "decimal-fixed",
+      "path": "fixtures/parquet/logical/decimal-fixed.parquet",
+      "exported": "fixtures/parquet/field-exports/decimal-fixed.parquet",
+      "view": {
+        "status": "checked",
+        "complete": false,
+        "fields": [
+          {
+            "index": 1,
+            "path": [
+              "value"
+            ],
+            "definitionLevel": 1,
+            "repetitionLevel": 0,
+            "nativeField": {
+              "type": "7",
+              "type_length": "16",
+              "repetition_type": "1",
+              "name": "value",
+              "logicalType": {
+                "DECIMAL": {
+                  "scale": "9",
+                  "precision": "38"
+                }
+              }
+            },
+            "element": {
+              "id": "schema:1",
+              "name": "value",
+              "scalarType": "decimal",
+              "extensions": {}
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "PARQUET_UNINTERPRETED",
+            "path": "",
+            "severity": "warning",
+            "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+          },
+          {
+            "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+          },
+          {
+            "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+          },
+          {
+            "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+          },
+          {
+            "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+            "path": "/schema/1",
+            "severity": "warning",
+            "message": "Corresponding legacy annotation is absent; source remains unchanged"
+          },
+          {
+            "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering"
+          }
+        ]
+      }
+    },
+    {
+      "id": "decimal-legacy-default",
+      "path": "fixtures/parquet/logical/decimal-legacy-default.parquet",
+      "exported": "fixtures/parquet/field-exports/decimal-legacy-default.parquet",
+      "view": {
+        "status": "checked",
+        "complete": false,
+        "fields": [
+          {
+            "index": 1,
+            "path": [
+              "value"
+            ],
+            "definitionLevel": 1,
+            "repetitionLevel": 0,
+            "nativeField": {
+              "type": "1",
+              "repetition_type": "1",
+              "name": "value",
+              "converted_type": "5",
+              "precision": "5"
+            },
+            "element": {
+              "id": "schema:1",
+              "name": "value",
+              "scalarType": "decimal",
+              "extensions": {}
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "PARQUET_UNINTERPRETED",
+            "path": "",
+            "severity": "warning",
+            "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+          },
+          {
+            "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+          },
+          {
+            "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+          },
+          {
+            "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+          },
+          {
+            "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering"
+          }
+        ]
+      }
+    },
+    {
+      "id": "decimal-legacy-conflict",
+      "path": "fixtures/parquet/logical/decimal-legacy-conflict.parquet",
+      "exported": "fixtures/parquet/field-exports/decimal-legacy-conflict.parquet",
+      "view": {
+        "status": "checked",
+        "complete": false,
+        "fields": [
+          {
+            "index": 1,
+            "path": [
+              "value"
+            ],
+            "definitionLevel": 1,
+            "repetitionLevel": 0,
+            "nativeField": {
+              "type": "1",
+              "repetition_type": "1",
+              "name": "value",
+              "converted_type": "5",
+              "scale": "1",
+              "precision": "4",
+              "logicalType": {
+                "DECIMAL": {
+                  "scale": "2",
+                  "precision": "5"
+                }
+              }
+            },
+            "element": {
+              "id": "schema:1",
+              "name": "value",
+              "scalarType": "decimal",
+              "extensions": {}
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "PARQUET_UNINTERPRETED",
+            "path": "",
+            "severity": "warning",
+            "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+          },
+          {
+            "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+          },
+          {
+            "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+          },
+          {
+            "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+          },
+          {
+            "code": "PARQUET_LEGACY_ANNOTATION_CONFLICT",
+            "path": "/schema/1/precision",
+            "severity": "warning",
+            "message": "Legacy decimal parameter differs from authoritative logical annotation"
+          },
+          {
+            "code": "PARQUET_LEGACY_ANNOTATION_CONFLICT",
+            "path": "/schema/1/scale",
+            "severity": "warning",
+            "message": "Legacy decimal parameter differs from authoritative logical annotation"
+          },
+          {
+            "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering"
+          }
+        ]
+      }
+    },
+    {
+      "id": "uint32",
+      "path": "fixtures/parquet/logical/uint32.parquet",
+      "exported": "fixtures/parquet/field-exports/uint32.parquet",
+      "view": {
+        "status": "checked",
+        "complete": false,
+        "fields": [
+          {
+            "index": 1,
+            "path": [
+              "value"
+            ],
+            "definitionLevel": 1,
+            "repetitionLevel": 0,
+            "nativeField": {
+              "type": "1",
+              "repetition_type": "1",
+              "name": "value",
+              "logicalType": {
+                "INTEGER": {
+                  "bitWidth": "32",
+                  "isSigned": false
+                }
+              }
+            },
+            "element": {
+              "id": "schema:1",
+              "name": "value",
+              "scalarType": "integer",
+              "extensions": {}
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "PARQUET_UNINTERPRETED",
+            "path": "",
+            "severity": "warning",
+            "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+          },
+          {
+            "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+          },
+          {
+            "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+          },
+          {
+            "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+          },
+          {
+            "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+            "path": "/schema/1",
+            "severity": "warning",
+            "message": "Corresponding legacy annotation is absent; source remains unchanged"
+          },
+          {
+            "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering"
+          }
+        ]
+      }
+    },
+    {
+      "id": "int8",
+      "path": "fixtures/parquet/logical/int8.parquet",
+      "exported": "fixtures/parquet/field-exports/int8.parquet",
+      "view": {
+        "status": "checked",
+        "complete": false,
+        "fields": [
+          {
+            "index": 1,
+            "path": [
+              "value"
+            ],
+            "definitionLevel": 1,
+            "repetitionLevel": 0,
+            "nativeField": {
+              "type": "1",
+              "repetition_type": "1",
+              "name": "value",
+              "logicalType": {
+                "INTEGER": {
+                  "bitWidth": "8",
+                  "isSigned": true
+                }
+              }
+            },
+            "element": {
+              "id": "schema:1",
+              "name": "value",
+              "scalarType": "integer",
+              "extensions": {}
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "PARQUET_UNINTERPRETED",
+            "path": "",
+            "severity": "warning",
+            "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+          },
+          {
+            "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+          },
+          {
+            "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+          },
+          {
+            "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+          },
+          {
+            "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+            "path": "/schema/1",
+            "severity": "warning",
+            "message": "Corresponding legacy annotation is absent; source remains unchanged"
+          },
+          {
+            "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering"
+          }
+        ]
+      }
+    },
+    {
+      "id": "timestamp-local",
+      "path": "fixtures/parquet/logical/timestamp-local.parquet",
+      "exported": "fixtures/parquet/field-exports/timestamp-local.parquet",
+      "view": {
+        "status": "checked",
+        "complete": false,
+        "fields": [
+          {
+            "index": 1,
+            "path": [
+              "value"
+            ],
+            "definitionLevel": 1,
+            "repetitionLevel": 0,
+            "nativeField": {
+              "type": "2",
+              "repetition_type": "1",
+              "name": "value",
+              "logicalType": {
+                "TIMESTAMP": {
+                  "isAdjustedToUTC": false,
+                  "unit": {
+                    "MICROS": {}
+                  }
+                }
+              }
+            },
+            "element": {
+              "id": "schema:1",
+              "name": "value",
+              "scalarType": "timestamp",
+              "extensions": {}
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "PARQUET_UNINTERPRETED",
+            "path": "",
+            "severity": "warning",
+            "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+          },
+          {
+            "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+          },
+          {
+            "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+          },
+          {
+            "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+          },
+          {
+            "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+            "path": "/schema/1",
+            "severity": "warning",
+            "message": "Corresponding legacy annotation is absent; source remains unchanged"
+          },
+          {
+            "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering"
+          }
+        ]
+      }
+    },
+    {
+      "id": "time-ms",
+      "path": "fixtures/parquet/logical/time-ms.parquet",
+      "exported": "fixtures/parquet/field-exports/time-ms.parquet",
+      "view": {
+        "status": "checked",
+        "complete": false,
+        "fields": [
+          {
+            "index": 1,
+            "path": [
+              "value"
+            ],
+            "definitionLevel": 1,
+            "repetitionLevel": 0,
+            "nativeField": {
+              "type": "1",
+              "repetition_type": "1",
+              "name": "value",
+              "logicalType": {
+                "TIME": {
+                  "isAdjustedToUTC": false,
+                  "unit": {
+                    "MILLIS": {}
+                  }
+                }
+              }
+            },
+            "element": {
+              "id": "schema:1",
+              "name": "value",
+              "scalarType": "time",
+              "extensions": {}
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "PARQUET_UNINTERPRETED",
+            "path": "",
+            "severity": "warning",
+            "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+          },
+          {
+            "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+          },
+          {
+            "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+          },
+          {
+            "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+          },
+          {
+            "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+            "path": "/schema/1",
+            "severity": "warning",
+            "message": "Corresponding legacy annotation is absent; source remains unchanged"
+          },
+          {
+            "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering"
+          }
+        ]
+      }
+    },
+    {
+      "id": "time-nanos",
+      "path": "fixtures/parquet/logical/time-nanos.parquet",
+      "exported": "fixtures/parquet/field-exports/time-nanos.parquet",
+      "view": {
+        "status": "checked",
+        "complete": false,
+        "fields": [
+          {
+            "index": 1,
+            "path": [
+              "value"
+            ],
+            "definitionLevel": 1,
+            "repetitionLevel": 0,
+            "nativeField": {
+              "type": "2",
+              "repetition_type": "1",
+              "name": "value",
+              "logicalType": {
+                "TIME": {
+                  "isAdjustedToUTC": true,
+                  "unit": {
+                    "NANOS": {}
+                  }
+                }
+              }
+            },
+            "element": {
+              "id": "schema:1",
+              "name": "value",
+              "scalarType": "time",
+              "extensions": {}
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "PARQUET_UNINTERPRETED",
+            "path": "",
+            "severity": "warning",
+            "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+          },
+          {
+            "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+          },
+          {
+            "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+          },
+          {
+            "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+          },
+          {
+            "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering"
+          }
+        ]
+      }
+    },
+    {
+      "id": "string",
+      "path": "fixtures/parquet/logical/string.parquet",
+      "exported": "fixtures/parquet/field-exports/string.parquet",
+      "view": {
+        "status": "checked",
+        "complete": false,
+        "fields": [
+          {
+            "index": 1,
+            "path": [
+              "value"
+            ],
+            "definitionLevel": 1,
+            "repetitionLevel": 0,
+            "nativeField": {
+              "type": "6",
+              "repetition_type": "1",
+              "name": "value",
+              "logicalType": {
+                "STRING": {}
+              }
+            },
+            "element": {
+              "id": "schema:1",
+              "name": "value",
+              "scalarType": "string",
+              "extensions": {}
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "PARQUET_UNINTERPRETED",
+            "path": "",
+            "severity": "warning",
+            "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+          },
+          {
+            "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+          },
+          {
+            "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+          },
+          {
+            "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+          },
+          {
+            "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+            "path": "/schema/1",
+            "severity": "warning",
+            "message": "Corresponding legacy annotation is absent; source remains unchanged"
+          },
+          {
+            "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering"
+          }
+        ]
+      }
+    },
+    {
+      "id": "uuid",
+      "path": "fixtures/parquet/logical/uuid.parquet",
+      "exported": "fixtures/parquet/field-exports/uuid.parquet",
+      "view": {
+        "status": "checked",
+        "complete": false,
+        "fields": [
+          {
+            "index": 1,
+            "path": [
+              "value"
+            ],
+            "definitionLevel": 1,
+            "repetitionLevel": 0,
+            "nativeField": {
+              "type": "7",
+              "type_length": "16",
+              "repetition_type": "1",
+              "name": "value",
+              "logicalType": {
+                "UUID": {}
+              }
+            },
+            "element": {
+              "id": "schema:1",
+              "name": "value",
+              "extensions": {}
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "PARQUET_UNINTERPRETED",
+            "path": "",
+            "severity": "warning",
+            "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+          },
+          {
+            "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+          },
+          {
+            "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+          },
+          {
+            "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+          },
+          {
+            "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering"
+          }
+        ]
+      }
+    },
+    {
+      "id": "float16",
+      "path": "fixtures/parquet/logical/float16.parquet",
+      "exported": "fixtures/parquet/field-exports/float16.parquet",
+      "view": {
+        "status": "checked",
+        "complete": false,
+        "fields": [
+          {
+            "index": 1,
+            "path": [
+              "value"
+            ],
+            "definitionLevel": 1,
+            "repetitionLevel": 0,
+            "nativeField": {
+              "type": "7",
+              "type_length": "2",
+              "repetition_type": "1",
+              "name": "value",
+              "logicalType": {
+                "FLOAT16": {}
+              }
+            },
+            "element": {
+              "id": "schema:1",
+              "name": "value",
+              "scalarType": "float",
+              "extensions": {}
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "PARQUET_UNINTERPRETED",
+            "path": "",
+            "severity": "warning",
+            "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+          },
+          {
+            "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+          },
+          {
+            "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+          },
+          {
+            "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+          },
+          {
+            "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering"
+          }
+        ]
+      }
+    },
+    {
+      "id": "date",
+      "path": "fixtures/parquet/logical/date.parquet",
+      "exported": "fixtures/parquet/field-exports/date.parquet",
+      "view": {
+        "status": "checked",
+        "complete": false,
+        "fields": [
+          {
+            "index": 1,
+            "path": [
+              "value"
+            ],
+            "definitionLevel": 1,
+            "repetitionLevel": 0,
+            "nativeField": {
+              "type": "1",
+              "repetition_type": "1",
+              "name": "value",
+              "logicalType": {
+                "DATE": {}
+              }
+            },
+            "element": {
+              "id": "schema:1",
+              "name": "value",
+              "scalarType": "date",
+              "extensions": {}
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "PARQUET_UNINTERPRETED",
+            "path": "",
+            "severity": "warning",
+            "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+          },
+          {
+            "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+          },
+          {
+            "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+          },
+          {
+            "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+          },
+          {
+            "code": "PARQUET_LEGACY_ANNOTATION_ABSENT",
+            "path": "/schema/1",
+            "severity": "warning",
+            "message": "Corresponding legacy annotation is absent; source remains unchanged"
+          },
+          {
+            "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering"
+          }
+        ]
+      }
+    },
+    {
+      "id": "interval",
+      "path": "fixtures/parquet/logical/interval.parquet",
+      "exported": "fixtures/parquet/field-exports/interval.parquet",
+      "view": {
+        "status": "checked",
+        "complete": false,
+        "fields": [
+          {
+            "index": 1,
+            "path": [
+              "value"
+            ],
+            "definitionLevel": 1,
+            "repetitionLevel": 0,
+            "nativeField": {
+              "type": "7",
+              "type_length": "12",
+              "repetition_type": "1",
+              "name": "value",
+              "converted_type": "21"
+            },
+            "element": {
+              "id": "schema:1",
+              "name": "value",
+              "extensions": {}
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "PARQUET_UNINTERPRETED",
+            "path": "",
+            "severity": "warning",
+            "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+          },
+          {
+            "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+          },
+          {
+            "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+          },
+          {
+            "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+          },
+          {
+            "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+            "path": "",
+            "severity": "warning",
+            "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering"
+          }
+        ]
+      }
+    }
+  ]
+}

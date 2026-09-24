@@ -1,0 +1,250 @@
+{
+  "runtime": "PyIceberg 0.11.0",
+  "cases": [
+    {
+      "id": "type-0",
+      "path": "fixtures/iceberg/type-0.json",
+      "umfValid": true,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"value\",\"type\":\"boolean\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "type-1",
+      "path": "fixtures/iceberg/type-1.json",
+      "umfValid": true,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"value\",\"type\":\"int\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "type-2",
+      "path": "fixtures/iceberg/type-2.json",
+      "umfValid": true,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"value\",\"type\":\"long\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "type-3",
+      "path": "fixtures/iceberg/type-3.json",
+      "umfValid": true,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"value\",\"type\":\"float\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "type-4",
+      "path": "fixtures/iceberg/type-4.json",
+      "umfValid": true,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"value\",\"type\":\"double\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "type-5",
+      "path": "fixtures/iceberg/type-5.json",
+      "umfValid": true,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"value\",\"type\":\"date\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "type-6",
+      "path": "fixtures/iceberg/type-6.json",
+      "umfValid": true,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"value\",\"type\":\"time\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "type-7",
+      "path": "fixtures/iceberg/type-7.json",
+      "umfValid": true,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"value\",\"type\":\"timestamp\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "type-8",
+      "path": "fixtures/iceberg/type-8.json",
+      "umfValid": true,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"value\",\"type\":\"timestamptz\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "type-9",
+      "path": "fixtures/iceberg/type-9.json",
+      "umfValid": true,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"value\",\"type\":\"timestamp_ns\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "type-10",
+      "path": "fixtures/iceberg/type-10.json",
+      "umfValid": true,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"value\",\"type\":\"timestamptz_ns\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "type-11",
+      "path": "fixtures/iceberg/type-11.json",
+      "umfValid": true,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"value\",\"type\":\"string\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "type-12",
+      "path": "fixtures/iceberg/type-12.json",
+      "umfValid": true,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"value\",\"type\":\"uuid\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "type-13",
+      "path": "fixtures/iceberg/type-13.json",
+      "umfValid": true,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"value\",\"type\":\"binary\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "type-14",
+      "path": "fixtures/iceberg/type-14.json",
+      "umfValid": true,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"value\",\"type\":\"fixed[16]\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "type-15",
+      "path": "fixtures/iceberg/type-15.json",
+      "umfValid": true,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"value\",\"type\":\"decimal(38, 9)\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "type-16",
+      "path": "fixtures/iceberg/type-16.json",
+      "umfValid": true,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"value\",\"type\":\"unknown\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "type-17",
+      "path": "fixtures/iceberg/type-17.json",
+      "umfValid": true,
+      "nativeAccepted": false,
+      "nativeError": "1 validation error for Schema\nfields.0.type\n  Value error, Unsupported field type: 'variant' [type=value_error, input_value='variant', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+    },
+    {
+      "id": "type-18",
+      "path": "fixtures/iceberg/type-18.json",
+      "umfValid": true,
+      "nativeAccepted": false,
+      "nativeError": "1 validation error for Schema\nfields.0.type\n  Value error, Unsupported field type: 'geometry(srid:4326)' [type=value_error, input_value='geometry(srid:4326)', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+    },
+    {
+      "id": "type-19",
+      "path": "fixtures/iceberg/type-19.json",
+      "umfValid": true,
+      "nativeAccepted": false,
+      "nativeError": "1 validation error for Schema\nfields.0.type\n  Value error, Unsupported field type: 'geography(srid:4326,spherical)' [type=value_error, input_value='geography(srid:4326,spherical)', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+    },
+    {
+      "id": "type-20",
+      "path": "fixtures/iceberg/type-20.json",
+      "umfValid": true,
+      "nativeAccepted": false,
+      "nativeError": "1 validation error for Schema\nfields.0.type\n  Value error, Unsupported field type: 'future_scalar' [type=value_error, input_value='future_scalar', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+    },
+    {
+      "id": "nested",
+      "path": "fixtures/iceberg/nested.json",
+      "umfValid": true,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"id\",\"type\":\"long\",\"required\":true},{\"id\":2,\"name\":\"record\",\"type\":{\"type\":\"struct\",\"fields\":[{\"id\":3,\"name\":\"a.b\",\"type\":\"string\",\"required\":true}]},\"required\":true},{\"id\":4,\"name\":\"list\",\"type\":{\"type\":\"list\",\"element-id\":5,\"element\":{\"type\":\"struct\",\"fields\":[{\"id\":6,\"name\":\"nested\",\"type\":\"decimal(20, 2)\",\"required\":true}]},\"element-required\":false},\"required\":true},{\"id\":7,\"name\":\"map\",\"type\":{\"type\":\"map\",\"key-id\":8,\"key\":\"string\",\"value-id\":9,\"value\":\"uuid\",\"value-required\":true},\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[1,3]}"
+    },
+    {
+      "id": "exact-defaults",
+      "path": "fixtures/iceberg/exact-defaults.json",
+      "umfValid": true,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"__proto__\",\"type\":\"long\",\"required\":true,\"initial-default\":9223372036854775807,\"write-default\":-9223372036854775808}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "future-object",
+      "path": "fixtures/iceberg/future-object.json",
+      "umfValid": true,
+      "nativeAccepted": false,
+      "nativeError": "3 validation errors for Schema\nfields.0.type.id\n  Input should be a valid integer [type=int_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.13/v/int_type\nfields.0.type.name\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type\nfields.0.type.type\n  Value error, Unsupported field type: 'future_type' [type=value_error, input_value='future_type', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+    },
+    {
+      "id": "duplicate-id",
+      "path": "fixtures/iceberg/duplicate-id.json",
+      "umfValid": false,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"a\",\"type\":\"int\",\"required\":true},{\"id\":1,\"name\":\"b\",\"type\":\"string\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "duplicate-name",
+      "path": "fixtures/iceberg/duplicate-name.json",
+      "umfValid": false,
+      "nativeAccepted": false,
+      "nativeError": "1 validation error for Schema\n  Value error, Invalid schema, multiple fields for name a: 1 and 2 [type=value_error, input_value={'type': 'struct', 'schem...ng', 'required': True}]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+    },
+    {
+      "id": "collection-id-collision",
+      "path": "fixtures/iceberg/collection-id-collision.json",
+      "umfValid": false,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"list\",\"type\":{\"type\":\"list\",\"element-id\":1,\"element\":\"string\",\"element-required\":true},\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "optional-identifier",
+      "path": "fixtures/iceberg/optional-identifier.json",
+      "umfValid": false,
+      "nativeAccepted": false,
+      "nativeError": "1 validation error for Schema\n  Value error, Identifier field 1 invalid: not a required field [type=value_error, input_value={'type': 'struct', 'schem...ntifier-field-ids': [1]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+    },
+    {
+      "id": "nested-optional-identifier",
+      "path": "fixtures/iceberg/nested-optional-identifier.json",
+      "umfValid": false,
+      "nativeAccepted": false,
+      "nativeError": "1 validation error for Schema\n  Value error, Cannot add field id as an identifier field: must not be nested in an optional field 1: parent: optional struct<2: id: required string> [type=value_error, input_value={'type': 'struct', 'schem...ntifier-field-ids': [2]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+    },
+    {
+      "id": "float-identifier",
+      "path": "fixtures/iceberg/float-identifier.json",
+      "umfValid": false,
+      "nativeAccepted": false,
+      "nativeError": "1 validation error for Schema\n  Value error, Identifier field 1 invalid: must not be float or double field [type=value_error, input_value={'type': 'struct', 'schem...ntifier-field-ids': [1]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+    },
+    {
+      "id": "missing-identifier",
+      "path": "fixtures/iceberg/missing-identifier.json",
+      "umfValid": false,
+      "nativeAccepted": false,
+      "nativeError": "1 validation error for Schema\n  Value error, Could not find field with id: 8 [type=value_error, input_value={'type': 'struct', 'schem...ntifier-field-ids': [8]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+    },
+    {
+      "id": "decimal-range",
+      "path": "fixtures/iceberg/decimal-range.json",
+      "umfValid": false,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"amount\",\"type\":\"decimal(39, 0)\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "missing-required",
+      "path": "fixtures/iceberg/missing-required.json",
+      "umfValid": false,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":1,\"name\":\"id\",\"type\":\"long\",\"required\":false}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "zero-id",
+      "path": "fixtures/iceberg/zero-id.json",
+      "umfValid": true,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":0,\"name\":\"zero\",\"type\":\"string\",\"required\":true}],\"schema-id\":0,\"identifier-field-ids\":[]}"
+    },
+    {
+      "id": "negative-id",
+      "path": "fixtures/iceberg/negative-id.json",
+      "umfValid": true,
+      "nativeAccepted": true,
+      "nativeOutput": "{\"type\":\"struct\",\"fields\":[{\"id\":-1,\"name\":\"negative\",\"type\":\"string\",\"required\":true}],\"schema-id\":-1,\"identifier-field-ids\":[]}"
+    }
+  ]
+}

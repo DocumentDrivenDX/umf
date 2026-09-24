@@ -1,0 +1,18 @@
+_:N5e742c1122584cc3ab69edff8056dccc <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nc62310bef1ef48fc97500362121deeed <http://www.w3.org/ns/shacl#resultMessage> "Value is not Literal with datatype rdf:langString" .
+_:Nc62310bef1ef48fc97500362121deeed <http://www.w3.org/ns/shacl#value> "Hello" .
+_:N5e742c1122584cc3ab69edff8056dccc <http://www.w3.org/ns/shacl#resultMessage> "Value is not Literal with datatype rdf:langString" .
+_:N1313b33accc14b27bf9decd5baf0ea00 <http://www.w3.org/ns/shacl#result> _:Nc62310bef1ef48fc97500362121deeed .
+_:Nc62310bef1ef48fc97500362121deeed <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:N5e742c1122584cc3ab69edff8056dccc <http://www.w3.org/ns/shacl#focusNode> "<span>Hello</span>"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#HTML> .
+_:N1313b33accc14b27bf9decd5baf0ea00 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N5e742c1122584cc3ab69edff8056dccc <http://www.w3.org/ns/shacl#value> "<span>Hello</span>"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#HTML> .
+_:Nc62310bef1ef48fc97500362121deeed <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/datatype-002.test#TestShape> .
+_:N1313b33accc14b27bf9decd5baf0ea00 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Nc62310bef1ef48fc97500362121deeed <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N1313b33accc14b27bf9decd5baf0ea00 <http://www.w3.org/ns/shacl#result> _:N5e742c1122584cc3ab69edff8056dccc .
+_:Nc62310bef1ef48fc97500362121deeed <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N5e742c1122584cc3ab69edff8056dccc <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:N5e742c1122584cc3ab69edff8056dccc <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/datatype-002.test#TestShape> .
+_:N5e742c1122584cc3ab69edff8056dccc <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nc62310bef1ef48fc97500362121deeed <http://www.w3.org/ns/shacl#focusNode> "Hello" .

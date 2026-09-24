@@ -1,0 +1,83 @@
+[
+  {
+    "txn": null,
+    "add": null,
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null,
+    "checkpointMetadata": {
+      "version": {
+        "$int64": "1"
+      },
+      "tags": null
+    },
+    "sidecar": null
+  },
+  {
+    "txn": null,
+    "add": null,
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null,
+    "checkpointMetadata": null,
+    "sidecar": {
+      "path": "00000000000000000001.checkpoint.0000000001.0000000001.c1bacf45-f3a9-4846-bd44-87cdacd4620f.parquet",
+      "sizeInBytes": {
+        "$int64": "9352"
+      },
+      "modificationTime": {
+        "$int64": "1739313202057"
+      },
+      "tags": null
+    }
+  },
+  {
+    "txn": null,
+    "add": null,
+    "remove": null,
+    "metaData": null,
+    "protocol": {
+      "minReaderVersion": 3,
+      "minWriterVersion": 7,
+      "readerFeatures": [
+        "v2Checkpoint"
+      ],
+      "writerFeatures": [
+        "v2Checkpoint",
+        "appendOnly",
+        "invariants"
+      ]
+    },
+    "domainMetadata": null,
+    "checkpointMetadata": null,
+    "sidecar": null
+  },
+  {
+    "txn": null,
+    "add": null,
+    "remove": null,
+    "metaData": {
+      "id": "29ef2045-59c5-4cf7-9d5d-2ba47e971d32",
+      "name": null,
+      "description": null,
+      "format": {
+        "provider": "parquet",
+        "options": {}
+      },
+      "schemaString": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}",
+      "partitionColumns": [],
+      "configuration": {
+        "delta.checkpointPolicy": "v2"
+      },
+      "createdTime": {
+        "$int64": "1739313200623"
+      }
+    },
+    "protocol": null,
+    "domainMetadata": null,
+    "checkpointMetadata": null,
+    "sidecar": null
+  }
+]

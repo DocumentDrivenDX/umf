@@ -1,0 +1,18 @@
+_:Ne347c624f27b417989a4570eb97d738a <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#AndConstraintComponent> .
+_:Nc8249c0161b14f7091540ffc14b31994 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/and-001.test#InvalidRectangle1> .
+_:Nc8249c0161b14f7091540ffc14b31994 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nf902909ea2cc489f9e4534bd750cea62 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Nc8249c0161b14f7091540ffc14b31994 <http://www.w3.org/ns/shacl#resultMessage> "Node ex:InvalidRectangle1 must conform to all shapes in [ sh:property [ sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:width ] ] , [ sh:property [ sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:height ] ]" .
+_:Ne347c624f27b417989a4570eb97d738a <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/and-001.test#Rectangle> .
+_:Ne347c624f27b417989a4570eb97d738a <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/and-001.test#InvalidRectangle2> .
+_:Nf902909ea2cc489f9e4534bd750cea62 <http://www.w3.org/ns/shacl#result> _:Nc8249c0161b14f7091540ffc14b31994 .
+_:Ne347c624f27b417989a4570eb97d738a <http://www.w3.org/ns/shacl#resultMessage> "Node ex:InvalidRectangle2 must conform to all shapes in [ sh:property [ sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:width ] ] , [ sh:property [ sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:height ] ]" .
+_:Nc8249c0161b14f7091540ffc14b31994 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nc8249c0161b14f7091540ffc14b31994 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#AndConstraintComponent> .
+_:Nf902909ea2cc489f9e4534bd750cea62 <http://www.w3.org/ns/shacl#result> _:Ne347c624f27b417989a4570eb97d738a .
+_:Ne347c624f27b417989a4570eb97d738a <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nc8249c0161b14f7091540ffc14b31994 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/and-001.test#Rectangle> .
+_:Nc8249c0161b14f7091540ffc14b31994 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/and-001.test#InvalidRectangle1> .
+_:Ne347c624f27b417989a4570eb97d738a <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/and-001.test#InvalidRectangle2> .
+_:Ne347c624f27b417989a4570eb97d738a <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nf902909ea2cc489f9e4534bd750cea62 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .

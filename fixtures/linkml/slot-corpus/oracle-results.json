@@ -1,0 +1,3284 @@
+{
+  "modelVersion": "1.11.0",
+  "runtimeVersion": "1.11.0rc2",
+  "scope": "Private normalized models with imports explicitly detached; no imported induction or source rewrite",
+  "cases": [
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/annotations.yaml",
+      "queries": [
+        {
+          "className": "annotatable",
+          "slotName": "annotations",
+          "status": "induction-blocked",
+          "error": "ValueError: No such slot: \"extensions\""
+        },
+        {
+          "className": "annotation",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"extension\""
+        }
+      ],
+      "detachedImports": [
+        "linkml:types",
+        "linkml:extensions"
+      ],
+      "status": "loaded"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/array.yaml",
+      "queries": [
+        {
+          "className": "NDArray",
+          "slotName": "dimensions",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"integer\"",
+            "description": "\"The number of elements in the tuple used to access elements of an array\""
+          }
+        },
+        {
+          "className": "NDArray",
+          "slotName": "elements",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"Any\"",
+            "required": "true",
+            "multivalued": "true",
+            "description": "\"the collection of values that make up the array. The elements have a *direct* representation which is an ordered sequence of values. The elements also have an *array interpretation*, where each element has a unique index which is determined by array_linearization_order\""
+          }
+        },
+        {
+          "className": "NDArray",
+          "slotName": "array_linearization_order",
+          "status": "induced",
+          "encodedFields": {
+            "ifabsent": "\"string(ROW_MAJOR_ARRAY_ORDER)\"",
+            "range": "\"ArrayLinearizationOrderOptions\""
+          }
+        },
+        {
+          "className": "OneDimensionalSeries",
+          "slotName": "dimensions",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"integer\"",
+            "equals_number": "1",
+            "description": "\"The number of elements in the tuple used to access elements of an array\""
+          }
+        },
+        {
+          "className": "OneDimensionalSeries",
+          "slotName": "elements",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"Any\"",
+            "required": "true",
+            "multivalued": "true",
+            "description": "\"the collection of values that make up the array. The elements have a *direct* representation which is an ordered sequence of values. The elements also have an *array interpretation*, where each element has a unique index which is determined by array_linearization_order\""
+          }
+        },
+        {
+          "className": "OneDimensionalSeries",
+          "slotName": "array_linearization_order",
+          "status": "induced",
+          "encodedFields": {
+            "ifabsent": "\"string(ROW_MAJOR_ARRAY_ORDER)\"",
+            "range": "\"ArrayLinearizationOrderOptions\""
+          }
+        },
+        {
+          "className": "DataArray",
+          "slotName": "axis",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"OneDimensionalSeries\"",
+            "required": "true",
+            "description": "\"A one-dimensional series that contains elements that form one part of a tuple used to access an array\""
+          }
+        },
+        {
+          "className": "DataArray",
+          "slotName": "array",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"NDArray\"",
+            "required": "true",
+            "description": "\"An array that is labeled by a set of one-dimensional series\""
+          }
+        },
+        {
+          "className": "ColumnOrderedArray",
+          "slotName": "array_linearization_order",
+          "status": "induced",
+          "encodedFields": {
+            "ifabsent": "\"string(COLUMN_MAJOR_ARRAY_ORDER)\"",
+            "range": "\"ArrayLinearizationOrderOptions\""
+          }
+        },
+        {
+          "className": "RowOrderedArray",
+          "slotName": "array_linearization_order",
+          "status": "induced",
+          "encodedFields": {
+            "ifabsent": "\"string(ROW_MAJOR_ARRAY_ORDER)\"",
+            "range": "\"ArrayLinearizationOrderOptions\""
+          }
+        }
+      ],
+      "detachedImports": [
+        "linkml:types"
+      ],
+      "status": "loaded"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/datasets.yaml",
+      "queries": [
+        {
+          "className": "Information",
+          "slotName": "id",
+          "status": "induced",
+          "encodedFields": {
+            "identifier": "true",
+            "range": "\"string\"",
+            "required": "true",
+            "description": "\"the unique name of th dataset\""
+          }
+        },
+        {
+          "className": "Information",
+          "slotName": "download_url",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"uri\""
+          }
+        },
+        {
+          "className": "Information",
+          "slotName": "license",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"license for the data\""
+          }
+        },
+        {
+          "className": "Information",
+          "slotName": "title",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"the official title of the element\""
+          }
+        },
+        {
+          "className": "Information",
+          "slotName": "description",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"human readable description of the information\""
+          }
+        },
+        {
+          "className": "Information",
+          "slotName": "conforms_to",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"uriorcurie\""
+          }
+        },
+        {
+          "className": "Information",
+          "slotName": "conforms_to_schema",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"uriorcurie\""
+          }
+        },
+        {
+          "className": "Information",
+          "slotName": "conforms_to_class",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"uriorcurie\"",
+            "description": "\"class in schema which the data object instantiates\""
+          }
+        },
+        {
+          "className": "Information",
+          "slotName": "version",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"particular version of schema\""
+          }
+        },
+        {
+          "className": "Information",
+          "slotName": "language",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"language in which the information is expressed\""
+          }
+        },
+        {
+          "className": "Information",
+          "slotName": "publisher",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"uriorcurie\""
+          }
+        },
+        {
+          "className": "Information",
+          "slotName": "keywords",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "multivalued": "true"
+          }
+        },
+        {
+          "className": "Information",
+          "slotName": "issued",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"datetime\""
+          }
+        },
+        {
+          "className": "Information",
+          "slotName": "created_by",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"uriorcurie\"",
+            "description": "\"agent that created the element\""
+          }
+        },
+        {
+          "className": "Information",
+          "slotName": "created_on",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"datetime\"",
+            "description": "\"time at which the element was created\""
+          }
+        },
+        {
+          "className": "Information",
+          "slotName": "compression",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "Information",
+          "slotName": "was_derived_from",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"A derivation is a transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a pre-existing entity.@en\""
+          }
+        },
+        {
+          "className": "Information",
+          "slotName": "page",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "Information",
+          "slotName": "test_roles",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"TestRole\"",
+            "multivalued": "true"
+          }
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "resources",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"DataResource\"",
+            "multivalued": "true"
+          }
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "id",
+          "status": "induced",
+          "encodedFields": {
+            "identifier": "true",
+            "range": "\"string\"",
+            "required": "true",
+            "description": "\"the unique name of th dataset\""
+          }
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "download_url",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"uri\""
+          }
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "license",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"license for the data\""
+          }
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "title",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"the official title of the element\""
+          }
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "description",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"human readable description of the information\""
+          }
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "conforms_to",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"uriorcurie\""
+          }
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "conforms_to_schema",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"uriorcurie\""
+          }
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "conforms_to_class",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"uriorcurie\"",
+            "description": "\"class in schema which the data object instantiates\""
+          }
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "version",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"particular version of schema\""
+          }
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "language",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"language in which the information is expressed\""
+          }
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "publisher",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"uriorcurie\""
+          }
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "keywords",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "multivalued": "true"
+          }
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "issued",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"datetime\""
+          }
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "created_by",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"uriorcurie\"",
+            "description": "\"agent that created the element\""
+          }
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "created_on",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"datetime\"",
+            "description": "\"time at which the element was created\""
+          }
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "compression",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "was_derived_from",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"A derivation is a transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a pre-existing entity.@en\""
+          }
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "page",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "DataPackage",
+          "slotName": "test_roles",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"TestRole\"",
+            "multivalued": "true"
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "path",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "title",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"the official title of the element\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "description",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"human readable description of the information\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "format",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"FormatEnum\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "media_type",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "encoding",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "bytes",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"integer\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "hash",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "md5",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "sha256",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "dialect",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "id",
+          "status": "induced",
+          "encodedFields": {
+            "identifier": "true",
+            "range": "\"string\"",
+            "required": "true",
+            "description": "\"the unique name of th dataset\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "download_url",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"uri\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "license",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"license for the data\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "conforms_to",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"uriorcurie\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "conforms_to_schema",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"uriorcurie\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "conforms_to_class",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"uriorcurie\"",
+            "description": "\"class in schema which the data object instantiates\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "version",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"particular version of schema\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "language",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"language in which the information is expressed\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "publisher",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"uriorcurie\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "keywords",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "multivalued": "true"
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "issued",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"datetime\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "created_by",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"uriorcurie\"",
+            "description": "\"agent that created the element\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "created_on",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"datetime\"",
+            "description": "\"time at which the element was created\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "compression",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "was_derived_from",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"A derivation is a transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a pre-existing entity.@en\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "page",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "DataResource",
+          "slotName": "test_roles",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"TestRole\"",
+            "multivalued": "true"
+          }
+        },
+        {
+          "className": "FormatDialect",
+          "slotName": "comment_prefix",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "FormatDialect",
+          "slotName": "delimiter",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "FormatDialect",
+          "slotName": "double_quote",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "FormatDialect",
+          "slotName": "header",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "FormatDialect",
+          "slotName": "quote_char",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        }
+      ],
+      "detachedImports": [
+        "linkml:types"
+      ],
+      "status": "loaded"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/extended_types.yaml",
+      "queries": [],
+      "detachedImports": [
+        "linkml:types"
+      ],
+      "status": "loaded"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/extensions.yaml",
+      "queries": [
+        {
+          "className": "extension",
+          "slotName": "extension_tag",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"extension\"",
+            "key": "true",
+            "range": "\"uriorcurie\"",
+            "required": "true",
+            "description": "\"a tag associated with an extension\""
+          }
+        },
+        {
+          "className": "extension",
+          "slotName": "extension_value",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"extension\"",
+            "range": "\"AnyValue\"",
+            "required": "true",
+            "description": "\"the actual annotation\""
+          }
+        },
+        {
+          "className": "extension",
+          "slotName": "extensions",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"extensible\"",
+            "range": "\"extension\"",
+            "multivalued": "true",
+            "inlined": "true",
+            "description": "\"a tag/text tuple attached to an arbitrary element\""
+          }
+        },
+        {
+          "className": "extensible",
+          "slotName": "extensions",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"extensible\"",
+            "range": "\"extension\"",
+            "multivalued": "true",
+            "inlined": "true",
+            "description": "\"a tag/text tuple attached to an arbitrary element\""
+          }
+        }
+      ],
+      "detachedImports": [
+        "linkml:types"
+      ],
+      "status": "loaded"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/meta.yaml",
+      "queries": [
+        {
+          "className": "common_metadata",
+          "slotName": "description",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"element\"",
+            "range": "\"string\"",
+            "recommended": "true",
+            "description": "\"a textual description of the element's purpose and use\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "alt_descriptions",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"element\"",
+            "range": "\"alt_description\"",
+            "multivalued": "true",
+            "inlined": "true",
+            "description": "\"A sourced alternative description for an element\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "title",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"element\"",
+            "range": "\"string\"",
+            "description": "\"A concise human-readable display label for the element. The title should mirror the name, and should use ordinary textual punctuation.\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "deprecated",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"element\"",
+            "range": "\"string\"",
+            "description": "\"Description of why and when this element will no longer be used\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "todos",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"element\"",
+            "range": "\"string\"",
+            "multivalued": "true",
+            "description": "\"Outstanding issues that needs resolution\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "notes",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"element\"",
+            "range": "\"string\"",
+            "multivalued": "true",
+            "description": "\"editorial notes about an element intended primarily for internal consumption\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "comments",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"element\"",
+            "range": "\"string\"",
+            "multivalued": "true",
+            "description": "\"notes and comments about an element intended primarily for external consumption\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "examples",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"element\"",
+            "range": "\"example\"",
+            "multivalued": "true",
+            "inlined": "true",
+            "description": "\"example usages of an element\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "in_subset",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"element\"",
+            "range": "\"subset_definition\"",
+            "multivalued": "true",
+            "description": "\"used to indicate membership of a term in a defined subset of terms used for a particular domain or application.\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "from_schema",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"element\"",
+            "readonly": "\"supplied by the schema loader or schema view\"",
+            "range": "\"uri\"",
+            "description": "\"id of the schema that defined the element\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "imported_from",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"element\"",
+            "readonly": "\"supplied by the schema loader or schema view\"",
+            "range": "\"string\"",
+            "description": "\"the imports entry that this element was derived from.  Empty means primary source\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "source",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"element\"",
+            "range": "\"uriorcurie\"",
+            "description": "\"A related resource from which the element is derived.\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "in_language",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"the primary language used in the sources\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "see_also",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"element\"",
+            "range": "\"uriorcurie\"",
+            "multivalued": "true",
+            "description": "\"A list of related entities or URLs that may be of relevance\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "deprecated element has exact replacement",
+          "status": "induction-blocked",
+          "error": "ValueError: No such slot deprecated element has exact replacement as an attribute of common_metadata ancestors or as a slot definition in the schema"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "deprecated element has possible replacement",
+          "status": "induction-blocked",
+          "error": "ValueError: No such slot deprecated element has possible replacement as an attribute of common_metadata ancestors or as a slot definition in the schema"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "aliases",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"element\"",
+            "range": "\"string\"",
+            "multivalued": "true",
+            "description": "\"Alternate names/labels for the element. These do not alter the semantics of the schema, but may be useful to support search and alignment.\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "structured_aliases",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"structured_alias\"",
+            "multivalued": "true",
+            "inlined": "true",
+            "description": "\"A list of structured_alias objects, used to provide aliases in conjunction with additional metadata.\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "mappings",
+          "status": "induction-blocked",
+          "error": "ValueError: No such slot mappings as an attribute of common_metadata ancestors or as a slot definition in the schema"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "exact mappings",
+          "status": "induction-blocked",
+          "error": "ValueError: No such slot exact mappings as an attribute of common_metadata ancestors or as a slot definition in the schema"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "close mappings",
+          "status": "induction-blocked",
+          "error": "ValueError: No such slot close mappings as an attribute of common_metadata ancestors or as a slot definition in the schema"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "related mappings",
+          "status": "induction-blocked",
+          "error": "ValueError: No such slot related mappings as an attribute of common_metadata ancestors or as a slot definition in the schema"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "narrow mappings",
+          "status": "induction-blocked",
+          "error": "ValueError: No such slot narrow mappings as an attribute of common_metadata ancestors or as a slot definition in the schema"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "broad mappings",
+          "status": "induction-blocked",
+          "error": "ValueError: No such slot broad mappings as an attribute of common_metadata ancestors or as a slot definition in the schema"
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "created_by",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"element\"",
+            "range": "\"uriorcurie\"",
+            "description": "\"agent that created the element\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "contributors",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"element\"",
+            "range": "\"uriorcurie\"",
+            "multivalued": "true",
+            "description": "\"agent that contributed to the element\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "created_on",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"element\"",
+            "range": "\"datetime\"",
+            "description": "\"time at which the element was created\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "last_updated_on",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"element\"",
+            "range": "\"datetime\"",
+            "description": "\"time at which the element was last updated\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "modified_by",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"element\"",
+            "range": "\"uriorcurie\"",
+            "description": "\"agent that modified the element\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "status",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"element\"",
+            "range": "\"uriorcurie\"",
+            "description": "\"status of the element\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "rank",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"integer\"",
+            "description": "\"the relative order in which the element occurs, lower values are given precedence\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "categories",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"uriorcurie\"",
+            "multivalued": "true",
+            "description": "\"Controlled terms used to categorize an element.\""
+          }
+        },
+        {
+          "className": "common_metadata",
+          "slotName": "keywords",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"element\"",
+            "range": "\"string\"",
+            "multivalued": "true",
+            "description": "\"Keywords or tags used to describe the element\""
+          }
+        },
+        {
+          "className": "element",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "schema_definition",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "type_expression",
+          "slotName": "pattern",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"definition\"",
+            "inherited": "true",
+            "range": "\"string\"",
+            "description": "\"the string value of the slot must conform to this regular expression expressed in the string\""
+          }
+        },
+        {
+          "className": "type_expression",
+          "slotName": "structured_pattern",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"definition\"",
+            "inherited": "true",
+            "range": "\"pattern_expression\"",
+            "description": "\"the string value of the slot must conform to the regular expression in the pattern expression\""
+          }
+        },
+        {
+          "className": "type_expression",
+          "slotName": "unit",
+          "status": "induction-blocked",
+          "error": "ValueError: No such slot unit as an attribute of type_expression ancestors or as a slot definition in the schema"
+        },
+        {
+          "className": "type_expression",
+          "slotName": "implicit_prefix",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"slot_expression\"",
+            "range": "\"string\"",
+            "description": "\"Causes the slot value to be interpreted as a uriorcurie after prefixing with this string\""
+          }
+        },
+        {
+          "className": "type_expression",
+          "slotName": "equals_string",
+          "status": "induced",
+          "encodedFields": {
+            "inherited": "true",
+            "range": "\"string\"",
+            "description": "\"the slot must have range string and the value of the slot must equal the specified value\""
+          }
+        },
+        {
+          "className": "type_expression",
+          "slotName": "equals_string_in",
+          "status": "induced",
+          "encodedFields": {
+            "inherited": "true",
+            "range": "\"string\"",
+            "multivalued": "true",
+            "description": "\"the slot must have range string and the value of the slot must equal one of the specified values\""
+          }
+        },
+        {
+          "className": "type_expression",
+          "slotName": "equals_number",
+          "status": "induced",
+          "encodedFields": {
+            "inherited": "true",
+            "range": "\"integer\"",
+            "description": "\"the slot must have range of a number and the value of the slot must equal the specified value\""
+          }
+        },
+        {
+          "className": "type_expression",
+          "slotName": "minimum_value",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"slot_definition\"",
+            "inherited": "true",
+            "range": "\"Anything\"",
+            "description": "\"For ordinal ranges, the value must be equal to or higher than this\""
+          }
+        },
+        {
+          "className": "type_expression",
+          "slotName": "maximum_value",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"slot_definition\"",
+            "inherited": "true",
+            "range": "\"Anything\"",
+            "description": "\"For ordinal ranges, the value must be equal to or lower than this\""
+          }
+        },
+        {
+          "className": "type_expression",
+          "slotName": "none_of",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"anonymous_type_expression\"",
+            "multivalued": "true",
+            "description": "\"holds if none of the expressions hold\""
+          }
+        },
+        {
+          "className": "type_expression",
+          "slotName": "exactly_one_of",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"anonymous_type_expression\"",
+            "multivalued": "true",
+            "description": "\"holds if only one of the expressions hold\""
+          }
+        },
+        {
+          "className": "type_expression",
+          "slotName": "any_of",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"anonymous_type_expression\"",
+            "multivalued": "true",
+            "description": "\"holds if at least one of the expressions hold\""
+          }
+        },
+        {
+          "className": "type_expression",
+          "slotName": "all_of",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"anonymous_type_expression\"",
+            "multivalued": "true",
+            "description": "\"holds if all of the expressions hold\""
+          }
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "pattern",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"definition\"",
+            "inherited": "true",
+            "range": "\"string\"",
+            "description": "\"the string value of the slot must conform to this regular expression expressed in the string\""
+          }
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "structured_pattern",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"definition\"",
+            "inherited": "true",
+            "range": "\"pattern_expression\"",
+            "description": "\"the string value of the slot must conform to the regular expression in the pattern expression\""
+          }
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "unit",
+          "status": "induction-blocked",
+          "error": "ValueError: No such slot unit as an attribute of anonymous_type_expression ancestors or as a slot definition in the schema"
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "implicit_prefix",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"slot_expression\"",
+            "range": "\"string\"",
+            "description": "\"Causes the slot value to be interpreted as a uriorcurie after prefixing with this string\""
+          }
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "equals_string",
+          "status": "induced",
+          "encodedFields": {
+            "inherited": "true",
+            "range": "\"string\"",
+            "description": "\"the slot must have range string and the value of the slot must equal the specified value\""
+          }
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "equals_string_in",
+          "status": "induced",
+          "encodedFields": {
+            "inherited": "true",
+            "range": "\"string\"",
+            "multivalued": "true",
+            "description": "\"the slot must have range string and the value of the slot must equal one of the specified values\""
+          }
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "equals_number",
+          "status": "induced",
+          "encodedFields": {
+            "inherited": "true",
+            "range": "\"integer\"",
+            "description": "\"the slot must have range of a number and the value of the slot must equal the specified value\""
+          }
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "minimum_value",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"slot_definition\"",
+            "inherited": "true",
+            "range": "\"Anything\"",
+            "description": "\"For ordinal ranges, the value must be equal to or higher than this\""
+          }
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "maximum_value",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"slot_definition\"",
+            "inherited": "true",
+            "range": "\"Anything\"",
+            "description": "\"For ordinal ranges, the value must be equal to or lower than this\""
+          }
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "none_of",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"anonymous_type_expression\"",
+            "multivalued": "true",
+            "description": "\"holds if none of the expressions hold\""
+          }
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "exactly_one_of",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"anonymous_type_expression\"",
+            "multivalued": "true",
+            "description": "\"holds if only one of the expressions hold\""
+          }
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "any_of",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"anonymous_type_expression\"",
+            "multivalued": "true",
+            "description": "\"holds if at least one of the expressions hold\""
+          }
+        },
+        {
+          "className": "anonymous_type_expression",
+          "slotName": "all_of",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"anonymous_type_expression\"",
+            "multivalued": "true",
+            "description": "\"holds if all of the expressions hold\""
+          }
+        },
+        {
+          "className": "type_definition",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "subset_definition",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "definition",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "enum_expression",
+          "slotName": "code_set",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"enum_expression\"",
+            "range": "\"uriorcurie\"",
+            "description": "\"the identifier of an enumeration code set.\""
+          }
+        },
+        {
+          "className": "enum_expression",
+          "slotName": "code_set_tag",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"enum_expression\"",
+            "range": "\"string\"",
+            "description": "\"the version tag of the enumeration code set\""
+          }
+        },
+        {
+          "className": "enum_expression",
+          "slotName": "code_set_version",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"enum_expression\"",
+            "range": "\"string\"",
+            "description": "\"the version identifier of the enumeration code set\""
+          }
+        },
+        {
+          "className": "enum_expression",
+          "slotName": "pv_formula",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"pv_formula_options\"",
+            "description": "\"Defines the specific formula to be used to generate the permissible values.\""
+          }
+        },
+        {
+          "className": "enum_expression",
+          "slotName": "permissible_values",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"enum_expression\"",
+            "range": "\"permissible_value\"",
+            "multivalued": "true",
+            "inlined": "true",
+            "description": "\"A list of possible values for a slot range\""
+          }
+        },
+        {
+          "className": "enum_expression",
+          "slotName": "include",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"enum_expression\"",
+            "range": "\"anonymous_enum_expression\"",
+            "multivalued": "true",
+            "description": "\"An enum expression that yields a list of permissible values that are to be included, after subtracting the minus set\""
+          }
+        },
+        {
+          "className": "enum_expression",
+          "slotName": "minus",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"enum_expression\"",
+            "range": "\"anonymous_enum_expression\"",
+            "multivalued": "true",
+            "description": "\"An enum expression that yields a list of permissible values that are to be subtracted from the enum\""
+          }
+        },
+        {
+          "className": "enum_expression",
+          "slotName": "inherits",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"enum_expression\"",
+            "range": "\"enum_definition\"",
+            "multivalued": "true",
+            "description": "\"An enum definition that is used as the basis to create a new enum\""
+          }
+        },
+        {
+          "className": "enum_expression",
+          "slotName": "reachable_from",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"enum_expression\"",
+            "range": "\"reachability_query\"",
+            "description": "\"Specifies a query for obtaining a list of permissible values based on graph reachability\""
+          }
+        },
+        {
+          "className": "enum_expression",
+          "slotName": "matches",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"enum_expression\"",
+            "range": "\"match_query\"",
+            "description": "\"Specifies a match query that is used to calculate the list of permissible values\""
+          }
+        },
+        {
+          "className": "enum_expression",
+          "slotName": "concepts",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"enum_expression\"",
+            "range": "\"uriorcurie\"",
+            "multivalued": "true",
+            "description": "\"A list of identifiers that are used to construct a set of permissible values\""
+          }
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "slotName": "code_set",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"enum_expression\"",
+            "range": "\"uriorcurie\"",
+            "description": "\"the identifier of an enumeration code set.\""
+          }
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "slotName": "code_set_tag",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"enum_expression\"",
+            "range": "\"string\"",
+            "description": "\"the version tag of the enumeration code set\""
+          }
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "slotName": "code_set_version",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"enum_expression\"",
+            "range": "\"string\"",
+            "description": "\"the version identifier of the enumeration code set\""
+          }
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "slotName": "pv_formula",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"pv_formula_options\"",
+            "description": "\"Defines the specific formula to be used to generate the permissible values.\""
+          }
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "slotName": "permissible_values",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"enum_expression\"",
+            "range": "\"permissible_value\"",
+            "multivalued": "true",
+            "inlined": "true",
+            "description": "\"A list of possible values for a slot range\""
+          }
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "slotName": "include",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"enum_expression\"",
+            "range": "\"anonymous_enum_expression\"",
+            "multivalued": "true",
+            "description": "\"An enum expression that yields a list of permissible values that are to be included, after subtracting the minus set\""
+          }
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "slotName": "minus",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"enum_expression\"",
+            "range": "\"anonymous_enum_expression\"",
+            "multivalued": "true",
+            "description": "\"An enum expression that yields a list of permissible values that are to be subtracted from the enum\""
+          }
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "slotName": "inherits",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"enum_expression\"",
+            "range": "\"enum_definition\"",
+            "multivalued": "true",
+            "description": "\"An enum definition that is used as the basis to create a new enum\""
+          }
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "slotName": "reachable_from",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"enum_expression\"",
+            "range": "\"reachability_query\"",
+            "description": "\"Specifies a query for obtaining a list of permissible values based on graph reachability\""
+          }
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "slotName": "matches",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"enum_expression\"",
+            "range": "\"match_query\"",
+            "description": "\"Specifies a match query that is used to calculate the list of permissible values\""
+          }
+        },
+        {
+          "className": "anonymous_enum_expression",
+          "slotName": "concepts",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"enum_expression\"",
+            "range": "\"uriorcurie\"",
+            "multivalued": "true",
+            "description": "\"A list of identifiers that are used to construct a set of permissible values\""
+          }
+        },
+        {
+          "className": "enum_definition",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "enum_binding",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "match_query",
+          "slotName": "identifier_pattern",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"match_query\"",
+            "range": "\"string\"",
+            "description": "\"A regular expression that is used to obtain a set of identifiers from a source_ontology to construct a set of permissible values\""
+          }
+        },
+        {
+          "className": "match_query",
+          "slotName": "source_ontology",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"uriorcurie\"",
+            "description": "\"An ontology or vocabulary or terminology that is used in a query to obtain a set of permissible values\""
+          }
+        },
+        {
+          "className": "reachability_query",
+          "slotName": "source_ontology",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"uriorcurie\"",
+            "description": "\"An ontology or vocabulary or terminology that is used in a query to obtain a set of permissible values\""
+          }
+        },
+        {
+          "className": "reachability_query",
+          "slotName": "source_nodes",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"reachability_query\"",
+            "range": "\"uriorcurie\"",
+            "multivalued": "true",
+            "description": "\"A list of nodes that are used in the reachability query\""
+          }
+        },
+        {
+          "className": "reachability_query",
+          "slotName": "relationship_types",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"reachability_query\"",
+            "range": "\"uriorcurie\"",
+            "multivalued": "true",
+            "description": "\"A list of relationship types (properties) that are used in a reachability query\""
+          }
+        },
+        {
+          "className": "reachability_query",
+          "slotName": "is_direct",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"reachability_query\"",
+            "range": "\"boolean\"",
+            "description": "\"True if the reachability query should only include directly related nodes, if False then include also transitively connected\""
+          }
+        },
+        {
+          "className": "reachability_query",
+          "slotName": "include_self",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"reachability_query\"",
+            "range": "\"boolean\"",
+            "description": "\"True if the query is reflexive\""
+          }
+        },
+        {
+          "className": "reachability_query",
+          "slotName": "traverse_up",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"reachability_query\"",
+            "range": "\"boolean\"",
+            "description": "\"True if the direction of the reachability query is reversed and ancestors are retrieved\""
+          }
+        },
+        {
+          "className": "structured_alias",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "anonymous_expression",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "path_expression",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "range",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"slot_definition\"",
+            "inherited": "true",
+            "ifabsent": "\"default_range\"",
+            "range": "\"element\"",
+            "description": "\"defines the type of the object of the slot.  Given the following slot definition\\n  S1:\\n    domain: C1\\n    range:  C2\\nthe declaration\\n  X:\\n    S1: Y\\n\\nimplicitly asserts Y is an instance of C2\\n\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "range_expression",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"slot_expression\"",
+            "range": "\"anonymous_class_expression\"",
+            "description": "\"A range that is described as a boolean expression combining existing ranges\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "enum_range",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"enum_expression\"",
+            "description": "\"An inlined enumeration\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "bindings",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"element\"",
+            "range": "\"enum_binding\"",
+            "multivalued": "true",
+            "inlined": "true",
+            "description": "\"A collection of enum bindings that specify how a slot can be bound to a permissible value from an enumeration.\\nLinkML provides enums to allow string values to be restricted to one of a set of permissible values (specified statically or dynamically).\\nEnum bindings allow enums to be bound to any object, including complex nested objects. For example, given a (generic) class Concept with slots id and label, it may be desirable to restrict the values the id takes on in a given context. For example, a HumanSample class may have a slot for representing sample site, with a range of concept, but the values of that slot may be restricted to concepts from a particular branch of an anatomy ontology.\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "required",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"slot_definition\"",
+            "inherited": "true",
+            "range": "\"boolean\"",
+            "description": "\"true means that the slot must be present in instances of the class definition\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "recommended",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"slot_definition\"",
+            "inherited": "true",
+            "range": "\"boolean\"",
+            "description": "\"true means that the slot should be present in instances of the class definition, but this is not required\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "multivalued",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"slot_definition\"",
+            "inherited": "true",
+            "range": "\"boolean\"",
+            "description": "\"true means that slot can have more than one value and should be represented using a list or collection structure.\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "inlined",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"slot_definition\"",
+            "inherited": "true",
+            "range": "\"boolean\"",
+            "description": "\"True means that keyed or identified slot appears in an outer structure by value.  False means that only the key or identifier for the slot appears within the domain, referencing a structure that appears elsewhere.\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "inlined_as_list",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"slot_definition\"",
+            "inherited": "true",
+            "range": "\"boolean\"",
+            "description": "\"True means that an inlined slot is represented as a list of range instances.  False means that an inlined slot is represented as a dictionary, whose key is the slot key or identifier and whose value is the range instance.\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "minimum_value",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"slot_definition\"",
+            "inherited": "true",
+            "range": "\"Anything\"",
+            "description": "\"For ordinal ranges, the value must be equal to or higher than this\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "maximum_value",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"slot_definition\"",
+            "inherited": "true",
+            "range": "\"Anything\"",
+            "description": "\"For ordinal ranges, the value must be equal to or lower than this\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "pattern",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"definition\"",
+            "inherited": "true",
+            "range": "\"string\"",
+            "description": "\"the string value of the slot must conform to this regular expression expressed in the string\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "structured_pattern",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"definition\"",
+            "inherited": "true",
+            "range": "\"pattern_expression\"",
+            "description": "\"the string value of the slot must conform to the regular expression in the pattern expression\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "unit",
+          "status": "induction-blocked",
+          "error": "ValueError: No such slot unit as an attribute of slot_expression ancestors or as a slot definition in the schema"
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "implicit_prefix",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"slot_expression\"",
+            "range": "\"string\"",
+            "description": "\"Causes the slot value to be interpreted as a uriorcurie after prefixing with this string\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "value_presence",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"slot_definition\"",
+            "inherited": "true",
+            "range": "\"presence_enum\"",
+            "description": "\"if PRESENT then a value must be present (for lists there must be at least one value). If ABSENT then a value must be absent (for lists, must be empty)\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "equals_string",
+          "status": "induced",
+          "encodedFields": {
+            "inherited": "true",
+            "range": "\"string\"",
+            "description": "\"the slot must have range string and the value of the slot must equal the specified value\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "equals_string_in",
+          "status": "induced",
+          "encodedFields": {
+            "inherited": "true",
+            "range": "\"string\"",
+            "multivalued": "true",
+            "description": "\"the slot must have range string and the value of the slot must equal one of the specified values\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "equals_number",
+          "status": "induced",
+          "encodedFields": {
+            "inherited": "true",
+            "range": "\"integer\"",
+            "description": "\"the slot must have range of a number and the value of the slot must equal the specified value\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "equals_expression",
+          "status": "induced",
+          "encodedFields": {
+            "inherited": "true",
+            "range": "\"string\"",
+            "description": "\"the value of the slot must equal the value of the evaluated expression\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "exact_cardinality",
+          "status": "induced",
+          "encodedFields": {
+            "inherited": "true",
+            "range": "\"integer\"",
+            "description": "\"the exact number of entries for a multivalued slot\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "minimum_cardinality",
+          "status": "induced",
+          "encodedFields": {
+            "inherited": "true",
+            "range": "\"integer\"",
+            "description": "\"the minimum number of entries for a multivalued slot\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "maximum_cardinality",
+          "status": "induced",
+          "encodedFields": {
+            "inherited": "true",
+            "range": "\"integer\"",
+            "description": "\"the maximum number of entries for a multivalued slot\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "has_member",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"anonymous_slot_expression\"",
+            "description": "\"the value of the slot is multivalued with at least one member satisfying the condition\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "all_members",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"anonymous_slot_expression\"",
+            "description": "\"the value of the slot is multivalued with all members satisfying the condition\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "none_of",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"anonymous_slot_expression\"",
+            "multivalued": "true",
+            "description": "\"holds if none of the expressions hold\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "exactly_one_of",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"anonymous_slot_expression\"",
+            "multivalued": "true",
+            "description": "\"holds if only one of the expressions hold\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "any_of",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"anonymous_slot_expression\"",
+            "multivalued": "true",
+            "description": "\"holds if at least one of the expressions hold\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "all_of",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"anonymous_slot_expression\"",
+            "multivalued": "true",
+            "description": "\"holds if all of the expressions hold\""
+          }
+        },
+        {
+          "className": "slot_expression",
+          "slotName": "array",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"slot_definition\"",
+            "inherited": "true",
+            "range": "\"array_expression\"",
+            "description": "\"coerces the value of the slot into an array and defines the dimensions of that array\""
+          }
+        },
+        {
+          "className": "anonymous_slot_expression",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "slot_definition",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "class_expression",
+          "slotName": "any_of",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"anonymous_class_expression\"",
+            "multivalued": "true",
+            "description": "\"holds if at least one of the expressions hold\""
+          }
+        },
+        {
+          "className": "class_expression",
+          "slotName": "exactly_one_of",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"anonymous_class_expression\"",
+            "multivalued": "true",
+            "description": "\"holds if only one of the expressions hold\""
+          }
+        },
+        {
+          "className": "class_expression",
+          "slotName": "none_of",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"anonymous_class_expression\"",
+            "multivalued": "true",
+            "description": "\"holds if none of the expressions hold\""
+          }
+        },
+        {
+          "className": "class_expression",
+          "slotName": "all_of",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"anonymous_class_expression\"",
+            "multivalued": "true",
+            "description": "\"holds if all of the expressions hold\""
+          }
+        },
+        {
+          "className": "class_expression",
+          "slotName": "slot_conditions",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"class_expression\"",
+            "range": "\"slot_definition\"",
+            "multivalued": "true",
+            "inlined": "true",
+            "description": "\"expresses constraints on a group of slots for a class expression\""
+          }
+        },
+        {
+          "className": "anonymous_class_expression",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "class_definition",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "class_rule",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "array_expression",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "dimension_expression",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "pattern_expression",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "import_expression",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "setting",
+          "slotName": "setting_key",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"setting\"",
+            "key": "true",
+            "range": "\"ncname\"",
+            "required": "true",
+            "description": "\"the variable name for a setting\""
+          }
+        },
+        {
+          "className": "setting",
+          "slotName": "setting_value",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"setting\"",
+            "range": "\"string\"",
+            "required": "true",
+            "description": "\"The value assigned for a setting\""
+          }
+        },
+        {
+          "className": "prefix",
+          "slotName": "prefix_prefix",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"prefix\"",
+            "key": "true",
+            "range": "\"ncname\"",
+            "required": "true",
+            "description": "\"The prefix components of a prefix expansions. This is the part that appears before the colon in a CURIE.\""
+          }
+        },
+        {
+          "className": "prefix",
+          "slotName": "prefix_reference",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"prefix\"",
+            "range": "\"uri\"",
+            "required": "true",
+            "description": "\"The namespace to which a prefix expands to.\""
+          }
+        },
+        {
+          "className": "local_name",
+          "slotName": "local_name_source",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"local_name\"",
+            "key": "true",
+            "range": "\"ncname\"",
+            "required": "true",
+            "description": "\"the ncname of the source of the name\""
+          }
+        },
+        {
+          "className": "local_name",
+          "slotName": "local_name_value",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"local_name\"",
+            "range": "\"string\"",
+            "required": "true",
+            "description": "\"a name assigned to an element in a given ontology\""
+          }
+        },
+        {
+          "className": "example",
+          "slotName": "value",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"example\"",
+            "range": "\"string\"",
+            "description": "\"example value\""
+          }
+        },
+        {
+          "className": "example",
+          "slotName": "value_description",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"example\"",
+            "range": "\"string\"",
+            "description": "\"description of what the value is doing\""
+          }
+        },
+        {
+          "className": "example",
+          "slotName": "value_object",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"example\"",
+            "range": "\"Anything\"",
+            "description": "\"direct object representation of the example\""
+          }
+        },
+        {
+          "className": "alt_description",
+          "slotName": "alt_description_source",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"alt_description\"",
+            "key": "true",
+            "range": "\"string\"",
+            "required": "true",
+            "description": "\"the source of an attributed description\""
+          }
+        },
+        {
+          "className": "alt_description",
+          "slotName": "alt_description_text",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"alt_description\"",
+            "range": "\"string\"",
+            "required": "true",
+            "description": "\"text of an attributed description\""
+          }
+        },
+        {
+          "className": "permissible_value",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "unique_key",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "type_mapping",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"annotatable\""
+        },
+        {
+          "className": "extra_slots_expression",
+          "slotName": "allowed",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"boolean\"",
+            "description": "\"Whether or not something is allowed. Usage defined by context.\""
+          }
+        },
+        {
+          "className": "extra_slots_expression",
+          "slotName": "range_expression",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"slot_expression\"",
+            "range": "\"anonymous_slot_expression\"",
+            "description": "\"A range that is described as a boolean expression combining existing ranges\""
+          }
+        }
+      ],
+      "detachedImports": [
+        "linkml:types",
+        "linkml:mappings",
+        "linkml:extensions",
+        "linkml:annotations",
+        "linkml:units"
+      ],
+      "status": "loaded"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/units.yaml",
+      "queries": [
+        {
+          "className": "UnitOfMeasure",
+          "slotName": "symbol",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"name of the unit encoded as a symbol\""
+          }
+        },
+        {
+          "className": "UnitOfMeasure",
+          "slotName": "abbreviation",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"An abbreviation for a unit is a short ASCII string that is used in place of the full name for the unit in contexts where non-ASCII characters would be problematic, or where using the abbreviation will enhance readability. When a power of a base unit needs to be expressed, such as squares this can be done using abbreviations rather than symbols (source: qudt)\""
+          }
+        },
+        {
+          "className": "UnitOfMeasure",
+          "slotName": "descriptive_name",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"the spelled out name of the unit, for example, meter\""
+          }
+        },
+        {
+          "className": "UnitOfMeasure",
+          "slotName": "exact mappings",
+          "status": "induction-blocked",
+          "error": "ValueError: No such slot exact mappings as an attribute of UnitOfMeasure ancestors or as a slot definition in the schema"
+        },
+        {
+          "className": "UnitOfMeasure",
+          "slotName": "ucum_code",
+          "status": "induced",
+          "encodedFields": {
+            "domain": "\"UnitOfMeasure\"",
+            "range": "\"string\"",
+            "recommended": "true",
+            "description": "\"associates a QUDT unit with its UCUM code (case-sensitive).\""
+          }
+        },
+        {
+          "className": "UnitOfMeasure",
+          "slotName": "derivation",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"Expression for deriving this unit from other units\""
+          }
+        },
+        {
+          "className": "UnitOfMeasure",
+          "slotName": "has_quantity_kind",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"uriorcurie\"",
+            "description": "\"Concept in a vocabulary or ontology that denotes the kind of quantity being measured, e.g. length\""
+          }
+        },
+        {
+          "className": "UnitOfMeasure",
+          "slotName": "iec61360code",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        }
+      ],
+      "detachedImports": [
+        "linkml:types",
+        "linkml:extensions",
+        "linkml:annotations",
+        "linkml:mappings"
+      ],
+      "status": "loaded"
+    },
+    {
+      "path": "native/linkml/sources/linkml_model/model/schema/validation.yaml",
+      "queries": [
+        {
+          "className": "ValidationReport",
+          "slotName": "results",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"ValidationResult\"",
+            "multivalued": "true"
+          }
+        },
+        {
+          "className": "ValidationResult",
+          "slotName": "type",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"nodeidentifier\""
+          }
+        },
+        {
+          "className": "ValidationResult",
+          "slotName": "severity",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"severity_options\""
+          }
+        },
+        {
+          "className": "ValidationResult",
+          "slotName": "subject",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"nodeidentifier\""
+          }
+        },
+        {
+          "className": "ValidationResult",
+          "slotName": "instantiates",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"nodeidentifier\""
+          }
+        },
+        {
+          "className": "ValidationResult",
+          "slotName": "predicate",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"nodeidentifier\""
+          }
+        },
+        {
+          "className": "ValidationResult",
+          "slotName": "object",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"nodeidentifier\""
+          }
+        },
+        {
+          "className": "ValidationResult",
+          "slotName": "object_str",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "ValidationResult",
+          "slotName": "node_source",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"nodeidentifier\""
+          }
+        },
+        {
+          "className": "ValidationResult",
+          "slotName": "info",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        }
+      ],
+      "detachedImports": [
+        "linkml:types"
+      ],
+      "status": "loaded"
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-array-1.yaml",
+      "queries": [
+        {
+          "className": "TemperatureDataset",
+          "slotName": "name",
+          "status": "induced",
+          "encodedFields": {
+            "identifier": "true",
+            "range": "\"string\"",
+            "required": "true"
+          }
+        },
+        {
+          "className": "TemperatureDataset",
+          "slotName": "latitude_in_deg",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"LatitudeSeries\"",
+            "required": "true"
+          }
+        },
+        {
+          "className": "TemperatureDataset",
+          "slotName": "longitude_in_deg",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"LongitudeSeries\"",
+            "required": "true"
+          }
+        },
+        {
+          "className": "TemperatureDataset",
+          "slotName": "time_in_d",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"DaySeries\"",
+            "required": "true"
+          }
+        },
+        {
+          "className": "TemperatureDataset",
+          "slotName": "temperatures_in_K",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"TemperatureMatrix\"",
+            "required": "true"
+          }
+        },
+        {
+          "className": "TemperatureMatrix",
+          "slotName": "values",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"float\"",
+            "required": "true",
+            "multivalued": "true"
+          }
+        },
+        {
+          "className": "LatitudeSeries",
+          "slotName": "values",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"float\"",
+            "required": "true",
+            "multivalued": "true"
+          }
+        },
+        {
+          "className": "LongitudeSeries",
+          "slotName": "values",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"float\"",
+            "required": "true",
+            "multivalued": "true"
+          }
+        },
+        {
+          "className": "DaySeries",
+          "slotName": "values",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"float\"",
+            "required": "true",
+            "multivalued": "true"
+          }
+        }
+      ],
+      "detachedImports": [
+        "linkml:types"
+      ],
+      "status": "loaded"
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-array-2.yaml",
+      "queries": [
+        {
+          "className": "IrregularlySampledTimestampSeries",
+          "slotName": "name",
+          "status": "induced",
+          "encodedFields": {
+            "key": "true",
+            "range": "\"string\"",
+            "required": "true"
+          }
+        },
+        {
+          "className": "IrregularlySampledTimestampSeries",
+          "slotName": "values",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"float\"",
+            "required": "true",
+            "multivalued": "true"
+          }
+        },
+        {
+          "className": "RegularlySampledTimestampSeries",
+          "slotName": "name",
+          "status": "induced",
+          "encodedFields": {
+            "key": "true",
+            "range": "\"string\"",
+            "required": "true"
+          }
+        },
+        {
+          "className": "RegularlySampledTimestampSeries",
+          "slotName": "sampling_rate",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"float\"",
+            "required": "true"
+          }
+        },
+        {
+          "className": "RegularlySampledTimestampSeries",
+          "slotName": "starting_time",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"float\"",
+            "required": "true"
+          }
+        },
+        {
+          "className": "RegularlySampledTimestampSeries",
+          "slotName": "length",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"integer\""
+          }
+        },
+        {
+          "className": "RegularlySampledTimestampSeries",
+          "slotName": "values",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"float\"",
+            "multivalued": "true",
+            "equals_expression": "\"{array_index} / {sampling_rate} + {starting_time}\""
+          }
+        },
+        {
+          "className": "Electrode",
+          "slotName": "name",
+          "status": "induced",
+          "encodedFields": {
+            "key": "true",
+            "range": "\"string\"",
+            "required": "true"
+          }
+        },
+        {
+          "className": "Electrode",
+          "slotName": "impedance",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"float\""
+          }
+        },
+        {
+          "className": "ElectrodeSeries",
+          "slotName": "values",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"Electrode\"",
+            "required": "true",
+            "multivalued": "true"
+          }
+        },
+        {
+          "className": "ElectricalDataMatrix",
+          "slotName": "values",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"float\"",
+            "required": "true",
+            "multivalued": "true"
+          }
+        },
+        {
+          "className": "ElectricalDataArray",
+          "slotName": "time",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"TimestampSeries\"",
+            "required": "true",
+            "inlined": "true"
+          }
+        },
+        {
+          "className": "ElectricalDataArray",
+          "slotName": "electrode",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"ElectrodeSeries\"",
+            "required": "true",
+            "inlined": "true"
+          }
+        },
+        {
+          "className": "ElectricalDataArray",
+          "slotName": "values",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"ElectricalDataMatrix\"",
+            "required": "true",
+            "inlined": "true"
+          }
+        },
+        {
+          "className": "IrregularlySampledElectricalDataArray",
+          "slotName": "time",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"IrregularlySampledTimestampSeries\"",
+            "required": "true",
+            "inlined": "true"
+          }
+        },
+        {
+          "className": "IrregularlySampledElectricalDataArray",
+          "slotName": "electrode",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"ElectrodeSeries\"",
+            "required": "true",
+            "inlined": "true"
+          }
+        },
+        {
+          "className": "IrregularlySampledElectricalDataArray",
+          "slotName": "values",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"ElectricalDataMatrix\"",
+            "required": "true",
+            "inlined": "true"
+          }
+        },
+        {
+          "className": "RegularlySampledElectricalDataArray",
+          "slotName": "time",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"RegularlySampledTimestampSeries\""
+          }
+        },
+        {
+          "className": "RegularlySampledElectricalDataArray",
+          "slotName": "electrode",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"ElectrodeSeries\"",
+            "required": "true",
+            "inlined": "true"
+          }
+        },
+        {
+          "className": "RegularlySampledElectricalDataArray",
+          "slotName": "values",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"ElectricalDataMatrix\"",
+            "required": "true",
+            "inlined": "true"
+          }
+        },
+        {
+          "className": "File",
+          "slotName": "electrical_data_arrays",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"ElectricalDataArray\"",
+            "multivalued": "true"
+          }
+        },
+        {
+          "className": "File",
+          "slotName": "electrodes",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"Electrode\"",
+            "multivalued": "true",
+            "inlined": "true",
+            "inlined_as_list": "true"
+          }
+        }
+      ],
+      "detachedImports": [
+        "linkml:types"
+      ],
+      "status": "loaded"
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-dynamic-enums.yaml",
+      "queries": [
+        {
+          "className": "HumanSample",
+          "slotName": "name",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "HumanSample",
+          "slotName": "disease",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"HumanDisease\""
+          }
+        }
+      ],
+      "detachedImports": [
+        "linkml:types"
+      ],
+      "status": "loaded"
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-enum_bindings-1.yaml",
+      "queries": [
+        {
+          "className": "Concept",
+          "slotName": "id",
+          "status": "induced",
+          "encodedFields": {
+            "identifier": "true",
+            "required": "true",
+            "description": "\"CURIE/identifier for the concept. E.g. ENVO:1234567\""
+          }
+        },
+        {
+          "className": "Concept",
+          "slotName": "name",
+          "status": "induced",
+          "encodedFields": {
+            "description": "\"human-readable label of the concept. E.g. \\\"blood\\\"\""
+          }
+        },
+        {
+          "className": "Concept",
+          "slotName": "vocabulary",
+          "status": "induced",
+          "encodedFields": {
+            "description": "\"E.g. UBERON, PO, ENVO, NCIT\""
+          }
+        },
+        {
+          "className": "Sample",
+          "slotName": "name",
+          "status": "induced",
+          "encodedFields": {
+            "description": "\"E.g. my blood sample\""
+          }
+        },
+        {
+          "className": "Sample",
+          "slotName": "sample_material_type",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"Concept\"",
+            "description": "\"The material type for the sample - depending on the type of sample, could be tissue (e.g. blood, muscle) or environmental (rock, soil, ...)\""
+          }
+        }
+      ],
+      "detachedImports": [
+        "linkml:types"
+      ],
+      "status": "loaded"
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-implements.yaml",
+      "queries": [
+        {
+          "className": "Measurement",
+          "slotName": "value",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"float\"",
+            "description": "\"the numeric value\""
+          }
+        },
+        {
+          "className": "Measurement",
+          "slotName": "unit",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"the unit\""
+          }
+        }
+      ],
+      "detachedImports": [
+        "linkml:types"
+      ],
+      "status": "loaded"
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-instantiates.yaml",
+      "queries": [
+        {
+          "className": "Person",
+          "slotName": "id",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "Person",
+          "slotName": "name",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "Person",
+          "slotName": "address",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "Reviewable",
+          "slotName": "description",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"an expert review of a schema element\""
+          }
+        },
+        {
+          "className": "Reviewable",
+          "slotName": "review",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"Review\""
+          }
+        },
+        {
+          "className": "Review",
+          "slotName": "desc",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "Review",
+          "slotName": "score",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"float\""
+          }
+        }
+      ],
+      "detachedImports": [
+        "linkml:types"
+      ],
+      "status": "loaded"
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-multivalued-in-any-of.yaml",
+      "queries": [
+        {
+          "className": "A",
+          "slotName": "s",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"Any\""
+          }
+        }
+      ],
+      "detachedImports": [
+        "linkml:types"
+      ],
+      "status": "loaded"
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-native-array-1.yaml",
+      "queries": [],
+      "status": "loader-rejected",
+      "error": "TypeError: Annotation.__init__() got an unexpected keyword argument 'data'"
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-native-array-rgb.yaml",
+      "queries": [
+        {
+          "className": "RGBImage",
+          "slotName": "rgb",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"float\""
+          }
+        },
+        {
+          "className": "SquareDataset",
+          "slotName": "square_matrix",
+          "status": "induced",
+          "encodedFields": {}
+        },
+        {
+          "className": "UnboundedTimeSeries",
+          "slotName": "my_matrix",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"float\""
+          }
+        }
+      ],
+      "detachedImports": [
+        "linkml:types"
+      ],
+      "status": "loaded"
+    },
+    {
+      "path": "native/linkml/sources/tests/input/examples/schema_definition-type_mappings-1.yaml",
+      "queries": [
+        {
+          "className": "A",
+          "slotName": "my_big_integer",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"integer\""
+          }
+        },
+        {
+          "className": "A",
+          "slotName": "my_date",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"date\""
+          }
+        }
+      ],
+      "detachedImports": [
+        "linkml:types"
+      ],
+      "status": "loaded"
+    },
+    {
+      "path": "native/linkml/examples/people.yaml",
+      "queries": [
+        {
+          "className": "Agent",
+          "slotName": "id",
+          "status": "induced",
+          "encodedFields": {
+            "identifier": "true",
+            "range": "\"string\"",
+            "required": "true"
+          }
+        },
+        {
+          "className": "Addressable",
+          "slotName": "email",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "description": "\"Synthetic contact field.\""
+          }
+        },
+        {
+          "className": "Person",
+          "slotName": "status",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"Status\""
+          }
+        },
+        {
+          "className": "Person",
+          "slotName": "manager",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"Person\""
+          }
+        },
+        {
+          "className": "Person",
+          "slotName": "email",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\"",
+            "required": "true",
+            "pattern": "\"^[^@]+@[^@]+$\"",
+            "description": "\"Synthetic contact field.\""
+          }
+        },
+        {
+          "className": "Person",
+          "slotName": "id",
+          "status": "induced",
+          "encodedFields": {
+            "identifier": "true",
+            "range": "\"string\"",
+            "required": "true"
+          }
+        }
+      ],
+      "detachedImports": [
+        "linkml:types"
+      ],
+      "status": "loaded"
+    },
+    {
+      "path": "native/linkml/examples/inheritance.json",
+      "queries": [
+        {
+          "className": "Root",
+          "slotName": "root",
+          "status": "induced",
+          "encodedFields": {}
+        },
+        {
+          "className": "Root",
+          "slotName": "duplicate",
+          "status": "induced",
+          "encodedFields": {}
+        },
+        {
+          "className": "Root",
+          "slotName": "inline",
+          "status": "induced",
+          "encodedFields": {}
+        },
+        {
+          "className": "MixinBase",
+          "slotName": "mixin_base",
+          "status": "induced",
+          "encodedFields": {}
+        },
+        {
+          "className": "Mixin",
+          "slotName": "duplicate",
+          "status": "induced",
+          "encodedFields": {}
+        },
+        {
+          "className": "Mixin",
+          "slotName": "mixin",
+          "status": "induced",
+          "encodedFields": {}
+        },
+        {
+          "className": "Mixin",
+          "slotName": "mixin_base",
+          "status": "induced",
+          "encodedFields": {}
+        },
+        {
+          "className": "Parent",
+          "slotName": "parent",
+          "status": "induced",
+          "encodedFields": {}
+        },
+        {
+          "className": "Parent",
+          "slotName": "root",
+          "status": "induced",
+          "encodedFields": {}
+        },
+        {
+          "className": "Parent",
+          "slotName": "duplicate",
+          "status": "induced",
+          "encodedFields": {}
+        },
+        {
+          "className": "Parent",
+          "slotName": "inline",
+          "status": "induced",
+          "encodedFields": {}
+        },
+        {
+          "className": "Child",
+          "slotName": "child",
+          "status": "induced",
+          "encodedFields": {}
+        },
+        {
+          "className": "Child",
+          "slotName": "duplicate",
+          "status": "induced",
+          "encodedFields": {}
+        },
+        {
+          "className": "Child",
+          "slotName": "inline",
+          "status": "induced",
+          "encodedFields": {
+            "range": "\"string\""
+          }
+        },
+        {
+          "className": "Child",
+          "slotName": "mixin",
+          "status": "induced",
+          "encodedFields": {}
+        },
+        {
+          "className": "Child",
+          "slotName": "parent",
+          "status": "induced",
+          "encodedFields": {}
+        },
+        {
+          "className": "Child",
+          "slotName": "root",
+          "status": "induced",
+          "encodedFields": {}
+        },
+        {
+          "className": "Child",
+          "slotName": "mixin_base",
+          "status": "induced",
+          "encodedFields": {}
+        },
+        {
+          "className": "CycleA",
+          "slotName": "a",
+          "status": "induced",
+          "encodedFields": {}
+        },
+        {
+          "className": "CycleA",
+          "slotName": "b",
+          "status": "induced",
+          "encodedFields": {}
+        },
+        {
+          "className": "CycleB",
+          "slotName": "b",
+          "status": "induced",
+          "encodedFields": {}
+        },
+        {
+          "className": "CycleB",
+          "slotName": "a",
+          "status": "induced",
+          "encodedFields": {}
+        },
+        {
+          "className": "Missing",
+          "status": "membership-blocked",
+          "error": "ValueError: No such class: \"External\""
+        }
+      ],
+      "detachedImports": [],
+      "status": "loaded"
+    }
+  ]
+}

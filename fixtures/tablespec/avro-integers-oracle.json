@@ -1,0 +1,68 @@
+{
+  "avro": "1.12.0",
+  "fastavro": "1.12.2",
+  "checks": [
+    {
+      "qualifier": "precision",
+      "value": "1.0000000000000000001",
+      "exactBoundaryConfirmed": true
+    },
+    {
+      "qualifier": "precision",
+      "value": "1E-400",
+      "exactBoundaryConfirmed": true
+    },
+    {
+      "qualifier": "precision",
+      "value": "9007199254740993",
+      "exactBoundaryConfirmed": true
+    },
+    {
+      "qualifier": "precision",
+      "value": "-0",
+      "exactBoundaryConfirmed": true
+    },
+    {
+      "qualifier": "scale",
+      "value": "1.0000000000000000001",
+      "exactBoundaryConfirmed": true
+    },
+    {
+      "qualifier": "scale",
+      "value": "1E-400",
+      "exactBoundaryConfirmed": true
+    },
+    {
+      "qualifier": "scale",
+      "value": "9007199254740993",
+      "exactBoundaryConfirmed": true
+    },
+    {
+      "qualifier": "scale",
+      "value": "-0",
+      "exactBoundaryConfirmed": true
+    },
+    {
+      "qualifier": "dimension",
+      "value": "1.0000000000000000001",
+      "exactBoundaryConfirmed": true
+    },
+    {
+      "qualifier": "dimension",
+      "value": "1E-400",
+      "exactBoundaryConfirmed": true
+    },
+    {
+      "qualifier": "dimension",
+      "value": "9007199254740993",
+      "exactBoundaryConfirmed": true
+    },
+    {
+      "qualifier": "dimension",
+      "value": "-0",
+      "exactBoundaryConfirmed": true
+    }
+  ],
+  "exactDecimalTargetBinaryAgreement": true,
+  "scope": "Exact Decimal boundary checks and target codec agreement; native TableSpec coercion is not executed."
+}

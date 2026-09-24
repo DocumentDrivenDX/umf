@@ -1,0 +1,16 @@
+{
+  "compiler": "protocompile 0.14.1",
+  "roots": [
+    "legacy.proto",
+    "modern.proto",
+    "edition.proto"
+  ],
+  "compiled": true,
+  "nativeDescriptorAgreement": true,
+  "normalization": "SourceCodeInfo excluded across different compilers; omitted syntax normalized to proto2; protoc --retain_options; all other descriptor fields compared",
+  "nativeBehaviorChecks": 42,
+  "originalSourceRetained": true,
+  "missingImportRejected": true,
+  "invalidFieldNumberRejected": true,
+  "sourceEmission": "not yet implemented"
+}

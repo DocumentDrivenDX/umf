@@ -1,0 +1,150 @@
+{
+  "producer": "pyarrow 21.0.0",
+  "origin": "authored synthetic arrays, not upstream conformance corpus",
+  "cases": [
+    {
+      "name": "int64",
+      "format": "stream",
+      "file": "int64.stream.arrow",
+      "rows": 6,
+      "batches": 2,
+      "sha256": "b51c861ddfec1df7963bf146dea92aa8bf0ab8641afc103fa9bbf5a1bf6fe7d4"
+    },
+    {
+      "name": "int64",
+      "format": "file",
+      "file": "int64.file.arrow",
+      "rows": 6,
+      "batches": 2,
+      "sha256": "32214292cbe23fac47029049527050aabcc04d213887b5439cbf85f0ee4aaff2"
+    },
+    {
+      "name": "dictionary",
+      "format": "stream",
+      "file": "dictionary.stream.arrow",
+      "rows": 6,
+      "batches": 2,
+      "sha256": "d94b3293decc1c31fb22c1da0d3f907ce77a55026ee53891de35859d730f25b4"
+    },
+    {
+      "name": "dictionary",
+      "format": "file",
+      "file": "dictionary.file.arrow",
+      "rows": 6,
+      "batches": 2,
+      "sha256": "1221d43ba23e9e253970da6fa4ae0b3dea58b915750d3dddab8b9f148d9ed898"
+    },
+    {
+      "name": "list",
+      "format": "stream",
+      "file": "list.stream.arrow",
+      "rows": 6,
+      "batches": 2,
+      "sha256": "c57f8410b50e5a1b72f48537d1dfe1c58739885d777e7b9faf83462df456df9e"
+    },
+    {
+      "name": "list",
+      "format": "file",
+      "file": "list.file.arrow",
+      "rows": 6,
+      "batches": 2,
+      "sha256": "e5464c276ec35c43ed3d4c8e4106d0b09712720b9172551eeee215491e9497f0"
+    },
+    {
+      "name": "struct",
+      "format": "stream",
+      "file": "struct.stream.arrow",
+      "rows": 6,
+      "batches": 2,
+      "sha256": "426305bd774519d273461ef817c6ed77a78541415896f52c0d3181aeb185d296"
+    },
+    {
+      "name": "struct",
+      "format": "file",
+      "file": "struct.file.arrow",
+      "rows": 6,
+      "batches": 2,
+      "sha256": "2187237e1caf43f85e5f85d0cc143f58904802ea24a2c676401c0a0a32eb571e"
+    },
+    {
+      "name": "map",
+      "format": "stream",
+      "file": "map.stream.arrow",
+      "rows": 6,
+      "batches": 2,
+      "sha256": "22bda29f9b01368ef9389c10fea54a2c45506591c0b6b223348b0658d5afbe8c"
+    },
+    {
+      "name": "map",
+      "format": "file",
+      "file": "map.file.arrow",
+      "rows": 6,
+      "batches": 2,
+      "sha256": "c5bf63c1b6f1e7cae81a6a4a8ba690bfff0a540c59814b41ac0cda72c1761214"
+    },
+    {
+      "name": "union",
+      "format": "stream",
+      "file": "union.stream.arrow",
+      "rows": 6,
+      "batches": 2,
+      "sha256": "b011bdc8a090239bc20a4e3906c8c5a25b1cac803af28ed5bd30ba0e47d2b25f"
+    },
+    {
+      "name": "union",
+      "format": "file",
+      "file": "union.file.arrow",
+      "rows": 6,
+      "batches": 2,
+      "sha256": "2090529639447e45ee11809c1f6fa9703a13372f800d4f755e136873e7c32054"
+    },
+    {
+      "name": "listview",
+      "format": "stream",
+      "file": "listview.stream.arrow",
+      "rows": 6,
+      "batches": 2,
+      "sha256": "57fb4887c06b74fd30491ac252d6f5c09f6d7e91b8eef47b211d9ebf230f64b7"
+    },
+    {
+      "name": "listview",
+      "format": "file",
+      "file": "listview.file.arrow",
+      "rows": 6,
+      "batches": 2,
+      "sha256": "0b35666e6911b50d2ec4f8d8b088515a13b4e6f854d9c281bb1aafaa98c8c848"
+    },
+    {
+      "name": "largelistview",
+      "format": "stream",
+      "file": "largelistview.stream.arrow",
+      "rows": 6,
+      "batches": 2,
+      "sha256": "33097ef1ec7ca61d67d4f37ece1281e7a0006285a5b5ba9803cb5521a0140f5c"
+    },
+    {
+      "name": "largelistview",
+      "format": "file",
+      "file": "largelistview.file.arrow",
+      "rows": 6,
+      "batches": 2,
+      "sha256": "ff1ea9a26a6e501f48f4f6adba412ef0bb0f54fb1a0b45f151ff32eb1cbb6a74"
+    },
+    {
+      "name": "runendencoded",
+      "format": "stream",
+      "file": "runendencoded.stream.arrow",
+      "rows": 6,
+      "batches": 2,
+      "sha256": "e28f0882928ac4c6ba7ed95dac9c13e2c973ee17b33c1e297b3b9936b898bd83"
+    },
+    {
+      "name": "runendencoded",
+      "format": "file",
+      "file": "runendencoded.file.arrow",
+      "rows": 6,
+      "batches": 2,
+      "sha256": "14a82287604c90ed4e7da675731f926aed0a02c0ad5ae179a1b76a030ff229dc"
+    }
+  ]
+}

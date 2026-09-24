@@ -1,0 +1,20 @@
+_:N8c63a77a4f764b2db0f2efcb7339d6b3 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/closed-001.test#MyShape> .
+_:N88b04540e7dd409e84a863faad860878 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#ClosedConstraintComponent> .
+_:N88b04540e7dd409e84a863faad860878 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N8c63a77a4f764b2db0f2efcb7339d6b3 <http://www.w3.org/ns/shacl#value> "4"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:N88b04540e7dd409e84a863faad860878 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/closed-001.test#MyShape> .
+_:N88b04540e7dd409e84a863faad860878 <http://www.w3.org/ns/shacl#resultMessage> "Node ex:InvalidInstance1 is closed. It cannot have value: ex:SomeClass" .
+_:N5f757fe73d7349079c6d18029afaa889 <http://www.w3.org/ns/shacl#result> _:N88b04540e7dd409e84a863faad860878 .
+_:N5f757fe73d7349079c6d18029afaa889 <http://www.w3.org/ns/shacl#result> _:N8c63a77a4f764b2db0f2efcb7339d6b3 .
+_:N88b04540e7dd409e84a863faad860878 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/closed-001.test#SomeClass> .
+_:N88b04540e7dd409e84a863faad860878 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N8c63a77a4f764b2db0f2efcb7339d6b3 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N8c63a77a4f764b2db0f2efcb7339d6b3 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/node/closed-001.test#otherProperty> .
+_:N8c63a77a4f764b2db0f2efcb7339d6b3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N5f757fe73d7349079c6d18029afaa889 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N8c63a77a4f764b2db0f2efcb7339d6b3 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/closed-001.test#InvalidInstance1> .
+_:N8c63a77a4f764b2db0f2efcb7339d6b3 <http://www.w3.org/ns/shacl#resultMessage> "Node ex:InvalidInstance1 is closed. It cannot have value: Literal(\"4\", datatype=xsd:integer)" .
+_:N88b04540e7dd409e84a863faad860878 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/closed-001.test#InvalidInstance1> .
+_:N5f757fe73d7349079c6d18029afaa889 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N88b04540e7dd409e84a863faad860878 <http://www.w3.org/ns/shacl#resultPath> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> .
+_:N8c63a77a4f764b2db0f2efcb7339d6b3 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#ClosedConstraintComponent> .

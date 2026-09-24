@@ -1,0 +1,47 @@
+{
+  "rootType": "Footer",
+  "value": {
+    "version": "V5",
+    "schema": {
+      "fields": [
+        {
+          "name": "value",
+          "nullable": true,
+          "type": {
+            "type": "Int",
+            "value": {
+              "bitWidth": 64,
+              "is_signed": true
+            }
+          },
+          "children": [],
+          "custom_metadata": [
+            {
+              "key": "field-note",
+              "value": "preserve"
+            }
+          ]
+        }
+      ],
+      "custom_metadata": [
+        {
+          "key": "schema-note",
+          "value": "café"
+        }
+      ]
+    },
+    "dictionaries": [],
+    "recordBatches": [
+      {
+        "offset": "264",
+        "metaDataLength": 144,
+        "bodyLength": "32"
+      },
+      {
+        "offset": "440",
+        "metaDataLength": 144,
+        "bodyLength": "32"
+      }
+    ]
+  }
+}

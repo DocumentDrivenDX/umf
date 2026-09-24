@@ -1,0 +1,7 @@
+{
+  "oracle": "pyarrow 21.0.0",
+  "schemas": 48,
+  "metadataAndNativeTypeEquality": true,
+  "editedFieldVerified": true,
+  "scope": "Schema-only IPC, compared with the pinned native baseline. No record-batch, dictionary-value, unknown FlatBuffer or arbitrary stream import claim."
+}

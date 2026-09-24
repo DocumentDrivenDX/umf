@@ -1,0 +1,97 @@
+{
+  "results": [
+    {
+      "id": "model",
+      "path": "fixtures/dbt/semantic/semantic-manifest.json",
+      "sourceSha256": "c56abd814722225ed4fba03ed6f2c50e8f56478ed3e133d63dd8e1440fe1ec90",
+      "editPath": "/semantic_models/0/description",
+      "value": "Reviewed semantic model.",
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_SEMANTIC_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Derived nullable shapes do not establish semantic rule validity, metric execution, joins, SQL semantics, parser coercion/defaults or exact-number constraints beyond JS precision"
+          }
+        ]
+      },
+      "candidateValidation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_SEMANTIC_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Derived nullable shapes do not establish semantic rule validity, metric execution, joins, SQL semantics, parser coercion/defaults or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "metric",
+      "path": "fixtures/dbt/semantic/semantic-manifest.json",
+      "sourceSha256": "c56abd814722225ed4fba03ed6f2c50e8f56478ed3e133d63dd8e1440fe1ec90",
+      "editPath": "/metrics/0/description",
+      "value": "Reviewed metric.",
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_SEMANTIC_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Derived nullable shapes do not establish semantic rule validity, metric execution, joins, SQL semantics, parser coercion/defaults or exact-number constraints beyond JS precision"
+          }
+        ]
+      },
+      "candidateValidation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_SEMANTIC_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Derived nullable shapes do not establish semantic rule validity, metric execution, joins, SQL semantics, parser coercion/defaults or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "saved-query",
+      "path": "fixtures/dbt/semantic/semantic-manifest.json",
+      "sourceSha256": "c56abd814722225ed4fba03ed6f2c50e8f56478ed3e133d63dd8e1440fe1ec90",
+      "editPath": "/saved_queries/0/description",
+      "value": "Reviewed saved query.",
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_SEMANTIC_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Derived nullable shapes do not establish semantic rule validity, metric execution, joins, SQL semantics, parser coercion/defaults or exact-number constraints beyond JS precision"
+          }
+        ]
+      },
+      "candidateValidation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_SEMANTIC_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Derived nullable shapes do not establish semantic rule validity, metric execution, joins, SQL semantics, parser coercion/defaults or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    }
+  ]
+}

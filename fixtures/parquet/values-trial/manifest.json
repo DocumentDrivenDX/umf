@@ -1,0 +1,25 @@
+{
+  "runtime": "PyArrow 21.0.0",
+  "cases": [
+    {
+      "id": "page-1.0-dict-true",
+      "path": "fixtures/parquet/values-trial/page-1.0-dict-true.parquet",
+      "rows": 3
+    },
+    {
+      "id": "page-1.0-dict-false",
+      "path": "fixtures/parquet/values-trial/page-1.0-dict-false.parquet",
+      "rows": 3
+    },
+    {
+      "id": "page-2.0-dict-true",
+      "path": "fixtures/parquet/values-trial/page-2.0-dict-true.parquet",
+      "rows": 3
+    },
+    {
+      "id": "page-2.0-dict-false",
+      "path": "fixtures/parquet/values-trial/page-2.0-dict-false.parquet",
+      "rows": 3
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+[
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "stats",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 2,
+              "name": "value",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "4b3b4ca85a86c47a098a223fffffffff"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "stats",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 2,
+              "name": "value",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "b4c4b357a5793b85f675ddc000000001"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "stats",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 2,
+              "name": "value",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "00000000000000000000000000000000"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "stats",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 2,
+              "name": "value",
+              "value": null
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "stats",
+        "value": null
+      }
+    ]
+  }
+]

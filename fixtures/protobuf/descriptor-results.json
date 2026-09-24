@@ -1,0 +1,32 @@
+{
+  "compiler": "libprotoc 36.2",
+  "runtime": "@bufbuild/protobuf 2.15.0",
+  "files": [
+    "google/protobuf/any.proto",
+    "google/protobuf/source_context.proto",
+    "google/protobuf/type.proto",
+    "google/protobuf/api.proto",
+    "google/protobuf/descriptor.proto",
+    "google/protobuf/c_sharp_features.proto",
+    "google/protobuf/cpp_features.proto",
+    "google/protobuf/cpp_file_options.proto",
+    "google/protobuf/cpp_options.proto",
+    "google/protobuf/duration.proto",
+    "google/protobuf/empty.proto",
+    "google/protobuf/field_mask.proto",
+    "google/protobuf/go_features.proto",
+    "google/protobuf/java_features.proto",
+    "google/protobuf/json_enumvalue_options.proto",
+    "google/protobuf/json_options.proto",
+    "google/protobuf/struct.proto",
+    "google/protobuf/timestamp.proto",
+    "google/protobuf/wrappers.proto",
+    "legacy.proto",
+    "modern.proto",
+    "edition.proto"
+  ],
+  "nativeDescriptorTextEquality": true,
+  "sourceCodeInfoRetained": true,
+  "normalization": "Native protoc text decode; no descriptor fields stripped. Binary field ordering and duplicate singular wire occurrences are not lexical guarantees.",
+  "sourceLanguageAdapter": "not yet implemented"
+}

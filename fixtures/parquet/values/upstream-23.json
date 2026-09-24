@@ -1,0 +1,319 @@
+[
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 20,
+        "name": "protocol",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 21,
+              "name": "minReaderVersion",
+              "value": {
+                "kind": "int",
+                "bits": 32,
+                "value": "1",
+                "physical": {
+                  "type": "INT32",
+                  "value": "1"
+                }
+              }
+            },
+            {
+              "index": 22,
+              "name": "minWriterVersion",
+              "value": {
+                "kind": "int",
+                "bits": 32,
+                "value": "2",
+                "physical": {
+                  "type": "INT32",
+                  "value": "2"
+                }
+              }
+            },
+            {
+              "index": 23,
+              "name": "writerFeatures",
+              "value": null
+            },
+            {
+              "index": 26,
+              "name": "readerFeatures",
+              "value": null
+            }
+          ]
+        }
+      },
+      {
+        "index": 29,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 32,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 52,
+        "name": "remove",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "metaData",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 2,
+              "name": "id",
+              "value": {
+                "kind": "string",
+                "value": "5d650ad7-a5bc-41ef-942d-8cb1911e929f",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "35643635306164372d613562632d343165662d393432642d386362313931316539323966"
+                }
+              }
+            },
+            {
+              "index": 3,
+              "name": "name",
+              "value": null
+            },
+            {
+              "index": 4,
+              "name": "description",
+              "value": null
+            },
+            {
+              "index": 5,
+              "name": "schemaString",
+              "value": {
+                "kind": "string",
+                "value": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a2278222c2274797065223a226c6f6e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d"
+                }
+              }
+            },
+            {
+              "index": 6,
+              "name": "createdTime",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1753290963616",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1753290963616"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionColumns",
+              "value": {
+                "kind": "list",
+                "items": []
+              }
+            },
+            {
+              "index": 10,
+              "name": "configuration",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": []
+              }
+            },
+            {
+              "index": 14,
+              "name": "format",
+              "value": {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "index": 15,
+                    "name": "provider",
+                    "value": {
+                      "kind": "string",
+                      "value": "parquet",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "70617271756574"
+                      }
+                    }
+                  },
+                  {
+                    "index": 16,
+                    "name": "options",
+                    "value": {
+                      "kind": "map",
+                      "duplicateKeys": "last-value",
+                      "entries": []
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 20,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 29,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 32,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 52,
+        "name": "remove",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 20,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 29,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 32,
+        "name": "add",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 33,
+              "name": "path",
+              "value": {
+                "kind": "string",
+                "value": "part-00001-4ad27870-ff0a-4fe5-b4c7-04cadfd628a9-c000.snappy.parquet",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "706172742d30303030312d34616432373837302d666630612d346665352d623463372d3034636164666436323861392d633030302e736e617070792e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 34,
+              "name": "size",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "514",
+                "physical": {
+                  "type": "INT64",
+                  "value": "514"
+                }
+              }
+            },
+            {
+              "index": 35,
+              "name": "modificationTime",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1753290963621",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1753290963621"
+                }
+              }
+            },
+            {
+              "index": 36,
+              "name": "dataChange",
+              "value": {
+                "kind": "bool",
+                "value": false,
+                "physical": {
+                  "type": "BOOLEAN",
+                  "value": false
+                }
+              }
+            },
+            {
+              "index": 37,
+              "name": "partitionValues",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": []
+              }
+            },
+            {
+              "index": 41,
+              "name": "tags",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": []
+              }
+            },
+            {
+              "index": 45,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 51,
+              "name": "stats",
+              "value": {
+                "kind": "string",
+                "value": "{\"numRecords\":3,\"minValues\":{\"x\":1},\"maxValues\":{\"x\":3},\"nullCount\":{\"x\":0}}",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a332c226d696e56616c756573223a7b2278223a317d2c226d617856616c756573223a7b2278223a337d2c226e756c6c436f756e74223a7b2278223a307d7d"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 52,
+        "name": "remove",
+        "value": null
+      }
+    ]
+  }
+]

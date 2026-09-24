@@ -1,0 +1,65 @@
+{
+  "rootType": "Footer",
+  "value": {
+    "version": "V5",
+    "schema": {
+      "fields": [
+        {
+          "name": "value",
+          "nullable": true,
+          "type": {
+            "type": "RunEndEncoded",
+            "value": {}
+          },
+          "children": [
+            {
+              "name": "run_ends",
+              "type": {
+                "type": "Int",
+                "value": {
+                  "bitWidth": 16,
+                  "is_signed": true
+                }
+              },
+              "children": []
+            },
+            {
+              "name": "values",
+              "nullable": true,
+              "type": {
+                "type": "Utf8",
+                "value": {}
+              },
+              "children": []
+            }
+          ],
+          "custom_metadata": [
+            {
+              "key": "field-note",
+              "value": "preserve"
+            }
+          ]
+        }
+      ],
+      "custom_metadata": [
+        {
+          "key": "schema-note",
+          "value": "café"
+        }
+      ]
+    },
+    "dictionaries": [],
+    "recordBatches": [
+      {
+        "offset": "392",
+        "metaDataLength": 224,
+        "bodyLength": "40"
+      },
+      {
+        "offset": "656",
+        "metaDataLength": 224,
+        "bodyLength": "40"
+      }
+    ]
+  }
+}

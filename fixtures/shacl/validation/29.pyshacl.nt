@@ -1,0 +1,19 @@
+_:N5a59660ab7444fe59a95b4582d08ab72 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/node-001.test#TestClass> .
+_:Nee1212fb2c794f16870d06c66fa3c777 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have class ex:OtherClass" .
+_:Nfe10d962256144168114cc87d4d419a2 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Nee1212fb2c794f16870d06c66fa3c777 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#ClassConstraintComponent> .
+_:Nee1212fb2c794f16870d06c66fa3c777 <http://www.w3.org/ns/shacl#sourceShape> _:n29b1b0542d9b49f8bc3517f80db34881b1 .
+_:Nee1212fb2c794f16870d06c66fa3c777 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/node-001.test#InvalidInstance> .
+_:N5a59660ab7444fe59a95b4582d08ab72 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/node-001.test#InvalidInstance> .
+_:Nee1212fb2c794f16870d06c66fa3c777 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/node-001.test#InvalidInstance> .
+_:Nfe10d962256144168114cc87d4d419a2 <http://www.w3.org/ns/shacl#result> _:N5a59660ab7444fe59a95b4582d08ab72 .
+_:Nee1212fb2c794f16870d06c66fa3c777 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:n29b1b0542d9b49f8bc3517f80db34881b1 <http://www.w3.org/ns/shacl#class> <http://datashapes.org/sh/tests/core/node/node-001.test#OtherClass> .
+_:N5a59660ab7444fe59a95b4582d08ab72 <http://www.w3.org/ns/shacl#resultMessage> "Value does not conform to Shape [ sh:class ex:OtherClass ]. See details for more information." .
+_:N5a59660ab7444fe59a95b4582d08ab72 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeConstraintComponent> .
+_:N5a59660ab7444fe59a95b4582d08ab72 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/node-001.test#InvalidInstance> .
+_:Nee1212fb2c794f16870d06c66fa3c777 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nfe10d962256144168114cc87d4d419a2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N5a59660ab7444fe59a95b4582d08ab72 <http://www.w3.org/ns/shacl#detail> _:Nee1212fb2c794f16870d06c66fa3c777 .
+_:N5a59660ab7444fe59a95b4582d08ab72 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N5a59660ab7444fe59a95b4582d08ab72 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .

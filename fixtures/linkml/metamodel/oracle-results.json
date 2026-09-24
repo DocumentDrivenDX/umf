@@ -1,0 +1,554 @@
+{
+  "runtime": "Pinned linkml-model 1.11.0 classes, linkml-runtime 1.11.0rc2, jsonschema 4.25.1 without formats",
+  "outcomes": [
+    {
+      "id": "000",
+      "path": "native/linkml/sources/linkml_model/model/schema/annotations.yaml",
+      "native": "accepted",
+      "normalizedSchemaErrors": []
+    },
+    {
+      "id": "001",
+      "path": "native/linkml/sources/linkml_model/model/schema/array.yaml",
+      "native": "accepted",
+      "normalizedSchemaErrors": []
+    },
+    {
+      "id": "002",
+      "path": "native/linkml/sources/linkml_model/model/schema/datasets.yaml",
+      "native": "accepted",
+      "normalizedSchemaErrors": []
+    },
+    {
+      "id": "003",
+      "path": "native/linkml/sources/linkml_model/model/schema/extended_types.yaml",
+      "native": "accepted",
+      "normalizedSchemaErrors": []
+    },
+    {
+      "id": "004",
+      "path": "native/linkml/sources/linkml_model/model/schema/extensions.yaml",
+      "native": "accepted",
+      "normalizedSchemaErrors": []
+    },
+    {
+      "id": "005",
+      "path": "native/linkml/sources/linkml_model/model/schema/mappings.yaml",
+      "native": "accepted",
+      "normalizedSchemaErrors": []
+    },
+    {
+      "id": "006",
+      "path": "native/linkml/sources/linkml_model/model/schema/meta.yaml",
+      "native": "accepted",
+      "normalizedSchemaErrors": []
+    },
+    {
+      "id": "007",
+      "path": "native/linkml/sources/linkml_model/model/schema/types.yaml",
+      "native": "accepted",
+      "normalizedSchemaErrors": [],
+      "singletonNotes": {
+        "source": "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"decimal\".",
+        "normalized": [
+          "If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"decimal\"."
+        ]
+      }
+    },
+    {
+      "id": "008",
+      "path": "native/linkml/sources/linkml_model/model/schema/units.yaml",
+      "native": "accepted",
+      "normalizedSchemaErrors": []
+    },
+    {
+      "id": "009",
+      "path": "native/linkml/sources/linkml_model/model/schema/validation.yaml",
+      "native": "accepted",
+      "normalizedSchemaErrors": []
+    }
+  ],
+  "results": [
+    {
+      "id": "000",
+      "format": "json",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "09e2c78288959637c820b58fe533e30f9d26b6935bbac04fd69ce055eb9109a7",
+      "editedSha256": "670f072ffd786769218c662cd8737581c8dda8e73539625fdda6ea5ac824b2f4"
+    },
+    {
+      "id": "000",
+      "format": "yaml",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "09e2c78288959637c820b58fe533e30f9d26b6935bbac04fd69ce055eb9109a7",
+      "editedSha256": "670f072ffd786769218c662cd8737581c8dda8e73539625fdda6ea5ac824b2f4"
+    },
+    {
+      "id": "001",
+      "format": "json",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "bcad521ad1462c273299f76ff51f9e9e171e61317906c3b04d57c7e90c759b8e",
+      "editedSha256": "621cddb2bc590f8165f40d147a57a1982e0179d464954f48b83c4c59363fde28"
+    },
+    {
+      "id": "001",
+      "format": "yaml",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "bcad521ad1462c273299f76ff51f9e9e171e61317906c3b04d57c7e90c759b8e",
+      "editedSha256": "621cddb2bc590f8165f40d147a57a1982e0179d464954f48b83c4c59363fde28"
+    },
+    {
+      "id": "002",
+      "format": "json",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "08a56848ca17f434ae8d63fa440f1ba2648afc9ae52b85bd753a24ba24d9c30f",
+      "editedSha256": "0ad77124bf870108ced731060d6c75dc1510bca803f4d4a216813c6e9026923b"
+    },
+    {
+      "id": "002",
+      "format": "yaml",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "08a56848ca17f434ae8d63fa440f1ba2648afc9ae52b85bd753a24ba24d9c30f",
+      "editedSha256": "0ad77124bf870108ced731060d6c75dc1510bca803f4d4a216813c6e9026923b"
+    },
+    {
+      "id": "003",
+      "format": "json",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "a11f98bbaed863b1e8b3a1b981a65820f702aad0dd4a1d4612cd454c66aa3de9",
+      "editedSha256": "51e100af676a7c16eed1950bd428457fb3ae2f4516e8dae691a3783b5665a263"
+    },
+    {
+      "id": "003",
+      "format": "yaml",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "a11f98bbaed863b1e8b3a1b981a65820f702aad0dd4a1d4612cd454c66aa3de9",
+      "editedSha256": "51e100af676a7c16eed1950bd428457fb3ae2f4516e8dae691a3783b5665a263"
+    },
+    {
+      "id": "004",
+      "format": "json",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "59ce22349510804c75717ef8ed2e869e170fac5cacabf6c49adce20fb48c5c7f",
+      "editedSha256": "7ebaaada3a349a65361b4b900972d1151cc8041d2970ce78c881b084066ef462"
+    },
+    {
+      "id": "004",
+      "format": "yaml",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "59ce22349510804c75717ef8ed2e869e170fac5cacabf6c49adce20fb48c5c7f",
+      "editedSha256": "7ebaaada3a349a65361b4b900972d1151cc8041d2970ce78c881b084066ef462"
+    },
+    {
+      "id": "005",
+      "format": "json",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "5475da7797574150ef8063bfdda9c6d2b47b968b7ada532b018ae9eaaf0f2ed5",
+      "editedSha256": "190fb2ece479a36581075c7381ba586c45280e40c827c3bcf6865da76e0d210d"
+    },
+    {
+      "id": "005",
+      "format": "yaml",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "5475da7797574150ef8063bfdda9c6d2b47b968b7ada532b018ae9eaaf0f2ed5",
+      "editedSha256": "190fb2ece479a36581075c7381ba586c45280e40c827c3bcf6865da76e0d210d"
+    },
+    {
+      "id": "006",
+      "format": "json",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "d4caaa3039ca406d31aaf8124ef03add9ab7922f04a9fc3ad7f818e3c4b4eecd",
+      "editedSha256": "a0aacb1c5e09431521ead2186566e398a0e571de3726556983809dffd8c72be8"
+    },
+    {
+      "id": "006",
+      "format": "yaml",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "d4caaa3039ca406d31aaf8124ef03add9ab7922f04a9fc3ad7f818e3c4b4eecd",
+      "editedSha256": "a0aacb1c5e09431521ead2186566e398a0e571de3726556983809dffd8c72be8"
+    },
+    {
+      "id": "007",
+      "format": "json",
+      "sourceSchemaValid": false,
+      "candidateSchemaValid": false,
+      "sourceSchemaErrors": [
+        {
+          "path": [
+            "types",
+            "uri"
+          ],
+          "message": "{'uri': 'xsd:anyURI', 'base': 'URI', 'repr': 'str', 'description': 'a complete URI', 'comments': ['in RDF serializations a slot with range of uri is treated as a literal or type xsd:anyURI unless it is an identifier or a reference to an identifier, in which case it is translated directly to a node'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"uri\".', 'close_mappings': ['schema:URL'], 'conforms_to': 'https://www.ietf.org/rfc/rfc3987.txt'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "uriorcurie"
+          ],
+          "message": "{'uri': 'xsd:anyURI', 'base': 'URIorCURIE', 'repr': 'str', 'description': 'a URI or a CURIE', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"uriorcurie\".'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "boolean"
+          ],
+          "message": "{'uri': 'xsd:boolean', 'base': 'Bool', 'repr': 'bool', 'description': 'A binary (true or false) value', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\".', 'exact_mappings': ['schema:Boolean']} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "jsonpath"
+          ],
+          "message": "{'uri': 'xsd:string', 'base': 'str', 'repr': 'str', 'description': 'A string encoding a JSON Path. The value of the string MUST conform to JSON Point syntax and SHOULD dereference to zero or more valid objects within the current instance document when encoded in tree form.', 'conforms_to': 'https://www.ietf.org/archive/id/draft-goessner-dispatch-jsonpath-00.html', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"jsonpath\".'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "double"
+          ],
+          "message": "{'uri': 'xsd:double', 'base': 'float', 'description': 'A real number that conforms to the xsd:double specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\".', 'close_mappings': ['schema:Float']} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "jsonpointer"
+          ],
+          "message": "{'uri': 'xsd:string', 'base': 'str', 'repr': 'str', 'description': 'A string encoding a JSON Pointer. The value of the string MUST conform to JSON Point syntax and SHOULD dereference to a valid object within the current instance document when encoded in tree form.', 'conforms_to': 'https://datatracker.ietf.org/doc/html/rfc6901', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"jsonpointer\".'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "objectidentifier"
+          ],
+          "message": "{'uri': 'shex:iri', 'base': 'ElementIdentifier', 'repr': 'str', 'description': 'A URI or CURIE that represents an object in the model.', 'comments': ['Used for inheritance and type checking'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\".'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "curie"
+          ],
+          "message": "{'uri': 'xsd:string', 'base': 'Curie', 'repr': 'str', 'description': 'a compact URI', 'comments': ['in RDF serializations this MUST be expanded to a URI', 'in non-RDF serializations MAY be serialized as the compact representation'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"curie\".', 'conforms_to': 'https://www.w3.org/TR/curie/'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "decimal"
+          ],
+          "message": "{'uri': 'xsd:decimal', 'base': 'Decimal', 'description': 'A real number with arbitrary precision that conforms to the xsd:decimal specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"decimal\".', 'broad_mappings': ['schema:Number']} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "integer"
+          ],
+          "message": "{'uri': 'xsd:integer', 'base': 'int', 'description': 'An integer', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"integer\".', 'exact_mappings': ['schema:Integer']} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "string"
+          ],
+          "message": "{'uri': 'xsd:string', 'base': 'str', 'description': 'A character string', 'notes': 'In RDF serializations, a slot with range of string is treated as a literal or type xsd:string. If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"string\".', 'exact_mappings': ['schema:Text']} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "ncname"
+          ],
+          "message": "{'uri': 'xsd:string', 'base': 'NCName', 'repr': 'str', 'description': 'Prefix part of CURIE', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"ncname\".'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "date_or_datetime"
+          ],
+          "message": "{'uri': 'linkml:DateOrDatetime', 'repr': 'str', 'base': 'str', 'description': 'Either a date or a datetime', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"date_or_datetime\".'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "nodeidentifier"
+          ],
+          "message": "{'uri': 'shex:nonLiteral', 'base': 'NodeIdentifier', 'repr': 'str', 'description': 'A URI, CURIE or BNODE that represents a node in a model.', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"nodeidentifier\".'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "sparqlpath"
+          ],
+          "message": "{'uri': 'xsd:string', 'base': 'str', 'repr': 'str', 'description': 'A string encoding a SPARQL Property Path. The value of the string MUST conform to SPARQL syntax and SHOULD dereference to zero or more valid objects within the current instance document when encoded as RDF.', 'conforms_to': 'https://www.w3.org/TR/sparql11-query/#propertypaths', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"sparqlpath\".'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "float"
+          ],
+          "message": "{'uri': 'xsd:float', 'base': 'float', 'description': 'A real number that conforms to the xsd:float specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"float\".', 'exact_mappings': ['schema:Float']} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "datetime"
+          ],
+          "message": "{'uri': 'xsd:dateTime', 'repr': 'str', 'base': 'XSDDateTime', 'description': 'The combination of a date and time', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"datetime\".', 'exact_mappings': ['schema:DateTime']} is not valid under any of the given schemas"
+        }
+      ],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "854c0cec07e56e9b8eaba0358f469de14010f486f83c17bd7853a5e3600cc00a",
+      "editedSha256": "a2b406cfadf81d0a1f946c1b878dcba696295893e261a5aaaec8e6a57e7703f9"
+    },
+    {
+      "id": "007",
+      "format": "yaml",
+      "sourceSchemaValid": false,
+      "candidateSchemaValid": false,
+      "sourceSchemaErrors": [
+        {
+          "path": [
+            "types",
+            "uri"
+          ],
+          "message": "{'uri': 'xsd:anyURI', 'base': 'URI', 'repr': 'str', 'description': 'a complete URI', 'comments': ['in RDF serializations a slot with range of uri is treated as a literal or type xsd:anyURI unless it is an identifier or a reference to an identifier, in which case it is translated directly to a node'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"uri\".', 'close_mappings': ['schema:URL'], 'conforms_to': 'https://www.ietf.org/rfc/rfc3987.txt'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "uriorcurie"
+          ],
+          "message": "{'uri': 'xsd:anyURI', 'base': 'URIorCURIE', 'repr': 'str', 'description': 'a URI or a CURIE', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"uriorcurie\".'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "boolean"
+          ],
+          "message": "{'uri': 'xsd:boolean', 'base': 'Bool', 'repr': 'bool', 'description': 'A binary (true or false) value', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\".', 'exact_mappings': ['schema:Boolean']} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "jsonpath"
+          ],
+          "message": "{'uri': 'xsd:string', 'base': 'str', 'repr': 'str', 'description': 'A string encoding a JSON Path. The value of the string MUST conform to JSON Point syntax and SHOULD dereference to zero or more valid objects within the current instance document when encoded in tree form.', 'conforms_to': 'https://www.ietf.org/archive/id/draft-goessner-dispatch-jsonpath-00.html', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"jsonpath\".'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "double"
+          ],
+          "message": "{'uri': 'xsd:double', 'base': 'float', 'description': 'A real number that conforms to the xsd:double specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\".', 'close_mappings': ['schema:Float']} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "jsonpointer"
+          ],
+          "message": "{'uri': 'xsd:string', 'base': 'str', 'repr': 'str', 'description': 'A string encoding a JSON Pointer. The value of the string MUST conform to JSON Point syntax and SHOULD dereference to a valid object within the current instance document when encoded in tree form.', 'conforms_to': 'https://datatracker.ietf.org/doc/html/rfc6901', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"jsonpointer\".'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "objectidentifier"
+          ],
+          "message": "{'uri': 'shex:iri', 'base': 'ElementIdentifier', 'repr': 'str', 'description': 'A URI or CURIE that represents an object in the model.', 'comments': ['Used for inheritance and type checking'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\".'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "curie"
+          ],
+          "message": "{'uri': 'xsd:string', 'base': 'Curie', 'repr': 'str', 'description': 'a compact URI', 'comments': ['in RDF serializations this MUST be expanded to a URI', 'in non-RDF serializations MAY be serialized as the compact representation'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"curie\".', 'conforms_to': 'https://www.w3.org/TR/curie/'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "decimal"
+          ],
+          "message": "{'uri': 'xsd:decimal', 'base': 'Decimal', 'description': 'A real number with arbitrary precision that conforms to the xsd:decimal specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"decimal\".', 'broad_mappings': ['schema:Number']} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "integer"
+          ],
+          "message": "{'uri': 'xsd:integer', 'base': 'int', 'description': 'An integer', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"integer\".', 'exact_mappings': ['schema:Integer']} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "string"
+          ],
+          "message": "{'uri': 'xsd:string', 'base': 'str', 'description': 'A character string', 'notes': 'In RDF serializations, a slot with range of string is treated as a literal or type xsd:string. If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"string\".', 'exact_mappings': ['schema:Text']} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "ncname"
+          ],
+          "message": "{'uri': 'xsd:string', 'base': 'NCName', 'repr': 'str', 'description': 'Prefix part of CURIE', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"ncname\".'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "date_or_datetime"
+          ],
+          "message": "{'uri': 'linkml:DateOrDatetime', 'repr': 'str', 'base': 'str', 'description': 'Either a date or a datetime', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"date_or_datetime\".'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "nodeidentifier"
+          ],
+          "message": "{'uri': 'shex:nonLiteral', 'base': 'NodeIdentifier', 'repr': 'str', 'description': 'A URI, CURIE or BNODE that represents a node in a model.', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"nodeidentifier\".'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "sparqlpath"
+          ],
+          "message": "{'uri': 'xsd:string', 'base': 'str', 'repr': 'str', 'description': 'A string encoding a SPARQL Property Path. The value of the string MUST conform to SPARQL syntax and SHOULD dereference to zero or more valid objects within the current instance document when encoded as RDF.', 'conforms_to': 'https://www.w3.org/TR/sparql11-query/#propertypaths', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"sparqlpath\".'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "float"
+          ],
+          "message": "{'uri': 'xsd:float', 'base': 'float', 'description': 'A real number that conforms to the xsd:float specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"float\".', 'exact_mappings': ['schema:Float']} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "datetime"
+          ],
+          "message": "{'uri': 'xsd:dateTime', 'repr': 'str', 'base': 'XSDDateTime', 'description': 'The combination of a date and time', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"datetime\".', 'exact_mappings': ['schema:DateTime']} is not valid under any of the given schemas"
+        }
+      ],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "854c0cec07e56e9b8eaba0358f469de14010f486f83c17bd7853a5e3600cc00a",
+      "editedSha256": "a2b406cfadf81d0a1f946c1b878dcba696295893e261a5aaaec8e6a57e7703f9"
+    },
+    {
+      "id": "008",
+      "format": "json",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "5d89d6038aadc5c541f1bcd1d95ce2f9f2f569ba9fdc633b05a4daa4027356e3",
+      "editedSha256": "e435d2d045e07f5e9f899b189475a12ba2b4b6b1ef3802322158f6c49289b24b"
+    },
+    {
+      "id": "008",
+      "format": "yaml",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "5d89d6038aadc5c541f1bcd1d95ce2f9f2f569ba9fdc633b05a4daa4027356e3",
+      "editedSha256": "e435d2d045e07f5e9f899b189475a12ba2b4b6b1ef3802322158f6c49289b24b"
+    },
+    {
+      "id": "009",
+      "format": "json",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "9269a33dbad0adcad693147a691eecae3015cab9b12d6e923ee7d626beac1ce7",
+      "editedSha256": "39cf84d447f0898b6c0039939ff1f591b9b55c73c8bbcc535d7c0241192c3b8e"
+    },
+    {
+      "id": "009",
+      "format": "yaml",
+      "sourceSchemaValid": true,
+      "candidateSchemaValid": true,
+      "sourceSchemaErrors": [],
+      "nativeOutcome": "accepted",
+      "candidateNativeOutcome": "accepted",
+      "nativeNormalizationOrRejectionPreserved": true,
+      "roundtripSha256": "9269a33dbad0adcad693147a691eecae3015cab9b12d6e923ee7d626beac1ce7",
+      "editedSha256": "39cf84d447f0898b6c0039939ff1f591b9b55c73c8bbcc535d7c0241192c3b8e"
+    }
+  ],
+  "limits": "Loader normalization/rejection evidence; no import resolution, induced schema, instance validation or generator execution"
+}

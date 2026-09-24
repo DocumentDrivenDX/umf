@@ -1,0 +1,202 @@
+{
+  "oracle": "C strtof/strtod via Python ctypes; independent direct decimal-to-binary conversions",
+  "libc": [
+    "glibc",
+    "2.41"
+  ],
+  "rounding": "process default, ties-to-even on this environment",
+  "results": [
+    {
+      "id": "float-double",
+      "a": 0.10000000149011612,
+      "b": 0.1,
+      "comparison": 1,
+      "expected": 1,
+      "equal": true
+    },
+    {
+      "id": "double-float",
+      "a": 0.1,
+      "b": 0.10000000149011612,
+      "comparison": -1,
+      "expected": -1,
+      "equal": true
+    },
+    {
+      "id": "integer-float",
+      "a": 16777216.0,
+      "b": 16777216.0,
+      "comparison": 0,
+      "expected": 0,
+      "equal": true
+    },
+    {
+      "id": "integer-double",
+      "a": 9007199254740992.0,
+      "b": 9007199254740992.0,
+      "comparison": 0,
+      "expected": 0,
+      "equal": true
+    },
+    {
+      "id": "even-tie",
+      "a": 1.0,
+      "b": 1.0,
+      "comparison": 0,
+      "expected": 0,
+      "equal": true
+    },
+    {
+      "id": "above-tie",
+      "a": 1.0000001192092896,
+      "b": 1.0,
+      "comparison": 1,
+      "expected": 1,
+      "equal": true
+    },
+    {
+      "id": "odd-tie",
+      "a": 1.000000238418579,
+      "b": 1.0000001192092896,
+      "comparison": 1,
+      "expected": 1,
+      "equal": true
+    },
+    {
+      "id": "negative-above-tie",
+      "a": -1.0000001192092896,
+      "b": -1.0,
+      "comparison": -1,
+      "expected": -1,
+      "equal": true
+    },
+    {
+      "id": "subnormal-tie",
+      "a": 0.0,
+      "b": 0.0,
+      "comparison": 0,
+      "expected": 0,
+      "equal": true
+    },
+    {
+      "id": "subnormal-above",
+      "a": 1.401298464324817e-45,
+      "b": 0.0,
+      "comparison": 1,
+      "expected": 1,
+      "equal": true
+    },
+    {
+      "id": "float-underflow",
+      "a": 0.0,
+      "b": 1e-50,
+      "comparison": -1,
+      "expected": -1,
+      "equal": true
+    },
+    {
+      "id": "double-underflow",
+      "a": 0.0,
+      "b": 0.0,
+      "comparison": 0,
+      "expected": 0,
+      "equal": true
+    },
+    {
+      "id": "float-overflow",
+      "a": "INF",
+      "b": 1e+300,
+      "comparison": 1,
+      "expected": 1,
+      "equal": true
+    },
+    {
+      "id": "decimal-overflow",
+      "a": "INF",
+      "b": "INF",
+      "comparison": 0,
+      "expected": 0,
+      "equal": true
+    },
+    {
+      "id": "overflow-tie",
+      "a": "INF",
+      "b": "INF",
+      "comparison": 0,
+      "expected": 0,
+      "equal": true
+    },
+    {
+      "id": "below-overflow-tie",
+      "a": 3.4028234663852886e+38,
+      "b": "INF",
+      "comparison": -1,
+      "expected": -1,
+      "equal": true
+    },
+    {
+      "id": "infinities",
+      "a": "INF",
+      "b": "INF",
+      "comparison": 0,
+      "expected": 0,
+      "equal": true
+    },
+    {
+      "id": "negative-infinity",
+      "a": "-INF",
+      "b": -1e+24,
+      "comparison": -1,
+      "expected": -1,
+      "equal": true
+    },
+    {
+      "id": "nan-left",
+      "a": "NaN",
+      "b": 1.0,
+      "comparison": null,
+      "expected": null,
+      "equal": true
+    },
+    {
+      "id": "nan-right",
+      "a": 1.0,
+      "b": "NaN",
+      "comparison": null,
+      "expected": null,
+      "equal": true
+    },
+    {
+      "id": "nan-both",
+      "a": "NaN",
+      "b": "NaN",
+      "comparison": null,
+      "expected": null,
+      "equal": true
+    },
+    {
+      "id": "signed-zero",
+      "a": -0.0,
+      "b": 0.0,
+      "comparison": 0,
+      "expected": 0,
+      "equal": true
+    },
+    {
+      "id": "huge-exponent",
+      "a": "INF",
+      "b": "INF",
+      "comparison": 0,
+      "expected": 0,
+      "equal": true
+    },
+    {
+      "id": "tiny-exponent",
+      "a": 0.0,
+      "b": 0.0,
+      "comparison": 0,
+      "expected": 0,
+      "equal": true
+    }
+  ]
+}

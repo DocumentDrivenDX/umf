@@ -1,0 +1,10 @@
+_:N953a12aabc8a4e07be638e6a1623fd64 <http://www.w3.org/ns/shacl#result> _:N92bf041b7b2d40ffb805f3a342953c0b .
+_:N92bf041b7b2d40ffb805f3a342953c0b <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N92bf041b7b2d40ffb805f3a342953c0b <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N92bf041b7b2d40ffb805f3a342953c0b <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/hasValue-001.test#gender> .
+_:N953a12aabc8a4e07be638e6a1623fd64 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N92bf041b7b2d40ffb805f3a342953c0b <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#HasValueConstraintComponent> .
+_:N953a12aabc8a4e07be638e6a1623fd64 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N92bf041b7b2d40ffb805f3a342953c0b <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/hasValue-001.test#InvalidMalePerson> .
+_:N92bf041b7b2d40ffb805f3a342953c0b <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/hasValue-001.test#PersonShape-gender> .
+_:N92bf041b7b2d40ffb805f3a342953c0b <http://www.w3.org/ns/shacl#resultMessage> "Node ex:InvalidMalePerson->ex:gender does not contain a value in the set: ['Literal(\"male\")']" .

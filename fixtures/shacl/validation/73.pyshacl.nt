@@ -1,0 +1,20 @@
+_:Nf8cdae5d4f25436794401be1bcaa26c7 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/minExclusive-001.test#testProperty> .
+_:Nf8cdae5d4f25436794401be1bcaa26c7 <http://www.w3.org/ns/shacl#resultMessage> "Value is not > Literal(\"40\", datatype=xsd:integer)" .
+_:Nfc442470d3dc4743a0c46d6ae25aca11 <http://www.w3.org/ns/shacl#result> _:N1b094e6acf82472ba98cdc237a4fddbd .
+_:N1b094e6acf82472ba98cdc237a4fddbd <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/minExclusive-001.test#TestShape-testProperty> .
+_:Nf8cdae5d4f25436794401be1bcaa26c7 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/minExclusive-001.test#TestShape-testProperty> .
+_:Nfc442470d3dc4743a0c46d6ae25aca11 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N1b094e6acf82472ba98cdc237a4fddbd <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinExclusiveConstraintComponent> .
+_:N1b094e6acf82472ba98cdc237a4fddbd <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/minExclusive-001.test#InvalidInstance2> .
+_:Nf8cdae5d4f25436794401be1bcaa26c7 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinExclusiveConstraintComponent> .
+_:N1b094e6acf82472ba98cdc237a4fddbd <http://www.w3.org/ns/shacl#value> "39"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:Nfc442470d3dc4743a0c46d6ae25aca11 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N1b094e6acf82472ba98cdc237a4fddbd <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nf8cdae5d4f25436794401be1bcaa26c7 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/minExclusive-001.test#InvalidInstance1> .
+_:N1b094e6acf82472ba98cdc237a4fddbd <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nf8cdae5d4f25436794401be1bcaa26c7 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N1b094e6acf82472ba98cdc237a4fddbd <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/minExclusive-001.test#testProperty> .
+_:Nf8cdae5d4f25436794401be1bcaa26c7 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N1b094e6acf82472ba98cdc237a4fddbd <http://www.w3.org/ns/shacl#resultMessage> "Value is not > Literal(\"40\", datatype=xsd:integer)" .
+_:Nf8cdae5d4f25436794401be1bcaa26c7 <http://www.w3.org/ns/shacl#value> "40"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:Nfc442470d3dc4743a0c46d6ae25aca11 <http://www.w3.org/ns/shacl#result> _:Nf8cdae5d4f25436794401be1bcaa26c7 .

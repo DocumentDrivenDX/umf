@@ -1,0 +1,1855 @@
+{
+  "repository": "https://github.com/delta-io/delta-rs",
+  "commit": "90b904ede68627c2450007034d9724c043f1a66b",
+  "selection": "Every JSON blob under an _delta_log directory plus LICENSE.txt; excludes data/checkpoint files",
+  "files": [
+    {
+      "path": "LICENSE.txt",
+      "size": 10257,
+      "sha256": "a25917a221b6184dcb9e0701f91dde42acc495f69958a84e2a5860a5c0f21ddd",
+      "gitBlob": "0c4cec1f99fcffb1dfaf4e49ef8663bcad089541"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000000.json",
+      "size": 715,
+      "sha256": "9e06c54ff2303dde9675d0b7324f92068a04a4f4c91a3bb812b3f4fa159c101e",
+      "gitBlob": "0316f09771d2e9a07c8298016ece45c009d36695"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000001.json",
+      "size": 3111,
+      "sha256": "1bf510492ab754b9df63b8c74a17e0cbebb7257db48038119dd0e5fbcbd9ff6b",
+      "gitBlob": "23002c6f58ffbc510aacb78caaa6b99f1e82b8ba"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000002.json",
+      "size": 3131,
+      "sha256": "fc2711b3b4e7eba0c81432c76f21a85801dd4e127a23acc6d397c32538cd2b77",
+      "gitBlob": "86e3c7470ced9b8bdeebf8a7deb8259a71660810"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000003.json",
+      "size": 3131,
+      "sha256": "e6ad50587cba17c5b11cbfa4fa206435376115befd9809a27f172a225d98d353",
+      "gitBlob": "14665bcd27517c2b96971020c229ab55294b2e8a"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000004.json",
+      "size": 3131,
+      "sha256": "05f64849615d598ca40ee9c41e56067d6e9d5a6f95a74ae88299511c9ffaca41",
+      "gitBlob": "ed86e283d518dc28f9ab4151e1d0ba0cc497e1d9"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000005.json",
+      "size": 3131,
+      "sha256": "447db54a5b1da135fb3e3652750b2dd0c7a9e9c36e3fa5ec4708298536600078",
+      "gitBlob": "f77fd655fec69ded1c5c56367626ea90a4444ad5"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000006.json",
+      "size": 3131,
+      "sha256": "44621c1004a633e2448d6261d88c7d574815196534e426eaec4d104514643563",
+      "gitBlob": "28116ba9f2494527243c9a446bee9c1d98743b4e"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000007.json",
+      "size": 3131,
+      "sha256": "264cd4a30f3884c3ae2190ec0d9f1999e563a48321c727dfa959fc2327953ac6",
+      "gitBlob": "956c8b508c0a8e5aa485bb9bddd26210943b01ab"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000008.json",
+      "size": 3131,
+      "sha256": "270b4beca847bb6d9ca24de1de2cf9999ccdcf6e2ee42de8fc00ab3a59b45edf",
+      "gitBlob": "ea216c15560b46f8981fc438287804436aac2d4b"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000009.json",
+      "size": 3131,
+      "sha256": "3264364d7030269a4d67510269a50bc4191c48f67578721ba6f6d80783b8927f",
+      "gitBlob": "1f9d5fb05b63b9825eef0238c4f0b73e61a63833"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000010.json",
+      "size": 3131,
+      "sha256": "8059a0b4f73e9a4cc568adcf0c5c7d4d2e2ecada6a08bfb2be01136183e7e613",
+      "gitBlob": "c1f8c8b095e745f9286c6275f4e822257de1771d"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000011.json",
+      "size": 3152,
+      "sha256": "9c7f3bfb38df412df909404361389d4c7312f052aec828f8c16b497d42687c8b",
+      "gitBlob": "05863f6cd070f5c9bf19ec33faebfc456a734448"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000012.json",
+      "size": 3152,
+      "sha256": "2e92dccfdde1b16fd3baa7f88087ed617ed999c805d52cf825860fe5bdd69f94",
+      "gitBlob": "4cc44fa8e8753eb0fa27b8784cb4c2e3970c70b9"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000013.json",
+      "size": 3152,
+      "sha256": "e9d1884a9ac3ef1caad7eef8fd03e1cee80dbe2e7423a64fc0ee14e40d1ebf97",
+      "gitBlob": "b2d03d3ead98cb0a5c629a368ac61055654620ce"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000000.json",
+      "size": 715,
+      "sha256": "9e06c54ff2303dde9675d0b7324f92068a04a4f4c91a3bb812b3f4fa159c101e",
+      "gitBlob": "0316f09771d2e9a07c8298016ece45c009d36695"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000001.json",
+      "size": 3111,
+      "sha256": "1bf510492ab754b9df63b8c74a17e0cbebb7257db48038119dd0e5fbcbd9ff6b",
+      "gitBlob": "23002c6f58ffbc510aacb78caaa6b99f1e82b8ba"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000002.json",
+      "size": 3131,
+      "sha256": "fc2711b3b4e7eba0c81432c76f21a85801dd4e127a23acc6d397c32538cd2b77",
+      "gitBlob": "86e3c7470ced9b8bdeebf8a7deb8259a71660810"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000003.json",
+      "size": 3131,
+      "sha256": "e6ad50587cba17c5b11cbfa4fa206435376115befd9809a27f172a225d98d353",
+      "gitBlob": "14665bcd27517c2b96971020c229ab55294b2e8a"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000004.json",
+      "size": 3131,
+      "sha256": "05f64849615d598ca40ee9c41e56067d6e9d5a6f95a74ae88299511c9ffaca41",
+      "gitBlob": "ed86e283d518dc28f9ab4151e1d0ba0cc497e1d9"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000005.json",
+      "size": 3131,
+      "sha256": "447db54a5b1da135fb3e3652750b2dd0c7a9e9c36e3fa5ec4708298536600078",
+      "gitBlob": "f77fd655fec69ded1c5c56367626ea90a4444ad5"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000006.json",
+      "size": 3131,
+      "sha256": "44621c1004a633e2448d6261d88c7d574815196534e426eaec4d104514643563",
+      "gitBlob": "28116ba9f2494527243c9a446bee9c1d98743b4e"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000008.json",
+      "size": 3131,
+      "sha256": "270b4beca847bb6d9ca24de1de2cf9999ccdcf6e2ee42de8fc00ab3a59b45edf",
+      "gitBlob": "ea216c15560b46f8981fc438287804436aac2d4b"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000009.json",
+      "size": 3131,
+      "sha256": "3264364d7030269a4d67510269a50bc4191c48f67578721ba6f6d80783b8927f",
+      "gitBlob": "1f9d5fb05b63b9825eef0238c4f0b73e61a63833"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000010.json",
+      "size": 3131,
+      "sha256": "8059a0b4f73e9a4cc568adcf0c5c7d4d2e2ecada6a08bfb2be01136183e7e613",
+      "gitBlob": "c1f8c8b095e745f9286c6275f4e822257de1771d"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000011.json",
+      "size": 3152,
+      "sha256": "9c7f3bfb38df412df909404361389d4c7312f052aec828f8c16b497d42687c8b",
+      "gitBlob": "05863f6cd070f5c9bf19ec33faebfc456a734448"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000012.json",
+      "size": 3152,
+      "sha256": "2e92dccfdde1b16fd3baa7f88087ed617ed999c805d52cf825860fe5bdd69f94",
+      "gitBlob": "4cc44fa8e8753eb0fa27b8784cb4c2e3970c70b9"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000013.json",
+      "size": 3152,
+      "sha256": "e9d1884a9ac3ef1caad7eef8fd03e1cee80dbe2e7423a64fc0ee14e40d1ebf97",
+      "gitBlob": "b2d03d3ead98cb0a5c629a368ac61055654620ce"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000000.json",
+      "size": 715,
+      "sha256": "9e06c54ff2303dde9675d0b7324f92068a04a4f4c91a3bb812b3f4fa159c101e",
+      "gitBlob": "0316f09771d2e9a07c8298016ece45c009d36695"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000001.json",
+      "size": 3111,
+      "sha256": "1bf510492ab754b9df63b8c74a17e0cbebb7257db48038119dd0e5fbcbd9ff6b",
+      "gitBlob": "23002c6f58ffbc510aacb78caaa6b99f1e82b8ba"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000002.json",
+      "size": 3131,
+      "sha256": "fc2711b3b4e7eba0c81432c76f21a85801dd4e127a23acc6d397c32538cd2b77",
+      "gitBlob": "86e3c7470ced9b8bdeebf8a7deb8259a71660810"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000003.json",
+      "size": 3131,
+      "sha256": "e6ad50587cba17c5b11cbfa4fa206435376115befd9809a27f172a225d98d353",
+      "gitBlob": "14665bcd27517c2b96971020c229ab55294b2e8a"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000004.json",
+      "size": 3131,
+      "sha256": "05f64849615d598ca40ee9c41e56067d6e9d5a6f95a74ae88299511c9ffaca41",
+      "gitBlob": "ed86e283d518dc28f9ab4151e1d0ba0cc497e1d9"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000005.json",
+      "size": 3131,
+      "sha256": "447db54a5b1da135fb3e3652750b2dd0c7a9e9c36e3fa5ec4708298536600078",
+      "gitBlob": "f77fd655fec69ded1c5c56367626ea90a4444ad5"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000006.json",
+      "size": 3131,
+      "sha256": "44621c1004a633e2448d6261d88c7d574815196534e426eaec4d104514643563",
+      "gitBlob": "28116ba9f2494527243c9a446bee9c1d98743b4e"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000007.json",
+      "size": 3131,
+      "sha256": "264cd4a30f3884c3ae2190ec0d9f1999e563a48321c727dfa959fc2327953ac6",
+      "gitBlob": "956c8b508c0a8e5aa485bb9bddd26210943b01ab"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000008.json",
+      "size": 3131,
+      "sha256": "270b4beca847bb6d9ca24de1de2cf9999ccdcf6e2ee42de8fc00ab3a59b45edf",
+      "gitBlob": "ea216c15560b46f8981fc438287804436aac2d4b"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000009.json",
+      "size": 3131,
+      "sha256": "3264364d7030269a4d67510269a50bc4191c48f67578721ba6f6d80783b8927f",
+      "gitBlob": "1f9d5fb05b63b9825eef0238c4f0b73e61a63833"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000010.json",
+      "size": 3131,
+      "sha256": "8059a0b4f73e9a4cc568adcf0c5c7d4d2e2ecada6a08bfb2be01136183e7e613",
+      "gitBlob": "c1f8c8b095e745f9286c6275f4e822257de1771d"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000011.json",
+      "size": 3152,
+      "sha256": "9c7f3bfb38df412df909404361389d4c7312f052aec828f8c16b497d42687c8b",
+      "gitBlob": "05863f6cd070f5c9bf19ec33faebfc456a734448"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000013.json",
+      "size": 3152,
+      "sha256": "e9d1884a9ac3ef1caad7eef8fd03e1cee80dbe2e7423a64fc0ee14e40d1ebf97",
+      "gitBlob": "b2d03d3ead98cb0a5c629a368ac61055654620ce"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_d/_delta_log/00000000000000000000.json",
+      "size": 741,
+      "sha256": "4860f8d723711753c50d58a42d2cd6762230eabcee1973f2836f661de43f8da3",
+      "gitBlob": "d78fe641246d34083190bf75c753ca2d84090462"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_e/_delta_log/00000000000000000000.json",
+      "size": 1005,
+      "sha256": "f73891139862899069c5b87313b2adebd10c3594e6ce0f86ae483a8bea60da73",
+      "gitBlob": "37d128c02c41e6f72ad6be76e5e743ba7b916c8a"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000000.json",
+      "size": 1005,
+      "sha256": "4b2b2bc32e7ce7f009f7e0f6d43c51dbbad127e82de21747290c2b8593e8d7f8",
+      "gitBlob": "25bdb69d883d2b237389fcc616bb341e905b930e"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000001.json",
+      "size": 491,
+      "sha256": "2bc6404502f61b1f2be277768bba89ee1299cd95875c4a6deb8bb5a97a2e4a03",
+      "gitBlob": "3d660573601ed1bff1e4cea25547a853b79764b9"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000002.json",
+      "size": 491,
+      "sha256": "370ce171ca563a50abc7cea10b7afa70b550106649b857283d435c6e9d73126a",
+      "gitBlob": "e4603c5c6b906e2dbd694ed398a7461f6db2858a"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000003.json",
+      "size": 491,
+      "sha256": "8a24e67e30a1d4b51530596ace4b41c5fd498a052c1d33273f76dd3fee794a63",
+      "gitBlob": "43abaf051072fd66e7b8e7a7252386c4436bb44b"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000004.json",
+      "size": 491,
+      "sha256": "e7d9233bec08b4260bb799d37f8ee86e4d7dc19f1ee17e5d3e449f71f19e9839",
+      "gitBlob": "06abe1b5998db08c5d13de85dd1f12244215b179"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000005.json",
+      "size": 491,
+      "sha256": "99b1d39a21a83b03688badd03ea65467a43605534c5ac0113490d0df340e5893",
+      "gitBlob": "05956e13f1bf5c0f66f783aa6a9e17ab388aed7f"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000006.json",
+      "size": 491,
+      "sha256": "9eab3280905ea074e68a86b9629f9359909e68b195192ac89340500344c2a2f0",
+      "gitBlob": "065299eb121139aa989c267f378d8a3c140de72c"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000007.json",
+      "size": 491,
+      "sha256": "8de3dcaaa41cb51c645f0ccfaf07c4c54c69031c77e6f52f0c132fbabddcbc27",
+      "gitBlob": "63532381772c06c96775c79924d38513293355d1"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000008.json",
+      "size": 491,
+      "sha256": "99a1d29373dc8520b89496a4f3f5dc072912525b857854665a9cf99e8e700881",
+      "gitBlob": "f891a3f55db375582b714b003cc246d5d7b521a1"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000009.json",
+      "size": 491,
+      "sha256": "88470551e37c57957d5fbbd0249cf5df9dfc0bab76553ad50ed96a4182f16f84",
+      "gitBlob": "0b9cd016404c54a0dbe895b4b58e0aaed86642d8"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000010.json",
+      "size": 491,
+      "sha256": "1b084c35d4989162b463da2bfb598de72634da6a8900ed467120851baea99944",
+      "gitBlob": "7c88a203489a0b27115d0d67c744cba5fc405945"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000011.json",
+      "size": 491,
+      "sha256": "0a1613ce516a5ba429eb0ab03aaaf9668d32a1ef7613e5015218f16de75e0b3e",
+      "gitBlob": "99f46d5427b568d5e4505088f6f797f9a89f829b"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000012.json",
+      "size": 491,
+      "sha256": "b7eea9ef7e1826039c4d8236ce7bc0a4efd5b695ffba08c9c3d05f362f79e426",
+      "gitBlob": "b01cf903be54e3f0448783b02775dacd2d81ea93"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000013.json",
+      "size": 491,
+      "sha256": "ec5a951b4a105efed942bc090df57fd06a6cc2c5fb7b8edd18e48517e902ac55",
+      "gitBlob": "24666b9e6db9b405802026d6d61d716dbde748a4"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000000.json",
+      "size": 715,
+      "sha256": "9e06c54ff2303dde9675d0b7324f92068a04a4f4c91a3bb812b3f4fa159c101e",
+      "gitBlob": "0316f09771d2e9a07c8298016ece45c009d36695"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000001.json",
+      "size": 3111,
+      "sha256": "1bf510492ab754b9df63b8c74a17e0cbebb7257db48038119dd0e5fbcbd9ff6b",
+      "gitBlob": "23002c6f58ffbc510aacb78caaa6b99f1e82b8ba"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000002.json",
+      "size": 3131,
+      "sha256": "fc2711b3b4e7eba0c81432c76f21a85801dd4e127a23acc6d397c32538cd2b77",
+      "gitBlob": "86e3c7470ced9b8bdeebf8a7deb8259a71660810"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000003.json",
+      "size": 3131,
+      "sha256": "e6ad50587cba17c5b11cbfa4fa206435376115befd9809a27f172a225d98d353",
+      "gitBlob": "14665bcd27517c2b96971020c229ab55294b2e8a"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000004.json",
+      "size": 3131,
+      "sha256": "05f64849615d598ca40ee9c41e56067d6e9d5a6f95a74ae88299511c9ffaca41",
+      "gitBlob": "ed86e283d518dc28f9ab4151e1d0ba0cc497e1d9"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000005.json",
+      "size": 3131,
+      "sha256": "447db54a5b1da135fb3e3652750b2dd0c7a9e9c36e3fa5ec4708298536600078",
+      "gitBlob": "f77fd655fec69ded1c5c56367626ea90a4444ad5"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000006.json",
+      "size": 3131,
+      "sha256": "44621c1004a633e2448d6261d88c7d574815196534e426eaec4d104514643563",
+      "gitBlob": "28116ba9f2494527243c9a446bee9c1d98743b4e"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000007.json",
+      "size": 3131,
+      "sha256": "264cd4a30f3884c3ae2190ec0d9f1999e563a48321c727dfa959fc2327953ac6",
+      "gitBlob": "956c8b508c0a8e5aa485bb9bddd26210943b01ab"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000008.json",
+      "size": 3131,
+      "sha256": "270b4beca847bb6d9ca24de1de2cf9999ccdcf6e2ee42de8fc00ab3a59b45edf",
+      "gitBlob": "ea216c15560b46f8981fc438287804436aac2d4b"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000009.json",
+      "size": 3131,
+      "sha256": "3264364d7030269a4d67510269a50bc4191c48f67578721ba6f6d80783b8927f",
+      "gitBlob": "1f9d5fb05b63b9825eef0238c4f0b73e61a63833"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000010.json",
+      "size": 3131,
+      "sha256": "8059a0b4f73e9a4cc568adcf0c5c7d4d2e2ecada6a08bfb2be01136183e7e613",
+      "gitBlob": "c1f8c8b095e745f9286c6275f4e822257de1771d"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000011.json",
+      "size": 3152,
+      "sha256": "9c7f3bfb38df412df909404361389d4c7312f052aec828f8c16b497d42687c8b",
+      "gitBlob": "05863f6cd070f5c9bf19ec33faebfc456a734448"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000012.json",
+      "size": 3152,
+      "sha256": "2e92dccfdde1b16fd3baa7f88087ed617ed999c805d52cf825860fe5bdd69f94",
+      "gitBlob": "4cc44fa8e8753eb0fa27b8784cb4c2e3970c70b9"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000013.json",
+      "size": 3152,
+      "sha256": "e9d1884a9ac3ef1caad7eef8fd03e1cee80dbe2e7423a64fc0ee14e40d1ebf97",
+      "gitBlob": "b2d03d3ead98cb0a5c629a368ac61055654620ce"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000009999.json",
+      "size": 3131,
+      "sha256": "8059a0b4f73e9a4cc568adcf0c5c7d4d2e2ecada6a08bfb2be01136183e7e613",
+      "gitBlob": "c1f8c8b095e745f9286c6275f4e822257de1771d"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000000.json",
+      "size": 715,
+      "sha256": "9e06c54ff2303dde9675d0b7324f92068a04a4f4c91a3bb812b3f4fa159c101e",
+      "gitBlob": "0316f09771d2e9a07c8298016ece45c009d36695"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000001.json",
+      "size": 3111,
+      "sha256": "1bf510492ab754b9df63b8c74a17e0cbebb7257db48038119dd0e5fbcbd9ff6b",
+      "gitBlob": "23002c6f58ffbc510aacb78caaa6b99f1e82b8ba"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000002.json",
+      "size": 3131,
+      "sha256": "fc2711b3b4e7eba0c81432c76f21a85801dd4e127a23acc6d397c32538cd2b77",
+      "gitBlob": "86e3c7470ced9b8bdeebf8a7deb8259a71660810"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000003.json",
+      "size": 3131,
+      "sha256": "e6ad50587cba17c5b11cbfa4fa206435376115befd9809a27f172a225d98d353",
+      "gitBlob": "14665bcd27517c2b96971020c229ab55294b2e8a"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000004.json",
+      "size": 3131,
+      "sha256": "05f64849615d598ca40ee9c41e56067d6e9d5a6f95a74ae88299511c9ffaca41",
+      "gitBlob": "ed86e283d518dc28f9ab4151e1d0ba0cc497e1d9"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000005.json",
+      "size": 3131,
+      "sha256": "447db54a5b1da135fb3e3652750b2dd0c7a9e9c36e3fa5ec4708298536600078",
+      "gitBlob": "f77fd655fec69ded1c5c56367626ea90a4444ad5"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000006.json",
+      "size": 3131,
+      "sha256": "44621c1004a633e2448d6261d88c7d574815196534e426eaec4d104514643563",
+      "gitBlob": "28116ba9f2494527243c9a446bee9c1d98743b4e"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000007.json",
+      "size": 3131,
+      "sha256": "264cd4a30f3884c3ae2190ec0d9f1999e563a48321c727dfa959fc2327953ac6",
+      "gitBlob": "956c8b508c0a8e5aa485bb9bddd26210943b01ab"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000008.json",
+      "size": 3131,
+      "sha256": "270b4beca847bb6d9ca24de1de2cf9999ccdcf6e2ee42de8fc00ab3a59b45edf",
+      "gitBlob": "ea216c15560b46f8981fc438287804436aac2d4b"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000009.json",
+      "size": 3131,
+      "sha256": "3264364d7030269a4d67510269a50bc4191c48f67578721ba6f6d80783b8927f",
+      "gitBlob": "1f9d5fb05b63b9825eef0238c4f0b73e61a63833"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000010.json",
+      "size": 3131,
+      "sha256": "8059a0b4f73e9a4cc568adcf0c5c7d4d2e2ecada6a08bfb2be01136183e7e613",
+      "gitBlob": "c1f8c8b095e745f9286c6275f4e822257de1771d"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000011.json",
+      "size": 3152,
+      "sha256": "9c7f3bfb38df412df909404361389d4c7312f052aec828f8c16b497d42687c8b",
+      "gitBlob": "05863f6cd070f5c9bf19ec33faebfc456a734448"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000012.json",
+      "size": 3152,
+      "sha256": "2e92dccfdde1b16fd3baa7f88087ed617ed999c805d52cf825860fe5bdd69f94",
+      "gitBlob": "4cc44fa8e8753eb0fa27b8784cb4c2e3970c70b9"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000013.json",
+      "size": 3152,
+      "sha256": "e9d1884a9ac3ef1caad7eef8fd03e1cee80dbe2e7423a64fc0ee14e40d1ebf97",
+      "gitBlob": "b2d03d3ead98cb0a5c629a368ac61055654620ce"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000009999.json",
+      "size": 741,
+      "sha256": "4860f8d723711753c50d58a42d2cd6762230eabcee1973f2836f661de43f8da3",
+      "gitBlob": "d78fe641246d34083190bf75c753ca2d84090462"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000000.json",
+      "size": 715,
+      "sha256": "9e06c54ff2303dde9675d0b7324f92068a04a4f4c91a3bb812b3f4fa159c101e",
+      "gitBlob": "0316f09771d2e9a07c8298016ece45c009d36695"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000001.json",
+      "size": 3111,
+      "sha256": "1bf510492ab754b9df63b8c74a17e0cbebb7257db48038119dd0e5fbcbd9ff6b",
+      "gitBlob": "23002c6f58ffbc510aacb78caaa6b99f1e82b8ba"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000002.json",
+      "size": 3131,
+      "sha256": "fc2711b3b4e7eba0c81432c76f21a85801dd4e127a23acc6d397c32538cd2b77",
+      "gitBlob": "86e3c7470ced9b8bdeebf8a7deb8259a71660810"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000003.json",
+      "size": 3131,
+      "sha256": "e6ad50587cba17c5b11cbfa4fa206435376115befd9809a27f172a225d98d353",
+      "gitBlob": "14665bcd27517c2b96971020c229ab55294b2e8a"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000004.json",
+      "size": 3131,
+      "sha256": "05f64849615d598ca40ee9c41e56067d6e9d5a6f95a74ae88299511c9ffaca41",
+      "gitBlob": "ed86e283d518dc28f9ab4151e1d0ba0cc497e1d9"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000005.json",
+      "size": 3131,
+      "sha256": "447db54a5b1da135fb3e3652750b2dd0c7a9e9c36e3fa5ec4708298536600078",
+      "gitBlob": "f77fd655fec69ded1c5c56367626ea90a4444ad5"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000006.json",
+      "size": 3131,
+      "sha256": "44621c1004a633e2448d6261d88c7d574815196534e426eaec4d104514643563",
+      "gitBlob": "28116ba9f2494527243c9a446bee9c1d98743b4e"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000007.json",
+      "size": 3131,
+      "sha256": "264cd4a30f3884c3ae2190ec0d9f1999e563a48321c727dfa959fc2327953ac6",
+      "gitBlob": "956c8b508c0a8e5aa485bb9bddd26210943b01ab"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000008.json",
+      "size": 3131,
+      "sha256": "270b4beca847bb6d9ca24de1de2cf9999ccdcf6e2ee42de8fc00ab3a59b45edf",
+      "gitBlob": "ea216c15560b46f8981fc438287804436aac2d4b"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000009.json",
+      "size": 3131,
+      "sha256": "3264364d7030269a4d67510269a50bc4191c48f67578721ba6f6d80783b8927f",
+      "gitBlob": "1f9d5fb05b63b9825eef0238c4f0b73e61a63833"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000010.json",
+      "size": 3131,
+      "sha256": "8059a0b4f73e9a4cc568adcf0c5c7d4d2e2ecada6a08bfb2be01136183e7e613",
+      "gitBlob": "c1f8c8b095e745f9286c6275f4e822257de1771d"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000011.json",
+      "size": 3152,
+      "sha256": "9c7f3bfb38df412df909404361389d4c7312f052aec828f8c16b497d42687c8b",
+      "gitBlob": "05863f6cd070f5c9bf19ec33faebfc456a734448"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000012.json",
+      "size": 3152,
+      "sha256": "2e92dccfdde1b16fd3baa7f88087ed617ed999c805d52cf825860fe5bdd69f94",
+      "gitBlob": "4cc44fa8e8753eb0fa27b8784cb4c2e3970c70b9"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000013.json",
+      "size": 3152,
+      "sha256": "e9d1884a9ac3ef1caad7eef8fd03e1cee80dbe2e7423a64fc0ee14e40d1ebf97",
+      "gitBlob": "b2d03d3ead98cb0a5c629a368ac61055654620ce"
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000009999.json",
+      "size": 1005,
+      "sha256": "f73891139862899069c5b87313b2adebd10c3594e6ce0f86ae483a8bea60da73",
+      "gitBlob": "37d128c02c41e6f72ad6be76e5e743ba7b916c8a"
+    },
+    {
+      "path": "crates/test/tests/data/COVID-19_NYT/_delta_log/00000000000000000000.json",
+      "size": 5624,
+      "sha256": "6e93948d6ff8bf09207c2a7eb788d7a58fcf0764223e1b2d3dcf8449eb14f356",
+      "gitBlob": "52bfb9d225bffb2a63e08a6f8e3a63339986656d"
+    },
+    {
+      "path": "crates/test/tests/data/cdc_ict_table/_delta_log/00000000000000000000.json",
+      "size": 1179,
+      "sha256": "a37abc952dc96882230b0ac1b06fdbdb36807cf544553031940d2a970f5a621e",
+      "gitBlob": "ec24c8361118d9924206cbe7afbae7ea200dc62c"
+    },
+    {
+      "path": "crates/test/tests/data/cdc_ict_table/_delta_log/00000000000000000001.json",
+      "size": 1839,
+      "sha256": "aa7c631fc9c6aadb3d2d7323fbeae8e8a26dd8ad4caedc431abf965bc0e84975",
+      "gitBlob": "046d48ef69d9190b4ad79ff4e2f1ec00fca91918"
+    },
+    {
+      "path": "crates/test/tests/data/cdc_ict_table/_delta_log/00000000000000000002.json",
+      "size": 1526,
+      "sha256": "2f60340c56f9b3b9e150107482d495773ec75855ad605615f3b740e1e49c6dc5",
+      "gitBlob": "2eb8e41abad3b3337c2434f2cb1e231996df08e0"
+    },
+    {
+      "path": "crates/test/tests/data/cdc_ict_table/_delta_log/00000000000000000003.json",
+      "size": 2202,
+      "sha256": "70e4e3f4332d0108a926e186dbd1e8e594ddefe9318932da40a565ded94b687a",
+      "gitBlob": "455c71cf41abcec7dfc0de052ae4c876c8278f7a"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-non-partitioned/_delta_log/00000000000000000000.json",
+      "size": 7169,
+      "sha256": "5aec93affd4ce0fbc6989dc3e4881fbd41a6695c107842d3b44d9a0cfb3f9f44",
+      "gitBlob": "69327845e7dcf083989b9271da93ee19637b0bd0"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-non-partitioned/_delta_log/00000000000000000001.json",
+      "size": 3463,
+      "sha256": "ba3ad2119903dac1b4d04812674e6b540d047cfa48a6da501638c31463a98406",
+      "gitBlob": "9f7d5a4a40ee507db9373c36a6444af13715f831"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-non-partitioned/_delta_log/00000000000000000002.json",
+      "size": 3472,
+      "sha256": "40a4e8bb59c11efb10174fbb3af8dfa456fe5c506a07ef953a82ba42049f3572",
+      "gitBlob": "206ed8624ef2bd8ba74fc908d94585d4235674ea"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-non-partitioned/_delta_log/00000000000000000003.json",
+      "size": 985,
+      "sha256": "b919983ed06ca7b369d082f78b4993cf5a0ec97e371f5cbf19dd47bed4329a0f",
+      "gitBlob": "730973b3d5a8abbb95ac7b95270ff8e4d08f6652"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-non-partitioned/_delta_log/00000000000000000004.json",
+      "size": 1549,
+      "sha256": "784a65f00fb9c511257e736b5eba8741ef11e2ad62f02b8dbd3c9a92fb7eb059",
+      "gitBlob": "85d27368aa5692546d8a65a4d0c365cd53b08a2e"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000000.json",
+      "size": 1818,
+      "sha256": "7e4389bb5a8c224f3e1c6b84c9e340acf8ec1137eaee1a3c3f08773bf315357d",
+      "gitBlob": "3d2ec8c1bbc5017f1dfed6d0f361563d91b88962"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000001.json",
+      "size": 1092,
+      "sha256": "48b40c66ba22d551c52ede1bbb484493fcb0de99b70a2e0306c007f95ec2a1d6",
+      "gitBlob": "f5d13a0262e59c4eb89ce04493dbde0be912a9ae"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000002.json",
+      "size": 2044,
+      "sha256": "409d388b837fb1221aec4c3685568d923dc14ee45f86a19d81f8ca5d172f3b0a",
+      "gitBlob": "8f7bdf00d4045daacc2744e6404fe23543a1beb0"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000003.json",
+      "size": 2536,
+      "sha256": "a5218b442553fd7e0196629f5ea090611a554d7d59e6d38e2fa230e8f9333d15",
+      "gitBlob": "754b7d84e0f0771d5297e9635f751d2e0d4f7c02"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000004.json",
+      "size": 1100,
+      "sha256": "8657f96e719da0da8fda76ed4a134608ff60db27390283f86c8bc93988ccdabb",
+      "gitBlob": "d46960f48ffcd7e9e0917de4dd5de47809ef3560"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000005.json",
+      "size": 2092,
+      "sha256": "4a074601f9d00eae3402d090bc8d0bac217e503bd241e496404c90382dfa3180",
+      "gitBlob": "8b377dfdc5ef30e676839bd201827a3b55a57f62"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000006.json",
+      "size": 2560,
+      "sha256": "18534cca12ce39fc251f32424ba59e4b114c852e357dea835d660754cb810410",
+      "gitBlob": "86ea7453f8f0cc70a66b6ca3035cd69243e61c70"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000007.json",
+      "size": 1100,
+      "sha256": "35bfd5bbb9fea3e47b6e312f3ce21a72aa225bb09918f958a6b0bd6275f1a08d",
+      "gitBlob": "43bc4431b7c99c96f29ae2af2d9862985356a6e4"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000008.json",
+      "size": 1084,
+      "sha256": "be712931c154c89276ca58058b6ce15ea231023130f4ab22a033e68ef3596fa0",
+      "gitBlob": "01e4c43556ea69812e7f32d7e0e993843868f7ac"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000009.json",
+      "size": 1932,
+      "sha256": "c68c2cc1841e3a47bbb86b4f525dd574074653f955348c0cb7cd6282a7eb812c",
+      "gitBlob": "440476b413b4a5b2edfc0e078723aef357a6c087"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000010.json",
+      "size": 2028,
+      "sha256": "02aef3d897717896f5136330d8507d4f70477b8456e8ec43bbecb848e89a150d",
+      "gitBlob": "3ea0fbcf4e32b122314a3003ab1ae9e77e67b31a"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000011.json",
+      "size": 3098,
+      "sha256": "c7ffd505c09fe77f6cb0448e74dc90644d78fb747bd0f9af8c2fe6d1dadda07c",
+      "gitBlob": "100456724c21de0cd5e7d58995a7ded146f7a3d5"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000012.json",
+      "size": 2763,
+      "sha256": "6bdbb7a7943204e10caf59f08ebcab9eecd6d5940e3753c913f4ac27bd72e28e",
+      "gitBlob": "18c0b3cfab607ec05d9889e5cb41e7296b05efc3"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000013.json",
+      "size": 2561,
+      "sha256": "a0bc1cca43aa2988db28dbd5882ea6060f3a0e4098b1ea043f1afb81af7e3607",
+      "gitBlob": "38eb40f91c4972cf2eaa2e1e348094cd10c8942c"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000014.json",
+      "size": 1085,
+      "sha256": "22f01c8b8b4bf881c6bd8636e795df1675fa13700efb6c398d997d1362b8303b",
+      "gitBlob": "8ea990722e7e998813a8d9d40d08cf5d6fc40bde"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000015.json",
+      "size": 1085,
+      "sha256": "fe14d4e30f75f2574c9decf7035262631164ba04289dbbe307bcc71baaa43f63",
+      "gitBlob": "7bc298b0da237990e9f5f5cd9233bc3e97e732f8"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000016.json",
+      "size": 3235,
+      "sha256": "f48e7bf3a9dd09807eb0d78044b7c67cec7bee148abac079b2ba819f4e2c2c74",
+      "gitBlob": "4edd85d39399aed0b8d4ae0d359d7fca5be23053"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000017.json",
+      "size": 3244,
+      "sha256": "df7130db53995fa4037c745e5d056e81ab2769a3002886cfad7eaf7f21e70a28",
+      "gitBlob": "3740680523fd42c6c213eda612d331958f4358b0"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000018.json",
+      "size": 3307,
+      "sha256": "ae2ffa67d7cba3e460866326cae6ffe46c9f12af66f95da56d0c6f727615d390",
+      "gitBlob": "8933fe8cca0453cb9e530a21f8623669bba2830e"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000019.json",
+      "size": 2563,
+      "sha256": "b32c6f3d70ab4911a1a3bbdc4b8bc3970e5fd2494edaf22dd7b58dbe7117a040",
+      "gitBlob": "0f48fa9177ed599228d7d1833ce3cda9424fe076"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000020.json",
+      "size": 2754,
+      "sha256": "43fd2d1f9fcce11843e41605df156c446df8467dbe0520b3385772ef280253d6",
+      "gitBlob": "0e9754afd932179820b864fe90312bb58c53e84f"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000021.json",
+      "size": 2547,
+      "sha256": "e973b49f792a0e794ef7c3553484dc45538531f083301b1fb082db9beb42e7c8",
+      "gitBlob": "8ef40813014a19fa67f0a2d24ea34c264d64ca6d"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000022.json",
+      "size": 3280,
+      "sha256": "4cde981af86da598cc2fdb707a277b04dcd2edde777ecf5dec7d6928915bb02d",
+      "gitBlob": "7b339e6e9eaf9969072e8861a85d5aa01c609e9a"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000023.json",
+      "size": 2563,
+      "sha256": "dcdc8704a5776d451d3897f9e8618c5585121c6d0385941ac226d80fb6e66f47",
+      "gitBlob": "341f27099091a31d8235e87a3ff22a75f313c006"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000024.json",
+      "size": 2096,
+      "sha256": "ddcb2cef958b1ca68eafde8196b9af65c677e3dbd8db3b23f4731ea1f09196d0",
+      "gitBlob": "f30da5ebdf76a8a295315159e342e1ae129cdfd0"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000025.json",
+      "size": 1074,
+      "sha256": "f3f7fadb77c2d116be07eaea07fc5e9143982ab2fecc56e06cd9e4f8ce027b3d",
+      "gitBlob": "da745cd73c19db6b13db1d3a08ab5806d6fc5d9e"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table/_delta_log/00000000000000000000.json",
+      "size": 4571,
+      "sha256": "824b07269cbba2d56c6453383bb0e373ef9c62656a8cb5da024aa66a855098db",
+      "gitBlob": "4c635f5dcc70bece3df0976c6044fda0ad1a7af0"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table/_delta_log/00000000000000000001.json",
+      "size": 3621,
+      "sha256": "827f511513764a2d0067f31165a56ae55f9f0fd10b5ac301194e1ed1062f132e",
+      "gitBlob": "d6d9b78338611567925cf1fd714abb495a403584"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table/_delta_log/00000000000000000002.json",
+      "size": 3629,
+      "sha256": "7525850f90e92006708818beeb00bd0a4ed5cbcac3aedaad35cc282b88d47870",
+      "gitBlob": "abbe569bdb8a9f189f5e54325ddb39c1544b3e52"
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table/_delta_log/00000000000000000003.json",
+      "size": 1068,
+      "sha256": "488db5c424d3c919cffbbf40e68c09836c53814ba144d25183e1ef8754d7ebe0",
+      "gitBlob": "26b9aa78df7b54bae3c19a8c11a7c1e3724b7675"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-cdf-table/_delta_log/00000000000000000003.json",
+      "size": 1068,
+      "sha256": "488db5c424d3c919cffbbf40e68c09836c53814ba144d25183e1ef8754d7ebe0",
+      "gitBlob": "26b9aa78df7b54bae3c19a8c11a7c1e3724b7675"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-cdf-table/_delta_log/00000000000000000004.json",
+      "size": 1837,
+      "sha256": "f27bb8deb6ca6b9481e5819c8dbae9bcf35045012aa89d01e9a5b4840d857e59",
+      "gitBlob": "da5838f1dc56f80ec8cc9ceb9d34dca24825329d"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-cdf-table/_delta_log/00000000000000000005.json",
+      "size": 3854,
+      "sha256": "09c6763977b3b7e8016dd738a79ec894e23751e0534f18aad93a0661fcab4aa8",
+      "gitBlob": "441da74062d10ffc8f9523ccee536dc375400d36"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000000.json",
+      "size": 1402,
+      "sha256": "974c97a65a54c952719e7ad83012db9b345ef877367a437977b8b7d48ec2020b",
+      "gitBlob": "a0af350a20306c9a4e328864060a58998b4a22eb"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000001.json",
+      "size": 1845,
+      "sha256": "6feb6dca516f9b755e0d4635b00413118c36e3a81b519aa3cd43413ac5376888",
+      "gitBlob": "5f28edb71c152fecfb7d208957370e8b8da88e79"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000002.json",
+      "size": 1849,
+      "sha256": "70a60a951fa704edce5a7133edeb9b0f0cc8c0540a6846b394390c461a38e459",
+      "gitBlob": "92ef0fe2bf0d8a7b2ccadfcc1ed2114862d5b1a3"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000003.json",
+      "size": 1846,
+      "sha256": "cd272eabf8e5663cd74dcd08e88ded92ad9365542fd3a0d9df1d7dc78898757b",
+      "gitBlob": "ba1a79d8f7a87f6928cec0f4a15621fe94349f58"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000004.json",
+      "size": 1849,
+      "sha256": "d5643fe6a82a3dd5a127424aa68b64a36ad358504cbfa17d952a90b78c2e95c2",
+      "gitBlob": "f719311831c33605932abf9ea7a083d923de9a1f"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000005.json",
+      "size": 1140,
+      "sha256": "bc2633b94c9916d9cc4d82bebdf1d87f939ea1f6ff5591097ea41eca9ca08cb7",
+      "gitBlob": "ff676e40a4deff33291805b539e620d40d735eeb"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000006.checkpoint.f5ee283b-37c7-46af-b64c-8f77c6a5c43a.json",
+      "size": 5460,
+      "sha256": "0059fe6df2984686d2e4dad6a855b225f4d52e78a385b682bd73bed2987ba2fc",
+      "gitBlob": "4e2af001ef2e8ef1fed838526b7f90d1a8b4989b"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000006.json",
+      "size": 1877,
+      "sha256": "4de52d8f454a0b92f585094e53e068b61da3892e70c1567fbc0886606b09f001",
+      "gitBlob": "1ed524594f64d78e5d9070a56613d5ab49e3d7d8"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000007.json",
+      "size": 1880,
+      "sha256": "75a288b2856b84199fa2f97147d8470ecd0ef70094921f779e502fdc59fa2219",
+      "gitBlob": "e73d9d536d3f54fd808629c73bdc20aa8fb8e753"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000008.checkpoint.e5ac4dc4-be27-4106-8a55-609707487f83.json",
+      "size": 5460,
+      "sha256": "2f8d6c9bd788aaa20359f97af57d513faaa59fbbfd7ab33a1fd7f4ac674e8356",
+      "gitBlob": "ec4e477c753f75611952f336b7509247f70edc6b"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000008.json",
+      "size": 1877,
+      "sha256": "e0c63343f870d60081b04890e22bbbd1c6f8a672c9d6d228decfd0a139c6477b",
+      "gitBlob": "d530b000d197fe52ba69442537c781d1dfb398b5"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000009.json",
+      "size": 1880,
+      "sha256": "6b934ddbeb0f8a76710536ec65cbf2a96b2ee765ab1039a947ad1cee5fbf7c46",
+      "gitBlob": "058bb7691935589449366489485000597108e3e5"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/_autostats/00000000000000000007.0000000000.stats.json",
+      "size": 2427,
+      "sha256": "7665ba2839741f7e3e393aa2339df39652fd33c9ab94297b2e5f16fc1ebdc2c5",
+      "gitBlob": "9f6243c311ef6e88cee48162d6d89ed1bd1109bd"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint_with_partitions/_delta_log/00000000000000000001.json",
+      "size": 252,
+      "sha256": "a2b6b98cfe24734244ffa9960127887f63960bc7acae59e69fab95f598b911dc",
+      "gitBlob": "6091e838df22ef36d302c4a2da52c4c89640ad81"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint_with_partitions/_delta_log/00000000000000000002.json",
+      "size": 251,
+      "sha256": "983717cf451df7dfdf8d1736198adae2bacb48defff5c28d38927783d9dafbcc",
+      "gitBlob": "1209bb74c5f83894d937aeda75a807e92d216523"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000000.json",
+      "size": 1180,
+      "sha256": "3ad2c9017743759368d62b57e3aa5fa81308f7d3175a6cf1d335b93c2bb7b370",
+      "gitBlob": "46ef49bf2cedc916bd9b665514b15e7e4d9e8116"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000001.json",
+      "size": 1082,
+      "sha256": "eb158adcd70c78696ba6fd72910aa3eb282600942a4249bb490e09f178f1bf28",
+      "gitBlob": "efc059f8290a3d8f5c4f057755fae6c31df336a9"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000002.json",
+      "size": 1082,
+      "sha256": "cd8f59f8692898fb238b2ed05d923f472966c5e528982aa769a5344e53a3ef38",
+      "gitBlob": "f7dfeebc85390c914b6c446c49302875a1b88627"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000003.json",
+      "size": 1082,
+      "sha256": "53c25e6dd9a483edfdd87795222b359e930598d53f47a420eee060d9f0f18429",
+      "gitBlob": "d972f0f01d77dfb0aa38e764091f0ae0e6c86d3d"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000004.json",
+      "size": 1082,
+      "sha256": "b272e16c09700bcd84682fe0be86503d781b5a3c58d772c47d15e59fb41669d8",
+      "gitBlob": "0eee18c27097bda5e20aaf59d94b18f35714754b"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000005.json",
+      "size": 1082,
+      "sha256": "ce0237aaac18ede1a6767ae9d5c6e8c83458fa1e14b534a43d18bef634b12986",
+      "gitBlob": "330c2e96761d0f64113220cb989edbd34d4e087a"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000006.json",
+      "size": 1082,
+      "sha256": "0e49ebe6805a39aec3222a7c1cc1a8df7edf1c5e33f053ef3638642ade55933c",
+      "gitBlob": "90e8eda6e91d9d6e43f5ce9a48009c066a8d700e"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000007.json",
+      "size": 1082,
+      "sha256": "c55e8b8cece6ff9bf543dff058183d579f7af93b888a41992598a1c78dacd6c0",
+      "gitBlob": "d5e64e4d897fb97665c2bda092a41ab6d4ed7b14"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000008.json",
+      "size": 1082,
+      "sha256": "d3e00ccdb9b84fbee3acb67bc5e5e3c352fb2ddc8bd60fc58806e4b1d142b043",
+      "gitBlob": "6a5c487668c3b68a733c45ac6e5abcc5b18479a9"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000009.json",
+      "size": 1082,
+      "sha256": "9b7d7870d9766248e5d8d9ede94f9fe10a8b95ab2f28c47e7b9ed96e25a23f99",
+      "gitBlob": "740d7cf718cb934b282814e833df13ae721e4f6d"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000010.json",
+      "size": 1082,
+      "sha256": "091d5006db37816a080fd01163356c849858976e807bf829b5b6388b1d54727e",
+      "gitBlob": "e5d0688d59adaccb4e39a16100978fe96a0c6049"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000011.json",
+      "size": 1083,
+      "sha256": "a68a027c8fa020b3fc6dc2ef03febc5d15da87765b26ce3b71bf1ce6b3e5863d",
+      "gitBlob": "542890dc55c4b34d4f4c3088c0347b4c26a511c2"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000012.json",
+      "size": 1083,
+      "sha256": "d62f78c5987111b18e11f33448ab8145083eb932fed1bec6ea1b89377f3cc49e",
+      "gitBlob": "b5f9f2ad8bd8c7a5be30ec1e4223bd5bbddf1eaf"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000005.json",
+      "size": 1082,
+      "sha256": "ce0237aaac18ede1a6767ae9d5c6e8c83458fa1e14b534a43d18bef634b12986",
+      "gitBlob": "330c2e96761d0f64113220cb989edbd34d4e087a"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000006.json",
+      "size": 1082,
+      "sha256": "0e49ebe6805a39aec3222a7c1cc1a8df7edf1c5e33f053ef3638642ade55933c",
+      "gitBlob": "90e8eda6e91d9d6e43f5ce9a48009c066a8d700e"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000007.json",
+      "size": 1082,
+      "sha256": "c55e8b8cece6ff9bf543dff058183d579f7af93b888a41992598a1c78dacd6c0",
+      "gitBlob": "d5e64e4d897fb97665c2bda092a41ab6d4ed7b14"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000008.json",
+      "size": 1082,
+      "sha256": "d3e00ccdb9b84fbee3acb67bc5e5e3c352fb2ddc8bd60fc58806e4b1d142b043",
+      "gitBlob": "6a5c487668c3b68a733c45ac6e5abcc5b18479a9"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000009.json",
+      "size": 1082,
+      "sha256": "9b7d7870d9766248e5d8d9ede94f9fe10a8b95ab2f28c47e7b9ed96e25a23f99",
+      "gitBlob": "740d7cf718cb934b282814e833df13ae721e4f6d"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000010.json",
+      "size": 1082,
+      "sha256": "091d5006db37816a080fd01163356c849858976e807bf829b5b6388b1d54727e",
+      "gitBlob": "e5d0688d59adaccb4e39a16100978fe96a0c6049"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000011.json",
+      "size": 1083,
+      "sha256": "a68a027c8fa020b3fc6dc2ef03febc5d15da87765b26ce3b71bf1ce6b3e5863d",
+      "gitBlob": "542890dc55c4b34d4f4c3088c0347b4c26a511c2"
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000012.json",
+      "size": 1083,
+      "sha256": "d62f78c5987111b18e11f33448ab8145083eb932fed1bec6ea1b89377f3cc49e",
+      "gitBlob": "b5f9f2ad8bd8c7a5be30ec1e4223bd5bbddf1eaf"
+    },
+    {
+      "path": "crates/test/tests/data/concurrent_workers/_delta_log/00000000000000000000.json",
+      "size": 549,
+      "sha256": "e3831ed62935a07573ac3253e96c161b279fcc9ad687ae12643f962106342bc7",
+      "gitBlob": "36701a9e96f30944c5772848a54a772aaf455c6b"
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.2.0/_delta_log/00000000000000000000.json",
+      "size": 848,
+      "sha256": "a3b04114405891b69d2d3dac36decc73c9fb7836dde037013979bbe0ce9a8be6",
+      "gitBlob": "ae8a857b92972f790e20c714c85418830f44f6e7"
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.2.0/_delta_log/00000000000000000001.json",
+      "size": 499,
+      "sha256": "0f006a38e2201d039430330b4a42843432a5d6620a4f4a5d4132cffc45680cc3",
+      "gitBlob": "e916b16665264f1b8b2a752054aaec002fc2d9ae"
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.2.0/_delta_log/00000000000000000002.json",
+      "size": 1071,
+      "sha256": "0759adbf8b503ac10887f70deaffa49ab375be2b1925ade519884fef0b557662",
+      "gitBlob": "29920cb1a96c54e6f94fb60ee0c795da32a22249"
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.2.0/_delta_log/00000000000000000003.json",
+      "size": 487,
+      "sha256": "b39c0d1d682c7a2e7ec2390543e426a5c98f32b54592ddb5ade5b8c6ab03a358",
+      "gitBlob": "25c112de1e012023a80793365a6a2072928f261a"
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.8-empty/_delta_log/00000000000000000000.json",
+      "size": 925,
+      "sha256": "a520be7c208beab7c8a046d129b2f7c7c3f249c545ae8f01bd463f3d8e6b229b",
+      "gitBlob": "96b236a734f9a32048f8729106bb0ac183767da3"
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.8-empty/_delta_log/00000000000000000001.json",
+      "size": 590,
+      "sha256": "a2072a28aee56a4684b496707b14006d7d034006319fb0caf59165a5bccc3ef0",
+      "gitBlob": "cf8941479c1450a0145c47d0faf0fbd4cecb158e"
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.8.0-date/_delta_log/00000000000000000000.json",
+      "size": 833,
+      "sha256": "5d4147b35f5026cc3d1f09471b1d9297df1dfbe1f477bf796bcdfb3fc80da49c",
+      "gitBlob": "b263e0f497260d4726cd7f5d37545a0ca729e42c"
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.8.0-null-partition/_delta_log/00000000000000000000.json",
+      "size": 1044,
+      "sha256": "aed83706be328d424d5f9e3122384db783d7e7317c071587de57fd62cff5170a",
+      "gitBlob": "b0252a5d079340b918514876a48d52f4e69ff8aa"
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.8.0-numeric-partition/_delta_log/00000000000000000000.json",
+      "size": 1138,
+      "sha256": "8fc45f631f7bcd8d688b786d59e64b222c319757a413147e638a3d95f05cd61f",
+      "gitBlob": "d48fe3d28e964c9560d2399b70714f59f5bee501"
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.8.0-partitioned/_delta_log/00000000000000000000.json",
+      "size": 2235,
+      "sha256": "0fff0b997d8f8d97a2644cad7d440c98c9bdd449b873bc120349e9415d1f45ee",
+      "gitBlob": "2fa0736fabf3b99c39c94620f3912b990ef375bf"
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.8.0-special-partition/_delta_log/00000000000000000000.json",
+      "size": 1037,
+      "sha256": "bb5839fcd8e9cb3ae0012909682d48ab16ffd081b2c625f0d22d4ab615ea33b0",
+      "gitBlob": "8e287fd1695b2bfd0cf1c41c5ece2441fdad0693"
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.8.0/_delta_log/00000000000000000000.json",
+      "size": 1154,
+      "sha256": "02d4999b498430f6c76d2dbf849c9fa286b47a193c26bd92d34663023f0b4203",
+      "gitBlob": "c52444eae23b8429ac2672f1abf81e82a09966d2"
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.8.0/_delta_log/00000000000000000001.json",
+      "size": 750,
+      "sha256": "20d93345ce01aa077f9583406f17ea4379a8432ee83bf5edb31c72e490a5c00a",
+      "gitBlob": "a4fb7af5705aa9e76ab78ba7227a43bd4a3c0394"
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000000.json",
+      "size": 1040,
+      "sha256": "2100454f9c46591858712ee2d90c6f652dfab59b26eb4e6142d6fb96b92ac6f9",
+      "gitBlob": "a67c417df7fb713caf69b380c5549d270d8f526f"
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000001.json",
+      "size": 3826,
+      "sha256": "5e8f91b6054788514278422aede53befb03876dac02696ceae4e650be8dd254f",
+      "gitBlob": "9ed804569eaa1c861ccd8fa2002a4a8eb51730c9"
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000002.json",
+      "size": 1694,
+      "sha256": "e16c9fdf458b11872a6a5bc5bc123e81db67f84be5275866da93cb2f089915ae",
+      "gitBlob": "bf06046026c4e9448d08647ce6e6f830e4a75a98"
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000003.json",
+      "size": 1694,
+      "sha256": "bd70087efb8781ad18bf62db286f16c25b5559136d748431570bde616cc8b4b3",
+      "gitBlob": "b1089c288499e2beabcdec23541eed035854969a"
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000004.json",
+      "size": 1694,
+      "sha256": "3985a930d20a21032ade7fe9006977c24c660c5b418a89078578b3532ad33bd7",
+      "gitBlob": "8dea7d48311409860c9cf59e6af33007bd20f940"
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000005.json",
+      "size": 1694,
+      "sha256": "882bd43ca19725dbd66bfb9f702ba0552dee4d6c9ee9ec3d87a28479631cd4f0",
+      "gitBlob": "83ba7afbee583a8f880ef138aaebce1fd371cd42"
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000006.json",
+      "size": 1694,
+      "sha256": "c4f16e609c48b4b3c2de802231b42c5a1e716d7a9993adb3757d1d243a8e3e0a",
+      "gitBlob": "eae98fc68da392c271aff0d5f40891de06137ba7"
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000007.json",
+      "size": 1694,
+      "sha256": "161124bbe75f696c62760b63ce582e821efc404251f52ff8d1118eca5e79cfb5",
+      "gitBlob": "8198723996a41059f46c888ee84a704e76b54b89"
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000008.json",
+      "size": 1694,
+      "sha256": "9b0d0fd1484daa93245233b38eafc2a2e6d31e7f3c49bd01130fa0ce0e808335",
+      "gitBlob": "f2368dfb0cd134fa280f32a933ca878dec021361"
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000009.json",
+      "size": 1694,
+      "sha256": "f0287f4dd738cbca043d680aa41167949eb6a25b5b7d1ab464fab68391154d64",
+      "gitBlob": "2b43208bc3422cfb9b91e0d03f3956578bf990c3"
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000010.json",
+      "size": 3958,
+      "sha256": "c84650aa5c7c164acd5491262f2499c963b1c6afdda1dffd70af9bd5e90b775b",
+      "gitBlob": "07f5e93eb95e4e960c8df559362418e50bccc333"
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000011.json",
+      "size": 1697,
+      "sha256": "bc792f3ae08743add28d20eec8531525bf9eae1e762e8234edd88919b02c5ba8",
+      "gitBlob": "19287a76618a5230f67a1b26dfbef9cbdea29a86"
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000012.json",
+      "size": 1697,
+      "sha256": "1da29404bec9cf33ffccecbd2040f8fb18c54e7e29c97b719b5eb1f2d8e34cc0",
+      "gitBlob": "1fc3f56d395051775c4427da67aff47672b1e060"
+    },
+    {
+      "path": "crates/test/tests/data/delta-2.2.0-partitioned-types/_delta_log/00000000000000000000.json",
+      "size": 1778,
+      "sha256": "bc78d79b9a062598833dd0b6df8b76668db9464cb536a2d10bd278d48cf36963",
+      "gitBlob": "2db663806aa0bbe526cac699373490c0413f685e"
+    },
+    {
+      "path": "crates/test/tests/data/delta-checkpoint-stats-optional/_delta_log/00000000000000000000.json",
+      "size": 1040,
+      "sha256": "2100454f9c46591858712ee2d90c6f652dfab59b26eb4e6142d6fb96b92ac6f9",
+      "gitBlob": "a67c417df7fb713caf69b380c5549d270d8f526f"
+    },
+    {
+      "path": "crates/test/tests/data/delta-checkpoint-stats-optional/_delta_log/00000000000000000001.json",
+      "size": 3826,
+      "sha256": "5e8f91b6054788514278422aede53befb03876dac02696ceae4e650be8dd254f",
+      "gitBlob": "9ed804569eaa1c861ccd8fa2002a4a8eb51730c9"
+    },
+    {
+      "path": "crates/test/tests/data/delta-checkpoint-stats-optional/_delta_log/00000000000000000002.json",
+      "size": 781,
+      "sha256": "51e176d952a38de9f847743a08bc493968a82270ff5101af04472ad3c54fc614",
+      "gitBlob": "f6f9a119ce237728ed471c7c45e3f399fee5b50b"
+    },
+    {
+      "path": "crates/test/tests/data/delta-live-table/_delta_log/00000000000000000000.json",
+      "size": 648,
+      "sha256": "c6f64d0c4b053207b0cb5197462db0f025f16304b9835c0f48276e01b5e1cdd3",
+      "gitBlob": "14a083ee45edf484b2bd2498b9404be9b86a6d07"
+    },
+    {
+      "path": "crates/test/tests/data/delta-live-table/_delta_log/00000000000000000001.json",
+      "size": 1785,
+      "sha256": "d9044259c0973eaa35f123da547d89617637bd7384739c499d001b258f630520",
+      "gitBlob": "ed4bd9056a9258d441fbde2a3ed4b2e224db8737"
+    },
+    {
+      "path": "crates/test/tests/data/delta-stats-optional/_delta_log/00000000000000000000.json",
+      "size": 1040,
+      "sha256": "2100454f9c46591858712ee2d90c6f652dfab59b26eb4e6142d6fb96b92ac6f9",
+      "gitBlob": "a67c417df7fb713caf69b380c5549d270d8f526f"
+    },
+    {
+      "path": "crates/test/tests/data/delta-stats-optional/_delta_log/00000000000000000001.json",
+      "size": 3826,
+      "sha256": "5e8f91b6054788514278422aede53befb03876dac02696ceae4e650be8dd254f",
+      "gitBlob": "9ed804569eaa1c861ccd8fa2002a4a8eb51730c9"
+    },
+    {
+      "path": "crates/test/tests/data/delta-stats-optional/_delta_log/00000000000000000002.json",
+      "size": 781,
+      "sha256": "51e176d952a38de9f847743a08bc493968a82270ff5101af04472ad3c54fc614",
+      "gitBlob": "f6f9a119ce237728ed471c7c45e3f399fee5b50b"
+    },
+    {
+      "path": "crates/test/tests/data/golden/data-reader-array-primitives/_delta_log/00000000000000000000.json",
+      "size": 2213,
+      "sha256": "800e7a19a0077b073da7a250d378491a8552f2fde53a70d9522440a7a68a1784",
+      "gitBlob": "4928f2bfa1187f22df63a4d703d901f1b8e299f1"
+    },
+    {
+      "path": "crates/test/tests/data/http_requests/_delta_log/00000000000000000000.json",
+      "size": 1155,
+      "sha256": "fe8a19c7973d0a198cd497838e2f7c647007bb9166ac463bbcc9d6b319b3889b",
+      "gitBlob": "08fa6636a9d3a43a7c229ad8a8f18d0c29746acd"
+    },
+    {
+      "path": "crates/test/tests/data/http_requests/_delta_log/00000000000000000001.json",
+      "size": 2156,
+      "sha256": "5aebf95fe7bed172a81eb57187483b9995785faa1b891cc70588ca0a1a203f58",
+      "gitBlob": "86934cfc806a99a53d647724288474c0c81abe7e"
+    },
+    {
+      "path": "crates/test/tests/data/issue-2152/_delta_log/00000000000000000000.json",
+      "size": 950,
+      "sha256": "db3e7f701ebb8ec1ae3ac77e1d0caed396c2353546175c421fa75467a45708dc",
+      "gitBlob": "45256b6236ca9c4d58c664f75f04f3e9b8d32fa1"
+    },
+    {
+      "path": "crates/test/tests/data/issue_1374/_delta_log/00000000000000000000.json",
+      "size": 1379,
+      "sha256": "73a8f4f967e0ca8b7eb4d306258327f5c39b04c0a07dc6ad60fd1e2aa6c0d4e7",
+      "gitBlob": "493d40ebfbeb96bf3da50908b357a4e3a4a72842"
+    },
+    {
+      "path": "crates/test/tests/data/issue_1374/_delta_log/00000000000000000001.json",
+      "size": 958,
+      "sha256": "7f1259c08da4d8926871b26687264e884e4367f0ed1745229459486d6fd77a8a",
+      "gitBlob": "74ce0bf390d92015fc3bcf56509d14e5a554fbf0"
+    },
+    {
+      "path": "crates/test/tests/data/latest_not_checkpointed/_delta_log/00000000000000000000.json",
+      "size": 908,
+      "sha256": "a9afd32c0fea0664d51f4245ef63d87a8e5c75c2cf114859d984b5a775e2da35",
+      "gitBlob": "8ecc70e64767a8c3c455df7e45e79026a590ebe8"
+    },
+    {
+      "path": "crates/test/tests/data/latest_not_checkpointed/_delta_log/00000000000000000001.json",
+      "size": 759,
+      "sha256": "a8062e37af51b625d4170467f21ecffc5ddadd0c23b7117ef36ac4a7b1358735",
+      "gitBlob": "5f4304c65c925fc5dedf0c0bea29fa7fe0245b92"
+    },
+    {
+      "path": "crates/test/tests/data/latest_not_checkpointed/_delta_log/00000000000000000002.json",
+      "size": 961,
+      "sha256": "171ff7abd58104b51e4eb435ae36c13d7b279bab5f525208d798b96642437109",
+      "gitBlob": "f59c40dd67a8d0148aa205de230ac0b058354f58"
+    },
+    {
+      "path": "crates/test/tests/data/latest_not_checkpointed/_delta_log/00000000000000000003.json",
+      "size": 962,
+      "sha256": "e3a7f0a63987a2e0110fb2dd47fd7c1aa446a97d3c8d8a274685f7ab78ca9444",
+      "gitBlob": "21a717332fd539cef6e1926d99fda9a859020e41"
+    },
+    {
+      "path": "crates/test/tests/data/partition-type-primitives/_delta_log/00000000000000000000.json",
+      "size": 10040,
+      "sha256": "a0ea89f5862111254dba7115f8591815aa9a376f92593aec2f70bc9f6ea41e1e",
+      "gitBlob": "a74ade6b4f2d9ec17d535594e1fedaddd3200b80"
+    },
+    {
+      "path": "crates/test/tests/data/python-0.25.5-checkpoint/_delta_log/00000000000000000000.json",
+      "size": 1030,
+      "sha256": "e0038c513210e4ac7a1f9942340e67262392c2e7cb506aeaf8f46f0f7769cf23",
+      "gitBlob": "aff0a20d4478ee3d2ae8e12d1062f5f735ef6461"
+    },
+    {
+      "path": "crates/test/tests/data/python-0.25.5-checkpoint/_delta_log/00000000000000000001.json",
+      "size": 652,
+      "sha256": "cc2cc908a9f1969e41a3ce9ebdecab478036d71edd6d98c5d4fba2b6960f9215",
+      "gitBlob": "edf99170970c324e0ebfe64b38a4d472a97ff129"
+    },
+    {
+      "path": "crates/test/tests/data/simple_commit/_delta_log/00000000000000000000.json",
+      "size": 549,
+      "sha256": "84c896c6ff04506f09da744397b35b28d5f07f1fa15ce111060933eedc6f16ee",
+      "gitBlob": "891536001bd31120b8db7da3fe23ddd94e02e0b3"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table/_delta_log/.tmp/00000000000000000005.json",
+      "size": 332,
+      "sha256": "c486a499f6c6cd2b6a827839e949b2d7c071648852817bd1f2ab3e99d42cc724",
+      "gitBlob": "b24b1f90263b2747f8ce7f18bba5df8614078436"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table/_delta_log/00000000000000000000.json",
+      "size": 1522,
+      "sha256": "cc2d157a82bfe81eb252570a03b6a88bd978ad1a60130e276f1909bd3a84279b",
+      "gitBlob": "47dd9bd9db6f5cc59e1f452474df74578a90b385"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table/_delta_log/00000000000000000001.json",
+      "size": 4449,
+      "sha256": "18bff30a5ebb3573ea0096c379b1d5b98d81ea90cf1bc2dc8be35ee945c9a37a",
+      "gitBlob": "0af2ff5ac47e05fb867572510a707a182da3f8f4"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table/_delta_log/00000000000000000002.json",
+      "size": 4307,
+      "sha256": "55844e220e1f77695542cfb790e32cff36bebf9c545c78b59e65f688e134b554",
+      "gitBlob": "8eeebb28d10fd3f853b7d5fabc2940310bb3b619"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table/_delta_log/00000000000000000003.json",
+      "size": 816,
+      "sha256": "646dfead019c05c79fe25b37e00b134e4507ffcc5aad83dfbf527148bc975323",
+      "gitBlob": "7c411a8f24d2354a6ef550b7c52e3e5a1010de8a"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table/_delta_log/00000000000000000004.json",
+      "size": 649,
+      "sha256": "87808328c595633d5796954c9dd5def87174ba8374122929743f0deabc9a4103",
+      "gitBlob": "8911adfbb230910276403042d5319989f6402aba"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_features/_delta_log/00000000000000000000.json",
+      "size": 1850,
+      "sha256": "1847436794452f6a437d274e0b3af14a6a0be42f897daeed56fa6e1caadb731d",
+      "gitBlob": "952f4177e7132176af745a5204c75ff9bb993e97"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_features/_delta_log/00000000000000000001.json",
+      "size": 4449,
+      "sha256": "18bff30a5ebb3573ea0096c379b1d5b98d81ea90cf1bc2dc8be35ee945c9a37a",
+      "gitBlob": "0af2ff5ac47e05fb867572510a707a182da3f8f4"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_features/_delta_log/00000000000000000002.json",
+      "size": 4307,
+      "sha256": "55844e220e1f77695542cfb790e32cff36bebf9c545c78b59e65f688e134b554",
+      "gitBlob": "8eeebb28d10fd3f853b7d5fabc2940310bb3b619"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_features/_delta_log/00000000000000000003.json",
+      "size": 816,
+      "sha256": "646dfead019c05c79fe25b37e00b134e4507ffcc5aad83dfbf527148bc975323",
+      "gitBlob": "7c411a8f24d2354a6ef550b7c52e3e5a1010de8a"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_features/_delta_log/00000000000000000004.json",
+      "size": 649,
+      "sha256": "87808328c595633d5796954c9dd5def87174ba8374122929743f0deabc9a4103",
+      "gitBlob": "8911adfbb230910276403042d5319989f6402aba"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_cdc/_delta_log/00000000000000000000.json",
+      "size": 1052,
+      "sha256": "3b358874032cf6d808f69857d3e199fc6230856648a980f47c8a10fe2495ce04",
+      "gitBlob": "3c1433de3efcd4c6d06ab6279415b01fd3030670"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_cdc/_delta_log/00000000000000000001.json",
+      "size": 991,
+      "sha256": "f16da0296d4d28e94db6fb0784e520c5bb529601d07745f15bc1d2c23911d000",
+      "gitBlob": "0ab42b18902e0d403f2687908cdab6057086d681"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_cdc/_delta_log/00000000000000000002.json",
+      "size": 1618,
+      "sha256": "b0dda56b155e4c018c62818bd8f7e05de52fb9af825223485bc1c588c8aae7ea",
+      "gitBlob": "8d1a28ad6d367121e4614c8da55f7a01ed4d161d"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000000.json",
+      "size": 752,
+      "sha256": "2aeed3abdb4785186ddf85dd3bf99ea2d198717ce675b80de24b3e514e654d8d",
+      "gitBlob": "90f4a993cf53032a02703b1174fd9925d590835e"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000001.json",
+      "size": 408,
+      "sha256": "527ac0892432db17493e4305e673c723aad25cd5a93da19bb41b78b0db077639",
+      "gitBlob": "66aa3a4d497bf400de1de51339a76861661d7c7a"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000002.json",
+      "size": 408,
+      "sha256": "2772d01baacd169b8fc9a8e56cc7c1d9f8c79451b74905226a46d33169f40562",
+      "gitBlob": "c4430292c4d12f7bb25b4e3dcbfa971fbce1ded3"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000003.json",
+      "size": 408,
+      "sha256": "80dfc37282ff981f4f57350e8649edb4a75a42031ee839f5c03f389184a3a9e5",
+      "gitBlob": "e91353d69ad8ba2e24df02c27fc3e3aee38cd1a3"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000004.json",
+      "size": 408,
+      "sha256": "819b7d65b5072c03aeb800becedd7f020d7504db49c0af9bfbf9ce052ec80785",
+      "gitBlob": "20fa6e4471c7718404d684c27a6296e85953b035"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000005.json",
+      "size": 408,
+      "sha256": "557b25cbdcb44cce4e50160401e21309aae82935b39b86f68cb783f95d3779d9",
+      "gitBlob": "12a3d009fe6cd4830fa70d4e7427b1694260bfb6"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000006.json",
+      "size": 408,
+      "sha256": "6ae4ff76bed74573c0871326e298ef693d82f773456643db062639e74cf2c46c",
+      "gitBlob": "97d497924e1e37845f9e15d5b6e208be9cd8cec7"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000007.json",
+      "size": 408,
+      "sha256": "7250afa6476458552573df55b03636f98815d5280f511942f4415f2ccaafc0e8",
+      "gitBlob": "f34c1124375ec1a26f10a6935c8ffd5896b53ab3"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000008.json",
+      "size": 408,
+      "sha256": "1873f78f54d31235b20f4a59ab1f252ba081783ae09e7858cf2a80d8a8501740",
+      "gitBlob": "61314a9df01c099fce74103694cd331f9fa8792a"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000009.json",
+      "size": 408,
+      "sha256": "abe41866c1859d2ff36c713eac43f46afadb8f746d421d2222e71b07f2333763",
+      "gitBlob": "4a584630749ca3b9abe53d4a4a9c72c551d68315"
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000010.json",
+      "size": 408,
+      "sha256": "365227e44731b401845150892f858e05245df32c7ff6441c692a8b46292dabce",
+      "gitBlob": "3f6aaf85df3c539f8a3e5ea8e7023409b85797ed"
+    },
+    {
+      "path": "crates/test/tests/data/spark-shredded-variant-preview-delta/_delta_log/00000000000000000000.json",
+      "size": 3146,
+      "sha256": "a5869c73e53220a2c36b9f03dde7d6c0ba658a0297dd52bccab1c5f002702e6e",
+      "gitBlob": "ce48ec2e8d945115194a4b471f79787ee93da4d8"
+    },
+    {
+      "path": "crates/test/tests/data/spark-shredded-variant-preview-delta/_delta_log/00000000000000000001.json",
+      "size": 846,
+      "sha256": "b2d73d96ad8d0861e5c012e33afdfabb1bf569c8d1fc08034a6bf1b65015e9c6",
+      "gitBlob": "6937c3cea61f30bbe270b2c2b820d0dc350fbebe"
+    },
+    {
+      "path": "crates/test/tests/data/spark-shredded-variant-preview-delta/_delta_log/00000000000000000002.json",
+      "size": 846,
+      "sha256": "608b53f2a6bb0283c1771540275bfcf39720c762f6821864de2ad534574d7c8e",
+      "gitBlob": "6e8e38654e5bec7eea167a1cce227f9f4dc67a05"
+    },
+    {
+      "path": "crates/test/tests/data/spark-variant-checkpoint/_delta_log/00000000000000000000.json",
+      "size": 2942,
+      "sha256": "7b4cdaccbda234dc42864c7cbc166a21d5ecf597c056f455081770252cd024b4",
+      "gitBlob": "76e56fc213ea984d26c63a533ab35defb1bbe304"
+    },
+    {
+      "path": "crates/test/tests/data/spark-variant-checkpoint/_delta_log/00000000000000000001.json",
+      "size": 825,
+      "sha256": "2e6e3b37f3f48d22923096259b7c58c2e4666fff9abf9b1194a59a8bc7b7efa5",
+      "gitBlob": "2bcd50d730c9224872506248fdf953aa0c0ac36d"
+    },
+    {
+      "path": "crates/test/tests/data/spark-variant-checkpoint/_delta_log/00000000000000000002.json",
+      "size": 825,
+      "sha256": "cbc7bf0c352a8130188c7129498232d8c8c064e561a9c0aedb130bf60aa9210d",
+      "gitBlob": "c90847277000976ee0961dd37595d2e8ecc043fd"
+    },
+    {
+      "path": "crates/test/tests/data/spark-variant-stable-feature-checkpoint/_delta_log/00000000000000000000.json",
+      "size": 3219,
+      "sha256": "3b67831e2d7948830013d030ddf03c27c368f1f049bbeb4879a3a648d08e13c1",
+      "gitBlob": "f584bf86e4ed91611aae7f19ee8b1006fb112eb9"
+    },
+    {
+      "path": "crates/test/tests/data/spark-variant-stable-feature-checkpoint/_delta_log/00000000000000000001.json",
+      "size": 1718,
+      "sha256": "a81129652c6efaecbe992097225557f37dad6b3684e017d6e9ca528fc20ca581",
+      "gitBlob": "6de436ef3de0ea9d80898aa824e4f25f61e270f7"
+    },
+    {
+      "path": "crates/test/tests/data/table-with-dv-small/_delta_log/00000000000000000000.json",
+      "size": 1295,
+      "sha256": "a0186fcb3120e1fe3f26e414588cac5e77209f9a1af70afedf2ba538c1d9b73c",
+      "gitBlob": "3760ad99302b353986714155dc1fd3ebdaae6050"
+    },
+    {
+      "path": "crates/test/tests/data/table-with-dv-small/_delta_log/00000000000000000001.json",
+      "size": 1590,
+      "sha256": "ad163502bb8c3963712d21e459c8cf88d138fa9b10c032f43177ec279971fb0a",
+      "gitBlob": "e5bcdc1163c3ac5226904f2f021c375d9de9cd43"
+    },
+    {
+      "path": "crates/test/tests/data/table-without-dv-small/_delta_log/00000000000000000000.json",
+      "size": 995,
+      "sha256": "cca6031a4fbec6b31d80fb7c34e56df90cf61bf7a881a8fe6964c7138846cd78",
+      "gitBlob": "a7941cd087bd9f8aaa8e50abb5502be9df60baf3"
+    },
+    {
+      "path": "crates/test/tests/data/table_failed_last_checkpoint_update/_delta_log/00000000000000000000.json",
+      "size": 1257,
+      "sha256": "152f7645600ae2fc73adaf0ef4150897622fcff01e309bd9659678e2134636a6",
+      "gitBlob": "ae3330f9abc7bc4689d0feaa72a5be7e8febb53b"
+    },
+    {
+      "path": "crates/test/tests/data/table_failed_last_checkpoint_update/_delta_log/00000000000000000001.json",
+      "size": 646,
+      "sha256": "b25223add8017247ffd944e0a8eb5c060db39f0dd33f054dcb8aac24c971f7c9",
+      "gitBlob": "b4d6ce3d67c81299741a18c1db71cbb12b527536"
+    },
+    {
+      "path": "crates/test/tests/data/table_failed_last_checkpoint_update/_delta_log/00000000000000000002.json",
+      "size": 646,
+      "sha256": "3b35a692ca4cd7d6eb62d61ee9bd99add7935cb1660f080e9558404b1d33e46b",
+      "gitBlob": "6df3799b4b29f35cbe49d8c7eddf04e6e25b529c"
+    },
+    {
+      "path": "crates/test/tests/data/table_failed_last_checkpoint_update/_delta_log/00000000000000000003.json",
+      "size": 646,
+      "sha256": "e75ae3e8b6e14fb4a6fa9ac82adb778cfe5072f2e83ca593eb157e767a33984d",
+      "gitBlob": "2ea49db4b5df0baeef2db4a7a3730ec0670ff10d"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_column_mapping/_delta_log/00000000000000000000.json",
+      "size": 2733,
+      "sha256": "ffeadfcb38a72dc2194e1ef5248b5995b1c2e89e4d45c926bca04f27ef5e6282",
+      "gitBlob": "c7f52c72d3f2de99bc5d1a137789db013b37b049"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000000.json",
+      "size": 2296,
+      "sha256": "a51701776054c764c0dcac5f90fea23ee806adc953383627d8726b4eedb90265",
+      "gitBlob": "bd535299af20c87ecbe98dc06bff4d49f5fa092a"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000001.json",
+      "size": 1516,
+      "sha256": "34a01c8248183051f0f64a28a411becb347312f77e5a86b30f2fe5249e1ad030",
+      "gitBlob": "e8ec28d1b65b2e166914bb4203471034bf14761f"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000002.json",
+      "size": 1563,
+      "sha256": "a51c3b5cd2017c9145801242e20e3a39e3f2d96d4b784c90a90f5010bc313de3",
+      "gitBlob": "ff1e9e344e55eef86babec9d7d0ad87f866ac85d"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000003.json",
+      "size": 2112,
+      "sha256": "87751f0e316e380ac5496d2688de0142ea94fdb84c753c7a0b9c19fdc2ed0664",
+      "gitBlob": "548c8477eb19dd93874216c55e7449e8ac96a3ba"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000004.json",
+      "size": 2233,
+      "sha256": "1f55ab07d4ee395a3de48277c8dd15947cd3f43a53874ca7403ea8e3e1995531",
+      "gitBlob": "9cc69610ac73da76bf7de6562b233f0ba257d046"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000005.json",
+      "size": 778,
+      "sha256": "17d1068fe20a371b64c3b7fd22a4d9794fae953edc67f712d70ddbe72c1cae68",
+      "gitBlob": "57bb1496692cebb462199cf5368404f9bf751d48"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000006.json",
+      "size": 750,
+      "sha256": "2d61bdfcda803ecf459d35851ecaae0f3151d9c0b9a4809807da565c41e876bb",
+      "gitBlob": "36ab69ddca13defb8fe1b5d3ba5afad53432c6c7"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000007.json",
+      "size": 750,
+      "sha256": "b5b9dc8716ed5c76bf9a6ca1012c82be97e4d22e76a69cce52e60ab67341910c",
+      "gitBlob": "83fec599b4f85d44fac1483ce59972e9205bf436"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000008.json",
+      "size": 750,
+      "sha256": "5f7cbec01a8e4be2b01ced65d0748484f3c29e3154e11d6acf34a64bf935b180",
+      "gitBlob": "71b5b6d0f93a9fde0d2fcbb088a9196241d0247f"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000009.json",
+      "size": 750,
+      "sha256": "dbf80b56d192bfa1fb006928375198a56e8facfa3ea5924106a4b3712cd35473",
+      "gitBlob": "eeed2bf9a5a5005465ed367d2d8ade027bb4c182"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000010.json",
+      "size": 750,
+      "sha256": "843dfb3962a29e32bc420ce139ea0ac4d135a69b3a4faad5d99e7ef4a5cbb347",
+      "gitBlob": "e4c3841c7c249b675c3736cfd3ac26de6a6c30ce"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000011.json",
+      "size": 751,
+      "sha256": "9d2465b4d6b372ba2d952846922872df270f49e19412195f3bd6ddbc8b5ebe07",
+      "gitBlob": "e15f988e1290172b7422738274192423643143cf"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000012.json",
+      "size": 751,
+      "sha256": "ac2e7e013363696c80e40262e9561114df73fa60a0fa41b2cc06d45b284caaa6",
+      "gitBlob": "d6766610a72e8a0252e33603c65b73b411d4846a"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000013.json",
+      "size": 751,
+      "sha256": "b55d456bb7b17815242437f53418640390183068c80e33e28039103947e117b1",
+      "gitBlob": "32679fb392b318d6ac99e490fc6d2a0aebe20f0f"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000014.json",
+      "size": 751,
+      "sha256": "c68d745390d6b630cac6cce44646aa2836cecc8b1080909420bdf437cd7efa35",
+      "gitBlob": "a531214fad0e20ff697dddb7c06c7eefc46a9343"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000015.json",
+      "size": 751,
+      "sha256": "668cf6cdf97afabd925110f84061f5484b11cfb92123988159c2ff4259c8d445",
+      "gitBlob": "488313996afc1816621e14b585504efc263c0d76"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000016.json",
+      "size": 751,
+      "sha256": "2519efa88b0974f20c07b31055526ee51371fa1a013ba0ef7c83a686a21f294c",
+      "gitBlob": "f16509dc7cc802c5b7b177abd234e6058b903a92"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000017.json",
+      "size": 751,
+      "sha256": "4ce93192655342b10e771d31571c78c30216ef2b3f5082d0e7a560d4aa94bae4",
+      "gitBlob": "fca9cb4129f07eaeaace625e71fcac182c5728c0"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000018.json",
+      "size": 751,
+      "sha256": "400aa039d7d8e7a8c4960ed4e6c4fdd182dde3e87849d3cae1152641a6f1f6b5",
+      "gitBlob": "37c479653fbf3db53e97d9d0586ca7e99225ded7"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000019.json",
+      "size": 751,
+      "sha256": "cb8e3985252d5e02bbe0b1c139796c06ceb54bef59adee24fd0f241d4a6b8d66",
+      "gitBlob": "357406d534c7c2901538d163a9856da7dbbfd168"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000020.json",
+      "size": 751,
+      "sha256": "4edef7c5ffcad4ecdb07633ace5844bdb06cd5198cd38194ecad5b67b3acf908",
+      "gitBlob": "434f5770af4c08a67b95e2423efa38f682515e5f"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_edge_timestamps/_delta_log/00000000000000000000.json",
+      "size": 2017,
+      "sha256": "a78a8cd9b9fbd0bfacf094c7a66339398552dbb79b79f0e9d2ea1a2227c2264e",
+      "gitBlob": "22fb790cb3b54072a1dfb5e5814c29d1782d451d"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_liquid_clustering/_delta_log/00000000000000000000.json",
+      "size": 7090,
+      "sha256": "469593d3e4faf237d3d78276062bb0708f20bb9fcf31be182d5622dabba90c59",
+      "gitBlob": "8ca995a5e477dcf386e30b685476e712a79b9b85"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_null_stats_in_notnull_struct/_delta_log/00000000000000000000.json",
+      "size": 875,
+      "sha256": "0967719743513c5648cc686da93f499f09bb90c34eae331e7c5a0520660cac3f",
+      "gitBlob": "afa5a2272599e1cf74e9c420e6666f1c4b557de3"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_null_stats_in_notnull_struct/_delta_log/00000000000000000001.json",
+      "size": 979,
+      "sha256": "63284a56aabe3db41b045bd1b90171de29ed29dd8029dd0f0962d360735fbddf",
+      "gitBlob": "598689466bd174b1d1c273ea2dea6b60e26ae9cd"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_partitioning_mapping/_delta_log/00000000000000000000.json",
+      "size": 1168,
+      "sha256": "c8dc73158ec7b464d4e4cc2d9e6b3a1b98e2f5ba145b09a0a1b7cdc95d5b4ef8",
+      "gitBlob": "785dc11f3262357fef7e6357a5202ce8c4648e42"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_partitioning_mapping/_delta_log/00000000000000000001.json",
+      "size": 1127,
+      "sha256": "811e1655339737768ec905c5f9cd056f75256549bc1abf4b3d81b9da45833778",
+      "gitBlob": "088d4a3863595ca3aa6dcd1c95268057b6810de2"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_partitioning_mapping/_delta_log/00000000000000000002.json",
+      "size": 1450,
+      "sha256": "e5ddcd5f7218bc366c970d0bcaf4734fc5d9cd3916409c57f7edc4a41fceb9a6",
+      "gitBlob": "7f18e53264518e0111850074971c4ede5c249660"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_partitioning_mapping/_delta_log/00000000000000000003.json",
+      "size": 1132,
+      "sha256": "0f641196c5daefedf57b6e621c148f08064fdc2ccb0d9e8857141df228439b3a",
+      "gitBlob": "7ed55e2bde8d345afae650de334b2438abae6972"
+    },
+    {
+      "path": "crates/test/tests/data/table_with_partitioning_mapping/_delta_log/00000000000000000004.json",
+      "size": 1131,
+      "sha256": "3d6968192d96a428cbc893489c20f12b5c4c438812d7a090cafb794e49cdd963",
+      "gitBlob": "a8a7b43d0f525ab85fecf6628fe5445493cb8ae2"
+    },
+    {
+      "path": "crates/test/tests/data/v2-classic-checkpoint-json/_delta_log/00000000000000000000.json",
+      "size": 1435,
+      "sha256": "472a7c6bf47b61e3089562d7d888aad6cd7391f143219a8c4fbca98f4dee68c9",
+      "gitBlob": "ed38377a900257367a5c54314f6dbc99b4c93d6e"
+    },
+    {
+      "path": "crates/test/tests/data/v2-classic-checkpoint-json/_delta_log/00000000000000000001.json",
+      "size": 973,
+      "sha256": "d65eea23976a3d805575f8237c2bfbbef1ba7a107b5014b70ecbb7fbdcbfa060",
+      "gitBlob": "05014aec7aab5135ebb77b1d68b1af5ed21f5b37"
+    },
+    {
+      "path": "crates/test/tests/data/with_checkpoint_no_last_checkpoint/_delta_log/00000000000000000000.json",
+      "size": 908,
+      "sha256": "a9afd32c0fea0664d51f4245ef63d87a8e5c75c2cf114859d984b5a775e2da35",
+      "gitBlob": "8ecc70e64767a8c3c455df7e45e79026a590ebe8"
+    },
+    {
+      "path": "crates/test/tests/data/with_checkpoint_no_last_checkpoint/_delta_log/00000000000000000001.json",
+      "size": 759,
+      "sha256": "a8062e37af51b625d4170467f21ecffc5ddadd0c23b7117ef36ac4a7b1358735",
+      "gitBlob": "5f4304c65c925fc5dedf0c0bea29fa7fe0245b92"
+    },
+    {
+      "path": "crates/test/tests/data/with_checkpoint_no_last_checkpoint/_delta_log/00000000000000000002.json",
+      "size": 961,
+      "sha256": "171ff7abd58104b51e4eb435ae36c13d7b279bab5f525208d798b96642437109",
+      "gitBlob": "f59c40dd67a8d0148aa205de230ac0b058354f58"
+    },
+    {
+      "path": "crates/test/tests/data/with_checkpoint_no_last_checkpoint/_delta_log/00000000000000000003.json",
+      "size": 962,
+      "sha256": "e3a7f0a63987a2e0110fb2dd47fd7c1aa446a97d3c8d8a274685f7ab78ca9444",
+      "gitBlob": "21a717332fd539cef6e1926d99fda9a859020e41"
+    }
+  ]
+}

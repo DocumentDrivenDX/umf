@@ -1,0 +1,16 @@
+import {test,expect} from 'bun:test';
+import Ajv from 'ajv/dist/2020';
+import {getShaclShapeMetadata,importShaclTurtle,exportShaclTurtle,readDocument,writeDocument,proposeShaclQuadEdit,getShaclQuads} from '../../src';
+const SH='http://www.w3.org/ns/shacl#',root={kind:'iri' as const,value:'https://example.org/Order'};
+test('US-028 metadata supports consumers without collapsing native declarations',async()=>{
+ const raw=await Bun.file('native/shacl/metadata.ttl').text(),doc=importShaclTurtle(raw,{id:'order',baseIRI:'https://example.org/',blankNodeScope:'orders'});
+ const ajv=new Ajv({strict:false});ajv.addSchema(await Bun.file('spec/core/schema.json').json());const valid=ajv.compile(await Bun.file('spec/extensions/shacl/metadata-schema.json').json());
+ for(const format of ['json','yaml'] as const){const restored=readDocument(writeDocument(doc,format),format),m=getShaclShapeMetadata(restored,root);expect(valid(m)).toBe(true);expect(m.complete).toBe(false);expect(m.blankNodeScope).toBe('orders');expect(exportShaclTurtle(m.source)).toBe(raw);expect(m.properties).toHaveLength(2);
+ const total=m.properties[0]!;expect(total.path).toEqual({status:'compiled',value:{kind:'predicate',iri:'https://example.org/totalAmount'}});expect(total.annotations.find(f=>f.predicate===SH+'name')!.values.map(v=>v.value)).toEqual(['Total','Gesamt']);expect(total.annotations.find(f=>f.predicate===SH+'order')!.values[0]!.value).toBe('9007199254740993');expect(total.annotations.find(f=>f.predicate===SH+'defaultValue')!.values[0]!.value).toBe('0.00');expect(total.constraints.find(f=>f.predicate===SH+'minCount')!.values[0]!.value).toBe('1');expect(total.uninterpreted[0]!.predicate).toBe('https://example.org/currencySource');expect(m.properties[1]!.path.status).toBe('compiled');
+ const f=total.annotations.find(f=>f.predicate===SH+'name')!,quads=getShaclQuads(restored);expect(quads[f.quadIndexes[0]!]!.object.value).toBe('Total');const q=quads[f.quadIndexes[0]!]!;q.object={...q.object,value:'Order total'};const edited=proposeShaclQuadEdit(restored,f.quadIndexes[0]!,q).document;expect(getShaclShapeMetadata(edited,root).properties[0]!.annotations.find(f=>f.predicate===SH+'name')!.values[0]!.value).toBe('Order total');expect(getShaclQuads(edited).filter(q=>q.predicate.value==='https://example.org/futureRule')).toHaveLength(1);expect(exportShaclTurtle(restored)).toBe(raw);
+ total.node.value='changed';m.source.id='changed';expect(doc.id).toBe('order');expect(getShaclShapeMetadata(restored,root).properties[0]!.node.value).toBe('https://example.org/total');
+ }
+});
+test('US-028 invalid paths and literal property links remain explicit metadata',()=>{
+ const doc=importShaclTurtle('<urn:s> <http://www.w3.org/ns/shacl#property> "bad", <urn:p> . <urn:p> <http://www.w3.org/ns/shacl#path> "bad" .',{id:'s',baseIRI:'urn:base:'}),m=getShaclShapeMetadata(doc,{kind:'iri',value:'urn:s'});expect(m.properties).toHaveLength(1);expect(m.properties[0]!.path.status).toBe('invalid');expect(m.diagnostics.map(d=>d.code)).toContain('SHACL_METADATA_PROPERTY');expect(m.diagnostics.map(d=>d.code)).toContain('SHACL_METADATA_PATH');expect(getShaclShapeMetadata(doc,{kind:'iri',value:'urn:absent'}).diagnostics.map(d=>d.code)).toContain('SHACL_METADATA_UNDESCRIBED');
+});

@@ -1,0 +1,18 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b27208 .
+_:report <http://www.w3.org/ns/shacl#result> _:b27231 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b27208 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b27208 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b27208 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#QualifiedMinCountConstraintComponent> .
+_:b27208 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/qualifiedValueShapesDisjoint-001.test#HandShape-digit1> .
+_:b27208 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/qualifiedValueShapesDisjoint-001.test#InvalidHand1> .
+_:b27208 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/qualifiedValueShapesDisjoint-001.test#digit> .
+_:b27208 <http://www.w3.org/ns/shacl#resultMessage> "Less than 1 values have shape " .
+_:b27231 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b27231 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b27231 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#QualifiedMinCountConstraintComponent> .
+_:b27231 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/qualifiedValueShapesDisjoint-001.test#HandShape-digit4> .
+_:b27231 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/qualifiedValueShapesDisjoint-001.test#InvalidHand1> .
+_:b27231 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/qualifiedValueShapesDisjoint-001.test#digit> .
+_:b27231 <http://www.w3.org/ns/shacl#resultMessage> "Less than 4 values have shape " .

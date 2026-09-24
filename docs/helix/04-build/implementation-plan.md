@@ -4378,3 +4378,13 @@ Chromium parity covers all 558 projection cases and both recovery directions.
 See the [public composition checkpoint](evidence/avro-facet-discovery.md#public-projection-and-composition-checkpoint).
 Full compatibility and prior concept-gate refresh remain required before closing
 the Avro binding. Facet admission and native equivalence are not claimed.
+
+
+Avro compatibility verification has completed the 85 native/browser refresh stages
+and a priority regression of 515 tests / 52,275 assertions across 160 files with
+zero failures. The earlier full-repository run retained three evidence-gate
+failures, which require the separate refreshed Field/Nullability/Cardinality
+gates before acceptance. A descriptive package-status correction also requires
+rebuilding and rechecking the browser evidence. The
+[Avro evidence record](evidence/avro-facet-discovery.md) records the final outcome;
+these intermediate results alone do not close the binding.

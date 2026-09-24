@@ -1,0 +1,19 @@
+_:Nf1708af7f7ed4e8fb7d0e1a8c923d852 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N8c3e133852b64900b391876d3ac691b1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nf1708af7f7ed4e8fb7d0e1a8c923d852 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxCountConstraintComponent> .
+_:N8c3e133852b64900b391876d3ac691b1 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/path/path-inverse-001.test#TestShape-P> .
+_:Nf1708af7f7ed4e8fb7d0e1a8c923d852 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N7c3e6e6047b14c2fb99da7b5ec48359d <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Nf1708af7f7ed4e8fb7d0e1a8c923d852 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/path/path-inverse-001.test#TestShape-P> .
+_:N7c3e6e6047b14c2fb99da7b5ec48359d <http://www.w3.org/ns/shacl#result> _:Nf1708af7f7ed4e8fb7d0e1a8c923d852 .
+_:N8c3e133852b64900b391876d3ac691b1 <http://www.w3.org/ns/shacl#resultMessage> "Less than 2 values on ex:InvalidResource1->[ sh:inversePath ex:child ]" .
+_:N8c3e133852b64900b391876d3ac691b1 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinCountConstraintComponent> .
+_:N8c3e133852b64900b391876d3ac691b1 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/path/path-inverse-001.test#InvalidResource1> .
+_:N8c3e133852b64900b391876d3ac691b1 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:n663435463f52461ebc20df396e7ba2b9b1 <http://www.w3.org/ns/shacl#inversePath> <http://datashapes.org/sh/tests/core/path/path-inverse-001.test#child> .
+_:N7c3e6e6047b14c2fb99da7b5ec48359d <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N7c3e6e6047b14c2fb99da7b5ec48359d <http://www.w3.org/ns/shacl#result> _:N8c3e133852b64900b391876d3ac691b1 .
+_:Nf1708af7f7ed4e8fb7d0e1a8c923d852 <http://www.w3.org/ns/shacl#resultPath> _:n663435463f52461ebc20df396e7ba2b9b1 .
+_:Nf1708af7f7ed4e8fb7d0e1a8c923d852 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/path/path-inverse-001.test#InvalidResource2> .
+_:N8c3e133852b64900b391876d3ac691b1 <http://www.w3.org/ns/shacl#resultPath> _:n663435463f52461ebc20df396e7ba2b9b1 .
+_:Nf1708af7f7ed4e8fb7d0e1a8c923d852 <http://www.w3.org/ns/shacl#resultMessage> "More than 2 values on ex:InvalidResource2->[ sh:inversePath ex:child ]" .

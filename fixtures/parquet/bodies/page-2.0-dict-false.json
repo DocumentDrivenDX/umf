@@ -1,0 +1,650 @@
+[
+  {
+    "rowGroup": 0,
+    "column": 0,
+    "offset": 4,
+    "headerBytes": 53,
+    "bodyOffset": 57,
+    "bodyBytes": 33,
+    "header": {
+      "type": "3",
+      "uncompressed_page_size": "33",
+      "compressed_page_size": "33",
+      "data_page_header_v2": {
+        "num_values": "2",
+        "num_nulls": "0",
+        "num_rows": "2",
+        "encoding": "0",
+        "definition_levels_byte_length": "2",
+        "repetition_levels_byte_length": "0",
+        "is_compressed": false,
+        "statistics": {
+          "null_count": "0",
+          "max_value": {
+            "hex": "6f776e2070726f7065727479"
+          },
+          "min_value": {
+            "hex": "636f6e7374727563746f72"
+          }
+        }
+      }
+    },
+    "bodyHex": "04010c0000006f776e2070726f70657274790b000000636f6e7374727563746f72",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 1,
+    "offset": 90,
+    "headerBytes": 70,
+    "bodyOffset": 160,
+    "bodyBytes": 23,
+    "header": {
+      "type": "3",
+      "uncompressed_page_size": "23",
+      "compressed_page_size": "23",
+      "data_page_header_v2": {
+        "num_values": "4",
+        "num_nulls": "2",
+        "num_rows": "2",
+        "encoding": "0",
+        "definition_levels_byte_length": "3",
+        "repetition_levels_byte_length": "2",
+        "is_compressed": false,
+        "statistics": {
+          "max": {
+            "hex": "000000000000000001"
+          },
+          "min": {
+            "hex": "fa9438a1d29cf0223e"
+          },
+          "null_count": "2",
+          "max_value": {
+            "hex": "000000000000000001"
+          },
+          "min_value": {
+            "hex": "fa9438a1d29cf0223e"
+          }
+        }
+      }
+    },
+    "bodyHex": "0306037b00fa9438a1d29cf0223e000000000000000001",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 2,
+    "offset": 183,
+    "headerBytes": 43,
+    "bodyOffset": 226,
+    "bodyBytes": 46,
+    "header": {
+      "type": "3",
+      "uncompressed_page_size": "49",
+      "compressed_page_size": "46",
+      "data_page_header_v2": {
+        "num_values": "5",
+        "num_nulls": "1",
+        "num_rows": "2",
+        "encoding": "0",
+        "definition_levels_byte_length": "3",
+        "repetition_levels_byte_length": "2",
+        "is_compressed": true,
+        "statistics": {
+          "null_count": "1",
+          "max_value": {
+            "hex": "73616d65"
+          },
+          "min_value": {
+            "hex": "5f5f70726f746f5f5f"
+          }
+        }
+      }
+    },
+    "bodyHex": "030e03aa010400000073616d650400000073616d65090000005f5f70726f746f5f5f0b000000636f6e7374727563746f72",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 3,
+    "offset": 272,
+    "headerBytes": 70,
+    "bodyOffset": 342,
+    "bodyBytes": 28,
+    "header": {
+      "type": "3",
+      "uncompressed_page_size": "32",
+      "compressed_page_size": "28",
+      "data_page_header_v2": {
+        "num_values": "5",
+        "num_nulls": "2",
+        "num_rows": "2",
+        "encoding": "0",
+        "definition_levels_byte_length": "3",
+        "repetition_levels_byte_length": "2",
+        "is_compressed": true,
+        "statistics": {
+          "max": {
+            "hex": "000000000000004e20"
+          },
+          "min": {
+            "hex": "ffffffffffffffffff"
+          },
+          "null_count": "2",
+          "max_value": {
+            "hex": "000000000000004e20"
+          },
+          "min_value": {
+            "hex": "ffffffffffffffffff"
+          }
+        }
+      }
+    },
+    "bodyHex": "030e03ef01000000000000002710000000000000004e20ffffffffffffffffff",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 4,
+    "offset": 370,
+    "headerBytes": 50,
+    "bodyOffset": 420,
+    "bodyBytes": 17,
+    "header": {
+      "type": "3",
+      "uncompressed_page_size": "17",
+      "compressed_page_size": "17",
+      "data_page_header_v2": {
+        "num_values": "4",
+        "num_nulls": "1",
+        "num_rows": "2",
+        "encoding": "0",
+        "definition_levels_byte_length": "3",
+        "repetition_levels_byte_length": "2",
+        "is_compressed": false,
+        "statistics": {
+          "max": {
+            "hex": "07000000"
+          },
+          "min": {
+            "hex": "ffffffff"
+          },
+          "null_count": "1",
+          "max_value": {
+            "hex": "07000000"
+          },
+          "min_value": {
+            "hex": "ffffffff"
+          }
+        }
+      }
+    },
+    "bodyHex": "0306036a000700000007000000ffffffff",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 5,
+    "offset": 437,
+    "headerBytes": 70,
+    "bodyOffset": 507,
+    "bodyBytes": 16,
+    "header": {
+      "type": "3",
+      "uncompressed_page_size": "16",
+      "compressed_page_size": "16",
+      "data_page_header_v2": {
+        "num_values": "5",
+        "num_nulls": "4",
+        "num_rows": "2",
+        "encoding": "0",
+        "definition_levels_byte_length": "4",
+        "repetition_levels_byte_length": "3",
+        "is_compressed": false,
+        "statistics": {
+          "max": {
+            "hex": "000000000000002711"
+          },
+          "min": {
+            "hex": "000000000000002711"
+          },
+          "null_count": "4",
+          "max_value": {
+            "hex": "000000000000002711"
+          },
+          "min_value": {
+            "hex": "000000000000002711"
+          }
+        }
+      }
+    },
+    "bodyHex": "03580003e51400000000000000002711",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 6,
+    "offset": 523,
+    "headerBytes": 66,
+    "bodyOffset": 589,
+    "bodyBytes": 11,
+    "header": {
+      "type": "3",
+      "uncompressed_page_size": "11",
+      "compressed_page_size": "11",
+      "data_page_header_v2": {
+        "num_values": "2",
+        "num_nulls": "1",
+        "num_rows": "2",
+        "encoding": "0",
+        "definition_levels_byte_length": "3",
+        "repetition_levels_byte_length": "0",
+        "is_compressed": false,
+        "statistics": {
+          "max": {
+            "hex": "15b10f2449470600"
+          },
+          "min": {
+            "hex": "15b10f2449470600"
+          },
+          "null_count": "1",
+          "max_value": {
+            "hex": "15b10f2449470600"
+          },
+          "min_value": {
+            "hex": "15b10f2449470600"
+          }
+        }
+      }
+    },
+    "bodyHex": "03020015b10f2449470600",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 7,
+    "offset": 600,
+    "headerBytes": 66,
+    "bodyOffset": 666,
+    "bodyBytes": 11,
+    "header": {
+      "type": "3",
+      "uncompressed_page_size": "11",
+      "compressed_page_size": "11",
+      "data_page_header_v2": {
+        "num_values": "2",
+        "num_nulls": "1",
+        "num_rows": "2",
+        "encoding": "0",
+        "definition_levels_byte_length": "3",
+        "repetition_levels_byte_length": "0",
+        "is_compressed": false,
+        "statistics": {
+          "max": {
+            "hex": "15b10f2449470600"
+          },
+          "min": {
+            "hex": "15b10f2449470600"
+          },
+          "null_count": "1",
+          "max_value": {
+            "hex": "15b10f2449470600"
+          },
+          "min_value": {
+            "hex": "15b10f2449470600"
+          }
+        }
+      }
+    },
+    "bodyHex": "03020015b10f2449470600",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 8,
+    "offset": 677,
+    "headerBytes": 66,
+    "bodyOffset": 743,
+    "bodyBytes": 11,
+    "header": {
+      "type": "3",
+      "uncompressed_page_size": "11",
+      "compressed_page_size": "11",
+      "data_page_header_v2": {
+        "num_values": "2",
+        "num_nulls": "1",
+        "num_rows": "2",
+        "encoding": "0",
+        "definition_levels_byte_length": "3",
+        "repetition_levels_byte_length": "0",
+        "is_compressed": false,
+        "statistics": {
+          "max": {
+            "hex": "1571efdd00000000"
+          },
+          "min": {
+            "hex": "1571efdd00000000"
+          },
+          "null_count": "1",
+          "max_value": {
+            "hex": "1571efdd00000000"
+          },
+          "min_value": {
+            "hex": "1571efdd00000000"
+          }
+        }
+      }
+    },
+    "bodyHex": "0302001571efdd00000000",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 9,
+    "offset": 754,
+    "headerBytes": 46,
+    "bodyOffset": 800,
+    "bodyBytes": 18,
+    "header": {
+      "type": "3",
+      "uncompressed_page_size": "18",
+      "compressed_page_size": "18",
+      "data_page_header_v2": {
+        "num_values": "2",
+        "num_nulls": "0",
+        "num_rows": "2",
+        "encoding": "0",
+        "definition_levels_byte_length": "2",
+        "repetition_levels_byte_length": "0",
+        "is_compressed": false,
+        "statistics": {
+          "null_count": "0",
+          "max_value": {
+            "hex": "ffffffffffffffff"
+          },
+          "min_value": {
+            "hex": "0000000000000080"
+          }
+        }
+      }
+    },
+    "bodyHex": "0401ffffffffffffffff0000000000000080",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 1,
+    "column": 0,
+    "offset": 818,
+    "headerBytes": 26,
+    "bodyOffset": 844,
+    "bodyBytes": 2,
+    "header": {
+      "type": "3",
+      "uncompressed_page_size": "2",
+      "compressed_page_size": "2",
+      "data_page_header_v2": {
+        "num_values": "1",
+        "num_nulls": "1",
+        "num_rows": "1",
+        "encoding": "0",
+        "definition_levels_byte_length": "2",
+        "repetition_levels_byte_length": "0",
+        "is_compressed": false,
+        "statistics": {
+          "null_count": "1"
+        }
+      }
+    },
+    "bodyHex": "0200",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 1,
+    "column": 1,
+    "offset": 846,
+    "headerBytes": 26,
+    "bodyOffset": 872,
+    "bodyBytes": 4,
+    "header": {
+      "type": "3",
+      "uncompressed_page_size": "4",
+      "compressed_page_size": "4",
+      "data_page_header_v2": {
+        "num_values": "1",
+        "num_nulls": "1",
+        "num_rows": "1",
+        "encoding": "0",
+        "definition_levels_byte_length": "2",
+        "repetition_levels_byte_length": "2",
+        "is_compressed": false,
+        "statistics": {
+          "null_count": "1"
+        }
+      }
+    },
+    "bodyHex": "02000200",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 1,
+    "column": 2,
+    "offset": 876,
+    "headerBytes": 26,
+    "bodyOffset": 902,
+    "bodyBytes": 4,
+    "header": {
+      "type": "3",
+      "uncompressed_page_size": "4",
+      "compressed_page_size": "4",
+      "data_page_header_v2": {
+        "num_values": "1",
+        "num_nulls": "1",
+        "num_rows": "1",
+        "encoding": "0",
+        "definition_levels_byte_length": "2",
+        "repetition_levels_byte_length": "2",
+        "is_compressed": false,
+        "statistics": {
+          "null_count": "1"
+        }
+      }
+    },
+    "bodyHex": "02000200",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 1,
+    "column": 3,
+    "offset": 906,
+    "headerBytes": 26,
+    "bodyOffset": 932,
+    "bodyBytes": 4,
+    "header": {
+      "type": "3",
+      "uncompressed_page_size": "4",
+      "compressed_page_size": "4",
+      "data_page_header_v2": {
+        "num_values": "1",
+        "num_nulls": "1",
+        "num_rows": "1",
+        "encoding": "0",
+        "definition_levels_byte_length": "2",
+        "repetition_levels_byte_length": "2",
+        "is_compressed": false,
+        "statistics": {
+          "null_count": "1"
+        }
+      }
+    },
+    "bodyHex": "02000200",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 1,
+    "column": 4,
+    "offset": 936,
+    "headerBytes": 26,
+    "bodyOffset": 962,
+    "bodyBytes": 4,
+    "header": {
+      "type": "3",
+      "uncompressed_page_size": "4",
+      "compressed_page_size": "4",
+      "data_page_header_v2": {
+        "num_values": "1",
+        "num_nulls": "1",
+        "num_rows": "1",
+        "encoding": "0",
+        "definition_levels_byte_length": "2",
+        "repetition_levels_byte_length": "2",
+        "is_compressed": false,
+        "statistics": {
+          "null_count": "1"
+        }
+      }
+    },
+    "bodyHex": "02000200",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 1,
+    "column": 5,
+    "offset": 966,
+    "headerBytes": 26,
+    "bodyOffset": 992,
+    "bodyBytes": 4,
+    "header": {
+      "type": "3",
+      "uncompressed_page_size": "4",
+      "compressed_page_size": "4",
+      "data_page_header_v2": {
+        "num_values": "1",
+        "num_nulls": "1",
+        "num_rows": "1",
+        "encoding": "0",
+        "definition_levels_byte_length": "2",
+        "repetition_levels_byte_length": "2",
+        "is_compressed": false,
+        "statistics": {
+          "null_count": "1"
+        }
+      }
+    },
+    "bodyHex": "02000200",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 1,
+    "column": 6,
+    "offset": 996,
+    "headerBytes": 26,
+    "bodyOffset": 1022,
+    "bodyBytes": 2,
+    "header": {
+      "type": "3",
+      "uncompressed_page_size": "2",
+      "compressed_page_size": "2",
+      "data_page_header_v2": {
+        "num_values": "1",
+        "num_nulls": "1",
+        "num_rows": "1",
+        "encoding": "0",
+        "definition_levels_byte_length": "2",
+        "repetition_levels_byte_length": "0",
+        "is_compressed": false,
+        "statistics": {
+          "null_count": "1"
+        }
+      }
+    },
+    "bodyHex": "0201",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 1,
+    "column": 7,
+    "offset": 1024,
+    "headerBytes": 26,
+    "bodyOffset": 1050,
+    "bodyBytes": 2,
+    "header": {
+      "type": "3",
+      "uncompressed_page_size": "2",
+      "compressed_page_size": "2",
+      "data_page_header_v2": {
+        "num_values": "1",
+        "num_nulls": "1",
+        "num_rows": "1",
+        "encoding": "0",
+        "definition_levels_byte_length": "2",
+        "repetition_levels_byte_length": "0",
+        "is_compressed": false,
+        "statistics": {
+          "null_count": "1"
+        }
+      }
+    },
+    "bodyHex": "0201",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 1,
+    "column": 8,
+    "offset": 1052,
+    "headerBytes": 26,
+    "bodyOffset": 1078,
+    "bodyBytes": 2,
+    "header": {
+      "type": "3",
+      "uncompressed_page_size": "2",
+      "compressed_page_size": "2",
+      "data_page_header_v2": {
+        "num_values": "1",
+        "num_nulls": "1",
+        "num_rows": "1",
+        "encoding": "0",
+        "definition_levels_byte_length": "2",
+        "repetition_levels_byte_length": "0",
+        "is_compressed": false,
+        "statistics": {
+          "null_count": "1"
+        }
+      }
+    },
+    "bodyHex": "0201",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 1,
+    "column": 9,
+    "offset": 1080,
+    "headerBytes": 46,
+    "bodyOffset": 1126,
+    "bodyBytes": 10,
+    "header": {
+      "type": "3",
+      "uncompressed_page_size": "10",
+      "compressed_page_size": "10",
+      "data_page_header_v2": {
+        "num_values": "1",
+        "num_nulls": "0",
+        "num_rows": "1",
+        "encoding": "0",
+        "definition_levels_byte_length": "2",
+        "repetition_levels_byte_length": "0",
+        "is_compressed": false,
+        "statistics": {
+          "null_count": "0",
+          "max_value": {
+            "hex": "0000000000000000"
+          },
+          "min_value": {
+            "hex": "0000000000000000"
+          }
+        }
+      }
+    },
+    "bodyHex": "02010000000000000000",
+    "checksum": "absent"
+  }
+]

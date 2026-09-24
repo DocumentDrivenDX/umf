@@ -1,0 +1,393 @@
+{
+  "version": "4.0.1",
+  "cases": 14,
+  "nativeComparisons": 28,
+  "results": [
+    {
+      "id": "valid",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {
+                "__COLLATIONS": {
+                  "x": "spark.UTF8_LCASE"
+                }
+              },
+              "name": "x",
+              "nullable": true,
+              "type": "string"
+            }
+          ],
+          "type": "struct"
+        }
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "x",
+              "type": "string",
+              "nullable": true,
+              "metadata": {
+                "__COLLATIONS": {
+                  "x": "spark.UTF8_LCASE"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "stale",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {},
+              "name": "x",
+              "nullable": true,
+              "type": "string"
+            }
+          ],
+          "type": "struct"
+        }
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "x",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "non-string",
+      "python": {
+        "status": "rejected",
+        "errorType": "PySparkTypeError"
+      },
+      "jvm": {
+        "status": "rejected",
+        "errorType": "Py4JJavaError"
+      }
+    },
+    {
+      "id": "value-number",
+      "python": {
+        "status": "rejected",
+        "errorType": "AttributeError"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "x",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "map-null",
+      "python": {
+        "status": "rejected",
+        "errorType": "AttributeError"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "x",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "map-array",
+      "python": {
+        "status": "rejected",
+        "errorType": "AttributeError"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "x",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "bad-provider",
+      "python": {
+        "status": "rejected",
+        "errorType": "PySparkValueError"
+      },
+      "jvm": {
+        "status": "rejected",
+        "errorType": "Py4JJavaError"
+      }
+    },
+    {
+      "id": "missing-provider",
+      "python": {
+        "status": "rejected",
+        "errorType": "AssertionError"
+      },
+      "jvm": {
+        "status": "rejected",
+        "errorType": "Py4JJavaError"
+      }
+    },
+    {
+      "id": "unknown-name",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {
+                "__COLLATIONS": {
+                  "x": "icu.NOT_A_COLLATION"
+                }
+              },
+              "name": "x",
+              "nullable": true,
+              "type": "string"
+            }
+          ],
+          "type": "struct"
+        }
+      },
+      "jvm": {
+        "status": "rejected",
+        "errorType": "Py4JJavaError"
+      }
+    },
+    {
+      "id": "empty-generated",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {},
+              "name": "",
+              "nullable": true,
+              "type": {
+                "containsNull": true,
+                "elementType": "string",
+                "type": "array"
+              }
+            }
+          ],
+          "type": "struct"
+        }
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "",
+              "type": {
+                "type": "array",
+                "elementType": "string",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "empty-parser",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {
+                "__COLLATIONS": {
+                  ".element": "spark.UTF8_LCASE"
+                }
+              },
+              "name": "",
+              "nullable": true,
+              "type": {
+                "containsNull": true,
+                "elementType": "string",
+                "type": "array"
+              }
+            }
+          ],
+          "type": "struct"
+        }
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "",
+              "type": {
+                "type": "array",
+                "elementType": "string",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {
+                "__COLLATIONS": {
+                  ".element": "spark.UTF8_LCASE"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "dotted",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {
+                "__COLLATIONS": {
+                  "a.b.element": "spark.UTF8_LCASE"
+                }
+              },
+              "name": "a.b",
+              "nullable": true,
+              "type": {
+                "containsNull": true,
+                "elementType": "string",
+                "type": "array"
+              }
+            }
+          ],
+          "type": "struct"
+        }
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "a.b",
+              "type": {
+                "type": "array",
+                "elementType": "string",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {
+                "__COLLATIONS": {
+                  "a.b.element": "spark.UTF8_LCASE"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "array-target",
+      "python": {
+        "status": "rejected",
+        "errorType": "PySparkTypeError"
+      },
+      "jvm": {
+        "status": "rejected",
+        "errorType": "Py4JJavaError"
+      }
+    },
+    {
+      "id": "child-owned",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {},
+              "name": "parent",
+              "nullable": true,
+              "type": {
+                "fields": [
+                  {
+                    "metadata": {},
+                    "name": "child",
+                    "nullable": true,
+                    "type": "string"
+                  }
+                ],
+                "type": "struct"
+              }
+            }
+          ],
+          "type": "struct"
+        }
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "parent",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "child",
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

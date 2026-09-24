@@ -1,0 +1,89 @@
+{
+  "arguments": [
+    "source",
+    "freshness",
+    "--project-dir",
+    "/home/erik/Projects/umf/native/dbt/freshness-project",
+    "--profiles-dir",
+    "/home/erik/Projects/umf/native/dbt/freshness-project",
+    "--target-path",
+    "/home/erik/Projects/umf/.cache/dbt-freshness-target",
+    "--log-path",
+    "/home/erik/Projects/umf/.cache/dbt-freshness-logs"
+  ],
+  "runnerSuccess": false,
+  "runnerStatuses": {
+    "broken": "runtime error",
+    "expired": "error",
+    "recent": "pass",
+    "stale": "warn"
+  },
+  "emittedStatuses": {
+    "expired": "error",
+    "recent": "pass",
+    "stale": "warn"
+  },
+  "omittedByNativeEmitter": [
+    "source.umf_freshness.synthetic.broken"
+  ],
+  "runnerArtifactOrigin": "Native process_freshness_result applied to all in-memory results; not the emitted sources.json",
+  "scope": "Synthetic custom SQL in local in-memory DuckDB; no physical source-table freshness claim",
+  "files": [
+    {
+      "path": "native/dbt/freshness-project/.cache/dbt-freshness-target/graph.gpickle",
+      "sha256": "c5d0d9bb6dc0174e2c3afc1a508355c7bb82823754dc65b30a6e377d5a172fc7"
+    },
+    {
+      "path": "native/dbt/freshness-project/.cache/dbt-freshness-target/graph_summary.json",
+      "sha256": "d170464493a0adbeb11352910ecbc5a5b95258ff11b9bdeea7719bf7e6db5f73"
+    },
+    {
+      "path": "native/dbt/freshness-project/.cache/dbt-freshness-target/manifest.json",
+      "sha256": "0bf03be06dd5da4f063bd83fb6ebf7fb9c3da15a542cff9ab94e183d06d7d390"
+    },
+    {
+      "path": "native/dbt/freshness-project/.cache/dbt-freshness-target/partial_parse.msgpack",
+      "sha256": "f3df2897862f1ddd27247c1c3ca2d96477a0ec517ed46e91faaaafcba641425b"
+    },
+    {
+      "path": "native/dbt/freshness-project/.cache/dbt-freshness-target/semantic_manifest.json",
+      "sha256": "ba3498492b9c02670717cac98b47113e8d74c5288b55be26b30ce1af97dfe518"
+    },
+    {
+      "path": "native/dbt/freshness-project/.cache/dbt-freshness-target/sources.json",
+      "sha256": "f31e4cc0917b0a41cf30a00c7e778dba93cc3a1bfafc13f647fbed64e0312a96"
+    },
+    {
+      "path": "native/dbt/freshness-project/dbt_project.yml",
+      "sha256": "89d1b92067e6d3029d1fe2b2c513348c451e551fb61d5a3ffb5b150acc6ccc78"
+    },
+    {
+      "path": "native/dbt/freshness-project/models/sources.yml",
+      "sha256": "2c511018236a59b69ed2dde97706e899fd0891716c955066839b459873af8f1c"
+    },
+    {
+      "path": "native/dbt/freshness-project/profiles.yml",
+      "sha256": "c3059c76db02a584240989d09d8ae1ff8b5595f088c679bd24b08be679763437"
+    },
+    {
+      "path": "fixtures/dbt/freshness/sources.json",
+      "sha256": "0892198cbbddcbdeae14fcb7bbc8effbe140f9a644db49c4293c525c634001fd"
+    },
+    {
+      "path": "fixtures/dbt/freshness/runner-results.json",
+      "sha256": "50b314623e55048cdc0a727bc13e6ac9481b895eaf96cda665d7071dff10ede2"
+    },
+    {
+      "path": "fixtures/dbt/freshness/manifest.json",
+      "sha256": "7df6bf174490e811fc1f3f532c56301b056e46cbf5f2e2a9dea72ddded5f1afb"
+    },
+    {
+      "path": "fixtures/dbt/freshness/command.log",
+      "sha256": "e1136bf7ef9bb44f6b330722b96abc9e2f5dc3ad1180b7edd7d6618a56ee4b5f"
+    },
+    {
+      "path": "native/dbt/oracle-requirements.txt",
+      "sha256": "4d47968c46440c839ba8abf847902ab5069ceda478c4674bf3312d81f54d6675"
+    }
+  ]
+}

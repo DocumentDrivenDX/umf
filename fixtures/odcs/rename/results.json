@@ -1,0 +1,96 @@
+{
+  "sourceSha256": "92282e352c19ff7cc4c4b33c4e85c68d1b42f6d631666791011defcfbde2520f",
+  "results": [
+    {
+      "id": "object",
+      "reference": "schema/orders_obj",
+      "name": "purchases",
+      "paths": [
+        "/schema/2/name",
+        "/schema/2/relationships/0/from/0",
+        "/schema/2/relationships/0/from/1"
+      ],
+      "changes": [
+        {
+          "path": "/schema/2/name",
+          "before": "orders",
+          "after": "purchases"
+        },
+        {
+          "path": "/schema/2/relationships/0/from/0",
+          "before": "orders.customer_id",
+          "after": "purchases.customer_id"
+        },
+        {
+          "path": "/schema/2/relationships/0/from/1",
+          "before": "orders.shipping_address_street",
+          "after": "purchases.shipping_address_street"
+        }
+      ]
+    },
+    {
+      "id": "target",
+      "reference": "schema/customers_obj/properties/customer_id_prop",
+      "name": "customer_key",
+      "paths": [
+        "/schema/0/properties/0/name",
+        "/schema/2/properties/1/relationships/0/to"
+      ],
+      "changes": [
+        {
+          "path": "/schema/0/properties/0/name",
+          "before": "id",
+          "after": "customer_key"
+        },
+        {
+          "path": "/schema/2/properties/1/relationships/0/to",
+          "before": "customers.id",
+          "after": "customers.customer_key"
+        }
+      ]
+    },
+    {
+      "id": "nested",
+      "reference": "schema/addresses_obj/properties/location",
+      "name": "postal",
+      "paths": [
+        "/schema/1/properties/3/name",
+        "/schema/2/properties/3/relationships/0/to"
+      ],
+      "changes": [
+        {
+          "path": "/schema/1/properties/3/name",
+          "before": "location",
+          "after": "postal"
+        },
+        {
+          "path": "/schema/2/properties/3/relationships/0/to",
+          "before": "addresses.location.zip",
+          "after": "addresses.postal.zip"
+        }
+      ]
+    },
+    {
+      "id": "source-property",
+      "reference": "schema/orders_obj/properties/order_customer_prop",
+      "name": "buyer_id",
+      "paths": [
+        "/schema/2/properties/1/name",
+        "/schema/2/relationships/0/from/0"
+      ],
+      "changes": [
+        {
+          "path": "/schema/2/properties/1/name",
+          "before": "customer_id",
+          "after": "buyer_id"
+        },
+        {
+          "path": "/schema/2/relationships/0/from/0",
+          "before": "orders.customer_id",
+          "after": "orders.buyer_id"
+        }
+      ]
+    }
+  ],
+  "scope": "Authored extension of paired relationship example; only local known foreign-key name references rewritten"
+}

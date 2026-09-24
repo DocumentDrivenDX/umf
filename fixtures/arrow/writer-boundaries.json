@@ -1,0 +1,6 @@
+{
+  "package": "apache-arrow@21.2.0",
+  "jsonWriterDropsSchemaMetadata": true,
+  "jsonWriterDropsFieldMetadata": true,
+  "scope": "Observed schema-only JSON writer behavior; the future UMF adapter must preserve source metadata independently and guard native conversion."
+}

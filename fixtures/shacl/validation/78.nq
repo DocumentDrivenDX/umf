@@ -1,0 +1,260 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b25019 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25020 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25021 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25022 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25023 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25024 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25025 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25026 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25027 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25028 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25029 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25030 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25031 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25032 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25033 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25034 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25035 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25036 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25037 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25038 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25039 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25040 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25041 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25042 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25043 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25044 .
+_:report <http://www.w3.org/ns/shacl#result> _:b25045 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b25019 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25019 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25019 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25019 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000033000038000036000031000039 .
+_:b25019 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithBlankNodeAndIRI> .
+_:b25019 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25019 <http://www.w3.org/ns/shacl#value> <http://www.w3.org/2000/01/rdf-schema#Class> .
+_:b25019 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#BlankNode>" .
+_:s_e_000062000033000038000036000031000039 <http://www.w3.org/ns/shacl#path> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:s_e_000062000033000038000036000031000039 <http://www.w3.org/ns/shacl#nodeKind> <http://www.w3.org/ns/shacl#BlankNode> .
+_:b25020 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25020 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25020 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25020 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000033000038000036000031000039 .
+_:b25020 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithBlankNodeAndLiteral> .
+_:b25020 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25020 <http://www.w3.org/ns/shacl#value> "Literal" .
+_:b25020 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#BlankNode>" .
+_:b25021 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25021 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25021 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25021 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000033000038000036000031000039 .
+_:b25021 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithIRI> .
+_:b25021 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25021 <http://www.w3.org/ns/shacl#value> <http://www.w3.org/2000/01/rdf-schema#Class> .
+_:b25021 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#BlankNode>" .
+_:b25022 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25022 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25022 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25022 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000033000038000036000031000039 .
+_:b25022 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithIRIAndLiteral> .
+_:b25022 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25022 <http://www.w3.org/ns/shacl#value> <http://www.w3.org/2000/01/rdf-schema#Class> .
+_:b25022 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#BlankNode>" .
+_:b25023 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25023 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25023 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25023 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000033000038000036000031000039 .
+_:b25023 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithIRIAndLiteral> .
+_:b25023 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25023 <http://www.w3.org/ns/shacl#value> "Literal" .
+_:b25023 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#BlankNode>" .
+_:b25024 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25024 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25024 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25024 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000033000038000036000031000039 .
+_:b25024 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithLiteral> .
+_:b25024 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25024 <http://www.w3.org/ns/shacl#value> "Literal" .
+_:b25024 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#BlankNode>" .
+_:b25025 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25025 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25025 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25025 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000033000030000037000038 .
+_:b25025 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithBlankNodeAndLiteral> .
+_:b25025 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25025 <http://www.w3.org/ns/shacl#value> "Literal" .
+_:b25025 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#BlankNodeOrIRI>" .
+_:s_e_000062000033000030000037000038 <http://www.w3.org/ns/shacl#path> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:s_e_000062000033000030000037000038 <http://www.w3.org/ns/shacl#nodeKind> <http://www.w3.org/ns/shacl#BlankNodeOrIRI> .
+_:b25026 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25026 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25026 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25026 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000033000030000037000038 .
+_:b25026 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithIRIAndLiteral> .
+_:b25026 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25026 <http://www.w3.org/ns/shacl#value> "Literal" .
+_:b25026 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#BlankNodeOrIRI>" .
+_:b25027 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25027 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25027 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25027 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000033000030000037000038 .
+_:b25027 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithLiteral> .
+_:b25027 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25027 <http://www.w3.org/ns/shacl#value> "Literal" .
+_:b25027 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#BlankNodeOrIRI>" .
+_:b25028 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25028 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25028 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25028 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000031000034000039000037000035 .
+_:b25028 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithBlankNodeAndIRI> .
+_:b25028 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25028 <http://www.w3.org/ns/shacl#value> <http://www.w3.org/2000/01/rdf-schema#Class> .
+_:b25028 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#BlankNodeOrLiteral>" .
+_:s_e_000062000031000034000039000037000035 <http://www.w3.org/ns/shacl#path> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:s_e_000062000031000034000039000037000035 <http://www.w3.org/ns/shacl#nodeKind> <http://www.w3.org/ns/shacl#BlankNodeOrLiteral> .
+_:b25029 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25029 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25029 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25029 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000031000034000039000037000035 .
+_:b25029 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithIRI> .
+_:b25029 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25029 <http://www.w3.org/ns/shacl#value> <http://www.w3.org/2000/01/rdf-schema#Class> .
+_:b25029 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#BlankNodeOrLiteral>" .
+_:b25030 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25030 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25030 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25030 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000031000034000039000037000035 .
+_:b25030 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithIRIAndLiteral> .
+_:b25030 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25030 <http://www.w3.org/ns/shacl#value> <http://www.w3.org/2000/01/rdf-schema#Class> .
+_:b25030 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#BlankNodeOrLiteral>" .
+_:b25031 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25031 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25031 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25031 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000039000037000036000031000034 .
+_:b25031 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithBlankNode> .
+_:b25031 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25031 <http://www.w3.org/ns/shacl#value> _:s_e_000062000035000035000034000035000034 .
+_:b25031 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#IRI>" .
+_:s_e_000062000039000037000036000031000034 <http://www.w3.org/ns/shacl#path> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:s_e_000062000039000037000036000031000034 <http://www.w3.org/ns/shacl#nodeKind> <http://www.w3.org/ns/shacl#IRI> .
+_:s_e_000062000035000035000034000035000034 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Resource> .
+_:b25032 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25032 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25032 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25032 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000039000037000036000031000034 .
+_:b25032 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithBlankNodeAndIRI> .
+_:b25032 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25032 <http://www.w3.org/ns/shacl#value> _:s_e_000062000036000037000030000039000038 .
+_:b25032 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#IRI>" .
+_:s_e_000062000036000037000030000039000038 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Resource> .
+_:b25033 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25033 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25033 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25033 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000039000037000036000031000034 .
+_:b25033 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithBlankNodeAndLiteral> .
+_:b25033 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25033 <http://www.w3.org/ns/shacl#value> "Literal" .
+_:b25033 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#IRI>" .
+_:b25034 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25034 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25034 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25034 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000039000037000036000031000034 .
+_:b25034 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithBlankNodeAndLiteral> .
+_:b25034 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25034 <http://www.w3.org/ns/shacl#value> _:s_e_000062000039000039000030000032000036 .
+_:b25034 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#IRI>" .
+_:s_e_000062000039000039000030000032000036 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Resource> .
+_:b25035 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25035 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25035 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25035 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000039000037000036000031000034 .
+_:b25035 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithIRIAndLiteral> .
+_:b25035 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25035 <http://www.w3.org/ns/shacl#value> "Literal" .
+_:b25035 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#IRI>" .
+_:b25036 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25036 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25036 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25036 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000039000037000036000031000034 .
+_:b25036 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithLiteral> .
+_:b25036 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25036 <http://www.w3.org/ns/shacl#value> "Literal" .
+_:b25036 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#IRI>" .
+_:b25037 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25037 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25037 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25037 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000039000037000038000036000030 .
+_:b25037 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithBlankNode> .
+_:b25037 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25037 <http://www.w3.org/ns/shacl#value> _:s_e_000062000035000035000034000035000034 .
+_:b25037 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#IRIOrLiteral>" .
+_:s_e_000062000039000037000038000036000030 <http://www.w3.org/ns/shacl#path> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:s_e_000062000039000037000038000036000030 <http://www.w3.org/ns/shacl#nodeKind> <http://www.w3.org/ns/shacl#IRIOrLiteral> .
+_:b25038 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25038 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25038 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25038 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000039000037000038000036000030 .
+_:b25038 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithBlankNodeAndIRI> .
+_:b25038 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25038 <http://www.w3.org/ns/shacl#value> _:s_e_000062000036000037000030000039000038 .
+_:b25038 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#IRIOrLiteral>" .
+_:b25039 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25039 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25039 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25039 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000039000037000038000036000030 .
+_:b25039 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithBlankNodeAndLiteral> .
+_:b25039 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25039 <http://www.w3.org/ns/shacl#value> _:s_e_000062000039000039000030000032000036 .
+_:b25039 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#IRIOrLiteral>" .
+_:b25040 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25040 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25040 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25040 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000037000039000035000032000036 .
+_:b25040 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithBlankNode> .
+_:b25040 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25040 <http://www.w3.org/ns/shacl#value> _:s_e_000062000035000035000034000035000034 .
+_:b25040 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#Literal>" .
+_:s_e_000062000037000039000035000032000036 <http://www.w3.org/ns/shacl#path> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:s_e_000062000037000039000035000032000036 <http://www.w3.org/ns/shacl#nodeKind> <http://www.w3.org/ns/shacl#Literal> .
+_:b25041 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25041 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25041 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25041 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000037000039000035000032000036 .
+_:b25041 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithBlankNodeAndIRI> .
+_:b25041 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25041 <http://www.w3.org/ns/shacl#value> <http://www.w3.org/2000/01/rdf-schema#Class> .
+_:b25041 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#Literal>" .
+_:b25042 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25042 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25042 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25042 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000037000039000035000032000036 .
+_:b25042 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithBlankNodeAndIRI> .
+_:b25042 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25042 <http://www.w3.org/ns/shacl#value> _:s_e_000062000036000037000030000039000038 .
+_:b25042 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#Literal>" .
+_:b25043 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25043 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25043 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25043 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000037000039000035000032000036 .
+_:b25043 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithBlankNodeAndLiteral> .
+_:b25043 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25043 <http://www.w3.org/ns/shacl#value> _:s_e_000062000039000039000030000032000036 .
+_:b25043 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#Literal>" .
+_:b25044 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25044 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25044 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25044 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000037000039000035000032000036 .
+_:b25044 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithIRI> .
+_:b25044 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25044 <http://www.w3.org/ns/shacl#value> <http://www.w3.org/2000/01/rdf-schema#Class> .
+_:b25044 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#Literal>" .
+_:b25045 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b25045 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b25045 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b25045 <http://www.w3.org/ns/shacl#sourceShape> _:s_e_000062000037000039000035000032000036 .
+_:b25045 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#InstanceWithIRIAndLiteral> .
+_:b25045 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/nodeKind-001.test#myProperty> .
+_:b25045 <http://www.w3.org/ns/shacl#value> <http://www.w3.org/2000/01/rdf-schema#Class> .
+_:b25045 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#Literal>" .

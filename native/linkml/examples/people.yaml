@@ -1,0 +1,41 @@
+id: https://example.invalid/people
+name: people
+version: 2.0.0
+prefixes:
+  ex: https://example.invalid/people/
+  linkml: https://w3id.org/linkml/
+imports: [linkml:types]
+default_prefix: ex
+default_range: string
+classes:
+  Agent:
+    abstract: true
+    slots: [id]
+  Addressable:
+    mixin: true
+    slots: [email]
+  Person:
+    description: Synthetic person metadata; no private data.
+    is_a: Agent
+    mixins: [Addressable]
+    slots: [status, manager]
+    slot_usage:
+      email:
+        required: true
+        pattern: '^[^@]+@[^@]+$'
+slots:
+  id:
+    identifier: true
+  email:
+    description: Synthetic contact field.
+  status:
+    range: Status
+  manager:
+    range: Person
+enums:
+  Status:
+    permissible_values:
+      ACTIVE:
+        description: Active synthetic record.
+      RETIRED:
+        description: Retired synthetic record.

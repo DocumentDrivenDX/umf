@@ -1,0 +1,10 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b14116 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b14116 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b14116 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b14116 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NotConstraintComponent> .
+_:b14116 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/not-001#TestShape> .
+_:b14116 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/not-001#InvalidResource1> .
+_:b14116 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/not-001#InvalidResource1> .
+_:b14116 <http://www.w3.org/ns/shacl#resultMessage> "Value does have shape " .

@@ -1,0 +1,95 @@
+{
+  "versions": {
+    "jsonschema": "4.26.0",
+    "PyYAML": "6.0.3"
+  },
+  "nativeContentEqual": true,
+  "cases": [
+    {
+      "version": "3.1.2",
+      "name": "valid",
+      "accepted": true
+    },
+    {
+      "version": "3.1.2",
+      "name": "missing-info",
+      "accepted": false
+    },
+    {
+      "version": "3.1.2",
+      "name": "missing-security-scheme",
+      "accepted": false
+    },
+    {
+      "version": "3.1.2",
+      "name": "wrong-schema-kind",
+      "accepted": false
+    },
+    {
+      "version": "3.1.2",
+      "name": "embedded-schema-invalid",
+      "accepted": true
+    },
+    {
+      "version": "3.1.2",
+      "name": "extension-retained",
+      "accepted": true
+    },
+    {
+      "version": "3.2.1",
+      "name": "valid",
+      "accepted": true
+    },
+    {
+      "version": "3.2.1",
+      "name": "missing-info",
+      "accepted": false
+    },
+    {
+      "version": "3.2.1",
+      "name": "missing-security-scheme",
+      "accepted": false
+    },
+    {
+      "version": "3.2.1",
+      "name": "wrong-schema-kind",
+      "accepted": false
+    },
+    {
+      "version": "3.2.1",
+      "name": "embedded-schema-invalid",
+      "accepted": true
+    },
+    {
+      "version": "3.2.1",
+      "name": "extension-retained",
+      "accepted": true
+    }
+  ],
+  "schemaResources": [
+    {
+      "file": "3.1-schema.json",
+      "url": "https://spec.openapis.org/oas/3.1/schema/2026-08-03",
+      "sha256": "59f106413cb48c31299f96f024c938d3628aed6cd02cd14bcfb2fcaae7a130b6"
+    },
+    {
+      "file": "3.2-schema.json",
+      "url": "https://spec.openapis.org/oas/3.2/schema/2026-08-30",
+      "sha256": "ec53db6e114b768ff2d273b232bda210f51b70c5e57d57ac8daf7e8496a6e073"
+    },
+    {
+      "file": "3.0-schema.json",
+      "url": "https://spec.openapis.org/oas/3.0/schema/2024-10-18",
+      "sha256": "2385f5bbb8c37878daae73baeabe7f34b2f022a4a8c049329ee61f71796f039c"
+    },
+    {
+      "file": "2.0-schema.json",
+      "url": "https://spec.openapis.org/oas/2.0/schema/2017-08-27",
+      "sha256": "b36871c8016292c5e66dd3b203e69aeff98bfef97e0b3c67c1909036095586a5"
+    }
+  ],
+  "limits": [
+    "Unmodified official object schemas intentionally do not validate embedded Schema Object dialects",
+    "No native instance, reference resolution, HTTP serialization, security execution or all-prose conformance claim"
+  ]
+}

@@ -1,0 +1,18 @@
+@prefix ex: <https://example.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+ex:predicate sh:path ex:p ; sh:minCount 9007199254740993 ; ex:future "preserve" .
+ex:inverse sh:path [ sh:inversePath ex:p ] .
+ex:sequence sh:path ( ex:p ex:q ) .
+ex:alternative sh:path [ sh:alternativePath ( ex:p ex:q ) ] .
+ex:star sh:path [ sh:zeroOrMorePath ex:p ] .
+ex:plus sh:path [ sh:oneOrMorePath ex:p ] .
+ex:optional sh:path [ sh:zeroOrOnePath ex:p ] .
+ex:inverseSequence sh:path [ sh:inversePath ( ex:p ex:q ) ] .
+ex:nested sh:path ( [ sh:oneOrMorePath ex:p ] [ sh:alternativePath ( ex:q [ sh:inversePath ex:q ] ) ] ) .
+ex:doubleInverse sh:path [ sh:inversePath [ sh:inversePath ex:p ] ] .
+ex:inverseStar sh:path [ sh:inversePath [ sh:zeroOrMorePath ex:p ] ] .
+ex:nullablePlus sh:path [ sh:oneOrMorePath [ sh:zeroOrOnePath ex:absent ] ] .
+ex:sequenceWithAnnotation sh:path _:annotated .
+_:annotated rdf:first ex:p ; rdf:rest ( ex:q ) ; ex:note "annotations retained" .

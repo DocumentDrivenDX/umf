@@ -1,0 +1,6 @@
+<urn:umf:renamed:minimal_whitespace> <http://example/p> <http://example/o> .
+<urn:umf:renamed:minimal_whitespace> <http://example/p> "Alice" .
+<urn:umf:renamed:minimal_whitespace> <http://example/p> _:o .
+_:s <http://example/p> <http://example/o> .
+_:s <http://example/p> "Alice" .
+_:s <http://example/p> _:bnode1 .

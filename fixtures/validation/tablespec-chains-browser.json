@@ -1,0 +1,30 @@
+{
+  "cases": 4,
+  "recoveries": 8,
+  "stageBlockingChecks": 8,
+  "stageIssues": [
+    {
+      "kind": "postgresql",
+      "first": 24,
+      "second": 39
+    },
+    {
+      "kind": "sqlserver",
+      "first": 32,
+      "second": 50
+    },
+    {
+      "kind": "parquet",
+      "first": 23,
+      "second": 32
+    },
+    {
+      "kind": "sqlserver-indexes",
+      "first": 9,
+      "second": 5
+    }
+  ],
+  "nodeGlobalsAbsent": true,
+  "externalRequests": 0,
+  "browser": "148.0.7778.0"
+}

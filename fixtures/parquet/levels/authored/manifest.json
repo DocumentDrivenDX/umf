@@ -1,0 +1,422 @@
+{
+  "runtime": "PyArrow 21.0.0 valid authored-page reads",
+  "cases": [
+    {
+      "id": "required-v1",
+      "path": "fixtures/parquet/levels/authored/required-v1.parquet",
+      "status": "decoded",
+      "repetition": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "definition": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "valuesOffset": 0,
+      "nonNullValues": 4,
+      "rowStarts": 4,
+      "nativeRows": [
+        10,
+        20,
+        30,
+        40
+      ]
+    },
+    {
+      "id": "required-v2",
+      "path": "fixtures/parquet/levels/authored/required-v2.parquet",
+      "status": "decoded",
+      "repetition": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "definition": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "valuesOffset": 0,
+      "nonNullValues": 4,
+      "rowStarts": 4,
+      "nativeRows": [
+        10,
+        20,
+        30,
+        40
+      ]
+    },
+    {
+      "id": "optional-v1",
+      "path": "fixtures/parquet/levels/authored/optional-v1.parquet",
+      "status": "decoded",
+      "repetition": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "definition": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "valuesOffset": 12,
+      "nonNullValues": 2,
+      "rowStarts": 4,
+      "nativeRows": [
+        null,
+        10,
+        null,
+        20
+      ]
+    },
+    {
+      "id": "optional-v2",
+      "path": "fixtures/parquet/levels/authored/optional-v2.parquet",
+      "status": "decoded",
+      "repetition": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "definition": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "valuesOffset": 8,
+      "nonNullValues": 2,
+      "rowStarts": 4,
+      "nativeRows": [
+        null,
+        10,
+        null,
+        20
+      ]
+    },
+    {
+      "id": "repeated-v1",
+      "path": "fixtures/parquet/levels/authored/repeated-v1.parquet",
+      "status": "decoded",
+      "repetition": [
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "definition": [
+        0,
+        1,
+        1,
+        1,
+        0
+      ],
+      "valuesOffset": 28,
+      "nonNullValues": 3,
+      "rowStarts": 4,
+      "nativeRows": [
+        [],
+        [
+          10,
+          20
+        ],
+        [
+          30
+        ],
+        []
+      ]
+    },
+    {
+      "id": "repeated-v2",
+      "path": "fixtures/parquet/levels/authored/repeated-v2.parquet",
+      "status": "decoded",
+      "repetition": [
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "definition": [
+        0,
+        1,
+        1,
+        1,
+        0
+      ],
+      "valuesOffset": 20,
+      "nonNullValues": 3,
+      "rowStarts": 4,
+      "nativeRows": [
+        [],
+        [
+          10,
+          20
+        ],
+        [
+          30
+        ],
+        []
+      ]
+    },
+    {
+      "id": "nullable-list-v1",
+      "path": "fixtures/parquet/levels/authored/nullable-list-v1.parquet",
+      "status": "decoded",
+      "repetition": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "definition": [
+        0,
+        1,
+        2,
+        3,
+        3,
+        3
+      ],
+      "valuesOffset": 32,
+      "nonNullValues": 3,
+      "rowStarts": 4,
+      "nativeRows": [
+        null,
+        [],
+        [
+          null,
+          10,
+          20
+        ],
+        [
+          30
+        ]
+      ]
+    },
+    {
+      "id": "nullable-list-v2",
+      "path": "fixtures/parquet/levels/authored/nullable-list-v2.parquet",
+      "status": "decoded",
+      "repetition": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "definition": [
+        0,
+        1,
+        2,
+        3,
+        3,
+        3
+      ],
+      "valuesOffset": 24,
+      "nonNullValues": 3,
+      "rowStarts": 4,
+      "nativeRows": [
+        null,
+        [],
+        [
+          null,
+          10,
+          20
+        ],
+        [
+          30
+        ]
+      ]
+    },
+    {
+      "id": "invalid-definition-domain",
+      "path": "fixtures/parquet/levels/authored/invalid-definition-domain.parquet",
+      "status": "blocked",
+      "repetition": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "definition": [
+        0,
+        1,
+        2,
+        3,
+        3,
+        3
+      ],
+      "valuesOffset": 32,
+      "nonNullValues": 3,
+      "rowStarts": 4,
+      "nativeRows": null
+    },
+    {
+      "id": "invalid-repetition-domain",
+      "path": "fixtures/parquet/levels/authored/invalid-repetition-domain.parquet",
+      "status": "blocked",
+      "repetition": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "definition": [
+        0,
+        1,
+        2,
+        3,
+        3,
+        3
+      ],
+      "valuesOffset": 32,
+      "nonNullValues": 3,
+      "rowStarts": 4,
+      "nativeRows": null
+    },
+    {
+      "id": "invalid-truncated-stream",
+      "path": "fixtures/parquet/levels/authored/invalid-truncated-stream.parquet",
+      "status": "blocked",
+      "repetition": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "definition": [
+        0,
+        1,
+        2,
+        3,
+        3,
+        3
+      ],
+      "valuesOffset": 31,
+      "nonNullValues": 3,
+      "rowStarts": 4,
+      "nativeRows": null
+    },
+    {
+      "id": "invalid-rle-overrun",
+      "path": "fixtures/parquet/levels/authored/invalid-rle-overrun.parquet",
+      "status": "blocked",
+      "repetition": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "definition": [
+        0,
+        1,
+        2,
+        3,
+        3,
+        3
+      ],
+      "valuesOffset": 32,
+      "nonNullValues": 3,
+      "rowStarts": 4,
+      "nativeRows": null
+    },
+    {
+      "id": "invalid-first-row",
+      "path": "fixtures/parquet/levels/authored/invalid-first-row.parquet",
+      "status": "blocked",
+      "repetition": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "definition": [
+        0,
+        1,
+        2,
+        3,
+        3,
+        3
+      ],
+      "valuesOffset": 32,
+      "nonNullValues": 3,
+      "rowStarts": 4,
+      "nativeRows": null
+    },
+    {
+      "id": "invalid-null-count",
+      "path": "fixtures/parquet/levels/authored/invalid-null-count.parquet",
+      "status": "blocked",
+      "repetition": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "definition": [
+        0,
+        1,
+        2,
+        3,
+        3,
+        3
+      ],
+      "valuesOffset": 24,
+      "nonNullValues": 3,
+      "rowStarts": 4,
+      "nativeRows": null
+    },
+    {
+      "id": "invalid-row-count",
+      "path": "fixtures/parquet/levels/authored/invalid-row-count.parquet",
+      "status": "blocked",
+      "repetition": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "definition": [
+        0,
+        1,
+        2,
+        3,
+        3,
+        3
+      ],
+      "valuesOffset": 24,
+      "nonNullValues": 3,
+      "rowStarts": 4,
+      "nativeRows": null
+    }
+  ]
+}

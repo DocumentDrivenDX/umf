@@ -1,0 +1,108 @@
+{
+  "version": "2",
+  "schema": [
+    {
+      "repetition_type": "0",
+      "name": "schema",
+      "num_children": "1"
+    },
+    {
+      "repetition_type": "1",
+      "name": "stats",
+      "num_children": "1"
+    },
+    {
+      "type": "1",
+      "repetition_type": "1",
+      "name": "value",
+      "converted_type": "5",
+      "scale": "5",
+      "precision": "8",
+      "logicalType": {
+        "DECIMAL": {
+          "scale": "5",
+          "precision": "8"
+        }
+      }
+    }
+  ],
+  "num_rows": "5",
+  "row_groups": [
+    {
+      "columns": [
+        {
+          "file_offset": "0",
+          "meta_data": {
+            "type": "1",
+            "encodings": [
+              "0",
+              "3",
+              "8"
+            ],
+            "path_in_schema": [
+              "stats",
+              "value"
+            ],
+            "codec": "1",
+            "num_values": "5",
+            "total_uncompressed_size": "82",
+            "total_compressed_size": "86",
+            "data_page_offset": "32",
+            "dictionary_page_offset": "4",
+            "statistics": {
+              "max": {
+                "hex": "ffe0f505"
+              },
+              "min": {
+                "hex": "011f0afa"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "ffe0f505"
+              },
+              "min_value": {
+                "hex": "011f0afa"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "0",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "8",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [],
+              "definition_level_histogram": [
+                "1",
+                "1",
+                "3"
+              ]
+            }
+          }
+        }
+      ],
+      "total_byte_size": "82",
+      "num_rows": "5",
+      "file_offset": "4",
+      "total_compressed_size": "86"
+    }
+  ],
+  "key_value_metadata": [
+    {
+      "key": "ARROW:schema",
+      "value": "/////7AAAAAQAAAAAAAKAAwABgAFAAgACgAAAAABBAAMAAAACAAIAAAABAAIAAAABAAAAAEAAAAEAAAA0P///wAAAQ0UAAAAIAAAAAQAAAABAAAAKAAAAAUAAABzdGF0cwAAAAQABAAEAAAAEAAUAAgABgAHAAwAAAAQABAAAAAAAAEHEAAAACAAAAAEAAAAAAAAAAUAAAB2YWx1ZQAAAAgADAAEAAgACAAAAAgAAAAFAAAAAAAAAA=="
+    }
+  ],
+  "created_by": "parquet-cpp-arrow version 21.0.0",
+  "column_orders": [
+    {
+      "TYPE_ORDER": {}
+    }
+  ]
+}

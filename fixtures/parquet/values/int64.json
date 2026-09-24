@@ -1,0 +1,109 @@
+[
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "stats",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 2,
+              "name": "value",
+              "value": {
+                "kind": "decimal",
+                "value": "9999999999999.99999",
+                "physical": {
+                  "type": "INT64",
+                  "value": "999999999999999999"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "stats",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 2,
+              "name": "value",
+              "value": {
+                "kind": "decimal",
+                "value": "-9999999999999.99999",
+                "physical": {
+                  "type": "INT64",
+                  "value": "-999999999999999999"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "stats",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 2,
+              "name": "value",
+              "value": {
+                "kind": "decimal",
+                "value": "0.00000",
+                "physical": {
+                  "type": "INT64",
+                  "value": "0"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "stats",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 2,
+              "name": "value",
+              "value": null
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "stats",
+        "value": null
+      }
+    ]
+  }
+]

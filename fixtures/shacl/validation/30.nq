@@ -1,0 +1,10 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b13885 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b13885 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b13885 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b13885 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b13885 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/nodeKind-001.test#IRITestShape> .
+_:b13885 <http://www.w3.org/ns/shacl#focusNode> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b13885 <http://www.w3.org/ns/shacl#value> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b13885 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#IRI>" .

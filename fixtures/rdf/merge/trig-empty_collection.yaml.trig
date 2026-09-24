@@ -1,0 +1,6 @@
+<http://a.example/s> <http://a.example/p> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+<http://example/graph> { <http://a.example/s> <http://a.example/p> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> . }
+_:m_1_0 <urn:example:related> <urn:example:resource> .
+<urn:example:populated> { _:m_1_0 <urn:example:label> "Original label" . }
+<urn:example:empty> {}
+_:m_1_0 {}

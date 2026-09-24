@@ -1,0 +1,10 @@
+_:N0d9ad3cdb04a4265b16944a6e64b8ad1 <http://www.w3.org/ns/shacl#focusNode> "32"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:N0d9ad3cdb04a4265b16944a6e64b8ad1 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:N0d9ad3cdb04a4265b16944a6e64b8ad1 <http://www.w3.org/ns/shacl#resultMessage> "Value is not Literal with datatype xsd:boolean" .
+_:N0d9ad3cdb04a4265b16944a6e64b8ad1 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N2e2e0d81cca3473b8c5d508952af65f7 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N0d9ad3cdb04a4265b16944a6e64b8ad1 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/misc/deactivated-002.test#TestShape> .
+_:N2e2e0d81cca3473b8c5d508952af65f7 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N0d9ad3cdb04a4265b16944a6e64b8ad1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N0d9ad3cdb04a4265b16944a6e64b8ad1 <http://www.w3.org/ns/shacl#value> "32"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:N2e2e0d81cca3473b8c5d508952af65f7 <http://www.w3.org/ns/shacl#result> _:N0d9ad3cdb04a4265b16944a6e64b8ad1 .

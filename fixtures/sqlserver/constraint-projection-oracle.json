@@ -1,0 +1,63 @@
+{
+  "avro": "1.12.0",
+  "fastavro": "1.12.2",
+  "cases": [
+    {
+      "table": "Child",
+      "format": "json",
+      "bytes": 11,
+      "valuesAgree": true
+    },
+    {
+      "table": "Child",
+      "format": "yaml",
+      "bytes": 11,
+      "valuesAgree": true
+    },
+    {
+      "table": "Parent",
+      "format": "json",
+      "bytes": 7,
+      "valuesAgree": true
+    },
+    {
+      "table": "Parent",
+      "format": "yaml",
+      "bytes": 7,
+      "valuesAgree": true
+    },
+    {
+      "table": "Untrusted",
+      "format": "json",
+      "bytes": 9,
+      "valuesAgree": true
+    },
+    {
+      "table": "Untrusted",
+      "format": "yaml",
+      "bytes": 9,
+      "valuesAgree": true
+    }
+  ],
+  "acceptedRows": {
+    "Child": {
+      "id": 2,
+      "parent_b": 99,
+      "parent_a": 99,
+      "qty": -1,
+      "other": -1
+    },
+    "Parent": {
+      "a": 9,
+      "b": 9,
+      "code": "one"
+    },
+    "Untrusted": {
+      "id": 1,
+      "parent_code": "absent"
+    }
+  },
+  "nativeSourceEvidence": "fixtures/sqlserver/constraints-oracle.json",
+  "nativeDdlSha256": "e9ebca795e3df1bca610ae1da177cfe77ab3a08a96e0c4b27711ef8436bc8da4",
+  "scope": "Target schemas accept orphan/check-violating rows and independent duplicate records. Native enforcement is separately tested; no cross-system constraint execution or row conversion is claimed."
+}

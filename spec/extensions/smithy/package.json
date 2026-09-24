@@ -1,0 +1,190 @@
+{
+  "id": "umf.smithy",
+  "version": "0.1.0",
+  "coreVersion": "0.1.0",
+  "description": "Smithy JSON AST and exact supplied IDL/JSON source bundles with explicit validation limits",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:smithy:0.1.0",
+    "$defs": {
+      "node": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "const": "null"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "boolean"
+              },
+              "value": {
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "number"
+              },
+              "value": {
+                "type": "string",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "items"
+            ],
+            "properties": {
+              "kind": {
+                "const": "array"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "members"
+            ],
+            "properties": {
+              "kind": {
+                "const": "object"
+              },
+              "members": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "oneOf": [
+      {
+        "type": "object",
+        "required": [
+          "profile",
+          "root"
+        ],
+        "properties": {
+          "profile": {
+            "const": "smithy-json-ast"
+          },
+          "root": {
+            "$ref": "#/$defs/node"
+          },
+          "dependencies": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "root"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "root": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "object",
+        "required": [
+          "profile",
+          "files"
+        ],
+        "properties": {
+          "profile": {
+            "const": "smithy-idl-sources"
+          },
+          "files": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "semantic",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "Smithy JSON AST",
+      "version": "2.0; external smithy-model 1.73.0",
+      "subset": "Exact JSON AST roots/dependencies and supplied IDL/JSON source files. Browser checks AST structure or source archive shape only; parsing, assembly, selectors, trait semantics and projections remain separately qualified. Optional pinned JavaScript assembly is explicit through a trusted backend; known reflection limitations and source normalization are reported."
+    },
+    "evidence": [
+      "tests/smithy/native.test.ts",
+      "fixtures/smithy/oracle-results.json",
+      "tests/smithy/bundle.test.ts",
+      "fixtures/smithy/bundles/oracle-results.json",
+      "tests/smithy/sources.test.ts",
+      "fixtures/smithy/idl/oracle-results.json",
+      "tests/smithy/assembly.test.ts",
+      "fixtures/smithy/assembly-oracle-results.json"
+    ]
+  },
+  "semantics": "CONTRACT-014. Exact native JSON AST retention and structural inspection; browser validity is not native semantic validity. Traits, references, mixins and model assembly require separate evidence."
+}

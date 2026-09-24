@@ -1,0 +1,854 @@
+{
+  "profile": "shacl-metadata-1",
+  "complete": false,
+  "source": {
+    "umf": "0.1.0",
+    "id": "order",
+    "vocabularies": {
+      "umf.shacl": {
+        "version": "0.1.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "dataset",
+        "namespace": "",
+        "elements": [
+          {
+            "id": "dataset",
+            "extensions": {
+              "umf.shacl": {
+                "profile": "rdf11-turtle",
+                "baseIRI": "https://example.org/",
+                "blankNodeScope": "orders",
+                "quads": [
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/Order"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/ns/shacl#NodeShape"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/Order"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/ns/shacl#targetClass"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/OrderRecord"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/Order"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/ns/shacl#property"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/total"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/Order"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/ns/shacl#property"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/address"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_0"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "https://example.org/review"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "manual",
+                      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/Order"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "https://example.org/policy"
+                    },
+                    "object": {
+                      "kind": "blank",
+                      "value": "g_0"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/total"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/ns/shacl#path"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/totalAmount"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/total"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/ns/shacl#name"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "Total",
+                      "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+                      "language": "en"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/total"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/ns/shacl#name"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "Gesamt",
+                      "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+                      "language": "de"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/total"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/ns/shacl#description"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "Declared order amount",
+                      "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+                      "language": "en"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/total"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/ns/shacl#order"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "9007199254740993",
+                      "datatype": "http://www.w3.org/2001/XMLSchema#decimal"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/total"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/ns/shacl#datatype"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2001/XMLSchema#decimal"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/total"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/ns/shacl#minCount"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "1",
+                      "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/total"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/ns/shacl#maxCount"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "1",
+                      "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/total"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/ns/shacl#minInclusive"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "0",
+                      "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/total"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/ns/shacl#defaultValue"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "0.00",
+                      "datatype": "http://www.w3.org/2001/XMLSchema#decimal"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/total"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "https://example.org/currencySource"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/Account"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_1"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/shipping"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_1"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+                    },
+                    "object": {
+                      "kind": "blank",
+                      "value": "g_2"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_2"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/street"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_2"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/address"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/ns/shacl#path"
+                    },
+                    "object": {
+                      "kind": "blank",
+                      "value": "g_1"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/address"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/ns/shacl#name"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "Shipping street",
+                      "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+                      "language": "en"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/address"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/ns/shacl#group"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/Delivery"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/address"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/ns/shacl#node"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/AddressRules"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/Delivery"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/ns/shacl#name"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "Delivery",
+                      "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+                      "language": "en"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/Delivery"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/ns/shacl#order"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "2",
+                      "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/AddressRules"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/ns/shacl#pattern"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "^[A-Z]",
+                      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_3"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "https://example.org/version"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "7",
+                      "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/AddressRules"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "https://example.org/futureRule"
+                    },
+                    "object": {
+                      "kind": "blank",
+                      "value": "g_3"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  }
+                ],
+                "originalSource": "@prefix sh: <http://www.w3.org/ns/shacl#> .\n@prefix ex: <https://example.org/> .\n@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\nex:Order a sh:NodeShape ; sh:targetClass ex:OrderRecord ; sh:property ex:total, ex:address ; ex:policy [ex:review \"manual\"] .\nex:total sh:path ex:totalAmount ; sh:name \"Total\"@en, \"Gesamt\"@de ; sh:description \"Declared order amount\"@en ; sh:order \"9007199254740993\"^^xsd:decimal ; sh:datatype xsd:decimal ; sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 0 ; sh:defaultValue \"0.00\"^^xsd:decimal ; ex:currencySource ex:Account .\nex:address sh:path (ex:shipping ex:street) ; sh:name \"Shipping street\"@en ; sh:group ex:Delivery ; sh:node ex:AddressRules .\nex:Delivery sh:name \"Delivery\"@en ; sh:order 2 .\nex:AddressRules sh:pattern \"^[A-Z]\" ; ex:futureRule [ex:version 7] .\n",
+                "shaclVersion": "1.0"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "blankNodeScope": "orders",
+  "shape": {
+    "node": {
+      "kind": "iri",
+      "value": "https://example.org/Order"
+    },
+    "annotations": [],
+    "constraints": [
+      {
+        "predicate": "http://www.w3.org/ns/shacl#property",
+        "values": [
+          {
+            "kind": "iri",
+            "value": "https://example.org/total"
+          },
+          {
+            "kind": "iri",
+            "value": "https://example.org/address"
+          }
+        ],
+        "quadIndexes": [
+          2,
+          3
+        ]
+      }
+    ],
+    "controls": [
+      {
+        "predicate": "http://www.w3.org/ns/shacl#targetClass",
+        "values": [
+          {
+            "kind": "iri",
+            "value": "https://example.org/OrderRecord"
+          }
+        ],
+        "quadIndexes": [
+          1
+        ]
+      }
+    ],
+    "uninterpreted": [
+      {
+        "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+        "values": [
+          {
+            "kind": "iri",
+            "value": "http://www.w3.org/ns/shacl#NodeShape"
+          }
+        ],
+        "quadIndexes": [
+          0
+        ]
+      },
+      {
+        "predicate": "https://example.org/policy",
+        "values": [
+          {
+            "kind": "blank",
+            "value": "g_0"
+          }
+        ],
+        "quadIndexes": [
+          5
+        ]
+      }
+    ],
+    "path": {
+      "status": "absent"
+    }
+  },
+  "properties": [
+    {
+      "node": {
+        "kind": "iri",
+        "value": "https://example.org/total"
+      },
+      "annotations": [
+        {
+          "predicate": "http://www.w3.org/ns/shacl#name",
+          "values": [
+            {
+              "kind": "literal",
+              "value": "Total",
+              "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+              "language": "en"
+            },
+            {
+              "kind": "literal",
+              "value": "Gesamt",
+              "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+              "language": "de"
+            }
+          ],
+          "quadIndexes": [
+            7,
+            8
+          ]
+        },
+        {
+          "predicate": "http://www.w3.org/ns/shacl#description",
+          "values": [
+            {
+              "kind": "literal",
+              "value": "Declared order amount",
+              "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+              "language": "en"
+            }
+          ],
+          "quadIndexes": [
+            9
+          ]
+        },
+        {
+          "predicate": "http://www.w3.org/ns/shacl#order",
+          "values": [
+            {
+              "kind": "literal",
+              "value": "9007199254740993",
+              "datatype": "http://www.w3.org/2001/XMLSchema#decimal"
+            }
+          ],
+          "quadIndexes": [
+            10
+          ]
+        },
+        {
+          "predicate": "http://www.w3.org/ns/shacl#defaultValue",
+          "values": [
+            {
+              "kind": "literal",
+              "value": "0.00",
+              "datatype": "http://www.w3.org/2001/XMLSchema#decimal"
+            }
+          ],
+          "quadIndexes": [
+            15
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "predicate": "http://www.w3.org/ns/shacl#datatype",
+          "values": [
+            {
+              "kind": "iri",
+              "value": "http://www.w3.org/2001/XMLSchema#decimal"
+            }
+          ],
+          "quadIndexes": [
+            11
+          ]
+        },
+        {
+          "predicate": "http://www.w3.org/ns/shacl#minCount",
+          "values": [
+            {
+              "kind": "literal",
+              "value": "1",
+              "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+            }
+          ],
+          "quadIndexes": [
+            12
+          ]
+        },
+        {
+          "predicate": "http://www.w3.org/ns/shacl#maxCount",
+          "values": [
+            {
+              "kind": "literal",
+              "value": "1",
+              "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+            }
+          ],
+          "quadIndexes": [
+            13
+          ]
+        },
+        {
+          "predicate": "http://www.w3.org/ns/shacl#minInclusive",
+          "values": [
+            {
+              "kind": "literal",
+              "value": "0",
+              "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+            }
+          ],
+          "quadIndexes": [
+            14
+          ]
+        }
+      ],
+      "controls": [],
+      "uninterpreted": [
+        {
+          "predicate": "https://example.org/currencySource",
+          "values": [
+            {
+              "kind": "iri",
+              "value": "https://example.org/Account"
+            }
+          ],
+          "quadIndexes": [
+            16
+          ]
+        }
+      ],
+      "path": {
+        "status": "compiled",
+        "value": {
+          "kind": "predicate",
+          "iri": "https://example.org/totalAmount"
+        }
+      }
+    },
+    {
+      "node": {
+        "kind": "iri",
+        "value": "https://example.org/address"
+      },
+      "annotations": [
+        {
+          "predicate": "http://www.w3.org/ns/shacl#name",
+          "values": [
+            {
+              "kind": "literal",
+              "value": "Shipping street",
+              "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+              "language": "en"
+            }
+          ],
+          "quadIndexes": [
+            22
+          ]
+        },
+        {
+          "predicate": "http://www.w3.org/ns/shacl#group",
+          "values": [
+            {
+              "kind": "iri",
+              "value": "https://example.org/Delivery"
+            }
+          ],
+          "quadIndexes": [
+            23
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "predicate": "http://www.w3.org/ns/shacl#node",
+          "values": [
+            {
+              "kind": "iri",
+              "value": "https://example.org/AddressRules"
+            }
+          ],
+          "quadIndexes": [
+            24
+          ]
+        }
+      ],
+      "controls": [],
+      "uninterpreted": [],
+      "path": {
+        "status": "compiled",
+        "value": {
+          "kind": "sequence",
+          "paths": [
+            {
+              "kind": "predicate",
+              "iri": "https://example.org/shipping"
+            },
+            {
+              "kind": "predicate",
+              "iri": "https://example.org/street"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "diagnostics": [
+    {
+      "code": "SHACL_METADATA_DECLARED",
+      "path": "",
+      "severity": "warning",
+      "message": "Declared metadata only; constraints are not validated or enforced. Referenced graphs and unknown predicates remain in source. Property expansion is one level; blank identifiers use the source scope."
+    }
+  ]
+}

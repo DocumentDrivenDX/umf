@@ -1,0 +1,2020 @@
+{
+  "commit": "8c27801dc8d42ccc00997f25c0b8f45f8d4a233e",
+  "results": [
+    {
+      "path": "share/test/schemas/FooBarSpecificRecord.avsc",
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/root",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/4/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/4/type/1",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/4/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "This projection defines a JSON instance binding; it does not convert Avro binary/JSON instances or implement reader/writer schema resolution",
+          "retainedInSource": true
+        }
+      ],
+      "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/avro-order\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"org.apache.avro.FooBarSpecificRecord\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"id\": {\n          \"type\": \"integer\",\n          \"minimum\": -2147483648,\n          \"maximum\": 2147483647\n        },\n        \"name\": {\n          \"type\": \"string\"\n        },\n        \"nicknames\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"string\"\n          }\n        },\n        \"relatedids\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"integer\",\n            \"minimum\": -2147483648,\n            \"maximum\": 2147483647\n          }\n        },\n        \"typeEnum\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"$ref\": \"#/$defs/type_1\"\n            }\n          ]\n        }\n      },\n      \"required\": [\n        \"id\",\n        \"name\",\n        \"nicknames\",\n        \"relatedids\",\n        \"typeEnum\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"type_1\": {\n      \"title\": \"org.apache.avro.TypeEnum\",\n      \"type\": \"string\",\n      \"enum\": [\n        \"a\",\n        \"b\",\n        \"c\"\n      ]\n    }\n  }\n}\n"
+    },
+    {
+      "path": "share/test/schemas/RecordWithRequiredFields.avsc",
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/root",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type/1",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type/1/fields/1/type/items",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type/1/fields/1/type/items/fields/1/type/values",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type/1/fields/1/type/items/fields/1/type/values/fields/0/type",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type/1/fields/1/type/items/fields/1/type/values/fields/0/type/default",
+          "code": "ENUM_RESOLUTION",
+          "classification": "not-enforced",
+          "detail": "Reader fallback for unknown enum symbols is not executed by JSON validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type/1/fields/1/type/items/fields/1/type/values",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type/1/fields/1/type/items",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type/1",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "This projection defines a JSON instance binding; it does not convert Avro binary/JSON instances or implement reader/writer schema resolution",
+          "retainedInSource": true
+        }
+      ],
+      "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/avro-order\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"org.apache.avro.RecordWithRequiredFields\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"strField\": {\n          \"type\": \"string\"\n        },\n        \"unionField\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"$ref\": \"#/$defs/type_1\"\n            }\n          ]\n        }\n      },\n      \"required\": [\n        \"strField\",\n        \"unionField\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"type_1\": {\n      \"title\": \"org.apache.avro.UnionRecord\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"strField\": {\n          \"type\": \"string\"\n        },\n        \"arrayField\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/$defs/type_2\"\n          }\n        }\n      },\n      \"required\": [\n        \"strField\",\n        \"arrayField\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"type_2\": {\n      \"title\": \"org.apache.avro.ArrayRecord\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"strField\": {\n          \"type\": \"string\"\n        },\n        \"mapField\": {\n          \"type\": \"object\",\n          \"additionalProperties\": {\n            \"$ref\": \"#/$defs/type_3\"\n          }\n        }\n      },\n      \"required\": [\n        \"strField\",\n        \"mapField\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"type_3\": {\n      \"title\": \"org.apache.avro.MapRecord\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"enumField\": {\n          \"$ref\": \"#/$defs/type_4\"\n        },\n        \"strField\": {\n          \"type\": \"string\"\n        }\n      },\n      \"required\": [\n        \"enumField\",\n        \"strField\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"type_4\": {\n      \"title\": \"org.apache.avro.MapRecordEnum\",\n      \"type\": \"string\",\n      \"enum\": [\n        \"A\",\n        \"B\"\n      ]\n    }\n  }\n}\n"
+    },
+    {
+      "path": "share/test/schemas/interop.avsc",
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/root",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type",
+          "code": "LONG_ENCODING",
+          "classification": "representation-change",
+          "detail": "Long values use decimal strings; signed 64-bit bounds remain unenforced by this pattern",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/4/type",
+          "code": "FLOAT_PRECISION",
+          "classification": "not-enforced",
+          "detail": "JSON numbers do not enforce binary32 rounding or represent non-finite Avro values",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/5/type",
+          "code": "NONFINITE_ENCODING",
+          "classification": "representation-change",
+          "detail": "JSON numbers cannot represent non-finite Avro values",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/6/type",
+          "code": "BYTES_ENCODING",
+          "classification": "representation-change",
+          "detail": "Native bytes require lowercase hexadecimal string encoding",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/8/type/items",
+          "code": "NONFINITE_ENCODING",
+          "classification": "representation-change",
+          "detail": "JSON numbers cannot represent non-finite Avro values",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/9/type/values",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/9/type/values",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/10/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/10/type/1",
+          "code": "NONFINITE_ENCODING",
+          "classification": "representation-change",
+          "detail": "JSON numbers cannot represent non-finite Avro values",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/10/type/2/items",
+          "code": "BYTES_ENCODING",
+          "classification": "representation-change",
+          "detail": "Native bytes require lowercase hexadecimal string encoding",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/11/type",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/12/type",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/12/type",
+          "code": "FIXED_ENCODING",
+          "classification": "representation-change",
+          "detail": "Fixed bytes require lowercase hexadecimal strings with exact byte length",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/13/type",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/13/type",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "This projection defines a JSON instance binding; it does not convert Avro binary/JSON instances or implement reader/writer schema resolution",
+          "retainedInSource": true
+        }
+      ],
+      "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/avro-order\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"org.apache.avro.Interop\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"intField\": {\n          \"type\": \"integer\",\n          \"minimum\": -2147483648,\n          \"maximum\": 2147483647\n        },\n        \"longField\": {\n          \"type\": \"string\",\n          \"pattern\": \"^-?(0|[1-9][0-9]*)(?![\\\\s\\\\S])\"\n        },\n        \"stringField\": {\n          \"type\": \"string\"\n        },\n        \"boolField\": {\n          \"type\": \"boolean\"\n        },\n        \"floatField\": {\n          \"type\": \"number\"\n        },\n        \"doubleField\": {\n          \"type\": \"number\"\n        },\n        \"bytesField\": {\n          \"type\": \"string\",\n          \"pattern\": \"^([0-9a-f]{2})*(?![\\\\s\\\\S])\"\n        },\n        \"nullField\": {\n          \"type\": \"null\"\n        },\n        \"arrayField\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"number\"\n          }\n        },\n        \"mapField\": {\n          \"type\": \"object\",\n          \"additionalProperties\": {\n            \"$ref\": \"#/$defs/type_1\"\n          }\n        },\n        \"unionField\": {\n          \"anyOf\": [\n            {\n              \"type\": \"boolean\"\n            },\n            {\n              \"type\": \"number\"\n            },\n            {\n              \"type\": \"array\",\n              \"items\": {\n                \"type\": \"string\",\n                \"pattern\": \"^([0-9a-f]{2})*(?![\\\\s\\\\S])\"\n              }\n            }\n          ]\n        },\n        \"enumField\": {\n          \"$ref\": \"#/$defs/type_2\"\n        },\n        \"fixedField\": {\n          \"$ref\": \"#/$defs/type_3\"\n        },\n        \"recordField\": {\n          \"$ref\": \"#/$defs/type_4\"\n        }\n      },\n      \"required\": [\n        \"intField\",\n        \"longField\",\n        \"stringField\",\n        \"boolField\",\n        \"floatField\",\n        \"doubleField\",\n        \"bytesField\",\n        \"nullField\",\n        \"arrayField\",\n        \"mapField\",\n        \"unionField\",\n        \"enumField\",\n        \"fixedField\",\n        \"recordField\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"type_1\": {\n      \"title\": \"org.apache.avro.Foo\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"label\": {\n          \"type\": \"string\"\n        }\n      },\n      \"required\": [\n        \"label\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"type_2\": {\n      \"title\": \"org.apache.avro.Kind\",\n      \"type\": \"string\",\n      \"enum\": [\n        \"A\",\n        \"B\",\n        \"C\"\n      ]\n    },\n    \"type_3\": {\n      \"title\": \"org.apache.avro.MD5\",\n      \"type\": \"string\",\n      \"pattern\": \"^([0-9a-f]{2})*(?![\\\\s\\\\S])\",\n      \"minLength\": 32,\n      \"maxLength\": 32\n    },\n    \"type_4\": {\n      \"title\": \"org.apache.avro.Node\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"label\": {\n          \"type\": \"string\"\n        },\n        \"children\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"$ref\": \"#/$defs/type_4\"\n          }\n        }\n      },\n      \"required\": [\n        \"label\",\n        \"children\"\n      ],\n      \"additionalProperties\": false\n    }\n  }\n}\n"
+    },
+    {
+      "path": "share/test/schemas/reserved.avsc",
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/root",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "This projection defines a JSON instance binding; it does not convert Avro binary/JSON instances or implement reader/writer schema resolution",
+          "retainedInSource": true
+        }
+      ],
+      "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/avro-order\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"org.apache.avro.test.Reserved\",\n      \"type\": \"string\",\n      \"enum\": [\n        \"default\",\n        \"class\",\n        \"int\"\n      ]\n    }\n  }\n}\n"
+    },
+    {
+      "path": "share/test/schemas/weather.avsc",
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/root",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/0",
+          "code": "FIELD_RESOLUTION",
+          "classification": "not-enforced",
+          "detail": "Native field aliases and sort order remain in source",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type",
+          "code": "LONG_ENCODING",
+          "classification": "representation-change",
+          "detail": "Long values use decimal strings; signed 64-bit bounds remain unenforced by this pattern",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "This projection defines a JSON instance binding; it does not convert Avro binary/JSON instances or implement reader/writer schema resolution",
+          "retainedInSource": true
+        }
+      ],
+      "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/avro-order\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"test.Weather\",\n      \"description\": \"A weather reading.\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"station\": {\n          \"type\": \"string\"\n        },\n        \"time\": {\n          \"type\": \"string\",\n          \"pattern\": \"^-?(0|[1-9][0-9]*)(?![\\\\s\\\\S])\"\n        },\n        \"temp\": {\n          \"type\": \"integer\",\n          \"minimum\": -2147483648,\n          \"maximum\": 2147483647\n        }\n      },\n      \"required\": [\n        \"station\",\n        \"time\",\n        \"temp\"\n      ],\n      \"additionalProperties\": false\n    }\n  }\n}\n"
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/SchemaBuilder.avsc",
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/root",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/2/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/2/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/3/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/3/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/5/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/5/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/6/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/6/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/7/type",
+          "code": "LONG_ENCODING",
+          "classification": "representation-change",
+          "detail": "Long values use decimal strings; signed 64-bit bounds remain unenforced by this pattern",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/8/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/8/type/1",
+          "code": "LONG_ENCODING",
+          "classification": "representation-change",
+          "detail": "Long values use decimal strings; signed 64-bit bounds remain unenforced by this pattern",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/8/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/9/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/9/type/0",
+          "code": "LONG_ENCODING",
+          "classification": "representation-change",
+          "detail": "Long values use decimal strings; signed 64-bit bounds remain unenforced by this pattern",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/9/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/10/type",
+          "code": "FLOAT_PRECISION",
+          "classification": "not-enforced",
+          "detail": "JSON numbers do not enforce binary32 rounding or represent non-finite Avro values",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/11/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/11/type/1",
+          "code": "FLOAT_PRECISION",
+          "classification": "not-enforced",
+          "detail": "JSON numbers do not enforce binary32 rounding or represent non-finite Avro values",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/11/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/12/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/12/type/0",
+          "code": "FLOAT_PRECISION",
+          "classification": "not-enforced",
+          "detail": "JSON numbers do not enforce binary32 rounding or represent non-finite Avro values",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/12/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/13/type",
+          "code": "NONFINITE_ENCODING",
+          "classification": "representation-change",
+          "detail": "JSON numbers cannot represent non-finite Avro values",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/14/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/14/type/1",
+          "code": "NONFINITE_ENCODING",
+          "classification": "representation-change",
+          "detail": "JSON numbers cannot represent non-finite Avro values",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/14/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/15/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/15/type/0",
+          "code": "NONFINITE_ENCODING",
+          "classification": "representation-change",
+          "detail": "JSON numbers cannot represent non-finite Avro values",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/15/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/16/type",
+          "code": "BYTES_ENCODING",
+          "classification": "representation-change",
+          "detail": "Native bytes require lowercase hexadecimal string encoding",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/17/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/17/type/1",
+          "code": "BYTES_ENCODING",
+          "classification": "representation-change",
+          "detail": "Native bytes require lowercase hexadecimal string encoding",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/17/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/18/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/18/type/0",
+          "code": "BYTES_ENCODING",
+          "classification": "representation-change",
+          "detail": "Native bytes require lowercase hexadecimal string encoding",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/18/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/20/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/20/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/21/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/21/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/22/type",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/22/type",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/23/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/23/type/1",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/23/type/1",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/23/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/24/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/24/type/0",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/24/type/0",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/24/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/25/type",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/26/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/26/type/1",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/26/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/27/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/27/type/0",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/27/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/29/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/29/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/30/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/30/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/32/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/32/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/33/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/33/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/34/type",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/34/type",
+          "code": "FIXED_ENCODING",
+          "classification": "representation-change",
+          "detail": "Fixed bytes require lowercase hexadecimal strings with exact byte length",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/35/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/35/type/1",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/35/type/1",
+          "code": "FIXED_ENCODING",
+          "classification": "representation-change",
+          "detail": "Fixed bytes require lowercase hexadecimal strings with exact byte length",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/35/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/36/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/36/type/0",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/36/type/0",
+          "code": "FIXED_ENCODING",
+          "classification": "representation-change",
+          "detail": "Fixed bytes require lowercase hexadecimal strings with exact byte length",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/36/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/37/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/37/type/0",
+          "code": "LONG_ENCODING",
+          "classification": "representation-change",
+          "detail": "Long values use decimal strings; signed 64-bit bounds remain unenforced by this pattern",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/38/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/38/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/39/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/39/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/40/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/40/type/0",
+          "code": "LONG_ENCODING",
+          "classification": "representation-change",
+          "detail": "Long values use decimal strings; signed 64-bit bounds remain unenforced by this pattern",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/40/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/41/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/41/type/0",
+          "code": "FLOAT_PRECISION",
+          "classification": "not-enforced",
+          "detail": "JSON numbers do not enforce binary32 rounding or represent non-finite Avro values",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/41/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/42/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/42/type/0",
+          "code": "NONFINITE_ENCODING",
+          "classification": "representation-change",
+          "detail": "JSON numbers cannot represent non-finite Avro values",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/42/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/43/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/43/type/0",
+          "code": "BYTES_ENCODING",
+          "classification": "representation-change",
+          "detail": "Native bytes require lowercase hexadecimal string encoding",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/43/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/44/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/44/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/45/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/45/type/0",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/45/type/0",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/45/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/46/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/46/type/0",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/46/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/47/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/47/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/48/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/48/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/49/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/49/type/0",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/49/type/0",
+          "code": "FIXED_ENCODING",
+          "classification": "representation-change",
+          "detail": "Fixed bytes require lowercase hexadecimal strings with exact byte length",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/49/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "This projection defines a JSON instance binding; it does not convert Avro binary/JSON instances or implement reader/writer schema resolution",
+          "retainedInSource": true
+        }
+      ],
+      "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/avro-order\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"recordAll\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"requiredBoolean\": {\n          \"type\": \"boolean\"\n        },\n        \"requiredBooleanWithDefault\": {\n          \"type\": \"boolean\"\n        },\n        \"optionalBoolean\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"type\": \"boolean\"\n            }\n          ]\n        },\n        \"optionalBooleanWithDefault\": {\n          \"anyOf\": [\n            {\n              \"type\": \"boolean\"\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        },\n        \"requiredInt\": {\n          \"type\": \"integer\",\n          \"minimum\": -2147483648,\n          \"maximum\": 2147483647\n        },\n        \"optionalInt\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"type\": \"integer\",\n              \"minimum\": -2147483648,\n              \"maximum\": 2147483647\n            }\n          ]\n        },\n        \"optionalIntWithDefault\": {\n          \"anyOf\": [\n            {\n              \"type\": \"integer\",\n              \"minimum\": -2147483648,\n              \"maximum\": 2147483647\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        },\n        \"requiredLong\": {\n          \"type\": \"string\",\n          \"pattern\": \"^-?(0|[1-9][0-9]*)(?![\\\\s\\\\S])\"\n        },\n        \"optionalLong\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"type\": \"string\",\n              \"pattern\": \"^-?(0|[1-9][0-9]*)(?![\\\\s\\\\S])\"\n            }\n          ]\n        },\n        \"optionalLongWithDefault\": {\n          \"anyOf\": [\n            {\n              \"type\": \"string\",\n              \"pattern\": \"^-?(0|[1-9][0-9]*)(?![\\\\s\\\\S])\"\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        },\n        \"requiredFloat\": {\n          \"type\": \"number\"\n        },\n        \"optionalFloat\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"type\": \"number\"\n            }\n          ]\n        },\n        \"optionalFloatWithDefault\": {\n          \"anyOf\": [\n            {\n              \"type\": \"number\"\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        },\n        \"requiredDouble\": {\n          \"type\": \"number\"\n        },\n        \"optionalDouble\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"type\": \"number\"\n            }\n          ]\n        },\n        \"optionalDoubleWithDefault\": {\n          \"anyOf\": [\n            {\n              \"type\": \"number\"\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        },\n        \"requiredBytes\": {\n          \"type\": \"string\",\n          \"pattern\": \"^([0-9a-f]{2})*(?![\\\\s\\\\S])\"\n        },\n        \"optionalBytes\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"type\": \"string\",\n              \"pattern\": \"^([0-9a-f]{2})*(?![\\\\s\\\\S])\"\n            }\n          ]\n        },\n        \"optionalBytesWithDefault\": {\n          \"anyOf\": [\n            {\n              \"type\": \"string\",\n              \"pattern\": \"^([0-9a-f]{2})*(?![\\\\s\\\\S])\"\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        },\n        \"requiredString\": {\n          \"type\": \"string\"\n        },\n        \"optionalString\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"type\": \"string\"\n            }\n          ]\n        },\n        \"optionalStringWithDefault\": {\n          \"anyOf\": [\n            {\n              \"type\": \"string\"\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        },\n        \"requiredRecord\": {\n          \"$ref\": \"#/$defs/type_1\"\n        },\n        \"optionalRecord\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"$ref\": \"#/$defs/type_2\"\n            }\n          ]\n        },\n        \"optionalRecordWithDefault\": {\n          \"anyOf\": [\n            {\n              \"$ref\": \"#/$defs/type_3\"\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        },\n        \"requiredEnum\": {\n          \"$ref\": \"#/$defs/type_4\"\n        },\n        \"optionalEnum\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"$ref\": \"#/$defs/type_5\"\n            }\n          ]\n        },\n        \"optionalEnumWithDefault\": {\n          \"anyOf\": [\n            {\n              \"$ref\": \"#/$defs/type_6\"\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        },\n        \"requiredArray\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"string\"\n          }\n        },\n        \"optionalArray\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"type\": \"array\",\n              \"items\": {\n                \"type\": \"string\"\n              }\n            }\n          ]\n        },\n        \"optionalArrayWithDefault\": {\n          \"anyOf\": [\n            {\n              \"type\": \"array\",\n              \"items\": {\n                \"type\": \"string\"\n              }\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        },\n        \"requiredMap\": {\n          \"type\": \"object\",\n          \"additionalProperties\": {\n            \"type\": \"string\"\n          }\n        },\n        \"optionalMap\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"type\": \"object\",\n              \"additionalProperties\": {\n                \"type\": \"string\"\n              }\n            }\n          ]\n        },\n        \"optionalMapWithDefault\": {\n          \"anyOf\": [\n            {\n              \"type\": \"object\",\n              \"additionalProperties\": {\n                \"type\": \"string\"\n              }\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        },\n        \"requiredFixed\": {\n          \"$ref\": \"#/$defs/type_7\"\n        },\n        \"optionalFixed\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"$ref\": \"#/$defs/type_8\"\n            }\n          ]\n        },\n        \"optionalFixedWithDefault\": {\n          \"anyOf\": [\n            {\n              \"$ref\": \"#/$defs/type_9\"\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        },\n        \"unionType\": {\n          \"anyOf\": [\n            {\n              \"type\": \"string\",\n              \"pattern\": \"^-?(0|[1-9][0-9]*)(?![\\\\s\\\\S])\"\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        },\n        \"unionBooleanWithDefault\": {\n          \"anyOf\": [\n            {\n              \"type\": \"boolean\"\n            },\n            {\n              \"type\": \"integer\",\n              \"minimum\": -2147483648,\n              \"maximum\": 2147483647\n            }\n          ]\n        },\n        \"unionIntWithDefault\": {\n          \"anyOf\": [\n            {\n              \"type\": \"integer\",\n              \"minimum\": -2147483648,\n              \"maximum\": 2147483647\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        },\n        \"unionLongWithDefault\": {\n          \"anyOf\": [\n            {\n              \"type\": \"string\",\n              \"pattern\": \"^-?(0|[1-9][0-9]*)(?![\\\\s\\\\S])\"\n            },\n            {\n              \"type\": \"integer\",\n              \"minimum\": -2147483648,\n              \"maximum\": 2147483647\n            }\n          ]\n        },\n        \"unionFloatWithDefault\": {\n          \"anyOf\": [\n            {\n              \"type\": \"number\"\n            },\n            {\n              \"type\": \"integer\",\n              \"minimum\": -2147483648,\n              \"maximum\": 2147483647\n            }\n          ]\n        },\n        \"unionDoubleWithDefault\": {\n          \"anyOf\": [\n            {\n              \"type\": \"number\"\n            },\n            {\n              \"type\": \"integer\",\n              \"minimum\": -2147483648,\n              \"maximum\": 2147483647\n            }\n          ]\n        },\n        \"unionBytesWithDefault\": {\n          \"anyOf\": [\n            {\n              \"type\": \"string\",\n              \"pattern\": \"^([0-9a-f]{2})*(?![\\\\s\\\\S])\"\n            },\n            {\n              \"type\": \"integer\",\n              \"minimum\": -2147483648,\n              \"maximum\": 2147483647\n            }\n          ]\n        },\n        \"unionStringWithDefault\": {\n          \"anyOf\": [\n            {\n              \"type\": \"string\"\n            },\n            {\n              \"type\": \"integer\",\n              \"minimum\": -2147483648,\n              \"maximum\": 2147483647\n            }\n          ]\n        },\n        \"unionRecordWithDefault\": {\n          \"anyOf\": [\n            {\n              \"$ref\": \"#/$defs/type_10\"\n            },\n            {\n              \"type\": \"integer\",\n              \"minimum\": -2147483648,\n              \"maximum\": 2147483647\n            }\n          ]\n        },\n        \"unionEnumWithDefault\": {\n          \"anyOf\": [\n            {\n              \"$ref\": \"#/$defs/type_11\"\n            },\n            {\n              \"type\": \"integer\",\n              \"minimum\": -2147483648,\n              \"maximum\": 2147483647\n            }\n          ]\n        },\n        \"unionArrayWithDefault\": {\n          \"anyOf\": [\n            {\n              \"type\": \"array\",\n              \"items\": {\n                \"type\": \"string\"\n              }\n            },\n            {\n              \"type\": \"integer\",\n              \"minimum\": -2147483648,\n              \"maximum\": 2147483647\n            }\n          ]\n        },\n        \"unionMapWithDefault\": {\n          \"anyOf\": [\n            {\n              \"type\": \"object\",\n              \"additionalProperties\": {\n                \"type\": \"string\"\n              }\n            },\n            {\n              \"type\": \"integer\",\n              \"minimum\": -2147483648,\n              \"maximum\": 2147483647\n            }\n          ]\n        },\n        \"unionFixedWithDefault\": {\n          \"anyOf\": [\n            {\n              \"$ref\": \"#/$defs/type_12\"\n            },\n            {\n              \"type\": \"integer\",\n              \"minimum\": -2147483648,\n              \"maximum\": 2147483647\n            }\n          ]\n        }\n      },\n      \"required\": [\n        \"requiredBoolean\",\n        \"requiredBooleanWithDefault\",\n        \"optionalBoolean\",\n        \"optionalBooleanWithDefault\",\n        \"requiredInt\",\n        \"optionalInt\",\n        \"optionalIntWithDefault\",\n        \"requiredLong\",\n        \"optionalLong\",\n        \"optionalLongWithDefault\",\n        \"requiredFloat\",\n        \"optionalFloat\",\n        \"optionalFloatWithDefault\",\n        \"requiredDouble\",\n        \"optionalDouble\",\n        \"optionalDoubleWithDefault\",\n        \"requiredBytes\",\n        \"optionalBytes\",\n        \"optionalBytesWithDefault\",\n        \"requiredString\",\n        \"optionalString\",\n        \"optionalStringWithDefault\",\n        \"requiredRecord\",\n        \"optionalRecord\",\n        \"optionalRecordWithDefault\",\n        \"requiredEnum\",\n        \"optionalEnum\",\n        \"optionalEnumWithDefault\",\n        \"requiredArray\",\n        \"optionalArray\",\n        \"optionalArrayWithDefault\",\n        \"requiredMap\",\n        \"optionalMap\",\n        \"optionalMapWithDefault\",\n        \"requiredFixed\",\n        \"optionalFixed\",\n        \"optionalFixedWithDefault\",\n        \"unionType\",\n        \"unionBooleanWithDefault\",\n        \"unionIntWithDefault\",\n        \"unionLongWithDefault\",\n        \"unionFloatWithDefault\",\n        \"unionDoubleWithDefault\",\n        \"unionBytesWithDefault\",\n        \"unionStringWithDefault\",\n        \"unionRecordWithDefault\",\n        \"unionEnumWithDefault\",\n        \"unionArrayWithDefault\",\n        \"unionMapWithDefault\",\n        \"unionFixedWithDefault\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"type_1\": {\n      \"title\": \"nestedRequiredRecord\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"nestedRequiredBoolean\": {\n          \"type\": \"boolean\"\n        }\n      },\n      \"required\": [\n        \"nestedRequiredBoolean\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"type_2\": {\n      \"title\": \"nestedOptionalRecord\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"nestedRequiredBoolean\": {\n          \"type\": \"boolean\"\n        }\n      },\n      \"required\": [\n        \"nestedRequiredBoolean\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"type_3\": {\n      \"title\": \"nestedOptionalRecordWithDefault\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"nestedRequiredBoolean\": {\n          \"type\": \"boolean\"\n        }\n      },\n      \"required\": [\n        \"nestedRequiredBoolean\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"type_4\": {\n      \"title\": \"requiredEnum\",\n      \"type\": \"string\",\n      \"enum\": [\n        \"a\",\n        \"b\"\n      ]\n    },\n    \"type_5\": {\n      \"title\": \"optionalEnum\",\n      \"type\": \"string\",\n      \"enum\": [\n        \"a\",\n        \"b\"\n      ]\n    },\n    \"type_6\": {\n      \"title\": \"optionalEnumWithDefault\",\n      \"type\": \"string\",\n      \"enum\": [\n        \"a\",\n        \"b\"\n      ]\n    },\n    \"type_7\": {\n      \"title\": \"requiredFixed\",\n      \"type\": \"string\",\n      \"pattern\": \"^([0-9a-f]{2})*(?![\\\\s\\\\S])\",\n      \"minLength\": 2,\n      \"maxLength\": 2\n    },\n    \"type_8\": {\n      \"title\": \"optionalFixed\",\n      \"type\": \"string\",\n      \"pattern\": \"^([0-9a-f]{2})*(?![\\\\s\\\\S])\",\n      \"minLength\": 2,\n      \"maxLength\": 2\n    },\n    \"type_9\": {\n      \"title\": \"optionalFixedWithDefault\",\n      \"type\": \"string\",\n      \"pattern\": \"^([0-9a-f]{2})*(?![\\\\s\\\\S])\",\n      \"minLength\": 2,\n      \"maxLength\": 2\n    },\n    \"type_10\": {\n      \"title\": \"nestedUnionRecordWithDefault\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"nestedRequiredBoolean\": {\n          \"type\": \"boolean\"\n        }\n      },\n      \"required\": [\n        \"nestedRequiredBoolean\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"type_11\": {\n      \"title\": \"nestedUnionEnumWithDefault\",\n      \"type\": \"string\",\n      \"enum\": [\n        \"a\",\n        \"b\"\n      ]\n    },\n    \"type_12\": {\n      \"title\": \"nestedUnionFixedWithDefault\",\n      \"type\": \"string\",\n      \"pattern\": \"^([0-9a-f]{2})*(?![\\\\s\\\\S])\",\n      \"minLength\": 2,\n      \"maxLength\": 2\n    }\n  }\n}\n"
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/TestRecordWithLogicalTypes.avsc",
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/root/fields/6/type/logicalType",
+          "code": "AVRO_LOGICAL_TYPE",
+          "classification": "unsupported",
+          "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/7/type/logicalType",
+          "code": "AVRO_LOGICAL_TYPE",
+          "classification": "unsupported",
+          "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/8/type/logicalType",
+          "code": "AVRO_LOGICAL_TYPE",
+          "classification": "unsupported",
+          "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/9/type/logicalType",
+          "code": "AVRO_LOGICAL_TYPE",
+          "classification": "unsupported",
+          "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/2/type",
+          "code": "LONG_ENCODING",
+          "classification": "representation-change",
+          "detail": "Long values use decimal strings; signed 64-bit bounds remain unenforced by this pattern",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/3/type",
+          "code": "FLOAT_PRECISION",
+          "classification": "not-enforced",
+          "detail": "JSON numbers do not enforce binary32 rounding or represent non-finite Avro values",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/4/type",
+          "code": "NONFINITE_ENCODING",
+          "classification": "representation-change",
+          "detail": "JSON numbers cannot represent non-finite Avro values",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/5/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/5/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/6/type/logicalType",
+          "code": "LOGICAL_TYPE_UNENFORCED",
+          "classification": "not-enforced",
+          "detail": "Only the underlying carrier is projected; logical type interpretation, units, precision and scale remain source-owned",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/7/type/logicalType",
+          "code": "LOGICAL_TYPE_UNENFORCED",
+          "classification": "not-enforced",
+          "detail": "Only the underlying carrier is projected; logical type interpretation, units, precision and scale remain source-owned",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/8/type/logicalType",
+          "code": "LOGICAL_TYPE_UNENFORCED",
+          "classification": "not-enforced",
+          "detail": "Only the underlying carrier is projected; logical type interpretation, units, precision and scale remain source-owned",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/8/type/type",
+          "code": "LONG_ENCODING",
+          "classification": "representation-change",
+          "detail": "Long values use decimal strings; signed 64-bit bounds remain unenforced by this pattern",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/9/type/logicalType",
+          "code": "LOGICAL_TYPE_UNENFORCED",
+          "classification": "not-enforced",
+          "detail": "Only the underlying carrier is projected; logical type interpretation, units, precision and scale remain source-owned",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/9/type/type",
+          "code": "BYTES_ENCODING",
+          "classification": "representation-change",
+          "detail": "Native bytes require lowercase hexadecimal string encoding",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "This projection defines a JSON instance binding; it does not convert Avro binary/JSON instances or implement reader/writer schema resolution",
+          "retainedInSource": true
+        }
+      ],
+      "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/avro-order\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"org.apache.avro.specific.TestRecordWithLogicalTypes\",\n      \"description\": \"Schema for TestRecordWithLogicalTypes and TestRecordWithoutLogicalTypes, see TestSpecificLogicalTypes\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"b\": {\n          \"type\": \"boolean\"\n        },\n        \"i32\": {\n          \"type\": \"integer\",\n          \"minimum\": -2147483648,\n          \"maximum\": 2147483647\n        },\n        \"i64\": {\n          \"type\": \"string\",\n          \"pattern\": \"^-?(0|[1-9][0-9]*)(?![\\\\s\\\\S])\"\n        },\n        \"f32\": {\n          \"type\": \"number\"\n        },\n        \"f64\": {\n          \"type\": \"number\"\n        },\n        \"s\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"type\": \"string\"\n            }\n          ]\n        },\n        \"d\": {\n          \"type\": \"integer\",\n          \"minimum\": -2147483648,\n          \"maximum\": 2147483647\n        },\n        \"t\": {\n          \"type\": \"integer\",\n          \"minimum\": -2147483648,\n          \"maximum\": 2147483647\n        },\n        \"ts\": {\n          \"type\": \"string\",\n          \"pattern\": \"^-?(0|[1-9][0-9]*)(?![\\\\s\\\\S])\"\n        },\n        \"bd\": {\n          \"type\": \"string\",\n          \"pattern\": \"^([0-9a-f]{2})*(?![\\\\s\\\\S])\"\n        }\n      },\n      \"required\": [\n        \"b\",\n        \"i32\",\n        \"i64\",\n        \"f32\",\n        \"f64\",\n        \"s\",\n        \"d\",\n        \"t\",\n        \"ts\",\n        \"bd\"\n      ],\n      \"additionalProperties\": false\n    }\n  }\n}\n"
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/TestRecordWithMapsAndArrays.avsc",
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/root/fields/0/type/default",
+          "code": "AVRO_METADATA",
+          "classification": "unsupported",
+          "detail": "Uninterpreted native metadata retained",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type/default",
+          "code": "AVRO_METADATA",
+          "classification": "unsupported",
+          "detail": "Uninterpreted native metadata retained",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/2/type/default",
+          "code": "AVRO_METADATA",
+          "classification": "unsupported",
+          "detail": "Uninterpreted native metadata retained",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/2/type/items/default",
+          "code": "AVRO_METADATA",
+          "classification": "unsupported",
+          "detail": "Uninterpreted native metadata retained",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/3/type/default",
+          "code": "AVRO_METADATA",
+          "classification": "unsupported",
+          "detail": "Uninterpreted native metadata retained",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/3/type/values/default",
+          "code": "AVRO_METADATA",
+          "classification": "unsupported",
+          "detail": "Uninterpreted native metadata retained",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type/values",
+          "code": "LONG_ENCODING",
+          "classification": "representation-change",
+          "detail": "Long values use decimal strings; signed 64-bit bounds remain unenforced by this pattern",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/3/type/values/values",
+          "code": "LONG_ENCODING",
+          "classification": "representation-change",
+          "detail": "Long values use decimal strings; signed 64-bit bounds remain unenforced by this pattern",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "This projection defines a JSON instance binding; it does not convert Avro binary/JSON instances or implement reader/writer schema resolution",
+          "retainedInSource": true
+        }
+      ],
+      "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/avro-order\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"org.apache.avro.specific.TestRecordWithMapsAndArrays\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"arr\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"string\"\n          }\n        },\n        \"map\": {\n          \"type\": \"object\",\n          \"additionalProperties\": {\n            \"type\": \"string\",\n            \"pattern\": \"^-?(0|[1-9][0-9]*)(?![\\\\s\\\\S])\"\n          }\n        },\n        \"nested_arr\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"string\"\n            }\n          }\n        },\n        \"nested_map\": {\n          \"type\": \"object\",\n          \"additionalProperties\": {\n            \"type\": \"object\",\n            \"additionalProperties\": {\n              \"type\": \"string\",\n              \"pattern\": \"^-?(0|[1-9][0-9]*)(?![\\\\s\\\\S])\"\n            }\n          }\n        }\n      },\n      \"required\": [\n        \"arr\",\n        \"map\",\n        \"nested_arr\",\n        \"nested_map\"\n      ],\n      \"additionalProperties\": false\n    }\n  }\n}\n"
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/TestUnionRecord.avsc",
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/root/1/fields/0/type/1/logicalType",
+          "code": "AVRO_LOGICAL_TYPE",
+          "classification": "unsupported",
+          "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/1",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/1/fields/0/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/1/fields/0/type/1/logicalType",
+          "code": "LOGICAL_TYPE_UNENFORCED",
+          "classification": "not-enforced",
+          "detail": "Only the underlying carrier is projected; logical type interpretation, units, precision and scale remain source-owned",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/1/fields/0/type/1/type",
+          "code": "BYTES_ENCODING",
+          "classification": "representation-change",
+          "detail": "Native bytes require lowercase hexadecimal string encoding",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/1/fields/0/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/1",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "This projection defines a JSON instance binding; it does not convert Avro binary/JSON instances or implement reader/writer schema resolution",
+          "retainedInSource": true
+        }
+      ],
+      "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/avro-order\",\n  \"anyOf\": [\n    {\n      \"type\": \"null\"\n    },\n    {\n      \"$ref\": \"#/$defs/type_0\"\n    }\n  ],\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"org.apache.avro.specific.TestUnionRecord\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"amount\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"type\": \"string\",\n              \"pattern\": \"^([0-9a-f]{2})*(?![\\\\s\\\\S])\"\n            }\n          ]\n        }\n      },\n      \"required\": [\n        \"amount\"\n      ],\n      \"additionalProperties\": false\n    }\n  }\n}\n"
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/multipleFile/ApplicationEvent.avsc",
+      "status": "blocked",
+      "issues": [
+        {
+          "path": "/root",
+          "code": "AVRO_VALIDATOR_LIMIT",
+          "classification": "unsupported",
+          "detail": "Native schema could not be interpreted by avsc 5.7.9: Error: undefined type name: model.DocumentInfo",
+          "retainedInSource": true
+        }
+      ]
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/multipleFile/DocumentInfo.avsc",
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/root",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "This projection defines a JSON instance binding; it does not convert Avro binary/JSON instances or implement reader/writer schema resolution",
+          "retainedInSource": true
+        }
+      ],
+      "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/avro-order\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"model.DocumentInfo\",\n      \"description\": \"\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"documentId\": {\n          \"type\": \"string\",\n          \"description\": \"Document ID\"\n        },\n        \"filePath\": {\n          \"type\": \"string\",\n          \"description\": \"Document Path\"\n        }\n      },\n      \"required\": [\n        \"documentId\",\n        \"filePath\"\n      ],\n      \"additionalProperties\": false\n    }\n  }\n}\n"
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/multipleFile/MyResponse.avsc",
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/root",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "This projection defines a JSON instance binding; it does not convert Avro binary/JSON instances or implement reader/writer schema resolution",
+          "retainedInSource": true
+        }
+      ],
+      "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/avro-order\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"model.MyResponse\",\n      \"description\": \"\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"isSuccessful\": {\n          \"type\": \"boolean\",\n          \"description\": \"Indicator for successful or unsuccessful call\"\n        }\n      },\n      \"required\": [\n        \"isSuccessful\"\n      ],\n      \"additionalProperties\": false\n    }\n  }\n}\n"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/foo.Bar.avsc",
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/root/fields/1/type/1/logicalType",
+          "code": "AVRO_LOGICAL_TYPE",
+          "classification": "unsupported",
+          "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type/1/logicalType",
+          "code": "LOGICAL_TYPE_UNENFORCED",
+          "classification": "not-enforced",
+          "detail": "Only the underlying carrier is projected; logical type interpretation, units, precision and scale remain source-owned",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type/1/type",
+          "code": "LONG_ENCODING",
+          "classification": "representation-change",
+          "detail": "Long values use decimal strings; signed 64-bit bounds remain unenforced by this pattern",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "This projection defines a JSON instance binding; it does not convert Avro binary/JSON instances or implement reader/writer schema resolution",
+          "retainedInSource": true
+        }
+      ],
+      "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/avro-order\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"foo.Bar\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"title\": {\n          \"type\": \"string\"\n        },\n        \"created_at\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"type\": \"string\",\n              \"pattern\": \"^-?(0|[1-9][0-9]*)(?![\\\\s\\\\S])\"\n            }\n          ]\n        }\n      },\n      \"required\": [\n        \"title\",\n        \"created_at\"\n      ],\n      \"additionalProperties\": false\n    }\n  }\n}\n"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/full_record_v1.avsc",
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/root",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/2/type",
+          "code": "LONG_ENCODING",
+          "classification": "representation-change",
+          "detail": "Long values use decimal strings; signed 64-bit bounds remain unenforced by this pattern",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/3/type",
+          "code": "FLOAT_PRECISION",
+          "classification": "not-enforced",
+          "detail": "JSON numbers do not enforce binary32 rounding or represent non-finite Avro values",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/4/type",
+          "code": "NONFINITE_ENCODING",
+          "classification": "representation-change",
+          "detail": "JSON numbers cannot represent non-finite Avro values",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/5/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/5/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/6/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "This projection defines a JSON instance binding; it does not convert Avro binary/JSON instances or implement reader/writer schema resolution",
+          "retainedInSource": true
+        }
+      ],
+      "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/avro-order\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"org.apache.avro.specific.test.FullRecordV1\",\n      \"description\": \"Test schema changes: this is the 'old' schema the SpecificRecord expects to see\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"b\": {\n          \"type\": \"boolean\"\n        },\n        \"i32\": {\n          \"type\": \"integer\",\n          \"minimum\": -2147483648,\n          \"maximum\": 2147483647\n        },\n        \"i64\": {\n          \"type\": \"string\",\n          \"pattern\": \"^-?(0|[1-9][0-9]*)(?![\\\\s\\\\S])\"\n        },\n        \"f32\": {\n          \"type\": \"number\"\n        },\n        \"f64\": {\n          \"type\": \"number\"\n        },\n        \"s\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"type\": \"string\"\n            }\n          ]\n        },\n        \"h\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"type\": \"string\"\n            }\n          ]\n        }\n      },\n      \"required\": [\n        \"b\",\n        \"i32\",\n        \"i64\",\n        \"f32\",\n        \"f64\",\n        \"s\",\n        \"h\"\n      ],\n      \"additionalProperties\": false\n    }\n  }\n}\n"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/full_record_v2.avsc",
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/root",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/3/type",
+          "code": "LONG_ENCODING",
+          "classification": "representation-change",
+          "detail": "Long values use decimal strings; signed 64-bit bounds remain unenforced by this pattern",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/4/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/4/type/0",
+          "code": "FLOAT_PRECISION",
+          "classification": "not-enforced",
+          "detail": "JSON numbers do not enforce binary32 rounding or represent non-finite Avro values",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/6/type",
+          "code": "BYTES_ENCODING",
+          "classification": "representation-change",
+          "detail": "Native bytes require lowercase hexadecimal string encoding",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "This projection defines a JSON instance binding; it does not convert Avro binary/JSON instances or implement reader/writer schema resolution",
+          "retainedInSource": true
+        }
+      ],
+      "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/avro-order\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"org.apache.avro.specific.test.FullRecordV2\",\n      \"description\": \"Test schema changes: this is the 'new' schema actually used to write data\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"b\": {\n          \"type\": \"boolean\"\n        },\n        \"i64\": {\n          \"type\": \"integer\",\n          \"minimum\": -2147483648,\n          \"maximum\": 2147483647\n        },\n        \"i32\": {\n          \"type\": \"integer\",\n          \"minimum\": -2147483648,\n          \"maximum\": 2147483647\n        },\n        \"f64\": {\n          \"type\": \"string\",\n          \"pattern\": \"^-?(0|[1-9][0-9]*)(?![\\\\s\\\\S])\"\n        },\n        \"f32\": {\n          \"anyOf\": [\n            {\n              \"type\": \"number\"\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        },\n        \"newfield\": {\n          \"type\": \"string\"\n        },\n        \"h\": {\n          \"type\": \"string\",\n          \"pattern\": \"^([0-9a-f]{2})*(?![\\\\s\\\\S])\"\n        },\n        \"myMap\": {\n          \"type\": \"object\",\n          \"additionalProperties\": {\n            \"type\": \"string\"\n          }\n        }\n      },\n      \"required\": [\n        \"b\",\n        \"i64\",\n        \"i32\",\n        \"f64\",\n        \"f32\",\n        \"newfield\",\n        \"h\",\n        \"myMap\"\n      ],\n      \"additionalProperties\": false\n    }\n  }\n}\n"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/logical-uuid.avsc",
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/root/fields/1/type/logicalType",
+          "code": "AVRO_LOGICAL_TYPE",
+          "classification": "unsupported",
+          "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/2/type/logicalType",
+          "code": "AVRO_LOGICAL_TYPE",
+          "classification": "unsupported",
+          "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type/logicalType",
+          "code": "LOGICAL_TYPE_UNENFORCED",
+          "classification": "not-enforced",
+          "detail": "Only the underlying carrier is projected; logical type interpretation, units, precision and scale remain source-owned",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/2/type/logicalType",
+          "code": "LOGICAL_TYPE_UNENFORCED",
+          "classification": "not-enforced",
+          "detail": "Only the underlying carrier is projected; logical type interpretation, units, precision and scale remain source-owned",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/2/type/type",
+          "code": "LONG_ENCODING",
+          "classification": "representation-change",
+          "detail": "Long values use decimal strings; signed 64-bit bounds remain unenforced by this pattern",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/3/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/3/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "This projection defines a JSON instance binding; it does not convert Avro binary/JSON instances or implement reader/writer schema resolution",
+          "retainedInSource": true
+        }
+      ],
+      "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/avro-order\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"schema.common.Action\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"name\": {\n          \"type\": \"string\"\n        },\n        \"guid\": {\n          \"type\": \"string\"\n        },\n        \"time\": {\n          \"type\": \"string\",\n          \"pattern\": \"^-?(0|[1-9][0-9]*)(?![\\\\s\\\\S])\"\n        },\n        \"requestId\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"type\": \"string\"\n            }\n          ]\n        }\n      },\n      \"required\": [\n        \"name\",\n        \"guid\",\n        \"time\",\n        \"requestId\"\n      ],\n      \"additionalProperties\": false\n    }\n  }\n}\n"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/logical_types_with_multiple_fields.avsc",
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/root/fields/2/type/logicalType",
+          "code": "AVRO_LOGICAL_TYPE",
+          "classification": "unsupported",
+          "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/2/type/logicalType",
+          "code": "LOGICAL_TYPE_UNENFORCED",
+          "classification": "not-enforced",
+          "detail": "Only the underlying carrier is projected; logical type interpretation, units, precision and scale remain source-owned",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/2/type/type",
+          "code": "LONG_ENCODING",
+          "classification": "representation-change",
+          "detail": "Long values use decimal strings; signed 64-bit bounds remain unenforced by this pattern",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/3/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/3/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "This projection defines a JSON instance binding; it does not convert Avro binary/JSON instances or implement reader/writer schema resolution",
+          "retainedInSource": true
+        }
+      ],
+      "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/avro-order\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"schema.common.Action\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"name\": {\n          \"type\": \"string\"\n        },\n        \"uuid\": {\n          \"type\": \"string\"\n        },\n        \"time\": {\n          \"type\": \"string\",\n          \"pattern\": \"^-?(0|[1-9][0-9]*)(?![\\\\s\\\\S])\"\n        },\n        \"requestId\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"type\": \"string\"\n            }\n          ]\n        }\n      },\n      \"required\": [\n        \"name\",\n        \"uuid\",\n        \"time\",\n        \"requestId\"\n      ],\n      \"additionalProperties\": false\n    }\n  }\n}\n"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/regression_error_field_in_record.avsc",
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/root",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/0/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/0/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type/1",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type/1",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/default",
+          "code": "READER_DEFAULT",
+          "classification": "not-enforced",
+          "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "This projection defines a JSON instance binding; it does not convert Avro binary/JSON instances or implement reader/writer schema resolution",
+          "retainedInSource": true
+        }
+      ],
+      "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/avro-order\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"org.apache.avro.specific.test.RecordWithErrorField\",\n      \"description\": \"With custom coders in Avro 1.9, previously successful records with error fields now fail to compile.\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"s\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"type\": \"string\"\n            }\n          ]\n        },\n        \"e\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"$ref\": \"#/$defs/type_1\"\n            }\n          ]\n        }\n      },\n      \"required\": [\n        \"s\",\n        \"e\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"type_1\": {\n      \"title\": \"org.apache.avro.specific.test.TestError\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"message\": {\n          \"type\": \"string\"\n        }\n      },\n      \"required\": [\n        \"message\"\n      ],\n      \"additionalProperties\": false\n    }\n  }\n}\n"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/simple_record.avsc",
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/root",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "This projection defines a JSON instance binding; it does not convert Avro binary/JSON instances or implement reader/writer schema resolution",
+          "retainedInSource": true
+        }
+      ],
+      "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/avro-order\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"SimpleRecord\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"value\": {\n          \"type\": \"integer\",\n          \"minimum\": -2147483648,\n          \"maximum\": 2147483647\n        },\n        \"nullableValue\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"type\": \"integer\",\n              \"minimum\": -2147483648,\n              \"maximum\": 2147483647\n            }\n          ],\n          \"description\": \"doc\"\n        }\n      },\n      \"required\": [\n        \"value\",\n        \"nullableValue\"\n      ],\n      \"additionalProperties\": false\n    }\n  }\n}\n"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/union_and_fixed_fields.avsc",
+      "status": "projected",
+      "issues": [
+        {
+          "path": "/root/fields/1/type/1/logicalType",
+          "code": "AVRO_LOGICAL_TYPE",
+          "classification": "unsupported",
+          "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/0/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/0/type/2",
+          "code": "LONG_ENCODING",
+          "classification": "representation-change",
+          "detail": "Long values use decimal strings; signed 64-bit bounds remain unenforced by this pattern",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/0/type/3",
+          "code": "FLOAT_PRECISION",
+          "classification": "not-enforced",
+          "detail": "JSON numbers do not enforce binary32 rounding or represent non-finite Avro values",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type",
+          "code": "UNION_TAGS",
+          "classification": "representation-change",
+          "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type/1/logicalType",
+          "code": "LOGICAL_TYPE_UNENFORCED",
+          "classification": "not-enforced",
+          "detail": "Only the underlying carrier is projected; logical type interpretation, units, precision and scale remain source-owned",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/1/type/1/type",
+          "code": "LONG_ENCODING",
+          "classification": "representation-change",
+          "detail": "Long values use decimal strings; signed 64-bit bounds remain unenforced by this pattern",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/2/type",
+          "code": "NATIVE_TYPE_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root/fields/2/type",
+          "code": "FIXED_ENCODING",
+          "classification": "representation-change",
+          "detail": "Fixed bytes require lowercase hexadecimal strings with exact byte length",
+          "retainedInSource": true
+        },
+        {
+          "path": "/root",
+          "code": "RECORD_ENCODING",
+          "classification": "representation-change",
+          "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+          "retainedInSource": true
+        },
+        {
+          "path": "",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "This projection defines a JSON instance binding; it does not convert Avro binary/JSON instances or implement reader/writer schema resolution",
+          "retainedInSource": true
+        }
+      ],
+      "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/avro-order\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"org.apache.avro.specific.UnionAndFixedFields\",\n      \"description\": \"Schema for UnionAndFixedFields designed to trigger fixed compiler warnings in generated code\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"u\": {\n          \"anyOf\": [\n            {\n              \"type\": \"boolean\"\n            },\n            {\n              \"type\": \"integer\",\n              \"minimum\": -2147483648,\n              \"maximum\": 2147483647\n            },\n            {\n              \"type\": \"string\",\n              \"pattern\": \"^-?(0|[1-9][0-9]*)(?![\\\\s\\\\S])\"\n            },\n            {\n              \"type\": \"number\"\n            },\n            {\n              \"type\": \"string\"\n            }\n          ]\n        },\n        \"l\": {\n          \"anyOf\": [\n            {\n              \"type\": \"string\"\n            },\n            {\n              \"type\": \"string\",\n              \"pattern\": \"^-?(0|[1-9][0-9]*)(?![\\\\s\\\\S])\"\n            }\n          ]\n        },\n        \"f\": {\n          \"$ref\": \"#/$defs/type_1\"\n        }\n      },\n      \"required\": [\n        \"u\",\n        \"l\",\n        \"f\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"type_1\": {\n      \"title\": \"org.apache.avro.specific.md5\",\n      \"type\": \"string\",\n      \"pattern\": \"^([0-9a-f]{2})*(?![\\\\s\\\\S])\",\n      \"minLength\": 32,\n      \"maxLength\": 32\n    }\n  }\n}\n"
+    }
+  ]
+}

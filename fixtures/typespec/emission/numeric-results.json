@@ -1,0 +1,268 @@
+[
+  {
+    "strategy": "string",
+    "original": {
+      "status": "emitted",
+      "source": {
+        "umf": "0.1.0",
+        "id": "emission",
+        "vocabularies": {
+          "umf.typespec": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.typespec": {
+                    "profile": "typespec-1.16.0-sources",
+                    "entrypoint": "main.tsp",
+                    "files": {
+                      "main.tsp": "import \"@typespec/json-schema\";\nusing TypeSpec.JsonSchema;\n\n// Authored boundary fixture: exact source must survive native emitter losses.\n@jsonSchema\nmodel NumericBoundary {\n  signed: int64;\n  unsigned: uint64;\n  literal: 9007199254740993;\n  @minValue(0) @maxValue(100)\n  percent: int32;\n}\n"
+                    },
+                    "libraries": {
+                      "@typespec/json-schema": "1.16.0"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "emitter": "@typespec/json-schema@1.16.0",
+      "policy": {
+        "options": {
+          "file-type": "json",
+          "int64-strategy": "string"
+        }
+      },
+      "compilation": {
+        "compiler": "@typespec/compiler@1.16.0",
+        "libraries": {
+          "@typespec/json-schema": "1.16.0"
+        },
+        "valid": true,
+        "complete": false,
+        "diagnostics": [],
+        "limitations": [
+          "Compiler ran the selected pinned JSON Schema emitter in the memory host; arbitrary project JavaScript remains unregistered",
+          "Compiler validity does not establish cross-system projection equivalence"
+        ]
+      },
+      "files": {
+        "@typespec/json-schema/NumericBoundary.json": "{\n    \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n    \"$id\": \"NumericBoundary.json\",\n    \"type\": \"object\",\n    \"properties\": {\n        \"signed\": {\n            \"type\": \"string\"\n        },\n        \"unsigned\": {\n            \"type\": \"string\"\n        },\n        \"literal\": {\n            \"type\": \"number\",\n            \"const\": 9007199254740992\n        },\n        \"percent\": {\n            \"type\": \"integer\",\n            \"minimum\": 0,\n            \"maximum\": 100\n        }\n    },\n    \"required\": [\n        \"signed\",\n        \"unsigned\",\n        \"literal\",\n        \"percent\"\n    ]\n}"
+      },
+      "complete": false,
+      "limitations": [
+        "Native emitter output is not proof of lossless TypeSpec semantic projection",
+        "Native JSON Schema 1.16.0 emission can round exact numeric literals through JavaScript numbers (9007199254740993 becomes 9007199254740992); int64-strategy does not prevent literal rounding",
+        "Native JSON Schema 1.16.0 emission omits int64/uint64 bounds; string strategy also omits numeric syntax constraints. Generated validators can therefore accept values outside the source scalar domain",
+        "TypeSpec operations, decorators, source identity and runtime semantics are retained in source, not guaranteed by generated validators"
+      ]
+    },
+    "edited": {
+      "status": "emitted",
+      "source": {
+        "umf": "0.1.0",
+        "id": "emission",
+        "vocabularies": {
+          "umf.typespec": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.typespec": {
+                    "profile": "typespec-1.16.0-sources",
+                    "entrypoint": "main.tsp",
+                    "files": {
+                      "main.tsp": "import \"@typespec/json-schema\";\nusing TypeSpec.JsonSchema;\n\n// Authored boundary fixture: exact source must survive native emitter losses.\n@jsonSchema\nmodel NumericBoundary {\n  signed: int64;\n  unsigned: uint64;\n  literal: 9007199254740993;\n  @minValue(0) @maxValue(50)\n  percent: int32;\n}\n"
+                    },
+                    "libraries": {
+                      "@typespec/json-schema": "1.16.0"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "emitter": "@typespec/json-schema@1.16.0",
+      "policy": {
+        "options": {
+          "file-type": "json",
+          "int64-strategy": "string"
+        }
+      },
+      "compilation": {
+        "compiler": "@typespec/compiler@1.16.0",
+        "libraries": {
+          "@typespec/json-schema": "1.16.0"
+        },
+        "valid": true,
+        "complete": false,
+        "diagnostics": [],
+        "limitations": [
+          "Compiler ran the selected pinned JSON Schema emitter in the memory host; arbitrary project JavaScript remains unregistered",
+          "Compiler validity does not establish cross-system projection equivalence"
+        ]
+      },
+      "files": {
+        "@typespec/json-schema/NumericBoundary.json": "{\n    \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n    \"$id\": \"NumericBoundary.json\",\n    \"type\": \"object\",\n    \"properties\": {\n        \"signed\": {\n            \"type\": \"string\"\n        },\n        \"unsigned\": {\n            \"type\": \"string\"\n        },\n        \"literal\": {\n            \"type\": \"number\",\n            \"const\": 9007199254740992\n        },\n        \"percent\": {\n            \"type\": \"integer\",\n            \"minimum\": 0,\n            \"maximum\": 50\n        }\n    },\n    \"required\": [\n        \"signed\",\n        \"unsigned\",\n        \"literal\",\n        \"percent\"\n    ]\n}"
+      },
+      "complete": false,
+      "limitations": [
+        "Native emitter output is not proof of lossless TypeSpec semantic projection",
+        "Native JSON Schema 1.16.0 emission can round exact numeric literals through JavaScript numbers (9007199254740993 becomes 9007199254740992); int64-strategy does not prevent literal rounding",
+        "Native JSON Schema 1.16.0 emission omits int64/uint64 bounds; string strategy also omits numeric syntax constraints. Generated validators can therefore accept values outside the source scalar domain",
+        "TypeSpec operations, decorators, source identity and runtime semantics are retained in source, not guaranteed by generated validators"
+      ]
+    }
+  },
+  {
+    "strategy": "number",
+    "original": {
+      "status": "emitted",
+      "source": {
+        "umf": "0.1.0",
+        "id": "emission",
+        "vocabularies": {
+          "umf.typespec": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.typespec": {
+                    "profile": "typespec-1.16.0-sources",
+                    "entrypoint": "main.tsp",
+                    "files": {
+                      "main.tsp": "import \"@typespec/json-schema\";\nusing TypeSpec.JsonSchema;\n\n// Authored boundary fixture: exact source must survive native emitter losses.\n@jsonSchema\nmodel NumericBoundary {\n  signed: int64;\n  unsigned: uint64;\n  literal: 9007199254740993;\n  @minValue(0) @maxValue(100)\n  percent: int32;\n}\n"
+                    },
+                    "libraries": {
+                      "@typespec/json-schema": "1.16.0"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "emitter": "@typespec/json-schema@1.16.0",
+      "policy": {
+        "options": {
+          "file-type": "json",
+          "int64-strategy": "number"
+        }
+      },
+      "compilation": {
+        "compiler": "@typespec/compiler@1.16.0",
+        "libraries": {
+          "@typespec/json-schema": "1.16.0"
+        },
+        "valid": true,
+        "complete": false,
+        "diagnostics": [],
+        "limitations": [
+          "Compiler ran the selected pinned JSON Schema emitter in the memory host; arbitrary project JavaScript remains unregistered",
+          "Compiler validity does not establish cross-system projection equivalence"
+        ]
+      },
+      "files": {
+        "@typespec/json-schema/NumericBoundary.json": "{\n    \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n    \"$id\": \"NumericBoundary.json\",\n    \"type\": \"object\",\n    \"properties\": {\n        \"signed\": {\n            \"type\": \"integer\"\n        },\n        \"unsigned\": {\n            \"type\": \"integer\"\n        },\n        \"literal\": {\n            \"type\": \"number\",\n            \"const\": 9007199254740992\n        },\n        \"percent\": {\n            \"type\": \"integer\",\n            \"minimum\": 0,\n            \"maximum\": 100\n        }\n    },\n    \"required\": [\n        \"signed\",\n        \"unsigned\",\n        \"literal\",\n        \"percent\"\n    ]\n}"
+      },
+      "complete": false,
+      "limitations": [
+        "Native emitter output is not proof of lossless TypeSpec semantic projection",
+        "Native JSON Schema 1.16.0 emission can round exact numeric literals through JavaScript numbers (9007199254740993 becomes 9007199254740992); int64-strategy does not prevent literal rounding",
+        "Native JSON Schema 1.16.0 emission omits int64/uint64 bounds; string strategy also omits numeric syntax constraints. Generated validators can therefore accept values outside the source scalar domain",
+        "TypeSpec operations, decorators, source identity and runtime semantics are retained in source, not guaranteed by generated validators"
+      ]
+    },
+    "edited": {
+      "status": "emitted",
+      "source": {
+        "umf": "0.1.0",
+        "id": "emission",
+        "vocabularies": {
+          "umf.typespec": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.typespec": {
+                    "profile": "typespec-1.16.0-sources",
+                    "entrypoint": "main.tsp",
+                    "files": {
+                      "main.tsp": "import \"@typespec/json-schema\";\nusing TypeSpec.JsonSchema;\n\n// Authored boundary fixture: exact source must survive native emitter losses.\n@jsonSchema\nmodel NumericBoundary {\n  signed: int64;\n  unsigned: uint64;\n  literal: 9007199254740993;\n  @minValue(0) @maxValue(50)\n  percent: int32;\n}\n"
+                    },
+                    "libraries": {
+                      "@typespec/json-schema": "1.16.0"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "emitter": "@typespec/json-schema@1.16.0",
+      "policy": {
+        "options": {
+          "file-type": "json",
+          "int64-strategy": "number"
+        }
+      },
+      "compilation": {
+        "compiler": "@typespec/compiler@1.16.0",
+        "libraries": {
+          "@typespec/json-schema": "1.16.0"
+        },
+        "valid": true,
+        "complete": false,
+        "diagnostics": [],
+        "limitations": [
+          "Compiler ran the selected pinned JSON Schema emitter in the memory host; arbitrary project JavaScript remains unregistered",
+          "Compiler validity does not establish cross-system projection equivalence"
+        ]
+      },
+      "files": {
+        "@typespec/json-schema/NumericBoundary.json": "{\n    \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n    \"$id\": \"NumericBoundary.json\",\n    \"type\": \"object\",\n    \"properties\": {\n        \"signed\": {\n            \"type\": \"integer\"\n        },\n        \"unsigned\": {\n            \"type\": \"integer\"\n        },\n        \"literal\": {\n            \"type\": \"number\",\n            \"const\": 9007199254740992\n        },\n        \"percent\": {\n            \"type\": \"integer\",\n            \"minimum\": 0,\n            \"maximum\": 50\n        }\n    },\n    \"required\": [\n        \"signed\",\n        \"unsigned\",\n        \"literal\",\n        \"percent\"\n    ]\n}"
+      },
+      "complete": false,
+      "limitations": [
+        "Native emitter output is not proof of lossless TypeSpec semantic projection",
+        "Native JSON Schema 1.16.0 emission can round exact numeric literals through JavaScript numbers (9007199254740993 becomes 9007199254740992); int64-strategy does not prevent literal rounding",
+        "Native JSON Schema 1.16.0 emission omits int64/uint64 bounds; string strategy also omits numeric syntax constraints. Generated validators can therefore accept values outside the source scalar domain",
+        "TypeSpec operations, decorators, source identity and runtime semantics are retained in source, not guaranteed by generated validators"
+      ]
+    }
+  }
+]

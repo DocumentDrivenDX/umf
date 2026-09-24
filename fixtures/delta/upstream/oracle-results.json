@@ -1,0 +1,5901 @@
+{
+  "runtime": "deltalake 1.6.4",
+  "cases": 141,
+  "nativeComparisons": 140,
+  "nativeAccepted": 134,
+  "results": [
+    {
+      "id": "0",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "1",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 1,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "2",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "3",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 1,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "4",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "5",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 1,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "6",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "7",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "rejected",
+        "errorType": "DeltaError"
+      }
+    },
+    {
+      "id": "8",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "9",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "rejected",
+        "errorType": "DeltaError"
+      }
+    },
+    {
+      "id": "10",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "11",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "rejected",
+        "errorType": "DeltaError"
+      }
+    },
+    {
+      "id": "12",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "13",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 1,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "14",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "15",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 1,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "16",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "17",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "rejected",
+        "errorType": "DeltaError"
+      }
+    },
+    {
+      "id": "18",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "19",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 1,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "20",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "21",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "rejected",
+        "errorType": "DeltaError"
+      }
+    },
+    {
+      "id": "22",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "date",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "county",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "state",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "fips",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "cases",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "deaths",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "23",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "date",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "county",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "state",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "fips",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "cases",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "deaths",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "24",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "birthyear",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "age",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "25",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "birthyear",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "age",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "delta.enableChangeDataFeed": "true",
+          "delta.enableInCommitTimestamps": "true"
+        },
+        "partitions": [
+          "birthyear"
+        ],
+        "protocol": {
+          "reader": 1,
+          "writer": 7,
+          "readerFeatures": [],
+          "writerFeatures": [
+            "appendOnly",
+            "changeDataFeed",
+            "inCommitTimestamp",
+            "invariants"
+          ]
+        }
+      }
+    },
+    {
+      "id": "26",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "birthday",
+              "type": "date",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "long_field",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "boolean_field",
+              "type": "boolean",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "double_field",
+              "type": "double",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "smallint_field",
+              "type": "short",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "27",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "birthday",
+              "type": "date",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "long_field",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "boolean_field",
+              "type": "boolean",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "double_field",
+              "type": "double",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "smallint_field",
+              "type": "short",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "delta.enableChangeDataFeed": "true"
+        },
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 4,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "28",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "comment",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "29",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "comment",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "delta.enableChangeDataFeed": "true",
+          "delta.enableDeletionVectors": "true"
+        },
+        "partitions": [],
+        "protocol": {
+          "reader": 3,
+          "writer": 7,
+          "readerFeatures": [
+            "deletionVectors"
+          ],
+          "writerFeatures": [
+            "changeDataFeed",
+            "deletionVectors"
+          ]
+        }
+      }
+    },
+    {
+      "id": "30",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "birthday",
+              "type": "date",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "31",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "birthday",
+              "type": "date",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "delta.enableChangeDataFeed": "true"
+        },
+        "partitions": [
+          "birthday"
+        ],
+        "protocol": {
+          "reader": 1,
+          "writer": 4,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "32",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {
+                "delta.identity.start": 1,
+                "delta.identity.step": 1,
+                "delta.identity.allowExplicitInsert": false
+              }
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "33",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {
+                "delta.identity.step": 1,
+                "delta.identity.allowExplicitInsert": false,
+                "delta.identity.start": 1
+              }
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "delta.checkpoint.writeStatsAsStruct": "true",
+          "delta.checkpointPolicy": "v2"
+        },
+        "partitions": [],
+        "protocol": {
+          "reader": 3,
+          "writer": 7,
+          "readerFeatures": [
+            "v2Checkpoint"
+          ],
+          "writerFeatures": [
+            "appendOnly",
+            "identityColumns",
+            "invariants",
+            "v2Checkpoint"
+          ]
+        }
+      }
+    },
+    {
+      "id": "34",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {
+                "delta.identity.highWaterMark": 10,
+                "delta.identity.step": 1,
+                "delta.identity.start": 1,
+                "delta.identity.allowExplicitInsert": false
+              }
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "35",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {
+                "delta.identity.start": 1,
+                "delta.identity.highWaterMark": 11,
+                "delta.identity.step": 1,
+                "delta.identity.allowExplicitInsert": false
+              }
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "36",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {
+                "delta.identity.allowExplicitInsert": false,
+                "delta.identity.highWaterMark": 21,
+                "delta.identity.step": 1,
+                "delta.identity.start": 1
+              }
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "37",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {
+                "delta.identity.step": 1,
+                "delta.identity.allowExplicitInsert": false,
+                "delta.identity.highWaterMark": 22,
+                "delta.identity.start": 1
+              }
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "38",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {
+                "delta.identity.step": 1,
+                "delta.identity.allowExplicitInsert": false,
+                "delta.identity.start": 1,
+                "delta.identity.highWaterMark": 22
+              }
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "39",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {
+                "delta.identity.allowExplicitInsert": false,
+                "delta.identity.highWaterMark": 32,
+                "delta.identity.step": 1,
+                "delta.identity.start": 1
+              }
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "40",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {
+                "delta.identity.allowExplicitInsert": false,
+                "delta.identity.start": 1,
+                "delta.identity.step": 1,
+                "delta.identity.highWaterMark": 32
+              }
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "delta.checkpointInterval": "2",
+          "delta.checkpoint.writeStatsAsStruct": "true",
+          "delta.checkpointPolicy": "v2"
+        },
+        "partitions": [],
+        "protocol": {
+          "reader": 3,
+          "writer": 7,
+          "readerFeatures": [
+            "v2Checkpoint"
+          ],
+          "writerFeatures": [
+            "appendOnly",
+            "identityColumns",
+            "invariants",
+            "v2Checkpoint"
+          ]
+        }
+      }
+    },
+    {
+      "id": "41",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {
+                "delta.identity.highWaterMark": 32,
+                "delta.identity.step": 1,
+                "delta.identity.start": 1,
+                "delta.identity.allowExplicitInsert": false
+              }
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "42",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {
+                "delta.identity.highWaterMark": 33,
+                "delta.identity.allowExplicitInsert": false,
+                "delta.identity.start": 1,
+                "delta.identity.step": 1
+              }
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "43",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {
+                "delta.identity.step": 1,
+                "delta.identity.start": 1,
+                "delta.identity.highWaterMark": 43,
+                "delta.identity.allowExplicitInsert": false
+              }
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "44",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {
+                "delta.identity.start": 1,
+                "delta.identity.step": 1,
+                "delta.identity.highWaterMark": 43,
+                "delta.identity.allowExplicitInsert": false
+              }
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "delta.checkpoint.writeStatsAsStruct": "true",
+          "delta.checkpointInterval": "2",
+          "delta.checkpointPolicy": "v2"
+        },
+        "partitions": [],
+        "protocol": {
+          "reader": 3,
+          "writer": 7,
+          "readerFeatures": [
+            "v2Checkpoint"
+          ],
+          "writerFeatures": [
+            "appendOnly",
+            "identityColumns",
+            "invariants",
+            "v2Checkpoint"
+          ]
+        }
+      }
+    },
+    {
+      "id": "45",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {
+                "delta.identity.step": 1,
+                "delta.identity.allowExplicitInsert": false,
+                "delta.identity.start": 1,
+                "delta.identity.highWaterMark": 43
+              }
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "46",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {
+                "delta.identity.step": 1,
+                "delta.identity.allowExplicitInsert": false,
+                "delta.identity.start": 1,
+                "delta.identity.highWaterMark": 44
+              }
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "47",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "some_struct",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "some_struct_member",
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {}
+                  },
+                  {
+                    "name": "some_struct_timestamp",
+                    "type": "timestamp",
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "ts",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "date",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "48",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "some_struct",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "some_struct_member",
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {}
+                  },
+                  {
+                    "name": "some_struct_timestamp",
+                    "type": "timestamp",
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "ts",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "date",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [
+          "date"
+        ],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "49",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "value",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "50",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "value",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 1,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "51",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "value",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "52",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "value",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "53",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "column",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "54",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "column",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "55",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "date",
+              "type": "date",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "dayOfYear",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "56",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "date",
+              "type": "date",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "dayOfYear",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "57",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "k",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "v",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "58",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "k",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "v",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [
+          "k"
+        ],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "59",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "x",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "y",
+              "type": "double",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "z",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "60",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "x",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "y",
+              "type": "double",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "z",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [
+          "x",
+          "y"
+        ],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "61",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "value",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "year",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "month",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "day",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "62",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "value",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "year",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "month",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "day",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [
+          "year",
+          "month",
+          "day"
+        ],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "63",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "x",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "y",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "64",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "x",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "y",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [
+          "x"
+        ],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "65",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "value",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "66",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "value",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "67",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "integer",
+              "type": "integer",
+              "nullable": false,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "68",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "integer",
+              "type": "integer",
+              "nullable": false,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "delta.checkpoint.writeStatsAsStruct": "true",
+          "delta.checkpoint.writeStatsAsJson": "false"
+        },
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "69",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "integer",
+              "type": "integer",
+              "nullable": false,
+              "metadata": {}
+            },
+            {
+              "name": "null",
+              "type": "boolean",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "boolean",
+              "type": "boolean",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "double",
+              "type": "double",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "decimal",
+              "type": "decimal(8,5)",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "string",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "binary",
+              "type": "binary",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "date",
+              "type": "date",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "timestamp",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "struct",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "struct_element",
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "map",
+              "type": {
+                "type": "map",
+                "keyType": "string",
+                "valueType": "string",
+                "valueContainsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "array",
+              "type": {
+                "type": "array",
+                "elementType": "string",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "nested_struct",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "struct_element",
+                    "type": {
+                      "type": "struct",
+                      "fields": [
+                        {
+                          "name": "nested_struct_element",
+                          "type": "string",
+                          "nullable": true,
+                          "metadata": {}
+                        }
+                      ]
+                    },
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "struct_of_array_of_map",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "struct_element",
+                    "type": {
+                      "type": "array",
+                      "elementType": {
+                        "type": "map",
+                        "keyType": "string",
+                        "valueType": "string",
+                        "valueContainsNull": true
+                      },
+                      "containsNull": true
+                    },
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "70",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "integer",
+              "type": "integer",
+              "nullable": false,
+              "metadata": {}
+            },
+            {
+              "name": "null",
+              "type": "boolean",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "boolean",
+              "type": "boolean",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "double",
+              "type": "double",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "decimal",
+              "type": "decimal(8,5)",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "string",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "binary",
+              "type": "binary",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "date",
+              "type": "date",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "timestamp",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "struct",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "struct_element",
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "map",
+              "type": {
+                "type": "map",
+                "keyType": "string",
+                "valueType": "string",
+                "valueContainsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "array",
+              "type": {
+                "type": "array",
+                "elementType": "string",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "nested_struct",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "struct_element",
+                    "type": {
+                      "type": "struct",
+                      "fields": [
+                        {
+                          "name": "nested_struct_element",
+                          "type": "string",
+                          "nullable": true,
+                          "metadata": {}
+                        }
+                      ]
+                    },
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "struct_of_array_of_map",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "struct_element",
+                    "type": {
+                      "type": "array",
+                      "elementType": {
+                        "type": "map",
+                        "keyType": "string",
+                        "valueType": "string",
+                        "valueContainsNull": true
+                      },
+                      "containsNull": true
+                    },
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "new_column",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "71",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "c1",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "c2",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "c3",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "72",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "c1",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "c2",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "c3",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [
+          "c1",
+          "c2"
+        ],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "73",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "integer",
+              "type": "integer",
+              "nullable": false,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "74",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "integer",
+              "type": "integer",
+              "nullable": false,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "delta.checkpoint.writeStatsAsStruct": "true",
+          "delta.checkpoint.writeStatsAsJson": "false"
+        },
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "75",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "integer",
+              "type": "integer",
+              "nullable": false,
+              "metadata": {}
+            },
+            {
+              "name": "null",
+              "type": "boolean",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "boolean",
+              "type": "boolean",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "double",
+              "type": "double",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "decimal",
+              "type": "decimal(8,5)",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "string",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "binary",
+              "type": "binary",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "date",
+              "type": "date",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "timestamp",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "struct",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "struct_element",
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "map",
+              "type": {
+                "type": "map",
+                "keyType": "string",
+                "valueType": "string",
+                "valueContainsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "array",
+              "type": {
+                "type": "array",
+                "elementType": "string",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "nested_struct",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "struct_element",
+                    "type": {
+                      "type": "struct",
+                      "fields": [
+                        {
+                          "name": "nested_struct_element",
+                          "type": "string",
+                          "nullable": true,
+                          "metadata": {}
+                        }
+                      ]
+                    },
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "struct_of_array_of_map",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "struct_element",
+                    "type": {
+                      "type": "array",
+                      "elementType": {
+                        "type": "map",
+                        "keyType": "string",
+                        "valueType": "string",
+                        "valueContainsNull": true
+                      },
+                      "containsNull": true
+                    },
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "76",
+      "kind": "context",
+      "umf": "rejected",
+      "native": {
+        "status": "rejected",
+        "errorType": "DeltaError"
+      }
+    },
+    {
+      "id": "77",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "sherpa_user_id",
+              "type": "decimal(38,0)",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "enabled",
+              "type": "boolean",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "last_login",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "first_name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "last_name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "full_name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "email",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "job_title",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "hire_date",
+              "type": "date",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "skypoint_delta_index",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "78",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "sherpa_user_id",
+              "type": "decimal(38,0)",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "enabled",
+              "type": "boolean",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "last_login",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "first_name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "last_name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "full_name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "email",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "job_title",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "hire_date",
+              "type": "date",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "skypoint_delta_index",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "pipelines.pipelineId": "5c7b47e9-12d6-4986-a601-6716734281ce",
+          "pipelines.autoOptimize.managed": "false",
+          "pipelines.metastore.tableName": "automation_retailsandbox.SnowflakeTest_Snowflake_DTL_SHERPA_USER_TABLE"
+        },
+        "partitions": [],
+        "protocol": {
+          "reader": 2,
+          "writer": 5,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "79",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "integer",
+              "type": "integer",
+              "nullable": false,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "80",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "integer",
+              "type": "integer",
+              "nullable": false,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "delta.checkpoint.writeStatsAsStruct": "true",
+          "delta.checkpoint.writeStatsAsJson": "false"
+        },
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "81",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "integer",
+              "type": "integer",
+              "nullable": false,
+              "metadata": {}
+            },
+            {
+              "name": "null",
+              "type": "boolean",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "boolean",
+              "type": "boolean",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "double",
+              "type": "double",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "decimal",
+              "type": "decimal(8,5)",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "string",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "binary",
+              "type": "binary",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "date",
+              "type": "date",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "timestamp",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "struct",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "struct_element",
+                    "type": "string",
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "map",
+              "type": {
+                "type": "map",
+                "keyType": "string",
+                "valueType": "string",
+                "valueContainsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "array",
+              "type": {
+                "type": "array",
+                "elementType": "string",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "nested_struct",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "struct_element",
+                    "type": {
+                      "type": "struct",
+                      "fields": [
+                        {
+                          "name": "nested_struct_element",
+                          "type": "string",
+                          "nullable": true,
+                          "metadata": {}
+                        }
+                      ]
+                    },
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "struct_of_array_of_map",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "struct_element",
+                    "type": {
+                      "type": "array",
+                      "elementType": {
+                        "type": "map",
+                        "keyType": "string",
+                        "valueType": "string",
+                        "valueContainsNull": true
+                      },
+                      "containsNull": true
+                    },
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "82",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "as_array_int",
+              "type": {
+                "type": "array",
+                "elementType": "integer",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "as_array_long",
+              "type": {
+                "type": "array",
+                "elementType": "long",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "as_array_byte",
+              "type": {
+                "type": "array",
+                "elementType": "byte",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "as_array_short",
+              "type": {
+                "type": "array",
+                "elementType": "short",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "as_array_boolean",
+              "type": {
+                "type": "array",
+                "elementType": "boolean",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "as_array_float",
+              "type": {
+                "type": "array",
+                "elementType": "float",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "as_array_double",
+              "type": {
+                "type": "array",
+                "elementType": "double",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "as_array_string",
+              "type": {
+                "type": "array",
+                "elementType": "string",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "as_array_binary",
+              "type": {
+                "type": "array",
+                "elementType": "binary",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "as_array_big_decimal",
+              "type": {
+                "type": "array",
+                "elementType": "decimal(1,0)",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "83",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "as_array_int",
+              "type": {
+                "type": "array",
+                "elementType": "integer",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "as_array_long",
+              "type": {
+                "type": "array",
+                "elementType": "long",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "as_array_byte",
+              "type": {
+                "type": "array",
+                "elementType": "byte",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "as_array_short",
+              "type": {
+                "type": "array",
+                "elementType": "short",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "as_array_boolean",
+              "type": {
+                "type": "array",
+                "elementType": "boolean",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "as_array_float",
+              "type": {
+                "type": "array",
+                "elementType": "float",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "as_array_double",
+              "type": {
+                "type": "array",
+                "elementType": "double",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "as_array_string",
+              "type": {
+                "type": "array",
+                "elementType": "string",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "as_array_binary",
+              "type": {
+                "type": "array",
+                "elementType": "binary",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "as_array_big_decimal",
+              "type": {
+                "type": "array",
+                "elementType": "decimal(1,0)",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "84",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "date",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "ClientIP",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "ClientRequestHost",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "ClientRequestMethod",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "ClientRequestURI",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "EdgeEndTimestamp",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "EdgeResponseBytes",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "EdgeResponseStatus",
+              "type": "short",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "EdgeStartTimestamp",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "85",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "date",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "ClientIP",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "ClientRequestHost",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "ClientRequestMethod",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "ClientRequestURI",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "EdgeEndTimestamp",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "EdgeResponseBytes",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "EdgeResponseStatus",
+              "type": "short",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "EdgeStartTimestamp",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [
+          "date"
+        ],
+        "protocol": {
+          "reader": 1,
+          "writer": 1,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "86",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "ID_D_DATE",
+              "type": "long",
+              "nullable": true,
+              "metadata": {
+                "delta.identity.step": 1,
+                "delta.identity.allowExplicitInsert": false,
+                "delta.identity.start": 1
+              }
+            },
+            {
+              "name": "TXT_DateKey",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "87",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "ID_D_DATE",
+              "type": "long",
+              "nullable": true,
+              "metadata": {
+                "delta.identity.step": 1,
+                "delta.identity.allowExplicitInsert": false,
+                "delta.identity.start": 1
+              }
+            },
+            {
+              "name": "TXT_DateKey",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 6,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "88",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "timestamp",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "temperature",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "date",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "89",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "timestamp",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "temperature",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "date",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [
+          "date"
+        ],
+        "protocol": {
+          "reader": 1,
+          "writer": 1,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "90",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "letter",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "int",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "date",
+              "type": "date",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "91",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "letter",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "int",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "date",
+              "type": "date",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "delta.checkpointInterval": "2"
+        },
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "92",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "year",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "is_active",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "event_date",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "category",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "93",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "year",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "is_active",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "event_date",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "category",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [
+          "year",
+          "is_active",
+          "event_date",
+          "category"
+        ],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "94",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "x",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "95",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "x",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "96",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "value",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "97",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "value",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "98",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "99",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "100",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "101",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "rejected",
+        "errorType": "DeltaError"
+      }
+    },
+    {
+      "id": "102",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "103",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "delta.enableChangeDataFeed": "true",
+          "description": "CDC test Table"
+        },
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 4,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "104",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "version",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "105",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "version",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "106",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "v",
+              "type": "variant",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "array_of_variants",
+              "type": {
+                "type": "array",
+                "elementType": "variant",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "struct_of_variants",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "v",
+                    "type": "variant",
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "map_of_variants",
+              "type": {
+                "type": "map",
+                "keyType": "string",
+                "valueType": "variant",
+                "valueContainsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "array_of_struct_of_variants",
+              "type": {
+                "type": "array",
+                "elementType": {
+                  "type": "struct",
+                  "fields": [
+                    {
+                      "name": "v",
+                      "type": "variant",
+                      "nullable": true,
+                      "metadata": {}
+                    }
+                  ]
+                },
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "struct_of_array_of_variants",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "v",
+                    "type": {
+                      "type": "array",
+                      "elementType": "variant",
+                      "containsNull": true
+                    },
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "107",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "v",
+              "type": "variant",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "array_of_variants",
+              "type": {
+                "type": "array",
+                "elementType": "variant",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "struct_of_variants",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "v",
+                    "type": "variant",
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "map_of_variants",
+              "type": {
+                "type": "map",
+                "keyType": "string",
+                "valueType": "variant",
+                "valueContainsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "array_of_struct_of_variants",
+              "type": {
+                "type": "array",
+                "elementType": {
+                  "type": "struct",
+                  "fields": [
+                    {
+                      "name": "v",
+                      "type": "variant",
+                      "nullable": true,
+                      "metadata": {}
+                    }
+                  ]
+                },
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "struct_of_array_of_variants",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "v",
+                    "type": {
+                      "type": "array",
+                      "elementType": "variant",
+                      "containsNull": true
+                    },
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "delta.enableVariantShredding": "true",
+          "delta.checkpointInterval": "2"
+        },
+        "partitions": [],
+        "protocol": {
+          "reader": 3,
+          "writer": 7,
+          "readerFeatures": [
+            "variantShredding-preview",
+            "variantType"
+          ],
+          "writerFeatures": [
+            "appendOnly",
+            "invariants",
+            "variantShredding-preview",
+            "variantType"
+          ]
+        }
+      }
+    },
+    {
+      "id": "108",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "v",
+              "type": "variant",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "array_of_variants",
+              "type": {
+                "type": "array",
+                "elementType": "variant",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "struct_of_variants",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "v",
+                    "type": "variant",
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "map_of_variants",
+              "type": {
+                "type": "map",
+                "keyType": "string",
+                "valueType": "variant",
+                "valueContainsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "array_of_struct_of_variants",
+              "type": {
+                "type": "array",
+                "elementType": {
+                  "type": "struct",
+                  "fields": [
+                    {
+                      "name": "v",
+                      "type": "variant",
+                      "nullable": true,
+                      "metadata": {}
+                    }
+                  ]
+                },
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "struct_of_array_of_variants",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "v",
+                    "type": {
+                      "type": "array",
+                      "elementType": "variant",
+                      "containsNull": true
+                    },
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "109",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "v",
+              "type": "variant",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "array_of_variants",
+              "type": {
+                "type": "array",
+                "elementType": "variant",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "struct_of_variants",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "v",
+                    "type": "variant",
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "map_of_variants",
+              "type": {
+                "type": "map",
+                "keyType": "string",
+                "valueType": "variant",
+                "valueContainsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "array_of_struct_of_variants",
+              "type": {
+                "type": "array",
+                "elementType": {
+                  "type": "struct",
+                  "fields": [
+                    {
+                      "name": "v",
+                      "type": "variant",
+                      "nullable": true,
+                      "metadata": {}
+                    }
+                  ]
+                },
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "struct_of_array_of_variants",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "v",
+                    "type": {
+                      "type": "array",
+                      "elementType": "variant",
+                      "containsNull": true
+                    },
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "delta.checkpointInterval": "2"
+        },
+        "partitions": [],
+        "protocol": {
+          "reader": 3,
+          "writer": 7,
+          "readerFeatures": [
+            "variantType-preview"
+          ],
+          "writerFeatures": [
+            "appendOnly",
+            "invariants",
+            "variantType-preview"
+          ]
+        }
+      }
+    },
+    {
+      "id": "110",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "v",
+              "type": "variant",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "array_of_variants",
+              "type": {
+                "type": "array",
+                "elementType": "variant",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "struct_of_variants",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "v",
+                    "type": "variant",
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "map_of_variants",
+              "type": {
+                "type": "map",
+                "keyType": "string",
+                "valueType": "variant",
+                "valueContainsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "array_of_struct_of_variants",
+              "type": {
+                "type": "array",
+                "elementType": {
+                  "type": "struct",
+                  "fields": [
+                    {
+                      "name": "v",
+                      "type": "variant",
+                      "nullable": true,
+                      "metadata": {}
+                    }
+                  ]
+                },
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "struct_of_array_of_variants",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "v",
+                    "type": {
+                      "type": "array",
+                      "elementType": "variant",
+                      "containsNull": true
+                    },
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "111",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "v",
+              "type": "variant",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "array_of_variants",
+              "type": {
+                "type": "array",
+                "elementType": "variant",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "struct_of_variants",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "v",
+                    "type": "variant",
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "map_of_variants",
+              "type": {
+                "type": "map",
+                "keyType": "string",
+                "valueType": "variant",
+                "valueContainsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "array_of_struct_of_variants",
+              "type": {
+                "type": "array",
+                "elementType": {
+                  "type": "struct",
+                  "fields": [
+                    {
+                      "name": "v",
+                      "type": "variant",
+                      "nullable": true,
+                      "metadata": {}
+                    }
+                  ]
+                },
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "struct_of_array_of_variants",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "v",
+                    "type": {
+                      "type": "array",
+                      "elementType": "variant",
+                      "containsNull": true
+                    },
+                    "nullable": true,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 3,
+          "writer": 7,
+          "readerFeatures": [
+            "variantType"
+          ],
+          "writerFeatures": [
+            "appendOnly",
+            "invariants",
+            "variantType"
+          ]
+        }
+      }
+    },
+    {
+      "id": "112",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "value",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "113",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "value",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "delta.columnMapping.mode": "none",
+          "delta.enableDeletionVectors": "true"
+        },
+        "partitions": [],
+        "protocol": {
+          "reader": 3,
+          "writer": 7,
+          "readerFeatures": [
+            "deletionVectors"
+          ],
+          "writerFeatures": [
+            "deletionVectors"
+          ]
+        }
+      }
+    },
+    {
+      "id": "114",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "value",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "115",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "value",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "116",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "price",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "sold",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "deleted",
+              "type": "boolean",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "117",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "price",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "sold",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "deleted",
+              "type": "boolean",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "118",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "Company Very Short",
+              "type": "string",
+              "nullable": true,
+              "metadata": {
+                "delta.columnMapping.physicalName": "col-173b4db9-b5ad-427f-9e75-516aae37fbbb",
+                "delta.columnMapping.id": 1
+              }
+            },
+            {
+              "name": "Super Name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {
+                "delta.columnMapping.id": 2,
+                "delta.columnMapping.physicalName": "col-3877fd94-0973-4941-ac6b-646849a1ff65"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "119",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "Company Very Short",
+              "type": "string",
+              "nullable": true,
+              "metadata": {
+                "delta.columnMapping.id": 1,
+                "delta.columnMapping.physicalName": "col-173b4db9-b5ad-427f-9e75-516aae37fbbb"
+              }
+            },
+            {
+              "name": "Super Name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {
+                "delta.columnMapping.id": 2,
+                "delta.columnMapping.physicalName": "col-3877fd94-0973-4941-ac6b-646849a1ff65"
+              }
+            }
+          ]
+        },
+        "configuration": {
+          "delta.autoOptimize.optimizeWrite": "true",
+          "delta.columnMapping.maxColumnId": "2",
+          "delta.targetFileSize": "33554432",
+          "delta.columnMapping.mode": "name",
+          "delta.tuneFileSizesForRewrites": "true"
+        },
+        "partitions": [
+          "Company Very Short"
+        ],
+        "protocol": {
+          "reader": 2,
+          "writer": 5,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "120",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "address",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "age",
+              "type": "double",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "company",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "nbr",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "phone_number",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "121",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "address",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "age",
+              "type": "double",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "company",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "nbr",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "phone_number",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "delta.tuneFileSizesForRewrites": "true",
+          "delta.autoOptimize.optimizeWrite": "true",
+          "delta.targetFileSize": "33554432"
+        },
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "122",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "address",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "age",
+              "type": "double",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "company",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "nbr",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "phone_number",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "123",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "address",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "age",
+              "type": "double",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "company",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "nbr",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "phone_number",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "delta.autoOptimize.optimizeWrite": "true",
+          "delta.tuneFileSizesForRewrites": "true",
+          "delta.targetFileSize": "33554432"
+        },
+        "partitions": [],
+        "protocol": {
+          "reader": 3,
+          "writer": 7,
+          "readerFeatures": [],
+          "writerFeatures": [
+            "appendOnly",
+            "invariants"
+          ]
+        }
+      }
+    },
+    {
+      "id": "124",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "address",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "age",
+              "type": "double",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "company",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "nbr",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "phone_number",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "125",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "address",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "age",
+              "type": "double",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "company",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "nbr",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "phone_number",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "delta.tuneFileSizesForRewrites": "true",
+          "delta.enableDeletionVectors": "true",
+          "delta.autoOptimize.optimizeWrite": "true",
+          "delta.targetFileSize": "33554432"
+        },
+        "partitions": [],
+        "protocol": {
+          "reader": 3,
+          "writer": 7,
+          "readerFeatures": [
+            "deletionVectors"
+          ],
+          "writerFeatures": [
+            "appendOnly",
+            "deletionVectors",
+            "invariants"
+          ]
+        }
+      }
+    },
+    {
+      "id": "126",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "BIG_DATE",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "NORMAL_DATE",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "SOME_VALUE",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "127",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "BIG_DATE",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "NORMAL_DATE",
+              "type": "timestamp",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "SOME_VALUE",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "128",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "129",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "delta.rowTracking.materializedRowCommitVersionColumnName": "_row-commit-version-col-2f60dcc1-9e36-4424-95e7-799b707e4ddb",
+          "delta.checkpoint.writeStatsAsJson": "false",
+          "delta.rowTracking.materializedRowIdColumnName": "_row-id-col-4cbc7924-f662-4db1-aa59-22c23f59eb5d",
+          "delta.enableRowTracking": "true",
+          "delta.checkpoint.writeStatsAsStruct": "true",
+          "delta.liquid.clusteringColumns": "id",
+          "delta.enableDeletionVectors": "true"
+        },
+        "partitions": [],
+        "protocol": {
+          "reader": 3,
+          "writer": 7,
+          "readerFeatures": [
+            "deletionVectors"
+          ],
+          "writerFeatures": [
+            "deletionVectors",
+            "domainMetadata",
+            "liquid",
+            "rowTracking"
+          ]
+        }
+      }
+    },
+    {
+      "id": "130",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "s",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "l",
+                    "type": "long",
+                    "nullable": false,
+                    "metadata": {}
+                  },
+                  {
+                    "name": "b",
+                    "type": "boolean",
+                    "nullable": false,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": false,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "131",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "s",
+              "type": {
+                "type": "struct",
+                "fields": [
+                  {
+                    "name": "l",
+                    "type": "long",
+                    "nullable": false,
+                    "metadata": {}
+                  },
+                  {
+                    "name": "b",
+                    "type": "boolean",
+                    "nullable": false,
+                    "metadata": {}
+                  }
+                ]
+              },
+              "nullable": false,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {},
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    },
+    {
+      "id": "132",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "description",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "133",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "description",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "delta.enableDeletionVectors": "true"
+        },
+        "partitions": [
+          "id"
+        ],
+        "protocol": {
+          "reader": 3,
+          "writer": 7,
+          "readerFeatures": [
+            "deletionVectors"
+          ],
+          "writerFeatures": [
+            "deletionVectors"
+          ]
+        }
+      }
+    },
+    {
+      "id": "134",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {
+                "delta.columnMapping.physicalName": "id",
+                "delta.columnMapping.id": 1
+              }
+            },
+            {
+              "name": "description",
+              "type": "string",
+              "nullable": true,
+              "metadata": {
+                "delta.columnMapping.id": 2,
+                "delta.columnMapping.physicalName": "description"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "135",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {
+                "delta.columnMapping.physicalName": "id",
+                "delta.columnMapping.id": 1
+              }
+            },
+            {
+              "name": "description",
+              "type": "string",
+              "nullable": true,
+              "metadata": {
+                "delta.columnMapping.physicalName": "description",
+                "delta.columnMapping.id": 2
+              }
+            }
+          ]
+        },
+        "configuration": {
+          "delta.columnMapping.mode": "name",
+          "delta.columnMapping.maxColumnId": "2",
+          "delta.enableDeletionVectors": "true"
+        },
+        "partitions": [
+          "id"
+        ],
+        "protocol": {
+          "reader": 3,
+          "writer": 7,
+          "readerFeatures": [
+            "columnMapping",
+            "deletionVectors"
+          ],
+          "writerFeatures": [
+            "appendOnly",
+            "changeDataFeed",
+            "checkConstraints",
+            "columnMapping",
+            "deletionVectors",
+            "generatedColumns",
+            "invariants"
+          ]
+        }
+      }
+    },
+    {
+      "id": "136",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "newid",
+              "type": "integer",
+              "nullable": true,
+              "metadata": {
+                "delta.columnMapping.id": 1,
+                "delta.columnMapping.physicalName": "id"
+              }
+            },
+            {
+              "name": "description",
+              "type": "string",
+              "nullable": true,
+              "metadata": {
+                "delta.columnMapping.physicalName": "description",
+                "delta.columnMapping.id": 2
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "137",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "138",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "delta.checkpointPolicy": "v2"
+        },
+        "partitions": [],
+        "protocol": {
+          "reader": 3,
+          "writer": 7,
+          "readerFeatures": [
+            "v2Checkpoint"
+          ],
+          "writerFeatures": [
+            "appendOnly",
+            "invariants",
+            "v2Checkpoint"
+          ]
+        }
+      }
+    },
+    {
+      "id": "139",
+      "kind": "schema",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "letter",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "int",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "date",
+              "type": "date",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "140",
+      "kind": "context",
+      "umf": "round-tripped",
+      "native": {
+        "status": "accepted",
+        "schema": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "letter",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "int",
+              "type": "long",
+              "nullable": true,
+              "metadata": {}
+            },
+            {
+              "name": "date",
+              "type": "date",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "configuration": {
+          "delta.checkpointInterval": "2"
+        },
+        "partitions": [],
+        "protocol": {
+          "reader": 1,
+          "writer": 2,
+          "readerFeatures": [],
+          "writerFeatures": []
+        }
+      }
+    }
+  ]
+}

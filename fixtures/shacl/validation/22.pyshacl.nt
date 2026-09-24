@@ -1,0 +1,35 @@
+_:N54c8197092b54da58a55dbe85cdc6196 <http://www.w3.org/ns/shacl#result> _:Ne2f0cc2647bf40dd8c845855e28faf7d .
+_:Nbf6bd5508f44417e885e0ba8322a4acd <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxInclusive-001.test#TestShape> .
+_:N342e6e8d17954d088734a1a8d090c480 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N54c8197092b54da58a55dbe85cdc6196 <http://www.w3.org/ns/shacl#result> _:N6e72adcaa6464b5d8acdae4780379a29 .
+_:N6e72adcaa6464b5d8acdae4780379a29 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Ne2f0cc2647bf40dd8c845855e28faf7d <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Ne2f0cc2647bf40dd8c845855e28faf7d <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxInclusiveConstraintComponent> .
+_:N342e6e8d17954d088734a1a8d090c480 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxInclusive-001.test#TestShape> .
+_:N6e72adcaa6464b5d8acdae4780379a29 <http://www.w3.org/ns/shacl#resultMessage> "Value is not <= Literal(\"4\", datatype=xsd:integer)" .
+_:Nbf6bd5508f44417e885e0ba8322a4acd <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Ne2f0cc2647bf40dd8c845855e28faf7d <http://www.w3.org/ns/shacl#focusNode> "Hello" .
+_:Ne2f0cc2647bf40dd8c845855e28faf7d <http://www.w3.org/ns/shacl#resultMessage> "Value is not <= Literal(\"4\", datatype=xsd:integer)" .
+_:Nbf6bd5508f44417e885e0ba8322a4acd <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxInclusiveConstraintComponent> .
+_:N6e72adcaa6464b5d8acdae4780379a29 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxInclusiveConstraintComponent> .
+_:Ne2f0cc2647bf40dd8c845855e28faf7d <http://www.w3.org/ns/shacl#value> "Hello" .
+_:n916074c7ee57435491df7c49b01345efb8 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://datashapes.org/sh/tests/core/node/maxInclusive-001.test#TestClass> .
+_:Nbf6bd5508f44417e885e0ba8322a4acd <http://www.w3.org/ns/shacl#resultMessage> "Value is not <= Literal(\"4\", datatype=xsd:integer)" .
+_:Nbf6bd5508f44417e885e0ba8322a4acd <http://www.w3.org/ns/shacl#focusNode> "4.1"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+_:N6e72adcaa6464b5d8acdae4780379a29 <http://www.w3.org/ns/shacl#focusNode> _:n916074c7ee57435491df7c49b01345efb8 .
+_:N342e6e8d17954d088734a1a8d090c480 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N54c8197092b54da58a55dbe85cdc6196 <http://www.w3.org/ns/shacl#result> _:N342e6e8d17954d088734a1a8d090c480 .
+_:N342e6e8d17954d088734a1a8d090c480 <http://www.w3.org/ns/shacl#resultMessage> "Value is not <= Literal(\"4\", datatype=xsd:integer)" .
+_:Nbf6bd5508f44417e885e0ba8322a4acd <http://www.w3.org/ns/shacl#value> "4.1"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+_:N6e72adcaa6464b5d8acdae4780379a29 <http://www.w3.org/ns/shacl#value> _:n916074c7ee57435491df7c49b01345efb8 .
+_:N342e6e8d17954d088734a1a8d090c480 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxInclusiveConstraintComponent> .
+_:N6e72adcaa6464b5d8acdae4780379a29 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N342e6e8d17954d088734a1a8d090c480 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/maxInclusive-001.test#John> .
+_:N54c8197092b54da58a55dbe85cdc6196 <http://www.w3.org/ns/shacl#result> _:Nbf6bd5508f44417e885e0ba8322a4acd .
+_:N6e72adcaa6464b5d8acdae4780379a29 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxInclusive-001.test#TestShape> .
+_:N54c8197092b54da58a55dbe85cdc6196 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N54c8197092b54da58a55dbe85cdc6196 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Ne2f0cc2647bf40dd8c845855e28faf7d <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxInclusive-001.test#TestShape> .
+_:N342e6e8d17954d088734a1a8d090c480 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/maxInclusive-001.test#John> .
+_:Ne2f0cc2647bf40dd8c845855e28faf7d <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nbf6bd5508f44417e885e0ba8322a4acd <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .

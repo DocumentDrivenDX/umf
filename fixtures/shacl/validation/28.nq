@@ -1,0 +1,35 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b13421 .
+_:report <http://www.w3.org/ns/shacl#result> _:b13422 .
+_:report <http://www.w3.org/ns/shacl#result> _:b13423 .
+_:report <http://www.w3.org/ns/shacl#result> _:b13424 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b13421 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b13421 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b13421 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinLengthConstraintComponent> .
+_:b13421 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/minLength-001.test#TestShape> .
+_:b13421 <http://www.w3.org/ns/shacl#focusNode> _:s_e_000062000031000039000030000031000039 .
+_:b13421 <http://www.w3.org/ns/shacl#value> _:s_e_000062000031000039000030000031000039 .
+_:b13421 <http://www.w3.org/ns/shacl#resultMessage> "Value has less than 4 characters" .
+_:s_e_000062000031000039000030000031000039 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://datashapes.org/sh/tests/core/node/minLength-001.test#TestClass> .
+_:b13422 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b13422 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b13422 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinLengthConstraintComponent> .
+_:b13422 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/minLength-001.test#TestShape> .
+_:b13422 <http://www.w3.org/ns/shacl#focusNode> <a:b> .
+_:b13422 <http://www.w3.org/ns/shacl#value> <a:b> .
+_:b13422 <http://www.w3.org/ns/shacl#resultMessage> "Value has less than 4 characters" .
+_:b13423 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b13423 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b13423 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinLengthConstraintComponent> .
+_:b13423 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/minLength-001.test#TestShape> .
+_:b13423 <http://www.w3.org/ns/shacl#focusNode> "123"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:b13423 <http://www.w3.org/ns/shacl#value> "123"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:b13423 <http://www.w3.org/ns/shacl#resultMessage> "Value has less than 4 characters" .
+_:b13424 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b13424 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b13424 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinLengthConstraintComponent> .
+_:b13424 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/minLength-001.test#TestShape> .
+_:b13424 <http://www.w3.org/ns/shacl#focusNode> "Hel" .
+_:b13424 <http://www.w3.org/ns/shacl#value> "Hel" .
+_:b13424 <http://www.w3.org/ns/shacl#resultMessage> "Value has less than 4 characters" .

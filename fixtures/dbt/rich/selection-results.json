@@ -1,0 +1,555 @@
+{
+  "sourceSha256": "3cb2f6904d9fd4cc4ec584c5532707ac9a6c266340435476ceb91519fd22769c",
+  "results": [
+    {
+      "id": "semantic-chain",
+      "options": {
+        "roots": [
+          "saved_query.umf_fixture.daily_totals"
+        ]
+      },
+      "selection": {
+        "status": "selected",
+        "complete": false,
+        "roots": [
+          "saved_query.umf_fixture.daily_totals"
+        ],
+        "includeMacros": false,
+        "maxDepth": 16,
+        "maxNodes": 256,
+        "nodes": [
+          {
+            "id": "saved_query.umf_fixture.daily_totals",
+            "collection": "saved_queries",
+            "path": "/saved_queries/saved_query.umf_fixture.daily_totals",
+            "depth": 0
+          },
+          {
+            "id": "metric.umf_fixture.total_amount",
+            "collection": "metrics",
+            "path": "/metrics/metric.umf_fixture.total_amount",
+            "depth": 1
+          },
+          {
+            "id": "semantic_model.umf_fixture.orders_semantic",
+            "collection": "semantic_models",
+            "path": "/semantic_models/semantic_model.umf_fixture.orders_semantic",
+            "depth": 2
+          },
+          {
+            "id": "model.umf_fixture.order_events",
+            "collection": "nodes",
+            "path": "/nodes/model.umf_fixture.order_events",
+            "depth": 3
+          },
+          {
+            "id": "seed.umf_fixture.orders",
+            "collection": "nodes",
+            "path": "/nodes/seed.umf_fixture.orders",
+            "depth": 4
+          }
+        ],
+        "edges": [
+          {
+            "dependent": "saved_query.umf_fixture.daily_totals",
+            "dependency": "metric.umf_fixture.total_amount",
+            "kind": "resource",
+            "path": "/saved_queries/saved_query.umf_fixture.daily_totals/depends_on/nodes/0",
+            "resolved": true
+          },
+          {
+            "dependent": "metric.umf_fixture.total_amount",
+            "dependency": "semantic_model.umf_fixture.orders_semantic",
+            "kind": "resource",
+            "path": "/metrics/metric.umf_fixture.total_amount/depends_on/nodes/0",
+            "resolved": true
+          },
+          {
+            "dependent": "semantic_model.umf_fixture.orders_semantic",
+            "dependency": "model.umf_fixture.order_events",
+            "kind": "resource",
+            "path": "/semantic_models/semantic_model.umf_fixture.orders_semantic/depends_on/nodes/0",
+            "resolved": true
+          },
+          {
+            "dependent": "model.umf_fixture.order_events",
+            "dependency": "seed.umf_fixture.orders",
+            "kind": "resource",
+            "path": "/nodes/model.umf_fixture.order_events/depends_on/nodes/0",
+            "resolved": true
+          }
+        ],
+        "boundary": [],
+        "diagnostics": [
+          {
+            "code": "DBT_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Native schema shapes do not establish graph/SQL/Jinja validity, format constraints or exact-number constraints beyond JS precision"
+          },
+          {
+            "code": "DBT_MANIFEST_GRAPH_INCOMPLETE",
+            "path": "",
+            "severity": "warning",
+            "message": "Explicit active references and redundant maps only; disabled alternatives, inferred SQL/Jinja references, group semantics, cycle legality and execution are not validated. Duplicate edge occurrences are retained."
+          },
+          {
+            "code": "DBT_SELECTION_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Upstream explicit-reference view only. Full original source is retained; boundary entries record omitted edges. Not a standalone runnable manifest or complete SQL/Jinja context."
+          }
+        ]
+      }
+    },
+    {
+      "id": "depth-bound",
+      "options": {
+        "roots": [
+          "saved_query.umf_fixture.daily_totals"
+        ],
+        "maxDepth": 1
+      },
+      "selection": {
+        "status": "selected",
+        "complete": false,
+        "roots": [
+          "saved_query.umf_fixture.daily_totals"
+        ],
+        "includeMacros": false,
+        "maxDepth": 1,
+        "maxNodes": 256,
+        "nodes": [
+          {
+            "id": "saved_query.umf_fixture.daily_totals",
+            "collection": "saved_queries",
+            "path": "/saved_queries/saved_query.umf_fixture.daily_totals",
+            "depth": 0
+          },
+          {
+            "id": "metric.umf_fixture.total_amount",
+            "collection": "metrics",
+            "path": "/metrics/metric.umf_fixture.total_amount",
+            "depth": 1
+          }
+        ],
+        "edges": [
+          {
+            "dependent": "saved_query.umf_fixture.daily_totals",
+            "dependency": "metric.umf_fixture.total_amount",
+            "kind": "resource",
+            "path": "/saved_queries/saved_query.umf_fixture.daily_totals/depends_on/nodes/0",
+            "resolved": true
+          }
+        ],
+        "boundary": [
+          {
+            "edge": {
+              "dependent": "metric.umf_fixture.total_amount",
+              "dependency": "semantic_model.umf_fixture.orders_semantic",
+              "kind": "resource",
+              "path": "/metrics/metric.umf_fixture.total_amount/depends_on/nodes/0",
+              "resolved": true
+            },
+            "reason": "depth-limit"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "DBT_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Native schema shapes do not establish graph/SQL/Jinja validity, format constraints or exact-number constraints beyond JS precision"
+          },
+          {
+            "code": "DBT_MANIFEST_GRAPH_INCOMPLETE",
+            "path": "",
+            "severity": "warning",
+            "message": "Explicit active references and redundant maps only; disabled alternatives, inferred SQL/Jinja references, group semantics, cycle legality and execution are not validated. Duplicate edge occurrences are retained."
+          },
+          {
+            "code": "DBT_SELECTION_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Upstream explicit-reference view only. Full original source is retained; boundary entries record omitted edges. Not a standalone runnable manifest or complete SQL/Jinja context."
+          }
+        ]
+      }
+    },
+    {
+      "id": "node-bound",
+      "options": {
+        "roots": [
+          "model.umf_fixture.order_totals"
+        ],
+        "maxNodes": 1
+      },
+      "selection": {
+        "status": "selected",
+        "complete": false,
+        "roots": [
+          "model.umf_fixture.order_totals"
+        ],
+        "includeMacros": false,
+        "maxDepth": 16,
+        "maxNodes": 1,
+        "nodes": [
+          {
+            "id": "model.umf_fixture.order_totals",
+            "collection": "nodes",
+            "path": "/nodes/model.umf_fixture.order_totals",
+            "depth": 0
+          }
+        ],
+        "edges": [],
+        "boundary": [
+          {
+            "edge": {
+              "dependent": "model.umf_fixture.order_totals",
+              "dependency": "seed.umf_fixture.orders",
+              "kind": "resource",
+              "path": "/nodes/model.umf_fixture.order_totals/depends_on/nodes/0",
+              "resolved": true
+            },
+            "reason": "node-limit"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "DBT_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Native schema shapes do not establish graph/SQL/Jinja validity, format constraints or exact-number constraints beyond JS precision"
+          },
+          {
+            "code": "DBT_MANIFEST_GRAPH_INCOMPLETE",
+            "path": "",
+            "severity": "warning",
+            "message": "Explicit active references and redundant maps only; disabled alternatives, inferred SQL/Jinja references, group semantics, cycle legality and execution are not validated. Duplicate edge occurrences are retained."
+          },
+          {
+            "code": "DBT_SELECTION_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Upstream explicit-reference view only. Full original source is retained; boundary entries record omitted edges. Not a standalone runnable manifest or complete SQL/Jinja context."
+          }
+        ]
+      }
+    },
+    {
+      "id": "resource-only",
+      "options": {
+        "roots": [
+          "test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434"
+        ]
+      },
+      "selection": {
+        "status": "selected",
+        "complete": false,
+        "roots": [
+          "test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434"
+        ],
+        "includeMacros": false,
+        "maxDepth": 16,
+        "maxNodes": 256,
+        "nodes": [
+          {
+            "id": "test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434",
+            "collection": "nodes",
+            "path": "/nodes/test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434",
+            "depth": 0
+          },
+          {
+            "id": "model.umf_fixture.order_totals",
+            "collection": "nodes",
+            "path": "/nodes/model.umf_fixture.order_totals",
+            "depth": 1
+          },
+          {
+            "id": "seed.umf_fixture.orders",
+            "collection": "nodes",
+            "path": "/nodes/seed.umf_fixture.orders",
+            "depth": 2
+          }
+        ],
+        "edges": [
+          {
+            "dependent": "test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434",
+            "dependency": "model.umf_fixture.order_totals",
+            "kind": "resource",
+            "path": "/nodes/test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434/depends_on/nodes/0",
+            "resolved": true
+          },
+          {
+            "dependent": "model.umf_fixture.order_totals",
+            "dependency": "seed.umf_fixture.orders",
+            "kind": "resource",
+            "path": "/nodes/model.umf_fixture.order_totals/depends_on/nodes/0",
+            "resolved": true
+          }
+        ],
+        "boundary": [
+          {
+            "edge": {
+              "dependent": "test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434",
+              "dependency": "macro.dbt.test_not_null",
+              "kind": "macro",
+              "path": "/nodes/test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434/depends_on/macros/0",
+              "resolved": true
+            },
+            "reason": "macro-excluded"
+          },
+          {
+            "edge": {
+              "dependent": "test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434",
+              "dependency": "macro.dbt.get_where_subquery",
+              "kind": "macro",
+              "path": "/nodes/test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434/depends_on/macros/1",
+              "resolved": true
+            },
+            "reason": "macro-excluded"
+          },
+          {
+            "edge": {
+              "dependent": "test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434",
+              "dependency": "macro.dbt.get_limit_subquery_sql",
+              "kind": "macro",
+              "path": "/nodes/test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434/depends_on/macros/2",
+              "resolved": true
+            },
+            "reason": "macro-excluded"
+          },
+          {
+            "edge": {
+              "dependent": "test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434",
+              "dependency": "macro.dbt.should_store_failures",
+              "kind": "macro",
+              "path": "/nodes/test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434/depends_on/macros/3",
+              "resolved": true
+            },
+            "reason": "macro-excluded"
+          },
+          {
+            "edge": {
+              "dependent": "test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434",
+              "dependency": "macro.dbt.statement",
+              "kind": "macro",
+              "path": "/nodes/test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434/depends_on/macros/4",
+              "resolved": true
+            },
+            "reason": "macro-excluded"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "DBT_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Native schema shapes do not establish graph/SQL/Jinja validity, format constraints or exact-number constraints beyond JS precision"
+          },
+          {
+            "code": "DBT_MANIFEST_GRAPH_INCOMPLETE",
+            "path": "",
+            "severity": "warning",
+            "message": "Explicit active references and redundant maps only; disabled alternatives, inferred SQL/Jinja references, group semantics, cycle legality and execution are not validated. Duplicate edge occurrences are retained."
+          },
+          {
+            "code": "DBT_SELECTION_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Upstream explicit-reference view only. Full original source is retained; boundary entries record omitted edges. Not a standalone runnable manifest or complete SQL/Jinja context."
+          }
+        ]
+      }
+    },
+    {
+      "id": "with-macros",
+      "options": {
+        "roots": [
+          "test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434"
+        ],
+        "includeMacros": true,
+        "maxDepth": 128,
+        "maxNodes": 10000
+      },
+      "selection": {
+        "status": "selected",
+        "complete": false,
+        "roots": [
+          "test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434"
+        ],
+        "includeMacros": true,
+        "maxDepth": 128,
+        "maxNodes": 10000,
+        "nodes": [
+          {
+            "id": "test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434",
+            "collection": "nodes",
+            "path": "/nodes/test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434",
+            "depth": 0
+          },
+          {
+            "id": "model.umf_fixture.order_totals",
+            "collection": "nodes",
+            "path": "/nodes/model.umf_fixture.order_totals",
+            "depth": 1
+          },
+          {
+            "id": "macro.dbt.test_not_null",
+            "collection": "macros",
+            "path": "/macros/macro.dbt.test_not_null",
+            "depth": 1
+          },
+          {
+            "id": "macro.dbt.get_where_subquery",
+            "collection": "macros",
+            "path": "/macros/macro.dbt.get_where_subquery",
+            "depth": 1
+          },
+          {
+            "id": "macro.dbt.get_limit_subquery_sql",
+            "collection": "macros",
+            "path": "/macros/macro.dbt.get_limit_subquery_sql",
+            "depth": 1
+          },
+          {
+            "id": "macro.dbt.should_store_failures",
+            "collection": "macros",
+            "path": "/macros/macro.dbt.should_store_failures",
+            "depth": 1
+          },
+          {
+            "id": "macro.dbt.statement",
+            "collection": "macros",
+            "path": "/macros/macro.dbt.statement",
+            "depth": 1
+          },
+          {
+            "id": "seed.umf_fixture.orders",
+            "collection": "nodes",
+            "path": "/nodes/seed.umf_fixture.orders",
+            "depth": 2
+          },
+          {
+            "id": "macro.dbt.default__test_not_null",
+            "collection": "macros",
+            "path": "/macros/macro.dbt.default__test_not_null",
+            "depth": 2
+          },
+          {
+            "id": "macro.dbt.default__get_where_subquery",
+            "collection": "macros",
+            "path": "/macros/macro.dbt.default__get_where_subquery",
+            "depth": 2
+          },
+          {
+            "id": "macro.dbt.default__get_limit_sql",
+            "collection": "macros",
+            "path": "/macros/macro.dbt.default__get_limit_sql",
+            "depth": 2
+          }
+        ],
+        "edges": [
+          {
+            "dependent": "test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434",
+            "dependency": "model.umf_fixture.order_totals",
+            "kind": "resource",
+            "path": "/nodes/test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434/depends_on/nodes/0",
+            "resolved": true
+          },
+          {
+            "dependent": "test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434",
+            "dependency": "macro.dbt.test_not_null",
+            "kind": "macro",
+            "path": "/nodes/test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434/depends_on/macros/0",
+            "resolved": true
+          },
+          {
+            "dependent": "test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434",
+            "dependency": "macro.dbt.get_where_subquery",
+            "kind": "macro",
+            "path": "/nodes/test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434/depends_on/macros/1",
+            "resolved": true
+          },
+          {
+            "dependent": "test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434",
+            "dependency": "macro.dbt.get_limit_subquery_sql",
+            "kind": "macro",
+            "path": "/nodes/test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434/depends_on/macros/2",
+            "resolved": true
+          },
+          {
+            "dependent": "test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434",
+            "dependency": "macro.dbt.should_store_failures",
+            "kind": "macro",
+            "path": "/nodes/test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434/depends_on/macros/3",
+            "resolved": true
+          },
+          {
+            "dependent": "test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434",
+            "dependency": "macro.dbt.statement",
+            "kind": "macro",
+            "path": "/nodes/test.umf_fixture.not_null_order_totals_customer_id.9ba12e8434/depends_on/macros/4",
+            "resolved": true
+          },
+          {
+            "dependent": "model.umf_fixture.order_totals",
+            "dependency": "seed.umf_fixture.orders",
+            "kind": "resource",
+            "path": "/nodes/model.umf_fixture.order_totals/depends_on/nodes/0",
+            "resolved": true
+          },
+          {
+            "dependent": "macro.dbt.test_not_null",
+            "dependency": "macro.dbt.default__test_not_null",
+            "kind": "macro",
+            "path": "/macros/macro.dbt.test_not_null/depends_on/macros/0",
+            "resolved": true
+          },
+          {
+            "dependent": "macro.dbt.get_where_subquery",
+            "dependency": "macro.dbt.default__get_where_subquery",
+            "kind": "macro",
+            "path": "/macros/macro.dbt.get_where_subquery/depends_on/macros/0",
+            "resolved": true
+          },
+          {
+            "dependent": "macro.dbt.get_limit_subquery_sql",
+            "dependency": "macro.dbt.default__get_limit_sql",
+            "kind": "macro",
+            "path": "/macros/macro.dbt.get_limit_subquery_sql/depends_on/macros/0",
+            "resolved": true
+          },
+          {
+            "dependent": "macro.dbt.default__test_not_null",
+            "dependency": "macro.dbt.should_store_failures",
+            "kind": "macro",
+            "path": "/macros/macro.dbt.default__test_not_null/depends_on/macros/0",
+            "resolved": true
+          }
+        ],
+        "boundary": [],
+        "diagnostics": [
+          {
+            "code": "DBT_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Native schema shapes do not establish graph/SQL/Jinja validity, format constraints or exact-number constraints beyond JS precision"
+          },
+          {
+            "code": "DBT_MANIFEST_GRAPH_INCOMPLETE",
+            "path": "",
+            "severity": "warning",
+            "message": "Explicit active references and redundant maps only; disabled alternatives, inferred SQL/Jinja references, group semantics, cycle legality and execution are not validated. Duplicate edge occurrences are retained."
+          },
+          {
+            "code": "DBT_SELECTION_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Upstream explicit-reference view only. Full original source is retained; boundary entries record omitted edges. Not a standalone runnable manifest or complete SQL/Jinja context."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "compiler": "@typespec/compiler@1.16.0",
+  "properties": [
+    {
+      "name": "state",
+      "type": "Sales.OrderState",
+      "optional": false
+    },
+    {
+      "name": "total",
+      "type": "int32",
+      "optional": false,
+      "defaultNumber": "42"
+    },
+    {
+      "name": "cost",
+      "type": "Sales.Money",
+      "optional": false
+    },
+    {
+      "name": "related",
+      "type": "Sales.Order[]",
+      "optional": true
+    },
+    {
+      "name": "externalId",
+      "type": "9007199254740993",
+      "optional": true
+    },
+    {
+      "name": "id",
+      "type": "string",
+      "optional": false
+    }
+  ],
+  "scope": "Filesystem-host native inherited properties compared with UMF graph traversal; same compiler implementation, not independent language implementation"
+}

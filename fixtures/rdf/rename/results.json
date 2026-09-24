@@ -1,0 +1,1774 @@
+{
+  "cases": [
+    {
+      "id": "nq-syntax-uri-01",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-01.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:nq-syntax-uri-01",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nq-syntax-uri-01.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nq-syntax-uri-01"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nq-syntax-uri-01.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nq-syntax-uri-01"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nq-syntax-uri-02",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-02.nq",
+      "from": "http://example/p",
+      "to": "urn:umf:renamed:nq-syntax-uri-02",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nq-syntax-uri-02.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/predicate/value",
+              "before": "http://example/p",
+              "after": "urn:umf:renamed:nq-syntax-uri-02"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nq-syntax-uri-02.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/predicate/value",
+              "before": "http://example/p",
+              "after": "urn:umf:renamed:nq-syntax-uri-02"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nq-syntax-uri-03",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-03.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:nq-syntax-uri-03",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nq-syntax-uri-03.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nq-syntax-uri-03"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nq-syntax-uri-03.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nq-syntax-uri-03"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nq-syntax-uri-04",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-04.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:nq-syntax-uri-04",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nq-syntax-uri-04.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nq-syntax-uri-04"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nq-syntax-uri-04.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nq-syntax-uri-04"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nq-syntax-uri-05",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-05.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:nq-syntax-uri-05",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nq-syntax-uri-05.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nq-syntax-uri-05"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nq-syntax-uri-05.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nq-syntax-uri-05"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nq-syntax-uri-06",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-06.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:nq-syntax-uri-06",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nq-syntax-uri-06.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nq-syntax-uri-06"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nq-syntax-uri-06.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nq-syntax-uri-06"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nq-syntax-bnode-01",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-01.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:nq-syntax-bnode-01",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nq-syntax-bnode-01.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nq-syntax-bnode-01"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nq-syntax-bnode-01.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nq-syntax-bnode-01"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nq-syntax-bnode-02",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-02.nq",
+      "from": "http://example/p",
+      "to": "urn:umf:renamed:nq-syntax-bnode-02",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nq-syntax-bnode-02.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/predicate/value",
+              "before": "http://example/p",
+              "after": "urn:umf:renamed:nq-syntax-bnode-02"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nq-syntax-bnode-02.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/predicate/value",
+              "before": "http://example/p",
+              "after": "urn:umf:renamed:nq-syntax-bnode-02"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nq-syntax-bnode-03",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-03.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:nq-syntax-bnode-03",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nq-syntax-bnode-03.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nq-syntax-bnode-03"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nq-syntax-bnode-03.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nq-syntax-bnode-03"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nq-syntax-bnode-04",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-04.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:nq-syntax-bnode-04",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nq-syntax-bnode-04.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nq-syntax-bnode-04"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nq-syntax-bnode-04.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nq-syntax-bnode-04"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nq-syntax-bnode-05",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-05.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:nq-syntax-bnode-05",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nq-syntax-bnode-05.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nq-syntax-bnode-05"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nq-syntax-bnode-05.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nq-syntax-bnode-05"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nq-syntax-bnode-06",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-06.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:nq-syntax-bnode-06",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nq-syntax-bnode-06.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nq-syntax-bnode-06"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nq-syntax-bnode-06.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nq-syntax-bnode-06"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-uri-01",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-uri-01.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:nt-syntax-uri-01",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nt-syntax-uri-01.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-uri-01"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nt-syntax-uri-01.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-uri-01"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-uri-02",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-uri-02.nq",
+      "from": "http://example/S",
+      "to": "urn:umf:renamed:nt-syntax-uri-02",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nt-syntax-uri-02.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/S",
+              "after": "urn:umf:renamed:nt-syntax-uri-02"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nt-syntax-uri-02.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/S",
+              "after": "urn:umf:renamed:nt-syntax-uri-02"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-uri-03",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-uri-03.nq",
+      "from": "http://example/S",
+      "to": "urn:umf:renamed:nt-syntax-uri-03",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nt-syntax-uri-03.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/S",
+              "after": "urn:umf:renamed:nt-syntax-uri-03"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nt-syntax-uri-03.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/S",
+              "after": "urn:umf:renamed:nt-syntax-uri-03"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-uri-04",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-uri-04.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:nt-syntax-uri-04",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nt-syntax-uri-04.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-uri-04"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nt-syntax-uri-04.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-uri-04"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-string-01",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-string-01.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:nt-syntax-string-01",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nt-syntax-string-01.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-string-01"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nt-syntax-string-01.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-string-01"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-string-02",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-string-02.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:nt-syntax-string-02",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nt-syntax-string-02.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-string-02"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nt-syntax-string-02.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-string-02"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-string-03",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-string-03.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:nt-syntax-string-03",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nt-syntax-string-03.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-string-03"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nt-syntax-string-03.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-string-03"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-str-esc-01",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-str-esc-01.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:nt-syntax-str-esc-01",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nt-syntax-str-esc-01.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-str-esc-01"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nt-syntax-str-esc-01.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-str-esc-01"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-str-esc-02",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-str-esc-02.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:nt-syntax-str-esc-02",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nt-syntax-str-esc-02.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-str-esc-02"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nt-syntax-str-esc-02.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-str-esc-02"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-str-esc-03",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-str-esc-03.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:nt-syntax-str-esc-03",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nt-syntax-str-esc-03.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-str-esc-03"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nt-syntax-str-esc-03.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-str-esc-03"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-bnode-01",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bnode-01.nq",
+      "from": "http://example/p",
+      "to": "urn:umf:renamed:nt-syntax-bnode-01",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nt-syntax-bnode-01.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/predicate/value",
+              "before": "http://example/p",
+              "after": "urn:umf:renamed:nt-syntax-bnode-01"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nt-syntax-bnode-01.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/predicate/value",
+              "before": "http://example/p",
+              "after": "urn:umf:renamed:nt-syntax-bnode-01"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-bnode-02",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bnode-02.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:nt-syntax-bnode-02",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nt-syntax-bnode-02.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-bnode-02"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nt-syntax-bnode-02.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-bnode-02"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-bnode-03",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bnode-03.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:nt-syntax-bnode-03",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nt-syntax-bnode-03.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-bnode-03"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nt-syntax-bnode-03.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-bnode-03"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-datatypes-01",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-datatypes-01.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:nt-syntax-datatypes-01",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nt-syntax-datatypes-01.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-datatypes-01"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nt-syntax-datatypes-01.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-datatypes-01"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-datatypes-02",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-datatypes-02.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:nt-syntax-datatypes-02",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nt-syntax-datatypes-02.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-datatypes-02"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nt-syntax-datatypes-02.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:nt-syntax-datatypes-02"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-subm-01",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-subm-01.nq",
+      "from": "http://example.org/resource1",
+      "to": "urn:umf:renamed:nt-syntax-subm-01",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/nt-syntax-subm-01.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example.org/resource1",
+              "after": "urn:umf:renamed:nt-syntax-subm-01"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/nt-syntax-subm-01.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example.org/resource1",
+              "after": "urn:umf:renamed:nt-syntax-subm-01"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "comment_following_triple",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/comment_following_triple.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:comment_following_triple",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/comment_following_triple.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:comment_following_triple"
+            },
+            {
+              "path": "/quads/1/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:comment_following_triple"
+            },
+            {
+              "path": "/quads/2/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:comment_following_triple"
+            },
+            {
+              "path": "/quads/3/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:comment_following_triple"
+            },
+            {
+              "path": "/quads/4/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:comment_following_triple"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/comment_following_triple.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:comment_following_triple"
+            },
+            {
+              "path": "/quads/1/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:comment_following_triple"
+            },
+            {
+              "path": "/quads/2/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:comment_following_triple"
+            },
+            {
+              "path": "/quads/3/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:comment_following_triple"
+            },
+            {
+              "path": "/quads/4/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:comment_following_triple"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal.nq",
+      "from": "http://a.example/s",
+      "to": "urn:umf:renamed:literal",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/literal.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/literal.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal_all_controls",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_all_controls.nq",
+      "from": "http://a.example/s",
+      "to": "urn:umf:renamed:literal_all_controls",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/literal_all_controls.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_all_controls"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/literal_all_controls.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_all_controls"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal_all_punctuation",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_all_punctuation.nq",
+      "from": "http://a.example/s",
+      "to": "urn:umf:renamed:literal_all_punctuation",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/literal_all_punctuation.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_all_punctuation"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/literal_all_punctuation.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_all_punctuation"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal_ascii_boundaries",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_ascii_boundaries.nq",
+      "from": "http://a.example/s",
+      "to": "urn:umf:renamed:literal_ascii_boundaries",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/literal_ascii_boundaries.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_ascii_boundaries"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/literal_ascii_boundaries.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_ascii_boundaries"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal_with_2_dquotes",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_2_dquotes.nq",
+      "from": "http://a.example/s",
+      "to": "urn:umf:renamed:literal_with_2_dquotes",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/literal_with_2_dquotes.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_2_dquotes"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/literal_with_2_dquotes.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_2_dquotes"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal_with_2_squotes",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_2_squotes.nq",
+      "from": "http://a.example/s",
+      "to": "urn:umf:renamed:literal_with_2_squotes",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/literal_with_2_squotes.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_2_squotes"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/literal_with_2_squotes.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_2_squotes"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal_with_BACKSPACE",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_BACKSPACE.nq",
+      "from": "http://a.example/s",
+      "to": "urn:umf:renamed:literal_with_BACKSPACE",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/literal_with_BACKSPACE.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_BACKSPACE"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/literal_with_BACKSPACE.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_BACKSPACE"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal_with_CARRIAGE_RETURN",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_CARRIAGE_RETURN.nq",
+      "from": "http://a.example/s",
+      "to": "urn:umf:renamed:literal_with_CARRIAGE_RETURN",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/literal_with_CARRIAGE_RETURN.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_CARRIAGE_RETURN"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/literal_with_CARRIAGE_RETURN.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_CARRIAGE_RETURN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal_with_CHARACTER_TABULATION",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_CHARACTER_TABULATION.nq",
+      "from": "http://a.example/s",
+      "to": "urn:umf:renamed:literal_with_CHARACTER_TABULATION",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/literal_with_CHARACTER_TABULATION.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_CHARACTER_TABULATION"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/literal_with_CHARACTER_TABULATION.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_CHARACTER_TABULATION"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal_with_dquote",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_dquote.nq",
+      "from": "http://a.example/s",
+      "to": "urn:umf:renamed:literal_with_dquote",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/literal_with_dquote.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_dquote"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/literal_with_dquote.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_dquote"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal_with_FORM_FEED",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_FORM_FEED.nq",
+      "from": "http://a.example/s",
+      "to": "urn:umf:renamed:literal_with_FORM_FEED",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/literal_with_FORM_FEED.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_FORM_FEED"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/literal_with_FORM_FEED.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_FORM_FEED"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal_with_LINE_FEED",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_LINE_FEED.nq",
+      "from": "http://a.example/s",
+      "to": "urn:umf:renamed:literal_with_LINE_FEED",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/literal_with_LINE_FEED.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_LINE_FEED"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/literal_with_LINE_FEED.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_LINE_FEED"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal_with_numeric_escape4",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_numeric_escape4.nq",
+      "from": "http://a.example/s",
+      "to": "urn:umf:renamed:literal_with_numeric_escape4",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/literal_with_numeric_escape4.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_numeric_escape4"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/literal_with_numeric_escape4.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_numeric_escape4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal_with_numeric_escape8",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_numeric_escape8.nq",
+      "from": "http://a.example/s",
+      "to": "urn:umf:renamed:literal_with_numeric_escape8",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/literal_with_numeric_escape8.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_numeric_escape8"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/literal_with_numeric_escape8.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_numeric_escape8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal_with_REVERSE_SOLIDUS",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_REVERSE_SOLIDUS.nq",
+      "from": "http://a.example/s",
+      "to": "urn:umf:renamed:literal_with_REVERSE_SOLIDUS",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/literal_with_REVERSE_SOLIDUS.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_REVERSE_SOLIDUS"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/literal_with_REVERSE_SOLIDUS.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_REVERSE_SOLIDUS"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal_with_REVERSE_SOLIDUS2",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_REVERSE_SOLIDUS2.nq",
+      "from": "http://example.org/ns#s",
+      "to": "urn:umf:renamed:literal_with_REVERSE_SOLIDUS2",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/literal_with_REVERSE_SOLIDUS2.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example.org/ns#s",
+              "after": "urn:umf:renamed:literal_with_REVERSE_SOLIDUS2"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/literal_with_REVERSE_SOLIDUS2.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example.org/ns#s",
+              "after": "urn:umf:renamed:literal_with_REVERSE_SOLIDUS2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal_with_squote",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_squote.nq",
+      "from": "http://a.example/s",
+      "to": "urn:umf:renamed:literal_with_squote",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/literal_with_squote.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_squote"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/literal_with_squote.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_squote"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "literal_with_UTF8_boundaries",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_UTF8_boundaries.nq",
+      "from": "http://a.example/s",
+      "to": "urn:umf:renamed:literal_with_UTF8_boundaries",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/literal_with_UTF8_boundaries.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_UTF8_boundaries"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/literal_with_UTF8_boundaries.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:literal_with_UTF8_boundaries"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "langtagged_string",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/langtagged_string.nq",
+      "from": "http://a.example/s",
+      "to": "urn:umf:renamed:langtagged_string",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/langtagged_string.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:langtagged_string"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/langtagged_string.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://a.example/s",
+              "after": "urn:umf:renamed:langtagged_string"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lantag_with_subtag",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/lantag_with_subtag.nq",
+      "from": "http://example.org/ex#a",
+      "to": "urn:umf:renamed:lantag_with_subtag",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/lantag_with_subtag.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example.org/ex#a",
+              "after": "urn:umf:renamed:lantag_with_subtag"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/lantag_with_subtag.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example.org/ex#a",
+              "after": "urn:umf:renamed:lantag_with_subtag"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "minimal_whitespace",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/minimal_whitespace.nq",
+      "from": "http://example/s",
+      "to": "urn:umf:renamed:minimal_whitespace",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/minimal_whitespace.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:minimal_whitespace"
+            },
+            {
+              "path": "/quads/1/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:minimal_whitespace"
+            },
+            {
+              "path": "/quads/2/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:minimal_whitespace"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/minimal_whitespace.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:minimal_whitespace"
+            },
+            {
+              "path": "/quads/1/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:minimal_whitespace"
+            },
+            {
+              "path": "/quads/2/subject/value",
+              "before": "http://example/s",
+              "after": "urn:umf:renamed:minimal_whitespace"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "authored-schema",
+      "path": "native/rdf/examples/schema.nq",
+      "from": "urn:example:Order",
+      "to": "urn:umf:renamed:authored-schema",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/authored-schema.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "urn:example:Order",
+              "after": "urn:umf:renamed:authored-schema"
+            },
+            {
+              "path": "/quads/1/subject/value",
+              "before": "urn:example:Order",
+              "after": "urn:umf:renamed:authored-schema"
+            },
+            {
+              "path": "/quads/2/subject/value",
+              "before": "urn:example:Order",
+              "after": "urn:umf:renamed:authored-schema"
+            },
+            {
+              "path": "/quads/4/object/value",
+              "before": "urn:example:Order",
+              "after": "urn:umf:renamed:authored-schema"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/authored-schema.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "urn:example:Order",
+              "after": "urn:umf:renamed:authored-schema"
+            },
+            {
+              "path": "/quads/1/subject/value",
+              "before": "urn:example:Order",
+              "after": "urn:umf:renamed:authored-schema"
+            },
+            {
+              "path": "/quads/2/subject/value",
+              "before": "urn:example:Order",
+              "after": "urn:umf:renamed:authored-schema"
+            },
+            {
+              "path": "/quads/4/object/value",
+              "before": "urn:example:Order",
+              "after": "urn:umf:renamed:authored-schema"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "all-positions",
+      "path": "native/rdf/examples/rename.nq",
+      "from": "urn:old",
+      "to": "urn:umf:renamed:all-positions",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/all-positions.json.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "urn:old",
+              "after": "urn:umf:renamed:all-positions"
+            },
+            {
+              "path": "/quads/0/predicate/value",
+              "before": "urn:old",
+              "after": "urn:umf:renamed:all-positions"
+            },
+            {
+              "path": "/quads/0/object/value",
+              "before": "urn:old",
+              "after": "urn:umf:renamed:all-positions"
+            },
+            {
+              "path": "/quads/0/graph/value",
+              "before": "urn:old",
+              "after": "urn:umf:renamed:all-positions"
+            },
+            {
+              "path": "/quads/1/subject/value",
+              "before": "urn:old",
+              "after": "urn:umf:renamed:all-positions"
+            },
+            {
+              "path": "/quads/1/predicate/value",
+              "before": "urn:old",
+              "after": "urn:umf:renamed:all-positions"
+            },
+            {
+              "path": "/quads/1/object/value",
+              "before": "urn:old",
+              "after": "urn:umf:renamed:all-positions"
+            },
+            {
+              "path": "/quads/1/graph/value",
+              "before": "urn:old",
+              "after": "urn:umf:renamed:all-positions"
+            },
+            {
+              "path": "/quads/2/object/datatype",
+              "before": "urn:old",
+              "after": "urn:umf:renamed:all-positions"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/all-positions.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/0/subject/value",
+              "before": "urn:old",
+              "after": "urn:umf:renamed:all-positions"
+            },
+            {
+              "path": "/quads/0/predicate/value",
+              "before": "urn:old",
+              "after": "urn:umf:renamed:all-positions"
+            },
+            {
+              "path": "/quads/0/object/value",
+              "before": "urn:old",
+              "after": "urn:umf:renamed:all-positions"
+            },
+            {
+              "path": "/quads/0/graph/value",
+              "before": "urn:old",
+              "after": "urn:umf:renamed:all-positions"
+            },
+            {
+              "path": "/quads/1/subject/value",
+              "before": "urn:old",
+              "after": "urn:umf:renamed:all-positions"
+            },
+            {
+              "path": "/quads/1/predicate/value",
+              "before": "urn:old",
+              "after": "urn:umf:renamed:all-positions"
+            },
+            {
+              "path": "/quads/1/object/value",
+              "before": "urn:old",
+              "after": "urn:umf:renamed:all-positions"
+            },
+            {
+              "path": "/quads/1/graph/value",
+              "before": "urn:old",
+              "after": "urn:umf:renamed:all-positions"
+            },
+            {
+              "path": "/quads/2/object/datatype",
+              "before": "urn:old",
+              "after": "urn:umf:renamed:all-positions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "datatype",
+      "path": "native/rdf/examples/schema.nq",
+      "from": "http://www.w3.org/2001/XMLSchema#integer",
+      "to": "urn:umf:renamed:datatype",
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/rename/datatype.json.nq",
+          "changes": [
+            {
+              "path": "/quads/7/object/datatype",
+              "before": "http://www.w3.org/2001/XMLSchema#integer",
+              "after": "urn:umf:renamed:datatype"
+            },
+            {
+              "path": "/quads/9/object/datatype",
+              "before": "http://www.w3.org/2001/XMLSchema#integer",
+              "after": "urn:umf:renamed:datatype"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/rename/datatype.yaml.nq",
+          "changes": [
+            {
+              "path": "/quads/7/object/datatype",
+              "before": "http://www.w3.org/2001/XMLSchema#integer",
+              "after": "urn:umf:renamed:datatype"
+            },
+            {
+              "path": "/quads/9/object/datatype",
+              "before": "http://www.w3.org/2001/XMLSchema#integer",
+              "after": "urn:umf:renamed:datatype"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

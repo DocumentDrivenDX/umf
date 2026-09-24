@@ -1,0 +1,242 @@
+[
+  {
+    "id": "blank-match",
+    "format": "json",
+    "roots": 1,
+    "malformed": 0,
+    "assertedOccurrences": 1,
+    "sourcePreserved": true
+  },
+  {
+    "id": "blank-match",
+    "format": "yaml",
+    "roots": 1,
+    "malformed": 0,
+    "assertedOccurrences": 1,
+    "sourcePreserved": true
+  },
+  {
+    "id": "blank-different",
+    "format": "json",
+    "roots": 0,
+    "malformed": 0,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "blank-different",
+    "format": "yaml",
+    "roots": 0,
+    "malformed": 0,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "language-case",
+    "format": "json",
+    "roots": 1,
+    "malformed": 0,
+    "assertedOccurrences": 1,
+    "sourcePreserved": true
+  },
+  {
+    "id": "language-case",
+    "format": "yaml",
+    "roots": 1,
+    "malformed": 0,
+    "assertedOccurrences": 1,
+    "sourcePreserved": true
+  },
+  {
+    "id": "language-different",
+    "format": "json",
+    "roots": 0,
+    "malformed": 0,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "language-different",
+    "format": "yaml",
+    "roots": 0,
+    "malformed": 0,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "datatype-different",
+    "format": "json",
+    "roots": 0,
+    "malformed": 0,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "datatype-different",
+    "format": "yaml",
+    "roots": 0,
+    "malformed": 0,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "lexical-different",
+    "format": "json",
+    "roots": 0,
+    "malformed": 0,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "lexical-different",
+    "format": "yaml",
+    "roots": 0,
+    "malformed": 0,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "duplicates",
+    "format": "json",
+    "roots": 1,
+    "malformed": 0,
+    "assertedOccurrences": 2,
+    "sourcePreserved": true
+  },
+  {
+    "id": "duplicates",
+    "format": "yaml",
+    "roots": 1,
+    "malformed": 0,
+    "assertedOccurrences": 2,
+    "sourcePreserved": true
+  },
+  {
+    "id": "source-missing",
+    "format": "json",
+    "roots": 0,
+    "malformed": 1,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "source-missing",
+    "format": "yaml",
+    "roots": 0,
+    "malformed": 1,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "source-multiple",
+    "format": "json",
+    "roots": 0,
+    "malformed": 1,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "source-multiple",
+    "format": "yaml",
+    "roots": 0,
+    "malformed": 1,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "source-literal",
+    "format": "json",
+    "roots": 0,
+    "malformed": 1,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "source-literal",
+    "format": "yaml",
+    "roots": 0,
+    "malformed": 1,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "property-blank",
+    "format": "json",
+    "roots": 0,
+    "malformed": 1,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "property-blank",
+    "format": "yaml",
+    "roots": 0,
+    "malformed": 1,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "property-multiple",
+    "format": "json",
+    "roots": 0,
+    "malformed": 1,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "property-multiple",
+    "format": "yaml",
+    "roots": 0,
+    "malformed": 1,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "target-missing",
+    "format": "json",
+    "roots": 0,
+    "malformed": 1,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "target-missing",
+    "format": "yaml",
+    "roots": 0,
+    "malformed": 1,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "target-multiple",
+    "format": "json",
+    "roots": 0,
+    "malformed": 1,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "target-multiple",
+    "format": "yaml",
+    "roots": 0,
+    "malformed": 1,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "two-types",
+    "format": "json",
+    "roots": 0,
+    "malformed": 1,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  },
+  {
+    "id": "two-types",
+    "format": "yaml",
+    "roots": 0,
+    "malformed": 1,
+    "assertedOccurrences": 0,
+    "sourcePreserved": true
+  }
+]

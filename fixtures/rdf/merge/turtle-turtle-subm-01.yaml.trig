@@ -1,0 +1,5 @@
+_:m_0_0 <https://w3c.github.io/rdf-tests/rdf/rdf11/rdf-turtle/turtle-subm-01.ttl#x> <https://w3c.github.io/rdf-tests/rdf/rdf11/rdf-turtle/turtle-subm-01.ttl#y> .
+_:m_1_0 <urn:example:related> <urn:example:resource> .
+<urn:example:populated> { _:m_1_0 <urn:example:label> "Original label" . }
+<urn:example:empty> {}
+_:m_1_0 {}

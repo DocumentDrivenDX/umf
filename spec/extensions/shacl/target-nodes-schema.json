@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:shacl:target-nodes:0.1.0",
+  "type": "array",
+  "items": {
+    "oneOf": [
+      {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "const": "iri"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "value"
+        ],
+        "additionalProperties": true
+      },
+      {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "const": "blank"
+          },
+          "value": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "kind",
+          "value"
+        ],
+        "additionalProperties": true
+      },
+      {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "const": "literal"
+          },
+          "value": {
+            "type": "string"
+          },
+          "datatype": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string",
+            "pattern": "^[a-z]+(?:-[a-z0-9]+)*$"
+          }
+        },
+        "required": [
+          "kind",
+          "value",
+          "datatype"
+        ],
+        "additionalProperties": true
+      }
+    ]
+  }
+}

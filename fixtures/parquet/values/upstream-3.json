@@ -1,0 +1,269 @@
+[
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 27,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 50,
+        "name": "metaData",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 51,
+              "name": "id",
+              "value": {
+                "kind": "string",
+                "value": "ebffcf7b-bf25-427f-a91a-d4a0d27ebbef",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "65626666636637622d626632352d343237662d613931612d643461306432376562626566"
+                }
+              }
+            },
+            {
+              "index": 52,
+              "name": "name",
+              "value": null
+            },
+            {
+              "index": 53,
+              "name": "description",
+              "value": null
+            },
+            {
+              "index": 54,
+              "name": "format",
+              "value": {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "index": 55,
+                    "name": "provider",
+                    "value": {
+                      "kind": "string",
+                      "value": "parquet",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "70617271756574"
+                      }
+                    }
+                  },
+                  {
+                    "index": 56,
+                    "name": "options",
+                    "value": {
+                      "kind": "map",
+                      "duplicateKeys": "last-value",
+                      "entries": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 60,
+              "name": "schemaString",
+              "value": {
+                "kind": "string",
+                "value": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a226964222c2274797065223a22696e7465676572222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d"
+                }
+              }
+            },
+            {
+              "index": 61,
+              "name": "partitionColumns",
+              "value": {
+                "kind": "list",
+                "items": []
+              }
+            },
+            {
+              "index": 64,
+              "name": "createdTime",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1742252106422",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1742252106422"
+                }
+              }
+            },
+            {
+              "index": 65,
+              "name": "configuration",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": [
+                  {
+                    "key": {
+                      "kind": "string",
+                      "value": "delta.feature.catalogowned",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "64656c74612e666561747572652e636174616c6f676f776e6564"
+                      }
+                    },
+                    "value": {
+                      "kind": "string",
+                      "value": "supported",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "737570706f72746564"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 69,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 78,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 27,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 50,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 69,
+        "name": "protocol",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 70,
+              "name": "minReaderVersion",
+              "value": {
+                "kind": "int",
+                "bits": 32,
+                "value": "3",
+                "physical": {
+                  "type": "INT32",
+                  "value": "3"
+                }
+              }
+            },
+            {
+              "index": 71,
+              "name": "minWriterVersion",
+              "value": {
+                "kind": "int",
+                "bits": 32,
+                "value": "7",
+                "physical": {
+                  "type": "INT32",
+                  "value": "7"
+                }
+              }
+            },
+            {
+              "index": 72,
+              "name": "readerFeatures",
+              "value": {
+                "kind": "list",
+                "items": [
+                  {
+                    "kind": "string",
+                    "value": "catalogOwned",
+                    "physical": {
+                      "type": "BYTE_ARRAY",
+                      "hex": "636174616c6f674f776e6564"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 75,
+              "name": "writerFeatures",
+              "value": {
+                "kind": "list",
+                "items": [
+                  {
+                    "kind": "string",
+                    "value": "catalogOwned",
+                    "physical": {
+                      "type": "BYTE_ARRAY",
+                      "hex": "636174616c6f674f776e6564"
+                    }
+                  },
+                  {
+                    "kind": "string",
+                    "value": "invariants",
+                    "physical": {
+                      "type": "BYTE_ARRAY",
+                      "hex": "696e76617269616e7473"
+                    }
+                  },
+                  {
+                    "kind": "string",
+                    "value": "appendOnly",
+                    "physical": {
+                      "type": "BYTE_ARRAY",
+                      "hex": "617070656e644f6e6c79"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 78,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  }
+]

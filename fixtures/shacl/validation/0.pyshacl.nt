@@ -1,0 +1,44 @@
+_:ncbf4e5b7fc5a428796972bfa04d3d4b4b2 <http://www.w3.org/ns/shacl#datatype> <http://www.w3.org/2001/XMLSchema#string> .
+_:ncbf4e5b7fc5a428796972bfa04d3d4b4b3 <http://www.w3.org/ns/shacl#class> <http://datashapes.org/sh/tests/core/complex/personexample.test#Company> .
+_:N5c4c4b2a31f142fba117e1e61ceff7cd <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxCountConstraintComponent> .
+_:N50d7d6adcccc4476b9b704e653c71122 <http://www.w3.org/ns/shacl#value> "987-65-432A" .
+_:N50d7d6adcccc4476b9b704e653c71122 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:ncbf4e5b7fc5a428796972bfa04d3d4b4b3 <http://www.w3.org/ns/shacl#nodeKind> <http://www.w3.org/ns/shacl#IRI> .
+_:N355c59c9531b4a5eaa93f3a0dbfb20b2 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/complex/personexample.test#UntypedCompany> .
+_:ncbf4e5b7fc5a428796972bfa04d3d4b4b2 <http://www.w3.org/ns/shacl#maxCount> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:N5c4c4b2a31f142fba117e1e61ceff7cd <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N355c59c9531b4a5eaa93f3a0dbfb20b2 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/complex/personexample.test#Calvin> .
+_:N50d7d6adcccc4476b9b704e653c71122 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#PatternConstraintComponent> .
+_:ncbf4e5b7fc5a428796972bfa04d3d4b4b2 <http://www.w3.org/ns/shacl#pattern> "^\\d{3}-\\d{2}-\\d{4}$" .
+_:ncbf4e5b7fc5a428796972bfa04d3d4b4b2 <http://www.w3.org/ns/shacl#path> <http://datashapes.org/sh/tests/core/complex/personexample.test#ssn> .
+_:N50d7d6adcccc4476b9b704e653c71122 <http://www.w3.org/ns/shacl#sourceShape> _:ncbf4e5b7fc5a428796972bfa04d3d4b4b2 .
+_:Ne7fc94d4f288433c96b463de3468a253 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/complex/personexample.test#birthDate> .
+_:Ne7fc94d4f288433c96b463de3468a253 <http://www.w3.org/ns/shacl#resultMessage> "Node ex:Calvin is closed. It cannot have value: Literal(\"1999-09-09\", datatype=xsd:date)" .
+_:Nd47fa616c90d4726aab1c3a4023665b2 <http://www.w3.org/ns/shacl#result> _:N5c4c4b2a31f142fba117e1e61ceff7cd .
+_:N355c59c9531b4a5eaa93f3a0dbfb20b2 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N355c59c9531b4a5eaa93f3a0dbfb20b2 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#ClassConstraintComponent> .
+_:Ne7fc94d4f288433c96b463de3468a253 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#ClosedConstraintComponent> .
+_:N5c4c4b2a31f142fba117e1e61ceff7cd <http://www.w3.org/ns/shacl#resultMessage> "More than 1 values on ex:Bob->ex:ssn" .
+_:N50d7d6adcccc4476b9b704e653c71122 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/complex/personexample.test#ssn> .
+_:Ne7fc94d4f288433c96b463de3468a253 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:ncbf4e5b7fc5a428796972bfa04d3d4b4b3 <http://www.w3.org/ns/shacl#path> <http://datashapes.org/sh/tests/core/complex/personexample.test#worksFor> .
+_:N50d7d6adcccc4476b9b704e653c71122 <http://www.w3.org/ns/shacl#resultMessage> "Value does not match pattern '^\\d{3}-\\d{2}-\\d{4}$'" .
+_:N355c59c9531b4a5eaa93f3a0dbfb20b2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N5c4c4b2a31f142fba117e1e61ceff7cd <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/complex/personexample.test#Bob> .
+_:N355c59c9531b4a5eaa93f3a0dbfb20b2 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/complex/personexample.test#worksFor> .
+_:Ne7fc94d4f288433c96b463de3468a253 <http://www.w3.org/ns/shacl#value> "1999-09-09"^^<http://www.w3.org/2001/XMLSchema#date> .
+_:N5c4c4b2a31f142fba117e1e61ceff7cd <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nd47fa616c90d4726aab1c3a4023665b2 <http://www.w3.org/ns/shacl#result> _:N355c59c9531b4a5eaa93f3a0dbfb20b2 .
+_:N50d7d6adcccc4476b9b704e653c71122 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N355c59c9531b4a5eaa93f3a0dbfb20b2 <http://www.w3.org/ns/shacl#sourceShape> _:ncbf4e5b7fc5a428796972bfa04d3d4b4b3 .
+_:Nd47fa616c90d4726aab1c3a4023665b2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N5c4c4b2a31f142fba117e1e61ceff7cd <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/complex/personexample.test#ssn> .
+_:Nd47fa616c90d4726aab1c3a4023665b2 <http://www.w3.org/ns/shacl#result> _:Ne7fc94d4f288433c96b463de3468a253 .
+_:N355c59c9531b4a5eaa93f3a0dbfb20b2 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have class ex:Company" .
+_:Nd47fa616c90d4726aab1c3a4023665b2 <http://www.w3.org/ns/shacl#result> _:N50d7d6adcccc4476b9b704e653c71122 .
+_:Ne7fc94d4f288433c96b463de3468a253 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N5c4c4b2a31f142fba117e1e61ceff7cd <http://www.w3.org/ns/shacl#sourceShape> _:ncbf4e5b7fc5a428796972bfa04d3d4b4b2 .
+_:N50d7d6adcccc4476b9b704e653c71122 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/complex/personexample.test#Alice> .
+_:Nd47fa616c90d4726aab1c3a4023665b2 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Ne7fc94d4f288433c96b463de3468a253 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/complex/personexample.test#PersonShape> .
+_:Ne7fc94d4f288433c96b463de3468a253 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/complex/personexample.test#Calvin> .

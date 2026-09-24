@@ -1,0 +1,337 @@
+[
+  {
+    "model": "PydanticConversionTypeParams",
+    "field": "window",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticConversionTypeParams",
+    "field": "constant_properties",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticCumulativeTypeParams",
+    "field": "window",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticCumulativeTypeParams",
+    "field": "grain_to_date",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticDimension",
+    "field": "description",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticDimension",
+    "field": "type_params",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticDimension",
+    "field": "expr",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticDimension",
+    "field": "metadata",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticDimension",
+    "field": "label",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticDimension",
+    "field": "config",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticDimensionTypeParams",
+    "field": "validity_params",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticEntity",
+    "field": "description",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticEntity",
+    "field": "role",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticEntity",
+    "field": "expr",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticEntity",
+    "field": "metadata",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticEntity",
+    "field": "label",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticEntity",
+    "field": "config",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticExportConfig",
+    "field": "schema_name",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticExportConfig",
+    "field": "alias",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMeasure",
+    "field": "description",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMeasure",
+    "field": "create_metric",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMeasure",
+    "field": "expr",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMeasure",
+    "field": "agg_params",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMeasure",
+    "field": "metadata",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMeasure",
+    "field": "non_additive_dimension",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMeasure",
+    "field": "agg_time_dimension",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMeasure",
+    "field": "label",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMeasure",
+    "field": "config",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMeasureAggregationParameters",
+    "field": "percentile",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMetric",
+    "field": "description",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMetric",
+    "field": "filter",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMetric",
+    "field": "metadata",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMetric",
+    "field": "label",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMetric",
+    "field": "config",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMetric",
+    "field": "time_granularity",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMetricInput",
+    "field": "filter",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMetricInput",
+    "field": "alias",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMetricInput",
+    "field": "offset_window",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMetricInput",
+    "field": "offset_to_grain",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMetricInputMeasure",
+    "field": "filter",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMetricInputMeasure",
+    "field": "alias",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMetricInputMeasure",
+    "field": "fill_nulls_with",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMetricTypeParams",
+    "field": "measure",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMetricTypeParams",
+    "field": "numerator",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMetricTypeParams",
+    "field": "denominator",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMetricTypeParams",
+    "field": "expr",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMetricTypeParams",
+    "field": "window",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMetricTypeParams",
+    "field": "grain_to_date",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMetricTypeParams",
+    "field": "metrics",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMetricTypeParams",
+    "field": "conversion_type_params",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticMetricTypeParams",
+    "field": "cumulative_type_params",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticNodeRelation",
+    "field": "database",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticProjectConfiguration",
+    "field": "metadata",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticSavedQuery",
+    "field": "description",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticSavedQuery",
+    "field": "metadata",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticSavedQuery",
+    "field": "label",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticSavedQueryQueryParams",
+    "field": "limit",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticSavedQueryQueryParams",
+    "field": "where",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticSemanticModel",
+    "field": "defaults",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticSemanticModel",
+    "field": "description",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticSemanticModel",
+    "field": "primary_entity",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticSemanticModel",
+    "field": "label",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticSemanticModel",
+    "field": "metadata",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticSemanticModel",
+    "field": "config",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticSemanticModelDefaults",
+    "field": "agg_time_dimension",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticSemanticVersion",
+    "field": "patch_version",
+    "reason": "native field.allow_none"
+  },
+  {
+    "model": "PydanticTimeSpineCustomGranularityColumn",
+    "field": "column_name",
+    "reason": "native field.allow_none"
+  }
+]

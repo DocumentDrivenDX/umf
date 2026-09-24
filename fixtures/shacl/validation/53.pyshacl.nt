@@ -1,0 +1,20 @@
+_:Ncb4c794aa9fd4d229575b5c31e349f6d <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/class-001.test#TestShape-testProperty> .
+_:N13fbcbd9c52840d2ab0a6b4f94707de3 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have class ex:SuperClass" .
+_:N13fbcbd9c52840d2ab0a6b4f94707de3 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#ClassConstraintComponent> .
+_:Ncb4c794aa9fd4d229575b5c31e349f6d <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/property/class-001.test#InvalidResource1> .
+_:Ncb4c794aa9fd4d229575b5c31e349f6d <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Ncb4c794aa9fd4d229575b5c31e349f6d <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Ncb4c794aa9fd4d229575b5c31e349f6d <http://www.w3.org/ns/shacl#resultMessage> "Value does not have class ex:SuperClass" .
+_:Ncb4c794aa9fd4d229575b5c31e349f6d <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#ClassConstraintComponent> .
+_:N13fbcbd9c52840d2ab0a6b4f94707de3 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/class-001.test#InvalidResource1> .
+_:N13fbcbd9c52840d2ab0a6b4f94707de3 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/class-001.test#TestShape-testProperty> .
+_:Ned8b0816f734462c8ed43d1b74f91e91 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Ned8b0816f734462c8ed43d1b74f91e91 <http://www.w3.org/ns/shacl#result> _:N13fbcbd9c52840d2ab0a6b4f94707de3 .
+_:Ned8b0816f734462c8ed43d1b74f91e91 <http://www.w3.org/ns/shacl#result> _:Ncb4c794aa9fd4d229575b5c31e349f6d .
+_:N13fbcbd9c52840d2ab0a6b4f94707de3 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N13fbcbd9c52840d2ab0a6b4f94707de3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N13fbcbd9c52840d2ab0a6b4f94707de3 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/class-001.test#testProperty> .
+_:N13fbcbd9c52840d2ab0a6b4f94707de3 <http://www.w3.org/ns/shacl#value> "A string" .
+_:Ncb4c794aa9fd4d229575b5c31e349f6d <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/class-001.test#InvalidResource1> .
+_:Ned8b0816f734462c8ed43d1b74f91e91 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Ncb4c794aa9fd4d229575b5c31e349f6d <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/class-001.test#testProperty> .

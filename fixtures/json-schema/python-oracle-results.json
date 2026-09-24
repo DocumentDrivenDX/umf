@@ -1,0 +1,2728 @@
+{
+  "sourceRevision": "ab079cc2bace029fdbb483be28a6ade526bcfbc2",
+  "oracle": {
+    "jsonschema": "4.26.0",
+    "referencing": "0.37.0",
+    "simplejson": "4.1.2",
+    "numericProfile": "Exact Decimal decoding; mathematical integer type check; Fraction multipleOf",
+    "dialectProfile": "Custom metaschema validation-vocabulary selection; Python regex limitations reported"
+  },
+  "cases": 384,
+  "vectors": 1301,
+  "outcomes": {
+    "passed": 382,
+    "failed": 2
+  },
+  "records": [
+    {
+      "file": "additionalProperties.json",
+      "index": 0,
+      "vectors": 6,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "additionalProperties.json",
+      "index": 1,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "additionalProperties.json",
+      "index": 2,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "additionalProperties.json",
+      "index": 3,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "additionalProperties.json",
+      "index": 4,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "additionalProperties.json",
+      "index": 5,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "additionalProperties.json",
+      "index": 6,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "additionalProperties.json",
+      "index": 7,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "additionalProperties.json",
+      "index": 8,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "allOf.json",
+      "index": 0,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "allOf.json",
+      "index": 1,
+      "vectors": 5,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "allOf.json",
+      "index": 2,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "allOf.json",
+      "index": 3,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "allOf.json",
+      "index": 4,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "allOf.json",
+      "index": 5,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "allOf.json",
+      "index": 6,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "allOf.json",
+      "index": 7,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "allOf.json",
+      "index": 8,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "allOf.json",
+      "index": 9,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "allOf.json",
+      "index": 10,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "allOf.json",
+      "index": 11,
+      "vectors": 8,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "anchor.json",
+      "index": 0,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "anchor.json",
+      "index": 1,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "anchor.json",
+      "index": 2,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "anchor.json",
+      "index": 3,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "anyOf.json",
+      "index": 0,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "anyOf.json",
+      "index": 1,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "anyOf.json",
+      "index": 2,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "anyOf.json",
+      "index": 3,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "anyOf.json",
+      "index": 4,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "anyOf.json",
+      "index": 5,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "anyOf.json",
+      "index": 6,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "anyOf.json",
+      "index": 7,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "boolean_schema.json",
+      "index": 0,
+      "vectors": 9,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "boolean_schema.json",
+      "index": 1,
+      "vectors": 9,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "const.json",
+      "index": 0,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "const.json",
+      "index": 1,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "const.json",
+      "index": 2,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "const.json",
+      "index": 3,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "const.json",
+      "index": 4,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "const.json",
+      "index": 5,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "const.json",
+      "index": 6,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "const.json",
+      "index": 7,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "const.json",
+      "index": 8,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "const.json",
+      "index": 9,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "const.json",
+      "index": 10,
+      "vectors": 6,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "const.json",
+      "index": 11,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "const.json",
+      "index": 12,
+      "vectors": 5,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "const.json",
+      "index": 13,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "const.json",
+      "index": 14,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "const.json",
+      "index": 15,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "const.json",
+      "index": 16,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "contains.json",
+      "index": 0,
+      "vectors": 6,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "contains.json",
+      "index": 1,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "contains.json",
+      "index": 2,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "contains.json",
+      "index": 3,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "contains.json",
+      "index": 4,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "contains.json",
+      "index": 5,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "contains.json",
+      "index": 6,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "content.json",
+      "index": 0,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "content.json",
+      "index": 1,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "content.json",
+      "index": 2,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "content.json",
+      "index": 3,
+      "vectors": 8,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "default.json",
+      "index": 0,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "default.json",
+      "index": 1,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "default.json",
+      "index": 2,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "defs.json",
+      "index": 0,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dependentRequired.json",
+      "index": 0,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dependentRequired.json",
+      "index": 1,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dependentRequired.json",
+      "index": 2,
+      "vectors": 6,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dependentRequired.json",
+      "index": 3,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dependentSchemas.json",
+      "index": 0,
+      "vectors": 8,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dependentSchemas.json",
+      "index": 1,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dependentSchemas.json",
+      "index": 2,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dependentSchemas.json",
+      "index": 3,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dynamicRef.json",
+      "index": 0,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dynamicRef.json",
+      "index": 1,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dynamicRef.json",
+      "index": 2,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dynamicRef.json",
+      "index": 3,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dynamicRef.json",
+      "index": 4,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dynamicRef.json",
+      "index": 5,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dynamicRef.json",
+      "index": 6,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dynamicRef.json",
+      "index": 7,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dynamicRef.json",
+      "index": 8,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dynamicRef.json",
+      "index": 9,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dynamicRef.json",
+      "index": 10,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dynamicRef.json",
+      "index": 11,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dynamicRef.json",
+      "index": 12,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dynamicRef.json",
+      "index": 13,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dynamicRef.json",
+      "index": 14,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dynamicRef.json",
+      "index": 15,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dynamicRef.json",
+      "index": 16,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dynamicRef.json",
+      "index": 17,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dynamicRef.json",
+      "index": 18,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dynamicRef.json",
+      "index": 19,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "dynamicRef.json",
+      "index": 20,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "enum.json",
+      "index": 0,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "enum.json",
+      "index": 1,
+      "vectors": 5,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "enum.json",
+      "index": 2,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "enum.json",
+      "index": 3,
+      "vectors": 6,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "enum.json",
+      "index": 4,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "enum.json",
+      "index": 5,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "enum.json",
+      "index": 6,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "enum.json",
+      "index": 7,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "enum.json",
+      "index": 8,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "enum.json",
+      "index": 9,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "enum.json",
+      "index": 10,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "enum.json",
+      "index": 11,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "enum.json",
+      "index": 12,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "enum.json",
+      "index": 13,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "enum.json",
+      "index": 14,
+      "vectors": 6,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "enum.json",
+      "index": 15,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "exclusiveMaximum.json",
+      "index": 0,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "exclusiveMinimum.json",
+      "index": 0,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "format.json",
+      "index": 0,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "format.json",
+      "index": 1,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "format.json",
+      "index": 2,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "format.json",
+      "index": 3,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "format.json",
+      "index": 4,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "format.json",
+      "index": 5,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "format.json",
+      "index": 6,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "format.json",
+      "index": 7,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "format.json",
+      "index": 8,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "format.json",
+      "index": 9,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "format.json",
+      "index": 10,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "format.json",
+      "index": 11,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "format.json",
+      "index": 12,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "format.json",
+      "index": 13,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "format.json",
+      "index": 14,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "format.json",
+      "index": 15,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "format.json",
+      "index": 16,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "format.json",
+      "index": 17,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "format.json",
+      "index": 18,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "if-then-else.json",
+      "index": 0,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "if-then-else.json",
+      "index": 1,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "if-then-else.json",
+      "index": 2,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "if-then-else.json",
+      "index": 3,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "if-then-else.json",
+      "index": 4,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "if-then-else.json",
+      "index": 5,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "if-then-else.json",
+      "index": 6,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "if-then-else.json",
+      "index": 7,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "if-then-else.json",
+      "index": 8,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "if-then-else.json",
+      "index": 9,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "if-then-else.json",
+      "index": 10,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "if-then-else.json",
+      "index": 11,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "infinite-loop-detection.json",
+      "index": 0,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "items.json",
+      "index": 0,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "items.json",
+      "index": 1,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "items.json",
+      "index": 2,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "items.json",
+      "index": 3,
+      "vectors": 6,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "items.json",
+      "index": 4,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "items.json",
+      "index": 5,
+      "vectors": 5,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "items.json",
+      "index": 6,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "items.json",
+      "index": 7,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "items.json",
+      "index": 8,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "items.json",
+      "index": 9,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "maxContains.json",
+      "index": 0,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "maxContains.json",
+      "index": 1,
+      "vectors": 5,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "maxContains.json",
+      "index": 2,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "maxContains.json",
+      "index": 3,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "maxContains.json",
+      "index": 4,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "maxItems.json",
+      "index": 0,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "maxItems.json",
+      "index": 1,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "maxLength.json",
+      "index": 0,
+      "vectors": 5,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "maxLength.json",
+      "index": 1,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "maxProperties.json",
+      "index": 0,
+      "vectors": 6,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "maxProperties.json",
+      "index": 1,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "maxProperties.json",
+      "index": 2,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "maximum.json",
+      "index": 0,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "maximum.json",
+      "index": 1,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "minContains.json",
+      "index": 0,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "minContains.json",
+      "index": 1,
+      "vectors": 5,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "minContains.json",
+      "index": 2,
+      "vectors": 6,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "minContains.json",
+      "index": 3,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "minContains.json",
+      "index": 4,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "minContains.json",
+      "index": 5,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "minContains.json",
+      "index": 6,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "minContains.json",
+      "index": 7,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "minItems.json",
+      "index": 0,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "minItems.json",
+      "index": 1,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "minLength.json",
+      "index": 0,
+      "vectors": 5,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "minLength.json",
+      "index": 1,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "minProperties.json",
+      "index": 0,
+      "vectors": 8,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "minProperties.json",
+      "index": 1,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "minimum.json",
+      "index": 0,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "minimum.json",
+      "index": 1,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "multipleOf.json",
+      "index": 0,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "multipleOf.json",
+      "index": 1,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "multipleOf.json",
+      "index": 2,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "multipleOf.json",
+      "index": 3,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "multipleOf.json",
+      "index": 4,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "not.json",
+      "index": 0,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "not.json",
+      "index": 1,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "not.json",
+      "index": 2,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "not.json",
+      "index": 3,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "not.json",
+      "index": 4,
+      "vectors": 9,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "not.json",
+      "index": 5,
+      "vectors": 9,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "not.json",
+      "index": 6,
+      "vectors": 9,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "not.json",
+      "index": 7,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "not.json",
+      "index": 8,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "oneOf.json",
+      "index": 0,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "oneOf.json",
+      "index": 1,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "oneOf.json",
+      "index": 2,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "oneOf.json",
+      "index": 3,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "oneOf.json",
+      "index": 4,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "oneOf.json",
+      "index": 5,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "oneOf.json",
+      "index": 6,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "oneOf.json",
+      "index": 7,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "oneOf.json",
+      "index": 8,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "oneOf.json",
+      "index": 9,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "oneOf.json",
+      "index": 10,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "pattern.json",
+      "index": 0,
+      "vectors": 8,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "pattern.json",
+      "index": 1,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "pattern.json",
+      "index": 2,
+      "vectors": 3,
+      "outcome": "failed",
+      "mismatches": [
+        {
+          "description": "ASCII letters match",
+          "error": "bad escape \\p at position 1"
+        },
+        {
+          "description": "Non-ASCII letters match",
+          "error": "bad escape \\p at position 1"
+        },
+        {
+          "description": "Digits do not match",
+          "error": "bad escape \\p at position 1"
+        }
+      ]
+    },
+    {
+      "file": "patternProperties.json",
+      "index": 0,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "patternProperties.json",
+      "index": 1,
+      "vectors": 6,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "patternProperties.json",
+      "index": 2,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "patternProperties.json",
+      "index": 3,
+      "vectors": 5,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "patternProperties.json",
+      "index": 4,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "patternProperties.json",
+      "index": 5,
+      "vectors": 2,
+      "outcome": "failed",
+      "mismatches": [
+        {
+          "description": "Unicode letter property name matches",
+          "error": "bad escape \\p at position 1"
+        },
+        {
+          "description": "Non-letter property name does not match pattern",
+          "error": "bad escape \\p at position 1"
+        }
+      ]
+    },
+    {
+      "file": "prefixItems.json",
+      "index": 0,
+      "vectors": 6,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "prefixItems.json",
+      "index": 1,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "prefixItems.json",
+      "index": 2,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "prefixItems.json",
+      "index": 3,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "properties.json",
+      "index": 0,
+      "vectors": 6,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "properties.json",
+      "index": 1,
+      "vectors": 8,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "properties.json",
+      "index": 2,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "properties.json",
+      "index": 3,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "properties.json",
+      "index": 4,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "properties.json",
+      "index": 5,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "propertyNames.json",
+      "index": 0,
+      "vectors": 8,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "propertyNames.json",
+      "index": 1,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "propertyNames.json",
+      "index": 2,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "propertyNames.json",
+      "index": 3,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "propertyNames.json",
+      "index": 4,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "propertyNames.json",
+      "index": 5,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 0,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 1,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 2,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 3,
+      "vectors": 6,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 4,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 5,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 6,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 7,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 8,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 9,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 10,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 11,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 12,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 13,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 14,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 15,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 16,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 17,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 18,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 19,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 20,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 21,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 22,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 23,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 24,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 25,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 26,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 27,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 28,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 29,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 30,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 31,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 32,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 33,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 34,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "ref.json",
+      "index": 35,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "refRemote.json",
+      "index": 0,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "refRemote.json",
+      "index": 1,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "refRemote.json",
+      "index": 2,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "refRemote.json",
+      "index": 3,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "refRemote.json",
+      "index": 4,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "refRemote.json",
+      "index": 5,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "refRemote.json",
+      "index": 6,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "refRemote.json",
+      "index": 7,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "refRemote.json",
+      "index": 8,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "refRemote.json",
+      "index": 9,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "refRemote.json",
+      "index": 10,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "refRemote.json",
+      "index": 11,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "refRemote.json",
+      "index": 12,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "refRemote.json",
+      "index": 13,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "refRemote.json",
+      "index": 14,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "required.json",
+      "index": 0,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "required.json",
+      "index": 1,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "required.json",
+      "index": 2,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "required.json",
+      "index": 3,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "required.json",
+      "index": 4,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "type.json",
+      "index": 0,
+      "vectors": 9,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "type.json",
+      "index": 1,
+      "vectors": 9,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "type.json",
+      "index": 2,
+      "vectors": 9,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "type.json",
+      "index": 3,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "type.json",
+      "index": 4,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "type.json",
+      "index": 5,
+      "vectors": 10,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "type.json",
+      "index": 6,
+      "vectors": 10,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "type.json",
+      "index": 7,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "type.json",
+      "index": 8,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "type.json",
+      "index": 9,
+      "vectors": 5,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "type.json",
+      "index": 10,
+      "vectors": 5,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 0,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 1,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 2,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 3,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 4,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 5,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 6,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 7,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 8,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 9,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 10,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 11,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 12,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 13,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 14,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 15,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 16,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 17,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 18,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 19,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 20,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 21,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 22,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 23,
+      "vectors": 8,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 24,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 25,
+      "vectors": 6,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 26,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 27,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedItems.json",
+      "index": 28,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 0,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 1,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 2,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 3,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 4,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 5,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 6,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 7,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 8,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 9,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 10,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 11,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 12,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 13,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 14,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 15,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 16,
+      "vectors": 4,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 17,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 18,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 19,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 20,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 21,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 22,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 23,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 24,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 25,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 26,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 27,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 28,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 29,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 30,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 31,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 32,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 33,
+      "vectors": 7,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 34,
+      "vectors": 8,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 35,
+      "vectors": 21,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 36,
+      "vectors": 6,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 37,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 38,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 39,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 40,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 41,
+      "vectors": 1,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 42,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "unevaluatedProperties.json",
+      "index": 43,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "uniqueItems.json",
+      "index": 0,
+      "vectors": 28,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "uniqueItems.json",
+      "index": 1,
+      "vectors": 8,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "uniqueItems.json",
+      "index": 2,
+      "vectors": 5,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "uniqueItems.json",
+      "index": 3,
+      "vectors": 15,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "uniqueItems.json",
+      "index": 4,
+      "vectors": 8,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "uniqueItems.json",
+      "index": 5,
+      "vectors": 5,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "vocabulary.json",
+      "index": 0,
+      "vectors": 3,
+      "outcome": "passed",
+      "mismatches": []
+    },
+    {
+      "file": "vocabulary.json",
+      "index": 1,
+      "vectors": 2,
+      "outcome": "passed",
+      "mismatches": []
+    }
+  ]
+}

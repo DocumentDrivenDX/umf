@@ -1,0 +1,97 @@
+{
+  "sourceSha256": "9512c6fab8d87764140b1a869bb32c0296f81e3c7b50ca1d41215d7e06372b64",
+  "modelSha256": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b",
+  "loaderSha256": "1b133536ef2abede237889b3be07e3197cf1a33ba00b0b80bfc2a388ed2efefa",
+  "cases": [
+    {
+      "mode": "monolithic",
+      "format": "json",
+      "nativeModelMatchesExplicitEdits": true,
+      "columns": [
+        "order_id",
+        "tenant"
+      ],
+      "primaryKey": [
+        "order_id"
+      ],
+      "contextColumn": "tenant"
+    },
+    {
+      "mode": "monolithic",
+      "format": "yaml",
+      "nativeModelMatchesExplicitEdits": true,
+      "columns": [
+        "order_id",
+        "tenant"
+      ],
+      "primaryKey": [
+        "order_id"
+      ],
+      "contextColumn": "tenant"
+    },
+    {
+      "mode": "split",
+      "format": "json",
+      "nativeModelMatchesExplicitEdits": true,
+      "columns": [
+        "order_id",
+        "tenant"
+      ],
+      "primaryKey": [
+        "order_id"
+      ],
+      "contextColumn": "tenant"
+    },
+    {
+      "mode": "split",
+      "format": "yaml",
+      "nativeModelMatchesExplicitEdits": true,
+      "columns": [
+        "order_id",
+        "tenant"
+      ],
+      "primaryKey": [
+        "order_id"
+      ],
+      "contextColumn": "tenant"
+    }
+  ],
+  "unrepairedCandidatesRejected": 2,
+  "rejections": [
+    {
+      "mode": "monolithic",
+      "error": "1 validation error for UMF\nprimary_key\n  Value error, Primary key column 'id' not found in table columns [type=value_error, input_value=['id'], input_type=list]\n    For further information visit https://errors.pydantic.dev/2.11/v/value_error"
+    },
+    {
+      "mode": "split",
+      "error": "1 validation error for UMF\nprimary_key\n  Value error, Primary key column 'id' not found in table columns [type=value_error, input_value=['id'], input_type=list]\n    For further information visit https://errors.pydantic.dev/2.11/v/value_error"
+    }
+  ],
+  "opaqueFieldRejections": [
+    {
+      "mode": "monolithic",
+      "format": "json",
+      "accepted": false,
+      "reason": "Unknown native table field retained; pinned model rejects extra input."
+    },
+    {
+      "mode": "monolithic",
+      "format": "yaml",
+      "accepted": false,
+      "reason": "Unknown native table field retained; pinned model rejects extra input."
+    },
+    {
+      "mode": "split",
+      "format": "json",
+      "accepted": false,
+      "reason": "Unknown native table field retained; pinned model rejects extra input."
+    },
+    {
+      "mode": "split",
+      "format": "yaml",
+      "accepted": false,
+      "reason": "Unknown native table field retained; pinned model rejects extra input."
+    }
+  ],
+  "scope": "Pinned native model/loader validates explicit table and column edits. Unknown table fields are preserved by UMF and still rejected natively; native normalization is not used as recovered source."
+}

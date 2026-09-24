@@ -1,0 +1,677 @@
+[
+  {
+    "id": "type-0",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "string",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "type-1",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "long",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "type-2",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "integer",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "type-3",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "short",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "type-4",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "byte",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "type-5",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "float",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "type-6",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "double",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "type-7",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "boolean",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "type-8",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "binary",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "type-9",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "date",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "type-10",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "timestamp",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "type-11",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "timestamp_ntz",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "type-12",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "void",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "type-13",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "variant",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "type-14",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "decimal(10,2)",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "type-15",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "decimal(38,18)",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "type-16",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "decimal(39,0)",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "type-17",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "decimal(10,-2)",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "type-18",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "char(5)",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "type-19",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "interval day to second",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "type-20",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "future_type",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "variant-object",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": {
+            "type": "variant"
+          },
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "array",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": {
+            "type": "array",
+            "elementType": "string",
+            "containsNull": false
+          },
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "map",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": {
+            "type": "map",
+            "keyType": "string",
+            "valueType": "long",
+            "valueContainsNull": false
+          },
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "nested",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "integer",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "future-object",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": {
+            "type": "future",
+            "settings": {
+              "x": 1
+            }
+          },
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "column-mapping",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "long",
+          "nullable": true,
+          "metadata": {
+            "delta.columnMapping.id": 1,
+            "delta.columnMapping.physicalName": "col-abcd"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "identity",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "long",
+          "nullable": true,
+          "metadata": {
+            "delta.identity.start": 1,
+            "delta.identity.step": 1,
+            "delta.identity.highWaterMark": 9223372036854775807,
+            "delta.identity.allowExplicitInsert": false
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "invariant",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "long",
+          "nullable": true,
+          "metadata": {
+            "delta.invariants": "{\"expression\": {\"expression\": \"value > 0\"}}"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "generated",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "long",
+          "nullable": true,
+          "metadata": {
+            "delta.generationExpression": "other + 1",
+            "CURRENT_DEFAULT": "42",
+            "EXISTS_DEFAULT": "42"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "metadata-unknown",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "string",
+          "nullable": true,
+          "metadata": {
+            "future": {
+              "nested": [
+                1,
+                true,
+                null
+              ]
+            },
+            "large": 9223372036854775808
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "unknown-root",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "string",
+          "nullable": true,
+          "metadata": {}
+        }
+      ],
+      "future": {
+        "meaning": true
+      }
+    }
+  },
+  {
+    "id": "unknown-field",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "string",
+          "nullable": true,
+          "metadata": {},
+          "future": {
+            "meaning": true
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "duplicate",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "string",
+          "nullable": true,
+          "metadata": {}
+        },
+        {
+          "name": "value",
+          "type": "long",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "case-duplicate",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "string",
+          "nullable": true,
+          "metadata": {}
+        },
+        {
+          "name": "VALUE",
+          "type": "long",
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "missing-field-defaults",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    }
+  },
+  {
+    "id": "array-missing-nullability",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": {
+            "type": "array",
+            "elementType": "string"
+          },
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "map-missing-nullability",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "value",
+          "type": {
+            "type": "map",
+            "keyType": "string",
+            "valueType": "long"
+          },
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "protocol-example",
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "a",
+          "type": "integer",
+          "nullable": false,
+          "metadata": {}
+        },
+        {
+          "name": "b",
+          "type": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "d",
+                "type": "integer",
+                "nullable": false,
+                "metadata": {}
+              }
+            ]
+          },
+          "nullable": true,
+          "metadata": {}
+        },
+        {
+          "name": "c",
+          "type": {
+            "type": "array",
+            "elementType": "integer",
+            "containsNull": false
+          },
+          "nullable": true,
+          "metadata": {}
+        },
+        {
+          "name": "e",
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "struct",
+              "fields": [
+                {
+                  "name": "d",
+                  "type": "integer",
+                  "nullable": false,
+                  "metadata": {}
+                }
+              ]
+            },
+            "containsNull": true
+          },
+          "nullable": true,
+          "metadata": {}
+        },
+        {
+          "name": "f",
+          "type": {
+            "type": "map",
+            "keyType": "string",
+            "valueType": "string",
+            "valueContainsNull": true
+          },
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  }
+]

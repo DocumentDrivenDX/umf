@@ -1,0 +1,19 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b8309 .
+_:report <http://www.w3.org/ns/shacl#result> _:b8310 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b8309 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b8309 <http://www.w3.org/ns/shacl#resultSeverity> <http://datashapes.org/sh/tests/core/misc/severity-002.test#MySeverity> .
+_:b8309 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b8309 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/misc/severity-002.test#TestShape1> .
+_:b8309 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/misc/severity-002.test#InvalidResource1> .
+_:b8309 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/misc/severity-002.test#InvalidResource1> .
+_:b8309 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#BlankNode>" .
+_:b8310 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b8310 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Info> .
+_:b8310 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:b8310 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/misc/severity-002.test#TestShape2> .
+_:b8310 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/misc/severity-002.test#InvalidResource1> .
+_:b8310 <http://www.w3.org/ns/shacl#value> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b8310 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have datatype <http://www.w3.org/2001/XMLSchema#integer>" .
+_:b8310 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/misc/severity-002.test#property> .

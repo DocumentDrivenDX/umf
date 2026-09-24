@@ -1,0 +1,524 @@
+{
+  "leaves": [
+    {
+      "ordinal": 0,
+      "pathString": "metaData.id",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 2,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 1,
+      "pathString": "metaData.name",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 2,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 2,
+      "pathString": "metaData.description",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 2,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 3,
+      "pathString": "metaData.schemaString",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 2,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 4,
+      "pathString": "metaData.createdTime",
+      "physicalType": "INT64",
+      "definitionLevel": 2,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 5,
+      "pathString": "metaData.partitionColumns.list.element",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 4,
+      "repetitionLevel": 1
+    },
+    {
+      "ordinal": 6,
+      "pathString": "metaData.configuration.key_value.key",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 3,
+      "repetitionLevel": 1
+    },
+    {
+      "ordinal": 7,
+      "pathString": "metaData.configuration.key_value.value",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 4,
+      "repetitionLevel": 1
+    },
+    {
+      "ordinal": 8,
+      "pathString": "metaData.format.provider",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 3,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 9,
+      "pathString": "metaData.format.options.key_value.key",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 4,
+      "repetitionLevel": 1
+    },
+    {
+      "ordinal": 10,
+      "pathString": "metaData.format.options.key_value.value",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 5,
+      "repetitionLevel": 1
+    },
+    {
+      "ordinal": 11,
+      "pathString": "protocol.minReaderVersion",
+      "physicalType": "INT32",
+      "definitionLevel": 2,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 12,
+      "pathString": "protocol.minWriterVersion",
+      "physicalType": "INT32",
+      "definitionLevel": 2,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 13,
+      "pathString": "protocol.writerFeatures.list.element",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 4,
+      "repetitionLevel": 1
+    },
+    {
+      "ordinal": 14,
+      "pathString": "protocol.readerFeatures.list.element",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 4,
+      "repetitionLevel": 1
+    },
+    {
+      "ordinal": 15,
+      "pathString": "txn.appId",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 2,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 16,
+      "pathString": "txn.version",
+      "physicalType": "INT64",
+      "definitionLevel": 2,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 17,
+      "pathString": "add.path",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 2,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 18,
+      "pathString": "add.size",
+      "physicalType": "INT64",
+      "definitionLevel": 2,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 19,
+      "pathString": "add.modificationTime",
+      "physicalType": "INT64",
+      "definitionLevel": 2,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 20,
+      "pathString": "add.dataChange",
+      "physicalType": "BOOLEAN",
+      "definitionLevel": 2,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 21,
+      "pathString": "add.partitionValues.key_value.key",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 3,
+      "repetitionLevel": 1
+    },
+    {
+      "ordinal": 22,
+      "pathString": "add.partitionValues.key_value.value",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 4,
+      "repetitionLevel": 1
+    },
+    {
+      "ordinal": 23,
+      "pathString": "add.tags.key_value.key",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 3,
+      "repetitionLevel": 1
+    },
+    {
+      "ordinal": 24,
+      "pathString": "add.tags.key_value.value",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 4,
+      "repetitionLevel": 1
+    },
+    {
+      "ordinal": 25,
+      "pathString": "add.deletionVector.storageType",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 2,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 26,
+      "pathString": "add.deletionVector.pathOrInlineDv",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 2,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 27,
+      "pathString": "add.deletionVector.offset",
+      "physicalType": "INT32",
+      "definitionLevel": 3,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 28,
+      "pathString": "add.deletionVector.sizeInBytes",
+      "physicalType": "INT32",
+      "definitionLevel": 2,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 29,
+      "pathString": "add.deletionVector.cardinality",
+      "physicalType": "INT64",
+      "definitionLevel": 2,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 30,
+      "pathString": "add.stats_parsed.numRecords",
+      "physicalType": "INT64",
+      "definitionLevel": 3,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 31,
+      "pathString": "add.stats_parsed.minValues.integer",
+      "physicalType": "INT32",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 32,
+      "pathString": "add.stats_parsed.minValues.null",
+      "physicalType": "BOOLEAN",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 33,
+      "pathString": "add.stats_parsed.minValues.boolean",
+      "physicalType": "BOOLEAN",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 34,
+      "pathString": "add.stats_parsed.minValues.double",
+      "physicalType": "DOUBLE",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 35,
+      "pathString": "add.stats_parsed.minValues.decimal",
+      "physicalType": "INT32",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 36,
+      "pathString": "add.stats_parsed.minValues.string",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 37,
+      "pathString": "add.stats_parsed.minValues.date",
+      "physicalType": "INT32",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 38,
+      "pathString": "add.stats_parsed.minValues.timestamp",
+      "physicalType": "INT64",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 39,
+      "pathString": "add.stats_parsed.minValues.struct.struct_element",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 5,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 40,
+      "pathString": "add.stats_parsed.minValues.nested_struct.struct_element.nested_struct_element",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 6,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 41,
+      "pathString": "add.stats_parsed.maxValues.integer",
+      "physicalType": "INT32",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 42,
+      "pathString": "add.stats_parsed.maxValues.null",
+      "physicalType": "BOOLEAN",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 43,
+      "pathString": "add.stats_parsed.maxValues.boolean",
+      "physicalType": "BOOLEAN",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 44,
+      "pathString": "add.stats_parsed.maxValues.double",
+      "physicalType": "DOUBLE",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 45,
+      "pathString": "add.stats_parsed.maxValues.decimal",
+      "physicalType": "INT32",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 46,
+      "pathString": "add.stats_parsed.maxValues.string",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 47,
+      "pathString": "add.stats_parsed.maxValues.date",
+      "physicalType": "INT32",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 48,
+      "pathString": "add.stats_parsed.maxValues.timestamp",
+      "physicalType": "INT64",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 49,
+      "pathString": "add.stats_parsed.maxValues.struct.struct_element",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 5,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 50,
+      "pathString": "add.stats_parsed.maxValues.nested_struct.struct_element.nested_struct_element",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 6,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 51,
+      "pathString": "add.stats_parsed.nullCount.integer",
+      "physicalType": "INT64",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 52,
+      "pathString": "add.stats_parsed.nullCount.null",
+      "physicalType": "INT64",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 53,
+      "pathString": "add.stats_parsed.nullCount.boolean",
+      "physicalType": "INT64",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 54,
+      "pathString": "add.stats_parsed.nullCount.double",
+      "physicalType": "INT64",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 55,
+      "pathString": "add.stats_parsed.nullCount.decimal",
+      "physicalType": "INT64",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 56,
+      "pathString": "add.stats_parsed.nullCount.string",
+      "physicalType": "INT64",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 57,
+      "pathString": "add.stats_parsed.nullCount.binary",
+      "physicalType": "INT64",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 58,
+      "pathString": "add.stats_parsed.nullCount.date",
+      "physicalType": "INT64",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 59,
+      "pathString": "add.stats_parsed.nullCount.timestamp",
+      "physicalType": "INT64",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 60,
+      "pathString": "add.stats_parsed.nullCount.struct.struct_element",
+      "physicalType": "INT64",
+      "definitionLevel": 5,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 61,
+      "pathString": "add.stats_parsed.nullCount.map",
+      "physicalType": "INT64",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 62,
+      "pathString": "add.stats_parsed.nullCount.array",
+      "physicalType": "INT64",
+      "definitionLevel": 4,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 63,
+      "pathString": "add.stats_parsed.nullCount.nested_struct.struct_element.nested_struct_element",
+      "physicalType": "INT64",
+      "definitionLevel": 6,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 64,
+      "pathString": "add.stats_parsed.nullCount.struct_of_array_of_map.struct_element",
+      "physicalType": "INT64",
+      "definitionLevel": 5,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 65,
+      "pathString": "remove.path",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 2,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 66,
+      "pathString": "remove.deletionTimestamp",
+      "physicalType": "INT64",
+      "definitionLevel": 2,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 67,
+      "pathString": "remove.dataChange",
+      "physicalType": "BOOLEAN",
+      "definitionLevel": 2,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 68,
+      "pathString": "remove.extendedFileMetadata",
+      "physicalType": "BOOLEAN",
+      "definitionLevel": 2,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 69,
+      "pathString": "remove.size",
+      "physicalType": "INT64",
+      "definitionLevel": 2,
+      "repetitionLevel": 0
+    },
+    {
+      "ordinal": 70,
+      "pathString": "remove.partitionValues.key_value.key",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 3,
+      "repetitionLevel": 1
+    },
+    {
+      "ordinal": 71,
+      "pathString": "remove.partitionValues.key_value.value",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 4,
+      "repetitionLevel": 1
+    },
+    {
+      "ordinal": 72,
+      "pathString": "remove.tags.key_value.key",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 3,
+      "repetitionLevel": 1
+    },
+    {
+      "ordinal": 73,
+      "pathString": "remove.tags.key_value.value",
+      "physicalType": "BYTE_ARRAY",
+      "definitionLevel": 4,
+      "repetitionLevel": 1
+    }
+  ],
+  "rowGroups": 1,
+  "rows": "4"
+}

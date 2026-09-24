@@ -1,0 +1,118 @@
+{
+  "fixtureSha256": "33cf8c8626b0ca0303a129e2e9137d25731cd15af051e8f8f7b5a2406144e832",
+  "checks": [
+    {
+      "path": "/serverVersion",
+      "token": "170004.0000000000000000001",
+      "integral": false,
+      "safeRange": true,
+      "negativeZero": false
+    },
+    {
+      "path": "/serverVersion",
+      "token": "1e-400",
+      "integral": false,
+      "safeRange": true,
+      "negativeZero": false
+    },
+    {
+      "path": "/serverVersion",
+      "token": "9007199254740993",
+      "integral": true,
+      "safeRange": false,
+      "negativeZero": false
+    },
+    {
+      "path": "/serverVersion",
+      "token": "-0",
+      "integral": true,
+      "safeRange": true,
+      "negativeZero": true
+    },
+    {
+      "path": "/snapshot/relations/4/columns/0/position",
+      "token": "1.0000000000000000001",
+      "integral": false,
+      "safeRange": true,
+      "negativeZero": false
+    },
+    {
+      "path": "/snapshot/relations/4/columns/0/position",
+      "token": "1e-400",
+      "integral": false,
+      "safeRange": true,
+      "negativeZero": false
+    },
+    {
+      "path": "/snapshot/relations/4/columns/0/position",
+      "token": "9007199254740993",
+      "integral": true,
+      "safeRange": false,
+      "negativeZero": false
+    },
+    {
+      "path": "/snapshot/relations/4/columns/0/position",
+      "token": "-0",
+      "integral": true,
+      "safeRange": true,
+      "negativeZero": true
+    },
+    {
+      "path": "/snapshot/relations/4/columns/0/nativeType/dimensions",
+      "token": "0.0000000000000000001",
+      "integral": false,
+      "safeRange": true,
+      "negativeZero": false
+    },
+    {
+      "path": "/snapshot/relations/4/columns/0/nativeType/dimensions",
+      "token": "1e-400",
+      "integral": false,
+      "safeRange": true,
+      "negativeZero": false
+    },
+    {
+      "path": "/snapshot/relations/4/columns/0/nativeType/dimensions",
+      "token": "9007199254740993",
+      "integral": true,
+      "safeRange": false,
+      "negativeZero": false
+    },
+    {
+      "path": "/snapshot/relations/4/columns/0/nativeType/dimensions",
+      "token": "-0",
+      "integral": true,
+      "safeRange": true,
+      "negativeZero": true
+    },
+    {
+      "path": "/snapshot/relations/4/columns/0/nativeType/modifier",
+      "token": "-1.0000000000000000001",
+      "integral": false,
+      "safeRange": true,
+      "negativeZero": false
+    },
+    {
+      "path": "/snapshot/relations/4/columns/0/nativeType/modifier",
+      "token": "1e-400",
+      "integral": false,
+      "safeRange": true,
+      "negativeZero": false
+    },
+    {
+      "path": "/snapshot/relations/4/columns/0/nativeType/modifier",
+      "token": "9007199254740993",
+      "integral": true,
+      "safeRange": false,
+      "negativeZero": false
+    },
+    {
+      "path": "/snapshot/relations/4/columns/0/nativeType/modifier",
+      "token": "-0",
+      "integral": true,
+      "safeRange": true,
+      "negativeZero": true
+    }
+  ],
+  "scope": "Independent exact Decimal assessment of the interoperable integer profile; no live server operations."
+}

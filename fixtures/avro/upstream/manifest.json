@@ -1,0 +1,93 @@
+{
+  "repository": "https://github.com/apache/avro",
+  "tag": "release-1.12.0",
+  "commit": "8c27801dc8d42ccc00997f25c0b8f45f8d4a233e",
+  "scope": [
+    "share/test/schemas",
+    "lang/java/avro/src/test/resources",
+    "lang/java/compiler/src/test/resources"
+  ],
+  "selection": "All recursively present .avsc files in listed directories; no outcome-based filtering",
+  "files": [
+    {
+      "path": "share/test/schemas/FooBarSpecificRecord.avsc",
+      "sha256": "91a193a616ad610b8f5cf234ead2295a284409f970a2e6c3a55746a2b8e14015"
+    },
+    {
+      "path": "share/test/schemas/RecordWithRequiredFields.avsc",
+      "sha256": "e360064ad0157bcf735359bc19a4c5b56d43261c92469d27300fe965913f99a2"
+    },
+    {
+      "path": "share/test/schemas/interop.avsc",
+      "sha256": "7e894e5e1fe8d78331ce93c103248d152772dc476dda1c3e11ea16931d203619"
+    },
+    {
+      "path": "share/test/schemas/reserved.avsc",
+      "sha256": "d9551feb8565e6e21bcfb95cb51605967aa2c1a5f67120b28f3264d3cfdf2488"
+    },
+    {
+      "path": "share/test/schemas/weather.avsc",
+      "sha256": "baf2c69442e2aa01d2ddfdd416899fb9af7ff524920c237409b842450a7c291a"
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/SchemaBuilder.avsc",
+      "sha256": "c51a254c85d2141c1fa03cb075eafee08c386e31d0555882a9cddb449d18b1ba"
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/TestRecordWithLogicalTypes.avsc",
+      "sha256": "919b39297578be025fc8a8aeba3c29fc1ac9516a18ee075550f37e6612d072a2"
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/TestRecordWithMapsAndArrays.avsc",
+      "sha256": "bd5acb1394119bfba673ed1bc9de2b9d77170fd1691e15de543313d31b4e6433"
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/TestUnionRecord.avsc",
+      "sha256": "48dc269544e8900c86aabf49129dc59913167b6e0e9a31b56f2828c3a721715b"
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/multipleFile/ApplicationEvent.avsc",
+      "sha256": "9ced72444aa332f68b5db3600495d931d72d8a827180db3c148eccfb3cfd482c"
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/multipleFile/DocumentInfo.avsc",
+      "sha256": "7f4b836194e6f52eaef596efd6a7e73bc47035530a24b4d28fec37f786c0a8b7"
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/multipleFile/MyResponse.avsc",
+      "sha256": "727827658af224cb77bc4b41a33447e229d6d2e29f20026e5d239dc171d07832"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/foo.Bar.avsc",
+      "sha256": "9f61a396eb826b86e375eb9fa59a4d8d402d875bb818ff8730d70154446893e4"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/full_record_v1.avsc",
+      "sha256": "af46e090056002d163f215b296745e2105107aaa7a609f40bfe13157676a5293"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/full_record_v2.avsc",
+      "sha256": "e5e861f4e3a774ac70acd3a04e9ad889b21cb6aa0e29e9bd3300308a1a341eb1"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/logical-uuid.avsc",
+      "sha256": "d8df15663ac6ea2862e496107513d28a9e7e7350a4e8e64332ddfbfa088b4a98"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/logical_types_with_multiple_fields.avsc",
+      "sha256": "f3762c63b16d7b2be2f2fd3a6824d5fd517008924d06b66ba213897b649edee8"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/regression_error_field_in_record.avsc",
+      "sha256": "e7a7015904ed7b4b04e3e8cb49e62d1019453e4f07ef52b4aceb491bae89951e"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/simple_record.avsc",
+      "sha256": "bacaf260944b1f6bfea0e3345b29468fbd10dd63a9788222ead244bc899b1006"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/union_and_fixed_fields.avsc",
+      "sha256": "6ecaa27206f408030d5ece2b14eb429eb22a78681d259bf958260e1d681026d9"
+    }
+  ]
+}

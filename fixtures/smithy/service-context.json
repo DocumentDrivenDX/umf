@@ -1,0 +1,13 @@
+{
+ "smithy":"2.0",
+ "shapes":{
+  "sales#Id":{"type":"string","traits":{"smithy.api#length":{"min":1}}},
+  "sales#Customer":{"type":"structure","members":{"id":{"target":"sales#Id","traits":{"smithy.api#required":{}}}}},
+  "support#Customer":{"type":"structure","members":{"ticket":{"target":"smithy.api#Integer","traits":{"smithy.api#required":{}}}}},
+  "shared#Request":{"type":"structure","members":{"sales":{"target":"sales#Customer","traits":{"smithy.api#required":{}}},"support":{"target":"support#Customer","traits":{"smithy.api#required":{}}}}},
+  "shared#Operation":{"type":"operation","input":{"target":"shared#Request"}},
+  "shared#Api":{"type":"service","version":"1","operations":[{"target":"shared#Operation"}],"rename":{"sales#Customer":"SalesCustomer","support#Customer":"SupportCustomer"}},
+  "shared#Unrelated":{"type":"string"},
+  "shared#EmptyService":{"type":"service","version":"1"}
+ }
+}

@@ -1,0 +1,16 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+ <modelVersion>4.0.0</modelVersion><groupId>umf</groupId><artifactId>smithy-browser</artifactId><version>0.1.0</version>
+ <properties><maven.compiler.release>17</maven.compiler.release><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding></properties>
+ <dependencies>
+  <dependency><groupId>software.amazon.smithy</groupId><artifactId>smithy-jsonschema</artifactId><version>1.73.0</version><scope>provided</scope></dependency>
+  <dependency><groupId>software.amazon.smithy</groupId><artifactId>smithy-utils</artifactId><version>1.73.0</version><scope>provided</scope></dependency>
+  <dependency><groupId>org.teavm</groupId><artifactId>teavm-classlib</artifactId><version>0.15.0</version></dependency>
+  <dependency><groupId>software.amazon.smithy</groupId><artifactId>smithy-model</artifactId><version>1.73.0</version><scope>provided</scope></dependency>
+  <dependency><groupId>org.teavm</groupId><artifactId>teavm-jso-apis</artifactId><version>0.15.0</version></dependency>
+ </dependencies>
+ <build><plugins>
+  <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-dependency-plugin</artifactId><version>3.8.1</version><executions><execution><phase>generate-resources</phase><goals><goal>unpack</goal></goals><configuration><artifactItems><artifactItem><groupId>software.amazon.smithy</groupId><artifactId>smithy-model</artifactId><version>1.73.0</version><outputDirectory>${project.build.outputDirectory}</outputDirectory></artifactItem><artifactItem><groupId>software.amazon.smithy</groupId><artifactId>smithy-utils</artifactId><version>1.73.0</version><outputDirectory>${project.build.outputDirectory}</outputDirectory></artifactItem><artifactItem><groupId>software.amazon.smithy</groupId><artifactId>smithy-jsonschema</artifactId><version>1.73.0</version><outputDirectory>${project.build.outputDirectory}</outputDirectory></artifactItem></artifactItems></configuration></execution></executions></plugin>
+  <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.14.1</version></plugin>
+  <plugin><groupId>org.teavm</groupId><artifactId>teavm-maven-plugin</artifactId><version>0.15.0</version><executions><execution><goals><goal>compile</goal></goals><phase>process-classes</phase></execution></executions><configuration><mainClass>umf.SmithyBrowser</mainClass><compileScopes><compileScope>compile</compileScope></compileScopes><targetType>JAVASCRIPT</targetType><jsModuleType>ES2015</jsModuleType><targetDirectory>${project.build.directory}/javascript</targetDirectory><targetFileName>smithy.js</targetFileName><optimizationLevel>SIMPLE</optimizationLevel><minifying>false</minifying></configuration></plugin>
+ </plugins></build>
+</project>

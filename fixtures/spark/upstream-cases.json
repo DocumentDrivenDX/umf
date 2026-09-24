@@ -1,0 +1,795 @@
+[
+  {
+    "id": "00-standalone_string",
+    "source": {
+      "function": "test_schema_with_collations_json_ser_de",
+      "line": 628,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "string collate UNICODE"
+  },
+  {
+    "id": "01-standalone_array",
+    "source": {
+      "function": "test_schema_with_collations_json_ser_de",
+      "line": 630,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": {
+      "type": "array",
+      "elementType": "string collate UNICODE",
+      "containsNull": true
+    }
+  },
+  {
+    "id": "02-standalone_map",
+    "source": {
+      "function": "test_schema_with_collations_json_ser_de",
+      "line": 632,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": {
+      "type": "map",
+      "keyType": "string collate UTF8_LCASE",
+      "valueType": "string collate UNICODE",
+      "valueContainsNull": true
+    }
+  },
+  {
+    "id": "03-standalone_nested",
+    "source": {
+      "function": "test_schema_with_collations_json_ser_de",
+      "line": 634,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": {
+      "type": "array",
+      "elementType": {
+        "type": "map",
+        "keyType": "string collate UTF8_LCASE",
+        "valueType": {
+          "type": "array",
+          "elementType": "string collate UNICODE",
+          "containsNull": true
+        },
+        "valueContainsNull": true
+      },
+      "containsNull": true
+    }
+  },
+  {
+    "id": "04-simple_struct",
+    "source": {
+      "function": "test_schema_with_collations_json_ser_de",
+      "line": 638,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "c1",
+          "type": "string",
+          "nullable": true,
+          "metadata": {
+            "__COLLATIONS": {
+              "c1": "icu.UNICODE"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "05-nested_struct",
+    "source": {
+      "function": "test_schema_with_collations_json_ser_de",
+      "line": 640,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "nested",
+          "type": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "c1",
+                "type": "string",
+                "nullable": true,
+                "metadata": {
+                  "__COLLATIONS": {
+                    "c1": "icu.UNICODE"
+                  }
+                }
+              }
+            ]
+          },
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "06-array_in_schema",
+    "source": {
+      "function": "test_schema_with_collations_json_ser_de",
+      "line": 642,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "array",
+          "type": {
+            "type": "array",
+            "elementType": "string",
+            "containsNull": true
+          },
+          "nullable": true,
+          "metadata": {
+            "__COLLATIONS": {
+              "array.element": "icu.UNICODE"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "07-map_in_schema",
+    "source": {
+      "function": "test_schema_with_collations_json_ser_de",
+      "line": 646,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "map",
+          "type": {
+            "type": "map",
+            "keyType": "string",
+            "valueType": "string",
+            "valueContainsNull": true
+          },
+          "nullable": true,
+          "metadata": {
+            "__COLLATIONS": {
+              "map.key": "icu.UNICODE",
+              "map.value": "icu.UNICODE"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "08-nested_map",
+    "source": {
+      "function": "test_schema_with_collations_json_ser_de",
+      "line": 654,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "nested",
+          "type": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "mapField",
+                "type": {
+                  "type": "map",
+                  "keyType": "string",
+                  "valueType": "string",
+                  "valueContainsNull": true
+                },
+                "nullable": true,
+                "metadata": {
+                  "__COLLATIONS": {
+                    "mapField.key": "icu.UNICODE",
+                    "mapField.value": "icu.UNICODE"
+                  }
+                }
+              }
+            ]
+          },
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "09-array_in_map",
+    "source": {
+      "function": "test_schema_with_collations_json_ser_de",
+      "line": 672,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "arrInMap",
+          "type": {
+            "type": "map",
+            "keyType": "string",
+            "valueType": {
+              "type": "array",
+              "elementType": "string",
+              "containsNull": true
+            },
+            "valueContainsNull": true
+          },
+          "nullable": true,
+          "metadata": {
+            "__COLLATIONS": {
+              "arrInMap.key": "icu.UNICODE",
+              "arrInMap.value.element": "icu.UNICODE"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "10-nested_array_in_map_value",
+    "source": {
+      "function": "test_schema_with_collations_json_ser_de",
+      "line": 683,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "nestedArrayInMap",
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "map",
+              "keyType": "string",
+              "valueType": {
+                "type": "array",
+                "elementType": {
+                  "type": "array",
+                  "elementType": "string",
+                  "containsNull": true
+                },
+                "containsNull": true
+              },
+              "valueContainsNull": true
+            },
+            "containsNull": true
+          },
+          "nullable": true,
+          "metadata": {
+            "__COLLATIONS": {
+              "nestedArrayInMap.element.key": "icu.UNICODE",
+              "nestedArrayInMap.element.value.element.element": "icu.UNICODE"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "11-schema_with_multiple_fields",
+    "source": {
+      "function": "test_schema_with_collations_json_ser_de",
+      "line": 697,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "c1",
+          "type": "string",
+          "nullable": true,
+          "metadata": {
+            "__COLLATIONS": {
+              "c1": "icu.UNICODE"
+            }
+          }
+        },
+        {
+          "name": "nested",
+          "type": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "c1",
+                "type": "string",
+                "nullable": true,
+                "metadata": {
+                  "__COLLATIONS": {
+                    "c1": "icu.UNICODE"
+                  }
+                }
+              }
+            ]
+          },
+          "nullable": true,
+          "metadata": {}
+        },
+        {
+          "name": "array",
+          "type": {
+            "type": "array",
+            "elementType": "string",
+            "containsNull": true
+          },
+          "nullable": true,
+          "metadata": {
+            "__COLLATIONS": {
+              "array.element": "icu.UNICODE"
+            }
+          }
+        },
+        {
+          "name": "map",
+          "type": {
+            "type": "map",
+            "keyType": "string",
+            "valueType": "string",
+            "valueContainsNull": true
+          },
+          "nullable": true,
+          "metadata": {
+            "__COLLATIONS": {
+              "map.key": "icu.UNICODE",
+              "map.value": "icu.UNICODE"
+            }
+          }
+        },
+        {
+          "name": "nested",
+          "type": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "mapField",
+                "type": {
+                  "type": "map",
+                  "keyType": "string",
+                  "valueType": "string",
+                  "valueContainsNull": true
+                },
+                "nullable": true,
+                "metadata": {
+                  "__COLLATIONS": {
+                    "mapField.key": "icu.UNICODE",
+                    "mapField.value": "icu.UNICODE"
+                  }
+                }
+              }
+            ]
+          },
+          "nullable": true,
+          "metadata": {}
+        },
+        {
+          "name": "arrInMap",
+          "type": {
+            "type": "map",
+            "keyType": "string",
+            "valueType": {
+              "type": "array",
+              "elementType": "string",
+              "containsNull": true
+            },
+            "valueContainsNull": true
+          },
+          "nullable": true,
+          "metadata": {
+            "__COLLATIONS": {
+              "arrInMap.key": "icu.UNICODE",
+              "arrInMap.value.element": "icu.UNICODE"
+            }
+          }
+        },
+        {
+          "name": "nestedArrayInMap",
+          "type": {
+            "type": "array",
+            "elementType": {
+              "type": "map",
+              "keyType": "string",
+              "valueType": {
+                "type": "array",
+                "elementType": {
+                  "type": "array",
+                  "elementType": "string",
+                  "containsNull": true
+                },
+                "containsNull": true
+              },
+              "valueContainsNull": true
+            },
+            "containsNull": true
+          },
+          "nullable": true,
+          "metadata": {
+            "__COLLATIONS": {
+              "nestedArrayInMap.element.key": "icu.UNICODE",
+              "nestedArrayInMap.element.value.element.element": "icu.UNICODE"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "12-datatype-0",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1226,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "string"
+  },
+  {
+    "id": "13-datatype-1",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1227,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "char(5)"
+  },
+  {
+    "id": "14-datatype-2",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1228,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "varchar(10)"
+  },
+  {
+    "id": "15-datatype-3",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1229,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "binary"
+  },
+  {
+    "id": "16-datatype-4",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1230,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "boolean"
+  },
+  {
+    "id": "17-datatype-5",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1231,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "decimal(10,0)"
+  },
+  {
+    "id": "18-datatype-6",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1232,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "decimal(10,2)"
+  },
+  {
+    "id": "19-datatype-7",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1233,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "float"
+  },
+  {
+    "id": "20-datatype-8",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1234,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "double"
+  },
+  {
+    "id": "21-datatype-9",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1235,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "byte"
+  },
+  {
+    "id": "22-datatype-10",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1236,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "short"
+  },
+  {
+    "id": "23-datatype-11",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1237,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "integer"
+  },
+  {
+    "id": "24-datatype-12",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1238,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "long"
+  },
+  {
+    "id": "25-datatype-13",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1239,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "date"
+  },
+  {
+    "id": "26-datatype-14",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1240,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "timestamp"
+  },
+  {
+    "id": "27-datatype-15",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1241,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "timestamp_ntz"
+  },
+  {
+    "id": "28-datatype-16",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1242,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "void"
+  },
+  {
+    "id": "29-datatype-17",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1243,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "variant"
+  },
+  {
+    "id": "30-datatype-18",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1244,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "interval year to month"
+  },
+  {
+    "id": "31-datatype-19",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1245,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "interval year"
+  },
+  {
+    "id": "32-datatype-20",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1246,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "interval year to month"
+  },
+  {
+    "id": "33-datatype-21",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1247,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "interval day to second"
+  },
+  {
+    "id": "34-datatype-22",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1248,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "interval day"
+  },
+  {
+    "id": "35-datatype-23",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1249,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "interval hour to second"
+  },
+  {
+    "id": "36-datatype-24",
+    "source": {
+      "function": "test_parse_datatype_json_string",
+      "line": 1250,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": "interval"
+  },
+  {
+    "id": "37-collations_on_int_col_json",
+    "source": {
+      "function": "test_schema_with_collations_on_non_string_types",
+      "line": 731,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "c1",
+          "type": "integer",
+          "nullable": true,
+          "metadata": {
+            "__COLLATIONS": {
+              "c1": "icu.UNICODE"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "38-collations_in_array_element_json",
+    "source": {
+      "function": "test_schema_with_collations_on_non_string_types",
+      "line": 749,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "arrayField",
+          "type": {
+            "type": "array",
+            "elementType": "integer",
+            "containsNull": true
+          },
+          "nullable": true,
+          "metadata": {
+            "__COLLATIONS": {
+              "arrayField.element": "icu.UNICODE"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "39-collations_on_array_json",
+    "source": {
+      "function": "test_schema_with_collations_on_non_string_types",
+      "line": 771,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "arrayField",
+          "type": {
+            "type": "array",
+            "elementType": "integer",
+            "containsNull": true
+          },
+          "nullable": true,
+          "metadata": {
+            "__COLLATIONS": {
+              "arrayField": "icu.UNICODE"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "40-collations_in_nested_map_json",
+    "source": {
+      "function": "test_schema_with_collations_on_non_string_types",
+      "line": 793,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "nested",
+          "type": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "mapField",
+                "type": {
+                  "type": "map",
+                  "keyType": "string",
+                  "valueType": "integer",
+                  "valueContainsNull": true
+                },
+                "nullable": true,
+                "metadata": {
+                  "__COLLATIONS": {
+                    "mapField.value": "icu.UNICODE"
+                  }
+                }
+              }
+            ]
+          },
+          "nullable": true,
+          "metadata": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": "41-schema_json",
+    "source": {
+      "function": "test_schema_with_bad_collations_provider",
+      "line": 877,
+      "sha256": "ef61d97b904b4063d03888496d7c7bda6b04e65ac009498f1c7aa860d0ce4355"
+    },
+    "input": {
+      "type": "struct",
+      "fields": [
+        {
+          "name": "c1",
+          "type": "string",
+          "nullable": "true",
+          "metadata": {
+            "__COLLATIONS": {
+              "c1": "badProvider.UNICODE"
+            }
+          }
+        }
+      ]
+    }
+  }
+]

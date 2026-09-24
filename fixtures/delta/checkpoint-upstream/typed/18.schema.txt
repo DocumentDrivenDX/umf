@@ -1,0 +1,67 @@
+txn: struct<appId: string, version: int64 not null, lastUpdated: int64>
+  child 0, appId: string
+  child 1, version: int64 not null
+  child 2, lastUpdated: int64
+add: struct<path: string, partitionValues: map<string, string ('partitionValues')>, size: int64 not null, (... 112 chars omitted)
+  child 0, path: string
+  child 1, partitionValues: map<string, string ('partitionValues')>
+      child 0, partitionValues: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+  child 2, size: int64 not null
+  child 3, modificationTime: int64 not null
+  child 4, dataChange: bool not null
+  child 5, stats: string
+  child 6, tags: map<string, string ('tags')>
+      child 0, tags: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+remove: struct<path: string, deletionTimestamp: int64, dataChange: bool not null>
+  child 0, path: string
+  child 1, deletionTimestamp: int64
+  child 2, dataChange: bool not null
+metaData: struct<id: string, name: string, description: string, format: struct<provider: string, options: map< (... 166 chars omitted)
+  child 0, id: string
+  child 1, name: string
+  child 2, description: string
+  child 3, format: struct<provider: string, options: map<string, string ('options')>>
+      child 0, provider: string
+      child 1, options: map<string, string ('options')>
+          child 0, options: struct<key: string not null, value: string> not null
+              child 0, key: string not null
+              child 1, value: string
+  child 4, schemaString: string
+  child 5, partitionColumns: list<element: string>
+      child 0, element: string
+  child 6, configuration: map<string, string ('configuration')>
+      child 0, configuration: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+  child 7, createdTime: int64
+protocol: struct<minReaderVersion: int32 not null, minWriterVersion: int32 not null>
+  child 0, minReaderVersion: int32 not null
+  child 1, minWriterVersion: int32 not null
+commitInfo: struct<version: int64, timestamp: timestamp[ns], userId: string, userName: string, operation: string (... 290 chars omitted)
+  child 0, version: int64
+  child 1, timestamp: timestamp[ns]
+  child 2, userId: string
+  child 3, userName: string
+  child 4, operation: string
+  child 5, operationParameters: map<string, string ('operationParameters')>
+      child 0, operationParameters: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+  child 6, job: struct<jobId: string, jobName: string, runId: string, jobOwnerId: string, triggerType: string>
+      child 0, jobId: string
+      child 1, jobName: string
+      child 2, runId: string
+      child 3, jobOwnerId: string
+      child 4, triggerType: string
+  child 7, notebook: struct<notebookId: string>
+      child 0, notebookId: string
+  child 8, clusterId: string
+  child 9, readVersion: int64
+  child 10, isolationLevel: string
+  child 11, isBlindAppend: bool
+-- schema metadata --
+org.apache.spark.sql.parquet.row.metadata: '{"type":"struct","fields":[{"' + 3862

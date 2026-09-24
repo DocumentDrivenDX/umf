@@ -1,0 +1,19 @@
+_:N58bef125722b41d286c0bae946f85f39 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have class ex:TestClass" .
+_:n19c1c0de52064a02b422d889565f5fe7b6 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://datashapes.org/sh/tests/core/node/class-002.test#BNodeClass> .
+_:N58bef125722b41d286c0bae946f85f39 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#ClassConstraintComponent> .
+_:N58bef125722b41d286c0bae946f85f39 <http://www.w3.org/ns/shacl#value> "String" .
+_:Nac0a32b8971c47e5807ba65ca573838d <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/class-002.test#TestShape> .
+_:Nac0a32b8971c47e5807ba65ca573838d <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N32ffe8ea68f64a3894e798c672b085cd <http://www.w3.org/ns/shacl#result> _:N58bef125722b41d286c0bae946f85f39 .
+_:Nac0a32b8971c47e5807ba65ca573838d <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nac0a32b8971c47e5807ba65ca573838d <http://www.w3.org/ns/shacl#value> _:n19c1c0de52064a02b422d889565f5fe7b6 .
+_:N32ffe8ea68f64a3894e798c672b085cd <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Nac0a32b8971c47e5807ba65ca573838d <http://www.w3.org/ns/shacl#resultMessage> "Value does not have class ex:TestClass" .
+_:N58bef125722b41d286c0bae946f85f39 <http://www.w3.org/ns/shacl#focusNode> "String" .
+_:N58bef125722b41d286c0bae946f85f39 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N32ffe8ea68f64a3894e798c672b085cd <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N58bef125722b41d286c0bae946f85f39 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/class-002.test#TestShape> .
+_:Nac0a32b8971c47e5807ba65ca573838d <http://www.w3.org/ns/shacl#focusNode> _:n19c1c0de52064a02b422d889565f5fe7b6 .
+_:N32ffe8ea68f64a3894e798c672b085cd <http://www.w3.org/ns/shacl#result> _:Nac0a32b8971c47e5807ba65ca573838d .
+_:Nac0a32b8971c47e5807ba65ca573838d <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#ClassConstraintComponent> .
+_:N58bef125722b41d286c0bae946f85f39 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .

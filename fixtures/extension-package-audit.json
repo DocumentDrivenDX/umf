@@ -1,0 +1,605 @@
+{
+  "scope": "Manifest validation, joint registry registration, standalone schema equality and local evidence existence only; no native conformance or inventory completeness claim",
+  "packages": 46,
+  "passed": 46,
+  "results": [
+    {
+      "path": "spec/extensions/arrow-flatbuffer/package.json",
+      "id": "umf.arrow.flatbuffer",
+      "version": "0.1.0",
+      "native": {
+        "system": "UMF logical Arrow FlatBuffer JSON profile",
+        "version": "0.1.0, Arrow apache-arrow-21.0.0 definitions",
+        "subset": "All 59 metadata declarations, 85 fields and 64 explicit enum/union members. Raw metadata decoding and guarded encoding preserve known values and physical field presence; unknown wire slots stay in source. No complete IPC dataset rewriting, full semantic validation or unknown enum interpretation."
+      },
+      "evidenceCount": 6,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/arrow-ipc/package.json",
+      "id": "umf.arrow.ipc",
+      "version": "0.1.0",
+      "native": {
+        "system": "Apache Arrow IPC source bytes",
+        "version": "Capture profile 0.1.0; optional observations apache-arrow 21.2.0",
+        "subset": "Exact original bytes up to 1000000 bytes, including unrecognized and invalid content. No semantic edits, complete framing validation or decoded data model."
+      },
+      "evidenceCount": 4,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/arrow/package.json",
+      "id": "umf.arrow",
+      "version": "0.1.0",
+      "native": {
+        "system": "Apache Arrow integration schema JSON",
+        "version": "Grammar profile 0.1.0; native feasibility evidence JS 21.2.0 / PyArrow 21.0.0",
+        "subset": "Schema JSON only, exact metadata/type parameter retention and candidate edits. Guarded schema-only IPC export via an explicit pinned backend; no arbitrary IPC import or array/data support claimed."
+      },
+      "evidenceCount": 5,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/avro-cardinality/package.json",
+      "id": "umf.avro.cardinality",
+      "version": "1.0.0",
+      "native": {
+        "system": "Avro",
+        "version": "1.12.0",
+        "subset": "Declared shape of present non-null values; native union branches, availability, logical refinements and codec behavior remain separate"
+      },
+      "evidenceCount": 2,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/avro-facets/package.json",
+      "id": "umf.avro.facets",
+      "version": "1.0.0",
+      "native": {
+        "system": "Avro",
+        "version": "1.12.0",
+        "subset": "Selected present non-null scalar declarations with retained unions, named dependencies and explicit Apache Python 1.12.0/fastavro 1.12.2 writer limitations; no native equivalence"
+      },
+      "evidenceCount": 5,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/avro-nullability/package.json",
+      "id": "umf.avro.nullability",
+      "version": "1.0.0",
+      "native": {
+        "system": "Avro",
+        "version": "1.12.0",
+        "subset": "Underlying field-value null carrier in declared records; excludes writer omission, reader defaults and logical refinements"
+      },
+      "evidenceCount": 2,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/avro/package.json",
+      "id": "umf.avro",
+      "version": "0.1.0",
+      "native": {
+        "system": "Apache Avro JSON schema",
+        "version": "1.12.0; avsc 5.7.9 validation profile",
+        "subset": "JSON schema artifacts with explicit ordered named-schema dependencies; native IDL, protocols, RPC and container formats remain separate work. Logical types and host-unsafe numbers are preserved without complete browser interpretation."
+      },
+      "evidenceCount": 8,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/dbt-artifact/package.json",
+      "id": "umf.dbt.artifact",
+      "version": "0.1.0",
+      "native": {
+        "system": "dbt generated artifacts",
+        "version": "run-results v6, catalog v1, sources v3; dbt Core 1.10.0 fixtures",
+        "subset": "Exact JSON preservation and candidate edits; native schema shapes; no artifact correlation or execution guarantees"
+      },
+      "evidenceCount": 8,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/dbt-manifest/package.json",
+      "id": "umf.dbt.manifest",
+      "version": "0.1.0",
+      "native": {
+        "system": "dbt manifest",
+        "version": "v12 grammar; dbt Core 1.10.0 fixture",
+        "subset": "Exact artifact preservation, copied edits and schema-shape diagnostics; no graph or execution validity"
+      },
+      "evidenceCount": 3,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/dbt-semantic/package.json",
+      "id": "umf.dbt.semantic",
+      "version": "0.1.0",
+      "native": {
+        "system": "dbt semantic manifest",
+        "version": "dbt-semantic-interfaces 0.8.5, dbt Core 1.10.0",
+        "subset": "Exact JSON preservation, copied candidate edits and derived nullable serialized shapes; no metric execution or semantic-validator equivalence"
+      },
+      "evidenceCount": 6,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/ddd/package.json",
+      "id": "umf.ddd",
+      "version": "0.1.0",
+      "native": {
+        "system": "UMF-authored DDD profile",
+        "version": "0.1.0",
+        "subset": "Versioned semantic declarations in UMF JSON/YAML; opaque invariant languages are retained, not executed; no external DDD tool compatibility claimed"
+      },
+      "evidenceCount": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/delta-log/package.json",
+      "id": "umf.delta.log",
+      "version": "0.1.0",
+      "native": {
+        "system": "Delta JSON transaction log",
+        "version": "Protocol 3b1b99cd077ec9c84c8a94c250dea3730cc33392; pinned delta-rs corpus",
+        "subset": "Bounded exact text capture and line/action envelope inspection. Native action semantics, commit validity and snapshot reconciliation remain unverified."
+      },
+      "evidenceCount": 15,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/delta-table/package.json",
+      "id": "umf.delta.table",
+      "version": "0.1.0",
+      "native": {
+        "system": "Delta transaction-log metadata and protocol context",
+        "version": "Protocol 3b1b99cd077ec9c84c8a94c250dea3730cc33392; deltalake 1.6.4 examples",
+        "subset": "Exact context preservation, known shape checks, incomplete feature diagnostics and guarded mapped rename candidates. No log reconciliation, transaction commit or general table evolution claim."
+      },
+      "evidenceCount": 13,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/delta/package.json",
+      "id": "umf.delta",
+      "version": "0.1.0",
+      "native": {
+        "system": "Delta schema JSON",
+        "version": "Protocol commit 3b1b99cd077ec9c84c8a94c250dea3730cc33392; deltalake 1.6.4 oracle",
+        "subset": "Recursive schema preservation, structural validation, copied pointer access and candidate edits. Table/protocol profile and execution support remain separate."
+      },
+      "evidenceCount": 7,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/generalized-rdf/package.json",
+      "id": "umf.generalized-rdf",
+      "version": "0.1.0",
+      "native": {
+        "system": "JSON-LD generalized RDF dataset",
+        "version": "JSON-LD 1.0/1.1 processing API; RDFJS-shaped JSON term records",
+        "subset": "JSON array of quads, node predicates including blank nodes, exact string lexical forms and source-local blank scope; unknown structures archived and block interpretation; no literal subjects/predicates or standard N-Quads export"
+      },
+      "evidenceCount": 3,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/graphql/package.json",
+      "id": "umf.graphql",
+      "version": "0.1.0",
+      "native": {
+        "system": "GraphQL SDL",
+        "version": "GraphQL.js 17.0.2; September 2025 specification plus explicitly reported runtime grammar additions",
+        "subset": "Schema definitions/extensions and constant values; executable operations are outside this schema adapter"
+      },
+      "evidenceCount": 3,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/iceberg-table/package.json",
+      "id": "umf.iceberg.table",
+      "version": "0.1.0",
+      "native": {
+        "system": "Apache Iceberg table metadata JSON",
+        "version": "1.11.0 spec; PyIceberg 0.11.0",
+        "subset": "Known v1-v3 metadata field shapes, embedded schema consistency, exact integers, preservation and candidate edits; reference/feature/default/history validation remains incomplete"
+      },
+      "evidenceCount": 3,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/iceberg/package.json",
+      "id": "umf.iceberg",
+      "version": "0.1.0",
+      "native": {
+        "system": "Apache Iceberg schema JSON",
+        "version": "1.11.0 spec 6976e020b894f6a6777704df2b8c4458cb291ae9; PyIceberg 0.11.0 oracle",
+        "subset": "Standalone recursive schema preservation, field-ID and identifier checks, pointer access and candidate edits; no table compatibility or data-reader claim"
+      },
+      "evidenceCount": 3,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/json-schema/package.json",
+      "id": "umf.json-schema",
+      "version": "0.1.0",
+      "native": {
+        "system": "JSON Schema",
+        "version": "2020-12",
+        "subset": "Native JSON tree preservation; semantic validation limited to known dialect/keywords and JavaScript-compatible numerics, format annotation-only; see CONTRACT-002 and evidence."
+      },
+      "evidenceCount": 2,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/jsonld/package.json",
+      "id": "umf.jsonld",
+      "version": "0.1.0",
+      "native": {
+        "system": "JSON-LD",
+        "version": "1.0/1.1; jsonld.js 9.0.0 + UMF processing patch",
+        "subset": "JSON source and explicit context bundle; exact-number expansion with recorded loss events or rejection; flattening and standalone compaction with recorded corpus discrepancies; framing selected views with retained sources, strict flag validation and recorded compatibility blocks; RDF-to-JSON-LD projection with lexical/native type policies; qualified JSON-LD-to-RDF proposals with explicitly recorded strict/binary64 numeric policies with explicit quantization and finite-overflow blocks; optional generalized dataset projection through umf.generalized-rdf; malformed terms omitted with explicit loss events; compound-literal direction conversion with graph/list round-trip evidence; no network"
+      },
+      "evidenceCount": 30,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/linkml/package.json",
+      "id": "umf.linkml",
+      "version": "0.1.0",
+      "native": {
+        "system": "LinkML",
+        "version": "linkml-model 1.11.0 commit 051e945bb8d64ffd60639c666615ace88d561e2f; native loader runtime 1.11.0rc2",
+        "subset": "JSON/YAML schema source, complete pinned metamodel JSON Schema, copied metadata edits, explicit supplied import graph, document-local class-slot membership and 29-field scalar induction; explicit import merge modes; no native retrieval, induced model, instance validation or generators"
+      },
+      "evidenceCount": 23,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/odcs/package.json",
+      "id": "umf.odcs",
+      "version": "0.1.0",
+      "native": {
+        "system": "Open Data Contract Standard",
+        "version": "3.0.0/3.0.1/3.0.2/3.1.0/3.2.0 schemas at f0bdad95346905d500be5ef4b2c2d9b1d95223b7",
+        "subset": "JSON/YAML preservation and native shapes; local v3.2.0 reference/relationship checks and ID-selected rename candidates; no external resolution, quality/SLA execution or physical lowering"
+      },
+      "evidenceCount": 8,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/openapi/package.json",
+      "id": "umf.openapi",
+      "version": "0.1.0",
+      "native": {
+        "system": "OpenAPI",
+        "version": "Swagger 2.0 schema 2017-08-27; OpenAPI 3.0 schema 2024-10-18; 3.1 schema 2026-08-03; 3.2 schema 2026-08-30",
+        "subset": "JSON-compatible JSON/YAML standalone descriptions; 2.0/3.0 check the Schema Object subset in their official schemas, known 3.1/3.2 embedded dialect keyword syntax is checked; unknown dialects are retained without reinterpretation; references and runtime rules remain incomplete; explicit URI-addressed resource archives and literal document-pointer lookup, without schema scope inference"
+      },
+      "evidenceCount": 14,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/owl/package.json",
+      "id": "umf.owl",
+      "version": "0.1.0",
+      "native": {
+        "system": "OWL",
+        "version": "OWL 2 Second Edition 2012-12-11",
+        "subset": "Turtle RDF graph preservation; explicit headers/declarations, local expressions, axiom annotations, negative/n-ary assertions and chain/key/disjoint-union lists. No complete structural OWL mapping, validity, profile, import execution or entailment claim"
+      },
+      "evidenceCount": 18,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet-cardinality/package.json",
+      "id": "umf.parquet.cardinality",
+      "version": "1.0.0",
+      "native": {
+        "system": "Parquet",
+        "version": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+        "subset": "Checked present-value LIST/MAP and record roles; physical wrappers, key uniqueness, availability and Arrow refinements remain native"
+      },
+      "evidenceCount": 2,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet-nullability/package.json",
+      "id": "umf.parquet.nullability",
+      "version": "1.0.0",
+      "native": {
+        "system": "Parquet",
+        "version": "parquet-format@219e3f12a62f9476e830c21e26d030d231f7c017",
+        "subset": "Checked physical leaf availability with row or repeated-element context; no writer-input, Arrow or logical-type equivalence"
+      },
+      "evidenceCount": 2,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/package.json",
+      "id": "umf.parquet",
+      "version": "0.1.0",
+      "native": {
+        "system": "Apache Parquet file envelope",
+        "version": "PAR1/PARE framing; PyArrow 21.0.0 fixtures and pinned delta-rs checkpoints",
+        "subset": "Exact source capture up to 1000000 bytes and footer-region bounds. No complete Parquet schema, codec, encryption, row decoding or editing claim."
+      },
+      "evidenceCount": 52,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/postgresql-cardinality/package.json",
+      "id": "umf.postgresql.cardinality",
+      "version": "1.0.0",
+      "native": {
+        "system": "PostgreSQL",
+        "version": "17.4",
+        "subset": "Declared column shape under selected metadata profile; not whole-model validation, item typing or execution equivalence"
+      },
+      "evidenceCount": 2,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/postgresql-catalog/package.json",
+      "id": "umf.postgresql.catalog",
+      "version": "0.1.0",
+      "native": {
+        "system": "UMF PostgreSQL catalog capture profile",
+        "version": "0.1.0 / PostgreSQL 17",
+        "subset": "The exact evidence query and metadata fields in capture.schema.json, with pg_dump plain schema-only archive; no full pg_catalog or server-state validation"
+      },
+      "evidenceCount": 2,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/postgresql-facets/package.json",
+      "id": "umf.postgresql.facets",
+      "version": "1.0.0",
+      "native": {
+        "system": "PostgreSQL",
+        "version": "17.4",
+        "subset": "Scalar catalog-column facets with explicit stored/new non-null value scope, verified CHECKs and retained native refinements; no native equivalence; authored projection uses explicit checked, type-modifier or carrier-only SQL with resource limits and conversion residuals"
+      },
+      "evidenceCount": 9,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/postgresql-nullability/package.json",
+      "id": "umf.postgresql.nullability",
+      "version": "1.0.0",
+      "native": {
+        "system": "PostgreSQL",
+        "version": "17.4",
+        "subset": "Captured PostgreSQL 17.4 stored-column declarations; excludes query results and input omission; not live enforcement verification"
+      },
+      "evidenceCount": 2,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/postgresql/package.json",
+      "id": "umf.postgresql",
+      "version": "0.1.0",
+      "native": {
+        "system": "PostgreSQL raw SQL syntax",
+        "version": "PostgreSQL 17.4 (170004), @libpg-query/parser 17.6.10",
+        "subset": "Supplied SQL source and complete raw parse-tree retention. Parse/deparse AST agreement checks exclude source offsets only; no catalog resolution or database execution claim."
+      },
+      "evidenceCount": 1,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/protobuf/package.json",
+      "id": "umf.protobuf",
+      "version": "0.1.0",
+      "native": {
+        "system": "Protocol Buffers .proto and FileDescriptorSet",
+        "version": "descriptor profile @bufbuild/protobuf 2.15.0; source compiler protocompile 0.14.1; printer protoprint 1.18.1; native oracle protoc 36.2",
+        "subset": "Complete pinned descriptor message graph; proto2/proto3/Editions descriptor representation. Optional WASM source compilation has authored proto2, proto3 and Edition 2023 evidence; newer Editions are not claimed. Source emission has native compiler evidence for 15 standard roots and authored proto2/proto3/Edition 2023 cases; four Edition 2024 standard roots are explicitly unsupported."
+      },
+      "evidenceCount": 5,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/rdf/package.json",
+      "id": "umf.rdf",
+      "version": "0.1.0",
+      "native": {
+        "system": "RDF",
+        "version": "RDF 1.1 N-Quads/Turtle/TriG; N3.js 2.7.12",
+        "subset": "N-Quads/Turtle/TriG RDF 1.1 terms, explicit Turtle/TriG base, named/default graphs with empty graph inventory, lexical literals and local blank nodes, collision-guarded IRI rename and explicit disjoint-input dataset merge; no other syntaxes, RDF 1.2, entailment or canonicalization"
+      },
+      "evidenceCount": 15,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/shacl/package.json",
+      "id": "umf.shacl",
+      "version": "0.1.0",
+      "native": {
+        "system": "SHACL",
+        "version": "W3C Recommendation 2017-07-20",
+        "subset": "RDF 1.1 Turtle shapes graph; all seven property-path forms and Core target selection; no constraint conformance, SPARQL execution, imports, entailment or SHACL 1.2 claim"
+      },
+      "evidenceCount": 24,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/smithy/package.json",
+      "id": "umf.smithy",
+      "version": "0.1.0",
+      "native": {
+        "system": "Smithy JSON AST",
+        "version": "2.0; external smithy-model 1.73.0",
+        "subset": "Exact JSON AST roots/dependencies and supplied IDL/JSON source files. Browser checks AST structure or source archive shape only; parsing, assembly, selectors, trait semantics and projections remain separately qualified. Optional pinned JavaScript assembly is explicit through a trusted backend; known reflection limitations and source normalization are reported."
+      },
+      "evidenceCount": 8,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/spark/package.json",
+      "id": "umf.spark",
+      "version": "0.1.0",
+      "native": {
+        "system": "Apache Spark DataType schema JSON",
+        "version": "4.0.1 grammar baseline; Python and JVM evidence separately qualified",
+        "subset": "Known array/map/struct shape validation, exact source preservation and candidate edits. Atomic names/parameters and UDT declarations retain interpretation limits; no JVM/browser execution, DDL or data coercion claim."
+      },
+      "evidenceCount": 22,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/sqlserver-cardinality/package.json",
+      "id": "umf.sqlserver.cardinality",
+      "version": "1.0.0",
+      "native": {
+        "system": "SQL Server",
+        "version": "16.0.4295.3",
+        "subset": "Declared column shape under selected metadata profile; not whole-model validation, item typing or execution equivalence"
+      },
+      "evidenceCount": 2,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/sqlserver-facets/package.json",
+      "id": "umf.sqlserver.facets",
+      "version": "1.0.0",
+      "native": {
+        "system": "SQL Server",
+        "version": "2022 16.0.4295.3",
+        "subset": "Scalar catalog-column facets with explicit stored/ordinary-checked-write non-null value scope, bounded catalog CHECKs and retained native refinements; no native equivalence"
+      },
+      "evidenceCount": 9,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/sqlserver-nullability/package.json",
+      "id": "umf.sqlserver.nullability",
+      "version": "1.0.0",
+      "native": {
+        "system": "SQL Server",
+        "version": "16.0.4295.3",
+        "subset": "Captured SQL Server 16.0.4295.3 stored-column declarations; excludes query results and input omission; not live enforcement verification"
+      },
+      "evidenceCount": 2,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/sqlserver/package.json",
+      "id": "umf.sqlserver",
+      "version": "0.1.0",
+      "native": {
+        "system": "Microsoft SQL Server",
+        "version": "SQL Server 2022; native evidence 16.0.4295.3; capture profiles v1/v2/v3",
+        "subset": "Table/column, key/foreign-key/check and index observations; exact recovery and metadata views. Permission-limited, not complete catalog or DDL reconstruction."
+      },
+      "evidenceCount": 8,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/tablespec-cardinality/package.json",
+      "id": "umf.tablespec.cardinality",
+      "version": "1.0.0",
+      "native": {
+        "system": "TableSpec",
+        "version": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+        "subset": "Declared column shape under selected metadata profile; not whole-model validation, item typing or execution equivalence"
+      },
+      "evidenceCount": 2,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/tablespec-facets/package.json",
+      "id": "umf.tablespec.facets",
+      "version": "1.0.0",
+      "native": {
+        "system": "TableSpec",
+        "version": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+        "subset": "Scalar-column facet interpretation under explicit consumer/input/obligation profiles; length claims cover well-formed Unicode scalar strings only; no whole-model validation, pipeline execution or native equivalence; authored projection uses explicit native scalar carriers and consumer profiles, with strict/report loss handling and retained ideal recovery"
+      },
+      "evidenceCount": 6,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/tablespec-nullability/package.json",
+      "id": "umf.tablespec.nullability",
+      "version": "1.0.0",
+      "native": {
+        "system": "TableSpec",
+        "version": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+        "subset": "Explicit declared nullable booleans in a selected profile/context; null-value absence policy; no native validation or row enforcement guarantee"
+      },
+      "evidenceCount": 2,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/tablespec/package.json",
+      "id": "umf.tablespec",
+      "version": "0.1.0",
+      "native": {
+        "system": "TableSpec",
+        "version": "source commit 647e8e566ad78b864282ec65c0b0b2237aa63084; table version 1.0",
+        "subset": "Monolithic JSON/YAML ingestion and split file-bundle capture; copied table/column metadata access and edits, core scalar families and native recovery. Schema projections are separately qualified by CONTRACT-033, CONTRACT-038 and CONTRACT-039. Split loader migrations, split-to-monolithic lowering, native validation/coercion and general value transforms remain open."
+      },
+      "evidenceCount": 11,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/typespec/package.json",
+      "id": "umf.typespec",
+      "version": "0.1.0",
+      "native": {
+        "system": "TypeSpec",
+        "version": "1.16.0",
+        "subset": "Supplied .tsp sources with pinned compiler/standard library and eleven explicitly selected official library versions; library-owned configuration retained; separate pinned JSON Schema emission API; no arbitrary project JavaScript or lossless projection claim"
+      },
+      "evidenceCount": 23,
+      "passed": true,
+      "failures": []
+    }
+  ]
+}

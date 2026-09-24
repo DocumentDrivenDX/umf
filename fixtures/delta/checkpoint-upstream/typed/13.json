@@ -1,0 +1,327 @@
+[
+  {
+    "add": {
+      "path": "part-00000-33e5a956-7506-43d8-bc29-e913eaeb2b73.c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1045"
+      },
+      "modificationTime": {
+        "$int64": "1754750666000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1754750666000000",
+        "MIN_INSERTION_TIME": "1754750666000000",
+        "MAX_INSERTION_TIME": "1754750666000000",
+        "OPTIMIZE_TARGET_SIZE": "67108864"
+      },
+      "deletionVector": null,
+      "baseRowId": null,
+      "defaultRowCommitVersion": null,
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":1,\"nullCount\":{\"id\":0,\"name\":0,\"created_at\":0},\"minValues\":{\"id\":11,\"name\":\"Mallory\",\"created_at\":\"2025-08-09T14:44:25.329Z\"},\"maxValues\":{\"id\":11,\"name\":\"Mallory\",\"created_at\":\"2025-08-09T14:44:25.329Z\"}}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "1"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "11"
+          },
+          "name": "Mallory",
+          "created_at": {
+            "$timestamp": {
+              "unit": "ns",
+              "value": "1754750665329000000"
+            }
+          }
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "11"
+          },
+          "name": "Mallory",
+          "created_at": {
+            "$timestamp": {
+              "unit": "ns",
+              "value": "1754750665329000000"
+            }
+          }
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "created_at": {
+            "$int64": "0"
+          }
+        }
+      }
+    },
+    "remove": null
+  },
+  {
+    "add": {
+      "path": "part-00000-dd0343ab-5277-4dc4-a8eb-4335e15a34d2.c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1044"
+      },
+      "modificationTime": {
+        "$int64": "1754750681000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1754750681000000",
+        "MIN_INSERTION_TIME": "1754750681000000",
+        "MAX_INSERTION_TIME": "1754750681000000",
+        "OPTIMIZE_TARGET_SIZE": "67108864"
+      },
+      "deletionVector": null,
+      "baseRowId": null,
+      "defaultRowCommitVersion": null,
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":1,\"nullCount\":{\"id\":0,\"name\":0,\"created_at\":0},\"minValues\":{\"id\":22,\"name\":\"Mallory\",\"created_at\":\"2025-08-09T14:44:39.984Z\"},\"maxValues\":{\"id\":22,\"name\":\"Mallory\",\"created_at\":\"2025-08-09T14:44:39.984Z\"}}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "1"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "22"
+          },
+          "name": "Mallory",
+          "created_at": {
+            "$timestamp": {
+              "unit": "ns",
+              "value": "1754750679984000000"
+            }
+          }
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "22"
+          },
+          "name": "Mallory",
+          "created_at": {
+            "$timestamp": {
+              "unit": "ns",
+              "value": "1754750679984000000"
+            }
+          }
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "created_at": {
+            "$int64": "0"
+          }
+        }
+      }
+    },
+    "remove": null
+  },
+  {
+    "add": {
+      "path": "part-00000-e8007055-c633-4323-84a9-db81e7493036.c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1186"
+      },
+      "modificationTime": {
+        "$int64": "1754751122000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1754751122000000",
+        "MIN_INSERTION_TIME": "1754751122000000",
+        "MAX_INSERTION_TIME": "1754751122000000",
+        "OPTIMIZE_TARGET_SIZE": "67108864"
+      },
+      "deletionVector": null,
+      "baseRowId": null,
+      "defaultRowCommitVersion": null,
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":10,\"nullCount\":{\"id\":0,\"name\":0,\"created_at\":0},\"minValues\":{\"id\":23,\"name\":\"Alice\",\"created_at\":\"2025-08-09T14:52:00.952Z\"},\"maxValues\":{\"id\":32,\"name\":\"Judy\",\"created_at\":\"2025-08-09T14:52:00.952Z\"}}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "10"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "23"
+          },
+          "name": "Alice",
+          "created_at": {
+            "$timestamp": {
+              "unit": "ns",
+              "value": "1754751120952000000"
+            }
+          }
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "32"
+          },
+          "name": "Judy",
+          "created_at": {
+            "$timestamp": {
+              "unit": "ns",
+              "value": "1754751120952000000"
+            }
+          }
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "created_at": {
+            "$int64": "0"
+          }
+        }
+      }
+    },
+    "remove": null
+  },
+  {
+    "add": {
+      "path": "part-00000-e9391801-c9e9-4314-95a9-b09261a5fb96.c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1185"
+      },
+      "modificationTime": {
+        "$int64": "1754750679000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1754750679000000",
+        "MIN_INSERTION_TIME": "1754750679000000",
+        "MAX_INSERTION_TIME": "1754750679000000",
+        "OPTIMIZE_TARGET_SIZE": "67108864"
+      },
+      "deletionVector": null,
+      "baseRowId": null,
+      "defaultRowCommitVersion": null,
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":10,\"nullCount\":{\"id\":0,\"name\":0,\"created_at\":0},\"minValues\":{\"id\":12,\"name\":\"Alice\",\"created_at\":\"2025-08-09T14:44:37.980Z\"},\"maxValues\":{\"id\":21,\"name\":\"Judy\",\"created_at\":\"2025-08-09T14:44:37.980Z\"}}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "10"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "12"
+          },
+          "name": "Alice",
+          "created_at": {
+            "$timestamp": {
+              "unit": "ns",
+              "value": "1754750677980000000"
+            }
+          }
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "21"
+          },
+          "name": "Judy",
+          "created_at": {
+            "$timestamp": {
+              "unit": "ns",
+              "value": "1754750677980000000"
+            }
+          }
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "created_at": {
+            "$int64": "0"
+          }
+        }
+      }
+    },
+    "remove": null
+  },
+  {
+    "add": {
+      "path": "part-00000-fb0df8bb-10ec-48a7-8c4a-f0d38c6b26ae.c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1186"
+      },
+      "modificationTime": {
+        "$int64": "1754750662000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1754750662000000",
+        "MIN_INSERTION_TIME": "1754750662000000",
+        "MAX_INSERTION_TIME": "1754750662000000",
+        "OPTIMIZE_TARGET_SIZE": "67108864"
+      },
+      "deletionVector": null,
+      "baseRowId": null,
+      "defaultRowCommitVersion": null,
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":10,\"nullCount\":{\"id\":0,\"name\":0,\"created_at\":0},\"minValues\":{\"id\":1,\"name\":\"Alice\",\"created_at\":\"2025-08-09T14:44:18.184Z\"},\"maxValues\":{\"id\":10,\"name\":\"Judy\",\"created_at\":\"2025-08-09T14:44:18.184Z\"}}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "10"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "created_at": {
+            "$timestamp": {
+              "unit": "ns",
+              "value": "1754750658184000000"
+            }
+          }
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "10"
+          },
+          "name": "Judy",
+          "created_at": {
+            "$timestamp": {
+              "unit": "ns",
+              "value": "1754750658184000000"
+            }
+          }
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "created_at": {
+            "$int64": "0"
+          }
+        }
+      }
+    },
+    "remove": null
+  }
+]

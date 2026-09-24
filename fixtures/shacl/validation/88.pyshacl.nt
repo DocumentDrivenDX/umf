@@ -1,0 +1,26 @@
+_:N5bfdad2773fc479382c8fdaef1e08b22 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/uniqueLang-001.test#TestShape-testProperty> .
+_:N08f31c0f503f41758022a2d780765ec9 <http://www.w3.org/ns/shacl#resultMessage> "More than one String shares the same Language" .
+_:N6e0381a7066c4ffc8fd5a6009d8a31b4 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/uniqueLang-001.test#TestShape-testProperty> .
+_:N08f31c0f503f41758022a2d780765ec9 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/uniqueLang-001.test#TestShape-testProperty> .
+_:N4248ba4650f141c7b4b5fa3439bb9229 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N5bfdad2773fc479382c8fdaef1e08b22 <http://www.w3.org/ns/shacl#resultMessage> "More than one String shares the same Language" .
+_:N6e0381a7066c4ffc8fd5a6009d8a31b4 <http://www.w3.org/ns/shacl#resultMessage> "More than one String shares the same Language" .
+_:N08f31c0f503f41758022a2d780765ec9 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/uniqueLang-001.test#InvalidInstance1> .
+_:N5bfdad2773fc479382c8fdaef1e08b22 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#UniqueLangConstraintComponent> .
+_:N6e0381a7066c4ffc8fd5a6009d8a31b4 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#UniqueLangConstraintComponent> .
+_:N08f31c0f503f41758022a2d780765ec9 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#UniqueLangConstraintComponent> .
+_:N4248ba4650f141c7b4b5fa3439bb9229 <http://www.w3.org/ns/shacl#result> _:N5bfdad2773fc479382c8fdaef1e08b22 .
+_:N6e0381a7066c4ffc8fd5a6009d8a31b4 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N4248ba4650f141c7b4b5fa3439bb9229 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N5bfdad2773fc479382c8fdaef1e08b22 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/uniqueLang-001.test#InvalidInstance2> .
+_:N6e0381a7066c4ffc8fd5a6009d8a31b4 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/uniqueLang-001.test#InvalidInstance2> .
+_:N4248ba4650f141c7b4b5fa3439bb9229 <http://www.w3.org/ns/shacl#result> _:N6e0381a7066c4ffc8fd5a6009d8a31b4 .
+_:N08f31c0f503f41758022a2d780765ec9 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N4248ba4650f141c7b4b5fa3439bb9229 <http://www.w3.org/ns/shacl#result> _:N08f31c0f503f41758022a2d780765ec9 .
+_:N08f31c0f503f41758022a2d780765ec9 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N5bfdad2773fc479382c8fdaef1e08b22 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N5bfdad2773fc479382c8fdaef1e08b22 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N6e0381a7066c4ffc8fd5a6009d8a31b4 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N6e0381a7066c4ffc8fd5a6009d8a31b4 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/uniqueLang-001.test#testProperty> .
+_:N5bfdad2773fc479382c8fdaef1e08b22 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/uniqueLang-001.test#testProperty> .
+_:N08f31c0f503f41758022a2d780765ec9 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/uniqueLang-001.test#testProperty> .

@@ -1,0 +1,68 @@
+[
+  {
+    "add": null,
+    "domainMetadata": null,
+    "metaData": {
+      "configuration": {
+        "delta.feature.catalogowned": "supported"
+      },
+      "createdTime": {
+        "$int64": "1742317196814"
+      },
+      "description": null,
+      "format": {
+        "options": {},
+        "provider": "parquet"
+      },
+      "id": "7998c165-cb06-408d-bba0-e5c4e532ba21",
+      "name": null,
+      "partitionColumns": [],
+      "schemaString": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}"
+    },
+    "protocol": null,
+    "remove": null,
+    "txn": null
+  },
+  {
+    "add": null,
+    "domainMetadata": null,
+    "metaData": null,
+    "protocol": {
+      "minReaderVersion": 3,
+      "minWriterVersion": 7,
+      "readerFeatures": [
+        "catalogOwned"
+      ],
+      "writerFeatures": [
+        "catalogOwned",
+        "appendOnly",
+        "invariants"
+      ]
+    },
+    "remove": null,
+    "txn": null
+  },
+  {
+    "add": {
+      "baseRowId": null,
+      "dataChange": true,
+      "defaultRowCommitVersion": null,
+      "deletionVector": null,
+      "modificationTime": {
+        "$int64": "1742317197691"
+      },
+      "partitionValues": {},
+      "path": "a735be79-daea-40b6-94f0-317a77a03df6-000.parquet",
+      "size": {
+        "$int64": "1918"
+      },
+      "stats": "{\"numRecords\":600,\"minValues\":{\"id\":16},\"maxValues\":{\"id\":3251},\"nullCounts\":{\"id\":30}}",
+      "tags": null
+    },
+    "domainMetadata": null,
+    "metaData": null,
+    "protocol": null,
+    "remove": null,
+    "txn": null
+  }
+]

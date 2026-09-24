@@ -1,0 +1,37 @@
+{
+  "image": "mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090",
+  "version": "16.0.4295.3",
+  "tables": 3,
+  "nativeDdlReplay": true,
+  "emptyDatabase": true,
+  "umfRecoveries": 2,
+  "behaviors": [
+    {
+      "database": "umf_source",
+      "cascadeUpdate": {
+        "parent_a": 3,
+        "parent_b": 2
+      },
+      "cascadeDelete": true,
+      "rejections": 5,
+      "disabledCheckAllowsNegativeId": true,
+      "checkAllowsNull": true,
+      "untrustedConstraintStillEnforcesNewRows": true
+    },
+    {
+      "database": "umf_replayed",
+      "cascadeUpdate": {
+        "parent_a": 3,
+        "parent_b": 2
+      },
+      "cascadeDelete": true,
+      "rejections": 5,
+      "disabledCheckAllowsNegativeId": true,
+      "checkAllowsNull": true,
+      "untrustedConstraintStillEnforcesNewRows": true
+    }
+  ],
+  "querySha256": "c8e71f1bb434bc996e2e6650a341e4cb853947d6ad6434c4d35b237fc7bc18ca",
+  "ddlSha256": "e9ebca795e3df1bca610ae1da177cfe77ab3a08a96e0c4b27711ef8436bc8da4",
+  "scope": "Named constraints in authored DDL; no arbitrary reconstruction or full catalog claim"
+}

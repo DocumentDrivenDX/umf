@@ -1,0 +1,20 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b22021 .
+_:report <http://www.w3.org/ns/shacl#result> _:b22022 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b22021 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b22021 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b22021 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LessThanOrEqualsConstraintComponent> .
+_:b22021 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/lessThanOrEquals-001.test#TestShape-property1> .
+_:b22021 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/lessThanOrEquals-001.test#InvalidResource1> .
+_:b22021 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/lessThanOrEquals-001.test#property1> .
+_:b22021 <http://www.w3.org/ns/shacl#value> "5"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:b22021 <http://www.w3.org/ns/shacl#resultMessage> "Value is not less than or equal to value of <http://datashapes.org/sh/tests/core/property/lessThanOrEquals-001.test#property2>" .
+_:b22022 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b22022 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b22022 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LessThanOrEqualsConstraintComponent> .
+_:b22022 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/lessThanOrEquals-001.test#TestShape-property1> .
+_:b22022 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/lessThanOrEquals-001.test#InvalidResource2> .
+_:b22022 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/lessThanOrEquals-001.test#property1> .
+_:b22022 <http://www.w3.org/ns/shacl#value> "6"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:b22022 <http://www.w3.org/ns/shacl#resultMessage> "Value is not less than or equal to value of <http://datashapes.org/sh/tests/core/property/lessThanOrEquals-001.test#property2>" .

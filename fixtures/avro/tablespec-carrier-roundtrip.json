@@ -1,0 +1,1051 @@
+{
+  "source": {
+    "umf": "0.1.0",
+    "id": "simple",
+    "vocabularies": {
+      "umf.avro": {
+        "version": "0.1.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "schema",
+        "namespace": "",
+        "elements": [
+          {
+            "id": "schema",
+            "extensions": {
+              "umf.avro": {
+                "version": "1.12.0",
+                "root": {
+                  "kind": "object",
+                  "members": {
+                    "type": {
+                      "kind": "string",
+                      "value": "record"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "Simple"
+                    },
+                    "namespace": {
+                      "kind": "string",
+                      "value": "example"
+                    },
+                    "fields": {
+                      "kind": "array",
+                      "items": [
+                        {
+                          "kind": "object",
+                          "members": {
+                            "name": {
+                              "kind": "string",
+                              "value": "title"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            }
+                          }
+                        },
+                        {
+                          "kind": "object",
+                          "members": {
+                            "name": {
+                              "kind": "string",
+                              "value": "count"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "int"
+                            }
+                          }
+                        },
+                        {
+                          "kind": "object",
+                          "members": {
+                            "name": {
+                              "kind": "string",
+                              "value": "flag"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "boolean"
+                            }
+                          }
+                        },
+                        {
+                          "kind": "object",
+                          "members": {
+                            "name": {
+                              "kind": "string",
+                              "value": "score"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "float"
+                            }
+                          }
+                        },
+                        {
+                          "kind": "object",
+                          "members": {
+                            "name": {
+                              "kind": "string",
+                              "value": "optional"
+                            },
+                            "type": {
+                              "kind": "array",
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "null"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "avro.fields",
+        "namespace": "",
+        "elements": [
+          {
+            "id": "[null,\"/fields/0\"]",
+            "name": "title",
+            "scalarType": "string",
+            "extensions": {}
+          },
+          {
+            "id": "[null,\"/fields/1\"]",
+            "name": "count",
+            "scalarType": "integer",
+            "extensions": {}
+          },
+          {
+            "id": "[null,\"/fields/2\"]",
+            "name": "flag",
+            "scalarType": "boolean",
+            "extensions": {}
+          },
+          {
+            "id": "[null,\"/fields/3\"]",
+            "name": "score",
+            "scalarType": "float",
+            "extensions": {}
+          },
+          {
+            "id": "[null,\"/fields/4\"]",
+            "name": "optional",
+            "scalarType": "string",
+            "extensions": {}
+          }
+        ]
+      }
+    ]
+  },
+  "policy": {
+    "id": "tablespec-result",
+    "tableName": "Orders",
+    "lossPolicy": "allow-reported-loss",
+    "fields": {
+      "title": {
+        "name": "title",
+        "representation": "string"
+      },
+      "count": {
+        "name": "count",
+        "representation": "integer32"
+      },
+      "flag": {
+        "name": "flag",
+        "representation": "boolean"
+      },
+      "score": {
+        "name": "score",
+        "representation": "float32"
+      },
+      "optional": {
+        "name": "optional",
+        "representation": "string"
+      }
+    }
+  },
+  "result": {
+    "status": "projected",
+    "source": {
+      "umf": "0.1.0",
+      "id": "simple",
+      "vocabularies": {
+        "umf.avro": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "schema",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "schema",
+              "extensions": {
+                "umf.avro": {
+                  "version": "1.12.0",
+                  "root": {
+                    "kind": "object",
+                    "members": {
+                      "type": {
+                        "kind": "string",
+                        "value": "record"
+                      },
+                      "name": {
+                        "kind": "string",
+                        "value": "Simple"
+                      },
+                      "namespace": {
+                        "kind": "string",
+                        "value": "example"
+                      },
+                      "fields": {
+                        "kind": "array",
+                        "items": [
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "title"
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "string"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "count"
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "int"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "flag"
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "boolean"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "score"
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "float"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "optional"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "avro.fields",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "[null,\"/fields/0\"]",
+              "name": "title",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/1\"]",
+              "name": "count",
+              "scalarType": "integer",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/2\"]",
+              "name": "flag",
+              "scalarType": "boolean",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/3\"]",
+              "name": "score",
+              "scalarType": "float",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/4\"]",
+              "name": "optional",
+              "scalarType": "string",
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    },
+    "policy": {
+      "id": "tablespec-result",
+      "tableName": "Orders",
+      "lossPolicy": "allow-reported-loss",
+      "fields": {
+        "title": {
+          "name": "title",
+          "representation": "string"
+        },
+        "count": {
+          "name": "count",
+          "representation": "integer32"
+        },
+        "flag": {
+          "name": "flag",
+          "representation": "boolean"
+        },
+        "score": {
+          "name": "score",
+          "representation": "float32"
+        },
+        "optional": {
+          "name": "optional",
+          "representation": "string"
+        }
+      }
+    },
+    "issues": [
+      {
+        "path": "",
+        "code": "RECORD_IDENTITY",
+        "classification": "not-enforced",
+        "detail": "TableSpec table name is explicit; Avro namespaces, aliases, record/error identity, recursion, binary framing and schema resolution remain in source",
+        "retainedInSource": true
+      },
+      {
+        "path": "",
+        "code": "SCHEMA_ONLY",
+        "classification": "representation-change",
+        "detail": "No row encoding/coercion, writer-field presence, reader defaults or TableSpec pipeline execution is established",
+        "retainedInSource": true
+      },
+      {
+        "path": "/fields/1",
+        "code": "INTEGER_EXECUTION_PROFILE",
+        "classification": "not-enforced",
+        "detail": "The pinned Spark helper uses int32; this does not establish all TableSpec execution, coercion or range enforcement",
+        "retainedInSource": true
+      },
+      {
+        "path": "/fields/3",
+        "code": "FLOAT_EXECUTION_PROFILE",
+        "classification": "not-enforced",
+        "detail": "Native non-finite values, signed zero and execution behavior remain source-owned",
+        "retainedInSource": true
+      },
+      {
+        "path": "/fields/4/type",
+        "code": "UNION_IDENTITY",
+        "classification": "not-enforced",
+        "detail": "Nullability is derived from a null branch; TableSpec does not preserve union order, branch tags or overlapping alternatives",
+        "retainedInSource": true
+      }
+    ],
+    "mappings": [
+      {
+        "sourcePath": "/fields/0",
+        "field": "title",
+        "column": "title",
+        "representation": "string",
+        "nullable": false
+      },
+      {
+        "sourcePath": "/fields/1",
+        "field": "count",
+        "column": "count",
+        "representation": "integer32",
+        "nullable": false
+      },
+      {
+        "sourcePath": "/fields/2",
+        "field": "flag",
+        "column": "flag",
+        "representation": "boolean",
+        "nullable": false
+      },
+      {
+        "sourcePath": "/fields/3",
+        "field": "score",
+        "column": "score",
+        "representation": "float32",
+        "nullable": false
+      },
+      {
+        "sourcePath": "/fields/4",
+        "field": "optional",
+        "column": "optional",
+        "representation": "string",
+        "nullable": true
+      }
+    ],
+    "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Orders\",\n  \"columns\": [\n    {\n      \"name\": \"title\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"count\",\n      \"nullable\": false,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"flag\",\n      \"nullable\": false,\n      \"data_type\": \"BOOLEAN\"\n    },\n    {\n      \"name\": \"score\",\n      \"nullable\": false,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"optional\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    }\n  ]\n}\n",
+    "target": {
+      "umf": "0.1.0",
+      "id": "tablespec-result",
+      "vocabularies": {
+        "umf.tablespec": {
+          "version": "0.1.0"
+        }
+      },
+      "extensions": {
+        "umf.tablespec": {
+          "profile": "tablespec-table-1",
+          "root": {
+            "kind": "object",
+            "members": {
+              "version": {
+                "kind": "string",
+                "value": "1.0"
+              },
+              "table_name": {
+                "kind": "string",
+                "value": "Orders"
+              },
+              "columns": {
+                "kind": "array",
+                "items": [
+                  {
+                    "kind": "object",
+                    "members": {
+                      "name": {
+                        "kind": "string",
+                        "value": "title"
+                      },
+                      "nullable": {
+                        "kind": "boolean",
+                        "value": false
+                      },
+                      "data_type": {
+                        "kind": "string",
+                        "value": "TEXT"
+                      }
+                    }
+                  },
+                  {
+                    "kind": "object",
+                    "members": {
+                      "name": {
+                        "kind": "string",
+                        "value": "count"
+                      },
+                      "nullable": {
+                        "kind": "boolean",
+                        "value": false
+                      },
+                      "data_type": {
+                        "kind": "string",
+                        "value": "INTEGER"
+                      }
+                    }
+                  },
+                  {
+                    "kind": "object",
+                    "members": {
+                      "name": {
+                        "kind": "string",
+                        "value": "flag"
+                      },
+                      "nullable": {
+                        "kind": "boolean",
+                        "value": false
+                      },
+                      "data_type": {
+                        "kind": "string",
+                        "value": "BOOLEAN"
+                      }
+                    }
+                  },
+                  {
+                    "kind": "object",
+                    "members": {
+                      "name": {
+                        "kind": "string",
+                        "value": "score"
+                      },
+                      "nullable": {
+                        "kind": "boolean",
+                        "value": false
+                      },
+                      "data_type": {
+                        "kind": "string",
+                        "value": "FLOAT"
+                      }
+                    }
+                  },
+                  {
+                    "kind": "object",
+                    "members": {
+                      "name": {
+                        "kind": "string",
+                        "value": "optional"
+                      },
+                      "nullable": {
+                        "kind": "boolean",
+                        "value": true
+                      },
+                      "data_type": {
+                        "kind": "string",
+                        "value": "TEXT"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "originalSource": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Orders\",\n  \"columns\": [\n    {\n      \"name\": \"title\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"count\",\n      \"nullable\": false,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"flag\",\n      \"nullable\": false,\n      \"data_type\": \"BOOLEAN\"\n    },\n    {\n      \"name\": \"score\",\n      \"nullable\": false,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"optional\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    }\n  ]\n}\n",
+          "originalFormat": "json"
+        }
+      },
+      "modules": [
+        {
+          "id": "table",
+          "namespace": "Orders",
+          "elements": [
+            {
+              "id": "column:0",
+              "name": "title",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "column:1",
+              "name": "count",
+              "scalarType": "integer",
+              "extensions": {}
+            },
+            {
+              "id": "column:2",
+              "name": "flag",
+              "scalarType": "boolean",
+              "extensions": {}
+            },
+            {
+              "id": "column:3",
+              "name": "score",
+              "scalarType": "float",
+              "extensions": {}
+            },
+            {
+              "id": "column:4",
+              "name": "optional",
+              "scalarType": "string",
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "reverse": {
+    "status": "projected",
+    "source": {
+      "umf": "0.1.0",
+      "id": "tablespec-result",
+      "vocabularies": {
+        "umf.tablespec": {
+          "version": "0.1.0"
+        }
+      },
+      "extensions": {
+        "umf.tablespec": {
+          "profile": "tablespec-table-1",
+          "root": {
+            "kind": "object",
+            "members": {
+              "version": {
+                "kind": "string",
+                "value": "1.0"
+              },
+              "table_name": {
+                "kind": "string",
+                "value": "Orders"
+              },
+              "columns": {
+                "kind": "array",
+                "items": [
+                  {
+                    "kind": "object",
+                    "members": {
+                      "name": {
+                        "kind": "string",
+                        "value": "title"
+                      },
+                      "nullable": {
+                        "kind": "boolean",
+                        "value": false
+                      },
+                      "data_type": {
+                        "kind": "string",
+                        "value": "TEXT"
+                      }
+                    }
+                  },
+                  {
+                    "kind": "object",
+                    "members": {
+                      "name": {
+                        "kind": "string",
+                        "value": "count"
+                      },
+                      "nullable": {
+                        "kind": "boolean",
+                        "value": false
+                      },
+                      "data_type": {
+                        "kind": "string",
+                        "value": "INTEGER"
+                      }
+                    }
+                  },
+                  {
+                    "kind": "object",
+                    "members": {
+                      "name": {
+                        "kind": "string",
+                        "value": "flag"
+                      },
+                      "nullable": {
+                        "kind": "boolean",
+                        "value": false
+                      },
+                      "data_type": {
+                        "kind": "string",
+                        "value": "BOOLEAN"
+                      }
+                    }
+                  },
+                  {
+                    "kind": "object",
+                    "members": {
+                      "name": {
+                        "kind": "string",
+                        "value": "score"
+                      },
+                      "nullable": {
+                        "kind": "boolean",
+                        "value": false
+                      },
+                      "data_type": {
+                        "kind": "string",
+                        "value": "FLOAT"
+                      }
+                    }
+                  },
+                  {
+                    "kind": "object",
+                    "members": {
+                      "name": {
+                        "kind": "string",
+                        "value": "optional"
+                      },
+                      "nullable": {
+                        "kind": "boolean",
+                        "value": true
+                      },
+                      "data_type": {
+                        "kind": "string",
+                        "value": "TEXT"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "originalSource": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Orders\",\n  \"columns\": [\n    {\n      \"name\": \"title\",\n      \"nullable\": false,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"count\",\n      \"nullable\": false,\n      \"data_type\": \"INTEGER\"\n    },\n    {\n      \"name\": \"flag\",\n      \"nullable\": false,\n      \"data_type\": \"BOOLEAN\"\n    },\n    {\n      \"name\": \"score\",\n      \"nullable\": false,\n      \"data_type\": \"FLOAT\"\n    },\n    {\n      \"name\": \"optional\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    }\n  ]\n}\n",
+          "originalFormat": "json"
+        }
+      },
+      "modules": [
+        {
+          "id": "table",
+          "namespace": "Orders",
+          "elements": [
+            {
+              "id": "column:0",
+              "name": "title",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "column:1",
+              "name": "count",
+              "scalarType": "integer",
+              "extensions": {}
+            },
+            {
+              "id": "column:2",
+              "name": "flag",
+              "scalarType": "boolean",
+              "extensions": {}
+            },
+            {
+              "id": "column:3",
+              "name": "score",
+              "scalarType": "float",
+              "extensions": {}
+            },
+            {
+              "id": "column:4",
+              "name": "optional",
+              "scalarType": "string",
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    },
+    "policy": {
+      "id": "back",
+      "recordName": "Simple",
+      "namespace": "example",
+      "fields": {
+        "title": {
+          "name": "title",
+          "representation": "string",
+          "nullable": "source"
+        },
+        "count": {
+          "name": "count",
+          "representation": "int32",
+          "nullable": "source"
+        },
+        "flag": {
+          "name": "flag",
+          "representation": "boolean",
+          "nullable": "source"
+        },
+        "score": {
+          "name": "score",
+          "representation": "float32",
+          "nullable": "source"
+        },
+        "optional": {
+          "name": "optional",
+          "representation": "string",
+          "nullable": "source"
+        }
+      },
+      "lossPolicy": "allow-reported-loss"
+    },
+    "issues": [
+      {
+        "path": "",
+        "code": "TABLESPEC_EXECUTION",
+        "classification": "not-enforced",
+        "detail": "Native Pydantic validation/coercion, constraints, relationships, derivations, pipelines and split-loader migrations are not executed by this schema projection",
+        "retainedInSource": true
+      },
+      {
+        "path": "",
+        "code": "SCHEMA_ONLY",
+        "classification": "representation-change",
+        "detail": "Native values require a separate encoder; the copied source UMF remains required for native meaning",
+        "retainedInSource": true
+      },
+      {
+        "path": "/version",
+        "code": "NATIVE_TABLE_METADATA",
+        "classification": "not-enforced",
+        "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+        "retainedInSource": true
+      },
+      {
+        "path": "/table_name",
+        "code": "NATIVE_TABLE_METADATA",
+        "classification": "not-enforced",
+        "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+        "retainedInSource": true
+      },
+      {
+        "path": "/columns/0",
+        "code": "TEXT_REFINEMENTS",
+        "classification": "not-enforced",
+        "detail": "Native length, formats, conversion and lexical validation are not enforced by Avro string",
+        "retainedInSource": true
+      },
+      {
+        "path": "/columns/1",
+        "code": "INTEGER_PROFILE",
+        "classification": "not-enforced",
+        "detail": "Selected integer width is a binding choice; the pinned Spark helper uses 32 bits and other execution rules remain source-owned",
+        "retainedInSource": true
+      },
+      {
+        "path": "/columns/3",
+        "code": "FLOAT_PROFILE",
+        "classification": "not-enforced",
+        "detail": "Selected floating width does not establish native rounding, non-finite or execution semantics",
+        "retainedInSource": true
+      },
+      {
+        "path": "/columns/4",
+        "code": "TEXT_REFINEMENTS",
+        "classification": "not-enforced",
+        "detail": "Native length, formats, conversion and lexical validation are not enforced by Avro string",
+        "retainedInSource": true
+      }
+    ],
+    "mappings": [
+      {
+        "index": 0,
+        "column": "title",
+        "field": "title",
+        "representation": "string",
+        "nullable": false
+      },
+      {
+        "index": 1,
+        "column": "count",
+        "field": "count",
+        "representation": "int32",
+        "nullable": false
+      },
+      {
+        "index": 2,
+        "column": "flag",
+        "field": "flag",
+        "representation": "boolean",
+        "nullable": false
+      },
+      {
+        "index": 3,
+        "column": "score",
+        "field": "score",
+        "representation": "float32",
+        "nullable": false
+      },
+      {
+        "index": 4,
+        "column": "optional",
+        "field": "optional",
+        "representation": "string",
+        "nullable": true
+      }
+    ],
+    "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Simple\",\n  \"namespace\": \"example\",\n  \"fields\": [\n    {\n      \"name\": \"title\",\n      \"type\": \"string\"\n    },\n    {\n      \"name\": \"count\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"flag\",\n      \"type\": \"boolean\"\n    },\n    {\n      \"name\": \"score\",\n      \"type\": \"float\"\n    },\n    {\n      \"name\": \"optional\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n",
+    "target": {
+      "umf": "0.1.0",
+      "id": "back",
+      "vocabularies": {
+        "umf.avro": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "schema",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "schema",
+              "extensions": {
+                "umf.avro": {
+                  "version": "1.12.0",
+                  "root": {
+                    "kind": "object",
+                    "members": {
+                      "type": {
+                        "kind": "string",
+                        "value": "record"
+                      },
+                      "name": {
+                        "kind": "string",
+                        "value": "Simple"
+                      },
+                      "namespace": {
+                        "kind": "string",
+                        "value": "example"
+                      },
+                      "fields": {
+                        "kind": "array",
+                        "items": [
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "title"
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "string"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "count"
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "int"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "flag"
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "boolean"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "score"
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "float"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "optional"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "avro.fields",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "[null,\"/fields/0\"]",
+              "name": "title",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/1\"]",
+              "name": "count",
+              "scalarType": "integer",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/2\"]",
+              "name": "flag",
+              "scalarType": "boolean",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/3\"]",
+              "name": "score",
+              "scalarType": "float",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/4\"]",
+              "name": "optional",
+              "scalarType": "string",
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

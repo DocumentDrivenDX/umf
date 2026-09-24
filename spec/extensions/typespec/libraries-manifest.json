@@ -1,0 +1,137 @@
+[
+  {
+    "package": "@typespec/http",
+    "version": "1.16.0",
+    "source": "https://www.npmjs.com/package/@typespec/http/v/1.16.0",
+    "license": "MIT",
+    "files": {
+      "package.json": "d0c5409f2eda7cb2b3066ecafd0e2ff5e3355df676d72ec80928dd1271cb587c",
+      "lib/auth.tsp": "55f05f93bc2c54617d8dfe83bf2fbd8d94af835c02134d275bfbbfa8811b90cf",
+      "lib/decorators.tsp": "e349416ba866359ff6b6d8b8be4d596d60274f03524b642f1d0aacb7b14a589f",
+      "lib/main.tsp": "4ef52ee1b90249654a08ec7d6a5da61ce1f5ffc9226caaaa8c3bd05f1b8637f7",
+      "lib/private.decorators.tsp": "0ac8fac153603a08087f442b0bffc67d77a2e06c61b2c9d84bd8046dd6cd07a9",
+      "lib/streams/main.tsp": "d1abb3b3990153fe2300fb8619e6dfdc59b7b9a509c82c409c23dd0db38eea06",
+      "tspconfig.yaml": "069fcc2b33860d2f9ec944f0d785342fc37eecc2ffa0a3dbb547f375f61ffcb8"
+    }
+  },
+  {
+    "package": "@typespec/rest",
+    "version": "0.86.0",
+    "source": "https://www.npmjs.com/package/@typespec/rest/v/0.86.0",
+    "license": "MIT",
+    "files": {
+      "package.json": "51353f0753de384989901be3c33b623a70a0f87a40611665f9eebf78c3ba0888",
+      "lib/resource.tsp": "97426c37aa2aa81a170cf9fa372c9dc158eb941abf9e227598e9761d9fae1fc2",
+      "lib/rest-decorators.tsp": "ad5cadce0fd83e5d3f177213da2680f438d9ce22408a3dae31b301e4d0ae73c2",
+      "lib/rest.tsp": "79596b0c58502d6ddd095bb487bfc75d0c18efc3c6e918e05f0d16d116a2b288"
+    }
+  },
+  {
+    "package": "@typespec/openapi",
+    "version": "1.16.0",
+    "source": "https://www.npmjs.com/package/@typespec/openapi/v/1.16.0",
+    "license": "MIT",
+    "files": {
+      "package.json": "4265eeb96b83eae7dcaf06cf209fe10352081507c4b1dd585f09280b1c3260f2",
+      "lib/decorators.tsp": "01f84c6aded0891cdd4fe51a94cd214680a3ef22b518134ae4c3b62b8598b594",
+      "lib/main.tsp": "779b65e3029a19d7b69a7d2c2a463d05521ab3f7ad9837f57576ab2c3456d1ee"
+    }
+  },
+  {
+    "package": "@typespec/streams",
+    "version": "0.86.0",
+    "source": "https://www.npmjs.com/package/@typespec/streams/v/0.86.0",
+    "license": "MIT",
+    "files": {
+      "package.json": "984ba458996904f85c5981591758291f350f2a3328493800d54c99084605b767",
+      "lib/decorators.tsp": "d71aef98c5be50634880585cdfa8643f7f1d17d64af6ec3a261d36e5abd6a681",
+      "lib/main.tsp": "e5629e2a7b2fe7cd2fb0987b7586114b00e6806f30b841cbf69ab7dceaa365d2",
+      "lib/types.tsp": "75c5bb9b7943c6190db431bd3c08dfa63a31972a00b61825c74212f6e00ff6c2"
+    }
+  },
+  {
+    "package": "@typespec/graphql",
+    "version": "0.3.0",
+    "source": "https://www.npmjs.com/package/@typespec/graphql/v/0.3.0",
+    "license": "MIT",
+    "files": {
+      "package.json": "a5c49dccbeda6dbec13a61d69b3d904e3feac44f62f0683893ee5aab38fc8264",
+      "lib/input-type.tsp": "4b791f034bb467f92edde1e2cd79254615767bf7e2c35668d604b3d97513408c",
+      "lib/interface.tsp": "ce59b6bbb666eee6ed2f2a7789e02304a53ac99f995793331fdfce40f1b3cd99",
+      "lib/main.tsp": "a91024e671459212684c991b584327f0d7269175204d64c58f42c22856804dee",
+      "lib/nullable.tsp": "e084c147951fc3649487d18310455c927f50b1461b90d323474747f533dea98d",
+      "lib/one-of.tsp": "ba77cd80c54737f7020f71426221c17616061e7ad36d6e0bd1eb09269a8ab63d",
+      "lib/operation-fields.tsp": "fcc7626397e57a0fe700d8b72d7feb9bd6155ea9c728423181dc9b6068905dfc",
+      "lib/operation-kind.tsp": "4473fce19bd7235f4206eeadc53d4e55fffeb9477e21e872b04b30a5fac0b6f8",
+      "lib/scalars.tsp": "fad55fea4091eb863fd087200765f5f77a4cdf9012675d5be99b2e993c113ee5",
+      "lib/schema.tsp": "c41ab791e40e0db1a5ac399acd19573c4c7a46dbc8dc4ec153eeec2ab948efe7",
+      "lib/specified-by.tsp": "9506e7045c22c7824f05dc30d97c79cbe51459d77e9f7776e184104ec27e01f9",
+      "tspconfig.yaml": "0866b9e60a803f1855005fb6a549018cc2d129e640a5fb74b91bff1a5bf44a8c"
+    }
+  },
+  {
+    "package": "@typespec/json-schema",
+    "version": "1.16.0",
+    "source": "https://www.npmjs.com/package/@typespec/json-schema/v/1.16.0",
+    "license": "MIT",
+    "files": {
+      "package.json": "e6aaddcf21b6dc16fc9ddb26d8f527003345ab48a715d3603bc8b54eef4ee677",
+      "lib/main.tsp": "3ed660602da2c49c68af272357044572b3c8f04d154cd71329369c644e152c35"
+    }
+  },
+  {
+    "package": "@typespec/protobuf",
+    "version": "0.86.0",
+    "source": "https://www.npmjs.com/package/@typespec/protobuf/v/0.86.0",
+    "license": "MIT",
+    "files": {
+      "package.json": "2efc52c1df5b5ceae49308427a28204982fa0d343cea15306b6941672210b35f",
+      "lib/proto.tsp": "68df7faca3f46d95066c42b6bd0034fe82e050e593712dbda60cdb8c38f1c97c"
+    }
+  },
+  {
+    "package": "@typespec/versioning",
+    "version": "0.86.0",
+    "source": "https://www.npmjs.com/package/@typespec/versioning/v/0.86.0",
+    "license": "MIT",
+    "files": {
+      "package.json": "7b5d746aa700dd92c277ee109b094fd7ec6278b7e60b139699930597e595114f",
+      "lib/decorators.tsp": "15a55b09661b66cebf1e76453eb357983c50217a5ebc550f7b0985e03cb6b246",
+      "lib/main.tsp": "9ab577a373f5c38d08c9c2bb8bb1df238f8e833f3df7e52db7fce3b42d04825a"
+    }
+  },
+  {
+    "package": "@typespec/openapi3",
+    "version": "1.16.0",
+    "source": "https://www.npmjs.com/package/@typespec/openapi3/v/1.16.0",
+    "license": "MIT",
+    "files": {
+      "package.json": "efc3ee118c0429e4a992ff5279dbcd28db23d82e31036d77a3f91d340faac39f",
+      "lib/decorators.tsp": "8bf9819ea8b2f5c4fed117215fcab72a464d9c48006251ce4b23dce6ffe3f9ab",
+      "lib/main.tsp": "adf2f31312ac6de6fbee975f92257d945863ac0e829031a64315ebccc22dd2ee"
+    }
+  },
+  {
+    "package": "@typespec/sse",
+    "version": "0.86.0",
+    "source": "https://www.npmjs.com/package/@typespec/sse/v/0.86.0",
+    "license": "MIT",
+    "files": {
+      "package.json": "4cc7db43b7773f3bd7b0009c8b00c2d6e696545c21d1b8c5e0b97336e296e998",
+      "lib/decorators.tsp": "0b8f715a7fd9d0dcab6f75b5eab1e7ce64cdbfa54bdfbcf4ec2ce1a36303ab91",
+      "lib/main.tsp": "e5629e2a7b2fe7cd2fb0987b7586114b00e6806f30b841cbf69ab7dceaa365d2",
+      "lib/types.tsp": "70c15d1fcee9af4415026f182fed1e9dca388ad1c9f573455ceab36fc70920d4"
+    }
+  },
+  {
+    "package": "@typespec/events",
+    "version": "0.86.0",
+    "source": "https://www.npmjs.com/package/@typespec/events/v/0.86.0",
+    "license": "MIT",
+    "files": {
+      "package.json": "d80fd624856397e9ae38e9dc3d2bf9d8f877df7985c52a89bf9908e8f31431b2",
+      "lib/decorators.tsp": "4d87e023e5a1e60a273bc8eab0f4b52f0449d4e1828bff2b4a20926ba515f36a",
+      "lib/main.tsp": "779b65e3029a19d7b69a7d2c2a463d05521ab3f7ad9837f57576ab2c3456d1ee"
+    }
+  }
+]

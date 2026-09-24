@@ -1,0 +1,276 @@
+{
+  "parser": "rdfxml-streaming-parser@3.3.0",
+  "scope": "Authored parser feasibility checks only; no UMF RDF/XML adapter or full conformance",
+  "results": [
+    {
+      "id": "simple",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><rdf:Description rdf:about=\"item\"><ex:value rdf:datatype=\"http://www.w3.org/2001/XMLSchema#integer\">9007199254740993</ex:value></rdf:Description></rdf:RDF>",
+      "profile": "baseline",
+      "baseIRI": "https://example.org/base/",
+      "accepted": true,
+      "emitted": 1,
+      "nquads": "<https://example.org/base/item> <https://example.org/value> \"9007199254740993\"^^<http://www.w3.org/2001/XMLSchema#integer> .\n"
+    },
+    {
+      "id": "simple",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><rdf:Description rdf:about=\"item\"><ex:value rdf:datatype=\"http://www.w3.org/2001/XMLSchema#integer\">9007199254740993</ex:value></rdf:Description></rdf:RDF>",
+      "profile": "finalized",
+      "baseIRI": "https://example.org/base/",
+      "accepted": true,
+      "emitted": 1,
+      "nquads": "<https://example.org/base/item> <https://example.org/value> \"9007199254740993\"^^<http://www.w3.org/2001/XMLSchema#integer> .\n"
+    },
+    {
+      "id": "simple",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><rdf:Description rdf:about=\"item\"><ex:value rdf:datatype=\"http://www.w3.org/2001/XMLSchema#integer\">9007199254740993</ex:value></rdf:Description></rdf:RDF>",
+      "profile": "literal-namespaces",
+      "baseIRI": "https://example.org/base/",
+      "accepted": true,
+      "emitted": 1,
+      "nquads": "<https://example.org/base/item> <https://example.org/value> \"9007199254740993\"^^<http://www.w3.org/2001/XMLSchema#integer> .\n"
+    },
+    {
+      "id": "collection",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><ex:Class rdf:about=\"C\"><ex:members rdf:parseType=\"Collection\"><rdf:Description rdf:about=\"a\"/><rdf:Description rdf:about=\"b\"/></ex:members></ex:Class></rdf:RDF>",
+      "profile": "baseline",
+      "baseIRI": "https://example.org/base/",
+      "accepted": true,
+      "emitted": 6,
+      "nquads": "<https://example.org/base/C> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://example.org/Class> .\n<https://example.org/base/C> <https://example.org/members> _:df_3_1 .\n_:df_3_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <https://example.org/base/a> .\n_:df_3_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:df_3_2 .\n_:df_3_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <https://example.org/base/b> .\n_:df_3_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .\n"
+    },
+    {
+      "id": "collection",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><ex:Class rdf:about=\"C\"><ex:members rdf:parseType=\"Collection\"><rdf:Description rdf:about=\"a\"/><rdf:Description rdf:about=\"b\"/></ex:members></ex:Class></rdf:RDF>",
+      "profile": "finalized",
+      "baseIRI": "https://example.org/base/",
+      "accepted": true,
+      "emitted": 6,
+      "nquads": "<https://example.org/base/C> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://example.org/Class> .\n<https://example.org/base/C> <https://example.org/members> _:df_4_1 .\n_:df_4_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <https://example.org/base/a> .\n_:df_4_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:df_4_2 .\n_:df_4_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <https://example.org/base/b> .\n_:df_4_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .\n"
+    },
+    {
+      "id": "collection",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><ex:Class rdf:about=\"C\"><ex:members rdf:parseType=\"Collection\"><rdf:Description rdf:about=\"a\"/><rdf:Description rdf:about=\"b\"/></ex:members></ex:Class></rdf:RDF>",
+      "profile": "literal-namespaces",
+      "baseIRI": "https://example.org/base/",
+      "accepted": true,
+      "emitted": 6,
+      "nquads": "<https://example.org/base/C> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://example.org/Class> .\n<https://example.org/base/C> <https://example.org/members> _:df_5_1 .\n_:df_5_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <https://example.org/base/a> .\n_:df_5_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:df_5_2 .\n_:df_5_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <https://example.org/base/b> .\n_:df_5_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .\n"
+    },
+    {
+      "id": "resource-language",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><rdf:Description rdf:nodeID=\"n\"><ex:child rdf:parseType=\"Resource\"><ex:label xml:lang=\"EN\">雪</ex:label></ex:child></rdf:Description></rdf:RDF>",
+      "profile": "baseline",
+      "baseIRI": "https://example.org/base/",
+      "accepted": true,
+      "emitted": 2,
+      "nquads": "_:n <https://example.org/child> _:df_6_1 .\n_:df_6_1 <https://example.org/label> \"雪\"@en .\n"
+    },
+    {
+      "id": "resource-language",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><rdf:Description rdf:nodeID=\"n\"><ex:child rdf:parseType=\"Resource\"><ex:label xml:lang=\"EN\">雪</ex:label></ex:child></rdf:Description></rdf:RDF>",
+      "profile": "finalized",
+      "baseIRI": "https://example.org/base/",
+      "accepted": true,
+      "emitted": 2,
+      "nquads": "_:n <https://example.org/child> _:df_7_1 .\n_:df_7_1 <https://example.org/label> \"雪\"@en .\n"
+    },
+    {
+      "id": "resource-language",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><rdf:Description rdf:nodeID=\"n\"><ex:child rdf:parseType=\"Resource\"><ex:label xml:lang=\"EN\">雪</ex:label></ex:child></rdf:Description></rdf:RDF>",
+      "profile": "literal-namespaces",
+      "baseIRI": "https://example.org/base/",
+      "accepted": true,
+      "emitted": 2,
+      "nquads": "_:n <https://example.org/child> _:df_8_1 .\n_:df_8_1 <https://example.org/label> \"雪\"@en .\n"
+    },
+    {
+      "id": "xml-literal",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><rdf:Description rdf:about=\"item\"><ex:value rdf:parseType=\"Literal\"><ex:b ex:attr=\"a&amp;b\">雪</ex:b></ex:value></rdf:Description></rdf:RDF>",
+      "profile": "baseline",
+      "baseIRI": "https://example.org/base/",
+      "accepted": true,
+      "emitted": 1,
+      "nquads": "<https://example.org/base/item> <https://example.org/value> \"<ex:b ex:attr=\\\"a&b\\\">雪</ex:b>\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .\n"
+    },
+    {
+      "id": "xml-literal",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><rdf:Description rdf:about=\"item\"><ex:value rdf:parseType=\"Literal\"><ex:b ex:attr=\"a&amp;b\">雪</ex:b></ex:value></rdf:Description></rdf:RDF>",
+      "profile": "finalized",
+      "baseIRI": "https://example.org/base/",
+      "accepted": true,
+      "emitted": 1,
+      "nquads": "<https://example.org/base/item> <https://example.org/value> \"<ex:b ex:attr=\\\"a&b\\\">雪</ex:b>\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .\n"
+    },
+    {
+      "id": "xml-literal",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><rdf:Description rdf:about=\"item\"><ex:value rdf:parseType=\"Literal\"><ex:b ex:attr=\"a&amp;b\">雪</ex:b></ex:value></rdf:Description></rdf:RDF>",
+      "profile": "literal-namespaces",
+      "baseIRI": "https://example.org/base/",
+      "accepted": true,
+      "emitted": 1,
+      "nquads": "<https://example.org/base/item> <https://example.org/value> \"<ex:b xmlns:rdf=\\\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\\\" xmlns:ex=\\\"https://example.org/\\\" ex:attr=\\\"a&b\\\">雪</ex:b>\"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .\n"
+    },
+    {
+      "id": "duplicate-id",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><rdf:Description rdf:ID=\"same\"/><rdf:Description rdf:ID=\"same\"/></rdf:RDF>",
+      "profile": "baseline",
+      "baseIRI": "https://example.org/base/",
+      "accepted": false,
+      "emitted": 0,
+      "error": "Error: Line 1 column 199: Found multiple occurrences of rdf:ID='https://example.org/base/#same'."
+    },
+    {
+      "id": "duplicate-id",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><rdf:Description rdf:ID=\"same\"/><rdf:Description rdf:ID=\"same\"/></rdf:RDF>",
+      "profile": "finalized",
+      "baseIRI": "https://example.org/base/",
+      "accepted": false,
+      "emitted": 0,
+      "error": "Error: Line 1 column 199: Found multiple occurrences of rdf:ID='https://example.org/base/#same'."
+    },
+    {
+      "id": "duplicate-id",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><rdf:Description rdf:ID=\"same\"/><rdf:Description rdf:ID=\"same\"/></rdf:RDF>",
+      "profile": "literal-namespaces",
+      "baseIRI": "https://example.org/base/",
+      "accepted": false,
+      "emitted": 0,
+      "error": "Error: Line 1 column 199: Found multiple occurrences of rdf:ID='https://example.org/base/#same'."
+    },
+    {
+      "id": "undefined-entity",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><rdf:Description rdf:about=\"item\"><ex:value>&absent;</ex:value></rdf:Description></rdf:RDF>",
+      "profile": "baseline",
+      "baseIRI": "https://example.org/base/",
+      "accepted": false,
+      "emitted": 0,
+      "error": "Error: 1:186: undefined entity."
+    },
+    {
+      "id": "undefined-entity",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><rdf:Description rdf:about=\"item\"><ex:value>&absent;</ex:value></rdf:Description></rdf:RDF>",
+      "profile": "finalized",
+      "baseIRI": "https://example.org/base/",
+      "accepted": false,
+      "emitted": 0,
+      "error": "Error: 1:186: undefined entity."
+    },
+    {
+      "id": "undefined-entity",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><rdf:Description rdf:about=\"item\"><ex:value>&absent;</ex:value></rdf:Description></rdf:RDF>",
+      "profile": "literal-namespaces",
+      "baseIRI": "https://example.org/base/",
+      "accepted": false,
+      "emitted": 0,
+      "error": "Error: 1:186: undefined entity."
+    },
+    {
+      "id": "unclosed-root",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><rdf:Description rdf:about=\"item\"><ex:value>partial</ex:value></rdf:Description>",
+      "profile": "baseline",
+      "baseIRI": "https://example.org/base/",
+      "accepted": true,
+      "emitted": 1,
+      "nquads": "<https://example.org/base/item> <https://example.org/value> \"partial\" .\n"
+    },
+    {
+      "id": "unclosed-root",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><rdf:Description rdf:about=\"item\"><ex:value>partial</ex:value></rdf:Description>",
+      "profile": "finalized",
+      "baseIRI": "https://example.org/base/",
+      "accepted": false,
+      "emitted": 1,
+      "error": "Error: 1:214: unclosed tag: rdf:RDF"
+    },
+    {
+      "id": "unclosed-root",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><rdf:Description rdf:about=\"item\"><ex:value>partial</ex:value></rdf:Description>",
+      "profile": "literal-namespaces",
+      "baseIRI": "https://example.org/base/",
+      "accepted": false,
+      "emitted": 1,
+      "error": "Error: 1:214: unclosed tag: rdf:RDF"
+    },
+    {
+      "id": "unclosed-property",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><rdf:Description rdf:about=\"item\"><ex:value>partial",
+      "profile": "baseline",
+      "baseIRI": "https://example.org/base/",
+      "accepted": true,
+      "emitted": 0,
+      "nquads": ""
+    },
+    {
+      "id": "unclosed-property",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><rdf:Description rdf:about=\"item\"><ex:value>partial",
+      "profile": "finalized",
+      "baseIRI": "https://example.org/base/",
+      "accepted": false,
+      "emitted": 0,
+      "error": "Error: 1:185: unclosed tag: ex:value"
+    },
+    {
+      "id": "unclosed-property",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"><rdf:Description rdf:about=\"item\"><ex:value>partial",
+      "profile": "literal-namespaces",
+      "baseIRI": "https://example.org/base/",
+      "accepted": false,
+      "emitted": 0,
+      "error": "Error: 1:185: unclosed tag: ex:value"
+    },
+    {
+      "id": "empty",
+      "input": "",
+      "profile": "baseline",
+      "baseIRI": "https://example.org/base/",
+      "accepted": true,
+      "emitted": 0,
+      "nquads": ""
+    },
+    {
+      "id": "empty",
+      "input": "",
+      "profile": "finalized",
+      "baseIRI": "https://example.org/base/",
+      "accepted": false,
+      "emitted": 0,
+      "error": "Error: 1:0: document must contain a root element."
+    },
+    {
+      "id": "empty",
+      "input": "",
+      "profile": "literal-namespaces",
+      "baseIRI": "https://example.org/base/",
+      "accepted": false,
+      "emitted": 0,
+      "error": "Error: 1:0: document must contain a root element."
+    },
+    {
+      "id": "trailing-junk",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"></rdf:RDF>junk",
+      "profile": "baseline",
+      "baseIRI": "https://example.org/base/",
+      "accepted": false,
+      "emitted": 0,
+      "error": "Error: 1:148: text data outside of root node."
+    },
+    {
+      "id": "trailing-junk",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"></rdf:RDF>junk",
+      "profile": "finalized",
+      "baseIRI": "https://example.org/base/",
+      "accepted": false,
+      "emitted": 0,
+      "error": "Error: 1:148: text data outside of root node."
+    },
+    {
+      "id": "trailing-junk",
+      "input": "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:ex=\"https://example.org/\" xml:base=\"https://example.org/base/\"></rdf:RDF>junk",
+      "profile": "literal-namespaces",
+      "baseIRI": "https://example.org/base/",
+      "accepted": false,
+      "emitted": 0,
+      "error": "Error: 1:148: text data outside of root node."
+    }
+  ]
+}

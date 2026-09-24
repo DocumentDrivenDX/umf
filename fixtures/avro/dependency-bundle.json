@@ -1,0 +1,492 @@
+{
+  "original": {
+    "schema": "{\"namespace\":\"model\",\"type\":\"record\",\"doc\":\"\",\"name\":\"ApplicationEvent\",\"fields\":[{\"name\":\"applicationId\",\"type\":\"string\",\"doc\":\"Application ID\"},{\"name\":\"status\",\"type\":\"string\",\"doc\":\"Application Status\"},{\"name\":\"documents\",\"type\":[\"null\",{\"type\":\"array\",\"items\":\"model.DocumentInfo\"}],\"doc\":\"\",\"default\":null}]}\n",
+    "dependencies": [
+      {
+        "id": "DocumentInfo.avsc",
+        "schema": "{\"namespace\":\"model\",\"type\":\"record\",\"doc\":\"\",\"name\":\"DocumentInfo\",\"fields\":[{\"name\":\"documentId\",\"type\":\"string\",\"doc\":\"Document ID\"},{\"name\":\"filePath\",\"type\":\"string\",\"doc\":\"Document Path\"}]}\n"
+      }
+    ],
+    "source": {
+      "umf": "0.1.0",
+      "id": "application",
+      "vocabularies": {
+        "umf.avro": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "schema",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "schema",
+              "extensions": {
+                "umf.avro": {
+                  "version": "1.12.0",
+                  "root": {
+                    "kind": "object",
+                    "members": {
+                      "namespace": {
+                        "kind": "string",
+                        "value": "model"
+                      },
+                      "type": {
+                        "kind": "string",
+                        "value": "record"
+                      },
+                      "doc": {
+                        "kind": "string",
+                        "value": ""
+                      },
+                      "name": {
+                        "kind": "string",
+                        "value": "ApplicationEvent"
+                      },
+                      "fields": {
+                        "kind": "array",
+                        "items": [
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "applicationId"
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "string"
+                              },
+                              "doc": {
+                                "kind": "string",
+                                "value": "Application ID"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "status"
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "string"
+                              },
+                              "doc": {
+                                "kind": "string",
+                                "value": "Application Status"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "documents"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "array"
+                                      },
+                                      "items": {
+                                        "kind": "string",
+                                        "value": "model.DocumentInfo"
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              "doc": {
+                                "kind": "string",
+                                "value": ""
+                              },
+                              "default": {
+                                "kind": "null"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "dependencies": [
+                    {
+                      "id": "DocumentInfo.avsc",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "namespace": {
+                            "kind": "string",
+                            "value": "model"
+                          },
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "doc": {
+                            "kind": "string",
+                            "value": ""
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "DocumentInfo"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "documentId"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "string"
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "Document ID"
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "filePath"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "string"
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "Document Path"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "avro.fields",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "[\"DocumentInfo.avsc\",\"/fields/0\"]",
+              "name": "documentId",
+              "description": "Document ID",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "[\"DocumentInfo.avsc\",\"/fields/1\"]",
+              "name": "filePath",
+              "description": "Document Path",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/0\"]",
+              "name": "applicationId",
+              "description": "Application ID",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/1\"]",
+              "name": "status",
+              "description": "Application Status",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/2\"]",
+              "name": "documents",
+              "description": "",
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    },
+    "diagnostics": [
+      {
+        "code": "SOURCE_ARTIFACT_REQUIRED",
+        "path": "",
+        "severity": "warning",
+        "message": "Retain source UMF for unrelated metadata and uninterpreted content"
+      }
+    ]
+  },
+  "edited": {
+    "schema": "{\"namespace\":\"model\",\"type\":\"record\",\"doc\":\"\",\"name\":\"ApplicationEvent\",\"fields\":[{\"name\":\"applicationId\",\"type\":\"string\",\"doc\":\"Application ID\"},{\"name\":\"status\",\"type\":\"string\",\"doc\":\"Application Status\"},{\"name\":\"documents\",\"type\":[\"null\",{\"type\":\"array\",\"items\":\"model.DocumentInfo\"}],\"doc\":\"\",\"default\":null}]}\n",
+    "dependencies": [
+      {
+        "id": "DocumentInfo.avsc",
+        "schema": "{\"namespace\":\"model\",\"type\":\"record\",\"doc\":\"\",\"name\":\"DocumentInfo\",\"fields\":[{\"name\":\"documentId\",\"type\":\"string\",\"doc\":\"Document ID\"},{\"name\":\"filePath\",\"type\":\"bytes\",\"doc\":\"Document Path\"}]}\n"
+      }
+    ],
+    "source": {
+      "umf": "0.1.0",
+      "id": "application",
+      "vocabularies": {
+        "umf.avro": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "schema",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "schema",
+              "extensions": {
+                "umf.avro": {
+                  "version": "1.12.0",
+                  "root": {
+                    "kind": "object",
+                    "members": {
+                      "namespace": {
+                        "kind": "string",
+                        "value": "model"
+                      },
+                      "type": {
+                        "kind": "string",
+                        "value": "record"
+                      },
+                      "doc": {
+                        "kind": "string",
+                        "value": ""
+                      },
+                      "name": {
+                        "kind": "string",
+                        "value": "ApplicationEvent"
+                      },
+                      "fields": {
+                        "kind": "array",
+                        "items": [
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "applicationId"
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "string"
+                              },
+                              "doc": {
+                                "kind": "string",
+                                "value": "Application ID"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "status"
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "string"
+                              },
+                              "doc": {
+                                "kind": "string",
+                                "value": "Application Status"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "documents"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "array"
+                                      },
+                                      "items": {
+                                        "kind": "string",
+                                        "value": "model.DocumentInfo"
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              "doc": {
+                                "kind": "string",
+                                "value": ""
+                              },
+                              "default": {
+                                "kind": "null"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "dependencies": [
+                    {
+                      "id": "DocumentInfo.avsc",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "namespace": {
+                            "kind": "string",
+                            "value": "model"
+                          },
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "doc": {
+                            "kind": "string",
+                            "value": ""
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "DocumentInfo"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "documentId"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "string"
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "Document ID"
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "filePath"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "bytes"
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "Document Path"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "avro.fields",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "[\"DocumentInfo.avsc\",\"/fields/0\"]",
+              "name": "documentId",
+              "extensions": {},
+              "description": "Document ID",
+              "scalarType": "string"
+            },
+            {
+              "id": "[\"DocumentInfo.avsc\",\"/fields/1\"]",
+              "name": "filePath",
+              "extensions": {},
+              "description": "Document Path",
+              "scalarType": "binary"
+            },
+            {
+              "id": "[null,\"/fields/0\"]",
+              "name": "applicationId",
+              "extensions": {},
+              "description": "Application ID",
+              "scalarType": "string"
+            },
+            {
+              "id": "[null,\"/fields/1\"]",
+              "name": "status",
+              "extensions": {},
+              "description": "Application Status",
+              "scalarType": "string"
+            },
+            {
+              "id": "[null,\"/fields/2\"]",
+              "name": "documents",
+              "extensions": {},
+              "description": ""
+            }
+          ]
+        }
+      ]
+    },
+    "diagnostics": [
+      {
+        "code": "SOURCE_ARTIFACT_REQUIRED",
+        "path": "",
+        "severity": "warning",
+        "message": "Retain source UMF for unrelated metadata and uninterpreted content"
+      }
+    ]
+  }
+}

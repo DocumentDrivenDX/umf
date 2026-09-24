@@ -1,0 +1,67 @@
+{
+  "status": "emitted",
+  "source": {
+    "umf": "0.1.0",
+    "id": "emission",
+    "vocabularies": {
+      "umf.typespec": {
+        "version": "0.1.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "schema",
+        "namespace": "",
+        "elements": [
+          {
+            "id": "schema",
+            "extensions": {
+              "umf.typespec": {
+                "profile": "typespec-1.16.0-sources",
+                "entrypoint": "main.tsp",
+                "files": {
+                  "main.tsp": "import \"@typespec/json-schema\";\n\nusing JsonSchema;\n\n@jsonSchema\nnamespace Schemas;\n\nmodel Person {\n  /** The person's first name. */\n  firstName: string;\n\n  /** The person's last name. */\n  lastName: string;\n\n  /** Age in years, which must be zero or greater. */\n  @minValue(0)\n  age: int32;\n\n  /** The person's address. */\n  address: Address;\n\n  /** The person's nicknames. */\n  @uniqueItems\n  nickNames?: string[];\n\n  /** Cars owned by the person. */\n  cars?: Car[];\n}\n\nmodel Address {\n  street: string;\n  city: string;\n  country: string;\n}\n\nmodel Car {\n  kind: \"ev\" | \"ice\";\n  brand: string;\n  `model`: string;\n}\n"
+                },
+                "libraries": {
+                  "@typespec/json-schema": "1.16.0"
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "emitter": "@typespec/json-schema@1.16.0",
+  "policy": {
+    "options": {
+      "file-type": "json",
+      "int64-strategy": "string"
+    }
+  },
+  "compilation": {
+    "compiler": "@typespec/compiler@1.16.0",
+    "libraries": {
+      "@typespec/json-schema": "1.16.0"
+    },
+    "valid": true,
+    "complete": false,
+    "diagnostics": [],
+    "limitations": [
+      "Compiler ran the selected pinned JSON Schema emitter in the memory host; arbitrary project JavaScript remains unregistered",
+      "Compiler validity does not establish cross-system projection equivalence"
+    ]
+  },
+  "files": {
+    "@typespec/json-schema/Person.json": "{\n    \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n    \"$id\": \"Person.json\",\n    \"type\": \"object\",\n    \"properties\": {\n        \"firstName\": {\n            \"type\": \"string\",\n            \"description\": \"The person's first name.\"\n        },\n        \"lastName\": {\n            \"type\": \"string\",\n            \"description\": \"The person's last name.\"\n        },\n        \"age\": {\n            \"type\": \"integer\",\n            \"minimum\": 0,\n            \"maximum\": 2147483647,\n            \"description\": \"Age in years, which must be zero or greater.\"\n        },\n        \"address\": {\n            \"$ref\": \"Address.json\",\n            \"description\": \"The person's address.\"\n        },\n        \"nickNames\": {\n            \"type\": \"array\",\n            \"items\": {\n                \"type\": \"string\"\n            },\n            \"uniqueItems\": true,\n            \"description\": \"The person's nicknames.\"\n        },\n        \"cars\": {\n            \"type\": \"array\",\n            \"items\": {\n                \"$ref\": \"Car.json\"\n            },\n            \"description\": \"Cars owned by the person.\"\n        }\n    },\n    \"required\": [\n        \"firstName\",\n        \"lastName\",\n        \"age\",\n        \"address\"\n    ]\n}",
+    "@typespec/json-schema/Address.json": "{\n    \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n    \"$id\": \"Address.json\",\n    \"type\": \"object\",\n    \"properties\": {\n        \"street\": {\n            \"type\": \"string\"\n        },\n        \"city\": {\n            \"type\": \"string\"\n        },\n        \"country\": {\n            \"type\": \"string\"\n        }\n    },\n    \"required\": [\n        \"street\",\n        \"city\",\n        \"country\"\n    ]\n}",
+    "@typespec/json-schema/Car.json": "{\n    \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n    \"$id\": \"Car.json\",\n    \"type\": \"object\",\n    \"properties\": {\n        \"kind\": {\n            \"anyOf\": [\n                {\n                    \"type\": \"string\",\n                    \"const\": \"ev\"\n                },\n                {\n                    \"type\": \"string\",\n                    \"const\": \"ice\"\n                }\n            ]\n        },\n        \"brand\": {\n            \"type\": \"string\"\n        },\n        \"model\": {\n            \"type\": \"string\"\n        }\n    },\n    \"required\": [\n        \"kind\",\n        \"brand\",\n        \"model\"\n    ]\n}"
+  },
+  "complete": false,
+  "limitations": [
+    "Native emitter output is not proof of lossless TypeSpec semantic projection",
+    "Native JSON Schema 1.16.0 emission can round exact numeric literals through JavaScript numbers (9007199254740993 becomes 9007199254740992); int64-strategy does not prevent literal rounding",
+    "Native JSON Schema 1.16.0 emission omits int64/uint64 bounds; string strategy also omits numeric syntax constraints. Generated validators can therefore accept values outside the source scalar domain",
+    "TypeSpec operations, decorators, source identity and runtime semantics are retained in source, not guaranteed by generated validators"
+  ]
+}

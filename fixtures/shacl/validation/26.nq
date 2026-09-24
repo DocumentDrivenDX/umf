@@ -1,0 +1,26 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b12956 .
+_:report <http://www.w3.org/ns/shacl#result> _:b12957 .
+_:report <http://www.w3.org/ns/shacl#result> _:b12958 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b12956 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b12956 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b12956 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinInclusiveConstraintComponent> .
+_:b12956 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/minInclusive-001.test#TestShape> .
+_:b12956 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/minInclusive-001.test#TestShape> .
+_:b12956 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/minInclusive-001.test#TestShape> .
+_:b12956 <http://www.w3.org/ns/shacl#resultMessage> "Value is not greater than or equal to 2002-10-10T12:00:00-05:00" .
+_:b12957 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b12957 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b12957 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinInclusiveConstraintComponent> .
+_:b12957 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/minInclusive-001.test#TestShape> .
+_:b12957 <http://www.w3.org/ns/shacl#focusNode> "2002-10-09T12:00:00-05:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+_:b12957 <http://www.w3.org/ns/shacl#value> "2002-10-09T12:00:00-05:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+_:b12957 <http://www.w3.org/ns/shacl#resultMessage> "Value is not greater than or equal to 2002-10-10T12:00:00-05:00" .
+_:b12958 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b12958 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b12958 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinInclusiveConstraintComponent> .
+_:b12958 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/minInclusive-001.test#TestShape> .
+_:b12958 <http://www.w3.org/ns/shacl#focusNode> "2002-10-10T12:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+_:b12958 <http://www.w3.org/ns/shacl#value> "2002-10-10T12:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+_:b12958 <http://www.w3.org/ns/shacl#resultMessage> "Value is not greater than or equal to 2002-10-10T12:00:00-05:00" .

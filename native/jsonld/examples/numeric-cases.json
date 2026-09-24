@@ -1,0 +1,11 @@
+[
+ {"id":"large-integer","source":"{\"@context\":{\"@language\":\"en\",\"n\":\"urn:n\"},\"n\":9007199254740993}","expected":"[{\"urn:n\":[{\"@value\":9007199254740993}]}]","edit":{"pointer":"/n","text":"9007199254740995"},"editedExpected":"[{\"urn:n\":[{\"@value\":9007199254740995}]}]"},
+ {"id":"typed-decimal","source":"{\"@context\":{\"n\":{\"@id\":\"urn:n\",\"@type\":\"http://www.w3.org/2001/XMLSchema#decimal\"}},\"n\":333333333.33333329}","expected":"[{\"urn:n\":[{\"@value\":333333333.33333329,\"@type\":\"http://www.w3.org/2001/XMLSchema#decimal\"}]}]"},
+ {"id":"extreme-values","source":"{\"urn:n\":[-0,1e400,1e-400,-1e400]}","expected":"[{\"urn:n\":[{\"@value\":-0},{\"@value\":1e400},{\"@value\":1e-400},{\"@value\":-1e400}]}]"},
+ {"id":"json-literal","source":"{\"@context\":{\"j\":{\"@id\":\"urn:j\",\"@type\":\"@json\"}},\"j\":{\"numbers\":[-0,1e400,1e-400,333333333.33333329],\"@language\":\"EN\"}}","expected":"[{\"urn:j\":[{\"@type\":\"@json\",\"@value\":{\"numbers\":[-0,1e400,1e-400,333333333.33333329],\"@language\":\"EN\"}}]}]"},
+ {"id":"string-control","source":"{\"@context\":{\"@language\":\"en\",\"n\":\"urn:n\"},\"n\":\"9007199254740993\"}","expected":"[{\"urn:n\":[{\"@value\":\"9007199254740993\",\"@language\":\"en\"}]}]"},
+ {"id":"id-coercion-numeric","source":"{\"@context\":{\"n\":{\"@id\":\"urn:n\",\"@type\":\"@id\"}},\"n\":9007199254740993}","expected":"[{\"urn:n\":[{\"@value\":9007199254740993}]}]"},
+ {"id":"invalid-id","source":"{\"@id\":9007199254740993,\"urn:p\":\"x\"}","blocked":true},
+ {"id":"invalid-version","source":"{\"@context\":{\"@version\":1.1000000000000001,\"n\":\"urn:n\"},\"n\":1}","blocked":true},
+ {"id":"free-floating","source":"9007199254740993","expected":"[]"}
+]

@@ -1,0 +1,167 @@
+[
+  {
+    "add": null,
+    "commitInfo": null,
+    "metaData": null,
+    "protocol": {
+      "minReaderVersion": 1,
+      "minWriterVersion": 2
+    },
+    "remove": null,
+    "txn": null
+  },
+  {
+    "add": null,
+    "commitInfo": null,
+    "metaData": {
+      "configuration": {},
+      "createdTime": {
+        "$int64": "1564524294376"
+      },
+      "description": null,
+      "format": {
+        "options": {},
+        "provider": "parquet"
+      },
+      "id": "22ef18ba-191c-4c36-a606-3dad5cdf3830",
+      "name": null,
+      "partitionColumns": [],
+      "schemaString": "{\"type\":\"struct\",\"fields\":[{\"name\":\"value\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}"
+    },
+    "protocol": null,
+    "remove": null,
+    "txn": null
+  },
+  {
+    "add": null,
+    "commitInfo": null,
+    "metaData": null,
+    "protocol": null,
+    "remove": null,
+    "txn": {
+      "appId": "e4a20b59-dd0e-4c50-b074-e8ae4786df30",
+      "lastUpdated": {
+        "$int64": "1564524299648"
+      },
+      "version": {
+        "$int64": "0"
+      }
+    }
+  },
+  {
+    "add": null,
+    "commitInfo": null,
+    "metaData": null,
+    "protocol": null,
+    "remove": {
+      "dataChange": false,
+      "deletionTimestamp": {
+        "$int64": "1564524298213"
+      },
+      "path": "part-00000-512e1537-8aaa-4193-b8b4-bef3de0de409-c000.snappy.parquet"
+    },
+    "txn": null
+  },
+  {
+    "add": null,
+    "commitInfo": null,
+    "metaData": null,
+    "protocol": null,
+    "remove": {
+      "dataChange": false,
+      "deletionTimestamp": {
+        "$int64": "1564524298214"
+      },
+      "path": "part-00000-b44fcdb0-8b06-4f3a-8606-f8311a96f6dc-c000.snappy.parquet"
+    },
+    "txn": null
+  },
+  {
+    "add": {
+      "dataChange": false,
+      "modificationTime": {
+        "$int64": "1564524299000"
+      },
+      "partitionValues": {},
+      "path": "part-00000-cb6b150b-30b8-4662-ad28-ff32ddab96d2-c000.snappy.parquet",
+      "size": {
+        "$int64": "404"
+      },
+      "stats": null,
+      "tags": null
+    },
+    "commitInfo": null,
+    "metaData": null,
+    "protocol": null,
+    "remove": null,
+    "txn": null
+  },
+  {
+    "add": null,
+    "commitInfo": null,
+    "metaData": null,
+    "protocol": null,
+    "remove": {
+      "dataChange": false,
+      "deletionTimestamp": {
+        "$int64": "1564524298214"
+      },
+      "path": "part-00001-185eca06-e017-4dea-ae49-fc48b973e37e-c000.snappy.parquet"
+    },
+    "txn": null
+  },
+  {
+    "add": {
+      "dataChange": false,
+      "modificationTime": {
+        "$int64": "1564524297000"
+      },
+      "partitionValues": {},
+      "path": "part-00000-7c2deba3-1994-4fb8-bc07-d46c948aa415-c000.snappy.parquet",
+      "size": {
+        "$int64": "396"
+      },
+      "stats": null,
+      "tags": null
+    },
+    "commitInfo": null,
+    "metaData": null,
+    "protocol": null,
+    "remove": null,
+    "txn": null
+  },
+  {
+    "add": null,
+    "commitInfo": null,
+    "metaData": null,
+    "protocol": null,
+    "remove": {
+      "dataChange": false,
+      "deletionTimestamp": {
+        "$int64": "1564524298214"
+      },
+      "path": "part-00001-4327c977-2734-4477-9507-7ccf67924649-c000.snappy.parquet"
+    },
+    "txn": null
+  },
+  {
+    "add": {
+      "dataChange": false,
+      "modificationTime": {
+        "$int64": "1564524297000"
+      },
+      "partitionValues": {},
+      "path": "part-00001-c373a5bd-85f0-4758-815e-7eb62007a15c-c000.snappy.parquet",
+      "size": {
+        "$int64": "400"
+      },
+      "stats": null,
+      "tags": null
+    },
+    "commitInfo": null,
+    "metaData": null,
+    "protocol": null,
+    "remove": null,
+    "txn": null
+  }
+]

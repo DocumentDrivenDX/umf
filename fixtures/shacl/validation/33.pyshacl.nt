@@ -1,0 +1,18 @@
+_:N1f49c912b6e94c6e95e0b8109990113a <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/or-001.test#InvalidRectangle2> .
+_:N4b5edfb938c64c599a29ef3fe014ae54 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N1e032c5d92d840d880b00ed65d261bd8 <http://www.w3.org/ns/shacl#result> _:N4b5edfb938c64c599a29ef3fe014ae54 .
+_:N4b5edfb938c64c599a29ef3fe014ae54 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/or-001.test#RectangleWithArea> .
+_:N4b5edfb938c64c599a29ef3fe014ae54 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/or-001.test#InvalidRectangle1> .
+_:N1f49c912b6e94c6e95e0b8109990113a <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N1f49c912b6e94c6e95e0b8109990113a <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#OrConstraintComponent> .
+_:N1f49c912b6e94c6e95e0b8109990113a <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N1f49c912b6e94c6e95e0b8109990113a <http://www.w3.org/ns/shacl#resultMessage> "Node ex:InvalidRectangle2 must conform to one or more shapes in [ sh:property [ sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:height ], [ sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:width ] ] , [ sh:property [ sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:area ] ]" .
+_:N4b5edfb938c64c599a29ef3fe014ae54 <http://www.w3.org/ns/shacl#resultMessage> "Node ex:InvalidRectangle1 must conform to one or more shapes in [ sh:property [ sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:height ], [ sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:width ] ] , [ sh:property [ sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:area ] ]" .
+_:N1e032c5d92d840d880b00ed65d261bd8 <http://www.w3.org/ns/shacl#result> _:N1f49c912b6e94c6e95e0b8109990113a .
+_:N1f49c912b6e94c6e95e0b8109990113a <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/or-001.test#RectangleWithArea> .
+_:N1e032c5d92d840d880b00ed65d261bd8 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N4b5edfb938c64c599a29ef3fe014ae54 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#OrConstraintComponent> .
+_:N1e032c5d92d840d880b00ed65d261bd8 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N4b5edfb938c64c599a29ef3fe014ae54 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N1f49c912b6e94c6e95e0b8109990113a <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/or-001.test#InvalidRectangle2> .
+_:N4b5edfb938c64c599a29ef3fe014ae54 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/or-001.test#InvalidRectangle1> .

@@ -1,0 +1,8 @@
+import {importRdfTurtle,exportRdfTurtle,exportRdfNQuads,getRdfQuads,proposeRdfQuadEdit,readDocument,writeDocument} from '../src';
+const manifest=await Bun.file('native/rdf/turtle-sources/manifest.json').json(),results=[];
+for(const c of manifest.cases){const raw=await Bun.file(c.path).text();let d;try{d=importRdfTurtle(raw,{id:c.id,baseIRI:c.baseIRI});}catch(e){if(c.positive)throw Error(c.id+': '+String(e));results.push({...c,status:'rejected'});continue;}if(!c.positive)throw Error('Negative accepted: '+c.id);
+ const quads=getRdfQuads(d),index=quads.findIndex(q=>q.object.kind==='literal'),exports=[];let candidate;if(index>=0)candidate=proposeRdfQuadEdit(d,index,{...quads[index]!,object:{kind:'literal',value:'UMF reviewed literal',datatype:'http://www.w3.org/2001/XMLSchema#string'}}).document;
+ const outputPath='fixtures/rdf/turtle/'+c.id+'.nq';await Bun.write(outputPath,exportRdfNQuads(d));for(const format of ['json','yaml'] as const){const restored=readDocument(writeDocument(d,format),format);if(exportRdfTurtle(restored)!==raw)throw Error('Original Turtle differs');if(exportRdfNQuads(restored)!==await Bun.file(outputPath).text())throw Error('N-Quads differs');if(candidate){const path='fixtures/rdf/turtle/'+c.id+'.'+format+'.edited.ttl';await Bun.write(path,exportRdfTurtle(readDocument(writeDocument(candidate,format),format)));exports.push({format,path});}}
+ results.push({...c,status:'accepted',terms:quads,outputPath,editIndex:index,exports});
+}
+await Bun.write('fixtures/rdf/turtle/results.json',JSON.stringify({results},null,2)+'\n');console.log({cases:results.length,accepted:results.filter(r=>r.status==='accepted').length,edited:results.filter(r=>r.exports?.length).length});

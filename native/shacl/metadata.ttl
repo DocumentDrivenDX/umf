@@ -1,0 +1,8 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix ex: <https://example.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+ex:Order a sh:NodeShape ; sh:targetClass ex:OrderRecord ; sh:property ex:total, ex:address ; ex:policy [ex:review "manual"] .
+ex:total sh:path ex:totalAmount ; sh:name "Total"@en, "Gesamt"@de ; sh:description "Declared order amount"@en ; sh:order "9007199254740993"^^xsd:decimal ; sh:datatype xsd:decimal ; sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 0 ; sh:defaultValue "0.00"^^xsd:decimal ; ex:currencySource ex:Account .
+ex:address sh:path (ex:shipping ex:street) ; sh:name "Shipping street"@en ; sh:group ex:Delivery ; sh:node ex:AddressRules .
+ex:Delivery sh:name "Delivery"@en ; sh:order 2 .
+ex:AddressRules sh:pattern "^[A-Z]" ; ex:futureRule [ex:version 7] .

@@ -1,0 +1,16 @@
+{
+    "smithy": "2.0",
+    "shapes": {
+        "example.rest#Foo": {
+            "type": "structure",
+            "members": {
+                "foo": {
+                    "target": "example.rest#Foo"
+                },
+                "bar": {
+                    "target": "smithy.api#String"
+                }
+            }
+        }
+    }
+}

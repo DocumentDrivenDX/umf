@@ -1,0 +1,516 @@
+{
+  "value": {
+    "kind": "struct",
+    "fields": [
+      {
+        "id": 1,
+        "value": {
+          "kind": "i32",
+          "value": "2"
+        }
+      },
+      {
+        "id": 2,
+        "value": {
+          "kind": "list",
+          "elementType": "struct",
+          "items": [
+            {
+              "kind": "struct",
+              "fields": [
+                {
+                  "id": 3,
+                  "value": {
+                    "kind": "i32",
+                    "value": "0"
+                  }
+                },
+                {
+                  "id": 4,
+                  "value": {
+                    "kind": "binary",
+                    "hex": "736368656d61"
+                  }
+                },
+                {
+                  "id": 5,
+                  "value": {
+                    "kind": "i32",
+                    "value": "1"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "struct",
+              "fields": [
+                {
+                  "id": 3,
+                  "value": {
+                    "kind": "i32",
+                    "value": "1"
+                  }
+                },
+                {
+                  "id": 4,
+                  "value": {
+                    "kind": "binary",
+                    "hex": "7374617473"
+                  }
+                },
+                {
+                  "id": 5,
+                  "value": {
+                    "kind": "i32",
+                    "value": "1"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "struct",
+              "fields": [
+                {
+                  "id": 1,
+                  "value": {
+                    "kind": "i32",
+                    "value": "2"
+                  }
+                },
+                {
+                  "id": 3,
+                  "value": {
+                    "kind": "i32",
+                    "value": "1"
+                  }
+                },
+                {
+                  "id": 4,
+                  "value": {
+                    "kind": "binary",
+                    "hex": "76616c7565"
+                  }
+                },
+                {
+                  "id": 6,
+                  "value": {
+                    "kind": "i32",
+                    "value": "5"
+                  }
+                },
+                {
+                  "id": 7,
+                  "value": {
+                    "kind": "i32",
+                    "value": "5"
+                  }
+                },
+                {
+                  "id": 8,
+                  "value": {
+                    "kind": "i32",
+                    "value": "18"
+                  }
+                },
+                {
+                  "id": 10,
+                  "value": {
+                    "kind": "struct",
+                    "fields": [
+                      {
+                        "id": 5,
+                        "value": {
+                          "kind": "struct",
+                          "fields": [
+                            {
+                              "id": 1,
+                              "value": {
+                                "kind": "i32",
+                                "value": "5"
+                              }
+                            },
+                            {
+                              "id": 2,
+                              "value": {
+                                "kind": "i32",
+                                "value": "18"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": 3,
+        "value": {
+          "kind": "i64",
+          "value": "5"
+        }
+      },
+      {
+        "id": 4,
+        "value": {
+          "kind": "list",
+          "elementType": "struct",
+          "items": [
+            {
+              "kind": "struct",
+              "fields": [
+                {
+                  "id": 1,
+                  "value": {
+                    "kind": "list",
+                    "elementType": "struct",
+                    "items": [
+                      {
+                        "kind": "struct",
+                        "fields": [
+                          {
+                            "id": 2,
+                            "value": {
+                              "kind": "i64",
+                              "value": "0"
+                            }
+                          },
+                          {
+                            "id": 3,
+                            "value": {
+                              "kind": "struct",
+                              "fields": [
+                                {
+                                  "id": 1,
+                                  "value": {
+                                    "kind": "i32",
+                                    "value": "2"
+                                  }
+                                },
+                                {
+                                  "id": 2,
+                                  "value": {
+                                    "kind": "list",
+                                    "elementType": "i32",
+                                    "items": [
+                                      {
+                                        "kind": "i32",
+                                        "value": "0"
+                                      },
+                                      {
+                                        "kind": "i32",
+                                        "value": "3"
+                                      },
+                                      {
+                                        "kind": "i32",
+                                        "value": "8"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "id": 3,
+                                  "value": {
+                                    "kind": "list",
+                                    "elementType": "binary",
+                                    "items": [
+                                      {
+                                        "kind": "binary",
+                                        "hex": "7374617473"
+                                      },
+                                      {
+                                        "kind": "binary",
+                                        "hex": "76616c7565"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "id": 4,
+                                  "value": {
+                                    "kind": "i32",
+                                    "value": "1"
+                                  }
+                                },
+                                {
+                                  "id": 5,
+                                  "value": {
+                                    "kind": "i64",
+                                    "value": "5"
+                                  }
+                                },
+                                {
+                                  "id": 6,
+                                  "value": {
+                                    "kind": "i64",
+                                    "value": "110"
+                                  }
+                                },
+                                {
+                                  "id": 7,
+                                  "value": {
+                                    "kind": "i64",
+                                    "value": "114"
+                                  }
+                                },
+                                {
+                                  "id": 9,
+                                  "value": {
+                                    "kind": "i64",
+                                    "value": "44"
+                                  }
+                                },
+                                {
+                                  "id": 11,
+                                  "value": {
+                                    "kind": "i64",
+                                    "value": "4"
+                                  }
+                                },
+                                {
+                                  "id": 12,
+                                  "value": {
+                                    "kind": "struct",
+                                    "fields": [
+                                      {
+                                        "id": 1,
+                                        "value": {
+                                          "kind": "binary",
+                                          "hex": "ffff63a7b3b6e00d"
+                                        }
+                                      },
+                                      {
+                                        "id": 2,
+                                        "value": {
+                                          "kind": "binary",
+                                          "hex": "01009c584c491ff2"
+                                        }
+                                      },
+                                      {
+                                        "id": 3,
+                                        "value": {
+                                          "kind": "i64",
+                                          "value": "2"
+                                        }
+                                      },
+                                      {
+                                        "id": 5,
+                                        "value": {
+                                          "kind": "binary",
+                                          "hex": "ffff63a7b3b6e00d"
+                                        }
+                                      },
+                                      {
+                                        "id": 6,
+                                        "value": {
+                                          "kind": "binary",
+                                          "hex": "01009c584c491ff2"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "id": 13,
+                                  "value": {
+                                    "kind": "list",
+                                    "elementType": "struct",
+                                    "items": [
+                                      {
+                                        "kind": "struct",
+                                        "fields": [
+                                          {
+                                            "id": 1,
+                                            "value": {
+                                              "kind": "i32",
+                                              "value": "2"
+                                            }
+                                          },
+                                          {
+                                            "id": 2,
+                                            "value": {
+                                              "kind": "i32",
+                                              "value": "0"
+                                            }
+                                          },
+                                          {
+                                            "id": 3,
+                                            "value": {
+                                              "kind": "i32",
+                                              "value": "1"
+                                            }
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "struct",
+                                        "fields": [
+                                          {
+                                            "id": 1,
+                                            "value": {
+                                              "kind": "i32",
+                                              "value": "0"
+                                            }
+                                          },
+                                          {
+                                            "id": 2,
+                                            "value": {
+                                              "kind": "i32",
+                                              "value": "8"
+                                            }
+                                          },
+                                          {
+                                            "id": 3,
+                                            "value": {
+                                              "kind": "i32",
+                                              "value": "1"
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "id": 16,
+                                  "value": {
+                                    "kind": "struct",
+                                    "fields": [
+                                      {
+                                        "id": 2,
+                                        "value": {
+                                          "kind": "list",
+                                          "elementType": "i64",
+                                          "items": []
+                                        }
+                                      },
+                                      {
+                                        "id": 3,
+                                        "value": {
+                                          "kind": "list",
+                                          "elementType": "i64",
+                                          "items": [
+                                            {
+                                              "kind": "i64",
+                                              "value": "1"
+                                            },
+                                            {
+                                              "kind": "i64",
+                                              "value": "1"
+                                            },
+                                            {
+                                              "kind": "i64",
+                                              "value": "3"
+                                            }
+                                          ]
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "id": 2,
+                  "value": {
+                    "kind": "i64",
+                    "value": "110"
+                  }
+                },
+                {
+                  "id": 3,
+                  "value": {
+                    "kind": "i64",
+                    "value": "5"
+                  }
+                },
+                {
+                  "id": 5,
+                  "value": {
+                    "kind": "i64",
+                    "value": "4"
+                  }
+                },
+                {
+                  "id": 6,
+                  "value": {
+                    "kind": "i64",
+                    "value": "114"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": 5,
+        "value": {
+          "kind": "list",
+          "elementType": "struct",
+          "items": [
+            {
+              "kind": "struct",
+              "fields": [
+                {
+                  "id": 1,
+                  "value": {
+                    "kind": "binary",
+                    "hex": "4152524f573a736368656d61"
+                  }
+                },
+                {
+                  "id": 2,
+                  "value": {
+                    "kind": "binary",
+                    "hex": "2f2f2f2f2f37414141414151414141414141414b41417741426741464141674143674141414141424241414d41414141434141494141414142414149414141414241414141414541414141454141414130502f2f2f7741414151305541414141494141414141514141414142414141414b414141414155414141427a6447463063774141414151414241414541414141454141554141674142674148414177414141415141424141414141414141454845414141414341414141414541414141414141414141554141414232595778315a514141414167414441414541416741434141414142494141414146414141414141414141413d3d"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": 6,
+        "value": {
+          "kind": "binary",
+          "hex": "706172717565742d6370702d6172726f772076657273696f6e2032312e302e30"
+        }
+      },
+      {
+        "id": 7,
+        "value": {
+          "kind": "list",
+          "elementType": "struct",
+          "items": [
+            {
+              "kind": "struct",
+              "fields": [
+                {
+                  "id": 1,
+                  "value": {
+                    "kind": "struct",
+                    "fields": []
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "consumedBytes": 489,
+  "trailingBytes": 0
+}

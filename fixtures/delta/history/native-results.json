@@ -1,0 +1,131 @@
+{
+  "runtime": "deltalake 1.6.4 DataFusion scan",
+  "results": [
+    {
+      "version": "0",
+      "paths": [
+        "a.parquet"
+      ],
+      "rows": [
+        {
+          "id": 1
+        }
+      ],
+      "job": 9,
+      "other": null,
+      "name": null,
+      "description": null,
+      "protocol": {
+        "minReaderVersion": 1,
+        "minWriterVersion": 2
+      }
+    },
+    {
+      "version": "1",
+      "paths": [
+        "b.parquet"
+      ],
+      "rows": [
+        {
+          "id": 2
+        }
+      ],
+      "job": 2,
+      "other": null,
+      "name": null,
+      "description": null,
+      "protocol": {
+        "minReaderVersion": 1,
+        "minWriterVersion": 2
+      }
+    },
+    {
+      "version": "2",
+      "paths": [
+        "a.parquet",
+        "b.parquet"
+      ],
+      "rows": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        }
+      ],
+      "job": 2,
+      "other": null,
+      "name": "renamed",
+      "description": "metadata replaced",
+      "protocol": {
+        "minReaderVersion": 1,
+        "minWriterVersion": 3
+      }
+    },
+    {
+      "version": "3",
+      "paths": [
+        "a.parquet",
+        "b.parquet"
+      ],
+      "rows": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        }
+      ],
+      "job": 2,
+      "other": 9223372036854775807,
+      "name": "renamed",
+      "description": "metadata replaced",
+      "protocol": {
+        "minReaderVersion": 1,
+        "minWriterVersion": 3
+      }
+    },
+    {
+      "version": "4",
+      "paths": [
+        "a.parquet"
+      ],
+      "rows": [
+        {
+          "id": 1
+        }
+      ],
+      "job": 2,
+      "other": 9223372036854775807,
+      "name": "renamed",
+      "description": "metadata replaced",
+      "protocol": {
+        "minReaderVersion": 1,
+        "minWriterVersion": 3
+      }
+    },
+    {
+      "version": "5",
+      "paths": [
+        "a.parquet"
+      ],
+      "rows": [
+        {
+          "id": 1
+        }
+      ],
+      "job": 2,
+      "other": 9223372036854775807,
+      "name": "renamed",
+      "description": "metadata replaced",
+      "protocol": {
+        "minReaderVersion": 1,
+        "minWriterVersion": 3
+      }
+    }
+  ],
+  "files": {
+    "a.parquet": "8117c78198a772a21ac4c1cece3cc5cdd5497fb34e5bde6c947332a237877a43",
+    "b.parquet": "d3bc53f8baf985f6c52e00f5df45ac0357aad661f8b434b53a66fd6c01ae7fb1"
+  }
+}

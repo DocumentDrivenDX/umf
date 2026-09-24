@@ -1,0 +1,140 @@
+[
+  {
+    "metaData": null,
+    "protocol": {
+      "minReaderVersion": 1,
+      "minWriterVersion": 1
+    },
+    "txn": null,
+    "add": null,
+    "remove": null
+  },
+  {
+    "metaData": {
+      "id": "d5ad9276-c21f-474e-bfa8-996099dce265",
+      "name": null,
+      "description": null,
+      "schemaString": "{\"type\":\"struct\",\"fields\":[{\"name\":\"timestamp\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}},{\"name\":\"temperature\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"date\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}",
+      "createdTime": {
+        "$int64": "1684886484991"
+      },
+      "partitionColumns": [
+        "date"
+      ],
+      "configuration": {},
+      "format": {
+        "provider": "parquet",
+        "options": {}
+      }
+    },
+    "protocol": null,
+    "txn": null,
+    "add": null,
+    "remove": null
+  },
+  {
+    "metaData": null,
+    "protocol": null,
+    "txn": null,
+    "add": {
+      "path": "date=2023-05-24/part-00000-e2b01fc6-a906-4008-82df-e98efdcdd49c-c000.snappy.parquet",
+      "size": {
+        "$int64": "1021"
+      },
+      "modificationTime": {
+        "$int64": "1684886485017"
+      },
+      "dataChange": false,
+      "stats": "{\"numRecords\":10,\"minValues\":{\"timestamp\":null,\"temperature\":8},\"maxValues\":{\"timestamp\":\"2023-05-24T00:01:25.014Z\",\"temperature\":90},\"nullCount\":{\"temperature\":0,\"timestamp\":0}}",
+      "partitionValues": {
+        "date": "2023-05-24"
+      },
+      "tags": null,
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "10"
+        },
+        "minValues": {
+          "timestamp": null,
+          "temperature": 8
+        },
+        "maxValues": {
+          "timestamp": {
+            "$timestamp": {
+              "unit": "us",
+              "value": "1684886485014000"
+            }
+          },
+          "temperature": 90
+        },
+        "nullCount": {
+          "timestamp": {
+            "$int64": "0"
+          },
+          "temperature": {
+            "$int64": "0"
+          }
+        }
+      },
+      "partitionValues_parsed": {
+        "date": "2023-05-24"
+      }
+    },
+    "remove": null
+  },
+  {
+    "metaData": null,
+    "protocol": null,
+    "txn": null,
+    "add": {
+      "path": "date=2023-05-24/part-00000-e2b01fc6-a906-4008-82df-e98efdcdd47d-c000.snappy.parquet",
+      "size": {
+        "$int64": "1021"
+      },
+      "modificationTime": {
+        "$int64": "1684886485017"
+      },
+      "dataChange": false,
+      "stats": "{\"numRecords\":10,\"minValues\":{\"timestamp\":\"2023-05-24T00:01:25.014Z\",\"temperature\":8},\"maxValues\":{\"timestamp\":\"2023-05-24T00:01:25.014Z\",\"temperature\":90},\"nullCount\":{\"temperature\":0,\"timestamp\":0}}",
+      "partitionValues": {
+        "date": "2023-05-24"
+      },
+      "tags": null,
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "10"
+        },
+        "minValues": {
+          "timestamp": {
+            "$timestamp": {
+              "unit": "us",
+              "value": "1684886485014000"
+            }
+          },
+          "temperature": 8
+        },
+        "maxValues": {
+          "timestamp": {
+            "$timestamp": {
+              "unit": "us",
+              "value": "1684886485014000"
+            }
+          },
+          "temperature": 90
+        },
+        "nullCount": {
+          "timestamp": {
+            "$int64": "0"
+          },
+          "temperature": {
+            "$int64": "0"
+          }
+        }
+      },
+      "partitionValues_parsed": {
+        "date": "2023-05-24"
+      }
+    },
+    "remove": null
+  }
+]

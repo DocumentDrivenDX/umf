@@ -1,0 +1,888 @@
+[
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 29,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 48,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 67,
+        "name": "protocol",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 68,
+              "name": "minReaderVersion",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT32",
+                  "value": "3"
+                }
+              }
+            },
+            {
+              "index": 69,
+              "name": "minWriterVersion",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT32",
+                  "value": "7"
+                }
+              }
+            },
+            {
+              "index": 70,
+              "name": "readerFeatures",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 71,
+                    "name": "list",
+                    "value": {
+                      "kind": "repeated",
+                      "items": [
+                        {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 72,
+                              "name": "element",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "76617269616e74547970652d70726576696577"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 73,
+              "name": "writerFeatures",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 74,
+                    "name": "list",
+                    "value": {
+                      "kind": "repeated",
+                      "items": [
+                        {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 75,
+                              "name": "element",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "76617269616e74547970652d70726576696577"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 75,
+                              "name": "element",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "617070656e644f6e6c79"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 75,
+                              "name": "element",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "696e76617269616e7473"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 76,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 29,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 48,
+        "name": "metaData",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 49,
+              "name": "id",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "64376562303834382d623030322d346530622d396438642d646433333563393039343666"
+                }
+              }
+            },
+            {
+              "index": 50,
+              "name": "name",
+              "value": null
+            },
+            {
+              "index": 51,
+              "name": "description",
+              "value": null
+            },
+            {
+              "index": 52,
+              "name": "format",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 53,
+                    "name": "provider",
+                    "value": {
+                      "kind": "physical",
+                      "value": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "70617271756574"
+                      }
+                    }
+                  },
+                  {
+                    "index": 54,
+                    "name": "options",
+                    "value": {
+                      "kind": "record",
+                      "fields": [
+                        {
+                          "index": 55,
+                          "name": "key_value",
+                          "value": {
+                            "kind": "repeated",
+                            "items": []
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 58,
+              "name": "schemaString",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a226964222c2274797065223a226c6f6e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2276222c2274797065223a2276617269616e74222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2261727261795f6f665f76617269616e7473222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a2276617269616e74222c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a227374727563745f6f665f76617269616e7473222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a2276222c2274797065223a2276617269616e74222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226d61705f6f665f76617269616e7473222c2274797065223a7b2274797065223a226d6170222c226b657954797065223a22737472696e67222c2276616c756554797065223a2276617269616e74222c2276616c7565436f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2261727261795f6f665f7374727563745f6f665f76617269616e7473222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a2276222c2274797065223a2276617269616e74222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a227374727563745f6f665f61727261795f6f665f76617269616e7473222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a2276222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a2276617269616e74222c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d"
+                }
+              }
+            },
+            {
+              "index": 59,
+              "name": "partitionColumns",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 60,
+                    "name": "list",
+                    "value": {
+                      "kind": "repeated",
+                      "items": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 62,
+              "name": "configuration",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 63,
+                    "name": "key_value",
+                    "value": {
+                      "kind": "repeated",
+                      "items": [
+                        {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 64,
+                              "name": "key",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "64656c74612e636865636b706f696e74496e74657276616c"
+                                }
+                              }
+                            },
+                            {
+                              "index": 65,
+                              "name": "value",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "32"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 66,
+              "name": "createdTime",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "1723768495302"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 67,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 76,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 6,
+              "name": "path",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "706172742d30303030302d31653134626132322d333131342d343664312d393666622d3438623439313235303763652d633030302e736e617070792e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionValues",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 8,
+                    "name": "key_value",
+                    "value": {
+                      "kind": "repeated",
+                      "items": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 11,
+              "name": "size",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "5072"
+                }
+              }
+            },
+            {
+              "index": 12,
+              "name": "modificationTime",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "1723768498986"
+                }
+              }
+            },
+            {
+              "index": 13,
+              "name": "dataChange",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BOOLEAN",
+                  "value": false
+                }
+              }
+            },
+            {
+              "index": 14,
+              "name": "tags",
+              "value": null
+            },
+            {
+              "index": 18,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 25,
+              "name": "baseRowId",
+              "value": null
+            },
+            {
+              "index": 26,
+              "name": "defaultRowCommitVersion",
+              "value": null
+            },
+            {
+              "index": 27,
+              "name": "clusteringProvider",
+              "value": null
+            },
+            {
+              "index": 28,
+              "name": "stats",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a312c226d696e56616c756573223a7b226964223a317d2c226d617856616c756573223a7b226964223a317d2c226e756c6c436f756e74223a7b226964223a302c2276223a302c2261727261795f6f665f76617269616e7473223a302c227374727563745f6f665f76617269616e7473223a7b2276223a307d2c226d61705f6f665f76617269616e7473223a302c2261727261795f6f665f7374727563745f6f665f76617269616e7473223a302c227374727563745f6f665f61727261795f6f665f76617269616e7473223a7b2276223a307d7d7d"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 29,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 48,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 67,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 76,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 6,
+              "name": "path",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "706172742d30303030302d39613963353730632d656533322d343332322d616432662d3863383337613737643339382d633030302e736e617070792e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionValues",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 8,
+                    "name": "key_value",
+                    "value": {
+                      "kind": "repeated",
+                      "items": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 11,
+              "name": "size",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "5072"
+                }
+              }
+            },
+            {
+              "index": 12,
+              "name": "modificationTime",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "1723768498551"
+                }
+              }
+            },
+            {
+              "index": 13,
+              "name": "dataChange",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BOOLEAN",
+                  "value": false
+                }
+              }
+            },
+            {
+              "index": 14,
+              "name": "tags",
+              "value": null
+            },
+            {
+              "index": 18,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 25,
+              "name": "baseRowId",
+              "value": null
+            },
+            {
+              "index": 26,
+              "name": "defaultRowCommitVersion",
+              "value": null
+            },
+            {
+              "index": 27,
+              "name": "clusteringProvider",
+              "value": null
+            },
+            {
+              "index": 28,
+              "name": "stats",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a312c226d696e56616c756573223a7b226964223a307d2c226d617856616c756573223a7b226964223a307d2c226e756c6c436f756e74223a7b226964223a302c2276223a302c2261727261795f6f665f76617269616e7473223a302c227374727563745f6f665f76617269616e7473223a7b2276223a307d2c226d61705f6f665f76617269616e7473223a302c2261727261795f6f665f7374727563745f6f665f76617269616e7473223a302c227374727563745f6f665f61727261795f6f665f76617269616e7473223a7b2276223a307d7d7d"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 29,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 48,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 67,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 76,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 6,
+              "name": "path",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "706172742d30303030312d36363433313364332d313462342d346462662d383131302d3737303031623837373138322d633030302e736e617070792e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionValues",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 8,
+                    "name": "key_value",
+                    "value": {
+                      "kind": "repeated",
+                      "items": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 11,
+              "name": "size",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "7324"
+                }
+              }
+            },
+            {
+              "index": 12,
+              "name": "modificationTime",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "1723768496908"
+                }
+              }
+            },
+            {
+              "index": 13,
+              "name": "dataChange",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BOOLEAN",
+                  "value": false
+                }
+              }
+            },
+            {
+              "index": 14,
+              "name": "tags",
+              "value": null
+            },
+            {
+              "index": 18,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 25,
+              "name": "baseRowId",
+              "value": null
+            },
+            {
+              "index": 26,
+              "name": "defaultRowCommitVersion",
+              "value": null
+            },
+            {
+              "index": 27,
+              "name": "clusteringProvider",
+              "value": null
+            },
+            {
+              "index": 28,
+              "name": "stats",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a35302c226d696e56616c756573223a7b226964223a35307d2c226d617856616c756573223a7b226964223a39397d2c226e756c6c436f756e74223a7b226964223a302c2276223a302c2261727261795f6f665f76617269616e7473223a302c227374727563745f6f665f76617269616e7473223a7b2276223a307d2c226d61705f6f665f76617269616e7473223a302c2261727261795f6f665f7374727563745f6f665f76617269616e7473223a302c227374727563745f6f665f61727261795f6f665f76617269616e7473223a7b2276223a307d7d7d"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 29,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 48,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 67,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 76,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 6,
+              "name": "path",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "706172742d30303030302d31366338353264662d626136362d343038302d626532352d3533306130353932323432322d633030302e736e617070792e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionValues",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 8,
+                    "name": "key_value",
+                    "value": {
+                      "kind": "repeated",
+                      "items": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 11,
+              "name": "size",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "7443"
+                }
+              }
+            },
+            {
+              "index": 12,
+              "name": "modificationTime",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "1723768496908"
+                }
+              }
+            },
+            {
+              "index": 13,
+              "name": "dataChange",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BOOLEAN",
+                  "value": false
+                }
+              }
+            },
+            {
+              "index": 14,
+              "name": "tags",
+              "value": null
+            },
+            {
+              "index": 18,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 25,
+              "name": "baseRowId",
+              "value": null
+            },
+            {
+              "index": 26,
+              "name": "defaultRowCommitVersion",
+              "value": null
+            },
+            {
+              "index": 27,
+              "name": "clusteringProvider",
+              "value": null
+            },
+            {
+              "index": 28,
+              "name": "stats",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a35302c226d696e56616c756573223a7b226964223a307d2c226d617856616c756573223a7b226964223a34397d2c226e756c6c436f756e74223a7b226964223a302c2276223a302c2261727261795f6f665f76617269616e7473223a302c227374727563745f6f665f76617269616e7473223a7b2276223a307d2c226d61705f6f665f76617269616e7473223a302c2261727261795f6f665f7374727563745f6f665f76617269616e7473223a302c227374727563745f6f665f61727261795f6f665f76617269616e7473223a7b2276223a307d7d7d"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 29,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 48,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 67,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 76,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  }
+]

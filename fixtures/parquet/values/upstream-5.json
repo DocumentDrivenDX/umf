@@ -1,0 +1,1699 @@
+[
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 6,
+              "name": "path",
+              "value": {
+                "kind": "string",
+                "value": "2b2f2b8c-fa9b-4f5d-972a-d49dc2576525-000.parquet",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "32623266326238632d666139622d346635642d393732612d6434396463323537363532352d3030302e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionValues",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": []
+              }
+            },
+            {
+              "index": 11,
+              "name": "size",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1918",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1918"
+                }
+              }
+            },
+            {
+              "index": 12,
+              "name": "modificationTime",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1742317801121",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1742317801121"
+                }
+              }
+            },
+            {
+              "index": 13,
+              "name": "dataChange",
+              "value": {
+                "kind": "bool",
+                "value": true,
+                "physical": {
+                  "type": "BOOLEAN",
+                  "value": true
+                }
+              }
+            },
+            {
+              "index": 14,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 20,
+              "name": "tags",
+              "value": null
+            },
+            {
+              "index": 24,
+              "name": "baseRowId",
+              "value": null
+            },
+            {
+              "index": 25,
+              "name": "defaultRowCommitVersion",
+              "value": null
+            },
+            {
+              "index": 26,
+              "name": "stats",
+              "value": {
+                "kind": "string",
+                "value": "{\"numRecords\":600,\"minValues\":{\"id\":16},\"maxValues\":{\"id\":3251},\"nullCounts\":{\"id\":30}}",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a3630302c226d696e56616c756573223a7b226964223a31367d2c226d617856616c756573223a7b226964223a333235317d2c226e756c6c436f756e7473223a7b226964223a33307d7d"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 27,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 50,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 69,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 78,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 6,
+              "name": "path",
+              "value": {
+                "kind": "string",
+                "value": "a236c3b0-99e6-4ae6-aa49-2f90b1e3cb2c-000.parquet",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "61323336633362302d393965362d346165362d616134392d3266393062316533636232632d3030302e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionValues",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": []
+              }
+            },
+            {
+              "index": 11,
+              "name": "size",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1918",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1918"
+                }
+              }
+            },
+            {
+              "index": 12,
+              "name": "modificationTime",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1742317800681",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1742317800681"
+                }
+              }
+            },
+            {
+              "index": 13,
+              "name": "dataChange",
+              "value": {
+                "kind": "bool",
+                "value": true,
+                "physical": {
+                  "type": "BOOLEAN",
+                  "value": true
+                }
+              }
+            },
+            {
+              "index": 14,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 20,
+              "name": "tags",
+              "value": null
+            },
+            {
+              "index": 24,
+              "name": "baseRowId",
+              "value": null
+            },
+            {
+              "index": 25,
+              "name": "defaultRowCommitVersion",
+              "value": null
+            },
+            {
+              "index": 26,
+              "name": "stats",
+              "value": {
+                "kind": "string",
+                "value": "{\"numRecords\":600,\"minValues\":{\"id\":16},\"maxValues\":{\"id\":3251},\"nullCounts\":{\"id\":30}}",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a3630302c226d696e56616c756573223a7b226964223a31367d2c226d617856616c756573223a7b226964223a333235317d2c226e756c6c436f756e7473223a7b226964223a33307d7d"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 27,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 50,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 69,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 78,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 6,
+              "name": "path",
+              "value": {
+                "kind": "string",
+                "value": "12a92422-f105-4d85-af99-248e16bdaaa1-000.parquet",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "31326139323432322d663130352d346438352d616639392d3234386531366264616161312d3030302e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionValues",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": []
+              }
+            },
+            {
+              "index": 11,
+              "name": "size",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1918",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1918"
+                }
+              }
+            },
+            {
+              "index": 12,
+              "name": "modificationTime",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1742317800269",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1742317800269"
+                }
+              }
+            },
+            {
+              "index": 13,
+              "name": "dataChange",
+              "value": {
+                "kind": "bool",
+                "value": true,
+                "physical": {
+                  "type": "BOOLEAN",
+                  "value": true
+                }
+              }
+            },
+            {
+              "index": 14,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 20,
+              "name": "tags",
+              "value": null
+            },
+            {
+              "index": 24,
+              "name": "baseRowId",
+              "value": null
+            },
+            {
+              "index": 25,
+              "name": "defaultRowCommitVersion",
+              "value": null
+            },
+            {
+              "index": 26,
+              "name": "stats",
+              "value": {
+                "kind": "string",
+                "value": "{\"numRecords\":600,\"minValues\":{\"id\":16},\"maxValues\":{\"id\":3251},\"nullCounts\":{\"id\":30}}",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a3630302c226d696e56616c756573223a7b226964223a31367d2c226d617856616c756573223a7b226964223a333235317d2c226e756c6c436f756e7473223a7b226964223a33307d7d"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 27,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 50,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 69,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 78,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 6,
+              "name": "path",
+              "value": {
+                "kind": "string",
+                "value": "94443ade-9c5d-4efc-9bd6-fd5d39bd3925-000.parquet",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "39343434336164652d396335642d346566632d396264362d6664356433396264333932352d3030302e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionValues",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": []
+              }
+            },
+            {
+              "index": 11,
+              "name": "size",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1918",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1918"
+                }
+              }
+            },
+            {
+              "index": 12,
+              "name": "modificationTime",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1742317799854",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1742317799854"
+                }
+              }
+            },
+            {
+              "index": 13,
+              "name": "dataChange",
+              "value": {
+                "kind": "bool",
+                "value": true,
+                "physical": {
+                  "type": "BOOLEAN",
+                  "value": true
+                }
+              }
+            },
+            {
+              "index": 14,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 20,
+              "name": "tags",
+              "value": null
+            },
+            {
+              "index": 24,
+              "name": "baseRowId",
+              "value": null
+            },
+            {
+              "index": 25,
+              "name": "defaultRowCommitVersion",
+              "value": null
+            },
+            {
+              "index": 26,
+              "name": "stats",
+              "value": {
+                "kind": "string",
+                "value": "{\"numRecords\":600,\"minValues\":{\"id\":16},\"maxValues\":{\"id\":3251},\"nullCounts\":{\"id\":30}}",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a3630302c226d696e56616c756573223a7b226964223a31367d2c226d617856616c756573223a7b226964223a333235317d2c226e756c6c436f756e7473223a7b226964223a33307d7d"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 27,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 50,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 69,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 78,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 6,
+              "name": "path",
+              "value": {
+                "kind": "string",
+                "value": "05ce144c-628e-463c-8a49-b9a3e2a0f03a-000.parquet",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "30356365313434632d363238652d343633632d386134392d6239613365326130663033612d3030302e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionValues",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": []
+              }
+            },
+            {
+              "index": 11,
+              "name": "size",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1918",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1918"
+                }
+              }
+            },
+            {
+              "index": 12,
+              "name": "modificationTime",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1742317799453",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1742317799453"
+                }
+              }
+            },
+            {
+              "index": 13,
+              "name": "dataChange",
+              "value": {
+                "kind": "bool",
+                "value": true,
+                "physical": {
+                  "type": "BOOLEAN",
+                  "value": true
+                }
+              }
+            },
+            {
+              "index": 14,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 20,
+              "name": "tags",
+              "value": null
+            },
+            {
+              "index": 24,
+              "name": "baseRowId",
+              "value": null
+            },
+            {
+              "index": 25,
+              "name": "defaultRowCommitVersion",
+              "value": null
+            },
+            {
+              "index": 26,
+              "name": "stats",
+              "value": {
+                "kind": "string",
+                "value": "{\"numRecords\":600,\"minValues\":{\"id\":16},\"maxValues\":{\"id\":3251},\"nullCounts\":{\"id\":30}}",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a3630302c226d696e56616c756573223a7b226964223a31367d2c226d617856616c756573223a7b226964223a333235317d2c226e756c6c436f756e7473223a7b226964223a33307d7d"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 27,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 50,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 69,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 78,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 6,
+              "name": "path",
+              "value": {
+                "kind": "string",
+                "value": "a1885a41-cf1f-43b2-9795-013182d51033-000.parquet",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "61313838356134312d636631662d343362322d393739352d3031333138326435313033332d3030302e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionValues",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": []
+              }
+            },
+            {
+              "index": 11,
+              "name": "size",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1918",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1918"
+                }
+              }
+            },
+            {
+              "index": 12,
+              "name": "modificationTime",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1742317799039",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1742317799039"
+                }
+              }
+            },
+            {
+              "index": 13,
+              "name": "dataChange",
+              "value": {
+                "kind": "bool",
+                "value": true,
+                "physical": {
+                  "type": "BOOLEAN",
+                  "value": true
+                }
+              }
+            },
+            {
+              "index": 14,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 20,
+              "name": "tags",
+              "value": null
+            },
+            {
+              "index": 24,
+              "name": "baseRowId",
+              "value": null
+            },
+            {
+              "index": 25,
+              "name": "defaultRowCommitVersion",
+              "value": null
+            },
+            {
+              "index": 26,
+              "name": "stats",
+              "value": {
+                "kind": "string",
+                "value": "{\"numRecords\":600,\"minValues\":{\"id\":16},\"maxValues\":{\"id\":3251},\"nullCounts\":{\"id\":30}}",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a3630302c226d696e56616c756573223a7b226964223a31367d2c226d617856616c756573223a7b226964223a333235317d2c226e756c6c436f756e7473223a7b226964223a33307d7d"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 27,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 50,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 69,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 78,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 6,
+              "name": "path",
+              "value": {
+                "kind": "string",
+                "value": "e18d2d0e-b059-4842-8e9a-773ce0289a71-000.parquet",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "65313864326430652d623035392d343834322d386539612d3737336365303238396137312d3030302e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionValues",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": []
+              }
+            },
+            {
+              "index": 11,
+              "name": "size",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1918",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1918"
+                }
+              }
+            },
+            {
+              "index": 12,
+              "name": "modificationTime",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1742317798593",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1742317798593"
+                }
+              }
+            },
+            {
+              "index": 13,
+              "name": "dataChange",
+              "value": {
+                "kind": "bool",
+                "value": true,
+                "physical": {
+                  "type": "BOOLEAN",
+                  "value": true
+                }
+              }
+            },
+            {
+              "index": 14,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 20,
+              "name": "tags",
+              "value": null
+            },
+            {
+              "index": 24,
+              "name": "baseRowId",
+              "value": null
+            },
+            {
+              "index": 25,
+              "name": "defaultRowCommitVersion",
+              "value": null
+            },
+            {
+              "index": 26,
+              "name": "stats",
+              "value": {
+                "kind": "string",
+                "value": "{\"numRecords\":600,\"minValues\":{\"id\":16},\"maxValues\":{\"id\":3251},\"nullCounts\":{\"id\":30}}",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a3630302c226d696e56616c756573223a7b226964223a31367d2c226d617856616c756573223a7b226964223a333235317d2c226e756c6c436f756e7473223a7b226964223a33307d7d"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 27,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 50,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 69,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 78,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 6,
+              "name": "path",
+              "value": {
+                "kind": "string",
+                "value": "1971092a-aabc-4a36-a792-a4ec7f98084a-000.parquet",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "31393731303932612d616162632d346133362d613739322d6134656337663938303834612d3030302e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionValues",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": []
+              }
+            },
+            {
+              "index": 11,
+              "name": "size",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1918",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1918"
+                }
+              }
+            },
+            {
+              "index": 12,
+              "name": "modificationTime",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1742317798117",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1742317798117"
+                }
+              }
+            },
+            {
+              "index": 13,
+              "name": "dataChange",
+              "value": {
+                "kind": "bool",
+                "value": true,
+                "physical": {
+                  "type": "BOOLEAN",
+                  "value": true
+                }
+              }
+            },
+            {
+              "index": 14,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 20,
+              "name": "tags",
+              "value": null
+            },
+            {
+              "index": 24,
+              "name": "baseRowId",
+              "value": null
+            },
+            {
+              "index": 25,
+              "name": "defaultRowCommitVersion",
+              "value": null
+            },
+            {
+              "index": 26,
+              "name": "stats",
+              "value": {
+                "kind": "string",
+                "value": "{\"numRecords\":600,\"minValues\":{\"id\":16},\"maxValues\":{\"id\":3251},\"nullCounts\":{\"id\":30}}",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a3630302c226d696e56616c756573223a7b226964223a31367d2c226d617856616c756573223a7b226964223a333235317d2c226e756c6c436f756e7473223a7b226964223a33307d7d"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 27,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 50,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 69,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 78,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 6,
+              "name": "path",
+              "value": {
+                "kind": "string",
+                "value": "b86a2fe9-f9d5-415b-ae8e-78b9c46ac18c-000.parquet",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "62383661326665392d663964352d343135622d616538652d3738623963343661633138632d3030302e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionValues",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": []
+              }
+            },
+            {
+              "index": 11,
+              "name": "size",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1918",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1918"
+                }
+              }
+            },
+            {
+              "index": 12,
+              "name": "modificationTime",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1742317797587",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1742317797587"
+                }
+              }
+            },
+            {
+              "index": 13,
+              "name": "dataChange",
+              "value": {
+                "kind": "bool",
+                "value": true,
+                "physical": {
+                  "type": "BOOLEAN",
+                  "value": true
+                }
+              }
+            },
+            {
+              "index": 14,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 20,
+              "name": "tags",
+              "value": null
+            },
+            {
+              "index": 24,
+              "name": "baseRowId",
+              "value": null
+            },
+            {
+              "index": 25,
+              "name": "defaultRowCommitVersion",
+              "value": null
+            },
+            {
+              "index": 26,
+              "name": "stats",
+              "value": {
+                "kind": "string",
+                "value": "{\"numRecords\":600,\"minValues\":{\"id\":16},\"maxValues\":{\"id\":3251},\"nullCounts\":{\"id\":30}}",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a3630302c226d696e56616c756573223a7b226964223a31367d2c226d617856616c756573223a7b226964223a333235317d2c226e756c6c436f756e7473223a7b226964223a33307d7d"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 27,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 50,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 69,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 78,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 6,
+              "name": "path",
+              "value": {
+                "kind": "string",
+                "value": "ea72200d-614f-42d0-873e-86e7b9442afa-000.parquet",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "65613732323030642d363134662d343264302d383733652d3836653762393434326166612d3030302e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionValues",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": []
+              }
+            },
+            {
+              "index": 11,
+              "name": "size",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1918",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1918"
+                }
+              }
+            },
+            {
+              "index": 12,
+              "name": "modificationTime",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1742317797038",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1742317797038"
+                }
+              }
+            },
+            {
+              "index": 13,
+              "name": "dataChange",
+              "value": {
+                "kind": "bool",
+                "value": true,
+                "physical": {
+                  "type": "BOOLEAN",
+                  "value": true
+                }
+              }
+            },
+            {
+              "index": 14,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 20,
+              "name": "tags",
+              "value": null
+            },
+            {
+              "index": 24,
+              "name": "baseRowId",
+              "value": null
+            },
+            {
+              "index": 25,
+              "name": "defaultRowCommitVersion",
+              "value": null
+            },
+            {
+              "index": 26,
+              "name": "stats",
+              "value": {
+                "kind": "string",
+                "value": "{\"numRecords\":600,\"minValues\":{\"id\":16},\"maxValues\":{\"id\":3251},\"nullCounts\":{\"id\":30}}",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a3630302c226d696e56616c756573223a7b226964223a31367d2c226d617856616c756573223a7b226964223a333235317d2c226e756c6c436f756e7473223a7b226964223a33307d7d"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 27,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 50,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 69,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 78,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 27,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 50,
+        "name": "metaData",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 51,
+              "name": "id",
+              "value": {
+                "kind": "string",
+                "value": "f8d0b1b0-efb8-4323-9c35-69d18d2eebc9",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "66386430623162302d656662382d343332332d396333352d363964313864326565626339"
+                }
+              }
+            },
+            {
+              "index": 52,
+              "name": "name",
+              "value": null
+            },
+            {
+              "index": 53,
+              "name": "description",
+              "value": null
+            },
+            {
+              "index": 54,
+              "name": "format",
+              "value": {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "index": 55,
+                    "name": "provider",
+                    "value": {
+                      "kind": "string",
+                      "value": "parquet",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "70617271756574"
+                      }
+                    }
+                  },
+                  {
+                    "index": 56,
+                    "name": "options",
+                    "value": {
+                      "kind": "map",
+                      "duplicateKeys": "last-value",
+                      "entries": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 60,
+              "name": "schemaString",
+              "value": {
+                "kind": "string",
+                "value": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a226964222c2274797065223a22696e7465676572222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d"
+                }
+              }
+            },
+            {
+              "index": 61,
+              "name": "partitionColumns",
+              "value": {
+                "kind": "list",
+                "items": []
+              }
+            },
+            {
+              "index": 64,
+              "name": "createdTime",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1742317795464",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1742317795464"
+                }
+              }
+            },
+            {
+              "index": 65,
+              "name": "configuration",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": [
+                  {
+                    "key": {
+                      "kind": "string",
+                      "value": "delta.feature.catalogowned",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "64656c74612e666561747572652e636174616c6f676f776e6564"
+                      }
+                    },
+                    "value": {
+                      "kind": "string",
+                      "value": "supported",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "737570706f72746564"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 69,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 78,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 27,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 50,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 69,
+        "name": "protocol",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 70,
+              "name": "minReaderVersion",
+              "value": {
+                "kind": "int",
+                "bits": 32,
+                "value": "3",
+                "physical": {
+                  "type": "INT32",
+                  "value": "3"
+                }
+              }
+            },
+            {
+              "index": 71,
+              "name": "minWriterVersion",
+              "value": {
+                "kind": "int",
+                "bits": 32,
+                "value": "7",
+                "physical": {
+                  "type": "INT32",
+                  "value": "7"
+                }
+              }
+            },
+            {
+              "index": 72,
+              "name": "readerFeatures",
+              "value": {
+                "kind": "list",
+                "items": [
+                  {
+                    "kind": "string",
+                    "value": "catalogOwned",
+                    "physical": {
+                      "type": "BYTE_ARRAY",
+                      "hex": "636174616c6f674f776e6564"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 75,
+              "name": "writerFeatures",
+              "value": {
+                "kind": "list",
+                "items": [
+                  {
+                    "kind": "string",
+                    "value": "catalogOwned",
+                    "physical": {
+                      "type": "BYTE_ARRAY",
+                      "hex": "636174616c6f674f776e6564"
+                    }
+                  },
+                  {
+                    "kind": "string",
+                    "value": "invariants",
+                    "physical": {
+                      "type": "BYTE_ARRAY",
+                      "hex": "696e76617269616e7473"
+                    }
+                  },
+                  {
+                    "kind": "string",
+                    "value": "appendOnly",
+                    "physical": {
+                      "type": "BYTE_ARRAY",
+                      "hex": "617070656e644f6e6c79"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 78,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 6,
+              "name": "path",
+              "value": {
+                "kind": "string",
+                "value": "67cfa9cb-6933-4e2c-90b3-5b0c5b513e35-000.parquet",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "36376366613963622d363933332d346532632d393062332d3562306335623531336533352d3030302e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionValues",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": []
+              }
+            },
+            {
+              "index": 11,
+              "name": "size",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1918",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1918"
+                }
+              }
+            },
+            {
+              "index": 12,
+              "name": "modificationTime",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1742317796362",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1742317796362"
+                }
+              }
+            },
+            {
+              "index": 13,
+              "name": "dataChange",
+              "value": {
+                "kind": "bool",
+                "value": true,
+                "physical": {
+                  "type": "BOOLEAN",
+                  "value": true
+                }
+              }
+            },
+            {
+              "index": 14,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 20,
+              "name": "tags",
+              "value": null
+            },
+            {
+              "index": 24,
+              "name": "baseRowId",
+              "value": null
+            },
+            {
+              "index": 25,
+              "name": "defaultRowCommitVersion",
+              "value": null
+            },
+            {
+              "index": 26,
+              "name": "stats",
+              "value": {
+                "kind": "string",
+                "value": "{\"numRecords\":600,\"minValues\":{\"id\":16},\"maxValues\":{\"id\":3251},\"nullCounts\":{\"id\":30}}",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a3630302c226d696e56616c756573223a7b226964223a31367d2c226d617856616c756573223a7b226964223a333235317d2c226e756c6c436f756e7473223a7b226964223a33307d7d"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 27,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 50,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 69,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 78,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  }
+]

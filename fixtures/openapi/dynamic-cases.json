@@ -1,0 +1,485 @@
+{
+  "schemas": {
+    "Tree": {
+      "$id": "https://example.test/tree",
+      "$dynamicAnchor": "node",
+      "type": "object",
+      "properties": {
+        "children": {
+          "type": "array",
+          "items": {
+            "$dynamicRef": "#node"
+          }
+        }
+      },
+      "$defs": {
+        "Fixed": {
+          "$anchor": "fixed",
+          "type": "string"
+        }
+      }
+    },
+    "Strict": {
+      "$id": "https://example.test/strict",
+      "$dynamicAnchor": "node",
+      "$ref": "https://example.test/tree",
+      "unevaluatedProperties": false,
+      "$defs": {
+        "Fixed": {
+          "$dynamicAnchor": "fixed",
+          "type": "integer"
+        }
+      }
+    },
+    "Outer": {
+      "$id": "https://example.test/outer",
+      "$dynamicAnchor": "node",
+      "$ref": "https://example.test/strict"
+    },
+    "Ordinary": {
+      "$id": "https://example.test/ordinary",
+      "$anchor": "node",
+      "$ref": "https://example.test/tree"
+    }
+  },
+  "rows": [
+    {
+      "scope": [
+        "tree"
+      ],
+      "reference": "#node",
+      "target": "Tree",
+      "kind": "dynamic",
+      "result": {
+        "source": {
+          "retrievalUri": "https://example.test/api.json",
+          "pointer": "/components/schemas/Tree/properties/children/items",
+          "baseUri": "https://example.test/tree",
+          "dialect": "https://spec.openapis.org/oas/3.1/dialect/base"
+        },
+        "initialTarget": {
+          "retrievalUri": "https://example.test/api.json",
+          "pointer": "/components/schemas/Tree",
+          "baseUri": "https://example.test/tree",
+          "dialect": "https://spec.openapis.org/oas/3.1/dialect/base"
+        },
+        "target": {
+          "retrievalUri": "https://example.test/api.json",
+          "pointer": "/components/schemas/Tree",
+          "baseUri": "https://example.test/tree",
+          "dialect": "https://spec.openapis.org/oas/3.1/dialect/base"
+        },
+        "node": {
+          "kind": "object",
+          "members": {
+            "$id": {
+              "kind": "string",
+              "value": "https://example.test/tree"
+            },
+            "$dynamicAnchor": {
+              "kind": "string",
+              "value": "node"
+            },
+            "type": {
+              "kind": "string",
+              "value": "object"
+            },
+            "properties": {
+              "kind": "object",
+              "members": {
+                "children": {
+                  "kind": "object",
+                  "members": {
+                    "type": {
+                      "kind": "string",
+                      "value": "array"
+                    },
+                    "items": {
+                      "kind": "object",
+                      "members": {
+                        "$dynamicRef": {
+                          "kind": "string",
+                          "value": "#node"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "$defs": {
+              "kind": "object",
+              "members": {
+                "Fixed": {
+                  "kind": "object",
+                  "members": {
+                    "$anchor": {
+                      "kind": "string",
+                      "value": "fixed"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "evaluationScope": [
+          "https://example.test/tree"
+        ],
+        "resolution": "dynamic",
+        "complete": false,
+        "limitations": [
+          "Caller supplies evaluation scope; this operation does not derive or certify an instance evaluation path",
+          "One dynamic reference is resolved; assertions and annotation propagation are not evaluated",
+          "Static projection still rejects dynamic scope because flattening it would change resource boundaries"
+        ]
+      }
+    },
+    {
+      "scope": [
+        "strict",
+        "tree"
+      ],
+      "reference": "#node",
+      "target": "Strict",
+      "kind": "dynamic",
+      "result": {
+        "source": {
+          "retrievalUri": "https://example.test/api.json",
+          "pointer": "/components/schemas/Tree/properties/children/items",
+          "baseUri": "https://example.test/tree",
+          "dialect": "https://spec.openapis.org/oas/3.1/dialect/base"
+        },
+        "initialTarget": {
+          "retrievalUri": "https://example.test/api.json",
+          "pointer": "/components/schemas/Tree",
+          "baseUri": "https://example.test/tree",
+          "dialect": "https://spec.openapis.org/oas/3.1/dialect/base"
+        },
+        "target": {
+          "retrievalUri": "https://example.test/api.json",
+          "pointer": "/components/schemas/Strict",
+          "baseUri": "https://example.test/strict",
+          "dialect": "https://spec.openapis.org/oas/3.1/dialect/base"
+        },
+        "node": {
+          "kind": "object",
+          "members": {
+            "$id": {
+              "kind": "string",
+              "value": "https://example.test/strict"
+            },
+            "$dynamicAnchor": {
+              "kind": "string",
+              "value": "node"
+            },
+            "$ref": {
+              "kind": "string",
+              "value": "https://example.test/tree"
+            },
+            "unevaluatedProperties": {
+              "kind": "boolean",
+              "value": false
+            },
+            "$defs": {
+              "kind": "object",
+              "members": {
+                "Fixed": {
+                  "kind": "object",
+                  "members": {
+                    "$dynamicAnchor": {
+                      "kind": "string",
+                      "value": "fixed"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "evaluationScope": [
+          "https://example.test/strict",
+          "https://example.test/tree"
+        ],
+        "resolution": "dynamic",
+        "complete": false,
+        "limitations": [
+          "Caller supplies evaluation scope; this operation does not derive or certify an instance evaluation path",
+          "One dynamic reference is resolved; assertions and annotation propagation are not evaluated",
+          "Static projection still rejects dynamic scope because flattening it would change resource boundaries"
+        ]
+      }
+    },
+    {
+      "scope": [
+        "outer",
+        "strict",
+        "tree"
+      ],
+      "reference": "#node",
+      "target": "Outer",
+      "kind": "dynamic",
+      "result": {
+        "source": {
+          "retrievalUri": "https://example.test/api.json",
+          "pointer": "/components/schemas/Tree/properties/children/items",
+          "baseUri": "https://example.test/tree",
+          "dialect": "https://spec.openapis.org/oas/3.1/dialect/base"
+        },
+        "initialTarget": {
+          "retrievalUri": "https://example.test/api.json",
+          "pointer": "/components/schemas/Tree",
+          "baseUri": "https://example.test/tree",
+          "dialect": "https://spec.openapis.org/oas/3.1/dialect/base"
+        },
+        "target": {
+          "retrievalUri": "https://example.test/api.json",
+          "pointer": "/components/schemas/Outer",
+          "baseUri": "https://example.test/outer",
+          "dialect": "https://spec.openapis.org/oas/3.1/dialect/base"
+        },
+        "node": {
+          "kind": "object",
+          "members": {
+            "$id": {
+              "kind": "string",
+              "value": "https://example.test/outer"
+            },
+            "$dynamicAnchor": {
+              "kind": "string",
+              "value": "node"
+            },
+            "$ref": {
+              "kind": "string",
+              "value": "https://example.test/strict"
+            }
+          }
+        },
+        "evaluationScope": [
+          "https://example.test/outer",
+          "https://example.test/strict",
+          "https://example.test/tree"
+        ],
+        "resolution": "dynamic",
+        "complete": false,
+        "limitations": [
+          "Caller supplies evaluation scope; this operation does not derive or certify an instance evaluation path",
+          "One dynamic reference is resolved; assertions and annotation propagation are not evaluated",
+          "Static projection still rejects dynamic scope because flattening it would change resource boundaries"
+        ]
+      }
+    },
+    {
+      "scope": [
+        "ordinary",
+        "tree"
+      ],
+      "reference": "#node",
+      "target": "Tree",
+      "kind": "dynamic",
+      "result": {
+        "source": {
+          "retrievalUri": "https://example.test/api.json",
+          "pointer": "/components/schemas/Tree/properties/children/items",
+          "baseUri": "https://example.test/tree",
+          "dialect": "https://spec.openapis.org/oas/3.1/dialect/base"
+        },
+        "initialTarget": {
+          "retrievalUri": "https://example.test/api.json",
+          "pointer": "/components/schemas/Tree",
+          "baseUri": "https://example.test/tree",
+          "dialect": "https://spec.openapis.org/oas/3.1/dialect/base"
+        },
+        "target": {
+          "retrievalUri": "https://example.test/api.json",
+          "pointer": "/components/schemas/Tree",
+          "baseUri": "https://example.test/tree",
+          "dialect": "https://spec.openapis.org/oas/3.1/dialect/base"
+        },
+        "node": {
+          "kind": "object",
+          "members": {
+            "$id": {
+              "kind": "string",
+              "value": "https://example.test/tree"
+            },
+            "$dynamicAnchor": {
+              "kind": "string",
+              "value": "node"
+            },
+            "type": {
+              "kind": "string",
+              "value": "object"
+            },
+            "properties": {
+              "kind": "object",
+              "members": {
+                "children": {
+                  "kind": "object",
+                  "members": {
+                    "type": {
+                      "kind": "string",
+                      "value": "array"
+                    },
+                    "items": {
+                      "kind": "object",
+                      "members": {
+                        "$dynamicRef": {
+                          "kind": "string",
+                          "value": "#node"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "$defs": {
+              "kind": "object",
+              "members": {
+                "Fixed": {
+                  "kind": "object",
+                  "members": {
+                    "$anchor": {
+                      "kind": "string",
+                      "value": "fixed"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "evaluationScope": [
+          "https://example.test/ordinary",
+          "https://example.test/tree"
+        ],
+        "resolution": "dynamic",
+        "complete": false,
+        "limitations": [
+          "Caller supplies evaluation scope; this operation does not derive or certify an instance evaluation path",
+          "One dynamic reference is resolved; assertions and annotation propagation are not evaluated",
+          "Static projection still rejects dynamic scope because flattening it would change resource boundaries"
+        ]
+      }
+    },
+    {
+      "scope": [
+        "strict",
+        "tree"
+      ],
+      "reference": "#fixed",
+      "target": "Tree/$defs/Fixed",
+      "kind": "static",
+      "result": {
+        "source": {
+          "retrievalUri": "https://example.test/api.json",
+          "pointer": "/components/schemas/Tree/properties/children/items",
+          "baseUri": "https://example.test/tree",
+          "dialect": "https://spec.openapis.org/oas/3.1/dialect/base"
+        },
+        "initialTarget": {
+          "retrievalUri": "https://example.test/api.json",
+          "pointer": "/components/schemas/Tree/$defs/Fixed",
+          "baseUri": "https://example.test/tree",
+          "dialect": "https://spec.openapis.org/oas/3.1/dialect/base"
+        },
+        "target": {
+          "retrievalUri": "https://example.test/api.json",
+          "pointer": "/components/schemas/Tree/$defs/Fixed",
+          "baseUri": "https://example.test/tree",
+          "dialect": "https://spec.openapis.org/oas/3.1/dialect/base"
+        },
+        "node": {
+          "kind": "object",
+          "members": {
+            "$anchor": {
+              "kind": "string",
+              "value": "fixed"
+            },
+            "type": {
+              "kind": "string",
+              "value": "string"
+            }
+          }
+        },
+        "evaluationScope": [
+          "https://example.test/strict",
+          "https://example.test/tree"
+        ],
+        "resolution": "static",
+        "complete": false,
+        "limitations": [
+          "Caller supplies evaluation scope; this operation does not derive or certify an instance evaluation path",
+          "One dynamic reference is resolved; assertions and annotation propagation are not evaluated",
+          "Static projection still rejects dynamic scope because flattening it would change resource boundaries"
+        ]
+      }
+    },
+    {
+      "scope": [
+        "strict",
+        "tree"
+      ],
+      "reference": "#/$defs/Fixed",
+      "target": "Tree/$defs/Fixed",
+      "kind": "static",
+      "result": {
+        "source": {
+          "retrievalUri": "https://example.test/api.json",
+          "pointer": "/components/schemas/Tree/properties/children/items",
+          "baseUri": "https://example.test/tree",
+          "dialect": "https://spec.openapis.org/oas/3.1/dialect/base"
+        },
+        "initialTarget": {
+          "retrievalUri": "https://example.test/api.json",
+          "pointer": "/components/schemas/Tree/$defs/Fixed",
+          "baseUri": "https://example.test/tree",
+          "dialect": "https://spec.openapis.org/oas/3.1/dialect/base"
+        },
+        "target": {
+          "retrievalUri": "https://example.test/api.json",
+          "pointer": "/components/schemas/Tree/$defs/Fixed",
+          "baseUri": "https://example.test/tree",
+          "dialect": "https://spec.openapis.org/oas/3.1/dialect/base"
+        },
+        "node": {
+          "kind": "object",
+          "members": {
+            "$anchor": {
+              "kind": "string",
+              "value": "fixed"
+            },
+            "type": {
+              "kind": "string",
+              "value": "string"
+            }
+          }
+        },
+        "evaluationScope": [
+          "https://example.test/strict",
+          "https://example.test/tree"
+        ],
+        "resolution": "static",
+        "complete": false,
+        "limitations": [
+          "Caller supplies evaluation scope; this operation does not derive or certify an instance evaluation path",
+          "One dynamic reference is resolved; assertions and annotation propagation are not evaluated",
+          "Static projection still rejects dynamic scope because flattening it would change resource boundaries"
+        ]
+      }
+    }
+  ]
+}

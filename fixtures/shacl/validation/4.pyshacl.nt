@@ -1,0 +1,10 @@
+_:N1e7d27df49ee4dbb94116bf96de34ec7 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/misc/message-001.test#TestShape> .
+_:N5c232099bfdd4d90b9199e4d4d840616 <http://www.w3.org/ns/shacl#result> _:N1e7d27df49ee4dbb94116bf96de34ec7 .
+_:N1e7d27df49ee4dbb94116bf96de34ec7 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N1e7d27df49ee4dbb94116bf96de34ec7 <http://www.w3.org/ns/shacl#resultMessage> "Test message"@en .
+_:N1e7d27df49ee4dbb94116bf96de34ec7 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N5c232099bfdd4d90b9199e4d4d840616 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N1e7d27df49ee4dbb94116bf96de34ec7 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:N1e7d27df49ee4dbb94116bf96de34ec7 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/misc/message-001.test#InvalidNode> .
+_:N5c232099bfdd4d90b9199e4d4d840616 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N1e7d27df49ee4dbb94116bf96de34ec7 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/misc/message-001.test#InvalidNode> .

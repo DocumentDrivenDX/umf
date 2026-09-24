@@ -1,0 +1,922 @@
+{
+  "repository": "https://github.com/smithy-lang/smithy",
+  "commit": "dd2d50a93db313ee21b41916af158442e14669e1",
+  "selection": "All .smithy and .json files in model loader invalid subtree, plus LICENSE; each model assembled standalone without inferred companion context",
+  "files": [
+    {
+      "file": "apply/apply-block-missing-closing.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/apply/apply-block-missing-closing.smithy",
+      "sha256": "6ec669a41a9e02bfe07d18e1457e91d57cc94b296b11d3a9bd7f5392b387bd67"
+    },
+    {
+      "file": "apply/apply-missing-newline.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/apply/apply-missing-newline.smithy",
+      "sha256": "12af0540c2be4fb238d407b26e70e62296974076477154fd0c330c8b8e9430ae"
+    },
+    {
+      "file": "apply/apply-missing-space.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/apply/apply-missing-space.smithy",
+      "sha256": "af9d676bbdd053b70084193562a24368a4a3d9fcb3139a6554cad8941f3f5afd"
+    },
+    {
+      "file": "apply/apply-missing-trait-value.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/apply/apply-missing-trait-value.smithy",
+      "sha256": "c2f57c739949a1f4679d04086824c2637ffe04139525520b0aa6077434b5e568"
+    },
+    {
+      "file": "control/control-colon-newline.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/control/control-colon-newline.smithy",
+      "sha256": "4bebd047940db48ccd91a47a91f6dbb5716d154d5e06c22d1822a9ece38ac85a"
+    },
+    {
+      "file": "control/control-missing-value.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/control/control-missing-value.smithy",
+      "sha256": "2470ab576268928e5f8071e6e7bcf9aa037f2f6dd397d2d62369eb90fb4fc30f"
+    },
+    {
+      "file": "control/control-newline.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/control/control-newline.smithy",
+      "sha256": "c2c9a216a8a848fb18e1139dab91765bfa7082f069eebe42982e27b3389f9199"
+    },
+    {
+      "file": "control/control-statement-before-others.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/control/control-statement-before-others.smithy",
+      "sha256": "0bd6fff7fd7e1bbf371be54ad45a98a73733cbd6a2b72ad2b1361de79ffee5d7"
+    },
+    {
+      "file": "control/control-version-defined-twice.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/control/control-version-defined-twice.smithy",
+      "sha256": "561e80f4b68c9d2ac14c975f3c2e93292b9e739483eaf75ea3d4a670929eee5b"
+    },
+    {
+      "file": "control/control-with-invalid-key.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/control/control-with-invalid-key.smithy",
+      "sha256": "1014a84099c4303daceadf164f82cba2ec3f1c1e1210db2dca44e72a7ef2c744"
+    },
+    {
+      "file": "control/control-with-invalid-key2.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/control/control-with-invalid-key2.smithy",
+      "sha256": "db7b114573070226797ac27175d935ff4801cae280264c491e5960c576d094d3"
+    },
+    {
+      "file": "control/control-with-no-colon.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/control/control-with-no-colon.smithy",
+      "sha256": "216122ddfc83f2ef651b1eeefb6e42154b62309b9a510c08d9398c2e2b9f8693"
+    },
+    {
+      "file": "control/no-newline-after-control.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/control/no-newline-after-control.smithy",
+      "sha256": "aa167d052ed0181447e32034c74cf82f6b54d8004e62683a4b11d8dba7cb2f2c"
+    },
+    {
+      "file": "defaults/default-in-v1.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/defaults/default-in-v1.smithy",
+      "sha256": "002e72de17707d655e75eca3d76c36393e6e399b142025b66f853ed37ae6e4f2"
+    },
+    {
+      "file": "defaults/default-incomplete-node.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/defaults/default-incomplete-node.smithy",
+      "sha256": "ec0ce39e80d82d0075e499f383a6ab19b621db6ec1873cfc50b0085755ded71f"
+    },
+    {
+      "file": "defaults/default-missing-structure-close.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/defaults/default-missing-structure-close.smithy",
+      "sha256": "5e2797c1398304cbd40eacfa8386958697525714589d7d76271ac241cf9e6fd1"
+    },
+    {
+      "file": "defaults/default-missing-value.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/defaults/default-missing-value.smithy",
+      "sha256": "fb0becde614e281da7b43fe9e5ba50f58fdccc4fd83657540cbeb4a822464547"
+    },
+    {
+      "file": "defaults/default-with-newline-before-value.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/defaults/default-with-newline-before-value.smithy",
+      "sha256": "15b7457686aa5964d3c05d97d9b4632732ed90dad7675d7e2f8fa47fc235fd7e"
+    },
+    {
+      "file": "defaults/missing-newline-after-assignment.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/defaults/missing-newline-after-assignment.smithy",
+      "sha256": "7cbf848ee8d19039275fb0bb942bd0225b72c52c89994c9a77b5e136f8446a5d"
+    },
+    {
+      "file": "elision/elide-nonexistent-id.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/elision/elide-nonexistent-id.smithy",
+      "sha256": "9b80fb7ecbd6f0072634f473baaf0a532a5e98d95a3023f96eb9fc76e5ab2e9a"
+    },
+    {
+      "file": "elision/elided-property-type-conflicts.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/elision/elided-property-type-conflicts.smithy",
+      "sha256": "c0b012612547a7269b3ac388e135a01a549ded61887965a4677046ff9462f9e6"
+    },
+    {
+      "file": "elision/elided-type-conflicts.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/elision/elided-type-conflicts.smithy",
+      "sha256": "67c29d9f5f7b86f3f7a52621faa366e888310dedcf51483e0b49cd9a9be2b147"
+    },
+    {
+      "file": "elision/eliding-with-resources-in-v1.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/elision/eliding-with-resources-in-v1.smithy",
+      "sha256": "a518af3bf296e95b49c41cfff48d181249f3516a3d32cd89c63e9635cb6b97ba"
+    },
+    {
+      "file": "elision/eliding-without-resources-v1.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/elision/eliding-without-resources-v1.smithy",
+      "sha256": "e03cb5fcd96b1b34844d8382e528ec0249ea9c2eb7bb6bc2f14bcd19754bd587"
+    },
+    {
+      "file": "elision/for-after-with.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/elision/for-after-with.smithy",
+      "sha256": "d4a535dca7714cbec90f3d995a9efd7f8759d0681cd788ae1356f6afeeeaf7e0"
+    },
+    {
+      "file": "elision/for-referencing-non-resource.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/elision/for-referencing-non-resource.smithy",
+      "sha256": "d4f73fc72c2e419f2c1d09054772acfcb7b4a7d76d755d8f21f1ee721d0de893"
+    },
+    {
+      "file": "elision/list-member-elision-in-v1.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/elision/list-member-elision-in-v1.smithy",
+      "sha256": "853c2f06913a6875971511a0a1960d8f1cdee8fab5e1de0aa43d5d9b2e488c0e"
+    },
+    {
+      "file": "elision/structure-member-elision-in-v1.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/elision/structure-member-elision-in-v1.smithy",
+      "sha256": "15dbe56262ea0997a77d612c9636893f70dab1c47d55d6eabb40f22e3a3dd3a3"
+    },
+    {
+      "file": "enums/enum-with-bad-values.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/enums/enum-with-bad-values.smithy",
+      "sha256": "d60b1a6627d32814c606794c8921bccc8c07c6f1aab95404a1ed4914fc7bc7b6"
+    },
+    {
+      "file": "enums/enum-with-duplicates.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/enums/enum-with-duplicates.smithy",
+      "sha256": "4a565c88c5cdfdcdec2adfcf8e0a4fa7fa38d92e6ed3e5c1ab7584bb247e1415"
+    },
+    {
+      "file": "enums/enum-with-newline-before-value.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/enums/enum-with-newline-before-value.smithy",
+      "sha256": "c55d98e6b3afa9abae3a97a0cfaa51cadbed4d3cc14f34fc209c4715f023038a"
+    },
+    {
+      "file": "enums/enum-without-member.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/enums/enum-without-member.smithy",
+      "sha256": "89b02382539a0f04d986e2d1b8aad0127f9b2b7a83e8f84c8a0908fd34fe3e15"
+    },
+    {
+      "file": "enums/idl-enums-in-v1.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/enums/idl-enums-in-v1.smithy",
+      "sha256": "1a18fe76efd4d9fe12f68174eceda1e8b3f8baadb4d458dcdb246d965939c3dc"
+    },
+    {
+      "file": "enums/int-enum-without-member.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/enums/int-enum-without-member.smithy",
+      "sha256": "5927af21f937d7c27c2ae209eab45be8fc4bb7de2f3b4913713cc9f95be40561"
+    },
+    {
+      "file": "enums/intEnum-with-bad-value.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/enums/intEnum-with-bad-value.smithy",
+      "sha256": "11d4d4a49f0546905af5ff3958a788584cf8a1e7bbd26aefbd3448ee73159f28"
+    },
+    {
+      "file": "enums/intEnum-with-duplicates.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/enums/intEnum-with-duplicates.smithy",
+      "sha256": "4fc27953bae34dbd3bff3218734163ba5bc5458580cedad4751ba570710a8252"
+    },
+    {
+      "file": "enums/intEnum-with-float.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/enums/intEnum-with-float.smithy",
+      "sha256": "be37e2d7ca4139d4ae49b66ffabab7785a578cfe17baace8469cf75969fb2f75"
+    },
+    {
+      "file": "enums/intEnum-with-long.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/enums/intEnum-with-long.smithy",
+      "sha256": "a7d5dc40653d304ed7bbd037cca14cf4c7a7ebe0343613cbe233f09211ecc021"
+    },
+    {
+      "file": "enums/missing-newline-after-assignment.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/enums/missing-newline-after-assignment.smithy",
+      "sha256": "f0adbd0c9464263382de601de40b38cc38fa228b07d96785b96a2608c74d3e3e"
+    },
+    {
+      "file": "inline-io/inline-error.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/inline-io/inline-error.smithy",
+      "sha256": "3cd0a2cd48086163669eecb75f0b77021a3fbc45d4d167c2325cbf9378b3b449"
+    },
+    {
+      "file": "inline-io/inline-io-in-explicit-1-0.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/inline-io/inline-io-in-explicit-1-0.smithy",
+      "sha256": "9211cf44b377bce8a60cc7420d65c2b7f4b2de5622117c51fc2aad72f5862ca1"
+    },
+    {
+      "file": "inline-io/inline-io-in-implicit-1-0.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/inline-io/inline-io-in-implicit-1-0.smithy",
+      "sha256": "2f6685df2777ac2c4c89dbf1761db9df206d67f4c33f5ca1acd398d207dba36a"
+    },
+    {
+      "file": "inline-io/inline-name-override.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/inline-io/inline-name-override.smithy",
+      "sha256": "5de01978e68c562bf97fe854340726e36db1f23e6363eaf654613913aa1738e6"
+    },
+    {
+      "file": "inline-io/inline-single-error.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/inline-io/inline-single-error.smithy",
+      "sha256": "7033ba23d54f3da9ab6ff1f0558aa42193759f688f84c0f7537bb46f731d8845"
+    },
+    {
+      "file": "inline-io/inline-structure-member.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/inline-io/inline-structure-member.smithy",
+      "sha256": "b51092fe69ebb536a3cf6bc73c39f152827af6a4461e7648d6bf68125d6ba918"
+    },
+    {
+      "file": "inline-io/walrus-operator-in-node.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/inline-io/walrus-operator-in-node.smithy",
+      "sha256": "58e7e4ab26b0731f0ffa6a8e31fb092c9cc415b64485e9d91d0ab6b1a649fcc2"
+    },
+    {
+      "file": "lists/list-empty-members.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/lists/list-empty-members.smithy",
+      "sha256": "efa14702372a6f5ea69096f28cc3a76f96674e5cc3ac198925603339c1fa5d47"
+    },
+    {
+      "file": "lists/no-sets-in-v2.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/lists/no-sets-in-v2.smithy",
+      "sha256": "f1a75aa08f89208abd1228a43bd59b2a3203394d1e9fa4b031a77cf4996ca11e"
+    },
+    {
+      "file": "lists/set-empty-members.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/lists/set-empty-members.smithy",
+      "sha256": "41e65f9028bb0493c91b40f996fb0dfcef7fd1d75c1f0fb12c9251473fb5a5cc"
+    },
+    {
+      "file": "maps/map-empty-members.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/maps/map-empty-members.smithy",
+      "sha256": "5dde129ee1837c8a896851f179654bfc4bad6ba5e298394ac82a8d6ef7aae4e2"
+    },
+    {
+      "file": "maps/map-unclosed-parameters1.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/maps/map-unclosed-parameters1.smithy",
+      "sha256": "a7a599a2d489520e7a089f5bdf91a80fb139cfbbaa35ac990233b1cddaec1603"
+    },
+    {
+      "file": "maps/map-unclosed-parameters2.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/maps/map-unclosed-parameters2.smithy",
+      "sha256": "276dfc8a11ab70c2eb60d070b0064b469aa55aec3815b079d90864e350c8ef55"
+    },
+    {
+      "file": "maps/map-unclosed-parameters3.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/maps/map-unclosed-parameters3.smithy",
+      "sha256": "a2241a9831aad8aa3113e1253cd745b3cc64bfd11d699161860125f68cbcb13e"
+    },
+    {
+      "file": "maps/map-unclosed-parameters4.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/maps/map-unclosed-parameters4.smithy",
+      "sha256": "c622433368eb190f61125ae21ab04870b044c3069b76f211bacc9b14c3606a52"
+    },
+    {
+      "file": "metadata/invalid-object-shape-id-key.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/metadata/invalid-object-shape-id-key.smithy",
+      "sha256": "acbd1bbba5fa8888dfa3add2dc0db0901749c56b6dc245768b216fd9d4595730"
+    },
+    {
+      "file": "metadata/invalid-object-text-block-key.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/metadata/invalid-object-text-block-key.smithy",
+      "sha256": "791a4d69c2621f872cb82400207e84778fafc3193006e11dedb2afe6dcc12d3f"
+    },
+    {
+      "file": "metadata/invalid-unquoted-shape-id.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/metadata/invalid-unquoted-shape-id.smithy",
+      "sha256": "512e80528df87ad39c3424d86fe27443fe889c42b060807d12f818a9e29166ec"
+    },
+    {
+      "file": "metadata/metadata-multiple-lines.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/metadata/metadata-multiple-lines.smithy",
+      "sha256": "b45999465abd7d00b81ae1f0f6237eeda0748479bd263443aaca44ff0496f0ba"
+    },
+    {
+      "file": "metadata/metadata-must-come-before-namespace.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/metadata/metadata-must-come-before-namespace.smithy",
+      "sha256": "71ffb2607ae5214fb3ff254674fb617b107fb03402e87017c799ef5f876fe31a"
+    },
+    {
+      "file": "metadata/metadata-with-invalid-key.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/metadata/metadata-with-invalid-key.smithy",
+      "sha256": "1c76d8ad16fd4f602389f9c1fec1d349690a242cf97d1e8d7180a5b7151d38fb"
+    },
+    {
+      "file": "metadata/no-newline-after-metadata.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/metadata/no-newline-after-metadata.smithy",
+      "sha256": "872475b74b5b7f3893270dafe70600733d3f4e1f1eae293acf86fca1494b8f8b"
+    },
+    {
+      "file": "metadata/not-newline-after-metadata.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/metadata/not-newline-after-metadata.smithy",
+      "sha256": "e36580bb39a1377b0e21c6212b8a6b4f6bc1427a9d2e730651f81ee6c92233d0"
+    },
+    {
+      "file": "metadata/space-after-metadata-quoted.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/metadata/space-after-metadata-quoted.smithy",
+      "sha256": "754abd10c80c724556953b0ff4e95dea1e9061508d6ef12ba994d2ca63d0af8d"
+    },
+    {
+      "file": "metadata/space-after-metadata-unquoted.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/metadata/space-after-metadata-unquoted.smithy",
+      "sha256": "fc7c10874e7a05fc63d0aebdb94e2dcb133c8ca7dd2fc48fd3f449f31276d2fc"
+    },
+    {
+      "file": "metadata/space-after-node-array-keyword.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/metadata/space-after-node-array-keyword.smithy",
+      "sha256": "011a98bce5fd4dbf3fde0f3d2b0343e34b08562f206f8cb56d3bbed24697e660"
+    },
+    {
+      "file": "mixins/dangling-with.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/dangling-with.smithy",
+      "sha256": "94af1deb74c73d9ca6f393942edf1a283f9c0f1ac6a944d35a9c0002ecac473e"
+    },
+    {
+      "file": "mixins/invalid-statement-after-structure-name.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/invalid-statement-after-structure-name.smithy",
+      "sha256": "04b7530dfc66a0b0efb0bcce8f74fed0976b4f98f40fb700954f89c5aa291701"
+    },
+    {
+      "file": "mixins/member-mixin-conflict-1.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/member-mixin-conflict-1.smithy",
+      "sha256": "9756646adc4fa779ec527686afdefb71a9a46398e5d55e3a27bcf343c6acdfc9"
+    },
+    {
+      "file": "mixins/member-mixin-conflict-2.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/member-mixin-conflict-2.smithy",
+      "sha256": "fd506d5afe59ab6c716153061f83d2a362a4898a250603ab365557449d16a1b7"
+    },
+    {
+      "file": "mixins/missing-rest-of-with-word.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/missing-rest-of-with-word.smithy",
+      "sha256": "771123e22273cf72d35a1924910946cd3ebe8ff09d8b97a46111cc44bb3a6331"
+    },
+    {
+      "file": "mixins/mix-types.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/mix-types.smithy",
+      "sha256": "2982b29913526ded9cc7be5487f72dc554249bcf6833ddc2d10ce2ea9ad368ca"
+    },
+    {
+      "file": "mixins/mixins-trait-in-explicit-1-0.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/mixins-trait-in-explicit-1-0.smithy",
+      "sha256": "1e11e3947025523afb708fea8f6aba1b9ce9c3ed2806bef79fab5ae6abe0e636"
+    },
+    {
+      "file": "mixins/mixins-trait-in-implicit-1-0.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/mixins-trait-in-implicit-1-0.smithy",
+      "sha256": "b1de0ede93b87e471136e8c6dfb2893692aacd47e3e8dc83cf3042f72c30036b"
+    },
+    {
+      "file": "mixins/mixins-usage-in-explicit-1-0.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/mixins-usage-in-explicit-1-0.smithy",
+      "sha256": "d487f457e662c4d44ef4915ef4d298d8b830150c480e0187657f26ad12abbc0b"
+    },
+    {
+      "file": "mixins/mixins-usage-in-implicit-1-0.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/mixins-usage-in-implicit-1-0.smithy",
+      "sha256": "65d5d478d439e87c3b54aa2897b434ac81f95e7ec93777dbfa31ed51dc597311"
+    },
+    {
+      "file": "mixins/operation-mixin-with-io.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/operation-mixin-with-io.smithy",
+      "sha256": "f0fed9145f60e8c15a43d9b77ba9f79ea2f449bfcd62cc78d978c0b1fdbd126c"
+    },
+    {
+      "file": "mixins/resource-mixin-with-properties.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/resource-mixin-with-properties.smithy",
+      "sha256": "0b34769d7e81f9e7d665de3f1b5f902a70b4a40b9c50f1bdfff14d2163373db6"
+    },
+    {
+      "file": "mixins/with-but-no-ids.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/with-but-no-ids.smithy",
+      "sha256": "687257eb50d5e2741675603210776c0531a3c8587ca08d889a7387a5801c3161"
+    },
+    {
+      "file": "mixins/with-on-next-line-bigDecimal.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/with-on-next-line-bigDecimal.smithy",
+      "sha256": "f12b74f28a413d064e9d30f938f0cdc35427b6943f848e4fde2dc0b0552cc776"
+    },
+    {
+      "file": "mixins/with-on-next-line-bigInteger.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/with-on-next-line-bigInteger.smithy",
+      "sha256": "996d1c03e218f69716f0ed143172b480d1222acb5f995037e4a2ca2a1533c417"
+    },
+    {
+      "file": "mixins/with-on-next-line-blob.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/with-on-next-line-blob.smithy",
+      "sha256": "05f89b13da09fe1e276396a819bcca2cac001272f224b3a3ab6ff229ec622f77"
+    },
+    {
+      "file": "mixins/with-on-next-line-boolean.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/with-on-next-line-boolean.smithy",
+      "sha256": "36a7035b39e6491343fcd5b2b295a26b7ce679fb64736149351b4228ec1cc192"
+    },
+    {
+      "file": "mixins/with-on-next-line-byte.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/with-on-next-line-byte.smithy",
+      "sha256": "5b7947c258e9000dfa218cc20e59b9270c0c37cc9834fcbbb6be33b250a9298e"
+    },
+    {
+      "file": "mixins/with-on-next-line-document.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/with-on-next-line-document.smithy",
+      "sha256": "ad7774154b740ba299f1355e7e8489e2c9227eb4c5ba5d936f272b815578e770"
+    },
+    {
+      "file": "mixins/with-on-next-line-double.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/with-on-next-line-double.smithy",
+      "sha256": "e7c8e94c1c841387d0d5b3da618bb8557ce9f81757b882816ec16a17ff7bafca"
+    },
+    {
+      "file": "mixins/with-on-next-line-float.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/with-on-next-line-float.smithy",
+      "sha256": "19fe432ade163242a5083712a3b3b6f3d7bdc174cd218d91086f9e8a34ea68fa"
+    },
+    {
+      "file": "mixins/with-on-next-line-integer.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/with-on-next-line-integer.smithy",
+      "sha256": "05baaf8e271973f2edce44c1060df79ddbef206e0479078a065e74116c359489"
+    },
+    {
+      "file": "mixins/with-on-next-line-list.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/with-on-next-line-list.smithy",
+      "sha256": "d5825c2740cd8ab01050c66c4b10904ba716b709ac162bd10ff0e8e61ed1aaef"
+    },
+    {
+      "file": "mixins/with-on-next-line-long.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/with-on-next-line-long.smithy",
+      "sha256": "8c32fdbca98a04d233947cd98ed8cc683ca85d2d24d9571769e95ca28b4e36a9"
+    },
+    {
+      "file": "mixins/with-on-next-line-map.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/with-on-next-line-map.smithy",
+      "sha256": "596e3325ef122a5a0b355da213a312e4f9244ff9262ff8bcf87de2e1d5330feb"
+    },
+    {
+      "file": "mixins/with-on-next-line-resource.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/with-on-next-line-resource.smithy",
+      "sha256": "6a62bf9128a7cb9e43c48f39194e8959d2776e000a9f7145ffa4a6b692526bd7"
+    },
+    {
+      "file": "mixins/with-on-next-line-service.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/with-on-next-line-service.smithy",
+      "sha256": "4e5b04040cffc7235920b1b91bfa1fd33cde2e4b123b66dcd4a8b8668de2498d"
+    },
+    {
+      "file": "mixins/with-on-next-line-short.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/with-on-next-line-short.smithy",
+      "sha256": "2b6615b2c2532805d266cf3dd51f59e3d71891a4453c342fa54e408fa24e9c04"
+    },
+    {
+      "file": "mixins/with-on-next-line-string.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/with-on-next-line-string.smithy",
+      "sha256": "20ba5df57cc8010ebe72de75a9b547d7f2def9fa652d050fc352713d40dbd36f"
+    },
+    {
+      "file": "mixins/with-on-next-line-structure.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/with-on-next-line-structure.smithy",
+      "sha256": "ce8994fc8c37e0380f7419e56b24314a01a4f319eb4013dd56da81f47b70f063"
+    },
+    {
+      "file": "mixins/with-on-next-line-timestamp.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/with-on-next-line-timestamp.smithy",
+      "sha256": "66342decee0973abf2ee3c9af4f7b492c614366cd98a7f9bcf9fc9ed36aa2ab6"
+    },
+    {
+      "file": "mixins/with-on-next-line-union.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/mixins/with-on-next-line-union.smithy",
+      "sha256": "41821382fd1fd59d11b15f215a90268c0e999bbc3a3d308a7772ef6b077e7fb7"
+    },
+    {
+      "file": "namespace/namespace-before-shapes.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/namespace/namespace-before-shapes.smithy",
+      "sha256": "30d3743328431c371d936667b0af62da960eb6e88cd7ebaa6c89f5d1b0ebee47"
+    },
+    {
+      "file": "namespace/namespace-before-traits.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/namespace/namespace-before-traits.smithy",
+      "sha256": "561fc6c97bf0823c13c94f0e3f9fdbd42f0aaab8e66a7b0a669f17fc95d12b00"
+    },
+    {
+      "file": "namespace/namespace-defined-twice.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/namespace/namespace-defined-twice.smithy",
+      "sha256": "5b4b6d5ee30cc8d675fce79139f3ef003a95c18b30c6335e9296624d09634900"
+    },
+    {
+      "file": "namespace/namespace-multiple-lines.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/namespace/namespace-multiple-lines.smithy",
+      "sha256": "6236cb643d506fc0522e09e5d0152baf3762644f5d427dd1b81afcb891d36076"
+    },
+    {
+      "file": "namespace/namespace-no-newline.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/namespace/namespace-no-newline.smithy",
+      "sha256": "afd6395a6476e32f2877ad3a1719e8af02437fe2711d80449d870cfd22487412"
+    },
+    {
+      "file": "namespace/namespace-syntax-error.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/namespace/namespace-syntax-error.smithy",
+      "sha256": "443dbe3892cd5c717be1d44906299be0a6bd779d97228b2938621bc5e476ea92"
+    },
+    {
+      "file": "namespace/unclosed-string1.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/namespace/unclosed-string1.smithy",
+      "sha256": "d7e32dcfcaebd50c2c72677c9c60a91e4ad316a75519e93c56f14b21d8575c47"
+    },
+    {
+      "file": "namespace/unclosed-string2-invalid-single-quote.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/namespace/unclosed-string2-invalid-single-quote.smithy",
+      "sha256": "cc665650b1e991a9ca4f582683ff2a5395402a036dd22fafc50090c66dcf4ce4"
+    },
+    {
+      "file": "namespace/unclosed-string3.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/namespace/unclosed-string3.smithy",
+      "sha256": "4b28cab72302ac83d5d3978c5aba336588f0bb4914c69de31e94d730fe47fa62"
+    },
+    {
+      "file": "numbers/decimal-with-no-digit-after.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/numbers/decimal-with-no-digit-after.smithy",
+      "sha256": "aae24cab9c331d899f8aa3436bec0670890b66ea65ea3dd9f742013ce2746ce6"
+    },
+    {
+      "file": "numbers/exponent-with-no-digit.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/numbers/exponent-with-no-digit.smithy",
+      "sha256": "1da7809c4f515ba7a5bfd3c7dd4d1722059e140c55c8ce7cbcfa959e4e1256ac"
+    },
+    {
+      "file": "numbers/exponent-with-sign-then-no-digit.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/numbers/exponent-with-sign-then-no-digit.smithy",
+      "sha256": "a8374e1d470fe585dcead43f6e8d72be2c8ac9027330129b0357d822c8691644"
+    },
+    {
+      "file": "numbers/leading-decimal.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/numbers/leading-decimal.smithy",
+      "sha256": "175368743bb50b416f9e9028bc0f59e8d061d0446853a149f5022089cd68dbac"
+    },
+    {
+      "file": "numbers/negative-with-no-digit.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/numbers/negative-with-no-digit.smithy",
+      "sha256": "2d4ae5907cbc06f5a4ea279a53d20d4023001e06a4710a3f8f6e80c40cccc080"
+    },
+    {
+      "file": "operations/input-defined-twice.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/operations/input-defined-twice.smithy",
+      "sha256": "bcaf2ed9045e09cc75bb983c4e6dcb9395aafae4ff342700e21646d50dff7bc0"
+    },
+    {
+      "file": "operations/invalid-operation-properties.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/operations/invalid-operation-properties.smithy",
+      "sha256": "4d352156a93360535e2d77dd9aa1d8aae8474e9ea2335126c5b19dc174fe73a7"
+    },
+    {
+      "file": "operations/missing-ws-after-input.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/operations/missing-ws-after-input.smithy",
+      "sha256": "465e7846247d4c9d588513293130bab0784824e16a09460044d3b0afaa523169"
+    },
+    {
+      "file": "parse-errors/absolute-shape-name.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/parse-errors/absolute-shape-name.smithy",
+      "sha256": "338845824b574bdc8d89e2482c00615d6c35f25f7e497fb2cc4e13ab29a3cdaa"
+    },
+    {
+      "file": "parse-errors/expected-shape-id-after-type.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/parse-errors/expected-shape-id-after-type.smithy",
+      "sha256": "8e4a25cf6eb28fa871483dbc9fc2f7aa52647e0ec7a4dbe10a894a933f25065c"
+    },
+    {
+      "file": "parse-errors/expected-shape-name-but-eof.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/parse-errors/expected-shape-name-but-eof.smithy",
+      "sha256": "4e4198d8a138d849ba419834d315bde1cf08c4aa33444faf6524d7c81286501e"
+    },
+    {
+      "file": "parse-errors/invalid-newline-after-shape-type.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/parse-errors/invalid-newline-after-shape-type.smithy",
+      "sha256": "2abd00f7802a4a9c343ea6d53501e8cb3bba788ec0a3bc02ac0a71952712c309"
+    },
+    {
+      "file": "parse-errors/missing-space-after-string.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/parse-errors/missing-space-after-string.smithy",
+      "sha256": "442cb2d850573a4b01f46bb948bac39043089bb8b3efc7d5716d8a1c695b4ecc"
+    },
+    {
+      "file": "parse-errors/missing-space-after-structure.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/parse-errors/missing-space-after-structure.smithy",
+      "sha256": "fe7341841c1a6ffbc4e277755f00d827227d5b1084bb1fee70b409d7b64cd965"
+    },
+    {
+      "file": "parse-errors/shape-name-syntax.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/parse-errors/shape-name-syntax.smithy",
+      "sha256": "aa698f33c9c3602a658166daae88fe5b1bacf49d8cd6cb94eb52d7b89da2cc0a"
+    },
+    {
+      "file": "parse-errors/shape-name-syntax2.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/parse-errors/shape-name-syntax2.smithy",
+      "sha256": "9ceda5a02c161a3fd8ba0d1968c29e28db33cda623707d6c4612dd5d6e40cc19"
+    },
+    {
+      "file": "parse-errors/shape-name-syntax3.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/parse-errors/shape-name-syntax3.smithy",
+      "sha256": "cae6586668cf1f6b8b6ef611e014360bf8561a7ccc454eb994e428cd0e930575"
+    },
+    {
+      "file": "parse-errors/statement-unknown.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/parse-errors/statement-unknown.smithy",
+      "sha256": "56d1e1ed1c495d985d7635f49852703dc9295b4aa1b597c62398c2c2d34652b5"
+    },
+    {
+      "file": "parse-errors/syntax-error-token.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/parse-errors/syntax-error-token.smithy",
+      "sha256": "f71b947fe18802b1ea9174f8baa6c7ef0e2e0baa897ed38c996dd2357b731944"
+    },
+    {
+      "file": "strings/invalid-escape-apostrophe.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/strings/invalid-escape-apostrophe.smithy",
+      "sha256": "a00e541cd76a3f19864fcfef18efbec110f9f7bbc141d8441c6ed92a9012fa4c"
+    },
+    {
+      "file": "strings/invalid-escape-space.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/strings/invalid-escape-space.smithy",
+      "sha256": "0eab3fa6715b28895f5fe95009bea9154b1ad0222aaaeb5ee07246f9844007cf"
+    },
+    {
+      "file": "strings/invalid-unicode-escape.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/strings/invalid-unicode-escape.smithy",
+      "sha256": "951a3d63fb09887e116b5ef5c714e140111c96a78b072f29617b96ad808c91ac"
+    },
+    {
+      "file": "strings/invalid-unicode-escape2.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/strings/invalid-unicode-escape2.smithy",
+      "sha256": "5dda0a547eb21edfe8cba68b0b701d52243cb306b0b6d912c508387f5e923654"
+    },
+    {
+      "file": "strings/invalid-unicode-escape3.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/strings/invalid-unicode-escape3.smithy",
+      "sha256": "09308e8e3074d186819a20b2f419d1d9f9b7e51c0ea2e69ecb731c0e3c0ef68e"
+    },
+    {
+      "file": "strings/invalid-unicode-escape4.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/strings/invalid-unicode-escape4.smithy",
+      "sha256": "f7f8de619d098a520838962a92a67ab4048a89ec2bd73fa9b26daa8bdfa5de60"
+    },
+    {
+      "file": "strings/invalid-unicode-escape5.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/strings/invalid-unicode-escape5.smithy",
+      "sha256": "0339fa4a52bae290ce0698114644ae238f9c48ee4885ba8c1cdba9649f80a559"
+    },
+    {
+      "file": "strings/text-block-empty.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/strings/text-block-empty.smithy",
+      "sha256": "29fe4b6718ef85bdd8048258c28135aca43474c72f516444f7cc052d0db2e0f8"
+    },
+    {
+      "file": "strings/text-block-invalid-unicode.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/strings/text-block-invalid-unicode.smithy",
+      "sha256": "742672bd0a01e51028eab1a74e75a2c13ec7b35c6a137711073be25c4cf82e3a"
+    },
+    {
+      "file": "strings/text-block-missing-newline.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/strings/text-block-missing-newline.smithy",
+      "sha256": "280504a65ad9716606b14a0b5e83781352a0f54bc1dbbb02e102f1b86c239daf"
+    },
+    {
+      "file": "strings/unclosed-string.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/strings/unclosed-string.smithy",
+      "sha256": "ef44c16bb007455f2c9ba0f4cfd4ac5cf17f3487bbfc3078d98e8666a8f2a6b3"
+    },
+    {
+      "file": "strings/unclosed-string2.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/strings/unclosed-string2.smithy",
+      "sha256": "b696cf8d0c5c4b68f383b4a90bade4997a1bf06ce91867c9ee3b6f42607a5d85"
+    },
+    {
+      "file": "strings/unclosed-string3.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/strings/unclosed-string3.smithy",
+      "sha256": "a4ebfac18eb49f400a132977f4b2d14f55b5cee8db0dc99f9849875bc3667852"
+    },
+    {
+      "file": "strings/unclosed-text-block.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/strings/unclosed-text-block.smithy",
+      "sha256": "3787c387dfc6e16114146bc3e61b9fd53068ad219d9d4e71a55b875ba9fa8910"
+    },
+    {
+      "file": "traits/annotation-invalid-object-key1.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/traits/annotation-invalid-object-key1.smithy",
+      "sha256": "f0a008add15b996755a79120c0ed8b548aa097c58125a92ddc4caf01c438f99c"
+    },
+    {
+      "file": "traits/annotation-invalid-object-key2.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/traits/annotation-invalid-object-key2.smithy",
+      "sha256": "77ff6dcd3b25e141baa8bb0b8107243ee9e25cb6212792f74643e6ae6d45d1b2"
+    },
+    {
+      "file": "traits/annotation-invalid-object-key3.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/traits/annotation-invalid-object-key3.smithy",
+      "sha256": "8d22fa4b1254f38580e47acf194ef1a6fecc4d329137da98605d131242fc0542"
+    },
+    {
+      "file": "traits/annotation-unclosed-list1.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/traits/annotation-unclosed-list1.smithy",
+      "sha256": "ad070e15c41743bd377d972675335689ff3175f6f080e5b9c5a5276b5b0f95f3"
+    },
+    {
+      "file": "traits/annotation-unclosed-list2.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/traits/annotation-unclosed-list2.smithy",
+      "sha256": "9cc37de6467df5125123cb98b3ea6e7cf3dbeaaed5ecfe40aea4db8349fed483"
+    },
+    {
+      "file": "traits/annotation-unclosed-list3.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/traits/annotation-unclosed-list3.smithy",
+      "sha256": "dc08f569ff72071ab9fca0c9b8f6e0f8729b09fb911d0b30c7b192c4137c2445"
+    },
+    {
+      "file": "traits/annotation-unclosed-list4.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/traits/annotation-unclosed-list4.smithy",
+      "sha256": "d43b7154108dee8bc457f2b5984eb69db8e50c05f3d1cd9e202e032c8eca3114"
+    },
+    {
+      "file": "traits/annotation-unclosed-object1.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/traits/annotation-unclosed-object1.smithy",
+      "sha256": "8ccc69a1566798bb81306cd259812dd0ebf7836cef86325a0ad0009b13b631ac"
+    },
+    {
+      "file": "traits/annotation-unclosed-object2.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/traits/annotation-unclosed-object2.smithy",
+      "sha256": "b7d12c815abcb311440c6597457aece504677d6822cd5dfe7d420e0b33b0a902"
+    },
+    {
+      "file": "traits/annotation-unclosed-object3.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/traits/annotation-unclosed-object3.smithy",
+      "sha256": "1095c5e3594d38299d402638aeab586dd4312e2b9d7c4a2ae35efc129b4a5cef"
+    },
+    {
+      "file": "traits/annotation-unclosed-object4.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/traits/annotation-unclosed-object4.smithy",
+      "sha256": "06c1d02edfa50a31249c49a2115ef960073d5224eb1a6816b2b46366bac32112"
+    },
+    {
+      "file": "traits/annotation-unclosed-object5.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/traits/annotation-unclosed-object5.smithy",
+      "sha256": "cb57614bad14b5f11ac176b459b7300fb73b1bd606b8b87bc4dfb6698498dc21"
+    },
+    {
+      "file": "traits/annotation-unclosed-object6.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/traits/annotation-unclosed-object6.smithy",
+      "sha256": "d17d3cc55fb93739fc2c8437466fb28fb25e52e586f5f810c4a26979cf901a94"
+    },
+    {
+      "file": "traits/invalid-trait-shape-id-key.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/traits/invalid-trait-shape-id-key.smithy",
+      "sha256": "207874de4409d731b46cfde56d919f9f3dc1daf7436d9c31abd1deb806110cd2"
+    },
+    {
+      "file": "traits/invalid-trait-textblock-key.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/traits/invalid-trait-textblock-key.smithy",
+      "sha256": "48f9438c43f439df5e086b6ff9714d2c7648c5e5d79042b2848f1384a1a36903"
+    },
+    {
+      "file": "traits/trait-name-syntax.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/traits/trait-name-syntax.smithy",
+      "sha256": "e83302cf015b13ed579e2216490b6d49e50c8c0c9e11915b4792edff956a2835"
+    },
+    {
+      "file": "traits/trait-on-eof.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/traits/trait-on-eof.smithy",
+      "sha256": "78b3c77169c9ccaf43b5ce672ea190714311ac8ff8f92a49cf5950c982e6bc6d"
+    },
+    {
+      "file": "traits/trait-trailing.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/traits/trait-trailing.smithy",
+      "sha256": "59f6cdd9ccf5dabc7d73c8ad3e44a1d5198562fdd598592a42871e3b62b0be3c"
+    },
+    {
+      "file": "traits/traits-on-apply.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/traits/traits-on-apply.smithy",
+      "sha256": "b4af47187e5d78977ab53e82759d60c889dd23e6e4cec80bac52d052b563a346"
+    },
+    {
+      "file": "traits/traits-on-metadata.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/traits/traits-on-metadata.smithy",
+      "sha256": "28826c65a55ed07094f8bd35799285071056bf5d0671d527619c0d2f78856f71"
+    },
+    {
+      "file": "traits/traits-on-namespace.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/traits/traits-on-namespace.smithy",
+      "sha256": "f7abd91efa4685544c289c78be0fae887cc430c1436f33915ae5442ee56539f2"
+    },
+    {
+      "file": "use/conflicting-shape-def.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/use/conflicting-shape-def.smithy",
+      "sha256": "1a2f11648d7d71f9b286e82bb9aead44df4e953a42a75b058d799bdd3f18b261"
+    },
+    {
+      "file": "use/conflicting-trait-def.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/use/conflicting-trait-def.smithy",
+      "sha256": "f67098e1299c4235a954524bf14cfa5bfd08bdb68adc6e33bdad691296d2d63b"
+    },
+    {
+      "file": "use/conflicting-use.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/use/conflicting-use.smithy",
+      "sha256": "5d6435be50401605eb052fcade3ad872656966b0504b012f6f2d749f37bc0e80"
+    },
+    {
+      "file": "use/use-after-shape.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/use/use-after-shape.smithy",
+      "sha256": "0a32d69eb5ec019b7353c84239713ff5e0b761e5a44140d9163a563fe1f9cdbd"
+    },
+    {
+      "file": "use/use-after-traitdef.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/use/use-after-traitdef.smithy",
+      "sha256": "5f7883d30a5f28ae0c83df128cf5c97c9ef2c6317597cac30e638af6b97054fd"
+    },
+    {
+      "file": "use/use-empty-namespace.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/use/use-empty-namespace.smithy",
+      "sha256": "73a31fa6e14f35ca9d8ea6fa830400f54a85959bf84df99cb2e5e0d9ea446626"
+    },
+    {
+      "file": "use/use-invalid-namespace.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/use/use-invalid-namespace.smithy",
+      "sha256": "6de0b36bbf56c84d813eca2b9c3de154f3230de160f6cc4b07259dab24212161"
+    },
+    {
+      "file": "use/use-missing-after-namespace.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/use/use-missing-after-namespace.smithy",
+      "sha256": "4eca95d9c18428607934a308877cd45c979b8b633640e6d546f78d269912a8ea"
+    },
+    {
+      "file": "use/use-missing-namespace.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/use/use-missing-namespace.smithy",
+      "sha256": "c4beb860e2c63febf2a531caaae0280777c405903ba3ed384bed4454e66a23f9"
+    },
+    {
+      "file": "use/use-missing-newline.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/use/use-missing-newline.smithy",
+      "sha256": "99314b6ab8f4281445aebfa3c4090126a8bb30aeda289f937e03b22bfb2b513d"
+    },
+    {
+      "file": "use/use-missing-space.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/use/use-missing-space.smithy",
+      "sha256": "815cbc518cc1a3039c6e02c5fff3b2faf97fc962705519c51f51141777dbd5c5"
+    },
+    {
+      "file": "use/use-multiple-lines-comment.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/use/use-multiple-lines-comment.smithy",
+      "sha256": "73d038ce4682f985031cb1204b991b9db61355df3e92805163feee47739a6fab"
+    },
+    {
+      "file": "use/use-multiple-lines.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/use/use-multiple-lines.smithy",
+      "sha256": "38900640e66dd04000be5ea4051016bc660697c83acdadc34824232fa93d1829"
+    },
+    {
+      "file": "use/use-must-come-after-namespace.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/use/use-must-come-after-namespace.smithy",
+      "sha256": "44af166905cd664633ed7308077c4a31de047e09382a6d8ede23ba050ee231ab"
+    },
+    {
+      "file": "use/use-statement-invalid-id.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/use/use-statement-invalid-id.smithy",
+      "sha256": "480c6377607ade197ed9e4f60a0fda78512f17bf2234ac627dbccdd8ac065950"
+    },
+    {
+      "file": "use/use-with-member.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/use/use-with-member.smithy",
+      "sha256": "6f578123beffccc4730113f369b11979729198aeaf03e8ca080605779b5d1e6e"
+    },
+    {
+      "file": "version/idl-int-enums-in-v1.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/version/idl-int-enums-in-v1.smithy",
+      "sha256": "33df493c357f17cdc35a70823f23a725afb7365aaff17608c2ab75e895f7bc9a"
+    },
+    {
+      "file": "version/invalid-version-type.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/version/invalid-version-type.smithy",
+      "sha256": "87f90d109b111a829060b1d85b6d034721f91c99aa03837ba44899463ddc66f1"
+    },
+    {
+      "file": "version/properties-v2-only.json",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/version/properties-v2-only.json",
+      "sha256": "a770d27588e2703f02041b4167a02154b0a361ce17363bbcb4d7802d54509808"
+    },
+    {
+      "file": "version/properties-v2-only.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/version/properties-v2-only.smithy",
+      "sha256": "a659c306937b2dc710d26f3855f2a923c52fe914dd0e7b36acdce958fd814ffc"
+    },
+    {
+      "file": "version/unsupported-version.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/version/unsupported-version.smithy",
+      "sha256": "ede5d0da00970a2f4fd6bdd01632df87fdd50772f266167bc466094d287071a0"
+    },
+    {
+      "file": "version/version-set-more-than-once.smithy",
+      "upstreamPath": "smithy-model/src/test/resources/software/amazon/smithy/model/loader/invalid/version/version-set-more-than-once.smithy",
+      "sha256": "0dd39ea7b3e49bbc001afda16501b671bd15b429b398be3dca9b3016261bb622"
+    },
+    {
+      "file": "LICENSE",
+      "upstreamPath": "LICENSE",
+      "sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b"
+    }
+  ]
+}

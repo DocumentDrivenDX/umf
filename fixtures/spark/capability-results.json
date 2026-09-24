@@ -1,0 +1,925 @@
+{
+  "version": "4.0.1",
+  "pythonTypesSha256": "1566ade6dcf2d9e7c7cdd8bd1fe0f4b6026584a58e2faed9322faf77e0ab260a",
+  "cases": 49,
+  "results": [
+    {
+      "id": "atomic-string",
+      "python": {
+        "status": "accepted",
+        "output": "string",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "string",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "atomic-binary",
+      "python": {
+        "status": "accepted",
+        "output": "binary",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "binary",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "atomic-boolean",
+      "python": {
+        "status": "accepted",
+        "output": "boolean",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "boolean",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "atomic-decimal",
+      "python": {
+        "status": "accepted",
+        "output": "decimal(10,0)",
+        "sourceEqual": false,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "decimal(10,0)",
+        "sourceEqual": false
+      }
+    },
+    {
+      "id": "atomic-float",
+      "python": {
+        "status": "accepted",
+        "output": "float",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "float",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "atomic-double",
+      "python": {
+        "status": "accepted",
+        "output": "double",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "double",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "atomic-byte",
+      "python": {
+        "status": "accepted",
+        "output": "byte",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "byte",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "atomic-short",
+      "python": {
+        "status": "accepted",
+        "output": "short",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "short",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "atomic-integer",
+      "python": {
+        "status": "accepted",
+        "output": "integer",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "integer",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "atomic-long",
+      "python": {
+        "status": "accepted",
+        "output": "long",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "long",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "atomic-date",
+      "python": {
+        "status": "accepted",
+        "output": "date",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "date",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "atomic-timestamp",
+      "python": {
+        "status": "accepted",
+        "output": "timestamp",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "timestamp",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "atomic-timestamp_ntz",
+      "python": {
+        "status": "accepted",
+        "output": "timestamp_ntz",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "timestamp_ntz",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "atomic-void",
+      "python": {
+        "status": "accepted",
+        "output": "void",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "void",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "atomic-variant",
+      "python": {
+        "status": "accepted",
+        "output": "variant",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "variant",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "atomic-interval",
+      "python": {
+        "status": "accepted",
+        "output": "interval",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "interval",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "spelling-16",
+      "python": {
+        "status": "accepted",
+        "output": "decimal(10,2)",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "decimal(10,2)",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "spelling-17",
+      "python": {
+        "status": "accepted",
+        "output": "decimal(38,18)",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "decimal(38,18)",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "spelling-18",
+      "python": {
+        "status": "accepted",
+        "output": "decimal(10,-2)",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "rejected",
+        "message": "[NEGATIVE_SCALE_DISALLOWED] Negative scale is not allowed: '-2'. Set the config \"spark.sql.legacy.allowNegativeScaleOfDecimal\" to \"true\" to allow it. SQLSTATE: 0A000"
+      }
+    },
+    {
+      "id": "spelling-19",
+      "python": {
+        "status": "accepted",
+        "output": "decimal(39,0)",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "rejected",
+        "message": "[DECIMAL_PRECISION_EXCEEDS_MAX_PRECISION] Decimal precision 39 exceeds max precision 38. SQLSTATE: 22003"
+      }
+    },
+    {
+      "id": "spelling-20",
+      "python": {
+        "status": "accepted",
+        "output": "decimal(2,3)",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "rejected",
+        "message": "Decimal scale (3) cannot be greater than precision (2)."
+      }
+    },
+    {
+      "id": "spelling-21",
+      "python": {
+        "status": "accepted",
+        "output": "char(5)",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "char(5)",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "spelling-22",
+      "python": {
+        "status": "accepted",
+        "output": "varchar(20)",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "varchar(20)",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "spelling-23",
+      "python": {
+        "status": "accepted",
+        "output": "char(0)",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "char(0)",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "spelling-24",
+      "python": {
+        "status": "accepted",
+        "output": "string collate UTF8_LCASE",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "string collate UTF8_LCASE",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "spelling-25",
+      "python": {
+        "status": "accepted",
+        "output": "string collate UNKNOWN_COLLATION",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "rejected",
+        "message": "None"
+      }
+    },
+    {
+      "id": "spelling-26",
+      "python": {
+        "status": "accepted",
+        "output": "interval year",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "interval year",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "spelling-27",
+      "python": {
+        "status": "accepted",
+        "output": "interval year to month",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "interval year to month",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "spelling-28",
+      "python": {
+        "status": "accepted",
+        "output": "interval month",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "interval month",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "spelling-29",
+      "python": {
+        "status": "accepted",
+        "output": "interval day",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "interval day",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "spelling-30",
+      "python": {
+        "status": "accepted",
+        "output": "interval day to second",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "interval day to second",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "spelling-31",
+      "python": {
+        "status": "accepted",
+        "output": "interval hour to minute",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "interval hour to minute",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "spelling-32",
+      "python": {
+        "status": "accepted",
+        "output": "interval second",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "interval second",
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "spelling-33",
+      "python": {
+        "status": "accepted",
+        "output": "interval month to year",
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "rejected",
+        "message": "[INVALID_JSON_DATA_TYPE] Failed to convert the JSON string 'interval month to year' to a data type. Please enter a valid data type. SQLSTATE: 2203G"
+      }
+    },
+    {
+      "id": "spelling-34",
+      "python": {
+        "status": "rejected",
+        "message": "[CANNOT_PARSE_DATATYPE] Unable to parse datatype. future_type."
+      },
+      "jvm": {
+        "status": "rejected",
+        "message": "[INVALID_JSON_DATA_TYPE] Failed to convert the JSON string 'future_type' to a data type. Please enter a valid data type. SQLSTATE: 2203G"
+      }
+    },
+    {
+      "id": "array",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "containsNull": false,
+          "elementType": "long",
+          "type": "array"
+        },
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "array",
+          "elementType": "long",
+          "containsNull": false
+        },
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "array-default",
+      "python": {
+        "status": "rejected",
+        "message": "'containsNull'"
+      },
+      "jvm": {
+        "status": "rejected",
+        "message": "[INVALID_JSON_DATA_TYPE] Failed to convert the JSON string '{\"type\":\"array\",\"elementType\":\"string\"}' to a data type. Please enter a valid data type. SQLSTATE: 2203G"
+      }
+    },
+    {
+      "id": "map",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "keyType": "string",
+          "type": "map",
+          "valueContainsNull": false,
+          "valueType": "integer"
+        },
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "map",
+          "keyType": "string",
+          "valueType": "integer",
+          "valueContainsNull": false
+        },
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "map-default",
+      "python": {
+        "status": "rejected",
+        "message": "'valueContainsNull'"
+      },
+      "jvm": {
+        "status": "rejected",
+        "message": "[INVALID_JSON_DATA_TYPE] Failed to convert the JSON string '{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"integer\"}' to a data type. Please enter a valid data type. SQLSTATE: 2203G"
+      }
+    },
+    {
+      "id": "atomic-object",
+      "python": {
+        "status": "rejected",
+        "message": "[UNSUPPORTED_DATA_TYPE] Unsupported DataType `integer`."
+      },
+      "jvm": {
+        "status": "rejected",
+        "message": "[INVALID_JSON_DATA_TYPE] Failed to convert the JSON string '{\"type\":\"integer\"}' to a data type. Please enter a valid data type. SQLSTATE: 2203G"
+      }
+    },
+    {
+      "id": "unknown-property",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [],
+          "type": "struct"
+        },
+        "sourceEqual": false,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "rejected",
+        "message": "[INVALID_JSON_DATA_TYPE] Failed to convert the JSON string '{\"type\":\"struct\",\"fields\":[],\"future\":{\"keep\":true}}' to a data type. Please enter a valid data type. SQLSTATE: 2203G"
+      }
+    },
+    {
+      "id": "field-defaults",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {},
+              "name": "x",
+              "nullable": true,
+              "type": "string"
+            }
+          ],
+          "type": "struct"
+        },
+        "sourceEqual": false,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "x",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "sourceEqual": false
+      }
+    },
+    {
+      "id": "field-unknown",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {},
+              "name": "x",
+              "nullable": true,
+              "type": "integer"
+            }
+          ],
+          "type": "struct"
+        },
+        "sourceEqual": false,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "rejected",
+        "message": "[INVALID_JSON_DATA_TYPE] Failed to convert the JSON string '{\"name\":\"x\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{},\"future\":true}' to a data type. Please enter a valid data type. SQLSTATE: 2203G"
+      }
+    },
+    {
+      "id": "duplicate-names",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {},
+              "name": "same",
+              "nullable": false,
+              "type": "integer"
+            },
+            {
+              "metadata": {},
+              "name": "same",
+              "nullable": true,
+              "type": "string"
+            }
+          ],
+          "type": "struct"
+        },
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "same",
+              "type": "integer",
+              "nullable": false,
+              "metadata": {}
+            },
+            {
+              "name": "same",
+              "type": "string",
+              "nullable": true,
+              "metadata": {}
+            }
+          ]
+        },
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "exact-metadata",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {
+                "array": [
+                  1,
+                  2
+                ],
+                "large": 9223372036854775807,
+                "nested": {
+                  "note": "café"
+                }
+              },
+              "name": "x",
+              "nullable": true,
+              "type": "long"
+            }
+          ],
+          "type": "struct"
+        },
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "x",
+              "type": "long",
+              "nullable": true,
+              "metadata": {
+                "large": 9223372036854775807,
+                "array": [
+                  1,
+                  2
+                ],
+                "nested": {
+                  "note": "café"
+                }
+              }
+            }
+          ]
+        },
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "mixed-metadata",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {
+                "mixed": [
+                  1,
+                  "a"
+                ]
+              },
+              "name": "x",
+              "nullable": true,
+              "type": "long"
+            }
+          ],
+          "type": "struct"
+        },
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "rejected",
+        "message": "class org.json4s.JString cannot be cast to class org.json4s.JInt (org.json4s.JString and org.json4s.JInt are in unnamed module of loader 'app')"
+      }
+    },
+    {
+      "id": "collated-field",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {
+                "__COLLATIONS": {
+                  "name": "spark.UTF8_LCASE"
+                }
+              },
+              "name": "name",
+              "nullable": true,
+              "type": "string"
+            }
+          ],
+          "type": "struct"
+        },
+        "sourceEqual": true,
+        "inputMutated": true,
+        "repeatStatus": "rejected",
+        "repeatMessage": "AssertionError"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "name",
+              "type": "string",
+              "nullable": true,
+              "metadata": {
+                "__COLLATIONS": {
+                  "name": "spark.UTF8_LCASE"
+                }
+              }
+            }
+          ]
+        },
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "collated-array",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {
+                "__COLLATIONS": {
+                  "values.element": "spark.UTF8_LCASE"
+                }
+              },
+              "name": "values",
+              "nullable": true,
+              "type": {
+                "containsNull": true,
+                "elementType": "string",
+                "type": "array"
+              }
+            }
+          ],
+          "type": "struct"
+        },
+        "sourceEqual": true,
+        "inputMutated": true,
+        "repeatStatus": "rejected",
+        "repeatMessage": "AssertionError"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "values",
+              "type": {
+                "type": "array",
+                "elementType": "string",
+                "containsNull": true
+              },
+              "nullable": true,
+              "metadata": {
+                "__COLLATIONS": {
+                  "values.element": "spark.UTF8_LCASE"
+                }
+              }
+            }
+          ]
+        },
+        "sourceEqual": true
+      }
+    },
+    {
+      "id": "nested",
+      "python": {
+        "status": "accepted",
+        "output": {
+          "fields": [
+            {
+              "metadata": {},
+              "name": "items",
+              "nullable": false,
+              "type": {
+                "containsNull": true,
+                "elementType": {
+                  "fields": [
+                    {
+                      "metadata": {},
+                      "name": "cost",
+                      "nullable": false,
+                      "type": "decimal(18,4)"
+                    }
+                  ],
+                  "type": "struct"
+                },
+                "type": "array"
+              }
+            }
+          ],
+          "type": "struct"
+        },
+        "sourceEqual": true,
+        "inputMutated": false
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": {
+          "type": "struct",
+          "fields": [
+            {
+              "name": "items",
+              "type": {
+                "type": "array",
+                "elementType": {
+                  "type": "struct",
+                  "fields": [
+                    {
+                      "name": "cost",
+                      "type": "decimal(18,4)",
+                      "nullable": false,
+                      "metadata": {}
+                    }
+                  ]
+                },
+                "containsNull": true
+              },
+              "nullable": false,
+              "metadata": {}
+            }
+          ]
+        },
+        "sourceEqual": true
+      }
+    }
+  ]
+}

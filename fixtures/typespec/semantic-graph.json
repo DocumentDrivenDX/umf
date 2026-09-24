@@ -1,0 +1,1040 @@
+{
+  "status": "available",
+  "source": {
+    "umf": "0.1.0",
+    "id": "semantic",
+    "vocabularies": {
+      "umf.typespec": {
+        "version": "0.1.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "schema",
+        "namespace": "",
+        "elements": [
+          {
+            "id": "schema",
+            "extensions": {
+              "umf.typespec": {
+                "profile": "typespec-1.16.0-sources",
+                "entrypoint": "main.tsp",
+                "files": {
+                  "main.tsp": "import \"./common.tsp\";\nnamespace Sales;\n/** An order with recursive related orders and exact native literals. */\n@doc(\"Customer order — preserves Unicode and comments\")\nmodel Order extends Entity<string> {\n  state: OrderState;\n  total: int32 = 42;\n  cost: Money;\n  related?: Order[];\n  externalId?: 9007199254740993;\n}\nalias OrdersPage = Page<Order>;\nunion OrderResult { found: Order, absent: NotFound }\ninterface Orders {\n  read(id: string): OrderResult;\n  list(): OrdersPage;\n}\nconst retryCount = 3;\n",
+                  "common.tsp": "// Shared definitions remain distinct source files.\nnamespace Sales;\n@pattern(\"^[A-Z]{3}$\")\nscalar CurrencyCode extends string;\nmodel Money { amount: decimal; currency: CurrencyCode; }\nmodel Entity<TId> { @key id: TId; }\nmodel Page<T> { data: T[]; next?: string; }\nenum OrderState { pending, shipped, cancelled }\n@error model NotFound { message: string; }\n"
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "compilation": {
+    "compiler": "@typespec/compiler@1.16.0",
+    "libraries": {},
+    "valid": true,
+    "complete": false,
+    "diagnostics": [],
+    "limitations": [
+      "Compiler checks supplied TypeSpec and the pinned standard library; only explicitly selected registered libraries are available; arbitrary JavaScript and emitters are not loaded",
+      "Compiler validity does not establish cross-system projection equivalence"
+    ]
+  },
+  "roots": [
+    {
+      "expression": "Sales.Order",
+      "target": "type_0"
+    },
+    {
+      "expression": "Sales.Orders",
+      "target": "type_32"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "type_0",
+      "kind": "Model",
+      "label": "Sales.Order",
+      "attributes": {
+        "doc": "Customer order — preserves Unicode and comments",
+        "decorators": [
+          {
+            "name": "docFromCommentDecorator",
+            "args": [
+              {
+                "type": "type_1"
+              },
+              {
+                "type": "type_2"
+              }
+            ]
+          },
+          {
+            "name": "(unnamed type)",
+            "args": [
+              {
+                "value": {
+                  "kind": "StringValue",
+                  "value": "Customer order — preserves Unicode and comments",
+                  "type": "type_3",
+                  "scalar": "type_3"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "edges": [
+        {
+          "role": "property",
+          "target": "type_5",
+          "name": "state"
+        },
+        {
+          "role": "property",
+          "target": "type_10",
+          "name": "total"
+        },
+        {
+          "role": "property",
+          "target": "type_19",
+          "name": "cost"
+        },
+        {
+          "role": "property",
+          "target": "type_26",
+          "name": "related"
+        },
+        {
+          "role": "property",
+          "target": "type_28",
+          "name": "externalId"
+        },
+        {
+          "role": "baseModel",
+          "target": "type_30"
+        }
+      ],
+      "location": {
+        "file": "/project/main.tsp",
+        "start": 40,
+        "end": 318
+      }
+    },
+    {
+      "id": "type_1",
+      "kind": "String",
+      "label": "\"self\"",
+      "attributes": {
+        "value": {
+          "kind": "string",
+          "value": "self"
+        }
+      },
+      "edges": []
+    },
+    {
+      "id": "type_2",
+      "kind": "String",
+      "label": "\"An order with recursive related orders and exact native literals.\"",
+      "attributes": {
+        "value": {
+          "kind": "string",
+          "value": "An order with recursive related orders and exact native literals."
+        }
+      },
+      "edges": []
+    },
+    {
+      "id": "type_3",
+      "kind": "Scalar",
+      "label": "string",
+      "attributes": {
+        "doc": "A sequence of textual characters.",
+        "decorators": [
+          {
+            "name": "docFromCommentDecorator",
+            "args": [
+              {
+                "type": "type_1"
+              },
+              {
+                "type": "type_4"
+              }
+            ]
+          }
+        ]
+      },
+      "edges": [],
+      "location": {
+        "file": "/compiler/lib/intrinsics.tsp",
+        "start": 1921,
+        "end": 1980
+      }
+    },
+    {
+      "id": "type_4",
+      "kind": "String",
+      "label": "\"A sequence of textual characters.\"",
+      "attributes": {
+        "value": {
+          "kind": "string",
+          "value": "A sequence of textual characters."
+        }
+      },
+      "edges": []
+    },
+    {
+      "id": "type_5",
+      "kind": "ModelProperty",
+      "label": "Sales.Order.state",
+      "attributes": {
+        "optional": false
+      },
+      "edges": [
+        {
+          "role": "type",
+          "target": "type_6"
+        }
+      ],
+      "location": {
+        "file": "/project/main.tsp",
+        "start": 208,
+        "end": 225
+      }
+    },
+    {
+      "id": "type_6",
+      "kind": "Enum",
+      "label": "Sales.OrderState",
+      "attributes": {},
+      "edges": [
+        {
+          "role": "member",
+          "target": "type_7",
+          "name": "pending"
+        },
+        {
+          "role": "member",
+          "target": "type_8",
+          "name": "shipped"
+        },
+        {
+          "role": "member",
+          "target": "type_9",
+          "name": "cancelled"
+        }
+      ],
+      "location": {
+        "file": "/project/common.tsp",
+        "start": 265,
+        "end": 312
+      }
+    },
+    {
+      "id": "type_7",
+      "kind": "EnumMember",
+      "label": "Sales.OrderState.pending",
+      "attributes": {},
+      "edges": [],
+      "location": {
+        "file": "/project/common.tsp",
+        "start": 283,
+        "end": 290
+      }
+    },
+    {
+      "id": "type_8",
+      "kind": "EnumMember",
+      "label": "Sales.OrderState.shipped",
+      "attributes": {},
+      "edges": [],
+      "location": {
+        "file": "/project/common.tsp",
+        "start": 292,
+        "end": 299
+      }
+    },
+    {
+      "id": "type_9",
+      "kind": "EnumMember",
+      "label": "Sales.OrderState.cancelled",
+      "attributes": {},
+      "edges": [],
+      "location": {
+        "file": "/project/common.tsp",
+        "start": 301,
+        "end": 310
+      }
+    },
+    {
+      "id": "type_10",
+      "kind": "ModelProperty",
+      "label": "Sales.Order.total",
+      "attributes": {
+        "optional": false,
+        "default": {
+          "kind": "NumericValue",
+          "value": "42",
+          "type": "type_11",
+          "scalar": "type_11"
+        }
+      },
+      "edges": [
+        {
+          "role": "type",
+          "target": "type_11"
+        }
+      ],
+      "location": {
+        "file": "/project/main.tsp",
+        "start": 229,
+        "end": 246
+      }
+    },
+    {
+      "id": "type_11",
+      "kind": "Scalar",
+      "label": "int32",
+      "attributes": {
+        "doc": "A 32-bit integer. (`-2,147,483,648` to `2,147,483,647`)",
+        "decorators": [
+          {
+            "name": "docFromCommentDecorator",
+            "args": [
+              {
+                "type": "type_1"
+              },
+              {
+                "type": "type_12"
+              }
+            ]
+          }
+        ]
+      },
+      "edges": [
+        {
+          "role": "baseScalar",
+          "target": "type_13"
+        }
+      ],
+      "location": {
+        "file": "/compiler/lib/intrinsics.tsp",
+        "start": 649,
+        "end": 743
+      }
+    },
+    {
+      "id": "type_12",
+      "kind": "String",
+      "label": "\"A 32-bit integer. (`-2,147,483,648` to `2,147,483,647`)\"",
+      "attributes": {
+        "value": {
+          "kind": "string",
+          "value": "A 32-bit integer. (`-2,147,483,648` to `2,147,483,647`)"
+        }
+      },
+      "edges": []
+    },
+    {
+      "id": "type_13",
+      "kind": "Scalar",
+      "label": "int64",
+      "attributes": {
+        "doc": "A 64-bit integer. (`-9,223,372,036,854,775,808` to `9,223,372,036,854,775,807`)",
+        "decorators": [
+          {
+            "name": "docFromCommentDecorator",
+            "args": [
+              {
+                "type": "type_1"
+              },
+              {
+                "type": "type_14"
+              }
+            ]
+          }
+        ]
+      },
+      "edges": [
+        {
+          "role": "baseScalar",
+          "target": "type_15"
+        }
+      ],
+      "location": {
+        "file": "/compiler/lib/intrinsics.tsp",
+        "start": 527,
+        "end": 647
+      }
+    },
+    {
+      "id": "type_14",
+      "kind": "String",
+      "label": "\"A 64-bit integer. (`-9,223,372,036,854,775,808` to `9,223,372,036,854,775,807`)\"",
+      "attributes": {
+        "value": {
+          "kind": "string",
+          "value": "A 64-bit integer. (`-9,223,372,036,854,775,808` to `9,223,372,036,854,775,807`)"
+        }
+      },
+      "edges": []
+    },
+    {
+      "id": "type_15",
+      "kind": "Scalar",
+      "label": "integer",
+      "attributes": {
+        "doc": "A whole number. This represent any `integer` value possible.\nIt is commonly represented as `BigInteger` in some languages.",
+        "decorators": [
+          {
+            "name": "docFromCommentDecorator",
+            "args": [
+              {
+                "type": "type_1"
+              },
+              {
+                "type": "type_16"
+              }
+            ]
+          }
+        ]
+      },
+      "edges": [
+        {
+          "role": "baseScalar",
+          "target": "type_17"
+        }
+      ],
+      "location": {
+        "file": "/compiler/lib/intrinsics.tsp",
+        "start": 287,
+        "end": 455
+      }
+    },
+    {
+      "id": "type_16",
+      "kind": "String",
+      "label": "\"A whole number. This represent any `integer` value possible.\nIt is commonly represented as `BigInteger` in some languages.\"",
+      "attributes": {
+        "value": {
+          "kind": "string",
+          "value": "A whole number. This represent any `integer` value possible.\nIt is commonly represented as `BigInteger` in some languages."
+        }
+      },
+      "edges": []
+    },
+    {
+      "id": "type_17",
+      "kind": "Scalar",
+      "label": "numeric",
+      "attributes": {
+        "doc": "A numeric type",
+        "decorators": [
+          {
+            "name": "docFromCommentDecorator",
+            "args": [
+              {
+                "type": "type_1"
+              },
+              {
+                "type": "type_18"
+              }
+            ]
+          }
+        ]
+      },
+      "edges": [],
+      "location": {
+        "file": "/compiler/lib/intrinsics.tsp",
+        "start": 244,
+        "end": 285
+      }
+    },
+    {
+      "id": "type_18",
+      "kind": "String",
+      "label": "\"A numeric type\"",
+      "attributes": {
+        "value": {
+          "kind": "string",
+          "value": "A numeric type"
+        }
+      },
+      "edges": []
+    },
+    {
+      "id": "type_19",
+      "kind": "ModelProperty",
+      "label": "Sales.Order.cost",
+      "attributes": {
+        "optional": false
+      },
+      "edges": [
+        {
+          "role": "type",
+          "target": "type_20"
+        }
+      ],
+      "location": {
+        "file": "/project/main.tsp",
+        "start": 250,
+        "end": 261
+      }
+    },
+    {
+      "id": "type_20",
+      "kind": "Model",
+      "label": "Sales.Money",
+      "attributes": {},
+      "edges": [
+        {
+          "role": "property",
+          "target": "type_21",
+          "name": "amount"
+        },
+        {
+          "role": "property",
+          "target": "type_24",
+          "name": "currency"
+        }
+      ],
+      "location": {
+        "file": "/project/common.tsp",
+        "start": 128,
+        "end": 184
+      }
+    },
+    {
+      "id": "type_21",
+      "kind": "ModelProperty",
+      "label": "Sales.Money.amount",
+      "attributes": {
+        "optional": false
+      },
+      "edges": [
+        {
+          "role": "type",
+          "target": "type_22"
+        }
+      ],
+      "location": {
+        "file": "/project/common.tsp",
+        "start": 142,
+        "end": 157
+      }
+    },
+    {
+      "id": "type_22",
+      "kind": "Scalar",
+      "label": "decimal",
+      "attributes": {
+        "doc": "A decimal number with any length and precision. This represent any `decimal` value possible.\nIt is commonly represented as `BigDecimal` in some languages.",
+        "decorators": [
+          {
+            "name": "docFromCommentDecorator",
+            "args": [
+              {
+                "type": "type_1"
+              },
+              {
+                "type": "type_23"
+              }
+            ]
+          }
+        ]
+      },
+      "edges": [
+        {
+          "role": "baseScalar",
+          "target": "type_17"
+        }
+      ],
+      "location": {
+        "file": "/compiler/lib/intrinsics.tsp",
+        "start": 1646,
+        "end": 1846
+      }
+    },
+    {
+      "id": "type_23",
+      "kind": "String",
+      "label": "\"A decimal number with any length and precision. This represent any `decimal` value possible.\nIt is commonly represented as `BigDecimal` in some languages.\"",
+      "attributes": {
+        "value": {
+          "kind": "string",
+          "value": "A decimal number with any length and precision. This represent any `decimal` value possible.\nIt is commonly represented as `BigDecimal` in some languages."
+        }
+      },
+      "edges": []
+    },
+    {
+      "id": "type_24",
+      "kind": "ModelProperty",
+      "label": "Sales.Money.currency",
+      "attributes": {
+        "optional": false
+      },
+      "edges": [
+        {
+          "role": "type",
+          "target": "type_25"
+        }
+      ],
+      "location": {
+        "file": "/project/common.tsp",
+        "start": 159,
+        "end": 181
+      }
+    },
+    {
+      "id": "type_25",
+      "kind": "Scalar",
+      "label": "Sales.CurrencyCode",
+      "attributes": {
+        "decorators": [
+          {
+            "name": "(unnamed type)",
+            "args": [
+              {
+                "value": {
+                  "kind": "StringValue",
+                  "value": "^[A-Z]{3}$",
+                  "type": "type_3",
+                  "scalar": "type_3"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "edges": [
+        {
+          "role": "baseScalar",
+          "target": "type_3"
+        }
+      ],
+      "location": {
+        "file": "/project/common.tsp",
+        "start": 69,
+        "end": 127
+      }
+    },
+    {
+      "id": "type_26",
+      "kind": "ModelProperty",
+      "label": "Sales.Order.related",
+      "attributes": {
+        "optional": true
+      },
+      "edges": [
+        {
+          "role": "type",
+          "target": "type_27"
+        }
+      ],
+      "location": {
+        "file": "/project/main.tsp",
+        "start": 265,
+        "end": 282
+      }
+    },
+    {
+      "id": "type_27",
+      "kind": "Model",
+      "label": "Sales.Order[]",
+      "attributes": {
+        "decorators": [
+          {
+            "name": "indexerDecorator",
+            "args": [
+              {
+                "type": "type_15"
+              },
+              {
+                "type": "type_0"
+              }
+            ]
+          }
+        ]
+      },
+      "edges": [
+        {
+          "role": "indexKey",
+          "target": "type_15"
+        },
+        {
+          "role": "indexValue",
+          "target": "type_0"
+        }
+      ],
+      "location": {
+        "file": "/compiler/lib/intrinsics.tsp",
+        "start": 4087,
+        "end": 4249
+      }
+    },
+    {
+      "id": "type_28",
+      "kind": "ModelProperty",
+      "label": "Sales.Order.externalId",
+      "attributes": {
+        "optional": true
+      },
+      "edges": [
+        {
+          "role": "type",
+          "target": "type_29"
+        }
+      ],
+      "location": {
+        "file": "/project/main.tsp",
+        "start": 286,
+        "end": 315
+      }
+    },
+    {
+      "id": "type_29",
+      "kind": "Number",
+      "label": "9007199254740993",
+      "attributes": {
+        "value": {
+          "kind": "number",
+          "value": "9007199254740993"
+        }
+      },
+      "edges": []
+    },
+    {
+      "id": "type_30",
+      "kind": "Model",
+      "label": "Sales.Entity<string>",
+      "attributes": {},
+      "edges": [
+        {
+          "role": "property",
+          "target": "type_31",
+          "name": "id"
+        }
+      ],
+      "location": {
+        "file": "/project/common.tsp",
+        "start": 185,
+        "end": 220
+      }
+    },
+    {
+      "id": "type_31",
+      "kind": "ModelProperty",
+      "label": "Sales.Entity<string>.id",
+      "attributes": {
+        "decorators": [
+          {
+            "name": "(unnamed type)",
+            "args": []
+          }
+        ],
+        "optional": false
+      },
+      "edges": [
+        {
+          "role": "type",
+          "target": "type_3"
+        }
+      ],
+      "location": {
+        "file": "/project/common.tsp",
+        "start": 205,
+        "end": 217
+      }
+    },
+    {
+      "id": "type_32",
+      "kind": "Interface",
+      "label": "Sales.Orders",
+      "attributes": {},
+      "edges": [
+        {
+          "role": "operation",
+          "target": "type_33",
+          "name": "read"
+        },
+        {
+          "role": "operation",
+          "target": "type_41",
+          "name": "list"
+        }
+      ],
+      "location": {
+        "file": "/project/main.tsp",
+        "start": 404,
+        "end": 479
+      }
+    },
+    {
+      "id": "type_33",
+      "kind": "Operation",
+      "label": "Sales.Orders.read",
+      "attributes": {},
+      "edges": [
+        {
+          "role": "parameters",
+          "target": "type_34"
+        },
+        {
+          "role": "returnType",
+          "target": "type_36"
+        }
+      ],
+      "location": {
+        "file": "/project/main.tsp",
+        "start": 425,
+        "end": 454
+      }
+    },
+    {
+      "id": "type_34",
+      "kind": "Model",
+      "label": "Sales.Orders.read::parameters",
+      "attributes": {},
+      "edges": [
+        {
+          "role": "property",
+          "target": "type_35",
+          "name": "id"
+        }
+      ],
+      "location": {
+        "file": "/project/main.tsp",
+        "start": 429,
+        "end": 441
+      }
+    },
+    {
+      "id": "type_35",
+      "kind": "ModelProperty",
+      "label": "Sales.Orders.read::parameters.id",
+      "attributes": {
+        "optional": false
+      },
+      "edges": [
+        {
+          "role": "type",
+          "target": "type_3"
+        }
+      ],
+      "location": {
+        "file": "/project/main.tsp",
+        "start": 430,
+        "end": 440
+      }
+    },
+    {
+      "id": "type_36",
+      "kind": "Union",
+      "label": "Sales.OrderResult",
+      "attributes": {
+        "expression": false
+      },
+      "edges": [
+        {
+          "role": "variant",
+          "target": "type_37",
+          "name": "found",
+          "index": 0
+        },
+        {
+          "role": "variant",
+          "target": "type_38",
+          "name": "absent",
+          "index": 1
+        }
+      ],
+      "location": {
+        "file": "/project/main.tsp",
+        "start": 351,
+        "end": 403
+      }
+    },
+    {
+      "id": "type_37",
+      "kind": "UnionVariant",
+      "label": "Sales.Order",
+      "attributes": {},
+      "edges": [
+        {
+          "role": "type",
+          "target": "type_0"
+        }
+      ],
+      "location": {
+        "file": "/project/main.tsp",
+        "start": 371,
+        "end": 383
+      }
+    },
+    {
+      "id": "type_38",
+      "kind": "UnionVariant",
+      "label": "Sales.NotFound",
+      "attributes": {},
+      "edges": [
+        {
+          "role": "type",
+          "target": "type_39"
+        }
+      ],
+      "location": {
+        "file": "/project/main.tsp",
+        "start": 385,
+        "end": 401
+      }
+    },
+    {
+      "id": "type_39",
+      "kind": "Model",
+      "label": "Sales.NotFound",
+      "attributes": {
+        "decorators": [
+          {
+            "name": "(unnamed type)",
+            "args": []
+          }
+        ]
+      },
+      "edges": [
+        {
+          "role": "property",
+          "target": "type_40",
+          "name": "message"
+        }
+      ],
+      "location": {
+        "file": "/project/common.tsp",
+        "start": 313,
+        "end": 355
+      }
+    },
+    {
+      "id": "type_40",
+      "kind": "ModelProperty",
+      "label": "Sales.NotFound.message",
+      "attributes": {
+        "optional": false
+      },
+      "edges": [
+        {
+          "role": "type",
+          "target": "type_3"
+        }
+      ],
+      "location": {
+        "file": "/project/common.tsp",
+        "start": 337,
+        "end": 352
+      }
+    },
+    {
+      "id": "type_41",
+      "kind": "Operation",
+      "label": "Sales.Orders.list",
+      "attributes": {},
+      "edges": [
+        {
+          "role": "parameters",
+          "target": "type_42"
+        },
+        {
+          "role": "returnType",
+          "target": "type_43"
+        }
+      ],
+      "location": {
+        "file": "/project/main.tsp",
+        "start": 458,
+        "end": 476
+      }
+    },
+    {
+      "id": "type_42",
+      "kind": "Model",
+      "label": "Sales.Orders.list::parameters",
+      "attributes": {},
+      "edges": [],
+      "location": {
+        "file": "/project/main.tsp",
+        "start": 462,
+        "end": 464
+      }
+    },
+    {
+      "id": "type_43",
+      "kind": "Model",
+      "label": "Sales.Page<Sales.Order>",
+      "attributes": {},
+      "edges": [
+        {
+          "role": "property",
+          "target": "type_44",
+          "name": "data"
+        },
+        {
+          "role": "property",
+          "target": "type_45",
+          "name": "next"
+        }
+      ],
+      "location": {
+        "file": "/project/common.tsp",
+        "start": 221,
+        "end": 264
+      }
+    },
+    {
+      "id": "type_44",
+      "kind": "ModelProperty",
+      "label": "Sales.Page<Sales.Order>.data",
+      "attributes": {
+        "optional": false
+      },
+      "edges": [
+        {
+          "role": "type",
+          "target": "type_27"
+        }
+      ],
+      "location": {
+        "file": "/project/common.tsp",
+        "start": 237,
+        "end": 246
+      }
+    },
+    {
+      "id": "type_45",
+      "kind": "ModelProperty",
+      "label": "Sales.Page<Sales.Order>.next",
+      "attributes": {
+        "optional": true
+      },
+      "edges": [
+        {
+          "role": "type",
+          "target": "type_3"
+        }
+      ],
+      "location": {
+        "file": "/project/common.tsp",
+        "start": 248,
+        "end": 261
+      }
+    }
+  ],
+  "complete": false,
+  "limitations": [
+    "Selected compiled type graph only; compiler state maps, arbitrary decorator effects and reverse relationships are not fully serialized",
+    "Node IDs are snapshot-local, not stable cross-version identities",
+    "Source remains authoritative; snapshot editing and cross-system equivalence are not established"
+  ],
+  "issues": []
+}

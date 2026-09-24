@@ -1,0 +1,5 @@
+import {captureParquet,inspectParquetPages} from '../src';
+const corpus=await Bun.file('fixtures/parquet/capture-results.json').json(),rename=await Bun.file('fixtures/parquet/rename/manifest.json').json(),values=await Bun.file('fixtures/parquet/values-trial/manifest.json').json(),cases=[...corpus.results,...rename.cases.map((c:any)=>({...c,id:'rename-'+c.id})),...values.cases],results=[];
+for(const c of cases){const r=inspectParquetPages(captureParquet(new Uint8Array(await Bun.file(c.path).arrayBuffer()),{id:c.id}));results.push({id:c.id,path:c.path,status:r.status,diagnostics:r.diagnostics.filter(d=>d.code==='PARQUET_PAGE_BOUNDS'),pages:r.pages,declaredUncompressedBytes:r.declaredUncompressedBytes,declaredValues:r.declaredValues});}
+await Bun.write('fixtures/parquet/pages/results.json',JSON.stringify({files:results.length,pages:results.reduce((n,r)=>n+(r.pages?.length??0),0),results},null,2)+'\n');console.log({files:results.length,pages:results.reduce((n,r)=>n+(r.pages?.length??0),0),blocked:results.filter(r=>r.status==='blocked').map(r=>({id:r.id,diagnostics:r.diagnostics}))});
+export {};

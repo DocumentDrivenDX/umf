@@ -1,0 +1,287 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:parquet:rows:0.1.0",
+  "type": "object",
+  "required": [
+    "source",
+    "status",
+    "complete",
+    "diagnostics"
+  ],
+  "properties": {
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "status": {
+      "enum": [
+        "assembled",
+        "blocked"
+      ]
+    },
+    "complete": {
+      "const": false
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "path",
+          "severity",
+          "message"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "rows": {
+      "type": "array",
+      "maxItems": 10000,
+      "items": {
+        "$ref": "#/$defs/rowValue"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "rowValue": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "physical"
+            },
+            "value": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "required": [
+                    "type",
+                    "value"
+                  ],
+                  "properties": {
+                    "type": {
+                      "const": "BOOLEAN"
+                    },
+                    "value": {
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "type",
+                    "value"
+                  ],
+                  "properties": {
+                    "type": {
+                      "const": "INT32"
+                    },
+                    "value": {
+                      "type": "string",
+                      "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                      "maxLength": 11
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "type",
+                    "value"
+                  ],
+                  "properties": {
+                    "type": {
+                      "const": "INT64"
+                    },
+                    "value": {
+                      "type": "string",
+                      "pattern": "^(0|-[1-9][0-9]*|[1-9][0-9]*)$",
+                      "maxLength": 20
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "type",
+                    "hex"
+                  ],
+                  "properties": {
+                    "type": {
+                      "const": "FLOAT"
+                    },
+                    "hex": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{8}$"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "type",
+                    "hex"
+                  ],
+                  "properties": {
+                    "type": {
+                      "const": "DOUBLE"
+                    },
+                    "hex": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{16}$"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "type",
+                    "hex"
+                  ],
+                  "properties": {
+                    "type": {
+                      "const": "INT96"
+                    },
+                    "hex": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{24}$"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "type",
+                    "hex"
+                  ],
+                  "properties": {
+                    "type": {
+                      "const": "BYTE_ARRAY"
+                    },
+                    "hex": {
+                      "type": "string",
+                      "pattern": "^(?:[0-9a-f]{2})*$",
+                      "minLength": 0,
+                      "maxLength": 16777216
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "required": [
+                    "type",
+                    "hex"
+                  ],
+                  "properties": {
+                    "type": {
+                      "const": "FIXED_LEN_BYTE_ARRAY"
+                    },
+                    "hex": {
+                      "type": "string",
+                      "pattern": "^(?:[0-9a-f]{2})*$",
+                      "minLength": 2,
+                      "maxLength": 16777216
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "fields"
+          ],
+          "properties": {
+            "kind": {
+              "const": "record"
+            },
+            "fields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "index",
+                  "name",
+                  "value"
+                ],
+                "properties": {
+                  "index": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "$ref": "#/$defs/rowValue"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "items"
+          ],
+          "properties": {
+            "kind": {
+              "const": "repeated"
+            },
+            "items": {
+              "type": "array",
+              "maxItems": 100000,
+              "items": {
+                "$ref": "#/$defs/rowValue"
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    }
+  }
+}

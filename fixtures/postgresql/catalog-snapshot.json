@@ -1,0 +1,3815 @@
+{
+  "types": [
+    {
+      "acl": null,
+      "base": "numeric(38,9)",
+      "kind": "d",
+      "name": "money_amount",
+      "owner": "postgres",
+      "labels": null,
+      "schema": "sales",
+      "comment": null,
+      "default": null,
+      "notNull": false,
+      "constraints": [
+        {
+          "name": "money_amount_check",
+          "validated": true,
+          "definition": "CHECK ((VALUE >= (0)::numeric))"
+        }
+      ]
+    },
+    {
+      "acl": null,
+      "base": "-",
+      "kind": "e",
+      "name": "order_state",
+      "owner": "postgres",
+      "labels": [
+        "new",
+        "paid",
+        "cancelled"
+      ],
+      "schema": "sales",
+      "comment": null,
+      "default": null,
+      "notNull": false,
+      "constraints": null
+    },
+    {
+      "acl": null,
+      "base": "integer",
+      "kind": "d",
+      "name": "text",
+      "owner": "postgres",
+      "labels": null,
+      "schema": "sales",
+      "comment": null,
+      "default": null,
+      "notNull": false,
+      "constraints": [
+        {
+          "name": "text_check",
+          "validated": true,
+          "definition": "CHECK ((VALUE >= 0))"
+        }
+      ]
+    }
+  ],
+  "profile": "umf-postgresql-catalog-evidence-17-v3",
+  "triggers": [
+    {
+      "name": "normalize_inventory",
+      "schema": "sales",
+      "comment": "Normalize display code — retain trigger intent",
+      "enabled": "O",
+      "deferred": false,
+      "function": "sales.normalize_inventory()",
+      "relation": "inventory",
+      "deferrable": false,
+      "definition": "CREATE TRIGGER normalize_inventory BEFORE INSERT OR UPDATE OF code ON sales.inventory FOR EACH ROW EXECUTE FUNCTION sales.normalize_inventory()"
+    }
+  ],
+  "functions": [
+    {
+      "acl": null,
+      "name": "echo_text",
+      "owner": "postgres",
+      "schema": "public",
+      "comment": null,
+      "identity": "value text",
+      "definition": "CREATE OR REPLACE FUNCTION public.echo_text(value text)\n RETURNS text\n LANGUAGE sql\n IMMUTABLE\nAS $function$ SELECT value $function$\n"
+    },
+    {
+      "acl": null,
+      "name": "normalize_inventory",
+      "owner": "postgres",
+      "schema": "sales",
+      "comment": null,
+      "identity": "",
+      "definition": "CREATE OR REPLACE FUNCTION sales.normalize_inventory()\n RETURNS trigger\n LANGUAGE plpgsql\nAS $function$\nBEGIN\n NEW.normalized := upper(NEW.code);\n RETURN NEW;\nEND\n$function$\n"
+    },
+    {
+      "acl": null,
+      "name": "price_span",
+      "owner": "postgres",
+      "schema": "sales",
+      "comment": null,
+      "identity": "numeric, numeric",
+      "definition": "CREATE OR REPLACE FUNCTION sales.price_span(numeric, numeric)\n RETURNS sales.price_span\n LANGUAGE internal\n IMMUTABLE PARALLEL SAFE\nAS $function$range_constructor2$function$\n"
+    },
+    {
+      "acl": null,
+      "name": "price_span",
+      "owner": "postgres",
+      "schema": "sales",
+      "comment": null,
+      "identity": "numeric, numeric, text",
+      "definition": "CREATE OR REPLACE FUNCTION sales.price_span(numeric, numeric, text)\n RETURNS sales.price_span\n LANGUAGE internal\n IMMUTABLE PARALLEL SAFE\nAS $function$range_constructor3$function$\n"
+    },
+    {
+      "acl": null,
+      "name": "price_spans",
+      "owner": "postgres",
+      "schema": "sales",
+      "comment": null,
+      "identity": "",
+      "definition": "CREATE OR REPLACE FUNCTION sales.price_spans()\n RETURNS sales.price_spans\n LANGUAGE internal\n IMMUTABLE PARALLEL SAFE STRICT\nAS $function$multirange_constructor0$function$\n"
+    },
+    {
+      "acl": null,
+      "name": "price_spans",
+      "owner": "postgres",
+      "schema": "sales",
+      "comment": null,
+      "identity": "VARIADIC sales.price_span[]",
+      "definition": "CREATE OR REPLACE FUNCTION sales.price_spans(VARIADIC sales.price_span[])\n RETURNS sales.price_spans\n LANGUAGE internal\n IMMUTABLE PARALLEL SAFE STRICT\nAS $function$multirange_constructor2$function$\n"
+    },
+    {
+      "acl": null,
+      "name": "price_spans",
+      "owner": "postgres",
+      "schema": "sales",
+      "comment": null,
+      "identity": "sales.price_span",
+      "definition": "CREATE OR REPLACE FUNCTION sales.price_spans(sales.price_span)\n RETURNS sales.price_spans\n LANGUAGE internal\n IMMUTABLE PARALLEL SAFE STRICT\nAS $function$multirange_constructor1$function$\n"
+    }
+  ],
+  "relations": [
+    {
+      "acl": "{postgres=arwdDxtm/postgres,=r/postgres}",
+      "kind": "p",
+      "name": "events",
+      "view": null,
+      "owner": "postgres",
+      "schema": "public",
+      "columns": [
+        {
+          "acl": null,
+          "name": "at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "notNull": true,
+          "storage": "p",
+          "identity": "",
+          "position": 1,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "timestamptz",
+            "schema": "pg_catalog",
+            "category": "D",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "payload",
+          "type": "jsonb",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "x",
+          "identity": "",
+          "position": 2,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "jsonb",
+            "schema": "pg_catalog",
+            "category": "U",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        }
+      ],
+      "comment": null,
+      "indexes": null,
+      "options": null,
+      "parents": null,
+      "policies": [
+        {
+          "name": "visible_events",
+          "check": null,
+          "roles": [
+            "PUBLIC"
+          ],
+          "using": "((payload ->> 'tenant'::text) = CURRENT_USER)",
+          "command": "r",
+          "permissive": true
+        }
+      ],
+      "sequence": null,
+      "constraints": null,
+      "persistence": "p",
+      "rowSecurity": true,
+      "partitionKey": "RANGE (at)",
+      "partitionBound": null,
+      "forceRowSecurity": false
+    },
+    {
+      "acl": null,
+      "kind": "r",
+      "name": "events_2026",
+      "view": null,
+      "owner": "postgres",
+      "schema": "public",
+      "columns": [
+        {
+          "acl": null,
+          "name": "at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "notNull": true,
+          "storage": "p",
+          "identity": "",
+          "position": 1,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "timestamptz",
+            "schema": "pg_catalog",
+            "category": "D",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "payload",
+          "type": "jsonb",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "x",
+          "identity": "",
+          "position": 2,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "jsonb",
+            "schema": "pg_catalog",
+            "category": "U",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        }
+      ],
+      "comment": null,
+      "indexes": null,
+      "options": null,
+      "parents": [
+        "events"
+      ],
+      "policies": null,
+      "sequence": null,
+      "constraints": null,
+      "persistence": "p",
+      "rowSecurity": false,
+      "partitionKey": null,
+      "partitionBound": "FOR VALUES FROM ('2026-01-01 00:00:00+00') TO ('2027-01-01 00:00:00+00')",
+      "forceRowSecurity": false
+    },
+    {
+      "acl": null,
+      "kind": "v",
+      "name": "recent_events",
+      "view": " SELECT at,\n    payload\n   FROM events\n  WHERE (at > (now() - '1 day'::interval));",
+      "owner": "postgres",
+      "schema": "public",
+      "columns": [
+        {
+          "acl": null,
+          "name": "at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "p",
+          "identity": "",
+          "position": 1,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "timestamptz",
+            "schema": "pg_catalog",
+            "category": "D",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "payload",
+          "type": "jsonb",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "x",
+          "identity": "",
+          "position": 2,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "jsonb",
+            "schema": "pg_catalog",
+            "category": "U",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        }
+      ],
+      "comment": null,
+      "indexes": null,
+      "options": null,
+      "parents": null,
+      "policies": null,
+      "sequence": null,
+      "constraints": null,
+      "persistence": "p",
+      "rowSecurity": false,
+      "partitionKey": null,
+      "partitionBound": null,
+      "forceRowSecurity": false
+    },
+    {
+      "acl": null,
+      "kind": "r",
+      "name": "inventory",
+      "view": null,
+      "owner": "postgres",
+      "schema": "sales",
+      "columns": [
+        {
+          "acl": null,
+          "name": "code",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "notNull": true,
+          "storage": "x",
+          "identity": "",
+          "position": 1,
+          "collation": "sales.code_order",
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "text",
+            "schema": "pg_catalog",
+            "category": "S",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "address",
+          "type": "sales.address",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "x",
+          "identity": "",
+          "position": 2,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "c",
+            "name": "address",
+            "schema": "sales",
+            "category": "C",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "prices",
+          "type": "sales.price_span",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "x",
+          "identity": "",
+          "position": 3,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "r",
+            "name": "price_span",
+            "schema": "sales",
+            "category": "R",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "history",
+          "type": "sales.price_spans",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "x",
+          "identity": "",
+          "position": 4,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "m",
+            "name": "price_spans",
+            "schema": "sales",
+            "category": "R",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "normalized",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "x",
+          "identity": "",
+          "position": 5,
+          "collation": "\"default\"",
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "text",
+            "schema": "pg_catalog",
+            "category": "S",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        }
+      ],
+      "comment": null,
+      "indexes": [
+        {
+          "ready": true,
+          "valid": true,
+          "definition": "CREATE UNIQUE INDEX inventory_pkey ON sales.inventory USING btree (code)",
+          "replicaIdentity": false
+        }
+      ],
+      "options": null,
+      "parents": null,
+      "policies": null,
+      "sequence": null,
+      "constraints": [
+        {
+          "kind": "p",
+          "name": "inventory_pkey",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "PRIMARY KEY (code)"
+        }
+      ],
+      "persistence": "p",
+      "rowSecurity": false,
+      "partitionKey": null,
+      "partitionBound": null,
+      "forceRowSecurity": false
+    },
+    {
+      "acl": null,
+      "kind": "m",
+      "name": "inventory_totals",
+      "view": " SELECT count(*) AS total\n   FROM sales.inventory;",
+      "owner": "postgres",
+      "schema": "sales",
+      "columns": [
+        {
+          "acl": null,
+          "name": "total",
+          "type": "bigint",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "p",
+          "identity": "",
+          "position": 1,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "int8",
+            "schema": "pg_catalog",
+            "category": "N",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        }
+      ],
+      "comment": null,
+      "indexes": [
+        {
+          "ready": true,
+          "valid": true,
+          "definition": "CREATE UNIQUE INDEX inventory_totals_unique ON sales.inventory_totals USING btree (total)",
+          "replicaIdentity": false
+        }
+      ],
+      "options": null,
+      "parents": null,
+      "policies": null,
+      "sequence": null,
+      "constraints": null,
+      "persistence": "p",
+      "rowSecurity": false,
+      "partitionKey": null,
+      "partitionBound": null,
+      "forceRowSecurity": false
+    },
+    {
+      "acl": null,
+      "kind": "r",
+      "name": "order_lines",
+      "view": null,
+      "owner": "postgres",
+      "schema": "sales",
+      "columns": [
+        {
+          "acl": null,
+          "name": "order_id",
+          "type": "bigint",
+          "comment": null,
+          "default": null,
+          "notNull": true,
+          "storage": "p",
+          "identity": "",
+          "position": 1,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "int8",
+            "schema": "pg_catalog",
+            "category": "N",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "line_no",
+          "type": "integer",
+          "comment": null,
+          "default": null,
+          "notNull": true,
+          "storage": "p",
+          "identity": "",
+          "position": 2,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "int4",
+            "schema": "pg_catalog",
+            "category": "N",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "quantity",
+          "type": "integer",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "p",
+          "identity": "",
+          "position": 3,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "int4",
+            "schema": "pg_catalog",
+            "category": "N",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        }
+      ],
+      "comment": null,
+      "indexes": [
+        {
+          "ready": true,
+          "valid": true,
+          "definition": "CREATE UNIQUE INDEX order_lines_pkey ON sales.order_lines USING btree (order_id, line_no)",
+          "replicaIdentity": false
+        }
+      ],
+      "options": null,
+      "parents": null,
+      "policies": null,
+      "sequence": null,
+      "constraints": [
+        {
+          "kind": "f",
+          "name": "order_lines_order_id_fkey",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "FOREIGN KEY (order_id) REFERENCES sales.orders(id) ON DELETE CASCADE"
+        },
+        {
+          "kind": "p",
+          "name": "order_lines_pkey",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "PRIMARY KEY (order_id, line_no)"
+        },
+        {
+          "kind": "c",
+          "name": "order_lines_quantity_check",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK ((quantity > 0))"
+        }
+      ],
+      "persistence": "p",
+      "rowSecurity": false,
+      "partitionKey": null,
+      "partitionBound": null,
+      "forceRowSecurity": false
+    },
+    {
+      "acl": null,
+      "kind": "r",
+      "name": "orders",
+      "view": null,
+      "owner": "postgres",
+      "schema": "sales",
+      "columns": [
+        {
+          "acl": null,
+          "name": "id",
+          "type": "bigint",
+          "comment": null,
+          "default": null,
+          "notNull": true,
+          "storage": "p",
+          "identity": "a",
+          "position": 1,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "int8",
+            "schema": "pg_catalog",
+            "category": "N",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "external_id",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "notNull": true,
+          "storage": "p",
+          "identity": "",
+          "position": 2,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "uuid",
+            "schema": "pg_catalog",
+            "category": "U",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "state",
+          "type": "sales.order_state",
+          "comment": null,
+          "default": "'new'::sales.order_state",
+          "notNull": true,
+          "storage": "p",
+          "identity": "",
+          "position": 3,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "e",
+            "name": "order_state",
+            "schema": "sales",
+            "category": "E",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "total",
+          "type": "sales.money_amount",
+          "comment": "Exact amount — café",
+          "default": "9007199254740993.123456789",
+          "notNull": false,
+          "storage": "m",
+          "identity": "",
+          "position": 4,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "d",
+            "name": "money_amount",
+            "schema": "sales",
+            "category": "N",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "details",
+          "type": "jsonb",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "x",
+          "identity": "",
+          "position": 5,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "jsonb",
+            "schema": "pg_catalog",
+            "category": "U",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "tags",
+          "type": "text[]",
+          "comment": null,
+          "default": "ARRAY[]::text[]",
+          "notNull": false,
+          "storage": "x",
+          "identity": "",
+          "position": 6,
+          "collation": "\"default\"",
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "_text",
+            "schema": "pg_catalog",
+            "category": "A",
+            "modifier": -1,
+            "dimensions": 1
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": "now()",
+          "notNull": false,
+          "storage": "p",
+          "identity": "",
+          "position": 7,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "timestamptz",
+            "schema": "pg_catalog",
+            "category": "D",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "subtotal",
+          "type": "numeric",
+          "comment": null,
+          "default": "((total)::numeric / 1.2)",
+          "notNull": false,
+          "storage": "m",
+          "identity": "",
+          "position": 8,
+          "collation": null,
+          "generated": "s",
+          "nativeType": {
+            "kind": "b",
+            "name": "numeric",
+            "schema": "pg_catalog",
+            "category": "N",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        }
+      ],
+      "comment": null,
+      "indexes": [
+        {
+          "ready": true,
+          "valid": true,
+          "definition": "CREATE INDEX paid_orders ON sales.orders USING btree (created_at DESC) WHERE (state = 'paid'::sales.order_state)",
+          "replicaIdentity": false
+        },
+        {
+          "ready": true,
+          "valid": true,
+          "definition": "CREATE UNIQUE INDEX orders_external_id_key ON sales.orders USING btree (external_id)",
+          "replicaIdentity": false
+        },
+        {
+          "ready": true,
+          "valid": true,
+          "definition": "CREATE UNIQUE INDEX orders_pkey ON sales.orders USING btree (id)",
+          "replicaIdentity": false
+        }
+      ],
+      "options": null,
+      "parents": null,
+      "policies": null,
+      "sequence": null,
+      "constraints": [
+        {
+          "kind": "u",
+          "name": "orders_external_id_key",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "UNIQUE (external_id)"
+        },
+        {
+          "kind": "p",
+          "name": "orders_pkey",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "kind": "c",
+          "name": "positive_total",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "CHECK (((total)::numeric >= (0)::numeric))"
+        }
+      ],
+      "persistence": "p",
+      "rowSecurity": false,
+      "partitionKey": null,
+      "partitionBound": null,
+      "forceRowSecurity": false
+    },
+    {
+      "acl": null,
+      "kind": "S",
+      "name": "orders_id_seq",
+      "view": null,
+      "owner": "postgres",
+      "schema": "sales",
+      "columns": [
+        {
+          "acl": null,
+          "name": "last_value",
+          "type": "bigint",
+          "comment": null,
+          "default": null,
+          "notNull": true,
+          "storage": "p",
+          "identity": "",
+          "position": 1,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "int8",
+            "schema": "pg_catalog",
+            "category": "N",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "log_cnt",
+          "type": "bigint",
+          "comment": null,
+          "default": null,
+          "notNull": true,
+          "storage": "p",
+          "identity": "",
+          "position": 2,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "int8",
+            "schema": "pg_catalog",
+            "category": "N",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "is_called",
+          "type": "boolean",
+          "comment": null,
+          "default": null,
+          "notNull": true,
+          "storage": "p",
+          "identity": "",
+          "position": 3,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "bool",
+            "schema": "pg_catalog",
+            "category": "B",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        }
+      ],
+      "comment": null,
+      "indexes": null,
+      "options": null,
+      "parents": null,
+      "policies": null,
+      "sequence": {
+        "max": "9223372036854775807",
+        "min": "1",
+        "type": "bigint",
+        "cache": "1",
+        "cycle": false,
+        "start": "1",
+        "increment": "1"
+      },
+      "constraints": null,
+      "persistence": "p",
+      "rowSecurity": false,
+      "partitionKey": null,
+      "partitionBound": null,
+      "forceRowSecurity": false
+    },
+    {
+      "acl": null,
+      "kind": "r",
+      "name": "row_encodings",
+      "view": null,
+      "owner": "postgres",
+      "schema": "sales",
+      "columns": [
+        {
+          "acl": null,
+          "name": "id",
+          "type": "integer",
+          "comment": null,
+          "default": null,
+          "notNull": true,
+          "storage": "p",
+          "identity": "",
+          "position": 1,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "int4",
+            "schema": "pg_catalog",
+            "category": "N",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "active",
+          "type": "boolean",
+          "comment": null,
+          "default": null,
+          "notNull": true,
+          "storage": "p",
+          "identity": "",
+          "position": 2,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "bool",
+            "schema": "pg_catalog",
+            "category": "B",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "optional_flag",
+          "type": "boolean",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "p",
+          "identity": "",
+          "position": 3,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "bool",
+            "schema": "pg_catalog",
+            "category": "B",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "nullable_json",
+          "type": "jsonb",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "x",
+          "identity": "",
+          "position": 4,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "jsonb",
+            "schema": "pg_catalog",
+            "category": "U",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "required_json",
+          "type": "jsonb",
+          "comment": null,
+          "default": null,
+          "notNull": true,
+          "storage": "x",
+          "identity": "",
+          "position": 5,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "jsonb",
+            "schema": "pg_catalog",
+            "category": "U",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "label",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "x",
+          "identity": "",
+          "position": 6,
+          "collation": "\"default\"",
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "text",
+            "schema": "pg_catalog",
+            "category": "S",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "small_value",
+          "type": "smallint",
+          "comment": null,
+          "default": null,
+          "notNull": true,
+          "storage": "p",
+          "identity": "",
+          "position": 7,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "int2",
+            "schema": "pg_catalog",
+            "category": "N",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        }
+      ],
+      "comment": null,
+      "indexes": [
+        {
+          "ready": true,
+          "valid": true,
+          "definition": "CREATE UNIQUE INDEX row_encodings_pkey ON sales.row_encodings USING btree (id)",
+          "replicaIdentity": false
+        }
+      ],
+      "options": null,
+      "parents": null,
+      "policies": null,
+      "sequence": null,
+      "constraints": [
+        {
+          "kind": "p",
+          "name": "row_encodings_pkey",
+          "deferred": false,
+          "validated": true,
+          "deferrable": false,
+          "definition": "PRIMARY KEY (id)"
+        }
+      ],
+      "persistence": "p",
+      "rowSecurity": false,
+      "partitionKey": null,
+      "partitionBound": null,
+      "forceRowSecurity": false
+    },
+    {
+      "acl": null,
+      "kind": "r",
+      "name": "scalar_types",
+      "view": null,
+      "owner": "postgres",
+      "schema": "sales",
+      "columns": [
+        {
+          "acl": null,
+          "name": "flag",
+          "type": "boolean",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "p",
+          "identity": "",
+          "position": 1,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "bool",
+            "schema": "pg_catalog",
+            "category": "B",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "small",
+          "type": "smallint",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "p",
+          "identity": "",
+          "position": 2,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "int2",
+            "schema": "pg_catalog",
+            "category": "N",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "ordinary",
+          "type": "integer",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "p",
+          "identity": "",
+          "position": 3,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "int4",
+            "schema": "pg_catalog",
+            "category": "N",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "large",
+          "type": "bigint",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "p",
+          "identity": "",
+          "position": 4,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "int8",
+            "schema": "pg_catalog",
+            "category": "N",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "exact",
+          "type": "numeric(20,4)",
+          "comment": "Exact amount with native precision and scale",
+          "default": null,
+          "notNull": false,
+          "storage": "m",
+          "identity": "",
+          "position": 5,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "numeric",
+            "schema": "pg_catalog",
+            "category": "N",
+            "modifier": 1310728,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "single",
+          "type": "real",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "p",
+          "identity": "",
+          "position": 6,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "float4",
+            "schema": "pg_catalog",
+            "category": "N",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "wide",
+          "type": "double precision",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "p",
+          "identity": "",
+          "position": 7,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "float8",
+            "schema": "pg_catalog",
+            "category": "N",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "words",
+          "type": "text",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "x",
+          "identity": "",
+          "position": 8,
+          "collation": "\"default\"",
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "text",
+            "schema": "pg_catalog",
+            "category": "S",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "bounded",
+          "type": "character varying(20)",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "x",
+          "identity": "",
+          "position": 9,
+          "collation": "\"default\"",
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "varchar",
+            "schema": "pg_catalog",
+            "category": "S",
+            "modifier": 24,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "padded",
+          "type": "character(4)",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "x",
+          "identity": "",
+          "position": 10,
+          "collation": "\"default\"",
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "bpchar",
+            "schema": "pg_catalog",
+            "category": "S",
+            "modifier": 8,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "data",
+          "type": "bytea",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "x",
+          "identity": "",
+          "position": 11,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "bytea",
+            "schema": "pg_catalog",
+            "category": "U",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "day",
+          "type": "date",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "p",
+          "identity": "",
+          "position": 12,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "date",
+            "schema": "pg_catalog",
+            "category": "D",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "clock",
+          "type": "time(3) without time zone",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "p",
+          "identity": "",
+          "position": 13,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "time",
+            "schema": "pg_catalog",
+            "category": "D",
+            "modifier": 3,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "zoned_clock",
+          "type": "time with time zone",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "p",
+          "identity": "",
+          "position": 14,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "timetz",
+            "schema": "pg_catalog",
+            "category": "D",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "local_stamp",
+          "type": "timestamp(6) without time zone",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "p",
+          "identity": "",
+          "position": 15,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "timestamp",
+            "schema": "pg_catalog",
+            "category": "D",
+            "modifier": 6,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "instant",
+          "type": "timestamp with time zone",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "p",
+          "identity": "",
+          "position": 16,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "timestamptz",
+            "schema": "pg_catalog",
+            "category": "D",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "items",
+          "type": "integer[]",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "x",
+          "identity": "",
+          "position": 17,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "_int4",
+            "schema": "pg_catalog",
+            "category": "A",
+            "modifier": -1,
+            "dimensions": 1
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "domain_value",
+          "type": "sales.text",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "p",
+          "identity": "",
+          "position": 18,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "d",
+            "name": "text",
+            "schema": "sales",
+            "category": "N",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "document",
+          "type": "jsonb",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "x",
+          "identity": "",
+          "position": 19,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "jsonb",
+            "schema": "pg_catalog",
+            "category": "U",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "identifier",
+          "type": "uuid",
+          "comment": null,
+          "default": null,
+          "notNull": false,
+          "storage": "p",
+          "identity": "",
+          "position": 20,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "uuid",
+            "schema": "pg_catalog",
+            "category": "U",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        }
+      ],
+      "comment": null,
+      "indexes": null,
+      "options": null,
+      "parents": null,
+      "policies": null,
+      "sequence": null,
+      "constraints": null,
+      "persistence": "p",
+      "rowSecurity": false,
+      "partitionKey": null,
+      "partitionBound": null,
+      "forceRowSecurity": false
+    },
+    {
+      "acl": null,
+      "kind": "S",
+      "name": "ticket_numbers",
+      "view": null,
+      "owner": "postgres",
+      "schema": "sales",
+      "columns": [
+        {
+          "acl": null,
+          "name": "last_value",
+          "type": "bigint",
+          "comment": null,
+          "default": null,
+          "notNull": true,
+          "storage": "p",
+          "identity": "",
+          "position": 1,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "int8",
+            "schema": "pg_catalog",
+            "category": "N",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "log_cnt",
+          "type": "bigint",
+          "comment": null,
+          "default": null,
+          "notNull": true,
+          "storage": "p",
+          "identity": "",
+          "position": 2,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "int8",
+            "schema": "pg_catalog",
+            "category": "N",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        },
+        {
+          "acl": null,
+          "name": "is_called",
+          "type": "boolean",
+          "comment": null,
+          "default": null,
+          "notNull": true,
+          "storage": "p",
+          "identity": "",
+          "position": 3,
+          "collation": null,
+          "generated": "",
+          "nativeType": {
+            "kind": "b",
+            "name": "bool",
+            "schema": "pg_catalog",
+            "category": "B",
+            "modifier": -1,
+            "dimensions": 0
+          },
+          "compression": ""
+        }
+      ],
+      "comment": null,
+      "indexes": null,
+      "options": null,
+      "parents": null,
+      "policies": null,
+      "sequence": {
+        "max": "9223372036854775807",
+        "min": "1",
+        "type": "bigint",
+        "cache": "2",
+        "cycle": false,
+        "start": "9007199254740993",
+        "increment": "3"
+      },
+      "constraints": null,
+      "persistence": "p",
+      "rowSecurity": false,
+      "partitionKey": null,
+      "partitionBound": null,
+      "forceRowSecurity": false
+    }
+  ],
+  "collations": [
+    {
+      "name": "code_order",
+      "ctype": "C",
+      "owner": "postgres",
+      "rules": null,
+      "locale": null,
+      "schema": "sales",
+      "collate": "C",
+      "comment": null,
+      "version": null,
+      "encoding": 6,
+      "provider": "c",
+      "deterministic": true
+    }
+  ],
+  "namespaces": [
+    {
+      "acl": "{pg_database_owner=UC/pg_database_owner,=U/pg_database_owner}",
+      "name": "public",
+      "owner": "pg_database_owner"
+    },
+    {
+      "acl": null,
+      "name": "sales",
+      "owner": "postgres"
+    }
+  ],
+  "rangeTypes": [
+    {
+      "acl": null,
+      "name": "price_span",
+      "owner": "postgres",
+      "schema": "sales",
+      "comment": null,
+      "subtype": "numeric",
+      "canonical": "-",
+      "collation": null,
+      "multirange": "sales.price_spans",
+      "operatorClass": "pg_catalog.numeric_ops",
+      "subtypeDifference": "-"
+    }
+  ],
+  "dependencies": [
+    {
+      "kind": "a",
+      "dependent": {
+        "name": "events_2026",
+        "type": "table",
+        "schema": "public",
+        "catalog": "pg_class",
+        "identity": "public.events_2026"
+      },
+      "referenced": {
+        "name": "events",
+        "type": "table",
+        "schema": "public",
+        "catalog": "pg_class",
+        "identity": "public.events"
+      }
+    },
+    {
+      "kind": "a",
+      "dependent": {
+        "name": "inventory_totals_unique",
+        "type": "index",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.inventory_totals_unique"
+      },
+      "referenced": {
+        "name": "inventory_totals",
+        "type": "materialized view column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.inventory_totals.total"
+      }
+    },
+    {
+      "kind": "a",
+      "dependent": {
+        "name": "paid_orders",
+        "type": "index",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.paid_orders"
+      },
+      "referenced": {
+        "name": "orders",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders.created_at"
+      }
+    },
+    {
+      "kind": "a",
+      "dependent": {
+        "name": "paid_orders",
+        "type": "index",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.paid_orders"
+      },
+      "referenced": {
+        "name": "orders",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders.state"
+      }
+    },
+    {
+      "kind": "a",
+      "dependent": {
+        "name": null,
+        "type": "default value",
+        "schema": null,
+        "catalog": "pg_attrdef",
+        "identity": "for sales.orders.created_at"
+      },
+      "referenced": {
+        "name": "orders",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders.created_at"
+      }
+    },
+    {
+      "kind": "a",
+      "dependent": {
+        "name": null,
+        "type": "default value",
+        "schema": null,
+        "catalog": "pg_attrdef",
+        "identity": "for sales.orders.state"
+      },
+      "referenced": {
+        "name": "orders",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders.state"
+      }
+    },
+    {
+      "kind": "a",
+      "dependent": {
+        "name": null,
+        "type": "default value",
+        "schema": null,
+        "catalog": "pg_attrdef",
+        "identity": "for sales.orders.tags"
+      },
+      "referenced": {
+        "name": "orders",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders.tags"
+      }
+    },
+    {
+      "kind": "a",
+      "dependent": {
+        "name": null,
+        "type": "default value",
+        "schema": null,
+        "catalog": "pg_attrdef",
+        "identity": "for sales.orders.total"
+      },
+      "referenced": {
+        "name": "orders",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders.total"
+      }
+    },
+    {
+      "kind": "a",
+      "dependent": {
+        "name": null,
+        "type": "domain constraint",
+        "schema": "sales",
+        "catalog": "pg_constraint",
+        "identity": "money_amount_check on sales.money_amount"
+      },
+      "referenced": {
+        "name": "money_amount",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.money_amount"
+      }
+    },
+    {
+      "kind": "a",
+      "dependent": {
+        "name": null,
+        "type": "domain constraint",
+        "schema": "sales",
+        "catalog": "pg_constraint",
+        "identity": "text_check on sales.text"
+      },
+      "referenced": {
+        "name": "text",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.text"
+      }
+    },
+    {
+      "kind": "a",
+      "dependent": {
+        "name": null,
+        "type": "policy",
+        "schema": null,
+        "catalog": "pg_policy",
+        "identity": "visible_events on public.events"
+      },
+      "referenced": {
+        "name": "events",
+        "type": "table",
+        "schema": "public",
+        "catalog": "pg_class",
+        "identity": "public.events"
+      }
+    },
+    {
+      "kind": "a",
+      "dependent": {
+        "name": null,
+        "type": "table constraint",
+        "schema": "sales",
+        "catalog": "pg_constraint",
+        "identity": "inventory_pkey on sales.inventory"
+      },
+      "referenced": {
+        "name": "inventory",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.inventory.code"
+      }
+    },
+    {
+      "kind": "a",
+      "dependent": {
+        "name": null,
+        "type": "table constraint",
+        "schema": "sales",
+        "catalog": "pg_constraint",
+        "identity": "order_lines_order_id_fkey on sales.order_lines"
+      },
+      "referenced": {
+        "name": "order_lines",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.order_lines.order_id"
+      }
+    },
+    {
+      "kind": "a",
+      "dependent": {
+        "name": null,
+        "type": "table constraint",
+        "schema": "sales",
+        "catalog": "pg_constraint",
+        "identity": "order_lines_pkey on sales.order_lines"
+      },
+      "referenced": {
+        "name": "order_lines",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.order_lines.line_no"
+      }
+    },
+    {
+      "kind": "a",
+      "dependent": {
+        "name": null,
+        "type": "table constraint",
+        "schema": "sales",
+        "catalog": "pg_constraint",
+        "identity": "order_lines_pkey on sales.order_lines"
+      },
+      "referenced": {
+        "name": "order_lines",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.order_lines.order_id"
+      }
+    },
+    {
+      "kind": "a",
+      "dependent": {
+        "name": null,
+        "type": "table constraint",
+        "schema": "sales",
+        "catalog": "pg_constraint",
+        "identity": "order_lines_quantity_check on sales.order_lines"
+      },
+      "referenced": {
+        "name": "order_lines",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.order_lines.quantity"
+      }
+    },
+    {
+      "kind": "a",
+      "dependent": {
+        "name": null,
+        "type": "table constraint",
+        "schema": "sales",
+        "catalog": "pg_constraint",
+        "identity": "orders_external_id_key on sales.orders"
+      },
+      "referenced": {
+        "name": "orders",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders.external_id"
+      }
+    },
+    {
+      "kind": "a",
+      "dependent": {
+        "name": null,
+        "type": "table constraint",
+        "schema": "sales",
+        "catalog": "pg_constraint",
+        "identity": "orders_pkey on sales.orders"
+      },
+      "referenced": {
+        "name": "orders",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders.id"
+      }
+    },
+    {
+      "kind": "a",
+      "dependent": {
+        "name": null,
+        "type": "table constraint",
+        "schema": "sales",
+        "catalog": "pg_constraint",
+        "identity": "positive_total on sales.orders"
+      },
+      "referenced": {
+        "name": "orders",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders.total"
+      }
+    },
+    {
+      "kind": "a",
+      "dependent": {
+        "name": null,
+        "type": "table constraint",
+        "schema": "sales",
+        "catalog": "pg_constraint",
+        "identity": "row_encodings_pkey on sales.row_encodings"
+      },
+      "referenced": {
+        "name": "row_encodings",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.row_encodings.id"
+      }
+    },
+    {
+      "kind": "a",
+      "dependent": {
+        "name": null,
+        "type": "trigger",
+        "schema": null,
+        "catalog": "pg_trigger",
+        "identity": "normalize_inventory on sales.inventory"
+      },
+      "referenced": {
+        "name": "inventory",
+        "type": "table",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.inventory"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "_address",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.address[]"
+      },
+      "referenced": {
+        "name": "address",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.address"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "_events",
+        "type": "type",
+        "schema": "public",
+        "catalog": "pg_type",
+        "identity": "public.events[]"
+      },
+      "referenced": {
+        "name": "events",
+        "type": "type",
+        "schema": "public",
+        "catalog": "pg_type",
+        "identity": "public.events"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "_events_2026",
+        "type": "type",
+        "schema": "public",
+        "catalog": "pg_type",
+        "identity": "public.events_2026[]"
+      },
+      "referenced": {
+        "name": "events_2026",
+        "type": "type",
+        "schema": "public",
+        "catalog": "pg_type",
+        "identity": "public.events_2026"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "_inventory",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.inventory[]"
+      },
+      "referenced": {
+        "name": "inventory",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.inventory"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "_inventory_totals",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.inventory_totals[]"
+      },
+      "referenced": {
+        "name": "inventory_totals",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.inventory_totals"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "_money_amount",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.money_amount[]"
+      },
+      "referenced": {
+        "name": "money_amount",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.money_amount"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "_order_lines",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.order_lines[]"
+      },
+      "referenced": {
+        "name": "order_lines",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.order_lines"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "_order_state",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.order_state[]"
+      },
+      "referenced": {
+        "name": "order_state",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.order_state"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "_orders",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.orders[]"
+      },
+      "referenced": {
+        "name": "orders",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.orders"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "_price_span",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.price_span[]"
+      },
+      "referenced": {
+        "name": "price_span",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.price_span"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "_price_spans",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.price_spans[]"
+      },
+      "referenced": {
+        "name": "price_spans",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.price_spans"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "_recent_events",
+        "type": "type",
+        "schema": "public",
+        "catalog": "pg_type",
+        "identity": "public.recent_events[]"
+      },
+      "referenced": {
+        "name": "recent_events",
+        "type": "type",
+        "schema": "public",
+        "catalog": "pg_type",
+        "identity": "public.recent_events"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "_row_encodings",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.row_encodings[]"
+      },
+      "referenced": {
+        "name": "row_encodings",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.row_encodings"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "_scalar_types",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.scalar_types[]"
+      },
+      "referenced": {
+        "name": "scalar_types",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.scalar_types"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "_text",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.text[]"
+      },
+      "referenced": {
+        "name": "text",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.text"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "address",
+        "type": "composite type",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.address"
+      },
+      "referenced": {
+        "name": "address",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.address"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "events",
+        "type": "table column",
+        "schema": "public",
+        "catalog": "pg_class",
+        "identity": "public.events.at"
+      },
+      "referenced": {
+        "name": "events",
+        "type": "table",
+        "schema": "public",
+        "catalog": "pg_class",
+        "identity": "public.events"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "events",
+        "type": "type",
+        "schema": "public",
+        "catalog": "pg_type",
+        "identity": "public.events"
+      },
+      "referenced": {
+        "name": "events",
+        "type": "table",
+        "schema": "public",
+        "catalog": "pg_class",
+        "identity": "public.events"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "events_2026",
+        "type": "type",
+        "schema": "public",
+        "catalog": "pg_type",
+        "identity": "public.events_2026"
+      },
+      "referenced": {
+        "name": "events_2026",
+        "type": "table",
+        "schema": "public",
+        "catalog": "pg_class",
+        "identity": "public.events_2026"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "inventory",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.inventory"
+      },
+      "referenced": {
+        "name": "inventory",
+        "type": "table",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.inventory"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "inventory_pkey",
+        "type": "index",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.inventory_pkey"
+      },
+      "referenced": {
+        "name": null,
+        "type": "table constraint",
+        "schema": "sales",
+        "catalog": "pg_constraint",
+        "identity": "inventory_pkey on sales.inventory"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "inventory_totals",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.inventory_totals"
+      },
+      "referenced": {
+        "name": "inventory_totals",
+        "type": "materialized view",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.inventory_totals"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "order_lines",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.order_lines"
+      },
+      "referenced": {
+        "name": "order_lines",
+        "type": "table",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.order_lines"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "order_lines_pkey",
+        "type": "index",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.order_lines_pkey"
+      },
+      "referenced": {
+        "name": null,
+        "type": "table constraint",
+        "schema": "sales",
+        "catalog": "pg_constraint",
+        "identity": "order_lines_pkey on sales.order_lines"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "orders",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.orders"
+      },
+      "referenced": {
+        "name": "orders",
+        "type": "table",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "orders_external_id_key",
+        "type": "index",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders_external_id_key"
+      },
+      "referenced": {
+        "name": null,
+        "type": "table constraint",
+        "schema": "sales",
+        "catalog": "pg_constraint",
+        "identity": "orders_external_id_key on sales.orders"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "orders_id_seq",
+        "type": "sequence",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders_id_seq"
+      },
+      "referenced": {
+        "name": "orders",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders.id"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "orders_pkey",
+        "type": "index",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders_pkey"
+      },
+      "referenced": {
+        "name": null,
+        "type": "table constraint",
+        "schema": "sales",
+        "catalog": "pg_constraint",
+        "identity": "orders_pkey on sales.orders"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "price_spans",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.price_spans"
+      },
+      "referenced": {
+        "name": "price_span",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.price_span"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "recent_events",
+        "type": "type",
+        "schema": "public",
+        "catalog": "pg_type",
+        "identity": "public.recent_events"
+      },
+      "referenced": {
+        "name": "recent_events",
+        "type": "view",
+        "schema": "public",
+        "catalog": "pg_class",
+        "identity": "public.recent_events"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "row_encodings",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.row_encodings"
+      },
+      "referenced": {
+        "name": "row_encodings",
+        "type": "table",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.row_encodings"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "row_encodings_pkey",
+        "type": "index",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.row_encodings_pkey"
+      },
+      "referenced": {
+        "name": null,
+        "type": "table constraint",
+        "schema": "sales",
+        "catalog": "pg_constraint",
+        "identity": "row_encodings_pkey on sales.row_encodings"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": "scalar_types",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.scalar_types"
+      },
+      "referenced": {
+        "name": "scalar_types",
+        "type": "table",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.scalar_types"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": null,
+        "type": "default value",
+        "schema": null,
+        "catalog": "pg_attrdef",
+        "identity": "for sales.orders.subtotal"
+      },
+      "referenced": {
+        "name": "orders",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders.subtotal"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": null,
+        "type": "function",
+        "schema": "sales",
+        "catalog": "pg_proc",
+        "identity": "sales.price_span(numeric,numeric)"
+      },
+      "referenced": {
+        "name": "price_span",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.price_span"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": null,
+        "type": "function",
+        "schema": "sales",
+        "catalog": "pg_proc",
+        "identity": "sales.price_span(numeric,numeric,pg_catalog.text)"
+      },
+      "referenced": {
+        "name": "price_span",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.price_span"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": null,
+        "type": "function",
+        "schema": "sales",
+        "catalog": "pg_proc",
+        "identity": "sales.price_spans()"
+      },
+      "referenced": {
+        "name": "price_spans",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.price_spans"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": null,
+        "type": "function",
+        "schema": "sales",
+        "catalog": "pg_proc",
+        "identity": "sales.price_spans(sales.price_span)"
+      },
+      "referenced": {
+        "name": "price_spans",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.price_spans"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": null,
+        "type": "function",
+        "schema": "sales",
+        "catalog": "pg_proc",
+        "identity": "sales.price_spans(sales.price_span[])"
+      },
+      "referenced": {
+        "name": "price_spans",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.price_spans"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": null,
+        "type": "rule",
+        "schema": null,
+        "catalog": "pg_rewrite",
+        "identity": "\"_RETURN\" on public.recent_events"
+      },
+      "referenced": {
+        "name": "recent_events",
+        "type": "view",
+        "schema": "public",
+        "catalog": "pg_class",
+        "identity": "public.recent_events"
+      }
+    },
+    {
+      "kind": "i",
+      "dependent": {
+        "name": null,
+        "type": "rule",
+        "schema": null,
+        "catalog": "pg_rewrite",
+        "identity": "\"_RETURN\" on sales.inventory_totals"
+      },
+      "referenced": {
+        "name": "inventory_totals",
+        "type": "materialized view",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.inventory_totals"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "address",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.address"
+      },
+      "referenced": {
+        "name": "sales",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "sales"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "code_order",
+        "type": "collation",
+        "schema": "sales",
+        "catalog": "pg_collation",
+        "identity": "sales.code_order"
+      },
+      "referenced": {
+        "name": "sales",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "sales"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "events",
+        "type": "table",
+        "schema": "public",
+        "catalog": "pg_class",
+        "identity": "public.events"
+      },
+      "referenced": {
+        "name": "public",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "public"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "events_2026",
+        "type": "table",
+        "schema": "public",
+        "catalog": "pg_class",
+        "identity": "public.events_2026"
+      },
+      "referenced": {
+        "name": "public",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "public"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "inventory",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.inventory.address"
+      },
+      "referenced": {
+        "name": "address",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.address"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "inventory",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.inventory.code"
+      },
+      "referenced": {
+        "name": "code_order",
+        "type": "collation",
+        "schema": "sales",
+        "catalog": "pg_collation",
+        "identity": "sales.code_order"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "inventory",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.inventory.history"
+      },
+      "referenced": {
+        "name": "price_spans",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.price_spans"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "inventory",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.inventory.prices"
+      },
+      "referenced": {
+        "name": "price_span",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.price_span"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "inventory",
+        "type": "table",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.inventory"
+      },
+      "referenced": {
+        "name": "sales",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "sales"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "inventory_pkey",
+        "type": "index",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.inventory_pkey"
+      },
+      "referenced": {
+        "name": "code_order",
+        "type": "collation",
+        "schema": "sales",
+        "catalog": "pg_collation",
+        "identity": "sales.code_order"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "inventory_totals",
+        "type": "materialized view",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.inventory_totals"
+      },
+      "referenced": {
+        "name": "sales",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "sales"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "money_amount",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.money_amount"
+      },
+      "referenced": {
+        "name": "sales",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "sales"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "order_lines",
+        "type": "table",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.order_lines"
+      },
+      "referenced": {
+        "name": "sales",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "sales"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "order_state",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.order_state"
+      },
+      "referenced": {
+        "name": "sales",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "sales"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "orders",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders.state"
+      },
+      "referenced": {
+        "name": "order_state",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.order_state"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "orders",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders.total"
+      },
+      "referenced": {
+        "name": "money_amount",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.money_amount"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "orders",
+        "type": "table",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders"
+      },
+      "referenced": {
+        "name": "sales",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "sales"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "orders_id_seq",
+        "type": "sequence",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders_id_seq"
+      },
+      "referenced": {
+        "name": "sales",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "sales"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "paid_orders",
+        "type": "index",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.paid_orders"
+      },
+      "referenced": {
+        "name": "order_state",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.order_state"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "price_span",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.price_span"
+      },
+      "referenced": {
+        "name": "sales",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "sales"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "price_spans",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.price_spans"
+      },
+      "referenced": {
+        "name": "sales",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "sales"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "recent_events",
+        "type": "view",
+        "schema": "public",
+        "catalog": "pg_class",
+        "identity": "public.recent_events"
+      },
+      "referenced": {
+        "name": "public",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "public"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "row_encodings",
+        "type": "table",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.row_encodings"
+      },
+      "referenced": {
+        "name": "sales",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "sales"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "scalar_types",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.scalar_types.domain_value"
+      },
+      "referenced": {
+        "name": "text",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.text"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "scalar_types",
+        "type": "table",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.scalar_types"
+      },
+      "referenced": {
+        "name": "sales",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "sales"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "text",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.text"
+      },
+      "referenced": {
+        "name": "sales",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "sales"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": "ticket_numbers",
+        "type": "sequence",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.ticket_numbers"
+      },
+      "referenced": {
+        "name": "sales",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "sales"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "default value",
+        "schema": null,
+        "catalog": "pg_attrdef",
+        "identity": "for sales.orders.state"
+      },
+      "referenced": {
+        "name": "order_state",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.order_state"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "default value",
+        "schema": null,
+        "catalog": "pg_attrdef",
+        "identity": "for sales.orders.subtotal"
+      },
+      "referenced": {
+        "name": "orders",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders.total"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "default value",
+        "schema": null,
+        "catalog": "pg_attrdef",
+        "identity": "for sales.orders.total"
+      },
+      "referenced": {
+        "name": "money_amount",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.money_amount"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "function",
+        "schema": "public",
+        "catalog": "pg_proc",
+        "identity": "public.echo_text(pg_catalog.text)"
+      },
+      "referenced": {
+        "name": "public",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "public"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "function",
+        "schema": "sales",
+        "catalog": "pg_proc",
+        "identity": "sales.normalize_inventory()"
+      },
+      "referenced": {
+        "name": "plpgsql",
+        "type": "language",
+        "schema": null,
+        "catalog": "pg_language",
+        "identity": "plpgsql"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "function",
+        "schema": "sales",
+        "catalog": "pg_proc",
+        "identity": "sales.normalize_inventory()"
+      },
+      "referenced": {
+        "name": "sales",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "sales"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "function",
+        "schema": "sales",
+        "catalog": "pg_proc",
+        "identity": "sales.price_span(numeric,numeric)"
+      },
+      "referenced": {
+        "name": "price_span",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.price_span"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "function",
+        "schema": "sales",
+        "catalog": "pg_proc",
+        "identity": "sales.price_span(numeric,numeric)"
+      },
+      "referenced": {
+        "name": "sales",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "sales"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "function",
+        "schema": "sales",
+        "catalog": "pg_proc",
+        "identity": "sales.price_span(numeric,numeric,pg_catalog.text)"
+      },
+      "referenced": {
+        "name": "price_span",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.price_span"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "function",
+        "schema": "sales",
+        "catalog": "pg_proc",
+        "identity": "sales.price_span(numeric,numeric,pg_catalog.text)"
+      },
+      "referenced": {
+        "name": "sales",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "sales"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "function",
+        "schema": "sales",
+        "catalog": "pg_proc",
+        "identity": "sales.price_spans()"
+      },
+      "referenced": {
+        "name": "price_spans",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.price_spans"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "function",
+        "schema": "sales",
+        "catalog": "pg_proc",
+        "identity": "sales.price_spans()"
+      },
+      "referenced": {
+        "name": "sales",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "sales"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "function",
+        "schema": "sales",
+        "catalog": "pg_proc",
+        "identity": "sales.price_spans(sales.price_span)"
+      },
+      "referenced": {
+        "name": "price_span",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.price_span"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "function",
+        "schema": "sales",
+        "catalog": "pg_proc",
+        "identity": "sales.price_spans(sales.price_span)"
+      },
+      "referenced": {
+        "name": "price_spans",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.price_spans"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "function",
+        "schema": "sales",
+        "catalog": "pg_proc",
+        "identity": "sales.price_spans(sales.price_span)"
+      },
+      "referenced": {
+        "name": "sales",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "sales"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "function",
+        "schema": "sales",
+        "catalog": "pg_proc",
+        "identity": "sales.price_spans(sales.price_span[])"
+      },
+      "referenced": {
+        "name": "_price_span",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.price_span[]"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "function",
+        "schema": "sales",
+        "catalog": "pg_proc",
+        "identity": "sales.price_spans(sales.price_span[])"
+      },
+      "referenced": {
+        "name": "price_spans",
+        "type": "type",
+        "schema": "sales",
+        "catalog": "pg_type",
+        "identity": "sales.price_spans"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "function",
+        "schema": "sales",
+        "catalog": "pg_proc",
+        "identity": "sales.price_spans(sales.price_span[])"
+      },
+      "referenced": {
+        "name": "sales",
+        "type": "schema",
+        "schema": null,
+        "catalog": "pg_namespace",
+        "identity": "sales"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "policy",
+        "schema": null,
+        "catalog": "pg_policy",
+        "identity": "visible_events on public.events"
+      },
+      "referenced": {
+        "name": "events",
+        "type": "table column",
+        "schema": "public",
+        "catalog": "pg_class",
+        "identity": "public.events.payload"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "rule",
+        "schema": null,
+        "catalog": "pg_rewrite",
+        "identity": "\"_RETURN\" on public.recent_events"
+      },
+      "referenced": {
+        "name": "events",
+        "type": "table column",
+        "schema": "public",
+        "catalog": "pg_class",
+        "identity": "public.events.at"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "rule",
+        "schema": null,
+        "catalog": "pg_rewrite",
+        "identity": "\"_RETURN\" on public.recent_events"
+      },
+      "referenced": {
+        "name": "events",
+        "type": "table column",
+        "schema": "public",
+        "catalog": "pg_class",
+        "identity": "public.events.payload"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "rule",
+        "schema": null,
+        "catalog": "pg_rewrite",
+        "identity": "\"_RETURN\" on sales.inventory_totals"
+      },
+      "referenced": {
+        "name": "inventory",
+        "type": "table",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.inventory"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "table constraint",
+        "schema": "sales",
+        "catalog": "pg_constraint",
+        "identity": "order_lines_order_id_fkey on sales.order_lines"
+      },
+      "referenced": {
+        "name": "orders",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders.id"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "table constraint",
+        "schema": "sales",
+        "catalog": "pg_constraint",
+        "identity": "order_lines_order_id_fkey on sales.order_lines"
+      },
+      "referenced": {
+        "name": "orders_pkey",
+        "type": "index",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders_pkey"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "table constraint",
+        "schema": "sales",
+        "catalog": "pg_constraint",
+        "identity": "order_lines_quantity_check on sales.order_lines"
+      },
+      "referenced": {
+        "name": "order_lines",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.order_lines.quantity"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "table constraint",
+        "schema": "sales",
+        "catalog": "pg_constraint",
+        "identity": "positive_total on sales.orders"
+      },
+      "referenced": {
+        "name": "orders",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.orders.total"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "trigger",
+        "schema": null,
+        "catalog": "pg_trigger",
+        "identity": "normalize_inventory on sales.inventory"
+      },
+      "referenced": {
+        "name": "inventory",
+        "type": "table column",
+        "schema": "sales",
+        "catalog": "pg_class",
+        "identity": "sales.inventory.code"
+      }
+    },
+    {
+      "kind": "n",
+      "dependent": {
+        "name": null,
+        "type": "trigger",
+        "schema": null,
+        "catalog": "pg_trigger",
+        "identity": "normalize_inventory on sales.inventory"
+      },
+      "referenced": {
+        "name": null,
+        "type": "function",
+        "schema": "sales",
+        "catalog": "pg_proc",
+        "identity": "sales.normalize_inventory()"
+      }
+    }
+  ],
+  "compositeTypes": [
+    {
+      "acl": null,
+      "name": "address",
+      "owner": "postgres",
+      "schema": "sales",
+      "comment": null,
+      "attributes": [
+        {
+          "name": "street",
+          "type": "text",
+          "position": 1,
+          "collation": "\"default\""
+        },
+        {
+          "name": "postcode",
+          "type": "text",
+          "position": 2,
+          "collation": "\"default\""
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+import {chromium} from 'playwright';
+const fixture=await Bun.file('fixtures/avro/native-schema.json').json();
+const built=await Bun.build({entrypoints:['src/index.ts','src/validation/schema.ts'],target:'browser',format:'esm',outdir:'.cache/avro-native-schema-browser',naming:'[name].js'});if(!built.success)throw Error(String(built.logs));
+const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){const name=new URL(req.url).pathname.slice(1);return ['index.js','schema.js'].includes(name)?new Response(Bun.file('.cache/avro-native-schema-browser/'+name),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>Native Avro schema</title>');}});
+let browser;
+try{
+ browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();let externalRequests=0;await page.route('**/*',r=>{if(!r.request().url().startsWith('http://127.0.0.1:')){externalRequests++;return r.abort();}return r.continue();});await page.goto('http://127.0.0.1:'+server.port);
+ const result=await page.evaluate(async f=>{const a='/index.js',b='/schema.js',u=await import(a),v=await import(b),check=v.createValidator(false).compile(u.avroNativeSchema);for(const c of f.cases)if(check(c.value)!==c.expected)throw Error('Native syntax parity differs');for(const r of f.recoveries){const source=u.importAvroSchema(r.source,{id:'syntax'}),native=u.exportAvroSchema(u.readDocument(u.writeDocument(source,r.format),r.format));if(native!==r.native||!check(JSON.parse(native)))throw Error('Schema recovery differs');}return {cases:f.cases.length,recoveries:f.recoveries.length,nodeGlobalsAbsent:!('process'in globalThis)&&!('Buffer'in globalThis)};},fixture);
+ if(externalRequests||!result.nodeGlobalsAbsent)throw Error('Browser boundary');await Bun.write('fixtures/avro/native-schema-browser.json',JSON.stringify({...result,externalRequests,browser:browser.version()},null,2)+'\n');console.log(result);
+}finally{await browser?.close();server.stop(true);}

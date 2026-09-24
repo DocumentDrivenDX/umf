@@ -1,0 +1,154 @@
+{
+  "id": "umf.generalized-rdf",
+  "version": "0.1.0",
+  "coreVersion": "0.1.0",
+  "description": "JSON-LD generalized dataset JSON with blank predicates and source-local blank identity",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:generalized-rdf:0.1.0",
+    "type": "object",
+    "properties": {
+      "profile": {
+        "const": "jsonld-generalized-dataset"
+      },
+      "blankNodeScope": {
+        "type": "string",
+        "minLength": 1
+      },
+      "root": {
+        "$ref": "#/$defs/node"
+      },
+      "originalSource": {
+        "type": "string",
+        "maxLength": 4000000
+      }
+    },
+    "required": [
+      "profile",
+      "blankNodeScope",
+      "root",
+      "originalSource"
+    ],
+    "additionalProperties": true,
+    "$defs": {
+      "node": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "const": "null"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "boolean"
+              },
+              "value": {
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "number"
+              },
+              "value": {
+                "type": "string",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "items"
+            ],
+            "properties": {
+              "kind": {
+                "const": "array"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "members"
+            ],
+            "properties": {
+              "kind": {
+                "const": "object"
+              },
+              "members": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "semantics": "CONTRACT-027; JSON-LD generalized RDF subset: node subjects/predicates, literal objects, named/default graphs; no RDF 1.1 syntax or entailment claim",
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "semantic",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "JSON-LD generalized RDF dataset",
+      "version": "JSON-LD 1.0/1.1 processing API; RDFJS-shaped JSON term records",
+      "subset": "JSON array of quads, node predicates including blank nodes, exact string lexical forms and source-local blank scope; unknown structures archived and block interpretation; no literal subjects/predicates or standard N-Quads export"
+    },
+    "evidence": [
+      "tests/generalized-rdf/dataset.test.ts",
+      "fixtures/generalized-rdf/oracle-results.json",
+      "fixtures/generalized-rdf/browser-results.json"
+    ]
+  }
+}

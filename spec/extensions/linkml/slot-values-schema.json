@@ -1,0 +1,650 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:linkml:slot-values:0.1.0",
+  "type": "object",
+  "properties": {
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "className": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "slotName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "scope": {
+      "const": "document-scalar-slot-values"
+    },
+    "status": {
+      "enum": [
+        "resolved",
+        "blocked"
+      ]
+    },
+    "complete": {
+      "const": false
+    },
+    "fields": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "string"
+                }
+              }
+            }
+          ]
+        },
+        "inherited": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "boolean"
+                }
+              }
+            }
+          ]
+        },
+        "readonly": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "string"
+                }
+              }
+            }
+          ]
+        },
+        "ifabsent": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "string"
+                }
+              }
+            }
+          ]
+        },
+        "list_elements_unique": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "boolean"
+                }
+              }
+            }
+          ]
+        },
+        "list_elements_ordered": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "boolean"
+                }
+              }
+            }
+          ]
+        },
+        "shared": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "boolean"
+                }
+              }
+            }
+          ]
+        },
+        "key": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "boolean"
+                }
+              }
+            }
+          ]
+        },
+        "identifier": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "boolean"
+                }
+              }
+            }
+          ]
+        },
+        "designates_type": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "boolean"
+                }
+              }
+            }
+          ]
+        },
+        "role": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "string"
+                }
+              }
+            }
+          ]
+        },
+        "relational_role": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "string"
+                }
+              }
+            }
+          ]
+        },
+        "range": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "string"
+                }
+              }
+            }
+          ]
+        },
+        "required": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "boolean"
+                }
+              }
+            }
+          ]
+        },
+        "recommended": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "boolean"
+                }
+              }
+            }
+          ]
+        },
+        "multivalued": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "boolean"
+                }
+              }
+            }
+          ]
+        },
+        "inlined": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "boolean"
+                }
+              }
+            }
+          ]
+        },
+        "inlined_as_list": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "boolean"
+                }
+              }
+            }
+          ]
+        },
+        "minimum_value": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "number"
+                }
+              }
+            }
+          ]
+        },
+        "maximum_value": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "number"
+                }
+              }
+            }
+          ]
+        },
+        "pattern": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "string"
+                }
+              }
+            }
+          ]
+        },
+        "value_presence": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "string"
+                }
+              }
+            }
+          ]
+        },
+        "equals_string": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "string"
+                }
+              }
+            }
+          ]
+        },
+        "equals_number": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "number"
+                }
+              }
+            }
+          ]
+        },
+        "equals_expression": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "string"
+                }
+              }
+            }
+          ]
+        },
+        "exact_cardinality": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "number"
+                }
+              }
+            }
+          ]
+        },
+        "minimum_cardinality": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "number"
+                }
+              }
+            }
+          ]
+        },
+        "maximum_cardinality": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "number"
+                }
+              }
+            }
+          ]
+        },
+        "description": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/node"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "string"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "derivations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "enum": [
+              "domain",
+              "inherited",
+              "readonly",
+              "ifabsent",
+              "list_elements_unique",
+              "list_elements_ordered",
+              "shared",
+              "key",
+              "identifier",
+              "designates_type",
+              "role",
+              "relational_role",
+              "range",
+              "required",
+              "recommended",
+              "multivalued",
+              "inlined",
+              "inlined_as_list",
+              "minimum_value",
+              "maximum_value",
+              "pattern",
+              "value_presence",
+              "equals_string",
+              "equals_number",
+              "equals_expression",
+              "exact_cardinality",
+              "minimum_cardinality",
+              "maximum_cardinality",
+              "description"
+            ]
+          },
+          "path": {
+            "type": "string"
+          },
+          "rule": {
+            "enum": [
+              "base",
+              "slot-inheritance",
+              "slot-usage",
+              "default-range",
+              "identifier-required",
+              "key-required",
+              "list-inlined"
+            ]
+          },
+          "value": {
+            "$ref": "#/$defs/node"
+          }
+        },
+        "required": [
+          "field",
+          "path",
+          "rule",
+          "value"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "warning",
+              "error"
+            ]
+          }
+        },
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "source",
+    "className",
+    "slotName",
+    "scope",
+    "status",
+    "complete",
+    "fields",
+    "derivations",
+    "diagnostics"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "node": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "kind"
+          ],
+          "properties": {
+            "kind": {
+              "const": "null"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "boolean"
+            },
+            "value": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "string"
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "number"
+            },
+            "value": {
+              "type": "string",
+              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "items"
+          ],
+          "properties": {
+            "kind": {
+              "const": "array"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/node"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "members"
+          ],
+          "properties": {
+            "kind": {
+              "const": "object"
+            },
+            "members": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/node"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,11 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b23175 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b23175 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b23175 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b23175 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxLengthConstraintComponent> .
+_:b23175 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/maxLength-001.test#TestShape-testProperty> .
+_:b23175 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/maxLength-001.test#InvalidInstance1> .
+_:b23175 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/maxLength-001.test#testProperty> .
+_:b23175 <http://www.w3.org/ns/shacl#value> "ABC" .
+_:b23175 <http://www.w3.org/ns/shacl#resultMessage> "Value has more than 2 characters" .

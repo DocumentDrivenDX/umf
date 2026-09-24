@@ -1,0 +1,29 @@
+_:N7b176e513444499bb6eab78a026b51be <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#OrConstraintComponent> .
+_:N281f9ba69f66457aaedfac45d57165e6 <http://www.w3.org/ns/shacl#resultMessage> "Node Literal(\"false\" = False, datatype=xsd:boolean) must conform to one or more shapes in [ sh:datatype xsd:string ] , [ sh:datatype rdf:HTML ] , [ sh:datatype rdf:langString ] , [ sh:datatype xsd:boolean ]" .
+_:N7b176e513444499bb6eab78a026b51be <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N79eb979d736d4998ad348be7c56e7166 <http://www.w3.org/ns/shacl#resultPath> <http://www.w3.org/2000/01/rdf-schema#comment> .
+_:N7b176e513444499bb6eab78a026b51be <http://www.w3.org/ns/shacl#value> <http://www.w3.org/2002/07/owl#Thing> .
+_:N7b176e513444499bb6eab78a026b51be <http://www.w3.org/ns/shacl#resultMessage> "Node owl:Thing must conform to one or more shapes in [ sh:datatype xsd:string ] , [ sh:datatype rdf:HTML ] , [ sh:datatype rdf:langString ] , [ sh:datatype xsd:boolean ]" .
+_:N281f9ba69f66457aaedfac45d57165e6 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#OrConstraintComponent> .
+_:N281f9ba69f66457aaedfac45d57165e6 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N281f9ba69f66457aaedfac45d57165e6 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N7b176e513444499bb6eab78a026b51be <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/or-datatypes-001.test#InvalidResource1> .
+_:N281f9ba69f66457aaedfac45d57165e6 <http://www.w3.org/ns/shacl#value> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N8783ed865920446b89dd307736359045 <http://www.w3.org/ns/shacl#result> _:N7b176e513444499bb6eab78a026b51be .
+_:N281f9ba69f66457aaedfac45d57165e6 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/or-datatypes-001.test#InvalidResource1> .
+_:N7b176e513444499bb6eab78a026b51be <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/or-datatypes-001.test#TestShape-comment> .
+_:N79eb979d736d4998ad348be7c56e7166 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#OrConstraintComponent> .
+_:N8783ed865920446b89dd307736359045 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N7b176e513444499bb6eab78a026b51be <http://www.w3.org/ns/shacl#resultPath> <http://www.w3.org/2000/01/rdf-schema#comment> .
+_:N8783ed865920446b89dd307736359045 <http://www.w3.org/ns/shacl#result> _:N79eb979d736d4998ad348be7c56e7166 .
+_:N79eb979d736d4998ad348be7c56e7166 <http://www.w3.org/ns/shacl#value> "42"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:N281f9ba69f66457aaedfac45d57165e6 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/or-datatypes-001.test#TestShape-comment> .
+_:N281f9ba69f66457aaedfac45d57165e6 <http://www.w3.org/ns/shacl#resultPath> <http://www.w3.org/2000/01/rdf-schema#comment> .
+_:N79eb979d736d4998ad348be7c56e7166 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/or-datatypes-001.test#InvalidResource1> .
+_:N7b176e513444499bb6eab78a026b51be <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N79eb979d736d4998ad348be7c56e7166 <http://www.w3.org/ns/shacl#resultMessage> "Node Literal(\"42\", datatype=xsd:integer) must conform to one or more shapes in [ sh:datatype xsd:string ] , [ sh:datatype rdf:HTML ] , [ sh:datatype rdf:langString ] , [ sh:datatype xsd:boolean ]" .
+_:N79eb979d736d4998ad348be7c56e7166 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N8783ed865920446b89dd307736359045 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N8783ed865920446b89dd307736359045 <http://www.w3.org/ns/shacl#result> _:N281f9ba69f66457aaedfac45d57165e6 .
+_:N79eb979d736d4998ad348be7c56e7166 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/or-datatypes-001.test#TestShape-comment> .
+_:N79eb979d736d4998ad348be7c56e7166 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .

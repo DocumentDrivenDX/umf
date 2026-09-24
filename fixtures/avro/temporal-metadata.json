@@ -1,0 +1,814 @@
+{
+  "cases": [
+    {
+      "id": "timestamp-millis-valid",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": "timestamp",
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-millis-suffix0",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\\n\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\\n\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\\n\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-millis-suffix1",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\\r\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\\r\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\\r\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-millis-suffix2",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis \"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-millis-suffix3",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis \"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-millis-suffix4",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis \"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-millis-suffix5",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\\u0000\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\\u0000\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\\u0000\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-millis-array",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":[\"timestamp-millis\"]},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":[\"timestamp-millis\"]},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":[\"timestamp-millis\"]},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-millis-wrong-carrier",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"int\",\"logicalType\":\"timestamp-millis\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"int\",\"logicalType\":\"timestamp-millis\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"int\",\"logicalType\":\"timestamp-millis\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-micros-valid",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": "timestamp",
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-micros-suffix0",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\\n\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\\n\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\\n\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-micros-suffix1",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\\r\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\\r\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\\r\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-micros-suffix2",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros \"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-micros-suffix3",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros \"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-micros-suffix4",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros \"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-micros-suffix5",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\\u0000\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\\u0000\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\\u0000\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-micros-array",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":[\"timestamp-micros\"]},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":[\"timestamp-micros\"]},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":[\"timestamp-micros\"]},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-micros-wrong-carrier",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"int\",\"logicalType\":\"timestamp-micros\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"int\",\"logicalType\":\"timestamp-micros\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"int\",\"logicalType\":\"timestamp-micros\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-nanos-valid",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-nanos\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": "timestamp",
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-nanos\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-nanos\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-nanos-suffix0",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-nanos\\n\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-nanos\\n\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-nanos\\n\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-nanos-suffix1",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-nanos\\r\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-nanos\\r\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-nanos\\r\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-nanos-suffix2",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-nanos \"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-nanos \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-nanos \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-nanos-suffix3",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-nanos \"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-nanos \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-nanos \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-nanos-suffix4",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-nanos \"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-nanos \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-nanos \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-nanos-suffix5",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-nanos\\u0000\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-nanos\\u0000\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-nanos\\u0000\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-nanos-array",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":[\"timestamp-nanos\"]},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":[\"timestamp-nanos\"]},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":[\"timestamp-nanos\"]},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-nanos-wrong-carrier",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"int\",\"logicalType\":\"timestamp-nanos\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"int\",\"logicalType\":\"timestamp-nanos\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"int\",\"logicalType\":\"timestamp-nanos\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-millis-valid",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-millis\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": "timestamp",
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-millis\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-millis\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-millis-suffix0",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-millis\\n\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-millis\\n\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-millis\\n\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-millis-suffix1",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-millis\\r\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-millis\\r\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-millis\\r\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-millis-suffix2",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-millis \"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-millis \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-millis \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-millis-suffix3",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-millis \"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-millis \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-millis \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-millis-suffix4",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-millis \"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-millis \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-millis \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-millis-suffix5",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-millis\\u0000\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-millis\\u0000\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-millis\\u0000\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-millis-array",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":[\"local-timestamp-millis\"]},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":[\"local-timestamp-millis\"]},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":[\"local-timestamp-millis\"]},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-millis-wrong-carrier",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"int\",\"logicalType\":\"local-timestamp-millis\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"int\",\"logicalType\":\"local-timestamp-millis\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"int\",\"logicalType\":\"local-timestamp-millis\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-micros-valid",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": "timestamp",
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-micros-suffix0",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros\\n\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros\\n\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros\\n\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-micros-suffix1",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros\\r\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros\\r\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros\\r\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-micros-suffix2",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros \"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-micros-suffix3",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros \"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-micros-suffix4",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros \"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-micros-suffix5",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros\\u0000\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros\\u0000\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros\\u0000\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-micros-array",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":[\"local-timestamp-micros\"]},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":[\"local-timestamp-micros\"]},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":[\"local-timestamp-micros\"]},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-micros-wrong-carrier",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"int\",\"logicalType\":\"local-timestamp-micros\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"int\",\"logicalType\":\"local-timestamp-micros\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"int\",\"logicalType\":\"local-timestamp-micros\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-nanos-valid",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-nanos\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": "timestamp",
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-nanos\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-nanos\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-nanos-suffix0",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-nanos\\n\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-nanos\\n\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-nanos\\n\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-nanos-suffix1",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-nanos\\r\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-nanos\\r\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-nanos\\r\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-nanos-suffix2",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-nanos \"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-nanos \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-nanos \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-nanos-suffix3",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-nanos \"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-nanos \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-nanos \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-nanos-suffix4",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-nanos \"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-nanos \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-nanos \"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-nanos-suffix5",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-nanos\\u0000\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-nanos\\u0000\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-nanos\\u0000\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-nanos-array",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":[\"local-timestamp-nanos\"]},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":[\"local-timestamp-nanos\"]},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"long\",\"logicalType\":[\"local-timestamp-nanos\"]},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "local-timestamp-nanos-wrong-carrier",
+      "source": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"int\",\"logicalType\":\"local-timestamp-nanos\"},\"future.field\":{\"intent\":\"preserve\"}}]}",
+      "expected": null,
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"int\",\"logicalType\":\"local-timestamp-nanos\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"Temporal\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"int\",\"logicalType\":\"local-timestamp-nanos\"},\"future.field\":{\"intent\":\"preserve\"}}]}\n"
+        }
+      ]
+    }
+  ]
+}

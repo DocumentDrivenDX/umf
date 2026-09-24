@@ -1,0 +1,269 @@
+{
+  "cases": 12,
+  "results": [
+    {
+      "id": "0",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        },
+        {
+          "code": "SPARK_METADATA_INT64_OVERFLOW",
+          "path": "/fields/0/metadata/x",
+          "severity": "warning",
+          "message": "Spark JVM metadata converts integer tokens to int64 and can wrap this value; UMF retains the exact token"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        },
+        {
+          "code": "SPARK_METADATA_INT64_OVERFLOW",
+          "path": "/fields/0/metadata/x",
+          "severity": "warning",
+          "message": "Spark JVM metadata converts integer tokens to int64 and can wrap this value; UMF retains the exact token"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        },
+        {
+          "code": "SPARK_METADATA_DOUBLE",
+          "path": "/fields/0/metadata/x",
+          "severity": "warning",
+          "message": "Spark JVM metadata uses binary64 for fractional/exponent tokens; precision and source spelling may change"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        },
+        {
+          "code": "SPARK_METADATA_NONFINITE",
+          "path": "/fields/0/metadata/x",
+          "severity": "warning",
+          "message": "Spark JVM metadata converts this number to a nonfinite double and may emit a string; UMF retains the exact token"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        },
+        {
+          "code": "SPARK_METADATA_ARRAY_MIXED",
+          "path": "/fields/0/metadata/x",
+          "severity": "warning",
+          "message": "Spark JVM metadata requires homogeneous array categories, including separate integer and double categories"
+        },
+        {
+          "code": "SPARK_METADATA_DOUBLE",
+          "path": "/fields/0/metadata/x/1",
+          "severity": "warning",
+          "message": "Spark JVM metadata uses binary64 for fractional/exponent tokens; precision and source spelling may change"
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        },
+        {
+          "code": "SPARK_METADATA_ARRAY_UNSUPPORTED",
+          "path": "/fields/0/metadata/x",
+          "severity": "warning",
+          "message": "Spark JVM metadata does not support arrays of nulls or nested arrays"
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        },
+        {
+          "code": "SPARK_METADATA_ARRAY_UNSUPPORTED",
+          "path": "/fields/0/metadata/x",
+          "severity": "warning",
+          "message": "Spark JVM metadata does not support arrays of nulls or nested arrays"
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        },
+        {
+          "code": "SPARK_METADATA_EMPTY_ARRAY",
+          "path": "/fields/0/metadata/x",
+          "severity": "warning",
+          "message": "Spark JVM infers an empty int64 array; the source JSON does not specify the array element type"
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_METADATA_UNVERIFIED",
+          "path": "/fields/0/metadata",
+          "message": "Metadata retained exactly; engine value restrictions, collation paths and name dependencies are not interpreted",
+          "severity": "warning"
+        },
+        {
+          "code": "SPARK_FIELD_METADATA_WITHOUT_NULLABLE",
+          "path": "/fields/0",
+          "severity": "warning",
+          "message": "Spark JVM 4.0.1 does not accept a field with metadata but no nullable property; Python may insert the default"
+        }
+      ]
+    }
+  ]
+}

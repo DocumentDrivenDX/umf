@@ -1,0 +1,11 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <https://example.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+ex:A rdfs:subClassOf ex:B .
+ex:ax1 a owl:Axiom ; owl:annotatedSource ex:A ; owl:annotatedProperty rdfs:subClassOf ; owl:annotatedTarget ex:B ; ex:confidence "0.90"^^xsd:decimal ; ex:source ex:manual .
+ex:ax2 a owl:Axiom ; owl:annotatedSource ex:A ; owl:annotatedProperty rdfs:subClassOf ; owl:annotatedTarget ex:B ; ex:source ex:other .
+ex:ann a owl:Annotation ; owl:annotatedSource ex:ax1 ; owl:annotatedProperty ex:confidence ; owl:annotatedTarget "0.90"^^xsd:decimal ; ex:reviewer "Ana"@en .
+ex:deep a owl:Annotation ; owl:annotatedSource ex:ann ; owl:annotatedProperty ex:reviewer ; owl:annotatedTarget "Ana"@en ; ex:version "9007199254740993"^^xsd:integer .
+ex:unmatched a owl:Annotation ; owl:annotatedSource ex:ax1 ; owl:annotatedProperty ex:confidence ; owl:annotatedTarget "0.9"^^xsd:decimal ; ex:reviewer "must not merge" .
+ex:bad a owl:Axiom ; owl:annotatedSource ex:A ; owl:annotatedTarget ex:B ; ex:note "missing predicate" .

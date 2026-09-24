@@ -1,0 +1,10 @@
+_:N66263232b32c46a29244f02eb238e663 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N7830c3e7c8e54e56be9d7477f5a92198 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/targets/targetNode-001.test#TestShape-label> .
+_:N7830c3e7c8e54e56be9d7477f5a92198 <http://www.w3.org/ns/shacl#resultPath> <http://www.w3.org/2000/01/rdf-schema#label> .
+_:N7830c3e7c8e54e56be9d7477f5a92198 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N7830c3e7c8e54e56be9d7477f5a92198 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N7830c3e7c8e54e56be9d7477f5a92198 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/targets/targetNode-001.test#InvalidResource1> .
+_:N7830c3e7c8e54e56be9d7477f5a92198 <http://www.w3.org/ns/shacl#resultMessage> "More than 0 values on ex:InvalidResource1->rdfs:label" .
+_:N66263232b32c46a29244f02eb238e663 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N66263232b32c46a29244f02eb238e663 <http://www.w3.org/ns/shacl#result> _:N7830c3e7c8e54e56be9d7477f5a92198 .
+_:N7830c3e7c8e54e56be9d7477f5a92198 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxCountConstraintComponent> .

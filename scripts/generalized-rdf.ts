@@ -1,0 +1,11 @@
+import {importJsonLdDocument,proposeJsonLdToRdf,exportGeneralizedRdfDataset,proposeGeneralizedRdfToJsonLd,exportJsonLdDocument,getGeneralizedRdfQuads,proposeGeneralizedRdfQuadEdit,readDocument,writeDocument} from '../src';
+const cases=[];
+for(const c of (await Bun.file('fixtures/jsonld/to-rdf/results.json').json()).cases.filter((c:any)=>c.nativeOptions.produceGeneralizedRdf)){
+ const source=importJsonLdDocument(await Bun.file(c.path).text(),c.inputs),options={...c.options,produceGeneralizedRdf:true},r=await proposeJsonLdToRdf(source,options),exports=[];if(!r.candidate)throw Error(c.id+JSON.stringify(r.diagnostics));
+ const backOptions={id:c.id+'-back',baseIRI:c.inputs.baseIRI,processingMode:c.inputs.processingMode,lossPolicy:'report' as const},back=await proposeGeneralizedRdfToJsonLd(r.candidate,backOptions);if(!back.candidate)throw Error('Reverse blocked');const again=await proposeJsonLdToRdf(back.candidate,options);if(!again.candidate)throw Error('Reprojection blocked');
+ for(const format of ['json','yaml'] as const){const path='fixtures/generalized-rdf/'+c.id+'.'+format+'.json';await Bun.write(path,exportGeneralizedRdfDataset(readDocument(writeDocument(r.candidate,format),format)));exports.push({format,path});}
+ const reversePath='fixtures/generalized-rdf/'+c.id+'.back.jsonld',againPath='fixtures/generalized-rdf/'+c.id+'.again.json';await Bun.write(reversePath,exportJsonLdDocument(back.candidate));await Bun.write(againPath,exportGeneralizedRdfDataset(again.candidate));
+ const qs=getGeneralizedRdfQuads(r.candidate),index=qs.findIndex(q=>q.predicate.termType==='BlankNode'&&q.object.termType==='Literal');if(index<0)throw Error('Missing editable blank predicate');const q=qs[index]!;if(q.object.termType!=='Literal')throw Error('Expected literal');q.object.value='edited';const edited=proposeGeneralizedRdfQuadEdit(r.candidate,index,q).document,editPath='fixtures/generalized-rdf/'+c.id+'.edited.json';await Bun.write(editPath,exportGeneralizedRdfDataset(edited));
+ cases.push({...c,options,backOptions,status:r.status,diagnostics:r.diagnostics,exports,reversePath,againPath,editPath,editIndex:index,quadCount:qs.length});
+}
+await Bun.write('fixtures/generalized-rdf/results.json',JSON.stringify({cases},null,2)+'\n');console.log({cases:cases.length,quads:cases.map(c=>c.quadCount)});

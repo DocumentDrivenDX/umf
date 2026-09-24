@@ -1,0 +1,39 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/sqlserver/catalog.test.ts:
+(pass) CONTRACT-031 SQL Server catalog recovery retains exact native qualifiers and core families [330.67ms]
+(pass) CONTRACT-031 copied candidate edits synchronize metadata and cannot lose attachments [361.82ms]
+(pass) CONTRACT-031 malformed captures reject and future type identities remain unclassified [103.44ms]
+
+tests/sqlserver/avro-projection.test.ts:
+(pass) CONTRACT-032 all captured SQL Server fixture columns project with explicit representations and fidelity issues [288.82ms]
+(pass) CONTRACT-032 authored precision and fixed-width boundaries are enforced before projection [349.49ms]
+(pass) CONTRACT-032 unsupported precision, source state and bindings cannot masquerade as value equivalence [894.94ms]
+
+tests/sqlserver/constraints.test.ts:
+(pass) CONTRACT-031 v2 constraints retain ordering, actions, trust, disabled state and exact unknown content [170.74ms]
+(pass) CONTRACT-031 old coverage, malformed sections, duplicate observations and edits remain explicit [302.34ms]
+
+tests/sqlserver/constraint-projection.test.ts:
+(pass) CONTRACT-032 every captured SQL Server constraint has a source-addressable projection loss [667.46ms]
+(pass) CONTRACT-032 uncaptured v1 constraints never masquerade as an unconstrained table [110.97ms]
+
+tests/sqlserver/indexes.test.ts:
+(pass) CONTRACT-031 index observations preserve physical ordering, filter and enforcement state [240.37ms]
+(pass) CONTRACT-031 v3 requires observations; older, unavailable and unknown index semantics stay qualified [422.37ms]
+(pass) CONTRACT-032 index-specific losses accompany SQL Server to Avro projection [480.06ms]
+
+tests/sqlserver/ddl.test.ts:
+(pass) CONTRACT-037 native captures lower deterministically with explicit source-addressable losses [715.60ms]
+(pass) CONTRACT-037 unsupported observations never produce partial DDL; candidate edits require explicit policy [632.34ms]
+(pass) CONTRACT-037 identifiers and unknown metadata retain their boundaries [36.26ms]
+(pass) CONTRACT-037 native evidence matches current generation and records declared physical losses [250.95ms]
+(pass) CONTRACT-037 copied edits survive native DDL execution without changing original captures [1694.40ms]
+
+tests/sqlserver/integer-tokens.test.ts:
+(pass) CONTRACT-031 declared catalog integers cannot be rounded into valid native identities or qualifiers [2658.35ms]
+
+ 19 pass
+ 0 fail
+ 434 expect() calls
+Ran 19 tests across 7 files. [11.53s]

@@ -1,0 +1,5 @@
+export {};
+const context=await Bun.file('spec/extensions/linkml/import-context-schema.json').json();delete context.$id;delete context.$schema;
+const str={type:'string'},obj=(properties:any,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:false});
+const schema=obj({context,mode:{enum:['view','merge-imports']},status:{enum:['candidate','blocked']},complete:{const:false},closure:{type:'array',items:str,uniqueItems:true},selections:{type:'array',items:obj({collection:{enum:['prefixes','classes','slots','enums','subsets','types']},name:str,winner:str,shadowed:{type:'array',items:str}})},candidate:{$ref:'urn:umf:core:0.1.0'},diagnostics:{type:'array',items:obj({code:str,path:str,message:str,severity:{enum:['warning','error']}})}},['context','mode','status','complete','closure','selections','diagnostics']);
+await Bun.write('spec/extensions/linkml/merge-schema.json',JSON.stringify({$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:linkml:merge:0.1.0',...schema,allOf:[{if:{properties:{status:{const:'candidate'}}},then:{required:['candidate']},else:{not:{required:['candidate']}}}]},null,2)+'\n');

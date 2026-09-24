@@ -1,0 +1,20 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b24789 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b24789 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b24789 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b24789 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeConstraintComponent> .
+_:b24789 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/node-002.test#PersonShape-address> .
+_:b24789 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/node-002.test#Reto> .
+_:b24789 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/node-002.test#address> .
+_:b24789 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/property/node-002.test#RetosAddress> .
+_:b24789 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have shape <http://datashapes.org/sh/tests/core/property/node-002.test#AddressShape>" .
+_:b24789 <http://www.w3.org/ns/shacl#detail> _:b24788 .
+_:b24788 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b24788 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b24788 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:b24788 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/node-002.test#AddressShape-postalCode> .
+_:b24788 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/node-002.test#RetosAddress> .
+_:b24788 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/node-002.test#postalCode> .
+_:b24788 <http://www.w3.org/ns/shacl#value> "5678"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:b24788 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have datatype <http://www.w3.org/2001/XMLSchema#string>" .

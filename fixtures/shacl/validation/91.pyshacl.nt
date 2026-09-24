@@ -1,0 +1,10 @@
+_:Nd67542a398dd44bfbd0a6bba38ae867a <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N380b9472fafd4d2f9cc57d6e69797657 <http://www.w3.org/ns/shacl#result> _:Nd67542a398dd44bfbd0a6bba38ae867a .
+_:Nd67542a398dd44bfbd0a6bba38ae867a <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/targets/targetClass-001.test#myProperty> .
+_:Nd67542a398dd44bfbd0a6bba38ae867a <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nd67542a398dd44bfbd0a6bba38ae867a <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/targets/targetClass-001.test#MyShape-myProperty> .
+_:Nd67542a398dd44bfbd0a6bba38ae867a <http://www.w3.org/ns/shacl#resultMessage> "More than 1 values on ex:InvalidInstance1->ex:myProperty" .
+_:Nd67542a398dd44bfbd0a6bba38ae867a <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/targets/targetClass-001.test#InvalidInstance1> .
+_:N380b9472fafd4d2f9cc57d6e69797657 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Nd67542a398dd44bfbd0a6bba38ae867a <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxCountConstraintComponent> .
+_:N380b9472fafd4d2f9cc57d6e69797657 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .

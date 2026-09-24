@@ -1,0 +1,496 @@
+{
+  "result": {
+    "status": "projected",
+    "source": {
+      "umf": "0.1.0",
+      "id": "source",
+      "vocabularies": {
+        "umf.typespec": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "schema",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "schema",
+              "extensions": {
+                "umf.typespec": {
+                  "profile": "typespec-1.16.0-sources",
+                  "entrypoint": "main.tsp",
+                  "files": {
+                    "main.tsp": "import \"@typespec/json-schema\";\n\nusing JsonSchema;\n\n@jsonSchema\nnamespace Schemas;\n\nmodel Person {\n  /** The person's first name. */\n  firstName: string;\n\n  /** The person's last name. */\n  lastName: string;\n\n  /** Age in years, which must be zero or greater. */\n  @minValue(0)\n  age: int32;\n\n  /** The person's address. */\n  address: Address;\n\n  /** The person's nicknames. */\n  @uniqueItems\n  nickNames?: string[];\n\n  /** Cars owned by the person. */\n  cars?: Car[];\n}\n\nmodel Address {\n  street: string;\n  city: string;\n  country: string;\n}\n\nmodel Car {\n  kind: \"ev\" | \"ice\";\n  brand: string;\n  `model`: string;\n}\n"
+                  },
+                  "libraries": {
+                    "@typespec/json-schema": "1.16.0"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "policy": {
+      "id": "projected-person",
+      "rootFile": "@typespec/json-schema/Person.json",
+      "retrievalBase": "https://example.test/emission/",
+      "options": {
+        "file-type": "json",
+        "int64-strategy": "string"
+      },
+      "usage": "native-emission",
+      "lossPolicy": "allow-reported-loss"
+    },
+    "complete": false,
+    "emission": {
+      "status": "emitted",
+      "source": {
+        "umf": "0.1.0",
+        "id": "source",
+        "vocabularies": {
+          "umf.typespec": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.typespec": {
+                    "profile": "typespec-1.16.0-sources",
+                    "entrypoint": "main.tsp",
+                    "files": {
+                      "main.tsp": "import \"@typespec/json-schema\";\n\nusing JsonSchema;\n\n@jsonSchema\nnamespace Schemas;\n\nmodel Person {\n  /** The person's first name. */\n  firstName: string;\n\n  /** The person's last name. */\n  lastName: string;\n\n  /** Age in years, which must be zero or greater. */\n  @minValue(0)\n  age: int32;\n\n  /** The person's address. */\n  address: Address;\n\n  /** The person's nicknames. */\n  @uniqueItems\n  nickNames?: string[];\n\n  /** Cars owned by the person. */\n  cars?: Car[];\n}\n\nmodel Address {\n  street: string;\n  city: string;\n  country: string;\n}\n\nmodel Car {\n  kind: \"ev\" | \"ice\";\n  brand: string;\n  `model`: string;\n}\n"
+                    },
+                    "libraries": {
+                      "@typespec/json-schema": "1.16.0"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "emitter": "@typespec/json-schema@1.16.0",
+      "policy": {
+        "options": {
+          "file-type": "json",
+          "int64-strategy": "string"
+        }
+      },
+      "compilation": {
+        "compiler": "@typespec/compiler@1.16.0",
+        "libraries": {
+          "@typespec/json-schema": "1.16.0"
+        },
+        "valid": true,
+        "complete": false,
+        "diagnostics": [],
+        "limitations": [
+          "Compiler ran the selected pinned JSON Schema emitter in the memory host; arbitrary project JavaScript remains unregistered",
+          "Compiler validity does not establish cross-system projection equivalence"
+        ]
+      },
+      "files": {
+        "@typespec/json-schema/Person.json": "{\n    \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n    \"$id\": \"Person.json\",\n    \"type\": \"object\",\n    \"properties\": {\n        \"firstName\": {\n            \"type\": \"string\",\n            \"description\": \"The person's first name.\"\n        },\n        \"lastName\": {\n            \"type\": \"string\",\n            \"description\": \"The person's last name.\"\n        },\n        \"age\": {\n            \"type\": \"integer\",\n            \"minimum\": 0,\n            \"maximum\": 2147483647,\n            \"description\": \"Age in years, which must be zero or greater.\"\n        },\n        \"address\": {\n            \"$ref\": \"Address.json\",\n            \"description\": \"The person's address.\"\n        },\n        \"nickNames\": {\n            \"type\": \"array\",\n            \"items\": {\n                \"type\": \"string\"\n            },\n            \"uniqueItems\": true,\n            \"description\": \"The person's nicknames.\"\n        },\n        \"cars\": {\n            \"type\": \"array\",\n            \"items\": {\n                \"$ref\": \"Car.json\"\n            },\n            \"description\": \"Cars owned by the person.\"\n        }\n    },\n    \"required\": [\n        \"firstName\",\n        \"lastName\",\n        \"age\",\n        \"address\"\n    ]\n}",
+        "@typespec/json-schema/Address.json": "{\n    \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n    \"$id\": \"Address.json\",\n    \"type\": \"object\",\n    \"properties\": {\n        \"street\": {\n            \"type\": \"string\"\n        },\n        \"city\": {\n            \"type\": \"string\"\n        },\n        \"country\": {\n            \"type\": \"string\"\n        }\n    },\n    \"required\": [\n        \"street\",\n        \"city\",\n        \"country\"\n    ]\n}",
+        "@typespec/json-schema/Car.json": "{\n    \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n    \"$id\": \"Car.json\",\n    \"type\": \"object\",\n    \"properties\": {\n        \"kind\": {\n            \"anyOf\": [\n                {\n                    \"type\": \"string\",\n                    \"const\": \"ev\"\n                },\n                {\n                    \"type\": \"string\",\n                    \"const\": \"ice\"\n                }\n            ]\n        },\n        \"brand\": {\n            \"type\": \"string\"\n        },\n        \"model\": {\n            \"type\": \"string\"\n        }\n    },\n    \"required\": [\n        \"kind\",\n        \"brand\",\n        \"model\"\n    ]\n}"
+      },
+      "complete": false,
+      "limitations": [
+        "Native emitter output is not proof of lossless TypeSpec semantic projection",
+        "Native JSON Schema 1.16.0 emission can round exact numeric literals through JavaScript numbers (9007199254740993 becomes 9007199254740992); int64-strategy does not prevent literal rounding",
+        "Native JSON Schema 1.16.0 emission omits int64/uint64 bounds; string strategy also omits numeric syntax constraints. Generated validators can therefore accept values outside the source scalar domain",
+        "TypeSpec operations, decorators, source identity and runtime semantics are retained in source, not guaranteed by generated validators"
+      ]
+    },
+    "issues": [
+      {
+        "path": "",
+        "code": "TYPESPEC_UNREVIEWED_SEMANTICS",
+        "classification": "not-enforced",
+        "detail": "Native emission has no exhaustive per-concept fidelity audit. Source operations, decorators and runtime semantics are not guaranteed in target validation. This is not an instance converter.",
+        "retainedInSource": true
+      },
+      {
+        "path": "",
+        "code": "TYPESPEC_NUMERIC_PRECISION",
+        "classification": "representation-change",
+        "detail": "Pinned native emitter can round exact numeric literals; int64-strategy does not prevent this. Original source retains exact values.",
+        "retainedInSource": true
+      },
+      {
+        "path": "",
+        "code": "TYPESPEC_INT64_CONSTRAINTS",
+        "classification": "not-enforced",
+        "detail": "Pinned native emitter omits int64/uint64 bounds and string numeric syntax constraints. These are global risks, not per-source findings.",
+        "retainedInSource": true
+      }
+    ],
+    "resources": [
+      {
+        "file": "@typespec/json-schema/Person.json",
+        "retrievalUri": "https://example.test/emission/%40typespec/json-schema/Person.json"
+      },
+      {
+        "file": "@typespec/json-schema/Address.json",
+        "retrievalUri": "https://example.test/emission/%40typespec/json-schema/Address.json"
+      },
+      {
+        "file": "@typespec/json-schema/Car.json",
+        "retrievalUri": "https://example.test/emission/%40typespec/json-schema/Car.json"
+      }
+    ],
+    "target": {
+      "umf": "0.1.0",
+      "id": "projected-person",
+      "vocabularies": {
+        "umf.json-schema": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "schema",
+          "namespace": "https://example.test/emission/%40typespec/json-schema/Person.json",
+          "elements": [
+            {
+              "id": "schema",
+              "extensions": {
+                "umf.json-schema": {
+                  "dialect": "https://json-schema.org/draft/2020-12/schema",
+                  "baseUri": "https://example.test/emission/%40typespec/json-schema/Person.json",
+                  "root": {
+                    "kind": "object",
+                    "members": {
+                      "$schema": {
+                        "kind": "string",
+                        "value": "https://json-schema.org/draft/2020-12/schema"
+                      },
+                      "$id": {
+                        "kind": "string",
+                        "value": "Person.json"
+                      },
+                      "type": {
+                        "kind": "string",
+                        "value": "object"
+                      },
+                      "properties": {
+                        "kind": "object",
+                        "members": {
+                          "firstName": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "string"
+                              },
+                              "description": {
+                                "kind": "string",
+                                "value": "The person's first name."
+                              }
+                            }
+                          },
+                          "lastName": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "string"
+                              },
+                              "description": {
+                                "kind": "string",
+                                "value": "The person's last name."
+                              }
+                            }
+                          },
+                          "age": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "integer"
+                              },
+                              "minimum": {
+                                "kind": "number",
+                                "value": "0"
+                              },
+                              "maximum": {
+                                "kind": "number",
+                                "value": "2147483647"
+                              },
+                              "description": {
+                                "kind": "string",
+                                "value": "Age in years, which must be zero or greater."
+                              }
+                            }
+                          },
+                          "address": {
+                            "kind": "object",
+                            "members": {
+                              "$ref": {
+                                "kind": "string",
+                                "value": "Address.json"
+                              },
+                              "description": {
+                                "kind": "string",
+                                "value": "The person's address."
+                              }
+                            }
+                          },
+                          "nickNames": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "array"
+                              },
+                              "items": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                }
+                              },
+                              "uniqueItems": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "description": {
+                                "kind": "string",
+                                "value": "The person's nicknames."
+                              }
+                            }
+                          },
+                          "cars": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "array"
+                              },
+                              "items": {
+                                "kind": "object",
+                                "members": {
+                                  "$ref": {
+                                    "kind": "string",
+                                    "value": "Car.json"
+                                  }
+                                }
+                              },
+                              "description": {
+                                "kind": "string",
+                                "value": "Cars owned by the person."
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": {
+                        "kind": "array",
+                        "items": [
+                          {
+                            "kind": "string",
+                            "value": "firstName"
+                          },
+                          {
+                            "kind": "string",
+                            "value": "lastName"
+                          },
+                          {
+                            "kind": "string",
+                            "value": "age"
+                          },
+                          {
+                            "kind": "string",
+                            "value": "address"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "resources": {
+                    "https://example.test/emission/%40typespec/json-schema/Address.json": {
+                      "kind": "object",
+                      "members": {
+                        "$schema": {
+                          "kind": "string",
+                          "value": "https://json-schema.org/draft/2020-12/schema"
+                        },
+                        "$id": {
+                          "kind": "string",
+                          "value": "Address.json"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        },
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "street": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "city": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "country": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "street"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "city"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "country"
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "https://example.test/emission/%40typespec/json-schema/Car.json": {
+                      "kind": "object",
+                      "members": {
+                        "$schema": {
+                          "kind": "string",
+                          "value": "https://json-schema.org/draft/2020-12/schema"
+                        },
+                        "$id": {
+                          "kind": "string",
+                          "value": "Car.json"
+                        },
+                        "type": {
+                          "kind": "string",
+                          "value": "object"
+                        },
+                        "properties": {
+                          "kind": "object",
+                          "members": {
+                            "kind": {
+                              "kind": "object",
+                              "members": {
+                                "anyOf": {
+                                  "kind": "array",
+                                  "items": [
+                                    {
+                                      "kind": "object",
+                                      "members": {
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "string"
+                                        },
+                                        "const": {
+                                          "kind": "string",
+                                          "value": "ev"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "kind": "object",
+                                      "members": {
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "string"
+                                        },
+                                        "const": {
+                                          "kind": "string",
+                                          "value": "ice"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            },
+                            "brand": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "model": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "required": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "string",
+                              "value": "kind"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "brand"
+                            },
+                            {
+                              "kind": "string",
+                              "value": "model"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "native": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"$id\":\"Person.json\",\"type\":\"object\",\"properties\":{\"firstName\":{\"type\":\"string\",\"description\":\"The person's first name.\"},\"lastName\":{\"type\":\"string\",\"description\":\"The person's last name.\"},\"age\":{\"type\":\"integer\",\"minimum\":0,\"maximum\":2147483647,\"description\":\"Age in years, which must be zero or greater.\"},\"address\":{\"$ref\":\"Address.json\",\"description\":\"The person's address.\"},\"nickNames\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"uniqueItems\":true,\"description\":\"The person's nicknames.\"},\"cars\":{\"type\":\"array\",\"items\":{\"$ref\":\"Car.json\"},\"description\":\"Cars owned by the person.\"}},\"required\":[\"firstName\",\"lastName\",\"age\",\"address\"]}\n",
+  "resources": {
+    "https://example.test/emission/%40typespec/json-schema/Address.json": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"$id\":\"Address.json\",\"type\":\"object\",\"properties\":{\"street\":{\"type\":\"string\"},\"city\":{\"type\":\"string\"},\"country\":{\"type\":\"string\"}},\"required\":[\"street\",\"city\",\"country\"]}\n",
+    "https://example.test/emission/%40typespec/json-schema/Car.json": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"$id\":\"Car.json\",\"type\":\"object\",\"properties\":{\"kind\":{\"anyOf\":[{\"type\":\"string\",\"const\":\"ev\"},{\"type\":\"string\",\"const\":\"ice\"}]},\"brand\":{\"type\":\"string\"},\"model\":{\"type\":\"string\"}},\"required\":[\"kind\",\"brand\",\"model\"]}\n"
+  }
+}

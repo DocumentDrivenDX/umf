@@ -1,0 +1,18 @@
+_:Neb3ef0b379ed43319773c1bac938b665 <http://www.w3.org/ns/shacl#sourceShape> <http://example.org/shacl-test/s1> .
+_:N2f7be347141d458dbb9f1b4b623ad958 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Neb3ef0b379ed43319773c1bac938b665 <http://www.w3.org/ns/shacl#resultMessage> "Node ex:j must conform to exactly one shape in ex:s2 , ex:s2" .
+_:Neb3ef0b379ed43319773c1bac938b665 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N2a1457030bb248938721cb096b2843a4 <http://www.w3.org/ns/shacl#value> <http://example.org/shacl-test/i> .
+_:N2f7be347141d458dbb9f1b4b623ad958 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N2a1457030bb248938721cb096b2843a4 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#XoneConstraintComponent> .
+_:Neb3ef0b379ed43319773c1bac938b665 <http://www.w3.org/ns/shacl#value> <http://example.org/shacl-test/j> .
+_:N2a1457030bb248938721cb096b2843a4 <http://www.w3.org/ns/shacl#resultMessage> "Node ex:i must conform to exactly one shape in ex:s2 , ex:s2" .
+_:Neb3ef0b379ed43319773c1bac938b665 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Neb3ef0b379ed43319773c1bac938b665 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#XoneConstraintComponent> .
+_:N2a1457030bb248938721cb096b2843a4 <http://www.w3.org/ns/shacl#sourceShape> <http://example.org/shacl-test/s1> .
+_:N2f7be347141d458dbb9f1b4b623ad958 <http://www.w3.org/ns/shacl#result> _:Neb3ef0b379ed43319773c1bac938b665 .
+_:N2f7be347141d458dbb9f1b4b623ad958 <http://www.w3.org/ns/shacl#result> _:N2a1457030bb248938721cb096b2843a4 .
+_:N2a1457030bb248938721cb096b2843a4 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N2a1457030bb248938721cb096b2843a4 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N2a1457030bb248938721cb096b2843a4 <http://www.w3.org/ns/shacl#focusNode> <http://example.org/shacl-test/i> .
+_:Neb3ef0b379ed43319773c1bac938b665 <http://www.w3.org/ns/shacl#focusNode> <http://example.org/shacl-test/j> .

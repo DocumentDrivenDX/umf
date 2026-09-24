@@ -1,0 +1,3082 @@
+[
+  {
+    "path": "/tables/0/columns/0",
+    "table": {
+      "schema": "sales",
+      "name": "LegacyTimestamp"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "id"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "1"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "56"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "56"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "int"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "int"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "4"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "10"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/0/columns/0",
+      "name": "id",
+      "scalarType": "integer",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/0/columns/1",
+    "table": {
+      "schema": "sales",
+      "name": "LegacyTimestamp"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "version_stamp"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "2"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "189"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "189"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "timestamp"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "timestamp"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "8"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "0"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/0/columns/1",
+      "name": "version_stamp",
+      "scalarType": "binary",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/0",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "id"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "1"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "127"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "127"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "bigint"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "bigint"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "8"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "19"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "string",
+          "value": "9007199254740993"
+        },
+        "identity_increment": {
+          "kind": "string",
+          "value": "1"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/0",
+      "name": "id",
+      "scalarType": "integer",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/1",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "flag"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "2"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "104"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "104"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "bit"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "bit"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "1"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "1"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "string",
+          "value": "((1))"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/1",
+      "name": "flag",
+      "scalarType": "boolean",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/2",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "tiny"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "3"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "48"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "48"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "tinyint"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "tinyint"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "1"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "3"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/2",
+      "name": "tiny",
+      "scalarType": "integer",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/3",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "small"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "4"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "52"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "52"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "smallint"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "smallint"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "2"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "5"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/3",
+      "name": "small",
+      "scalarType": "integer",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/4",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "ordinary"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "5"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "56"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "56"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "int"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "int"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "4"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "10"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/4",
+      "name": "ordinary",
+      "scalarType": "integer",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/5",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "exact"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "6"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "106"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "106"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "decimal"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "decimal"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "17"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "38"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "9"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "string",
+          "value": "Exact decimal amount"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/5",
+      "name": "exact",
+      "description": "Exact decimal amount",
+      "scalarType": "decimal",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/6",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "numeric_value"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "7"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "108"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "108"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "numeric"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "numeric"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "13"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "20"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "3"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/6",
+      "name": "numeric_value",
+      "scalarType": "decimal",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/7",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "cash"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "8"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "60"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "60"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "money"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "money"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "8"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "19"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "4"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/7",
+      "name": "cash",
+      "scalarType": "decimal",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/8",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "small_cash"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "9"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "122"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "122"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "smallmoney"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "smallmoney"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "4"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "10"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "4"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/8",
+      "name": "small_cash",
+      "scalarType": "decimal",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/9",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "approximate"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "10"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "62"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "62"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "float"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "float"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "8"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "53"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/9",
+      "name": "approximate",
+      "scalarType": "float",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/10",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "single"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "11"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "59"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "59"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "real"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "real"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "4"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "24"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/10",
+      "name": "single",
+      "scalarType": "float",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/11",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "words"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "12"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "167"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "167"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "varchar"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "varchar"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "40"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "0"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "string",
+          "value": "Latin1_General_100_BIN2"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/11",
+      "name": "words",
+      "scalarType": "string",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/12",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "unicode_words"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "13"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "231"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "231"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "nvarchar"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "nvarchar"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "80"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "0"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "string",
+          "value": "SQL_Latin1_General_CP1_CI_AS"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/12",
+      "name": "unicode_words",
+      "scalarType": "string",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/13",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "unlimited"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "14"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "231"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "231"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "nvarchar"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "nvarchar"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "-1"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "0"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "string",
+          "value": "SQL_Latin1_General_CP1_CI_AS"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/13",
+      "name": "unlimited",
+      "scalarType": "string",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/14",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "fixed_text"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "15"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "175"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "175"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "char"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "char"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "4"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "0"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "string",
+          "value": "SQL_Latin1_General_CP1_CI_AS"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/14",
+      "name": "fixed_text",
+      "scalarType": "string",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/15",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "unicode_fixed"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "16"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "239"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "239"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "nchar"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "nchar"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "8"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "0"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "string",
+          "value": "SQL_Latin1_General_CP1_CI_AS"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/15",
+      "name": "unicode_fixed",
+      "scalarType": "string",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/16",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "bytes"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "17"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "165"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "165"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "varbinary"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "varbinary"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "-1"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "0"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/16",
+      "name": "bytes",
+      "scalarType": "binary",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/17",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "fixed_bytes"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "18"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "173"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "173"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "binary"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "binary"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "8"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "0"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/17",
+      "name": "fixed_bytes",
+      "scalarType": "binary",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/18",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "version_stamp"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "19"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "189"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "189"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "timestamp"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "timestamp"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "8"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "0"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/18",
+      "name": "version_stamp",
+      "scalarType": "binary",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/19",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "day"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "20"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "40"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "40"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "date"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "date"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "3"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "10"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/19",
+      "name": "day",
+      "scalarType": "date",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/20",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "clock"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "21"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "41"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "41"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "time"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "time"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "5"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "16"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "7"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/20",
+      "name": "clock",
+      "scalarType": "time",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/21",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "local_stamp"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "22"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "42"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "42"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "datetime2"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "datetime2"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "8"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "27"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "7"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/21",
+      "name": "local_stamp",
+      "scalarType": "timestamp",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/22",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "instant"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "23"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "43"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "43"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "datetimeoffset"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "datetimeoffset"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "10"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "34"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "7"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/22",
+      "name": "instant",
+      "scalarType": "timestamp",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/23",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "legacy_stamp"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "24"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "61"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "61"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "datetime"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "datetime"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "8"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "23"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "3"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/23",
+      "name": "legacy_stamp",
+      "scalarType": "timestamp",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/24",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "small_stamp"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "25"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "58"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "58"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "smalldatetime"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "smalldatetime"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "4"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "16"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/24",
+      "name": "small_stamp",
+      "scalarType": "timestamp",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/25",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "amount"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "26"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "106"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "257"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sales"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "Amount"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "decimal"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "9"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "18"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "4"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/25",
+      "name": "amount",
+      "scalarType": "decimal",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/26",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "identifier"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "27"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "36"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "36"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "uniqueidentifier"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "uniqueidentifier"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "16"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "0"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/26",
+      "name": "identifier",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/27",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "document"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "28"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "241"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "241"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "xml"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "xml"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "-1"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "0"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/27",
+      "name": "document",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/28",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "variant"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "29"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "98"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "98"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "sql_variant"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "sql_variant"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "8016"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "0"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": false
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "null"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/28",
+      "name": "variant",
+      "extensions": {}
+    }
+  },
+  {
+    "path": "/tables/1/columns/29",
+    "table": {
+      "schema": "sales",
+      "name": "Types"
+    },
+    "nativeColumn": {
+      "kind": "object",
+      "members": {
+        "name": {
+          "kind": "string",
+          "value": "computed"
+        },
+        "column_id": {
+          "kind": "number",
+          "value": "30"
+        },
+        "system_type_id": {
+          "kind": "number",
+          "value": "56"
+        },
+        "user_type_id": {
+          "kind": "number",
+          "value": "56"
+        },
+        "type_schema": {
+          "kind": "string",
+          "value": "sys"
+        },
+        "type_name": {
+          "kind": "string",
+          "value": "int"
+        },
+        "base_type_name": {
+          "kind": "string",
+          "value": "int"
+        },
+        "is_user_defined": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_assembly_type": {
+          "kind": "boolean",
+          "value": false
+        },
+        "max_length": {
+          "kind": "number",
+          "value": "4"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "10"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "0"
+        },
+        "is_nullable": {
+          "kind": "boolean",
+          "value": true
+        },
+        "is_identity": {
+          "kind": "boolean",
+          "value": false
+        },
+        "is_computed": {
+          "kind": "boolean",
+          "value": true
+        },
+        "collation_name": {
+          "kind": "null"
+        },
+        "default_definition": {
+          "kind": "null"
+        },
+        "computed_definition": {
+          "kind": "string",
+          "value": "([ordinary]+(1))"
+        },
+        "identity_seed": {
+          "kind": "null"
+        },
+        "identity_increment": {
+          "kind": "null"
+        },
+        "description": {
+          "kind": "null"
+        }
+      }
+    },
+    "element": {
+      "id": "/tables/1/columns/29",
+      "name": "computed",
+      "scalarType": "integer",
+      "extensions": {}
+    }
+  }
+]

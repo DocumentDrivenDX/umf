@@ -1,0 +1,17 @@
+export {};
+const capture=await Bun.file('spec/extensions/sqlserver/capture.schema.json').json(),core=await Bun.file('spec/core/schema.json').json(),tree=await Bun.file('spec/core/native-json.schema.json').json();
+const s={type:'string'},b={type:'boolean'},nullable={type:['string','null']},positive={type:'integer',minimum:1};
+const object=(properties:Record<string,unknown>)=>({type:'object',required:Object.keys(properties),properties}),array=(items:unknown)=>({type:'array',items});
+const key=object({name:s,kind:s,is_system_named:b,index_type:s,is_disabled:b,ignore_dup_key:b,columns:array(object({key_ordinal:positive,column_id:positive,name:s,is_descending_key:b}))});
+const foreign=object({name:s,is_system_named:b,is_disabled:b,is_not_trusted:b,is_not_for_replication:b,delete_action:s,update_action:s,referenced_schema:nullable,referenced_table:nullable,columns:array(object({ordinal:positive,column_id:positive,column_name:nullable,referenced_column_id:positive,referenced_column_name:nullable}))});
+const check=object({name:s,is_system_named:b,parent_column_id:{type:'integer',minimum:0},definition:nullable,is_disabled:b,is_not_trusted:b,is_not_for_replication:b,uses_database_collation:b});
+capture.properties.profile={enum:['sqlserver-catalog-v1','sqlserver-catalog-v2']};const table=capture.properties.tables.items;
+Object.assign(table.properties,{keys:array(key),foreign_keys:array(foreign),checks:array(check)});
+capture.allOf=[{if:{properties:{profile:{const:'sqlserver-catalog-v2'}}},then:{properties:{tables:{type:'array',items:{...table,required:[...table.required,'keys','foreign_keys','checks']}}}}}];
+await Bun.write('spec/extensions/sqlserver/capture.schema.json',JSON.stringify(capture,null,2)+'\n');
+const item=object({path:s,table:object({schema:s,name:s}),available:object({keys:b,foreign_keys:b,checks:b}),keys:array({$ref:'#/$defs/node'}),foreign_keys:array({$ref:'#/$defs/node'}),checks:array({$ref:'#/$defs/node'})});
+const view={$schema:core.$schema,$id:'urn:umf:sqlserver:constraints:0.1.0',...object({complete:{const:false},tables:array(item)}),$defs:tree.$defs};
+await Bun.write('spec/extensions/sqlserver/constraint-metadata.schema.json',JSON.stringify(view,null,2)+'\n');
+const manifest=await Bun.file('spec/extensions/sqlserver/package.json').json();manifest.capabilities.native.version='SQL Server 2022; native evidence 16.0.4295.3; capture profiles v1/v2';manifest.capabilities.native.subset='Table/column capture, keys, foreign keys and checks; exact recovery and metadata views. Permission-limited observations, not complete catalog or DDL reconstruction.';manifest.capabilities.evidence.push('tests/sqlserver/constraints.test.ts','fixtures/sqlserver/constraints-oracle.json');manifest.capabilities.evidence=[...new Set(manifest.capabilities.evidence)];await Bun.write('spec/extensions/sqlserver/package.json',JSON.stringify(manifest,null,2)+'\n');
+const query=await Bun.file('native/sqlserver/catalog.sql').text(),extra=await Bun.file('native/sqlserver/constraints.sql').text();
+await Bun.write('native/sqlserver/catalog-v2.sql',query.replace("'sqlserver-catalog-v1'","'sqlserver-catalog-v2'").replace("'native/sqlserver/catalog.sql'","'native/sqlserver/catalog-v2.sql'").replace('  FROM sys.tables t',extra+'\n  FROM sys.tables t'));

@@ -1,0 +1,50 @@
+{
+  "runtime": "deltalake 1.6.4",
+  "clustering": "Spark 4.0.1 Murmur3HashFunction",
+  "earlierCommitsAbsent": true,
+  "results": [
+    {
+      "version": "10",
+      "rows": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        }
+      ],
+      "paths": [
+        "a.parquet",
+        "b.parquet"
+      ],
+      "job": 2,
+      "other": 9223372036854775807
+    },
+    {
+      "version": "11",
+      "rows": [
+        {
+          "id": 1
+        }
+      ],
+      "paths": [
+        "a.parquet"
+      ],
+      "job": 1,
+      "other": 9223372036854775807
+    },
+    {
+      "version": "12",
+      "rows": [
+        {
+          "id": 1
+        }
+      ],
+      "paths": [
+        "a.parquet"
+      ],
+      "job": 1,
+      "other": 9223372036854775807
+    }
+  ]
+}

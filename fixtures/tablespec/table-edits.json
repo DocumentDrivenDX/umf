@@ -1,0 +1,1599 @@
+{
+  "cases": [
+    {
+      "mode": "monolithic",
+      "source": {
+        "umf": "0.1.0",
+        "id": "monolithic",
+        "vocabularies": {
+          "umf.tablespec": {
+            "version": "0.1.0"
+          }
+        },
+        "extensions": {
+          "umf.tablespec": {
+            "profile": "tablespec-table-1",
+            "root": {
+              "kind": "object",
+              "members": {
+                "version": {
+                  "kind": "string",
+                  "value": "1.0"
+                },
+                "table_name": {
+                  "kind": "string",
+                  "value": "orders"
+                },
+                "description": {
+                  "kind": "string",
+                  "value": "Original"
+                },
+                "primary_key": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "id"
+                    }
+                  ]
+                },
+                "context_column": {
+                  "kind": "string",
+                  "value": "context"
+                },
+                "future": {
+                  "kind": "object",
+                  "members": {
+                    "exact": {
+                      "kind": "number",
+                      "value": "9007199254740993"
+                    }
+                  }
+                },
+                "columns": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "id"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "INTEGER"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "context"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "TEXT"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "originalSource": "{\"version\":\"1.0\",\"table_name\":\"orders\",\"description\":\"Original\",\"primary_key\":[\"id\"],\"context_column\":\"context\",\"future\":{\"exact\":9007199254740993},\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"context\",\"data_type\":\"TEXT\",\"nullable\":false}]}",
+            "originalFormat": "json"
+          }
+        },
+        "modules": [
+          {
+            "id": "table",
+            "namespace": "orders",
+            "elements": [
+              {
+                "id": "column:0",
+                "name": "id",
+                "scalarType": "integer",
+                "extensions": {},
+                "consumer.field": {
+                  "keep": true
+                }
+              },
+              {
+                "id": "column:1",
+                "name": "context",
+                "scalarType": "string",
+                "extensions": {}
+              }
+            ],
+            "consumer.metadata": {
+              "keep": true
+            }
+          }
+        ]
+      },
+      "renamed": {
+        "umf": "0.1.0",
+        "id": "monolithic",
+        "vocabularies": {
+          "umf.tablespec": {
+            "version": "0.1.0"
+          }
+        },
+        "extensions": {
+          "umf.tablespec": {
+            "profile": "tablespec-table-1",
+            "root": {
+              "kind": "object",
+              "members": {
+                "version": {
+                  "kind": "string",
+                  "value": "1.0"
+                },
+                "table_name": {
+                  "kind": "string",
+                  "value": "orders"
+                },
+                "description": {
+                  "kind": "string",
+                  "value": "Original"
+                },
+                "primary_key": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "id"
+                    }
+                  ]
+                },
+                "context_column": {
+                  "kind": "string",
+                  "value": "context"
+                },
+                "future": {
+                  "kind": "object",
+                  "members": {
+                    "exact": {
+                      "kind": "number",
+                      "value": "9007199254740993"
+                    }
+                  }
+                },
+                "columns": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "order_id"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "INTEGER"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "tenant"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "TEXT"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "originalSource": "{\"version\":\"1.0\",\"table_name\":\"orders\",\"description\":\"Original\",\"primary_key\":[\"id\"],\"context_column\":\"context\",\"future\":{\"exact\":9007199254740993},\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"context\",\"data_type\":\"TEXT\",\"nullable\":false}]}",
+            "originalFormat": "json"
+          }
+        },
+        "modules": [
+          {
+            "id": "table",
+            "namespace": "orders",
+            "elements": [
+              {
+                "id": "column:0",
+                "name": "order_id",
+                "extensions": {},
+                "consumer.field": {
+                  "keep": true
+                },
+                "scalarType": "integer"
+              },
+              {
+                "id": "column:1",
+                "name": "tenant",
+                "extensions": {},
+                "scalarType": "string"
+              }
+            ],
+            "consumer.metadata": {
+              "keep": true
+            }
+          }
+        ]
+      },
+      "edited": {
+        "umf": "0.1.0",
+        "id": "monolithic",
+        "vocabularies": {
+          "umf.tablespec": {
+            "version": "0.1.0"
+          }
+        },
+        "extensions": {
+          "umf.tablespec": {
+            "profile": "tablespec-table-1",
+            "root": {
+              "kind": "object",
+              "members": {
+                "version": {
+                  "kind": "string",
+                  "value": "1.0"
+                },
+                "table_name": {
+                  "kind": "string",
+                  "value": "renamed_orders"
+                },
+                "description": {
+                  "kind": "string",
+                  "value": "Edited customer's orders — 注文"
+                },
+                "primary_key": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "order_id"
+                    }
+                  ]
+                },
+                "context_column": {
+                  "kind": "string",
+                  "value": "tenant"
+                },
+                "future": {
+                  "kind": "object",
+                  "members": {
+                    "exact": {
+                      "kind": "number",
+                      "value": "9007199254740993"
+                    }
+                  }
+                },
+                "columns": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "order_id"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "INTEGER"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "tenant"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "TEXT"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "originalSource": "{\"version\":\"1.0\",\"table_name\":\"orders\",\"description\":\"Original\",\"primary_key\":[\"id\"],\"context_column\":\"context\",\"future\":{\"exact\":9007199254740993},\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"context\",\"data_type\":\"TEXT\",\"nullable\":false}]}",
+            "originalFormat": "json"
+          }
+        },
+        "modules": [
+          {
+            "id": "table",
+            "namespace": "renamed_orders",
+            "elements": [
+              {
+                "id": "column:0",
+                "name": "order_id",
+                "extensions": {},
+                "consumer.field": {
+                  "keep": true
+                },
+                "scalarType": "integer"
+              },
+              {
+                "id": "column:1",
+                "name": "tenant",
+                "extensions": {},
+                "scalarType": "string"
+              }
+            ],
+            "consumer.metadata": {
+              "keep": true
+            }
+          }
+        ]
+      },
+      "changes": {
+        "table_name": {
+          "kind": "string",
+          "value": "renamed_orders"
+        },
+        "description": {
+          "kind": "string",
+          "value": "Edited customer's orders — 注文"
+        },
+        "primary_key": {
+          "kind": "array",
+          "items": [
+            {
+              "kind": "string",
+              "value": "order_id"
+            }
+          ]
+        },
+        "context_column": {
+          "kind": "string",
+          "value": "tenant"
+        }
+      },
+      "input": {
+        "text": "{\"version\":\"1.0\",\"table_name\":\"orders\",\"description\":\"Original\",\"primary_key\":[\"id\"],\"context_column\":\"context\",\"future\":{\"exact\":9007199254740993},\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"context\",\"data_type\":\"TEXT\",\"nullable\":false}]}"
+      },
+      "unrepaired": {
+        "text": "{\"version\":\"1.0\",\"table_name\":\"orders\",\"description\":\"Original\",\"primary_key\":[\"id\"],\"context_column\":\"context\",\"future\":{\"exact\":9007199254740993},\"columns\":[{\"name\":\"order_id\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"tenant\",\"data_type\":\"TEXT\",\"nullable\":false}]}\n"
+      },
+      "exports": [
+        {
+          "format": "json",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"renamed_orders\",\"description\":\"Edited customer's orders — 注文\",\"primary_key\":[\"order_id\"],\"context_column\":\"tenant\",\"future\":{\"exact\":9007199254740993},\"columns\":[{\"name\":\"order_id\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"tenant\",\"data_type\":\"TEXT\",\"nullable\":false}]}\n"
+        },
+        {
+          "format": "yaml",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"renamed_orders\",\"description\":\"Edited customer's orders — 注文\",\"primary_key\":[\"order_id\"],\"context_column\":\"tenant\",\"future\":{\"exact\":9007199254740993},\"columns\":[{\"name\":\"order_id\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"tenant\",\"data_type\":\"TEXT\",\"nullable\":false}]}\n"
+        }
+      ]
+    },
+    {
+      "mode": "split",
+      "source": {
+        "umf": "0.1.0",
+        "id": "split",
+        "vocabularies": {
+          "umf.tablespec": {
+            "version": "0.1.0"
+          }
+        },
+        "extensions": {
+          "umf.tablespec": {
+            "profile": "tablespec-table-1",
+            "root": {
+              "kind": "object",
+              "members": {
+                "version": {
+                  "kind": "string",
+                  "value": "1.0"
+                },
+                "table_name": {
+                  "kind": "string",
+                  "value": "orders"
+                },
+                "description": {
+                  "kind": "string",
+                  "value": "Original"
+                },
+                "primary_key": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "id"
+                    }
+                  ]
+                },
+                "context_column": {
+                  "kind": "string",
+                  "value": "context"
+                },
+                "future": {
+                  "kind": "object",
+                  "members": {
+                    "exact": {
+                      "kind": "number",
+                      "value": "9007199254740993"
+                    }
+                  }
+                },
+                "columns": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "id"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "INTEGER"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "context"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "TEXT"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "originalSource": "{\"version\":\"1.0\",\"table_name\":\"orders\",\"description\":\"Original\",\"primary_key\":[\"id\"],\"context_column\":\"context\",\"future\":{\"exact\":9007199254740993},\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"context\",\"data_type\":\"TEXT\",\"nullable\":false}]}",
+            "originalFormat": "json",
+            "splitFiles": {
+              "table.yaml": "version: \"1.0\"\ntable_name: orders\ndescription: Original\nprimary_key: [id]\ncontext_column: context\nfuture: {exact: 9007199254740993}\ncolumns: [{name: shadowed, data_type: TEXT}]\n",
+              "columns/01-id.yaml": "column: {name: id, data_type: INTEGER, nullable: false}\nfutureSibling: retained\n",
+              "columns/02-context.yaml": "column: {name: context, data_type: TEXT, nullable: false}\n",
+              "notes.txt": "Keep exactly\n"
+            }
+          }
+        },
+        "modules": [
+          {
+            "id": "table",
+            "namespace": "orders",
+            "elements": [
+              {
+                "id": "column:0",
+                "name": "id",
+                "scalarType": "integer",
+                "extensions": {},
+                "consumer.field": {
+                  "keep": true
+                }
+              },
+              {
+                "id": "column:1",
+                "name": "context",
+                "scalarType": "string",
+                "extensions": {}
+              }
+            ],
+            "consumer.metadata": {
+              "keep": true
+            }
+          }
+        ]
+      },
+      "renamed": {
+        "umf": "0.1.0",
+        "id": "split",
+        "vocabularies": {
+          "umf.tablespec": {
+            "version": "0.1.0"
+          }
+        },
+        "extensions": {
+          "umf.tablespec": {
+            "profile": "tablespec-table-1",
+            "root": {
+              "kind": "object",
+              "members": {
+                "version": {
+                  "kind": "string",
+                  "value": "1.0"
+                },
+                "table_name": {
+                  "kind": "string",
+                  "value": "orders"
+                },
+                "description": {
+                  "kind": "string",
+                  "value": "Original"
+                },
+                "primary_key": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "id"
+                    }
+                  ]
+                },
+                "context_column": {
+                  "kind": "string",
+                  "value": "context"
+                },
+                "future": {
+                  "kind": "object",
+                  "members": {
+                    "exact": {
+                      "kind": "number",
+                      "value": "9007199254740993"
+                    }
+                  }
+                },
+                "columns": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "order_id"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "INTEGER"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "tenant"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "TEXT"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "originalSource": "{\"version\":\"1.0\",\"table_name\":\"orders\",\"description\":\"Original\",\"primary_key\":[\"id\"],\"context_column\":\"context\",\"future\":{\"exact\":9007199254740993},\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"context\",\"data_type\":\"TEXT\",\"nullable\":false}]}",
+            "originalFormat": "json",
+            "splitFiles": {
+              "table.yaml": "version: \"1.0\"\ntable_name: orders\ndescription: Original\nprimary_key: [id]\ncontext_column: context\nfuture: {exact: 9007199254740993}\ncolumns: [{name: shadowed, data_type: TEXT}]\n",
+              "columns/01-id.yaml": "column: {name: id, data_type: INTEGER, nullable: false}\nfutureSibling: retained\n",
+              "columns/02-context.yaml": "column: {name: context, data_type: TEXT, nullable: false}\n",
+              "notes.txt": "Keep exactly\n"
+            }
+          }
+        },
+        "modules": [
+          {
+            "id": "table",
+            "namespace": "orders",
+            "elements": [
+              {
+                "id": "column:0",
+                "name": "order_id",
+                "extensions": {},
+                "consumer.field": {
+                  "keep": true
+                },
+                "scalarType": "integer"
+              },
+              {
+                "id": "column:1",
+                "name": "tenant",
+                "extensions": {},
+                "scalarType": "string"
+              }
+            ],
+            "consumer.metadata": {
+              "keep": true
+            }
+          }
+        ]
+      },
+      "edited": {
+        "umf": "0.1.0",
+        "id": "split",
+        "vocabularies": {
+          "umf.tablespec": {
+            "version": "0.1.0"
+          }
+        },
+        "extensions": {
+          "umf.tablespec": {
+            "profile": "tablespec-table-1",
+            "root": {
+              "kind": "object",
+              "members": {
+                "version": {
+                  "kind": "string",
+                  "value": "1.0"
+                },
+                "table_name": {
+                  "kind": "string",
+                  "value": "renamed_orders"
+                },
+                "description": {
+                  "kind": "string",
+                  "value": "Edited customer's orders — 注文"
+                },
+                "primary_key": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "order_id"
+                    }
+                  ]
+                },
+                "context_column": {
+                  "kind": "string",
+                  "value": "tenant"
+                },
+                "future": {
+                  "kind": "object",
+                  "members": {
+                    "exact": {
+                      "kind": "number",
+                      "value": "9007199254740993"
+                    }
+                  }
+                },
+                "columns": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "order_id"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "INTEGER"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "tenant"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "TEXT"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "originalSource": "{\"version\":\"1.0\",\"table_name\":\"orders\",\"description\":\"Original\",\"primary_key\":[\"id\"],\"context_column\":\"context\",\"future\":{\"exact\":9007199254740993},\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"context\",\"data_type\":\"TEXT\",\"nullable\":false}]}",
+            "originalFormat": "json",
+            "splitFiles": {
+              "table.yaml": "version: \"1.0\"\ntable_name: orders\ndescription: Original\nprimary_key: [id]\ncontext_column: context\nfuture: {exact: 9007199254740993}\ncolumns: [{name: shadowed, data_type: TEXT}]\n",
+              "columns/01-id.yaml": "column: {name: id, data_type: INTEGER, nullable: false}\nfutureSibling: retained\n",
+              "columns/02-context.yaml": "column: {name: context, data_type: TEXT, nullable: false}\n",
+              "notes.txt": "Keep exactly\n"
+            }
+          }
+        },
+        "modules": [
+          {
+            "id": "table",
+            "namespace": "renamed_orders",
+            "elements": [
+              {
+                "id": "column:0",
+                "name": "order_id",
+                "extensions": {},
+                "consumer.field": {
+                  "keep": true
+                },
+                "scalarType": "integer"
+              },
+              {
+                "id": "column:1",
+                "name": "tenant",
+                "extensions": {},
+                "scalarType": "string"
+              }
+            ],
+            "consumer.metadata": {
+              "keep": true
+            }
+          }
+        ]
+      },
+      "changes": {
+        "table_name": {
+          "kind": "string",
+          "value": "renamed_orders"
+        },
+        "description": {
+          "kind": "string",
+          "value": "Edited customer's orders — 注文"
+        },
+        "primary_key": {
+          "kind": "array",
+          "items": [
+            {
+              "kind": "string",
+              "value": "order_id"
+            }
+          ]
+        },
+        "context_column": {
+          "kind": "string",
+          "value": "tenant"
+        }
+      },
+      "input": {
+        "files": {
+          "table.yaml": "version: \"1.0\"\ntable_name: orders\ndescription: Original\nprimary_key: [id]\ncontext_column: context\nfuture: {exact: 9007199254740993}\ncolumns: [{name: shadowed, data_type: TEXT}]\n",
+          "columns/01-id.yaml": "column: {name: id, data_type: INTEGER, nullable: false}\nfutureSibling: retained\n",
+          "columns/02-context.yaml": "column: {name: context, data_type: TEXT, nullable: false}\n",
+          "notes.txt": "Keep exactly\n"
+        }
+      },
+      "unrepaired": {
+        "files": {
+          "table.yaml": "version: \"1.0\"\ntable_name: orders\ndescription: Original\nprimary_key: [id]\ncontext_column: context\nfuture: {exact: 9007199254740993}\ncolumns: [{name: shadowed, data_type: TEXT}]\n",
+          "columns/01-id.yaml": "{\"column\":{\"name\":\"order_id\",\"data_type\":\"INTEGER\",\"nullable\":false},\"futureSibling\":\"retained\"}\n",
+          "columns/02-context.yaml": "{\"column\":{\"name\":\"tenant\",\"data_type\":\"TEXT\",\"nullable\":false}}\n",
+          "notes.txt": "Keep exactly\n"
+        }
+      },
+      "exports": [
+        {
+          "format": "json",
+          "files": {
+            "table.yaml": "{\"version\":\"1.0\",\"table_name\":\"renamed_orders\",\"description\":\"Edited customer's orders — 注文\",\"primary_key\":[\"order_id\"],\"context_column\":\"tenant\",\"future\":{\"exact\":9007199254740993},\"columns\":[{\"name\":\"shadowed\",\"data_type\":\"TEXT\"}]}\n",
+            "columns/01-id.yaml": "{\"column\":{\"name\":\"order_id\",\"data_type\":\"INTEGER\",\"nullable\":false},\"futureSibling\":\"retained\"}\n",
+            "columns/02-context.yaml": "{\"column\":{\"name\":\"tenant\",\"data_type\":\"TEXT\",\"nullable\":false}}\n",
+            "notes.txt": "Keep exactly\n"
+          }
+        },
+        {
+          "format": "yaml",
+          "files": {
+            "table.yaml": "{\"version\":\"1.0\",\"table_name\":\"renamed_orders\",\"description\":\"Edited customer's orders — 注文\",\"primary_key\":[\"order_id\"],\"context_column\":\"tenant\",\"future\":{\"exact\":9007199254740993},\"columns\":[{\"name\":\"shadowed\",\"data_type\":\"TEXT\"}]}\n",
+            "columns/01-id.yaml": "{\"column\":{\"name\":\"order_id\",\"data_type\":\"INTEGER\",\"nullable\":false},\"futureSibling\":\"retained\"}\n",
+            "columns/02-context.yaml": "{\"column\":{\"name\":\"tenant\",\"data_type\":\"TEXT\",\"nullable\":false}}\n",
+            "notes.txt": "Keep exactly\n"
+          }
+        }
+      ]
+    },
+    {
+      "mode": "monolithic",
+      "source": {
+        "umf": "0.1.0",
+        "id": "known-monolithic",
+        "vocabularies": {
+          "umf.tablespec": {
+            "version": "0.1.0"
+          }
+        },
+        "extensions": {
+          "umf.tablespec": {
+            "profile": "tablespec-table-1",
+            "root": {
+              "kind": "object",
+              "members": {
+                "version": {
+                  "kind": "string",
+                  "value": "1.0"
+                },
+                "table_name": {
+                  "kind": "string",
+                  "value": "orders"
+                },
+                "description": {
+                  "kind": "string",
+                  "value": "Original"
+                },
+                "primary_key": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "id"
+                    }
+                  ]
+                },
+                "context_column": {
+                  "kind": "string",
+                  "value": "context"
+                },
+                "columns": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "id"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "INTEGER"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "context"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "TEXT"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "originalSource": "{\"version\":\"1.0\",\"table_name\":\"orders\",\"description\":\"Original\",\"primary_key\":[\"id\"],\"context_column\":\"context\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"context\",\"data_type\":\"TEXT\",\"nullable\":false}]}",
+            "originalFormat": "json"
+          }
+        },
+        "modules": [
+          {
+            "id": "table",
+            "namespace": "orders",
+            "elements": [
+              {
+                "id": "column:0",
+                "name": "id",
+                "scalarType": "integer",
+                "extensions": {}
+              },
+              {
+                "id": "column:1",
+                "name": "context",
+                "scalarType": "string",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "renamed": {
+        "umf": "0.1.0",
+        "id": "known-monolithic",
+        "vocabularies": {
+          "umf.tablespec": {
+            "version": "0.1.0"
+          }
+        },
+        "extensions": {
+          "umf.tablespec": {
+            "profile": "tablespec-table-1",
+            "root": {
+              "kind": "object",
+              "members": {
+                "version": {
+                  "kind": "string",
+                  "value": "1.0"
+                },
+                "table_name": {
+                  "kind": "string",
+                  "value": "orders"
+                },
+                "description": {
+                  "kind": "string",
+                  "value": "Original"
+                },
+                "primary_key": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "id"
+                    }
+                  ]
+                },
+                "context_column": {
+                  "kind": "string",
+                  "value": "context"
+                },
+                "columns": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "order_id"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "INTEGER"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "tenant"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "TEXT"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "originalSource": "{\"version\":\"1.0\",\"table_name\":\"orders\",\"description\":\"Original\",\"primary_key\":[\"id\"],\"context_column\":\"context\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"context\",\"data_type\":\"TEXT\",\"nullable\":false}]}",
+            "originalFormat": "json"
+          }
+        },
+        "modules": [
+          {
+            "id": "table",
+            "namespace": "orders",
+            "elements": [
+              {
+                "id": "column:0",
+                "name": "order_id",
+                "extensions": {},
+                "scalarType": "integer"
+              },
+              {
+                "id": "column:1",
+                "name": "tenant",
+                "extensions": {},
+                "scalarType": "string"
+              }
+            ]
+          }
+        ]
+      },
+      "edited": {
+        "umf": "0.1.0",
+        "id": "known-monolithic",
+        "vocabularies": {
+          "umf.tablespec": {
+            "version": "0.1.0"
+          }
+        },
+        "extensions": {
+          "umf.tablespec": {
+            "profile": "tablespec-table-1",
+            "root": {
+              "kind": "object",
+              "members": {
+                "version": {
+                  "kind": "string",
+                  "value": "1.0"
+                },
+                "table_name": {
+                  "kind": "string",
+                  "value": "renamed_orders"
+                },
+                "description": {
+                  "kind": "string",
+                  "value": "Edited customer's orders — 注文"
+                },
+                "primary_key": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "order_id"
+                    }
+                  ]
+                },
+                "context_column": {
+                  "kind": "string",
+                  "value": "tenant"
+                },
+                "columns": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "order_id"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "INTEGER"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "tenant"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "TEXT"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "originalSource": "{\"version\":\"1.0\",\"table_name\":\"orders\",\"description\":\"Original\",\"primary_key\":[\"id\"],\"context_column\":\"context\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"context\",\"data_type\":\"TEXT\",\"nullable\":false}]}",
+            "originalFormat": "json"
+          }
+        },
+        "modules": [
+          {
+            "id": "table",
+            "namespace": "renamed_orders",
+            "elements": [
+              {
+                "id": "column:0",
+                "name": "order_id",
+                "extensions": {},
+                "scalarType": "integer"
+              },
+              {
+                "id": "column:1",
+                "name": "tenant",
+                "extensions": {},
+                "scalarType": "string"
+              }
+            ]
+          }
+        ]
+      },
+      "changes": {
+        "table_name": {
+          "kind": "string",
+          "value": "renamed_orders"
+        },
+        "description": {
+          "kind": "string",
+          "value": "Edited customer's orders — 注文"
+        },
+        "primary_key": {
+          "kind": "array",
+          "items": [
+            {
+              "kind": "string",
+              "value": "order_id"
+            }
+          ]
+        },
+        "context_column": {
+          "kind": "string",
+          "value": "tenant"
+        }
+      },
+      "input": {
+        "text": "{\"version\":\"1.0\",\"table_name\":\"orders\",\"description\":\"Original\",\"primary_key\":[\"id\"],\"context_column\":\"context\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"context\",\"data_type\":\"TEXT\",\"nullable\":false}]}"
+      },
+      "unrepaired": {
+        "text": "{\"version\":\"1.0\",\"table_name\":\"orders\",\"description\":\"Original\",\"primary_key\":[\"id\"],\"context_column\":\"context\",\"columns\":[{\"name\":\"order_id\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"tenant\",\"data_type\":\"TEXT\",\"nullable\":false}]}\n"
+      },
+      "exports": [
+        {
+          "format": "json",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"renamed_orders\",\"description\":\"Edited customer's orders — 注文\",\"primary_key\":[\"order_id\"],\"context_column\":\"tenant\",\"columns\":[{\"name\":\"order_id\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"tenant\",\"data_type\":\"TEXT\",\"nullable\":false}]}\n"
+        },
+        {
+          "format": "yaml",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"renamed_orders\",\"description\":\"Edited customer's orders — 注文\",\"primary_key\":[\"order_id\"],\"context_column\":\"tenant\",\"columns\":[{\"name\":\"order_id\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"tenant\",\"data_type\":\"TEXT\",\"nullable\":false}]}\n"
+        }
+      ]
+    },
+    {
+      "mode": "split",
+      "source": {
+        "umf": "0.1.0",
+        "id": "known-split",
+        "vocabularies": {
+          "umf.tablespec": {
+            "version": "0.1.0"
+          }
+        },
+        "extensions": {
+          "umf.tablespec": {
+            "profile": "tablespec-table-1",
+            "root": {
+              "kind": "object",
+              "members": {
+                "version": {
+                  "kind": "string",
+                  "value": "1.0"
+                },
+                "table_name": {
+                  "kind": "string",
+                  "value": "orders"
+                },
+                "description": {
+                  "kind": "string",
+                  "value": "Original"
+                },
+                "primary_key": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "id"
+                    }
+                  ]
+                },
+                "context_column": {
+                  "kind": "string",
+                  "value": "context"
+                },
+                "columns": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "id"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "INTEGER"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "context"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "TEXT"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "originalSource": "{\"version\":\"1.0\",\"table_name\":\"orders\",\"description\":\"Original\",\"primary_key\":[\"id\"],\"context_column\":\"context\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"context\",\"data_type\":\"TEXT\",\"nullable\":false}]}",
+            "originalFormat": "json",
+            "splitFiles": {
+              "table.yaml": "version: \"1.0\"\ntable_name: orders\ndescription: Original\nprimary_key: [id]\ncontext_column: context\ncolumns: [{name: shadowed, data_type: TEXT}]\n",
+              "columns/01-id.yaml": "column: {name: id, data_type: INTEGER, nullable: false}\nfutureSibling: retained\n",
+              "columns/02-context.yaml": "column: {name: context, data_type: TEXT, nullable: false}\n",
+              "notes.txt": "Keep exactly\n"
+            }
+          }
+        },
+        "modules": [
+          {
+            "id": "table",
+            "namespace": "orders",
+            "elements": [
+              {
+                "id": "column:0",
+                "name": "id",
+                "scalarType": "integer",
+                "extensions": {}
+              },
+              {
+                "id": "column:1",
+                "name": "context",
+                "scalarType": "string",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "renamed": {
+        "umf": "0.1.0",
+        "id": "known-split",
+        "vocabularies": {
+          "umf.tablespec": {
+            "version": "0.1.0"
+          }
+        },
+        "extensions": {
+          "umf.tablespec": {
+            "profile": "tablespec-table-1",
+            "root": {
+              "kind": "object",
+              "members": {
+                "version": {
+                  "kind": "string",
+                  "value": "1.0"
+                },
+                "table_name": {
+                  "kind": "string",
+                  "value": "orders"
+                },
+                "description": {
+                  "kind": "string",
+                  "value": "Original"
+                },
+                "primary_key": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "id"
+                    }
+                  ]
+                },
+                "context_column": {
+                  "kind": "string",
+                  "value": "context"
+                },
+                "columns": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "order_id"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "INTEGER"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "tenant"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "TEXT"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "originalSource": "{\"version\":\"1.0\",\"table_name\":\"orders\",\"description\":\"Original\",\"primary_key\":[\"id\"],\"context_column\":\"context\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"context\",\"data_type\":\"TEXT\",\"nullable\":false}]}",
+            "originalFormat": "json",
+            "splitFiles": {
+              "table.yaml": "version: \"1.0\"\ntable_name: orders\ndescription: Original\nprimary_key: [id]\ncontext_column: context\ncolumns: [{name: shadowed, data_type: TEXT}]\n",
+              "columns/01-id.yaml": "column: {name: id, data_type: INTEGER, nullable: false}\nfutureSibling: retained\n",
+              "columns/02-context.yaml": "column: {name: context, data_type: TEXT, nullable: false}\n",
+              "notes.txt": "Keep exactly\n"
+            }
+          }
+        },
+        "modules": [
+          {
+            "id": "table",
+            "namespace": "orders",
+            "elements": [
+              {
+                "id": "column:0",
+                "name": "order_id",
+                "extensions": {},
+                "scalarType": "integer"
+              },
+              {
+                "id": "column:1",
+                "name": "tenant",
+                "extensions": {},
+                "scalarType": "string"
+              }
+            ]
+          }
+        ]
+      },
+      "edited": {
+        "umf": "0.1.0",
+        "id": "known-split",
+        "vocabularies": {
+          "umf.tablespec": {
+            "version": "0.1.0"
+          }
+        },
+        "extensions": {
+          "umf.tablespec": {
+            "profile": "tablespec-table-1",
+            "root": {
+              "kind": "object",
+              "members": {
+                "version": {
+                  "kind": "string",
+                  "value": "1.0"
+                },
+                "table_name": {
+                  "kind": "string",
+                  "value": "renamed_orders"
+                },
+                "description": {
+                  "kind": "string",
+                  "value": "Edited customer's orders — 注文"
+                },
+                "primary_key": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "order_id"
+                    }
+                  ]
+                },
+                "context_column": {
+                  "kind": "string",
+                  "value": "tenant"
+                },
+                "columns": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "order_id"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "INTEGER"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    },
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "tenant"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "TEXT"
+                        },
+                        "nullable": {
+                          "kind": "boolean",
+                          "value": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "originalSource": "{\"version\":\"1.0\",\"table_name\":\"orders\",\"description\":\"Original\",\"primary_key\":[\"id\"],\"context_column\":\"context\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"context\",\"data_type\":\"TEXT\",\"nullable\":false}]}",
+            "originalFormat": "json",
+            "splitFiles": {
+              "table.yaml": "version: \"1.0\"\ntable_name: orders\ndescription: Original\nprimary_key: [id]\ncontext_column: context\ncolumns: [{name: shadowed, data_type: TEXT}]\n",
+              "columns/01-id.yaml": "column: {name: id, data_type: INTEGER, nullable: false}\nfutureSibling: retained\n",
+              "columns/02-context.yaml": "column: {name: context, data_type: TEXT, nullable: false}\n",
+              "notes.txt": "Keep exactly\n"
+            }
+          }
+        },
+        "modules": [
+          {
+            "id": "table",
+            "namespace": "renamed_orders",
+            "elements": [
+              {
+                "id": "column:0",
+                "name": "order_id",
+                "extensions": {},
+                "scalarType": "integer"
+              },
+              {
+                "id": "column:1",
+                "name": "tenant",
+                "extensions": {},
+                "scalarType": "string"
+              }
+            ]
+          }
+        ]
+      },
+      "changes": {
+        "table_name": {
+          "kind": "string",
+          "value": "renamed_orders"
+        },
+        "description": {
+          "kind": "string",
+          "value": "Edited customer's orders — 注文"
+        },
+        "primary_key": {
+          "kind": "array",
+          "items": [
+            {
+              "kind": "string",
+              "value": "order_id"
+            }
+          ]
+        },
+        "context_column": {
+          "kind": "string",
+          "value": "tenant"
+        }
+      },
+      "input": {
+        "files": {
+          "table.yaml": "version: \"1.0\"\ntable_name: orders\ndescription: Original\nprimary_key: [id]\ncontext_column: context\ncolumns: [{name: shadowed, data_type: TEXT}]\n",
+          "columns/01-id.yaml": "column: {name: id, data_type: INTEGER, nullable: false}\nfutureSibling: retained\n",
+          "columns/02-context.yaml": "column: {name: context, data_type: TEXT, nullable: false}\n",
+          "notes.txt": "Keep exactly\n"
+        }
+      },
+      "unrepaired": {
+        "files": {
+          "table.yaml": "version: \"1.0\"\ntable_name: orders\ndescription: Original\nprimary_key: [id]\ncontext_column: context\ncolumns: [{name: shadowed, data_type: TEXT}]\n",
+          "columns/01-id.yaml": "{\"column\":{\"name\":\"order_id\",\"data_type\":\"INTEGER\",\"nullable\":false},\"futureSibling\":\"retained\"}\n",
+          "columns/02-context.yaml": "{\"column\":{\"name\":\"tenant\",\"data_type\":\"TEXT\",\"nullable\":false}}\n",
+          "notes.txt": "Keep exactly\n"
+        }
+      },
+      "exports": [
+        {
+          "format": "json",
+          "files": {
+            "table.yaml": "{\"version\":\"1.0\",\"table_name\":\"renamed_orders\",\"description\":\"Edited customer's orders — 注文\",\"primary_key\":[\"order_id\"],\"context_column\":\"tenant\",\"columns\":[{\"name\":\"shadowed\",\"data_type\":\"TEXT\"}]}\n",
+            "columns/01-id.yaml": "{\"column\":{\"name\":\"order_id\",\"data_type\":\"INTEGER\",\"nullable\":false},\"futureSibling\":\"retained\"}\n",
+            "columns/02-context.yaml": "{\"column\":{\"name\":\"tenant\",\"data_type\":\"TEXT\",\"nullable\":false}}\n",
+            "notes.txt": "Keep exactly\n"
+          }
+        },
+        {
+          "format": "yaml",
+          "files": {
+            "table.yaml": "{\"version\":\"1.0\",\"table_name\":\"renamed_orders\",\"description\":\"Edited customer's orders — 注文\",\"primary_key\":[\"order_id\"],\"context_column\":\"tenant\",\"columns\":[{\"name\":\"shadowed\",\"data_type\":\"TEXT\"}]}\n",
+            "columns/01-id.yaml": "{\"column\":{\"name\":\"order_id\",\"data_type\":\"INTEGER\",\"nullable\":false},\"futureSibling\":\"retained\"}\n",
+            "columns/02-context.yaml": "{\"column\":{\"name\":\"tenant\",\"data_type\":\"TEXT\",\"nullable\":false}}\n",
+            "notes.txt": "Keep exactly\n"
+          }
+        }
+      ]
+    }
+  ],
+  "scope": "Copied metadata edits, not full native validation or reference discovery; shadowed split content remains preserved."
+}

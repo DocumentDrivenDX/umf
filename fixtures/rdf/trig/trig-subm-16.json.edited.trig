@@ -1,0 +1,4 @@
+<http://example.org/foo#a> <http://example.org/foo#b> "UMF reviewed literal" .
+<http://example.org/foo#d> <http://example.org/foo#e> "\tThis ꯍis\r \U00012451another\n\none\n" .
+<http://example/graph> { <http://example.org/foo#a> <http://example.org/foo#b> "\nthis \ris a \U00012451long\t\nliteralꯍ\n" . }
+<http://example/graph> { <http://example.org/foo#d> <http://example.org/foo#e> "\tThis ꯍis\r \U00012451another\n\none\n" . }

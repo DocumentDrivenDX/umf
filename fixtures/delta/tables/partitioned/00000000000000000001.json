@@ -1,0 +1,3 @@
+{"commitInfo":{"timestamp":1789910455131,"operation":"ADD CONSTRAINT","operationParameters":{"constraints":"[{\"name\":\"positive_id\",\"expr\":\"id > 0\"}]"},"engineInfo":"delta-rs:py-1.6.4","clientVersion":"delta-rs.py-1.6.4"}}
+{"metaData":{"id":"a8c35597-a73e-4e77-b406-76f5213868fd","name":null,"description":null,"format":{"provider":"parquet","options":{}},"schemaString":"{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"region\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}","partitionColumns":["region"],"createdTime":1789910455100,"configuration":{"delta.appendOnly":"true","delta.constraints.positive_id":"id > 0"}}}
+{"protocol":{"minReaderVersion":1,"minWriterVersion":3}}

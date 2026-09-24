@@ -1,0 +1,10 @@
+<http://example.org/base/book/one> <http://purl.org/dc/terms/Isbn> _:b0 .
+<http://example.org/base/book/one> <http://purl.org/dc/terms/Publication> _:b1 .
+<http://example.org/base/book/one> <http://purl.org/dc/terms/aut> _:b3 .
+<http://example.org/base/book/one> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/ontology/bibo/Book> .
+_:b0 <http://purl.org/dc/terms/value> "1234567890" .
+_:b1 <http://purl.org/dc/terms/agent> _:b2 .
+_:b1 <http://purl.org/dc/terms/date> "1999" .
+_:b2 <http://www.w3.org/2000/01/rdf-schema#label> "PubCorp" .
+_:b3 <http://purl.org/dc/terms/agent> _:b4 .
+_:b4 <http://www.w3.org/2000/01/rdf-schema#label> "Some Body" .

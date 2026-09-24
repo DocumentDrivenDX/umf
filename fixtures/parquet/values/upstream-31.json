@@ -1,0 +1,1225 @@
+[
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 53,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 70,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 89,
+        "name": "protocol",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 90,
+              "name": "minReaderVersion",
+              "value": {
+                "kind": "int",
+                "bits": 32,
+                "value": "3",
+                "physical": {
+                  "type": "INT32",
+                  "value": "3"
+                }
+              }
+            },
+            {
+              "index": 91,
+              "name": "minWriterVersion",
+              "value": {
+                "kind": "int",
+                "bits": 32,
+                "value": "7",
+                "physical": {
+                  "type": "INT32",
+                  "value": "7"
+                }
+              }
+            },
+            {
+              "index": 92,
+              "name": "readerFeatures",
+              "value": {
+                "kind": "list",
+                "items": [
+                  {
+                    "kind": "string",
+                    "value": "deletionVectors",
+                    "physical": {
+                      "type": "BYTE_ARRAY",
+                      "hex": "64656c6574696f6e566563746f7273"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 95,
+              "name": "writerFeatures",
+              "value": {
+                "kind": "list",
+                "items": [
+                  {
+                    "kind": "string",
+                    "value": "deletionVectors",
+                    "physical": {
+                      "type": "BYTE_ARRAY",
+                      "hex": "64656c6574696f6e566563746f7273"
+                    }
+                  },
+                  {
+                    "kind": "string",
+                    "value": "appendOnly",
+                    "physical": {
+                      "type": "BYTE_ARRAY",
+                      "hex": "617070656e644f6e6c79"
+                    }
+                  },
+                  {
+                    "kind": "string",
+                    "value": "invariants",
+                    "physical": {
+                      "type": "BYTE_ARRAY",
+                      "hex": "696e76617269616e7473"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 98,
+        "name": "rowIdHighWaterMark",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 53,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 70,
+        "name": "metaData",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 71,
+              "name": "id",
+              "value": {
+                "kind": "string",
+                "value": "bc4dc621-70d1-4392-86c0-fb1cf9d0f04a",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "62633464633632312d373064312d343339322d383663302d666231636639643066303461"
+                }
+              }
+            },
+            {
+              "index": 72,
+              "name": "name",
+              "value": null
+            },
+            {
+              "index": 73,
+              "name": "description",
+              "value": null
+            },
+            {
+              "index": 74,
+              "name": "format",
+              "value": {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "index": 75,
+                    "name": "provider",
+                    "value": {
+                      "kind": "string",
+                      "value": "parquet",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "70617271756574"
+                      }
+                    }
+                  },
+                  {
+                    "index": 76,
+                    "name": "options",
+                    "value": {
+                      "kind": "map",
+                      "duplicateKeys": "last-value",
+                      "entries": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 80,
+              "name": "schemaString",
+              "value": {
+                "kind": "string",
+                "value": "{\"type\":\"struct\",\"fields\":[{\"name\":\"address\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"age\",\"type\":\"double\",\"nullable\":true,\"metadata\":{}},{\"name\":\"company\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"nbr\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"phone_number\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a2261646472657373222c2274797065223a22737472696e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22616765222c2274797065223a22646f75626c65222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22636f6d70616e79222c2274797065223a22737472696e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226964222c2274797065223a226c6f6e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226e616d65222c2274797065223a22737472696e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226e6272222c2274797065223a226c6f6e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2270686f6e655f6e756d626572222c2274797065223a22737472696e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d"
+                }
+              }
+            },
+            {
+              "index": 81,
+              "name": "partitionColumns",
+              "value": {
+                "kind": "list",
+                "items": []
+              }
+            },
+            {
+              "index": 84,
+              "name": "configuration",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": [
+                  {
+                    "key": {
+                      "kind": "string",
+                      "value": "delta.enableDeletionVectors",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "64656c74612e656e61626c6544656c6574696f6e566563746f7273"
+                      }
+                    },
+                    "value": {
+                      "kind": "string",
+                      "value": "true",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "74727565"
+                      }
+                    }
+                  },
+                  {
+                    "key": {
+                      "kind": "string",
+                      "value": "delta.autoOptimize.optimizeWrite",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "64656c74612e6175746f4f7074696d697a652e6f7074696d697a655772697465"
+                      }
+                    },
+                    "value": {
+                      "kind": "string",
+                      "value": "true",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "74727565"
+                      }
+                    }
+                  },
+                  {
+                    "key": {
+                      "kind": "string",
+                      "value": "delta.targetFileSize",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "64656c74612e74617267657446696c6553697a65"
+                      }
+                    },
+                    "value": {
+                      "kind": "string",
+                      "value": "33554432",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "3333353534343332"
+                      }
+                    }
+                  },
+                  {
+                    "key": {
+                      "kind": "string",
+                      "value": "delta.tuneFileSizesForRewrites",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "64656c74612e74756e6546696c6553697a6573466f725265777269746573"
+                      }
+                    },
+                    "value": {
+                      "kind": "string",
+                      "value": "true",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "74727565"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 88,
+              "name": "createdTime",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1690885055727",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1690885055727"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 89,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 98,
+        "name": "rowIdHighWaterMark",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 6,
+              "name": "path",
+              "value": {
+                "kind": "string",
+                "value": "part-00000-cb251d5e-b665-437a-a9a7-fbfc5137c77d.c000.snappy.parquet",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "706172742d30303030302d63623235316435652d623636352d343337612d613961372d6662666335313337633737642e633030302e736e617070792e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionValues",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": []
+              }
+            },
+            {
+              "index": 11,
+              "name": "size",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "10499",
+                "physical": {
+                  "type": "INT64",
+                  "value": "10499"
+                }
+              }
+            },
+            {
+              "index": 12,
+              "name": "modificationTime",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1690885056000",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1690885056000"
+                }
+              }
+            },
+            {
+              "index": 13,
+              "name": "dataChange",
+              "value": {
+                "kind": "bool",
+                "value": false,
+                "physical": {
+                  "type": "BOOLEAN",
+                  "value": false
+                }
+              }
+            },
+            {
+              "index": 14,
+              "name": "tags",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": [
+                  {
+                    "key": {
+                      "kind": "string",
+                      "value": "INSERTION_TIME",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "494e53455254494f4e5f54494d45"
+                      }
+                    },
+                    "value": {
+                      "kind": "string",
+                      "value": "1690885056000000",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "31363930383835303536303030303030"
+                      }
+                    }
+                  },
+                  {
+                    "key": {
+                      "kind": "string",
+                      "value": "MIN_INSERTION_TIME",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "4d494e5f494e53455254494f4e5f54494d45"
+                      }
+                    },
+                    "value": {
+                      "kind": "string",
+                      "value": "1690885056000000",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "31363930383835303536303030303030"
+                      }
+                    }
+                  },
+                  {
+                    "key": {
+                      "kind": "string",
+                      "value": "MAX_INSERTION_TIME",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "4d41585f494e53455254494f4e5f54494d45"
+                      }
+                    },
+                    "value": {
+                      "kind": "string",
+                      "value": "1690885056000000",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "31363930383835303536303030303030"
+                      }
+                    }
+                  },
+                  {
+                    "key": {
+                      "kind": "string",
+                      "value": "OPTIMIZE_TARGET_SIZE",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "4f5054494d495a455f5441524745545f53495a45"
+                      }
+                    },
+                    "value": {
+                      "kind": "string",
+                      "value": "33554432",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "3333353534343332"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 18,
+              "name": "deletionVector",
+              "value": {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "index": 19,
+                    "name": "storageType",
+                    "value": {
+                      "kind": "string",
+                      "value": "u",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "75"
+                      }
+                    }
+                  },
+                  {
+                    "index": 20,
+                    "name": "pathOrInlineDv",
+                    "value": {
+                      "kind": "string",
+                      "value": "Q6Kt3y1b)0MgZSWwPunr",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "51364b743379316229304d675a53577750756e72"
+                      }
+                    }
+                  },
+                  {
+                    "index": 21,
+                    "name": "offset",
+                    "value": {
+                      "kind": "int",
+                      "bits": 32,
+                      "value": "1",
+                      "physical": {
+                        "type": "INT32",
+                        "value": "1"
+                      }
+                    }
+                  },
+                  {
+                    "index": 22,
+                    "name": "sizeInBytes",
+                    "value": {
+                      "kind": "int",
+                      "bits": 32,
+                      "value": "36",
+                      "physical": {
+                        "type": "INT32",
+                        "value": "36"
+                      }
+                    }
+                  },
+                  {
+                    "index": 23,
+                    "name": "cardinality",
+                    "value": {
+                      "kind": "int",
+                      "bits": 64,
+                      "value": "2",
+                      "physical": {
+                        "type": "INT64",
+                        "value": "2"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 24,
+              "name": "baseRowId",
+              "value": null
+            },
+            {
+              "index": 25,
+              "name": "stats",
+              "value": {
+                "kind": "string",
+                "value": "{\"numRecords\":100,\"minValues\":{\"address\":\"002 Mark Tunnel\\nNew Robert, GU 4\",\"age\":8.842105263157896,\"company\":\"Ag\",\"id\":10,\"name\":\"Aaron Daniels\",\"nbr\":1111,\"phone_number\":\"(208)218-3006\"},\"maxValues\":{\"address\":\"Unit 6055 Box 5622\\nDPO AE 10192\",\"age\":512.421052631579,\"company\":\"Wr\",\"id\":109,\"name\":\"William Lamb\",\"nbr\":1210,\"phone_number\":\"998-256-9686\"},\"nullCount\":{\"address\":0,\"age\":0,\"company\":0,\"id\":0,\"name\":0,\"nbr\":0,\"phone_number\":0},\"tightBounds\":false}",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a3130302c226d696e56616c756573223a7b2261646472657373223a22303032204d61726b2054756e6e656c5c6e4e657720526f626572742c2047552034222c22616765223a382e3834323130353236333135373839362c22636f6d70616e79223a224167222c226964223a31302c226e616d65223a224161726f6e2044616e69656c73222c226e6272223a313131312c2270686f6e655f6e756d626572223a2228323038293231382d33303036227d2c226d617856616c756573223a7b2261646472657373223a22556e6974203630353520426f7820353632325c6e44504f204145203130313932222c22616765223a3531322e3432313035323633313537392c22636f6d70616e79223a225772222c226964223a3130392c226e616d65223a2257696c6c69616d204c616d62222c226e6272223a313231302c2270686f6e655f6e756d626572223a223939382d3235362d39363836227d2c226e756c6c436f756e74223a7b2261646472657373223a302c22616765223a302c22636f6d70616e79223a302c226964223a302c226e616d65223a302c226e6272223a302c2270686f6e655f6e756d626572223a307d2c227469676874426f756e6473223a66616c73657d"
+                }
+              }
+            },
+            {
+              "index": 26,
+              "name": "stats_parsed",
+              "value": {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "index": 27,
+                    "name": "numRecords",
+                    "value": {
+                      "kind": "int",
+                      "bits": 64,
+                      "value": "100",
+                      "physical": {
+                        "type": "INT64",
+                        "value": "100"
+                      }
+                    }
+                  },
+                  {
+                    "index": 28,
+                    "name": "minValues",
+                    "value": {
+                      "kind": "struct",
+                      "fields": [
+                        {
+                          "index": 29,
+                          "name": "address",
+                          "value": {
+                            "kind": "string",
+                            "value": "002 Mark Tunnel\nNew Robert, GU 4",
+                            "physical": {
+                              "type": "BYTE_ARRAY",
+                              "hex": "303032204d61726b2054756e6e656c0a4e657720526f626572742c2047552034"
+                            }
+                          }
+                        },
+                        {
+                          "index": 30,
+                          "name": "age",
+                          "value": {
+                            "kind": "float",
+                            "bits": 64,
+                            "value": "8.842105263157896",
+                            "physical": {
+                              "type": "DOUBLE",
+                              "hex": "f31aca6b28af2140"
+                            }
+                          }
+                        },
+                        {
+                          "index": 31,
+                          "name": "company",
+                          "value": {
+                            "kind": "string",
+                            "value": "Ag",
+                            "physical": {
+                              "type": "BYTE_ARRAY",
+                              "hex": "4167"
+                            }
+                          }
+                        },
+                        {
+                          "index": 32,
+                          "name": "id",
+                          "value": {
+                            "kind": "int",
+                            "bits": 64,
+                            "value": "10",
+                            "physical": {
+                              "type": "INT64",
+                              "value": "10"
+                            }
+                          }
+                        },
+                        {
+                          "index": 33,
+                          "name": "name",
+                          "value": {
+                            "kind": "string",
+                            "value": "Aaron Daniels",
+                            "physical": {
+                              "type": "BYTE_ARRAY",
+                              "hex": "4161726f6e2044616e69656c73"
+                            }
+                          }
+                        },
+                        {
+                          "index": 34,
+                          "name": "nbr",
+                          "value": {
+                            "kind": "int",
+                            "bits": 64,
+                            "value": "1111",
+                            "physical": {
+                              "type": "INT64",
+                              "value": "1111"
+                            }
+                          }
+                        },
+                        {
+                          "index": 35,
+                          "name": "phone_number",
+                          "value": {
+                            "kind": "string",
+                            "value": "(208)218-3006",
+                            "physical": {
+                              "type": "BYTE_ARRAY",
+                              "hex": "28323038293231382d33303036"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "index": 36,
+                    "name": "maxValues",
+                    "value": {
+                      "kind": "struct",
+                      "fields": [
+                        {
+                          "index": 37,
+                          "name": "address",
+                          "value": {
+                            "kind": "string",
+                            "value": "Unit 6055 Box 5622\nDPO AE 10192",
+                            "physical": {
+                              "type": "BYTE_ARRAY",
+                              "hex": "556e6974203630353520426f7820353632320a44504f204145203130313932"
+                            }
+                          }
+                        },
+                        {
+                          "index": 38,
+                          "name": "age",
+                          "value": {
+                            "kind": "float",
+                            "bits": 64,
+                            "value": "512.421052631579",
+                            "physical": {
+                              "type": "DOUBLE",
+                              "hex": "3694d7505e038040"
+                            }
+                          }
+                        },
+                        {
+                          "index": 39,
+                          "name": "company",
+                          "value": {
+                            "kind": "string",
+                            "value": "Wr",
+                            "physical": {
+                              "type": "BYTE_ARRAY",
+                              "hex": "5772"
+                            }
+                          }
+                        },
+                        {
+                          "index": 40,
+                          "name": "id",
+                          "value": {
+                            "kind": "int",
+                            "bits": 64,
+                            "value": "109",
+                            "physical": {
+                              "type": "INT64",
+                              "value": "109"
+                            }
+                          }
+                        },
+                        {
+                          "index": 41,
+                          "name": "name",
+                          "value": {
+                            "kind": "string",
+                            "value": "William Lamb",
+                            "physical": {
+                              "type": "BYTE_ARRAY",
+                              "hex": "57696c6c69616d204c616d62"
+                            }
+                          }
+                        },
+                        {
+                          "index": 42,
+                          "name": "nbr",
+                          "value": {
+                            "kind": "int",
+                            "bits": 64,
+                            "value": "1210",
+                            "physical": {
+                              "type": "INT64",
+                              "value": "1210"
+                            }
+                          }
+                        },
+                        {
+                          "index": 43,
+                          "name": "phone_number",
+                          "value": {
+                            "kind": "string",
+                            "value": "998-256-9686",
+                            "physical": {
+                              "type": "BYTE_ARRAY",
+                              "hex": "3939382d3235362d39363836"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "index": 44,
+                    "name": "nullCount",
+                    "value": {
+                      "kind": "struct",
+                      "fields": [
+                        {
+                          "index": 45,
+                          "name": "address",
+                          "value": {
+                            "kind": "int",
+                            "bits": 64,
+                            "value": "0",
+                            "physical": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 46,
+                          "name": "age",
+                          "value": {
+                            "kind": "int",
+                            "bits": 64,
+                            "value": "0",
+                            "physical": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 47,
+                          "name": "company",
+                          "value": {
+                            "kind": "int",
+                            "bits": 64,
+                            "value": "0",
+                            "physical": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 48,
+                          "name": "id",
+                          "value": {
+                            "kind": "int",
+                            "bits": 64,
+                            "value": "0",
+                            "physical": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 49,
+                          "name": "name",
+                          "value": {
+                            "kind": "int",
+                            "bits": 64,
+                            "value": "0",
+                            "physical": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 50,
+                          "name": "nbr",
+                          "value": {
+                            "kind": "int",
+                            "bits": 64,
+                            "value": "0",
+                            "physical": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 51,
+                          "name": "phone_number",
+                          "value": {
+                            "kind": "int",
+                            "bits": 64,
+                            "value": "0",
+                            "physical": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "index": 52,
+                    "name": "tightBounds",
+                    "value": {
+                      "kind": "bool",
+                      "value": false,
+                      "physical": {
+                        "type": "BOOLEAN",
+                        "value": false
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 53,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 70,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 89,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 98,
+        "name": "rowIdHighWaterMark",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 53,
+        "name": "remove",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 54,
+              "name": "path",
+              "value": {
+                "kind": "string",
+                "value": "part-00000-cb251d5e-b665-437a-a9a7-fbfc5137c77d.c000.snappy.parquet",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "706172742d30303030302d63623235316435652d623636352d343337612d613961372d6662666335313337633737642e633030302e736e617070792e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 55,
+              "name": "deletionTimestamp",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1690885062609",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1690885062609"
+                }
+              }
+            },
+            {
+              "index": 56,
+              "name": "dataChange",
+              "value": {
+                "kind": "bool",
+                "value": false,
+                "physical": {
+                  "type": "BOOLEAN",
+                  "value": false
+                }
+              }
+            },
+            {
+              "index": 57,
+              "name": "extendedFileMetadata",
+              "value": {
+                "kind": "bool",
+                "value": true,
+                "physical": {
+                  "type": "BOOLEAN",
+                  "value": true
+                }
+              }
+            },
+            {
+              "index": 58,
+              "name": "partitionValues",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": []
+              }
+            },
+            {
+              "index": 62,
+              "name": "size",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "10499",
+                "physical": {
+                  "type": "INT64",
+                  "value": "10499"
+                }
+              }
+            },
+            {
+              "index": 63,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 69,
+              "name": "baseRowId",
+              "value": null
+            }
+          ]
+        }
+      },
+      {
+        "index": 70,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 89,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 98,
+        "name": "rowIdHighWaterMark",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 53,
+        "name": "remove",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 54,
+              "name": "path",
+              "value": {
+                "kind": "string",
+                "value": "part-00000-cb251d5e-b665-437a-a9a7-fbfc5137c77d.c000.snappy.parquet",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "706172742d30303030302d63623235316435652d623636352d343337612d613961372d6662666335313337633737642e633030302e736e617070792e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 55,
+              "name": "deletionTimestamp",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1690885064443",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1690885064443"
+                }
+              }
+            },
+            {
+              "index": 56,
+              "name": "dataChange",
+              "value": {
+                "kind": "bool",
+                "value": false,
+                "physical": {
+                  "type": "BOOLEAN",
+                  "value": false
+                }
+              }
+            },
+            {
+              "index": 57,
+              "name": "extendedFileMetadata",
+              "value": {
+                "kind": "bool",
+                "value": true,
+                "physical": {
+                  "type": "BOOLEAN",
+                  "value": true
+                }
+              }
+            },
+            {
+              "index": 58,
+              "name": "partitionValues",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": []
+              }
+            },
+            {
+              "index": 62,
+              "name": "size",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "10499",
+                "physical": {
+                  "type": "INT64",
+                  "value": "10499"
+                }
+              }
+            },
+            {
+              "index": 63,
+              "name": "deletionVector",
+              "value": {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "index": 64,
+                    "name": "storageType",
+                    "value": {
+                      "kind": "string",
+                      "value": "u",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "75"
+                      }
+                    }
+                  },
+                  {
+                    "index": 65,
+                    "name": "pathOrInlineDv",
+                    "value": {
+                      "kind": "string",
+                      "value": "J.Dy=B})x<YARTP5LcO1",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "4a2e44793d427d29783c5941525450354c634f31"
+                      }
+                    }
+                  },
+                  {
+                    "index": 66,
+                    "name": "offset",
+                    "value": {
+                      "kind": "int",
+                      "bits": 32,
+                      "value": "1",
+                      "physical": {
+                        "type": "INT32",
+                        "value": "1"
+                      }
+                    }
+                  },
+                  {
+                    "index": 67,
+                    "name": "sizeInBytes",
+                    "value": {
+                      "kind": "int",
+                      "bits": 32,
+                      "value": "34",
+                      "physical": {
+                        "type": "INT32",
+                        "value": "34"
+                      }
+                    }
+                  },
+                  {
+                    "index": 68,
+                    "name": "cardinality",
+                    "value": {
+                      "kind": "int",
+                      "bits": 64,
+                      "value": "1",
+                      "physical": {
+                        "type": "INT64",
+                        "value": "1"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 69,
+              "name": "baseRowId",
+              "value": null
+            }
+          ]
+        }
+      },
+      {
+        "index": 70,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 89,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 98,
+        "name": "rowIdHighWaterMark",
+        "value": null
+      }
+    ]
+  }
+]

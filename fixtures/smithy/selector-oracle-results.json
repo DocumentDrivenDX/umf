@@ -1,0 +1,2545 @@
+{
+  "oracle": "software.amazon.smithy:smithy-model:1.73.0",
+  "jars": {
+    "jsonschema": "47584feccfe5879ba438d6ab11a646f890bd606ff39c82849c75be1f642fb493",
+    "model": "816e2cbbf8a62895d484e481e1d7beb1e4e929dec0cfbdda8c160d69402f750b",
+    "utils": "1d89fa0624ebf8e0f3032cc6b8283ee58335d3ee43e1826b24b1e951b3bdf8d2"
+  },
+  "runtimeSha256": "602a90b691aaeeaaab841b472d68592236a520f2c59ce9ae1e69addc7e654898",
+  "commit": "dd2d50a93db313ee21b41916af158442e14669e1",
+  "files": 15,
+  "cases": [
+    {
+      "file": "fixtures/smithy/selector-upstream/attribute-existence.smithy",
+      "selector": "[trait|enum]",
+      "shapeIds": [
+        "smithy.api#HttpApiKeyLocations",
+        "smithy.api#Severity",
+        "smithy.api#StructurallyExclusive",
+        "smithy.api#TraitChangeType",
+        "smithy.api#error",
+        "smithy.api#timestampFormat",
+        "smithy.example#EnumWithTags",
+        "smithy.example#SimpleEnum"
+      ],
+      "test": {
+        "selector": "[trait|enum]",
+        "skipPreludeShapes": true,
+        "matches": [
+          "smithy.example#SimpleEnum",
+          "smithy.example#EnumWithTags"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/attribute-existence.smithy",
+      "selector": "[trait|enum|(values)|tags|(values)]",
+      "shapeIds": [
+        "smithy.example#EnumWithTags"
+      ],
+      "test": {
+        "selector": "[trait|enum|(values)|tags|(values)]",
+        "matches": [
+          "smithy.example#EnumWithTags"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/functions.smithy",
+      "selector": "list:test(> member > string)",
+      "shapeIds": [
+        "smithy.api#IdempotentErrors",
+        "smithy.api#LocalMixinTraitList",
+        "smithy.api#Namespaces",
+        "smithy.api#NonEmptyStringList",
+        "smithy.api#RequestCompressionEncodingsList",
+        "smithy.api#TraitShapeIdList",
+        "smithy.api#auth",
+        "smithy.api#suppress",
+        "smithy.api#tags",
+        "smithy.example#StringList"
+      ],
+      "test": {
+        "selector": "list:test(> member > string)",
+        "skipPreludeShapes": true,
+        "matches": [
+          "smithy.example#StringList"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/functions.smithy",
+      "selector": ":is(string, number)",
+      "shapeIds": [
+        "smithy.api#AuthTraitReference",
+        "smithy.api#BigDecimal",
+        "smithy.api#BigInteger",
+        "smithy.api#Byte",
+        "smithy.api#ClosureId",
+        "smithy.api#CommonMark",
+        "smithy.api#Double",
+        "smithy.api#EnumConstantBodyName",
+        "smithy.api#Float",
+        "smithy.api#HttpApiKeyLocations",
+        "smithy.api#Identifier",
+        "smithy.api#Integer",
+        "smithy.api#LocalMixinTrait",
+        "smithy.api#Long",
+        "smithy.api#NonEmptyString",
+        "smithy.api#PrimitiveByte",
+        "smithy.api#PrimitiveDouble",
+        "smithy.api#PrimitiveFloat",
+        "smithy.api#PrimitiveInteger",
+        "smithy.api#PrimitiveLong",
+        "smithy.api#PrimitiveShort",
+        "smithy.api#Severity",
+        "smithy.api#Short",
+        "smithy.api#String",
+        "smithy.api#StructurallyExclusive",
+        "smithy.api#TraitChangeType",
+        "smithy.api#TraitShapeId",
+        "smithy.api#documentation",
+        "smithy.api#error",
+        "smithy.api#httpError",
+        "smithy.api#httpHeader",
+        "smithy.api#httpPrefixHeaders",
+        "smithy.api#httpQuery",
+        "smithy.api#jsonName",
+        "smithy.api#mediaType",
+        "smithy.api#pattern",
+        "smithy.api#resourceIdentifier",
+        "smithy.api#since",
+        "smithy.api#timestampFormat",
+        "smithy.api#title",
+        "smithy.api#xmlName",
+        "smithy.example#SimpleInteger",
+        "smithy.example#SimpleString"
+      ],
+      "test": {
+        "selector": ":is(string, number)",
+        "skipPreludeShapes": true,
+        "matches": [
+          "smithy.example#SimpleString",
+          "smithy.example#SimpleInteger"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/functions.smithy",
+      "selector": "member > :is(string, number)",
+      "shapeIds": [
+        "smithy.api#AuthTraitReference",
+        "smithy.api#BigDecimal",
+        "smithy.api#ClosureId",
+        "smithy.api#CommonMark",
+        "smithy.api#EnumConstantBodyName",
+        "smithy.api#HttpApiKeyLocations",
+        "smithy.api#Identifier",
+        "smithy.api#Integer",
+        "smithy.api#LocalMixinTrait",
+        "smithy.api#Long",
+        "smithy.api#NonEmptyString",
+        "smithy.api#Severity",
+        "smithy.api#String",
+        "smithy.api#StructurallyExclusive",
+        "smithy.api#TraitChangeType",
+        "smithy.api#TraitShapeId",
+        "smithy.example#SimpleInteger",
+        "smithy.example#SimpleString"
+      ],
+      "test": {
+        "selector": "member > :is(string, number)",
+        "skipPreludeShapes": true,
+        "matches": [
+          "smithy.example#SimpleInteger",
+          "smithy.example#SimpleString"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/functions.smithy",
+      "selector": ":is(list > member > string, map > member > number)",
+      "shapeIds": [
+        "smithy.api#AuthTraitReference",
+        "smithy.api#LocalMixinTrait",
+        "smithy.api#NonEmptyString",
+        "smithy.api#String",
+        "smithy.api#TraitShapeId",
+        "smithy.example#SimpleInteger",
+        "smithy.example#SimpleString"
+      ],
+      "test": {
+        "selector": ":is(list > member > string, map > member > number)",
+        "skipPreludeShapes": true,
+        "matches": [
+          "smithy.example#SimpleString",
+          "smithy.example#SimpleInteger"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/functions.smithy",
+      "selector": ":not(string) :not(number) :not(structure) :not(service) :not(operation) :not(resource)",
+      "shapeIds": [
+        "smithy.api#Blob",
+        "smithy.api#Boolean",
+        "smithy.api#Document",
+        "smithy.api#EnumDefinition$deprecated",
+        "smithy.api#EnumDefinition$documentation",
+        "smithy.api#EnumDefinition$name",
+        "smithy.api#EnumDefinition$tags",
+        "smithy.api#EnumDefinition$value",
+        "smithy.api#Example$allowConstraintErrors",
+        "smithy.api#Example$documentation",
+        "smithy.api#Example$error",
+        "smithy.api#Example$input",
+        "smithy.api#Example$output",
+        "smithy.api#Example$title",
+        "smithy.api#ExampleError$content",
+        "smithy.api#ExampleError$shapeId",
+        "smithy.api#HttpApiKeyLocations$HEADER",
+        "smithy.api#HttpApiKeyLocations$QUERY",
+        "smithy.api#IdempotentErrors",
+        "smithy.api#IdempotentErrors$member",
+        "smithy.api#LocalMixinTraitList",
+        "smithy.api#LocalMixinTraitList$member",
+        "smithy.api#Namespaces",
+        "smithy.api#Namespaces$member",
+        "smithy.api#NonEmptyStringList",
+        "smithy.api#NonEmptyStringList$member",
+        "smithy.api#NonEmptyStringMap",
+        "smithy.api#NonEmptyStringMap$key",
+        "smithy.api#NonEmptyStringMap$value",
+        "smithy.api#PrimitiveBoolean",
+        "smithy.api#Reference$ids",
+        "smithy.api#Reference$rel",
+        "smithy.api#Reference$resource",
+        "smithy.api#Reference$service",
+        "smithy.api#Renames",
+        "smithy.api#Renames$key",
+        "smithy.api#Renames$value",
+        "smithy.api#RequestCompressionEncodingsList",
+        "smithy.api#RequestCompressionEncodingsList$member",
+        "smithy.api#Severity$DANGER",
+        "smithy.api#Severity$ERROR",
+        "smithy.api#Severity$NOTE",
+        "smithy.api#Severity$WARNING",
+        "smithy.api#ShapeClosure$documentation",
+        "smithy.api#ShapeClosure$id",
+        "smithy.api#ShapeClosure$includeBySelector",
+        "smithy.api#ShapeClosure$includeNamespaces",
+        "smithy.api#ShapeClosure$rename",
+        "smithy.api#ShapeClosures",
+        "smithy.api#ShapeClosures$member",
+        "smithy.api#StructurallyExclusive$MEMBER",
+        "smithy.api#StructurallyExclusive$TARGET",
+        "smithy.api#Timestamp",
+        "smithy.api#TraitChangeType$ADD",
+        "smithy.api#TraitChangeType$ANY",
+        "smithy.api#TraitChangeType$PRESENCE",
+        "smithy.api#TraitChangeType$REMOVE",
+        "smithy.api#TraitChangeType$UPDATE",
+        "smithy.api#TraitDiffRule$change",
+        "smithy.api#TraitDiffRule$message",
+        "smithy.api#TraitDiffRule$path",
+        "smithy.api#TraitDiffRule$severity",
+        "smithy.api#TraitDiffRules",
+        "smithy.api#TraitDiffRules$member",
+        "smithy.api#TraitShapeIdList",
+        "smithy.api#TraitShapeIdList$member",
+        "smithy.api#TraitValidator$message",
+        "smithy.api#TraitValidator$selector",
+        "smithy.api#TraitValidator$severity",
+        "smithy.api#auth",
+        "smithy.api#auth$member",
+        "smithy.api#authDefinition$traits",
+        "smithy.api#cors$additionalAllowedHeaders",
+        "smithy.api#cors$additionalExposedHeaders",
+        "smithy.api#cors$maxAge",
+        "smithy.api#cors$origin",
+        "smithy.api#cors$origins",
+        "smithy.api#default",
+        "smithy.api#deprecated$message",
+        "smithy.api#deprecated$since",
+        "smithy.api#endpoint$hostPrefix",
+        "smithy.api#enum",
+        "smithy.api#enum$member",
+        "smithy.api#enumValue",
+        "smithy.api#error$CLIENT",
+        "smithy.api#error$SERVER",
+        "smithy.api#examples",
+        "smithy.api#examples$member",
+        "smithy.api#externalDocumentation",
+        "smithy.api#externalDocumentation$key",
+        "smithy.api#externalDocumentation$value",
+        "smithy.api#http$code",
+        "smithy.api#http$method",
+        "smithy.api#http$uri",
+        "smithy.api#httpApiKeyAuth$in",
+        "smithy.api#httpApiKeyAuth$name",
+        "smithy.api#httpApiKeyAuth$scheme",
+        "smithy.api#idRef$errorMessage",
+        "smithy.api#idRef$failWhenMissing",
+        "smithy.api#idRef$selector",
+        "smithy.api#idempotent$exists",
+        "smithy.api#idempotent$notFound",
+        "smithy.api#length$max",
+        "smithy.api#length$min",
+        "smithy.api#longPoll$timeoutMillis",
+        "smithy.api#metadata$key",
+        "smithy.api#mixin$localTraits",
+        "smithy.api#paginated$inputToken",
+        "smithy.api#paginated$items",
+        "smithy.api#paginated$outputToken",
+        "smithy.api#paginated$pageSize",
+        "smithy.api#property$name",
+        "smithy.api#protocolDefinition$noInlineDocumentSupport",
+        "smithy.api#protocolDefinition$traits",
+        "smithy.api#range$max",
+        "smithy.api#range$min",
+        "smithy.api#recommended$reason",
+        "smithy.api#references",
+        "smithy.api#references$member",
+        "smithy.api#requestCompression$encodings",
+        "smithy.api#retryable$throttling",
+        "smithy.api#suppress",
+        "smithy.api#suppress$member",
+        "smithy.api#tags",
+        "smithy.api#tags$member",
+        "smithy.api#timestampFormat$DATE_TIME",
+        "smithy.api#timestampFormat$EPOCH_SECONDS",
+        "smithy.api#timestampFormat$HTTP_DATE",
+        "smithy.api#trait$breakingChanges",
+        "smithy.api#trait$conflicts",
+        "smithy.api#trait$selector",
+        "smithy.api#trait$structurallyExclusive",
+        "smithy.api#traitValidators",
+        "smithy.api#traitValidators$key",
+        "smithy.api#traitValidators$value",
+        "smithy.api#xmlNamespace$prefix",
+        "smithy.api#xmlNamespace$uri",
+        "smithy.example#IntegerList",
+        "smithy.example#IntegerList$member",
+        "smithy.example#SimpleMap",
+        "smithy.example#SimpleMap$key",
+        "smithy.example#SimpleMap$value",
+        "smithy.example#StringList",
+        "smithy.example#StringList$member"
+      ],
+      "test": {
+        "selector": ":not(string) :not(number) :not(structure) :not(service) :not(operation) :not(resource)",
+        "skipPreludeShapes": true,
+        "matches": [
+          "smithy.example#IntegerList",
+          "smithy.example#IntegerList$member",
+          "smithy.example#SimpleMap",
+          "smithy.example#SimpleMap$key",
+          "smithy.example#SimpleMap$value",
+          "smithy.example#StringList",
+          "smithy.example#StringList$member"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/functions.smithy",
+      "selector": "list :not(> member > string)",
+      "shapeIds": [
+        "smithy.api#ShapeClosures",
+        "smithy.api#TraitDiffRules",
+        "smithy.api#enum",
+        "smithy.api#examples",
+        "smithy.api#references",
+        "smithy.example#IntegerList"
+      ],
+      "test": {
+        "selector": "list :not(> member > string)",
+        "skipPreludeShapes": true,
+        "matches": [
+          "smithy.example#IntegerList"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/functions.smithy",
+      "selector": ":topdown([trait|smithy.example#dataPlane])",
+      "shapeIds": [
+        "smithy.example#OperationA",
+        "smithy.example#Resource",
+        "smithy.example#ServiceA"
+      ],
+      "test": {
+        "selector": ":topdown([trait|smithy.example#dataPlane])",
+        "matches": [
+          "smithy.example#OperationA",
+          "smithy.example#Resource",
+          "smithy.example#ServiceA"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/functions.smithy",
+      "selector": ":topdown([trait|smithy.example#dataPlane], [trait|smithy.example#controlPlane])",
+      "shapeIds": [
+        "smithy.example#OperationA",
+        "smithy.example#ServiceA"
+      ],
+      "test": {
+        "selector": ":topdown([trait|smithy.example#dataPlane], [trait|smithy.example#controlPlane])",
+        "matches": [
+          "smithy.example#OperationA",
+          "smithy.example#ServiceA"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/id-attribute.smithy",
+      "selector": "[id = smithy.example#Exception]",
+      "shapeIds": [
+        "smithy.example#Exception"
+      ],
+      "test": {
+        "selector": "[id = smithy.example#Exception]",
+        "matches": [
+          "smithy.example#Exception"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/id-attribute.smithy",
+      "selector": "[id|namespace = 'smithy.example']",
+      "shapeIds": [
+        "smithy.example#Exception",
+        "smithy.example#Exception$message"
+      ],
+      "test": {
+        "selector": "[id|namespace = 'smithy.example']",
+        "matches": [
+          "smithy.example#Exception",
+          "smithy.example#Exception$message"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/id-attribute.smithy",
+      "selector": "[id|(length) <= 24]",
+      "shapeIds": [
+        "smithy.api#BigDecimal",
+        "smithy.api#BigInteger",
+        "smithy.api#Blob",
+        "smithy.api#Boolean",
+        "smithy.api#Byte",
+        "smithy.api#ClosureId",
+        "smithy.api#CommonMark",
+        "smithy.api#Document",
+        "smithy.api#Double",
+        "smithy.api#Example",
+        "smithy.api#Example$error",
+        "smithy.api#Example$input",
+        "smithy.api#Example$title",
+        "smithy.api#ExampleError",
+        "smithy.api#Float",
+        "smithy.api#Identifier",
+        "smithy.api#Integer",
+        "smithy.api#Long",
+        "smithy.api#Namespaces",
+        "smithy.api#PrimitiveByte",
+        "smithy.api#PrimitiveLong",
+        "smithy.api#Reference",
+        "smithy.api#Reference$ids",
+        "smithy.api#Reference$rel",
+        "smithy.api#Renames",
+        "smithy.api#Renames$key",
+        "smithy.api#Renames$value",
+        "smithy.api#Severity",
+        "smithy.api#Severity$NOTE",
+        "smithy.api#ShapeClosure",
+        "smithy.api#ShapeClosures",
+        "smithy.api#Short",
+        "smithy.api#String",
+        "smithy.api#Timestamp",
+        "smithy.api#TraitDiffRule",
+        "smithy.api#TraitShapeId",
+        "smithy.api#Unit",
+        "smithy.api#addedDefault",
+        "smithy.api#auth",
+        "smithy.api#auth$member",
+        "smithy.api#box",
+        "smithy.api#cors",
+        "smithy.api#cors$maxAge",
+        "smithy.api#cors$origin",
+        "smithy.api#cors$origins",
+        "smithy.api#default",
+        "smithy.api#deprecated",
+        "smithy.api#documentation",
+        "smithy.api#endpoint",
+        "smithy.api#enum",
+        "smithy.api#enum$member",
+        "smithy.api#enumValue",
+        "smithy.api#error",
+        "smithy.api#error$CLIENT",
+        "smithy.api#error$SERVER",
+        "smithy.api#eventHeader",
+        "smithy.api#eventPayload",
+        "smithy.api#examples",
+        "smithy.api#hostLabel",
+        "smithy.api#http",
+        "smithy.api#http$code",
+        "smithy.api#http$method",
+        "smithy.api#http$uri",
+        "smithy.api#httpBasicAuth",
+        "smithy.api#httpError",
+        "smithy.api#httpHeader",
+        "smithy.api#httpLabel",
+        "smithy.api#httpPayload",
+        "smithy.api#httpQuery",
+        "smithy.api#idRef",
+        "smithy.api#idempotent",
+        "smithy.api#input",
+        "smithy.api#internal",
+        "smithy.api#jsonName",
+        "smithy.api#length",
+        "smithy.api#length$max",
+        "smithy.api#length$min",
+        "smithy.api#longPoll",
+        "smithy.api#mediaType",
+        "smithy.api#metadata",
+        "smithy.api#metadata$key",
+        "smithy.api#mixin",
+        "smithy.api#noReplace",
+        "smithy.api#notProperty",
+        "smithy.api#optionalAuth",
+        "smithy.api#output",
+        "smithy.api#paginated",
+        "smithy.api#pattern",
+        "smithy.api#private",
+        "smithy.api#property",
+        "smithy.api#property$name",
+        "smithy.api#range",
+        "smithy.api#range$max",
+        "smithy.api#range$min",
+        "smithy.api#readonly",
+        "smithy.api#recommended",
+        "smithy.api#references",
+        "smithy.api#required",
+        "smithy.api#retryable",
+        "smithy.api#sensitive",
+        "smithy.api#since",
+        "smithy.api#sparse",
+        "smithy.api#streaming",
+        "smithy.api#suppress",
+        "smithy.api#tags",
+        "smithy.api#tags$member",
+        "smithy.api#title",
+        "smithy.api#trait",
+        "smithy.api#uniqueItems",
+        "smithy.api#unitType",
+        "smithy.api#unstable",
+        "smithy.api#xmlAttribute",
+        "smithy.api#xmlFlattened",
+        "smithy.api#xmlName",
+        "smithy.api#xmlNamespace",
+        "smithy.example#Exception"
+      ],
+      "test": {
+        "selector": "[id|(length) <= 24]",
+        "skipPreludeShapes": true,
+        "matches": [
+          "smithy.example#Exception"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/id-attribute.smithy",
+      "selector": "[id|(length) > 24]",
+      "shapeIds": [
+        "smithy.api#AuthTraitReference",
+        "smithy.api#EnumConstantBodyName",
+        "smithy.api#EnumDefinition",
+        "smithy.api#EnumDefinition$deprecated",
+        "smithy.api#EnumDefinition$documentation",
+        "smithy.api#EnumDefinition$name",
+        "smithy.api#EnumDefinition$tags",
+        "smithy.api#EnumDefinition$value",
+        "smithy.api#Example$allowConstraintErrors",
+        "smithy.api#Example$documentation",
+        "smithy.api#Example$output",
+        "smithy.api#ExampleError$content",
+        "smithy.api#ExampleError$shapeId",
+        "smithy.api#HttpApiKeyLocations",
+        "smithy.api#HttpApiKeyLocations$HEADER",
+        "smithy.api#HttpApiKeyLocations$QUERY",
+        "smithy.api#IdempotentErrors",
+        "smithy.api#IdempotentErrors$member",
+        "smithy.api#LocalMixinTrait",
+        "smithy.api#LocalMixinTraitList",
+        "smithy.api#LocalMixinTraitList$member",
+        "smithy.api#Namespaces$member",
+        "smithy.api#NonEmptyString",
+        "smithy.api#NonEmptyStringList",
+        "smithy.api#NonEmptyStringList$member",
+        "smithy.api#NonEmptyStringMap",
+        "smithy.api#NonEmptyStringMap$key",
+        "smithy.api#NonEmptyStringMap$value",
+        "smithy.api#PrimitiveBoolean",
+        "smithy.api#PrimitiveDouble",
+        "smithy.api#PrimitiveFloat",
+        "smithy.api#PrimitiveInteger",
+        "smithy.api#PrimitiveShort",
+        "smithy.api#Reference$resource",
+        "smithy.api#Reference$service",
+        "smithy.api#RequestCompressionEncodingsList",
+        "smithy.api#RequestCompressionEncodingsList$member",
+        "smithy.api#Severity$DANGER",
+        "smithy.api#Severity$ERROR",
+        "smithy.api#Severity$WARNING",
+        "smithy.api#ShapeClosure$documentation",
+        "smithy.api#ShapeClosure$id",
+        "smithy.api#ShapeClosure$includeBySelector",
+        "smithy.api#ShapeClosure$includeNamespaces",
+        "smithy.api#ShapeClosure$rename",
+        "smithy.api#ShapeClosures$member",
+        "smithy.api#StructurallyExclusive",
+        "smithy.api#StructurallyExclusive$MEMBER",
+        "smithy.api#StructurallyExclusive$TARGET",
+        "smithy.api#TraitChangeType",
+        "smithy.api#TraitChangeType$ADD",
+        "smithy.api#TraitChangeType$ANY",
+        "smithy.api#TraitChangeType$PRESENCE",
+        "smithy.api#TraitChangeType$REMOVE",
+        "smithy.api#TraitChangeType$UPDATE",
+        "smithy.api#TraitDiffRule$change",
+        "smithy.api#TraitDiffRule$message",
+        "smithy.api#TraitDiffRule$path",
+        "smithy.api#TraitDiffRule$severity",
+        "smithy.api#TraitDiffRules",
+        "smithy.api#TraitDiffRules$member",
+        "smithy.api#TraitShapeIdList",
+        "smithy.api#TraitShapeIdList$member",
+        "smithy.api#TraitValidator",
+        "smithy.api#TraitValidator$message",
+        "smithy.api#TraitValidator$selector",
+        "smithy.api#TraitValidator$severity",
+        "smithy.api#authDefinition",
+        "smithy.api#authDefinition$traits",
+        "smithy.api#clientOptional",
+        "smithy.api#cors$additionalAllowedHeaders",
+        "smithy.api#cors$additionalExposedHeaders",
+        "smithy.api#deprecated$message",
+        "smithy.api#deprecated$since",
+        "smithy.api#endpoint$hostPrefix",
+        "smithy.api#examples$member",
+        "smithy.api#externalDocumentation",
+        "smithy.api#externalDocumentation$key",
+        "smithy.api#externalDocumentation$value",
+        "smithy.api#httpApiKeyAuth",
+        "smithy.api#httpApiKeyAuth$in",
+        "smithy.api#httpApiKeyAuth$name",
+        "smithy.api#httpApiKeyAuth$scheme",
+        "smithy.api#httpBearerAuth",
+        "smithy.api#httpChecksumRequired",
+        "smithy.api#httpDigestAuth",
+        "smithy.api#httpPrefixHeaders",
+        "smithy.api#httpQueryParams",
+        "smithy.api#httpResponseCode",
+        "smithy.api#idRef$errorMessage",
+        "smithy.api#idRef$failWhenMissing",
+        "smithy.api#idRef$selector",
+        "smithy.api#idempotencyToken",
+        "smithy.api#idempotent$exists",
+        "smithy.api#idempotent$notFound",
+        "smithy.api#longPoll$timeoutMillis",
+        "smithy.api#mixin$localTraits",
+        "smithy.api#nestedProperties",
+        "smithy.api#paginated$inputToken",
+        "smithy.api#paginated$items",
+        "smithy.api#paginated$outputToken",
+        "smithy.api#paginated$pageSize",
+        "smithy.api#protocolDefinition",
+        "smithy.api#protocolDefinition$noInlineDocumentSupport",
+        "smithy.api#protocolDefinition$traits",
+        "smithy.api#recommended$reason",
+        "smithy.api#references$member",
+        "smithy.api#requestCompression",
+        "smithy.api#requestCompression$encodings",
+        "smithy.api#requiresLength",
+        "smithy.api#resourceIdentifier",
+        "smithy.api#retryable$throttling",
+        "smithy.api#suppress$member",
+        "smithy.api#timestampFormat",
+        "smithy.api#timestampFormat$DATE_TIME",
+        "smithy.api#timestampFormat$EPOCH_SECONDS",
+        "smithy.api#timestampFormat$HTTP_DATE",
+        "smithy.api#trait$breakingChanges",
+        "smithy.api#trait$conflicts",
+        "smithy.api#trait$selector",
+        "smithy.api#trait$structurallyExclusive",
+        "smithy.api#traitValidators",
+        "smithy.api#traitValidators$key",
+        "smithy.api#traitValidators$value",
+        "smithy.api#xmlNamespace$prefix",
+        "smithy.api#xmlNamespace$uri",
+        "smithy.example#Exception$message"
+      ],
+      "test": {
+        "selector": "[id|(length) > 24]",
+        "skipPreludeShapes": true,
+        "matches": [
+          "smithy.example#Exception$message"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/in-function.smithy",
+      "selector": "service\n$output(~> operation -[output]-> ~> number)\n~> operation -[input]-> ~> number\n:not(:in(${output}))",
+      "shapeIds": [
+        "smithy.api#Double",
+        "smithy.api#Integer"
+      ],
+      "test": {
+        "selector": "service\n$output(~> operation -[output]-> ~> number)\n~> operation -[input]-> ~> number\n:not(:in(${output}))",
+        "matches": [
+          "smithy.api#Integer",
+          "smithy.api#Double"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/in-function.smithy",
+      "selector": "$usedNumbers(operation ~> number)\noperation ~> *\n:in(${usedNumbers})",
+      "shapeIds": [
+        "smithy.api#Byte",
+        "smithy.api#Double",
+        "smithy.api#Float",
+        "smithy.api#Integer",
+        "smithy.api#Long",
+        "smithy.api#Short"
+      ],
+      "test": {
+        "selector": "$usedNumbers(operation ~> number)\noperation ~> *\n:in(${usedNumbers})",
+        "matches": [
+          "smithy.api#Integer",
+          "smithy.api#Float",
+          "smithy.api#Double",
+          "smithy.api#Short",
+          "smithy.api#Long",
+          "smithy.api#Byte"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/in-function.smithy",
+      "selector": ":in(number :test(< member [id|namespace = smithy.example]))",
+      "shapeIds": [
+        "smithy.api#Byte",
+        "smithy.api#Double",
+        "smithy.api#Float",
+        "smithy.api#Integer",
+        "smithy.api#Long",
+        "smithy.api#Short"
+      ],
+      "test": {
+        "selector": ":in(number :test(< member [id|namespace = smithy.example]))",
+        "matches": [
+          "smithy.api#Integer",
+          "smithy.api#Float",
+          "smithy.api#Double",
+          "smithy.api#Short",
+          "smithy.api#Long",
+          "smithy.api#Byte"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "service ~> operation",
+      "shapeIds": [
+        "smithy.example#CreateBar",
+        "smithy.example#DeleteBar",
+        "smithy.example#GetBar",
+        "smithy.example#ListBar",
+        "smithy.example#NamedCollectionOperation",
+        "smithy.example#NamedOperation",
+        "smithy.example#OperationA",
+        "smithy.example#OperationB",
+        "smithy.example#PutBar",
+        "smithy.example#UpdateBar"
+      ],
+      "test": {
+        "selector": "service ~> operation",
+        "matches": [
+          "smithy.example#OperationA",
+          "smithy.example#OperationB",
+          "smithy.example#CreateBar",
+          "smithy.example#GetBar",
+          "smithy.example#UpdateBar",
+          "smithy.example#DeleteBar",
+          "smithy.example#ListBar",
+          "smithy.example#PutBar",
+          "smithy.example#NamedOperation",
+          "smithy.example#NamedCollectionOperation"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "service[trait|title] ~> operation:not([trait|http])",
+      "shapeIds": [
+        "smithy.example#CreateBar",
+        "smithy.example#DeleteBar",
+        "smithy.example#GetBar",
+        "smithy.example#ListBar",
+        "smithy.example#NamedCollectionOperation",
+        "smithy.example#NamedOperation",
+        "smithy.example#OperationB",
+        "smithy.example#PutBar",
+        "smithy.example#UpdateBar"
+      ],
+      "test": {
+        "selector": "service[trait|title] ~> operation:not([trait|http])",
+        "matches": [
+          "smithy.example#OperationB",
+          "smithy.example#CreateBar",
+          "smithy.example#GetBar",
+          "smithy.example#UpdateBar",
+          "smithy.example#DeleteBar",
+          "smithy.example#ListBar",
+          "smithy.example#PutBar",
+          "smithy.example#NamedOperation",
+          "smithy.example#NamedCollectionOperation"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "string :test(< member < list)",
+      "shapeIds": [
+        "smithy.api#AuthTraitReference",
+        "smithy.api#LocalMixinTrait",
+        "smithy.api#NonEmptyString",
+        "smithy.api#String",
+        "smithy.api#TraitShapeId",
+        "smithy.example#BarId",
+        "smithy.example#String"
+      ],
+      "test": {
+        "selector": "string :test(< member < list)",
+        "skipPreludeShapes": true,
+        "matches": [
+          "smithy.example#String",
+          "smithy.example#BarId"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": ":not([trait|trait]) :not(< *)",
+      "shapeIds": [
+        "smithy.api#BigInteger",
+        "smithy.api#Blob",
+        "smithy.api#Byte",
+        "smithy.api#Double",
+        "smithy.api#Float",
+        "smithy.api#PrimitiveBoolean",
+        "smithy.api#PrimitiveByte",
+        "smithy.api#PrimitiveDouble",
+        "smithy.api#PrimitiveFloat",
+        "smithy.api#PrimitiveInteger",
+        "smithy.api#PrimitiveLong",
+        "smithy.api#PrimitiveShort",
+        "smithy.api#ShapeClosures",
+        "smithy.api#Short",
+        "smithy.api#Timestamp",
+        "smithy.api#Unit",
+        "smithy.example#List",
+        "smithy.example#Service",
+        "smithy.example#Structure"
+      ],
+      "test": {
+        "selector": ":not([trait|trait]) :not(< *)",
+        "skipPreludeShapes": true,
+        "matches": [
+          "smithy.example#Service",
+          "smithy.example#List",
+          "smithy.example#Structure"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "[trait|streaming] :test(<) :not(< member < structure <-[input, output]- operation)",
+      "shapeIds": [
+        "smithy.example#StreamBlob"
+      ],
+      "test": {
+        "selector": "[trait|streaming] :test(<) :not(< member < structure <-[input, output]- operation)",
+        "matches": [
+          "smithy.example#StreamBlob"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "[trait|trait] :not(<-[trait]-)",
+      "shapeIds": [
+        "smithy.api#addedDefault",
+        "smithy.api#auth",
+        "smithy.api#clientOptional",
+        "smithy.api#cors",
+        "smithy.api#endpoint",
+        "smithy.api#enum",
+        "smithy.api#error",
+        "smithy.api#eventHeader",
+        "smithy.api#eventPayload",
+        "smithy.api#examples",
+        "smithy.api#hostLabel",
+        "smithy.api#httpApiKeyAuth",
+        "smithy.api#httpBasicAuth",
+        "smithy.api#httpBearerAuth",
+        "smithy.api#httpChecksumRequired",
+        "smithy.api#httpDigestAuth",
+        "smithy.api#httpError",
+        "smithy.api#httpHeader",
+        "smithy.api#httpLabel",
+        "smithy.api#httpPayload",
+        "smithy.api#httpPrefixHeaders",
+        "smithy.api#httpQuery",
+        "smithy.api#httpQueryParams",
+        "smithy.api#httpResponseCode",
+        "smithy.api#idempotencyToken",
+        "smithy.api#internal",
+        "smithy.api#jsonName",
+        "smithy.api#longPoll",
+        "smithy.api#nestedProperties",
+        "smithy.api#noReplace",
+        "smithy.api#optionalAuth",
+        "smithy.api#paginated",
+        "smithy.api#property",
+        "smithy.api#protocolDefinition",
+        "smithy.api#recommended",
+        "smithy.api#references",
+        "smithy.api#requestCompression",
+        "smithy.api#requiresLength",
+        "smithy.api#resourceIdentifier",
+        "smithy.api#retryable",
+        "smithy.api#sensitive",
+        "smithy.api#since",
+        "smithy.api#sparse",
+        "smithy.api#suppress",
+        "smithy.api#timestampFormat",
+        "smithy.api#traitValidators",
+        "smithy.api#xmlAttribute",
+        "smithy.api#xmlFlattened",
+        "smithy.api#xmlName",
+        "smithy.api#xmlNamespace",
+        "smithy.example#Regex"
+      ],
+      "test": {
+        "selector": "[trait|trait] :not(<-[trait]-)",
+        "skipPreludeShapes": true,
+        "matches": [
+          "smithy.example#Regex"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource >",
+      "shapeIds": [
+        "smithy.example#BarId",
+        "smithy.example#Color",
+        "smithy.example#CreateBar",
+        "smithy.example#DeleteBar",
+        "smithy.example#GetBar",
+        "smithy.example#ListBar",
+        "smithy.example#NamedCollectionOperation",
+        "smithy.example#NamedOperation",
+        "smithy.example#PutBar",
+        "smithy.example#UpdateBar"
+      ],
+      "test": {
+        "selector": "resource >",
+        "matches": [
+          "smithy.example#BarId",
+          "smithy.example#Color",
+          "smithy.example#CreateBar",
+          "smithy.example#GetBar",
+          "smithy.example#UpdateBar",
+          "smithy.example#DeleteBar",
+          "smithy.example#ListBar",
+          "smithy.example#PutBar",
+          "smithy.example#NamedOperation",
+          "smithy.example#NamedCollectionOperation"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource <",
+      "shapeIds": [
+        "smithy.example#Service"
+      ],
+      "test": {
+        "selector": "resource <",
+        "matches": [
+          "smithy.example#Service"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource <-[resource]-",
+      "shapeIds": [
+        "smithy.example#Service"
+      ],
+      "test": {
+        "selector": "resource <-[resource]-",
+        "matches": [
+          "smithy.example#Service"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource -[property]->",
+      "shapeIds": [
+        "smithy.example#Color"
+      ],
+      "test": {
+        "selector": "resource -[property]->",
+        "matches": [
+          "smithy.example#Color"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource -[identifier]->",
+      "shapeIds": [
+        "smithy.example#BarId"
+      ],
+      "test": {
+        "selector": "resource -[identifier]->",
+        "matches": [
+          "smithy.example#BarId"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource -[operation]->",
+      "shapeIds": [
+        "smithy.example#NamedOperation"
+      ],
+      "test": {
+        "selector": "resource -[operation]->",
+        "matches": [
+          "smithy.example#NamedOperation"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource -[collectionOperation]->",
+      "shapeIds": [
+        "smithy.example#NamedCollectionOperation"
+      ],
+      "test": {
+        "selector": "resource -[collectionOperation]->",
+        "matches": [
+          "smithy.example#NamedCollectionOperation"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource -[create]->",
+      "shapeIds": [
+        "smithy.example#CreateBar"
+      ],
+      "test": {
+        "selector": "resource -[create]->",
+        "matches": [
+          "smithy.example#CreateBar"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource -[read]->",
+      "shapeIds": [
+        "smithy.example#GetBar"
+      ],
+      "test": {
+        "selector": "resource -[read]->",
+        "matches": [
+          "smithy.example#GetBar"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource -[update]->",
+      "shapeIds": [
+        "smithy.example#UpdateBar"
+      ],
+      "test": {
+        "selector": "resource -[update]->",
+        "matches": [
+          "smithy.example#UpdateBar"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource -[delete]->",
+      "shapeIds": [
+        "smithy.example#DeleteBar"
+      ],
+      "test": {
+        "selector": "resource -[delete]->",
+        "matches": [
+          "smithy.example#DeleteBar"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource -[list]->",
+      "shapeIds": [
+        "smithy.example#ListBar"
+      ],
+      "test": {
+        "selector": "resource -[list]->",
+        "matches": [
+          "smithy.example#ListBar"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource -[put]->",
+      "shapeIds": [
+        "smithy.example#PutBar"
+      ],
+      "test": {
+        "selector": "resource -[put]->",
+        "matches": [
+          "smithy.example#PutBar"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "[id|name = CreateBar] ~>",
+      "shapeIds": [
+        "smithy.example#BarId",
+        "smithy.example#BarInstanceInput",
+        "smithy.example#BarInstanceInput$barId",
+        "smithy.example#Color",
+        "smithy.example#Color$BLUE",
+        "smithy.example#Color$GREEN",
+        "smithy.example#Color$RED",
+        "smithy.example#CreateBarInput",
+        "smithy.example#CreateBarInput$color",
+        "smithy.example#CreateBarOutput",
+        "smithy.example#CreateBarOutput$barId"
+      ],
+      "test": {
+        "selector": "[id|name = CreateBar] ~>",
+        "matches": [
+          "smithy.example#CreateBarInput",
+          "smithy.example#BarInstanceInput",
+          "smithy.example#BarInstanceInput$barId",
+          "smithy.example#BarId",
+          "smithy.example#CreateBarInput$color",
+          "smithy.example#Color",
+          "smithy.example#Color$BLUE",
+          "smithy.example#Color$GREEN",
+          "smithy.example#Color$RED",
+          "smithy.example#CreateBarOutput",
+          "smithy.example#CreateBarOutput$barId"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "[id|member = barId] >",
+      "shapeIds": [
+        "smithy.example#BarId"
+      ],
+      "test": {
+        "selector": "[id|member = barId] >",
+        "matches": [
+          "smithy.example#BarId"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "[id|member = barId] ~>",
+      "shapeIds": [
+        "smithy.example#BarId"
+      ],
+      "test": {
+        "selector": "[id|member = barId] ~>",
+        "matches": [
+          "smithy.example#BarId"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/node-attributes.smithy",
+      "selector": "[trait|externalDocumentation|(keys) = Homepage]",
+      "shapeIds": [
+        "smithy.example#ServiceA"
+      ],
+      "test": {
+        "selector": "[trait|externalDocumentation|(keys) = Homepage]",
+        "matches": [
+          "smithy.example#ServiceA"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/node-attributes.smithy",
+      "selector": "[trait|enum|(values)|tags|(values) = internal]",
+      "shapeIds": [
+        "smithy.example#Ec2Instance"
+      ],
+      "test": {
+        "selector": "[trait|enum|(values)|tags|(values) = internal]",
+        "matches": [
+          "smithy.example#Ec2Instance"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/node-attributes.smithy",
+      "selector": "[trait|documentation|(length) < 3]",
+      "shapeIds": [
+        "smithy.example#ServiceB"
+      ],
+      "test": {
+        "selector": "[trait|documentation|(length) < 3]",
+        "matches": [
+          "smithy.example#ServiceB"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/node-attributes.smithy",
+      "selector": "[trait|externalDocumentation|'API Reference']",
+      "shapeIds": [
+        "smithy.example#ServiceA"
+      ],
+      "test": {
+        "selector": "[trait|externalDocumentation|'API Reference']",
+        "matches": [
+          "smithy.example#ServiceA"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/node-attributes.smithy",
+      "selector": "[trait|documentation|invalid|child = Hi]",
+      "shapeIds": [],
+      "test": {
+        "selector": "[trait|documentation|invalid|child = Hi]",
+        "matches": []
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/numeric-comparators.smithy",
+      "selector": "[trait|length|min > 1]",
+      "shapeIds": [
+        "smithy.example#AtLeastTen"
+      ],
+      "test": {
+        "selector": "[trait|length|min > 1]",
+        "matches": [
+          "smithy.example#AtLeastTen"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/numeric-comparators.smithy",
+      "selector": "[trait|length|min >= 1]",
+      "shapeIds": [
+        "smithy.api#NonEmptyString",
+        "smithy.api#ShapeClosure$includeBySelector",
+        "smithy.api#TraitDiffRules",
+        "smithy.api#enum",
+        "smithy.api#externalDocumentation",
+        "smithy.api#httpHeader",
+        "smithy.api#httpQuery",
+        "smithy.api#metadata$key",
+        "smithy.api#resourceIdentifier",
+        "smithy.api#suppress$member",
+        "smithy.api#traitValidators$key",
+        "smithy.example#AtLeastOne",
+        "smithy.example#AtLeastTen"
+      ],
+      "test": {
+        "selector": "[trait|length|min >= 1]",
+        "skipPreludeShapes": true,
+        "matches": [
+          "smithy.example#AtLeastOne",
+          "smithy.example#AtLeastTen"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/numeric-comparators.smithy",
+      "selector": "[trait|length|min < 2]",
+      "shapeIds": [
+        "smithy.api#NonEmptyString",
+        "smithy.api#ShapeClosure$includeBySelector",
+        "smithy.api#TraitDiffRules",
+        "smithy.api#enum",
+        "smithy.api#externalDocumentation",
+        "smithy.api#httpHeader",
+        "smithy.api#httpQuery",
+        "smithy.api#metadata$key",
+        "smithy.api#resourceIdentifier",
+        "smithy.api#suppress$member",
+        "smithy.api#traitValidators$key",
+        "smithy.example#AtLeastOne"
+      ],
+      "test": {
+        "selector": "[trait|length|min < 2]",
+        "skipPreludeShapes": true,
+        "matches": [
+          "smithy.example#AtLeastOne"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/numeric-comparators.smithy",
+      "selector": "[trait|length|max <= 5]",
+      "shapeIds": [
+        "smithy.example#AtMostFive"
+      ],
+      "test": {
+        "selector": "[trait|length|max <= 5]",
+        "matches": [
+          "smithy.example#AtMostFive"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/projection-attributes.smithy",
+      "selector": "service\n[trait|smithy.example#allowedTags]\n$service(*)\n~>\n[trait|tags]\n:not([@: @{trait|tags|(values)} = @{var|service|trait|smithy.example#allowedTags|(values)}])\n",
+      "shapeIds": [
+        "smithy.example#OperationD"
+      ],
+      "test": {
+        "selector": "service\n[trait|smithy.example#allowedTags]\n$service(*)\n~>\n[trait|tags]\n:not([@: @{trait|tags|(values)} = @{var|service|trait|smithy.example#allowedTags|(values)}])\n",
+        "matches": [
+          "smithy.example#OperationD"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/projection-attributes.smithy",
+      "selector": "service\n[trait|smithy.example#allowedTags]\n$service(*)\n~>\n[trait|enum]\n:not([@: @{trait|enum|(values)|tags|(values)}\n         {<} @{var|service|trait|smithy.example#allowedTags|(values)}])\n",
+      "shapeIds": [
+        "smithy.example#BadEnum"
+      ],
+      "test": {
+        "selector": "service\n[trait|smithy.example#allowedTags]\n$service(*)\n~>\n[trait|enum]\n:not([@: @{trait|enum|(values)|tags|(values)}\n         {<} @{var|service|trait|smithy.example#allowedTags|(values)}])\n",
+        "matches": [
+          "smithy.example#BadEnum"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": "[id=smithy.example#C] :recursive(<-[resource]-)",
+      "shapeIds": [
+        "smithy.example#A",
+        "smithy.example#B"
+      ],
+      "test": {
+        "selector": "[id=smithy.example#C] :recursive(<-[resource]-)",
+        "matches": [
+          "smithy.example#A",
+          "smithy.example#B"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": ":test(:recursive(<-[resource]-) [id=smithy.example#A])",
+      "shapeIds": [
+        "smithy.example#B",
+        "smithy.example#C"
+      ],
+      "test": {
+        "selector": ":test(:recursive(<-[resource]-) [id=smithy.example#A])",
+        "matches": [
+          "smithy.example#B",
+          "smithy.example#C"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": "[id=smithy.example#Indirect2] :recursive(-[mixin]->)",
+      "shapeIds": [
+        "smithy.example#Direct",
+        "smithy.example#Indirect",
+        "smithy.example#MyMixin"
+      ],
+      "test": {
+        "selector": "[id=smithy.example#Indirect2] :recursive(-[mixin]->)",
+        "matches": [
+          "smithy.example#Indirect",
+          "smithy.example#Direct",
+          "smithy.example#MyMixin"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": ":test(:recursive(-[mixin]->) [id=smithy.example#MyMixin])",
+      "shapeIds": [
+        "smithy.example#Direct",
+        "smithy.example#Indirect",
+        "smithy.example#Indirect2"
+      ],
+      "test": {
+        "selector": ":test(:recursive(-[mixin]->) [id=smithy.example#MyMixin])",
+        "matches": [
+          "smithy.example#Direct",
+          "smithy.example#Indirect",
+          "smithy.example#Indirect2"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": ":test(:recursive(-[mixin]->) :test([id=smithy.example#MyMixin]))",
+      "shapeIds": [
+        "smithy.example#Direct",
+        "smithy.example#Indirect",
+        "smithy.example#Indirect2"
+      ],
+      "test": {
+        "selector": ":test(:recursive(-[mixin]->) :test([id=smithy.example#MyMixin]))",
+        "matches": [
+          "smithy.example#Direct",
+          "smithy.example#Indirect",
+          "smithy.example#Indirect2"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": ":recursive(-[mixin]->) [trait|mixin]",
+      "shapeIds": [
+        "smithy.example#Direct",
+        "smithy.example#Indirect",
+        "smithy.example#MyMixin"
+      ],
+      "test": {
+        "selector": ":recursive(-[mixin]->) [trait|mixin]",
+        "matches": [
+          "smithy.example#MyMixin",
+          "smithy.example#Direct",
+          "smithy.example#Indirect"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": "[trait|mixin] :test(<-[mixin]-)",
+      "shapeIds": [
+        "smithy.example#Direct",
+        "smithy.example#Indirect",
+        "smithy.example#MyMixin"
+      ],
+      "test": {
+        "selector": "[trait|mixin] :test(<-[mixin]-)",
+        "matches": [
+          "smithy.example#MyMixin",
+          "smithy.example#Direct",
+          "smithy.example#Indirect"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": "[id=smithy.example#Direct] :recursive(>)",
+      "shapeIds": [
+        "smithy.api#String",
+        "smithy.example#Direct$foo",
+        "smithy.example#MyMixin"
+      ],
+      "test": {
+        "selector": "[id=smithy.example#Direct] :recursive(>)",
+        "matches": [
+          "smithy.example#MyMixin",
+          "smithy.api#String",
+          "smithy.example#Direct$foo"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": "[id=smithy.example#Direct] ~>",
+      "shapeIds": [
+        "smithy.api#String",
+        "smithy.example#Direct$foo",
+        "smithy.example#MyMixin"
+      ],
+      "test": {
+        "selector": "[id=smithy.example#Direct] ~>",
+        "matches": [
+          "smithy.example#MyMixin",
+          "smithy.api#String",
+          "smithy.example#Direct$foo"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": "[id=smithy.example#Direct] :recursive(<)",
+      "shapeIds": [
+        "smithy.example#Indirect",
+        "smithy.example#Indirect2"
+      ],
+      "test": {
+        "selector": "[id=smithy.example#Direct] :recursive(<)",
+        "matches": [
+          "smithy.example#Indirect",
+          "smithy.example#Indirect2"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": ":recursive(:recursive(:recursive(:recursive(:recursive(~>))))) [id|namespace=smithy.example]",
+      "shapeIds": [
+        "smithy.example#B",
+        "smithy.example#C",
+        "smithy.example#Direct",
+        "smithy.example#Direct$foo",
+        "smithy.example#Indirect",
+        "smithy.example#Indirect$foo",
+        "smithy.example#Indirect2$foo",
+        "smithy.example#MyMixin"
+      ],
+      "test": {
+        "selector": ":recursive(:recursive(:recursive(:recursive(:recursive(~>))))) [id|namespace=smithy.example]",
+        "matches": [
+          "smithy.example#C",
+          "smithy.example#Direct",
+          "smithy.example#MyMixin",
+          "smithy.example#Indirect",
+          "smithy.example#B",
+          "smithy.example#Direct$foo",
+          "smithy.example#Indirect$foo",
+          "smithy.example#Indirect2$foo"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": "~> :recursive(:recursive(:recursive(:recursive(:recursive(~>))))) [id|namespace=smithy.example]",
+      "shapeIds": [
+        "smithy.example#C",
+        "smithy.example#Direct",
+        "smithy.example#Direct$foo",
+        "smithy.example#Indirect$foo",
+        "smithy.example#MyMixin"
+      ],
+      "test": {
+        "selector": "~> :recursive(:recursive(:recursive(:recursive(:recursive(~>))))) [id|namespace=smithy.example]",
+        "matches": [
+          "smithy.example#C",
+          "smithy.example#Direct",
+          "smithy.example#MyMixin",
+          "smithy.example#Direct$foo",
+          "smithy.example#Indirect$foo"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/root-function.smithy",
+      "selector": "number\n:in(:root(service ~> operation -[input]-> * ~> number))\n:not(:in(:root(service ~> operation -[output]-> * ~> number)))",
+      "shapeIds": [
+        "smithy.api#Integer"
+      ],
+      "test": {
+        "selector": "number\n:in(:root(service ~> operation -[input]-> * ~> number))\n:not(:in(:root(service ~> operation -[output]-> * ~> number)))",
+        "matches": [
+          "smithy.api#Integer"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/root-function.smithy",
+      "selector": "service\n$outputs(~> operation -[output]-> ~> number)\n~> operation -[input]-> ~> number\n:not(:in(${outputs}))",
+      "shapeIds": [
+        "smithy.api#Double",
+        "smithy.api#Integer"
+      ],
+      "test": {
+        "selector": "service\n$outputs(~> operation -[output]-> ~> number)\n~> operation -[input]-> ~> number\n:not(:in(${outputs}))",
+        "matches": [
+          "smithy.api#Integer",
+          "smithy.api#Double"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/scope-attribute.smithy",
+      "selector": "[@trait|range: @{min} = @{max}]",
+      "shapeIds": [
+        "smithy.example#Ten"
+      ],
+      "test": {
+        "selector": "[@trait|range: @{min} = @{max}]",
+        "matches": [
+          "smithy.example#Ten"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/scope-attribute.smithy",
+      "selector": "[@trait|enum|(values): @{deprecated} = true && @{tags|(values)} = \"deprecated\"]",
+      "shapeIds": [
+        "smithy.example#GoodEnum"
+      ],
+      "test": {
+        "selector": "[@trait|enum|(values): @{deprecated} = true && @{tags|(values)} = \"deprecated\"]",
+        "matches": [
+          "smithy.example#GoodEnum"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/scope-attribute.smithy",
+      "selector": "[@trait|idRef: @{failWhenMissing} = true && @{errorMessage} ?= false]",
+      "shapeIds": [
+        "smithy.api#TraitShapeId",
+        "smithy.example#integerRef"
+      ],
+      "test": {
+        "selector": "[@trait|idRef: @{failWhenMissing} = true && @{errorMessage} ?= false]",
+        "skipPreludeShapes": true,
+        "matches": [
+          "smithy.example#integerRef"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/scope-attribute.smithy",
+      "selector": "[@trait|httpApiKeyAuth: @{name} = header && @{in} != 'x-api-token', 'authorization']",
+      "shapeIds": [
+        "smithy.example#WeatherService"
+      ],
+      "test": {
+        "selector": "[@trait|httpApiKeyAuth: @{name} = header && @{in} != 'x-api-token', 'authorization']",
+        "matches": [
+          "smithy.example#WeatherService"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/scope-attribute.smithy",
+      "selector": "[@trait|deprecated: @{message} = DePrEcAtEd]",
+      "shapeIds": [],
+      "test": {
+        "selector": "[@trait|deprecated: @{message} = DePrEcAtEd]",
+        "matches": []
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/scope-attribute.smithy",
+      "selector": "[@trait|deprecated: @{message} = DePrEcAtEd i]",
+      "shapeIds": [
+        "smithy.example#DeprecatedString"
+      ],
+      "test": {
+        "selector": "[@trait|deprecated: @{message} = DePrEcAtEd i]",
+        "matches": [
+          "smithy.example#DeprecatedString"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/service-attribute.smithy",
+      "selector": "[service]",
+      "shapeIds": [
+        "smithy.example#ServiceA",
+        "smithy.example#ServiceB"
+      ],
+      "test": {
+        "selector": "[service]",
+        "matches": [
+          "smithy.example#ServiceA",
+          "smithy.example#ServiceB"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/service-attribute.smithy",
+      "selector": "[service = smithy.example#ServiceA]",
+      "shapeIds": [
+        "smithy.example#ServiceA"
+      ],
+      "test": {
+        "selector": "[service = smithy.example#ServiceA]",
+        "matches": [
+          "smithy.example#ServiceA"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/service-attribute.smithy",
+      "selector": "[service|version ^= '2018-']",
+      "shapeIds": [
+        "smithy.example#ServiceB"
+      ],
+      "test": {
+        "selector": "[service|version ^= '2018-']",
+        "matches": [
+          "smithy.example#ServiceB"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/string-comparators.smithy",
+      "selector": "[id|name = 'Name']",
+      "shapeIds": [
+        "smithy.example#Name"
+      ],
+      "test": {
+        "selector": "[id|name = 'Name']",
+        "matches": [
+          "smithy.example#Name"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/string-comparators.smithy",
+      "selector": "[id|namespace != 'smithy.api']",
+      "shapeIds": [
+        "smithy.example#Age",
+        "smithy.example#Name",
+        "smithy.example#_Boolean"
+      ],
+      "test": {
+        "selector": "[id|namespace != 'smithy.api']",
+        "matches": [
+          "smithy.example#Name",
+          "smithy.example#Age",
+          "smithy.example#_Boolean"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/string-comparators.smithy",
+      "selector": "[id|name ^= '_']",
+      "shapeIds": [
+        "smithy.example#_Boolean"
+      ],
+      "test": {
+        "selector": "[id|name ^= '_']",
+        "matches": [
+          "smithy.example#_Boolean"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/string-comparators.smithy",
+      "selector": "[trait|documentation $= 'ge']",
+      "shapeIds": [
+        "smithy.example#Age"
+      ],
+      "test": {
+        "selector": "[trait|documentation $= 'ge']",
+        "matches": [
+          "smithy.example#Age"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/string-comparators.smithy",
+      "selector": "[id|name *= 'Boo']",
+      "shapeIds": [
+        "smithy.api#Boolean",
+        "smithy.api#PrimitiveBoolean",
+        "smithy.example#_Boolean"
+      ],
+      "test": {
+        "selector": "[id|name *= 'Boo']",
+        "skipPreludeShapes": true,
+        "matches": [
+          "smithy.example#_Boolean"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/string-comparators.smithy",
+      "selector": "[trait|documentation ?= true]",
+      "shapeIds": [
+        "smithy.api#AuthTraitReference",
+        "smithy.api#ClosureId",
+        "smithy.api#CommonMark",
+        "smithy.api#EnumConstantBodyName",
+        "smithy.api#EnumDefinition",
+        "smithy.api#EnumDefinition$deprecated",
+        "smithy.api#EnumDefinition$documentation",
+        "smithy.api#EnumDefinition$name",
+        "smithy.api#EnumDefinition$tags",
+        "smithy.api#EnumDefinition$value",
+        "smithy.api#Identifier",
+        "smithy.api#Namespaces",
+        "smithy.api#Reference$ids",
+        "smithy.api#Reference$rel",
+        "smithy.api#Reference$resource",
+        "smithy.api#Reference$service",
+        "smithy.api#Renames",
+        "smithy.api#Renames$key",
+        "smithy.api#Renames$value",
+        "smithy.api#RequestCompressionEncodingsList",
+        "smithy.api#Severity$DANGER",
+        "smithy.api#Severity$ERROR",
+        "smithy.api#Severity$NOTE",
+        "smithy.api#Severity$WARNING",
+        "smithy.api#ShapeClosure",
+        "smithy.api#ShapeClosure$documentation",
+        "smithy.api#ShapeClosure$id",
+        "smithy.api#ShapeClosure$includeBySelector",
+        "smithy.api#ShapeClosure$includeNamespaces",
+        "smithy.api#ShapeClosure$rename",
+        "smithy.api#ShapeClosures",
+        "smithy.api#StructurallyExclusive$MEMBER",
+        "smithy.api#StructurallyExclusive$TARGET",
+        "smithy.api#TraitChangeType$ADD",
+        "smithy.api#TraitChangeType$ANY",
+        "smithy.api#TraitChangeType$PRESENCE",
+        "smithy.api#TraitChangeType$REMOVE",
+        "smithy.api#TraitChangeType$UPDATE",
+        "smithy.api#TraitDiffRule$change",
+        "smithy.api#TraitDiffRule$message",
+        "smithy.api#TraitDiffRule$path",
+        "smithy.api#TraitDiffRule$severity",
+        "smithy.api#TraitValidator$message",
+        "smithy.api#TraitValidator$selector",
+        "smithy.api#TraitValidator$severity",
+        "smithy.api#addedDefault",
+        "smithy.api#auth",
+        "smithy.api#authDefinition",
+        "smithy.api#authDefinition$traits",
+        "smithy.api#box",
+        "smithy.api#clientOptional",
+        "smithy.api#cors",
+        "smithy.api#cors$additionalAllowedHeaders",
+        "smithy.api#cors$additionalExposedHeaders",
+        "smithy.api#cors$maxAge",
+        "smithy.api#cors$origin",
+        "smithy.api#cors$origins",
+        "smithy.api#default",
+        "smithy.api#deprecated",
+        "smithy.api#deprecated$message",
+        "smithy.api#deprecated$since",
+        "smithy.api#documentation",
+        "smithy.api#endpoint",
+        "smithy.api#endpoint$hostPrefix",
+        "smithy.api#enum",
+        "smithy.api#enumValue",
+        "smithy.api#error",
+        "smithy.api#eventHeader",
+        "smithy.api#eventPayload",
+        "smithy.api#examples",
+        "smithy.api#externalDocumentation",
+        "smithy.api#hostLabel",
+        "smithy.api#http",
+        "smithy.api#http$method",
+        "smithy.api#http$uri",
+        "smithy.api#httpApiKeyAuth",
+        "smithy.api#httpApiKeyAuth$in",
+        "smithy.api#httpApiKeyAuth$name",
+        "smithy.api#httpApiKeyAuth$scheme",
+        "smithy.api#httpBasicAuth",
+        "smithy.api#httpBearerAuth",
+        "smithy.api#httpChecksumRequired",
+        "smithy.api#httpDigestAuth",
+        "smithy.api#httpError",
+        "smithy.api#httpHeader",
+        "smithy.api#httpLabel",
+        "smithy.api#httpPayload",
+        "smithy.api#httpPrefixHeaders",
+        "smithy.api#httpQuery",
+        "smithy.api#httpQueryParams",
+        "smithy.api#httpResponseCode",
+        "smithy.api#idRef",
+        "smithy.api#idRef$errorMessage",
+        "smithy.api#idRef$failWhenMissing",
+        "smithy.api#idRef$selector",
+        "smithy.api#idempotencyToken",
+        "smithy.api#idempotent",
+        "smithy.api#idempotent$exists",
+        "smithy.api#idempotent$notFound",
+        "smithy.api#input",
+        "smithy.api#internal",
+        "smithy.api#jsonName",
+        "smithy.api#length",
+        "smithy.api#length$max",
+        "smithy.api#length$min",
+        "smithy.api#longPoll",
+        "smithy.api#longPoll$timeoutMillis",
+        "smithy.api#mediaType",
+        "smithy.api#metadata",
+        "smithy.api#metadata$key",
+        "smithy.api#mixin",
+        "smithy.api#nestedProperties",
+        "smithy.api#noReplace",
+        "smithy.api#notProperty",
+        "smithy.api#optionalAuth",
+        "smithy.api#output",
+        "smithy.api#paginated",
+        "smithy.api#paginated$inputToken",
+        "smithy.api#paginated$items",
+        "smithy.api#paginated$outputToken",
+        "smithy.api#paginated$pageSize",
+        "smithy.api#pattern",
+        "smithy.api#private",
+        "smithy.api#property",
+        "smithy.api#protocolDefinition",
+        "smithy.api#protocolDefinition$noInlineDocumentSupport",
+        "smithy.api#protocolDefinition$traits",
+        "smithy.api#range",
+        "smithy.api#range$max",
+        "smithy.api#range$min",
+        "smithy.api#readonly",
+        "smithy.api#recommended",
+        "smithy.api#recommended$reason",
+        "smithy.api#references",
+        "smithy.api#requestCompression",
+        "smithy.api#required",
+        "smithy.api#requiresLength",
+        "smithy.api#resourceIdentifier",
+        "smithy.api#retryable",
+        "smithy.api#retryable$throttling",
+        "smithy.api#sensitive",
+        "smithy.api#since",
+        "smithy.api#sparse",
+        "smithy.api#streaming",
+        "smithy.api#suppress",
+        "smithy.api#tags",
+        "smithy.api#timestampFormat$DATE_TIME",
+        "smithy.api#timestampFormat$EPOCH_SECONDS",
+        "smithy.api#timestampFormat$HTTP_DATE",
+        "smithy.api#title",
+        "smithy.api#trait",
+        "smithy.api#trait$breakingChanges",
+        "smithy.api#trait$conflicts",
+        "smithy.api#trait$selector",
+        "smithy.api#trait$structurallyExclusive",
+        "smithy.api#traitValidators",
+        "smithy.api#traitValidators$key",
+        "smithy.api#traitValidators$value",
+        "smithy.api#uniqueItems",
+        "smithy.api#unitType",
+        "smithy.api#unstable",
+        "smithy.api#xmlAttribute",
+        "smithy.api#xmlFlattened",
+        "smithy.api#xmlName",
+        "smithy.api#xmlNamespace",
+        "smithy.api#xmlNamespace$prefix",
+        "smithy.api#xmlNamespace$uri",
+        "smithy.example#Age"
+      ],
+      "test": {
+        "selector": "[trait|documentation ?= true]",
+        "skipPreludeShapes": true,
+        "matches": [
+          "smithy.example#Age"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/trait-attributes.smithy",
+      "selector": "[trait|(keys)|namespace = 'smithy.example']",
+      "shapeIds": [
+        "smithy.example#ServiceA"
+      ],
+      "test": {
+        "selector": "[trait|(keys)|namespace = 'smithy.example']",
+        "matches": [
+          "smithy.example#ServiceA"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/trait-attributes.smithy",
+      "selector": "[trait|(values)|description]",
+      "shapeIds": [
+        "smithy.example#ServiceA"
+      ],
+      "test": {
+        "selector": "[trait|(values)|description]",
+        "matches": [
+          "smithy.example#ServiceA"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/trait-attributes.smithy",
+      "selector": "[trait|(length) > 1]",
+      "shapeIds": [
+        "smithy.api#AuthTraitReference",
+        "smithy.api#ClosureId",
+        "smithy.api#CommonMark",
+        "smithy.api#EnumConstantBodyName",
+        "smithy.api#EnumDefinition",
+        "smithy.api#EnumDefinition$value",
+        "smithy.api#HttpApiKeyLocations",
+        "smithy.api#Identifier",
+        "smithy.api#LocalMixinTrait",
+        "smithy.api#Namespaces",
+        "smithy.api#NonEmptyString",
+        "smithy.api#Reference$resource",
+        "smithy.api#Renames",
+        "smithy.api#Renames$key",
+        "smithy.api#RequestCompressionEncodingsList",
+        "smithy.api#Severity",
+        "smithy.api#Severity$DANGER",
+        "smithy.api#Severity$ERROR",
+        "smithy.api#Severity$NOTE",
+        "smithy.api#Severity$WARNING",
+        "smithy.api#ShapeClosure",
+        "smithy.api#ShapeClosure$id",
+        "smithy.api#ShapeClosure$includeBySelector",
+        "smithy.api#ShapeClosure$includeNamespaces",
+        "smithy.api#ShapeClosure$rename",
+        "smithy.api#ShapeClosures",
+        "smithy.api#StructurallyExclusive",
+        "smithy.api#StructurallyExclusive$MEMBER",
+        "smithy.api#StructurallyExclusive$TARGET",
+        "smithy.api#TraitChangeType",
+        "smithy.api#TraitChangeType$ADD",
+        "smithy.api#TraitChangeType$ANY",
+        "smithy.api#TraitChangeType$PRESENCE",
+        "smithy.api#TraitChangeType$REMOVE",
+        "smithy.api#TraitChangeType$UPDATE",
+        "smithy.api#TraitDiffRule$change",
+        "smithy.api#TraitDiffRule$severity",
+        "smithy.api#TraitDiffRules",
+        "smithy.api#TraitShapeId",
+        "smithy.api#TraitValidator$selector",
+        "smithy.api#TraitValidator$severity",
+        "smithy.api#addedDefault",
+        "smithy.api#auth",
+        "smithy.api#authDefinition",
+        "smithy.api#box",
+        "smithy.api#clientOptional",
+        "smithy.api#cors",
+        "smithy.api#cors$maxAge",
+        "smithy.api#cors$origin",
+        "smithy.api#default",
+        "smithy.api#deprecated",
+        "smithy.api#documentation",
+        "smithy.api#endpoint",
+        "smithy.api#endpoint$hostPrefix",
+        "smithy.api#enum",
+        "smithy.api#enumValue",
+        "smithy.api#error",
+        "smithy.api#eventHeader",
+        "smithy.api#eventPayload",
+        "smithy.api#examples",
+        "smithy.api#externalDocumentation",
+        "smithy.api#hostLabel",
+        "smithy.api#http",
+        "smithy.api#http$code",
+        "smithy.api#http$method",
+        "smithy.api#http$uri",
+        "smithy.api#httpApiKeyAuth",
+        "smithy.api#httpApiKeyAuth$in",
+        "smithy.api#httpApiKeyAuth$name",
+        "smithy.api#httpBasicAuth",
+        "smithy.api#httpBearerAuth",
+        "smithy.api#httpChecksumRequired",
+        "smithy.api#httpDigestAuth",
+        "smithy.api#httpError",
+        "smithy.api#httpHeader",
+        "smithy.api#httpLabel",
+        "smithy.api#httpPayload",
+        "smithy.api#httpPrefixHeaders",
+        "smithy.api#httpQuery",
+        "smithy.api#httpQueryParams",
+        "smithy.api#httpResponseCode",
+        "smithy.api#idRef",
+        "smithy.api#idRef$selector",
+        "smithy.api#idempotencyToken",
+        "smithy.api#idempotent",
+        "smithy.api#input",
+        "smithy.api#internal",
+        "smithy.api#jsonName",
+        "smithy.api#length",
+        "smithy.api#longPoll",
+        "smithy.api#longPoll$timeoutMillis",
+        "smithy.api#mediaType",
+        "smithy.api#metadata",
+        "smithy.api#metadata$key",
+        "smithy.api#mixin",
+        "smithy.api#nestedProperties",
+        "smithy.api#noReplace",
+        "smithy.api#notProperty",
+        "smithy.api#optionalAuth",
+        "smithy.api#output",
+        "smithy.api#paginated",
+        "smithy.api#pattern",
+        "smithy.api#private",
+        "smithy.api#property",
+        "smithy.api#protocolDefinition",
+        "smithy.api#protocolDefinition$noInlineDocumentSupport",
+        "smithy.api#range",
+        "smithy.api#readonly",
+        "smithy.api#recommended",
+        "smithy.api#references",
+        "smithy.api#requestCompression",
+        "smithy.api#required",
+        "smithy.api#requiresLength",
+        "smithy.api#resourceIdentifier",
+        "smithy.api#retryable",
+        "smithy.api#sensitive",
+        "smithy.api#since",
+        "smithy.api#sparse",
+        "smithy.api#streaming",
+        "smithy.api#suppress",
+        "smithy.api#tags",
+        "smithy.api#timestampFormat",
+        "smithy.api#timestampFormat$DATE_TIME",
+        "smithy.api#timestampFormat$EPOCH_SECONDS",
+        "smithy.api#timestampFormat$HTTP_DATE",
+        "smithy.api#title",
+        "smithy.api#trait",
+        "smithy.api#traitValidators",
+        "smithy.api#traitValidators$key",
+        "smithy.api#uniqueItems",
+        "smithy.api#unitType",
+        "smithy.api#unstable",
+        "smithy.api#xmlAttribute",
+        "smithy.api#xmlFlattened",
+        "smithy.api#xmlName",
+        "smithy.api#xmlNamespace",
+        "smithy.api#xmlNamespace$prefix",
+        "smithy.api#xmlNamespace$uri",
+        "smithy.example#Exception",
+        "smithy.example#ServiceB"
+      ],
+      "test": {
+        "selector": "[trait|(length) > 1]",
+        "skipPreludeShapes": true,
+        "matches": [
+          "smithy.example#Exception",
+          "smithy.example#ServiceB"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/trait-attributes.smithy",
+      "selector": "[trait|smithy.api#deprecated]",
+      "shapeIds": [
+        "smithy.api#enum",
+        "smithy.api#protocolDefinition$noInlineDocumentSupport",
+        "smithy.example#Exception",
+        "smithy.example#ServiceB"
+      ],
+      "test": {
+        "selector": "[trait|smithy.api#deprecated]",
+        "skipPreludeShapes": true,
+        "matches": [
+          "smithy.example#Exception",
+          "smithy.example#ServiceB"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/trait-attributes.smithy",
+      "selector": "[trait|deprecated]",
+      "shapeIds": [
+        "smithy.api#enum",
+        "smithy.api#protocolDefinition$noInlineDocumentSupport",
+        "smithy.example#Exception",
+        "smithy.example#ServiceB"
+      ],
+      "test": {
+        "selector": "[trait|deprecated]",
+        "skipPreludeShapes": true,
+        "matches": [
+          "smithy.example#Exception",
+          "smithy.example#ServiceB"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/trait-attributes.smithy",
+      "selector": "[trait|error = client]",
+      "shapeIds": [
+        "smithy.example#Exception"
+      ],
+      "test": {
+        "selector": "[trait|error = client]",
+        "matches": [
+          "smithy.example#Exception"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/trait-attributes.smithy",
+      "selector": "[trait|error != client]",
+      "shapeIds": [],
+      "test": {
+        "selector": "[trait|error != client]",
+        "matches": []
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/trait-attributes.smithy",
+      "selector": "[trait|documentation *= TODO, FIXME]",
+      "shapeIds": [
+        "smithy.example#Exception",
+        "smithy.example#ServiceB"
+      ],
+      "test": {
+        "selector": "[trait|documentation *= TODO, FIXME]",
+        "matches": [
+          "smithy.example#ServiceB",
+          "smithy.example#Exception"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/variables.smithy",
+      "selector": "service $authTraits(-[trait]-> [trait|authDefinition])",
+      "shapeIds": [
+        "smithy.example#MyService"
+      ],
+      "test": {
+        "selector": "service $authTraits(-[trait]-> [trait|authDefinition])",
+        "matches": [
+          "smithy.example#MyService"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/variables.smithy",
+      "selector": "service\n$authTraits(-[trait]-> [trait|authDefinition])\n~>\noperation [trait|auth]\n",
+      "shapeIds": [
+        "smithy.example#HasBasicAuth",
+        "smithy.example#HasDigestAuth"
+      ],
+      "test": {
+        "selector": "service\n$authTraits(-[trait]-> [trait|authDefinition])\n~>\noperation [trait|auth]\n",
+        "matches": [
+          "smithy.example#HasBasicAuth",
+          "smithy.example#HasDigestAuth"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/variables.smithy",
+      "selector": "service\n$authTraits(-[trait]-> [trait|authDefinition])\n~>\noperation\n[trait|auth]\n:not([@: @{trait|auth|(values)} {<} @{var|authTraits|id}])\n",
+      "shapeIds": [
+        "smithy.example#HasDigestAuth"
+      ],
+      "test": {
+        "selector": "service\n$authTraits(-[trait]-> [trait|authDefinition])\n~>\noperation\n[trait|auth]\n:not([@: @{trait|auth|(values)} {<} @{var|authTraits|id}])\n",
+        "matches": [
+          "smithy.example#HasDigestAuth"
+        ]
+      },
+      "agrees": true,
+      "actualStatus": "selected",
+      "issues": []
+    }
+  ],
+  "negatives": [
+    {
+      "selector": "[",
+      "blocked": true
+    },
+    {
+      "selector": ":missingFunction()",
+      "blocked": true
+    },
+    {
+      "selector": ":is(",
+      "blocked": true
+    }
+  ],
+  "scope": "Shape-set queries only; native complete IDs compared before upstream skipPrelude filtering. Upstream expected matches and unmodified JVM are both checked. Variable environments are not exposed."
+}

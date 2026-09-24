@@ -1,0 +1,31 @@
+_:N573198e255b24c42833f29ef0a2ceb17 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/and-001.test#InvalidResource1> .
+_:N573198e255b24c42833f29ef0a2ceb17 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#AndConstraintComponent> .
+_:Nac80f1c5990743cba0f1d86432d8585f <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/and-001.test#address> .
+_:n8486c8236ed24fe1b5091ab55a82ef21b8 <http://datashapes.org/sh/tests/core/property/and-001.test#suburb> <http://datashapes.org/sh/tests/core/property/and-001.test#KewarraBeach> .
+_:Nce7af5d43400473cb6e0fc82c3c4ab7c <http://www.w3.org/ns/shacl#resultMessage> "Node [ ex:suburb ex:KewarraBeach ] must conform to all shapes in [ sh:property [ sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:suburb ] ] , [ sh:property [ sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:postalCode ] ]" .
+_:n8486c8236ed24fe1b5091ab55a82ef21b7 <http://datashapes.org/sh/tests/core/property/and-001.test#postalCode> "4879"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:N97309be62c864b87a64a419315fac4da <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Nce7af5d43400473cb6e0fc82c3c4ab7c <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/and-001.test#address> .
+_:Nac80f1c5990743cba0f1d86432d8585f <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#AndConstraintComponent> .
+_:N97309be62c864b87a64a419315fac4da <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Nce7af5d43400473cb6e0fc82c3c4ab7c <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#AndConstraintComponent> .
+_:N97309be62c864b87a64a419315fac4da <http://www.w3.org/ns/shacl#result> _:Nac80f1c5990743cba0f1d86432d8585f .
+_:Nac80f1c5990743cba0f1d86432d8585f <http://www.w3.org/ns/shacl#value> _:n8486c8236ed24fe1b5091ab55a82ef21b9 .
+_:N573198e255b24c42833f29ef0a2ceb17 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nac80f1c5990743cba0f1d86432d8585f <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nce7af5d43400473cb6e0fc82c3c4ab7c <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/and-001.test#InvalidResource2> .
+_:N573198e255b24c42833f29ef0a2ceb17 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nac80f1c5990743cba0f1d86432d8585f <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/and-001.test#AddressShape-address> .
+_:N97309be62c864b87a64a419315fac4da <http://www.w3.org/ns/shacl#result> _:Nce7af5d43400473cb6e0fc82c3c4ab7c .
+_:N573198e255b24c42833f29ef0a2ceb17 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/and-001.test#AddressShape-address> .
+_:N573198e255b24c42833f29ef0a2ceb17 <http://www.w3.org/ns/shacl#value> _:n8486c8236ed24fe1b5091ab55a82ef21b7 .
+_:Nce7af5d43400473cb6e0fc82c3c4ab7c <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/and-001.test#AddressShape-address> .
+_:Nac80f1c5990743cba0f1d86432d8585f <http://www.w3.org/ns/shacl#resultMessage> "Node [ ] must conform to all shapes in [ sh:property [ sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:suburb ] ] , [ sh:property [ sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:postalCode ] ]" .
+_:Nac80f1c5990743cba0f1d86432d8585f <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/and-001.test#InvalidResource3> .
+_:Nac80f1c5990743cba0f1d86432d8585f <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N573198e255b24c42833f29ef0a2ceb17 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/and-001.test#address> .
+_:N573198e255b24c42833f29ef0a2ceb17 <http://www.w3.org/ns/shacl#resultMessage> "Node [ ex:postalCode Literal(\"4879\", datatype=xsd:integer) ] must conform to all shapes in [ sh:property [ sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:suburb ] ] , [ sh:property [ sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:postalCode ] ]" .
+_:N97309be62c864b87a64a419315fac4da <http://www.w3.org/ns/shacl#result> _:N573198e255b24c42833f29ef0a2ceb17 .
+_:Nce7af5d43400473cb6e0fc82c3c4ab7c <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nce7af5d43400473cb6e0fc82c3c4ab7c <http://www.w3.org/ns/shacl#value> _:n8486c8236ed24fe1b5091ab55a82ef21b8 .
+_:Nce7af5d43400473cb6e0fc82c3c4ab7c <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .

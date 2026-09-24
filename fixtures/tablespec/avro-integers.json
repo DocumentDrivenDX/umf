@@ -1,0 +1,1787 @@
+{
+  "cases": [
+    {
+      "result": {
+        "status": "blocked",
+        "source": {
+          "umf": "0.1.0",
+          "id": "precision1.0000000000000000001",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "example"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "DECIMAL"
+                          },
+                          "precision": {
+                            "kind": "number",
+                            "value": "1.0000000000000000001"
+                          },
+                          "scale": {
+                            "kind": "number",
+                            "value": "1"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"example\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\",\"precision\":1.0000000000000000001,\"scale\":1,\"nullable\":false}]}",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "example",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "decimal",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "id": "target",
+          "recordName": "Record",
+          "namespace": "example",
+          "lossPolicy": "allow-reported-loss",
+          "fields": {
+            "value": {
+              "name": "value",
+              "representation": "decimal",
+              "nullable": "source"
+            }
+          }
+        },
+        "issues": [
+          {
+            "path": "",
+            "code": "TABLESPEC_EXECUTION",
+            "classification": "not-enforced",
+            "detail": "Native Pydantic validation/coercion, constraints, relationships, derivations, pipelines and split-loader migrations are not executed by this schema projection",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "SCHEMA_ONLY",
+            "classification": "representation-change",
+            "detail": "Native values require a separate encoder; the copied source UMF remains required for native meaning",
+            "retainedInSource": true
+          },
+          {
+            "path": "/version",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/table_name",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/0/precision",
+            "code": "TABLESPEC_AVRO_UNSUPPORTED",
+            "classification": "unsupported",
+            "detail": "Selected numeric qualifier must be an exact interoperable integer; source numeric rounding is not permitted",
+            "retainedInSource": true
+          }
+        ],
+        "mappings": []
+      },
+      "exports": []
+    },
+    {
+      "result": {
+        "status": "blocked",
+        "source": {
+          "umf": "0.1.0",
+          "id": "precision1e-400",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "example"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "DECIMAL"
+                          },
+                          "precision": {
+                            "kind": "number",
+                            "value": "1e-400"
+                          },
+                          "scale": {
+                            "kind": "number",
+                            "value": "1"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"example\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\",\"precision\":1e-400,\"scale\":1,\"nullable\":false}]}",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "example",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "decimal",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "id": "target",
+          "recordName": "Record",
+          "namespace": "example",
+          "lossPolicy": "allow-reported-loss",
+          "fields": {
+            "value": {
+              "name": "value",
+              "representation": "decimal",
+              "nullable": "source"
+            }
+          }
+        },
+        "issues": [
+          {
+            "path": "",
+            "code": "TABLESPEC_EXECUTION",
+            "classification": "not-enforced",
+            "detail": "Native Pydantic validation/coercion, constraints, relationships, derivations, pipelines and split-loader migrations are not executed by this schema projection",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "SCHEMA_ONLY",
+            "classification": "representation-change",
+            "detail": "Native values require a separate encoder; the copied source UMF remains required for native meaning",
+            "retainedInSource": true
+          },
+          {
+            "path": "/version",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/table_name",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/0/precision",
+            "code": "TABLESPEC_AVRO_UNSUPPORTED",
+            "classification": "unsupported",
+            "detail": "Selected numeric qualifier must be an exact interoperable integer; source numeric rounding is not permitted",
+            "retainedInSource": true
+          }
+        ],
+        "mappings": []
+      },
+      "exports": []
+    },
+    {
+      "result": {
+        "status": "blocked",
+        "source": {
+          "umf": "0.1.0",
+          "id": "precision9007199254740993",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "example"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "DECIMAL"
+                          },
+                          "precision": {
+                            "kind": "number",
+                            "value": "9007199254740993"
+                          },
+                          "scale": {
+                            "kind": "number",
+                            "value": "1"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"example\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\",\"precision\":9007199254740993,\"scale\":1,\"nullable\":false}]}",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "example",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "decimal",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "id": "target",
+          "recordName": "Record",
+          "namespace": "example",
+          "lossPolicy": "allow-reported-loss",
+          "fields": {
+            "value": {
+              "name": "value",
+              "representation": "decimal",
+              "nullable": "source"
+            }
+          }
+        },
+        "issues": [
+          {
+            "path": "",
+            "code": "TABLESPEC_EXECUTION",
+            "classification": "not-enforced",
+            "detail": "Native Pydantic validation/coercion, constraints, relationships, derivations, pipelines and split-loader migrations are not executed by this schema projection",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "SCHEMA_ONLY",
+            "classification": "representation-change",
+            "detail": "Native values require a separate encoder; the copied source UMF remains required for native meaning",
+            "retainedInSource": true
+          },
+          {
+            "path": "/version",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/table_name",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/0/precision",
+            "code": "TABLESPEC_AVRO_UNSUPPORTED",
+            "classification": "unsupported",
+            "detail": "Selected numeric qualifier must be an exact interoperable integer; source numeric rounding is not permitted",
+            "retainedInSource": true
+          }
+        ],
+        "mappings": []
+      },
+      "exports": []
+    },
+    {
+      "result": {
+        "status": "blocked",
+        "source": {
+          "umf": "0.1.0",
+          "id": "precision-0",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "example"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "DECIMAL"
+                          },
+                          "precision": {
+                            "kind": "number",
+                            "value": "-0"
+                          },
+                          "scale": {
+                            "kind": "number",
+                            "value": "1"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"example\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\",\"precision\":-0,\"scale\":1,\"nullable\":false}]}",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "example",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "decimal",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "id": "target",
+          "recordName": "Record",
+          "namespace": "example",
+          "lossPolicy": "allow-reported-loss",
+          "fields": {
+            "value": {
+              "name": "value",
+              "representation": "decimal",
+              "nullable": "source"
+            }
+          }
+        },
+        "issues": [
+          {
+            "path": "",
+            "code": "TABLESPEC_EXECUTION",
+            "classification": "not-enforced",
+            "detail": "Native Pydantic validation/coercion, constraints, relationships, derivations, pipelines and split-loader migrations are not executed by this schema projection",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "SCHEMA_ONLY",
+            "classification": "representation-change",
+            "detail": "Native values require a separate encoder; the copied source UMF remains required for native meaning",
+            "retainedInSource": true
+          },
+          {
+            "path": "/version",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/table_name",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/0/precision",
+            "code": "TABLESPEC_AVRO_UNSUPPORTED",
+            "classification": "unsupported",
+            "detail": "Selected numeric qualifier must be an exact interoperable integer; source numeric rounding is not permitted",
+            "retainedInSource": true
+          }
+        ],
+        "mappings": []
+      },
+      "exports": []
+    },
+    {
+      "result": {
+        "status": "blocked",
+        "source": {
+          "umf": "0.1.0",
+          "id": "scale1.0000000000000000001",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "example"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "DECIMAL"
+                          },
+                          "precision": {
+                            "kind": "number",
+                            "value": "8"
+                          },
+                          "scale": {
+                            "kind": "number",
+                            "value": "1.0000000000000000001"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"example\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\",\"precision\":8,\"scale\":1.0000000000000000001,\"nullable\":false}]}",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "example",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "decimal",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "id": "target",
+          "recordName": "Record",
+          "namespace": "example",
+          "lossPolicy": "allow-reported-loss",
+          "fields": {
+            "value": {
+              "name": "value",
+              "representation": "decimal",
+              "nullable": "source"
+            }
+          }
+        },
+        "issues": [
+          {
+            "path": "",
+            "code": "TABLESPEC_EXECUTION",
+            "classification": "not-enforced",
+            "detail": "Native Pydantic validation/coercion, constraints, relationships, derivations, pipelines and split-loader migrations are not executed by this schema projection",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "SCHEMA_ONLY",
+            "classification": "representation-change",
+            "detail": "Native values require a separate encoder; the copied source UMF remains required for native meaning",
+            "retainedInSource": true
+          },
+          {
+            "path": "/version",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/table_name",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/0/scale",
+            "code": "TABLESPEC_AVRO_UNSUPPORTED",
+            "classification": "unsupported",
+            "detail": "Selected numeric qualifier must be an exact interoperable integer; source numeric rounding is not permitted",
+            "retainedInSource": true
+          }
+        ],
+        "mappings": []
+      },
+      "exports": []
+    },
+    {
+      "result": {
+        "status": "blocked",
+        "source": {
+          "umf": "0.1.0",
+          "id": "scale1e-400",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "example"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "DECIMAL"
+                          },
+                          "precision": {
+                            "kind": "number",
+                            "value": "8"
+                          },
+                          "scale": {
+                            "kind": "number",
+                            "value": "1e-400"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"example\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\",\"precision\":8,\"scale\":1e-400,\"nullable\":false}]}",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "example",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "decimal",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "id": "target",
+          "recordName": "Record",
+          "namespace": "example",
+          "lossPolicy": "allow-reported-loss",
+          "fields": {
+            "value": {
+              "name": "value",
+              "representation": "decimal",
+              "nullable": "source"
+            }
+          }
+        },
+        "issues": [
+          {
+            "path": "",
+            "code": "TABLESPEC_EXECUTION",
+            "classification": "not-enforced",
+            "detail": "Native Pydantic validation/coercion, constraints, relationships, derivations, pipelines and split-loader migrations are not executed by this schema projection",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "SCHEMA_ONLY",
+            "classification": "representation-change",
+            "detail": "Native values require a separate encoder; the copied source UMF remains required for native meaning",
+            "retainedInSource": true
+          },
+          {
+            "path": "/version",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/table_name",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/0/scale",
+            "code": "TABLESPEC_AVRO_UNSUPPORTED",
+            "classification": "unsupported",
+            "detail": "Selected numeric qualifier must be an exact interoperable integer; source numeric rounding is not permitted",
+            "retainedInSource": true
+          }
+        ],
+        "mappings": []
+      },
+      "exports": []
+    },
+    {
+      "result": {
+        "status": "blocked",
+        "source": {
+          "umf": "0.1.0",
+          "id": "scale9007199254740993",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "example"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "DECIMAL"
+                          },
+                          "precision": {
+                            "kind": "number",
+                            "value": "8"
+                          },
+                          "scale": {
+                            "kind": "number",
+                            "value": "9007199254740993"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"example\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\",\"precision\":8,\"scale\":9007199254740993,\"nullable\":false}]}",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "example",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "decimal",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "id": "target",
+          "recordName": "Record",
+          "namespace": "example",
+          "lossPolicy": "allow-reported-loss",
+          "fields": {
+            "value": {
+              "name": "value",
+              "representation": "decimal",
+              "nullable": "source"
+            }
+          }
+        },
+        "issues": [
+          {
+            "path": "",
+            "code": "TABLESPEC_EXECUTION",
+            "classification": "not-enforced",
+            "detail": "Native Pydantic validation/coercion, constraints, relationships, derivations, pipelines and split-loader migrations are not executed by this schema projection",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "SCHEMA_ONLY",
+            "classification": "representation-change",
+            "detail": "Native values require a separate encoder; the copied source UMF remains required for native meaning",
+            "retainedInSource": true
+          },
+          {
+            "path": "/version",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/table_name",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/0/scale",
+            "code": "TABLESPEC_AVRO_UNSUPPORTED",
+            "classification": "unsupported",
+            "detail": "Selected numeric qualifier must be an exact interoperable integer; source numeric rounding is not permitted",
+            "retainedInSource": true
+          }
+        ],
+        "mappings": []
+      },
+      "exports": []
+    },
+    {
+      "result": {
+        "status": "blocked",
+        "source": {
+          "umf": "0.1.0",
+          "id": "scale-0",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "example"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "DECIMAL"
+                          },
+                          "precision": {
+                            "kind": "number",
+                            "value": "8"
+                          },
+                          "scale": {
+                            "kind": "number",
+                            "value": "-0"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"example\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\",\"precision\":8,\"scale\":-0,\"nullable\":false}]}",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "example",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "scalarType": "decimal",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "id": "target",
+          "recordName": "Record",
+          "namespace": "example",
+          "lossPolicy": "allow-reported-loss",
+          "fields": {
+            "value": {
+              "name": "value",
+              "representation": "decimal",
+              "nullable": "source"
+            }
+          }
+        },
+        "issues": [
+          {
+            "path": "",
+            "code": "TABLESPEC_EXECUTION",
+            "classification": "not-enforced",
+            "detail": "Native Pydantic validation/coercion, constraints, relationships, derivations, pipelines and split-loader migrations are not executed by this schema projection",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "SCHEMA_ONLY",
+            "classification": "representation-change",
+            "detail": "Native values require a separate encoder; the copied source UMF remains required for native meaning",
+            "retainedInSource": true
+          },
+          {
+            "path": "/version",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/table_name",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/0/scale",
+            "code": "TABLESPEC_AVRO_UNSUPPORTED",
+            "classification": "unsupported",
+            "detail": "Selected numeric qualifier must be an exact interoperable integer; source numeric rounding is not permitted",
+            "retainedInSource": true
+          }
+        ],
+        "mappings": []
+      },
+      "exports": []
+    },
+    {
+      "result": {
+        "status": "blocked",
+        "source": {
+          "umf": "0.1.0",
+          "id": "dimension1.0000000000000000001",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "example"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "EMBEDDING"
+                          },
+                          "dimension": {
+                            "kind": "number",
+                            "value": "1.0000000000000000001"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"example\",\"columns\":[{\"name\":\"value\",\"data_type\":\"EMBEDDING\",\"dimension\":1.0000000000000000001,\"nullable\":false}]}",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "example",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "id": "target",
+          "recordName": "Record",
+          "namespace": "example",
+          "lossPolicy": "allow-reported-loss",
+          "fields": {
+            "value": {
+              "name": "value",
+              "representation": "embedding-float32",
+              "nullable": "source",
+              "itemsNullable": false
+            }
+          }
+        },
+        "issues": [
+          {
+            "path": "",
+            "code": "TABLESPEC_EXECUTION",
+            "classification": "not-enforced",
+            "detail": "Native Pydantic validation/coercion, constraints, relationships, derivations, pipelines and split-loader migrations are not executed by this schema projection",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "SCHEMA_ONLY",
+            "classification": "representation-change",
+            "detail": "Native values require a separate encoder; the copied source UMF remains required for native meaning",
+            "retainedInSource": true
+          },
+          {
+            "path": "/version",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/table_name",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/0/dimension",
+            "code": "TABLESPEC_AVRO_UNSUPPORTED",
+            "classification": "unsupported",
+            "detail": "Selected numeric qualifier must be an exact interoperable integer; source numeric rounding is not permitted",
+            "retainedInSource": true
+          }
+        ],
+        "mappings": []
+      },
+      "exports": []
+    },
+    {
+      "result": {
+        "status": "blocked",
+        "source": {
+          "umf": "0.1.0",
+          "id": "dimension1e-400",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "example"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "EMBEDDING"
+                          },
+                          "dimension": {
+                            "kind": "number",
+                            "value": "1e-400"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"example\",\"columns\":[{\"name\":\"value\",\"data_type\":\"EMBEDDING\",\"dimension\":1e-400,\"nullable\":false}]}",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "example",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "id": "target",
+          "recordName": "Record",
+          "namespace": "example",
+          "lossPolicy": "allow-reported-loss",
+          "fields": {
+            "value": {
+              "name": "value",
+              "representation": "embedding-float32",
+              "nullable": "source",
+              "itemsNullable": false
+            }
+          }
+        },
+        "issues": [
+          {
+            "path": "",
+            "code": "TABLESPEC_EXECUTION",
+            "classification": "not-enforced",
+            "detail": "Native Pydantic validation/coercion, constraints, relationships, derivations, pipelines and split-loader migrations are not executed by this schema projection",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "SCHEMA_ONLY",
+            "classification": "representation-change",
+            "detail": "Native values require a separate encoder; the copied source UMF remains required for native meaning",
+            "retainedInSource": true
+          },
+          {
+            "path": "/version",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/table_name",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/0/dimension",
+            "code": "TABLESPEC_AVRO_UNSUPPORTED",
+            "classification": "unsupported",
+            "detail": "Selected numeric qualifier must be an exact interoperable integer; source numeric rounding is not permitted",
+            "retainedInSource": true
+          }
+        ],
+        "mappings": []
+      },
+      "exports": []
+    },
+    {
+      "result": {
+        "status": "blocked",
+        "source": {
+          "umf": "0.1.0",
+          "id": "dimension9007199254740993",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "example"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "EMBEDDING"
+                          },
+                          "dimension": {
+                            "kind": "number",
+                            "value": "9007199254740993"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"example\",\"columns\":[{\"name\":\"value\",\"data_type\":\"EMBEDDING\",\"dimension\":9007199254740993,\"nullable\":false}]}",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "example",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "id": "target",
+          "recordName": "Record",
+          "namespace": "example",
+          "lossPolicy": "allow-reported-loss",
+          "fields": {
+            "value": {
+              "name": "value",
+              "representation": "embedding-float32",
+              "nullable": "source",
+              "itemsNullable": false
+            }
+          }
+        },
+        "issues": [
+          {
+            "path": "",
+            "code": "TABLESPEC_EXECUTION",
+            "classification": "not-enforced",
+            "detail": "Native Pydantic validation/coercion, constraints, relationships, derivations, pipelines and split-loader migrations are not executed by this schema projection",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "SCHEMA_ONLY",
+            "classification": "representation-change",
+            "detail": "Native values require a separate encoder; the copied source UMF remains required for native meaning",
+            "retainedInSource": true
+          },
+          {
+            "path": "/version",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/table_name",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/0/dimension",
+            "code": "TABLESPEC_AVRO_UNSUPPORTED",
+            "classification": "unsupported",
+            "detail": "Selected numeric qualifier must be an exact interoperable integer; source numeric rounding is not permitted",
+            "retainedInSource": true
+          }
+        ],
+        "mappings": []
+      },
+      "exports": []
+    },
+    {
+      "result": {
+        "status": "blocked",
+        "source": {
+          "umf": "0.1.0",
+          "id": "dimension-0",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "example"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "value"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "EMBEDDING"
+                          },
+                          "dimension": {
+                            "kind": "number",
+                            "value": "-0"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"example\",\"columns\":[{\"name\":\"value\",\"data_type\":\"EMBEDDING\",\"dimension\":-0,\"nullable\":false}]}",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "example",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "value",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "id": "target",
+          "recordName": "Record",
+          "namespace": "example",
+          "lossPolicy": "allow-reported-loss",
+          "fields": {
+            "value": {
+              "name": "value",
+              "representation": "embedding-float32",
+              "nullable": "source",
+              "itemsNullable": false
+            }
+          }
+        },
+        "issues": [
+          {
+            "path": "",
+            "code": "TABLESPEC_EXECUTION",
+            "classification": "not-enforced",
+            "detail": "Native Pydantic validation/coercion, constraints, relationships, derivations, pipelines and split-loader migrations are not executed by this schema projection",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "SCHEMA_ONLY",
+            "classification": "representation-change",
+            "detail": "Native values require a separate encoder; the copied source UMF remains required for native meaning",
+            "retainedInSource": true
+          },
+          {
+            "path": "/version",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/table_name",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/0/dimension",
+            "code": "TABLESPEC_AVRO_UNSUPPORTED",
+            "classification": "unsupported",
+            "detail": "Selected numeric qualifier must be an exact interoperable integer; source numeric rounding is not permitted",
+            "retainedInSource": true
+          }
+        ],
+        "mappings": []
+      },
+      "exports": []
+    },
+    {
+      "result": {
+        "status": "projected",
+        "source": {
+          "umf": "0.1.0",
+          "id": "exact",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "t"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "n"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "DECIMAL"
+                          },
+                          "precision": {
+                            "kind": "number",
+                            "value": "8.00e0"
+                          },
+                          "scale": {
+                            "kind": "number",
+                            "value": "1.00"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          },
+                          "unknown": {
+                            "kind": "number",
+                            "value": "9007199254740993.0000001"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"t\",\"columns\":[{\"name\":\"n\",\"data_type\":\"DECIMAL\",\"precision\":8.00e0,\"scale\":1.00,\"nullable\":false,\"unknown\":9007199254740993.0000001}]}",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "t",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "n",
+                  "scalarType": "decimal",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "id": "target",
+          "recordName": "Record",
+          "namespace": "example",
+          "lossPolicy": "allow-reported-loss",
+          "fields": {
+            "n": {
+              "name": "n",
+              "representation": "decimal",
+              "nullable": "source"
+            }
+          }
+        },
+        "issues": [
+          {
+            "path": "",
+            "code": "TABLESPEC_EXECUTION",
+            "classification": "not-enforced",
+            "detail": "Native Pydantic validation/coercion, constraints, relationships, derivations, pipelines and split-loader migrations are not executed by this schema projection",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "SCHEMA_ONLY",
+            "classification": "representation-change",
+            "detail": "Native values require a separate encoder; the copied source UMF remains required for native meaning",
+            "retainedInSource": true
+          },
+          {
+            "path": "/version",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/table_name",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/0",
+            "code": "DECIMAL_ENCODING",
+            "classification": "representation-change",
+            "detail": "Values require signed big-endian unscaled decimal bytes; native coercion/rounding and engine precision limits remain source-owned",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/0/unknown",
+            "code": "NATIVE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native field metadata remains in source without Avro interpretation",
+            "retainedInSource": true
+          }
+        ],
+        "mappings": [
+          {
+            "index": 0,
+            "column": "n",
+            "field": "n",
+            "representation": "decimal",
+            "nullable": false
+          }
+        ],
+        "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Record\",\n  \"namespace\": \"example\",\n  \"fields\": [\n    {\n      \"name\": \"n\",\n      \"type\": {\n        \"type\": \"bytes\",\n        \"logicalType\": \"decimal\",\n        \"precision\": 8,\n        \"scale\": 1\n      }\n    }\n  ]\n}\n",
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Record"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "example"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "n"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "bytes"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "decimal"
+                                      },
+                                      "precision": {
+                                        "kind": "number",
+                                        "value": "8"
+                                      },
+                                      "scale": {
+                                        "kind": "number",
+                                        "value": "1"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "n",
+                  "scalarType": "decimal",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "exports": []
+    }
+  ]
+}

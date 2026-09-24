@@ -1,0 +1,12 @@
+import {chromium} from 'playwright';
+const base='fixtures/dbt/semantic-metrics/',raw=await Bun.file(base+'semantic-manifest.json').text(),source=await Bun.file(base+'source.json.json').text(),cases=[];
+for(const c of (await Bun.file(base+'results.json').json()).results)cases.push({...c,edited:await Bun.file(base+c.id+'.edited.json.json').text()});
+const built=await Bun.build({entrypoints:['src/index.ts'],outdir:'.cache/dbt-semantic-metrics-browser',naming:'umf.js',target:'browser',format:'esm'});if(!built.success)throw Error(built.logs.join('\n'));
+const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(req){return new URL(req.url).pathname==='/umf.js'?new Response(Bun.file('.cache/dbt-semantic-metrics-browser/umf.js'),{headers:{'content-type':'text/javascript'}}):new Response('<!doctype html><title>dbt metric types</title>');}});let browser;
+try{browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});const page=await browser.newPage();await page.goto('http://127.0.0.1:'+server.port);
+ const result=await page.evaluate(async({raw,source,cases})=>{const path='/umf.js',u=await import(path),d=u.importDbtSemanticManifest(raw,{id:'metrics'});let formats=0,edits=0;
+  for(const f of ['json','yaml']){if(u.exportDbtSemanticManifest(u.readDocument(u.writeDocument(d,f),f))!==source)throw Error('Source differs');formats++;}
+  for(const c of cases){const candidate=u.proposeDbtSemanticManifestNodeEdit(d,c.editPath,JSON.stringify(c.value));if(candidate.validation.complete!==false)throw Error('Incomplete semantics hidden');if(!candidate.validation.diagnostics.some((x:any)=>x.code==='DBT_SEMANTIC_MANIFEST_NATIVE_SCHEMA')!==c.shapeValid)throw Error('Shape differs');for(const f of ['json','yaml']){if(u.exportDbtSemanticManifest(u.readDocument(u.writeDocument(candidate.document,f),f))!==c.edited)throw Error('Edit differs');edits++;}}
+  if(u.exportDbtSemanticManifest(d)!==source)throw Error('Source mutated');return {formats,edits,nodeGlobalsAbsent:!('process' in globalThis)&&!('Buffer' in globalThis),nativeSemanticValidationExecuted:false};
+ },{raw,source,cases});if(result.formats!==2||result.edits!==22||!result.nodeGlobalsAbsent)throw Error('Browser baseline changed');await Bun.write(base+'browser-results.json',JSON.stringify({...result,browser:browser.version()},null,2)+'\n');console.log(result);
+}finally{await browser?.close();server.stop(true);}

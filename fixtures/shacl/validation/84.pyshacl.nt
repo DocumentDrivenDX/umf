@@ -1,0 +1,20 @@
+_:N2a3bf16df3874b7899672a2f7c22f8ce <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/property-001.test#InvalidAddress> .
+_:N2a3bf16df3874b7899672a2f7c22f8ce <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#ClassConstraintComponent> .
+_:N2a3bf16df3874b7899672a2f7c22f8ce <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/property-001.test#city> .
+_:N879a1f99e3ec43099217036d946d25bf <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/property-001.test#PersonShape-address-city> .
+_:N858ab5a14b994254952b8a9b05fc5bce <http://www.w3.org/ns/shacl#result> _:N879a1f99e3ec43099217036d946d25bf .
+_:N858ab5a14b994254952b8a9b05fc5bce <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N879a1f99e3ec43099217036d946d25bf <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/property-001.test#city> .
+_:N2a3bf16df3874b7899672a2f7c22f8ce <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/property/property-001.test#InvalidCity> .
+_:N858ab5a14b994254952b8a9b05fc5bce <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N2a3bf16df3874b7899672a2f7c22f8ce <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N879a1f99e3ec43099217036d946d25bf <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/property/property-001.test#InvalidCity> .
+_:N2a3bf16df3874b7899672a2f7c22f8ce <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/property-001.test#PersonShape-address-city> .
+_:N2a3bf16df3874b7899672a2f7c22f8ce <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N858ab5a14b994254952b8a9b05fc5bce <http://www.w3.org/ns/shacl#result> _:N2a3bf16df3874b7899672a2f7c22f8ce .
+_:N2a3bf16df3874b7899672a2f7c22f8ce <http://www.w3.org/ns/shacl#resultMessage> "Value does not have class ex:City" .
+_:N879a1f99e3ec43099217036d946d25bf <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N879a1f99e3ec43099217036d946d25bf <http://www.w3.org/ns/shacl#resultMessage> "Value does not have class ex:City" .
+_:N879a1f99e3ec43099217036d946d25bf <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N879a1f99e3ec43099217036d946d25bf <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#ClassConstraintComponent> .
+_:N879a1f99e3ec43099217036d946d25bf <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/property-001.test#InvalidAddress> .

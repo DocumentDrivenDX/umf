@@ -1,0 +1,369 @@
+[
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "__proto__",
+        "value": {
+          "kind": "string",
+          "value": "own property",
+          "physical": {
+            "type": "BYTE_ARRAY",
+            "hex": "6f776e2070726f7065727479"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "name": "nested.decimals",
+        "value": {
+          "kind": "list",
+          "items": [
+            {
+              "kind": "decimal",
+              "value": "-9999999999999999.1234",
+              "physical": {
+                "type": "FIXED_LEN_BYTE_ARRAY",
+                "hex": "fa9438a1d29cf0223e"
+              }
+            },
+            null,
+            {
+              "kind": "decimal",
+              "value": "0.0001",
+              "physical": {
+                "type": "FIXED_LEN_BYTE_ARRAY",
+                "hex": "000000000000000001"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 5,
+        "name": "ordered",
+        "value": {
+          "kind": "map",
+          "duplicateKeys": "last-value",
+          "entries": [
+            {
+              "key": {
+                "kind": "string",
+                "value": "same",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "73616d65"
+                }
+              },
+              "value": {
+                "kind": "decimal",
+                "value": "1.0000",
+                "physical": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "000000000000002710"
+                }
+              }
+            },
+            {
+              "key": {
+                "kind": "string",
+                "value": "same",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "73616d65"
+                }
+              },
+              "value": {
+                "kind": "decimal",
+                "value": "2.0000",
+                "physical": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "000000000000004e20"
+                }
+              }
+            },
+            {
+              "key": {
+                "kind": "string",
+                "value": "__proto__",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "5f5f70726f746f5f5f"
+                }
+              },
+              "value": null
+            },
+            {
+              "key": {
+                "kind": "string",
+                "value": "constructor",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "636f6e7374727563746f72"
+                }
+              },
+              "value": {
+                "kind": "decimal",
+                "value": "-0.0001",
+                "physical": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "ffffffffffffffffff"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 9,
+        "name": "integer.keys",
+        "value": {
+          "kind": "map",
+          "duplicateKeys": "last-value",
+          "entries": [
+            {
+              "key": {
+                "kind": "int",
+                "bits": 32,
+                "value": "7",
+                "physical": {
+                  "type": "INT32",
+                  "value": "7"
+                }
+              },
+              "value": {
+                "kind": "list",
+                "items": [
+                  {
+                    "kind": "decimal",
+                    "value": "1.0001",
+                    "physical": {
+                      "type": "FIXED_LEN_BYTE_ARRAY",
+                      "hex": "000000000000002711"
+                    }
+                  },
+                  null
+                ]
+              }
+            },
+            {
+              "key": {
+                "kind": "int",
+                "bits": 32,
+                "value": "7",
+                "physical": {
+                  "type": "INT32",
+                  "value": "7"
+                }
+              },
+              "value": {
+                "kind": "list",
+                "items": []
+              }
+            },
+            {
+              "key": {
+                "kind": "int",
+                "bits": 32,
+                "value": "-1",
+                "physical": {
+                  "type": "INT32",
+                  "value": "-1"
+                }
+              },
+              "value": null
+            }
+          ]
+        }
+      },
+      {
+        "index": 15,
+        "name": "clock",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 16,
+              "name": "local",
+              "value": {
+                "kind": "timestamp",
+                "unit": "MICROS",
+                "isAdjustedToUTC": false,
+                "value": "1767229323456789",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1767229323456789"
+                }
+              }
+            },
+            {
+              "index": 17,
+              "name": "utc",
+              "value": {
+                "kind": "timestamp",
+                "unit": "MICROS",
+                "isAdjustedToUTC": true,
+                "value": "1767229323456789",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1767229323456789"
+                }
+              }
+            },
+            {
+              "index": 18,
+              "name": "time",
+              "value": {
+                "kind": "time",
+                "unit": "MICROS",
+                "isAdjustedToUTC": true,
+                "value": "3723456789",
+                "physical": {
+                  "type": "INT64",
+                  "value": "3723456789"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 19,
+        "name": "large",
+        "value": {
+          "kind": "uint",
+          "bits": 64,
+          "value": "18446744073709551615",
+          "physical": {
+            "type": "INT64",
+            "value": "-1"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "__proto__",
+        "value": {
+          "kind": "string",
+          "value": "constructor",
+          "physical": {
+            "type": "BYTE_ARRAY",
+            "hex": "636f6e7374727563746f72"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "name": "nested.decimals",
+        "value": {
+          "kind": "list",
+          "items": []
+        }
+      },
+      {
+        "index": 5,
+        "name": "ordered",
+        "value": {
+          "kind": "map",
+          "duplicateKeys": "last-value",
+          "entries": []
+        }
+      },
+      {
+        "index": 9,
+        "name": "integer.keys",
+        "value": {
+          "kind": "map",
+          "duplicateKeys": "last-value",
+          "entries": []
+        }
+      },
+      {
+        "index": 15,
+        "name": "clock",
+        "value": null
+      },
+      {
+        "index": 19,
+        "name": "large",
+        "value": {
+          "kind": "uint",
+          "bits": 64,
+          "value": "9223372036854775808",
+          "physical": {
+            "type": "INT64",
+            "value": "-9223372036854775808"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "__proto__",
+        "value": null
+      },
+      {
+        "index": 2,
+        "name": "nested.decimals",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "ordered",
+        "value": null
+      },
+      {
+        "index": 9,
+        "name": "integer.keys",
+        "value": null
+      },
+      {
+        "index": 15,
+        "name": "clock",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 16,
+              "name": "local",
+              "value": null
+            },
+            {
+              "index": 17,
+              "name": "utc",
+              "value": null
+            },
+            {
+              "index": 18,
+              "name": "time",
+              "value": null
+            }
+          ]
+        }
+      },
+      {
+        "index": 19,
+        "name": "large",
+        "value": {
+          "kind": "uint",
+          "bits": 64,
+          "value": "0",
+          "physical": {
+            "type": "INT64",
+            "value": "0"
+          }
+        }
+      }
+    ]
+  }
+]

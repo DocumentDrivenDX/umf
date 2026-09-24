@@ -1,0 +1,57 @@
+{
+  "sourceOracle": "jsonschema Draft202012Validator",
+  "targetOracle": "Python protobuf 7.36.2; protoc 36.2",
+  "records": [
+    {
+      "case": "required",
+      "sourceAccepts": false,
+      "targetAccepts": true
+    },
+    {
+      "case": "minimum",
+      "sourceAccepts": false,
+      "targetAccepts": true
+    },
+    {
+      "case": "minLength",
+      "sourceAccepts": false,
+      "targetAccepts": true
+    },
+    {
+      "case": "integer-range",
+      "sourceAccepts": true,
+      "targetAccepts": false
+    },
+    {
+      "case": "nullability",
+      "sourceAccepts": true,
+      "targetAccepts": false
+    },
+    {
+      "case": "uniqueItems",
+      "sourceAccepts": false,
+      "targetAccepts": true
+    },
+    {
+      "case": "minItems",
+      "sourceAccepts": false,
+      "targetAccepts": true
+    },
+    {
+      "case": "oneOf",
+      "sourceAccepts": false,
+      "targetAccepts": true
+    },
+    {
+      "case": "accepted",
+      "sourceAccepts": true,
+      "targetAccepts": true
+    }
+  ],
+  "additionalChecks": [
+    "source annotation default is not a native default",
+    "absent and empty repeated fields collapse",
+    "native double admits nonfinite values"
+  ],
+  "scope": "Explicit authored instance correspondence; projection does not implement a general data converter"
+}

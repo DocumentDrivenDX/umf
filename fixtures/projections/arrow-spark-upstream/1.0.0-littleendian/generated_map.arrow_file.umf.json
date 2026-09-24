@@ -1,0 +1,78 @@
+{
+  "umf": "0.1.0",
+  "id": "1.0.0-littleendian/generated_map.arrow_file/message/0",
+  "vocabularies": {
+    "umf.arrow.flatbuffer": {
+      "version": "0.1.0"
+    }
+  },
+  "modules": [
+    {
+      "id": "metadata",
+      "namespace": "",
+      "elements": [
+        {
+          "id": "root",
+          "extensions": {
+            "umf.arrow.flatbuffer": {
+              "profile": "arrow-flatbuffer-model",
+              "model": {
+                "rootType": "Message",
+                "value": {
+                  "version": "V5",
+                  "header": {
+                    "type": "Schema",
+                    "value": {
+                      "fields": [
+                        {
+                          "name": "map_nullable",
+                          "nullable": true,
+                          "type": {
+                            "type": "Map",
+                            "value": {}
+                          },
+                          "children": [
+                            {
+                              "name": "entries",
+                              "type": {
+                                "type": "Struct_",
+                                "value": {}
+                              },
+                              "children": [
+                                {
+                                  "name": "key",
+                                  "type": {
+                                    "type": "Utf8",
+                                    "value": {}
+                                  },
+                                  "children": []
+                                },
+                                {
+                                  "name": "value",
+                                  "nullable": true,
+                                  "type": {
+                                    "type": "Int",
+                                    "value": {
+                                      "bitWidth": 32,
+                                      "is_signed": true
+                                    }
+                                  },
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ],
+                      "custom_metadata": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

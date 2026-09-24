@@ -1,0 +1,153 @@
+{
+  "results": [
+    {
+      "id": "type-0",
+      "status": "roundtripped"
+    },
+    {
+      "id": "type-1",
+      "status": "roundtripped"
+    },
+    {
+      "id": "type-2",
+      "status": "roundtripped"
+    },
+    {
+      "id": "type-3",
+      "status": "roundtripped"
+    },
+    {
+      "id": "type-4",
+      "status": "roundtripped"
+    },
+    {
+      "id": "type-5",
+      "status": "roundtripped"
+    },
+    {
+      "id": "type-6",
+      "status": "roundtripped"
+    },
+    {
+      "id": "type-7",
+      "status": "roundtripped"
+    },
+    {
+      "id": "type-8",
+      "status": "roundtripped"
+    },
+    {
+      "id": "type-9",
+      "status": "roundtripped"
+    },
+    {
+      "id": "type-10",
+      "status": "roundtripped"
+    },
+    {
+      "id": "type-11",
+      "status": "roundtripped"
+    },
+    {
+      "id": "type-12",
+      "status": "roundtripped"
+    },
+    {
+      "id": "type-13",
+      "status": "roundtripped"
+    },
+    {
+      "id": "type-14",
+      "status": "roundtripped"
+    },
+    {
+      "id": "type-15",
+      "status": "roundtripped"
+    },
+    {
+      "id": "type-16",
+      "status": "roundtripped"
+    },
+    {
+      "id": "type-17",
+      "status": "roundtripped"
+    },
+    {
+      "id": "type-18",
+      "status": "roundtripped"
+    },
+    {
+      "id": "type-19",
+      "status": "roundtripped"
+    },
+    {
+      "id": "type-20",
+      "status": "roundtripped"
+    },
+    {
+      "id": "nested",
+      "status": "roundtripped"
+    },
+    {
+      "id": "exact-defaults",
+      "status": "roundtripped"
+    },
+    {
+      "id": "future-object",
+      "status": "roundtripped"
+    },
+    {
+      "id": "duplicate-id",
+      "status": "rejected",
+      "error": "[{\"code\":\"ICEBERG_CONTEXT_UNVERIFIED\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support\"},{\"code\":\"ICEBERG_DUPLICATE_ID\",\"path\":\"/fields/1/id\",\"message\":\"Field IDs must be unique across fields and list/map components\",\"severity\":\"error\"}]"
+    },
+    {
+      "id": "duplicate-name",
+      "status": "rejected",
+      "error": "[{\"code\":\"ICEBERG_CONTEXT_UNVERIFIED\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support\"},{\"code\":\"ICEBERG_DUPLICATE_NAME\",\"path\":\"/fields/1\",\"message\":\"Sibling names must be unique\",\"severity\":\"error\"}]"
+    },
+    {
+      "id": "collection-id-collision",
+      "status": "rejected",
+      "error": "[{\"code\":\"ICEBERG_CONTEXT_UNVERIFIED\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support\"},{\"code\":\"ICEBERG_DUPLICATE_ID\",\"path\":\"/fields/0/type/element-id\",\"message\":\"Field IDs must be unique across fields and list/map components\",\"severity\":\"error\"}]"
+    },
+    {
+      "id": "optional-identifier",
+      "status": "rejected",
+      "error": "[{\"code\":\"ICEBERG_CONTEXT_UNVERIFIED\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support\"},{\"code\":\"ICEBERG_IDENTIFIER\",\"path\":\"/identifier-field-ids/0\",\"message\":\"Identifier requires a required primitive field under required structs, outside collections\",\"severity\":\"error\"}]"
+    },
+    {
+      "id": "nested-optional-identifier",
+      "status": "rejected",
+      "error": "[{\"code\":\"ICEBERG_CONTEXT_UNVERIFIED\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support\"},{\"code\":\"ICEBERG_IDENTIFIER\",\"path\":\"/identifier-field-ids/0\",\"message\":\"Identifier requires a required primitive field under required structs, outside collections\",\"severity\":\"error\"}]"
+    },
+    {
+      "id": "float-identifier",
+      "status": "rejected",
+      "error": "[{\"code\":\"ICEBERG_CONTEXT_UNVERIFIED\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support\"},{\"code\":\"ICEBERG_IDENTIFIER\",\"path\":\"/identifier-field-ids/0\",\"message\":\"Identifier requires a required primitive field under required structs, outside collections\",\"severity\":\"error\"}]"
+    },
+    {
+      "id": "missing-identifier",
+      "status": "rejected",
+      "error": "[{\"code\":\"ICEBERG_CONTEXT_UNVERIFIED\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support\"},{\"code\":\"ICEBERG_IDENTIFIER\",\"path\":\"/identifier-field-ids/0\",\"message\":\"Identifier requires a required primitive field under required structs, outside collections\",\"severity\":\"error\"}]"
+    },
+    {
+      "id": "decimal-range",
+      "status": "rejected",
+      "error": "[{\"code\":\"ICEBERG_CONTEXT_UNVERIFIED\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support\"},{\"code\":\"ICEBERG_TYPE_PARAMETERS\",\"path\":\"/fields/0/type\",\"message\":\"Decimal requires 1..38 precision and 0..precision scale\",\"severity\":\"error\"}]"
+    },
+    {
+      "id": "missing-required",
+      "status": "rejected",
+      "error": "[{\"code\":\"ICEBERG_CONTEXT_UNVERIFIED\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support\"},{\"code\":\"ICEBERG_STRUCTURE\",\"path\":\"/fields/0\",\"message\":\"must have required property 'required'\",\"severity\":\"error\"}]"
+    },
+    {
+      "id": "zero-id",
+      "status": "roundtripped"
+    },
+    {
+      "id": "negative-id",
+      "status": "roundtripped"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+import {test,expect} from 'bun:test';
+import {projectToTableSpecViaAvro,exportTableSpec,readDocument,writeDocument,type TableSpecViaAvroPolicy,type AvroTableSpecRepresentation,type Document} from '../../src';
+import {createValidator} from '../../src/validation/schema';
+const bindings:Record<string,Record<string,AvroTableSpecRepresentation>>={
+ postgresql:{flag:'boolean',small:'integer32',ordinary:'integer32',large:'json-text',exact:'decimal',single:'float32',wide:'float32',words:'string',bounded:'string',padded:'string',data:'hex-text',day:'date',clock:'json-text',zoned_clock:'string',local_stamp:'local-timestamp',instant:'timestamp',items:'string',domain_value:'string',document:'string',identifier:'string'},
+ sqlserver:{id:'json-text',flag:'boolean',tiny:'integer32',small:'integer32',ordinary:'integer32',exact:'decimal',numeric_value:'decimal',cash:'decimal',small_cash:'decimal',approximate:'float32',single:'float32',words:'string',unicode_words:'string',unlimited:'string',fixed_text:'string',unicode_fixed:'string',bytes:'hex-text',fixed_bytes:'hex-text',version_stamp:'hex-text',day:'date',clock:'string',local_stamp:'string',instant:'string',legacy_stamp:'string',small_stamp:'string',amount:'decimal',identifier:'string',document:'string',variant:'string',computed:'integer32'},
+ parquet:{id:'json-text',unsigned:'decimal',amount:'decimal',profile:'json-text',items:'json-text',lookup:'json-text',matrix:'json-text',stamp:'timestamp',local:'local-timestamp',day:'date',clock:'json-text',bytes:'hex-text',small:'integer32'},
+};
+const cases:{kind:string;source:Document;policy:TableSpecViaAvroPolicy}[]=[];for(const kind of ['postgresql','sqlserver','parquet'] as const){const file=kind==='parquet'?'fixtures/parquet/avro/projection.json':'fixtures/'+kind+'/avro-projection.json',f=await Bun.file(file).json();cases.push({kind,source:f.result.source,policy:{sourceKind:kind,toAvro:f.policy,toTableSpec:{id:kind+'-tablespec',tableName:'Converted',fields:Object.fromEntries(Object.entries(bindings[kind]!).map(([name,representation])=>[name,{name,representation}])),lossPolicy:'allow-reported-loss'}} as TableSpecViaAvroPolicy});}
+const indexed=await Bun.file('fixtures/sqlserver/index-projection.json').json();cases.push({kind:'sqlserver-indexes',source:indexed.source,policy:{sourceKind:'sqlserver',toAvro:indexed.policy,toTableSpec:{id:'sqlserver-indexes-tablespec',tableName:'Items',fields:{id:{name:'id',representation:'integer32'},email:{name:'email',representation:'string'},active:{name:'active',representation:'boolean'},payload:{name:'payload',representation:'string'}},lossPolicy:'allow-reported-loss'}}});
+const ajv=createValidator(false);for(const path of ['core/schema','projections/postgresql-avro.schema','projections/sqlserver-avro.schema','projections/parquet-avro.schema','projections/avro-tablespec.schema','projections/tablespec-via-avro.schema'])ajv.addSchema(await Bun.file('spec/'+path+'.json').json());const check=ajv.getSchema('urn:umf:projection:tablespec-via-avro:0.1.0')!;
+test('CONTRACT-039 priority-system chains retain native source, every stage and qualified diagnostics',async()=>{
+ const results=[];
+ for(const c of cases){const result=projectToTableSpecViaAvro(c.source,c.policy);expect(result.status).toBe('projected');expect(check(result)).toBe(true);expect(result.source).toEqual(c.source);expect(result.stages.sourceToAvro.source).toEqual(c.source);expect(result.stages.avroToTableSpec!.source).toEqual(result.stages.sourceToAvro.target!);
+  expect(result.issues.filter(i=>i.stage==='sourceToAvro').map(i=>i.issue)).toEqual(result.stages.sourceToAvro.issues);expect(result.issues.filter(i=>i.stage==='avroToTableSpec').map(i=>i.issue)).toEqual(result.stages.avroToTableSpec!.issues);
+  if(c.kind==='sqlserver-indexes')expect(result.issues.filter(i=>i.stage==='sourceToAvro'&&i.issue.code==='INDEX_NOT_REPRESENTED').length).toBe(3);
+  const wrongPath=structuredClone(result);wrongPath.issues[0]!.sourceDocumentPath='/stages/avroToTableSpec/source';expect(check(wrongPath)).toBe(false);
+  const exports=[];for(const format of ['json','yaml'] as const){expect(projectToTableSpecViaAvro(readDocument(writeDocument(c.source,format),format),c.policy)).toEqual(result);exports.push({format,schema:exportTableSpec(readDocument(writeDocument(result.target!,format),format))});expect(JSON.parse(exports.at(-1)!.schema)).toEqual(JSON.parse(result.nativeSchema!));}
+  results.push({...c,result,exports});
+ }
+ await Bun.write('fixtures/validation/tablespec-chains.json',JSON.stringify({scope:'Two-stage schema projections; no implicit transitive semantic equivalence or row encoding',cases:results},null,2)+'\n');
+});
+test('CONTRACT-039 blocked stages retain evidence without exposing a partial final target',()=>{
+ for(const c of cases){const first=projectToTableSpecViaAvro(c.source,{...c.policy,toAvro:{...c.policy.toAvro,lossPolicy:'strict'}} as TableSpecViaAvroPolicy);expect(check(first)).toBe(true);expect(first.status).toBe('blocked');expect(first.stages.avroToTableSpec).toBeUndefined();expect(first.target).toBeUndefined();
+  const second=projectToTableSpecViaAvro(c.source,{...c.policy,toTableSpec:{...c.policy.toTableSpec,lossPolicy:'strict'}});expect(check(second)).toBe(true);expect(second.status).toBe('blocked');expect(second.stages.sourceToAvro.target).toBeDefined();expect(second.stages.avroToTableSpec!.status).toBe('blocked');expect(second.target).toBeUndefined();expect(second.nativeSchema).toBeUndefined();
+  const corrupt=structuredClone(second);corrupt.status='projected';expect(check(corrupt)).toBe(false);
+ }
+ const c=cases[0]!;expect(()=>projectToTableSpecViaAvro(c.source,{...c.policy,toAvro:{...c.policy.toAvro,lossPolicy:'strict'},toTableSpec:{...c.policy.toTableSpec,tableName:'_invalid'}} as any)).toThrow('second-stage');
+ const unknown=structuredClone(c.source);unknown.vocabularies['example.future']={version:'1.0.0'};unknown.extensions??={};unknown.extensions['example.future']={semantic:'uninterpreted'};const r=projectToTableSpecViaAvro(unknown,c.policy);expect(r.source.extensions!['example.future']).toEqual({semantic:'uninterpreted'});expect(r.stages.sourceToAvro.source.extensions!['example.future']).toEqual({semantic:'uninterpreted'});
+ r.source.id='mutated';expect(r.stages.sourceToAvro.source.id).toBe(unknown.id);expect(unknown.id).toBe(c.source.id);
+ r.target!.id='target mutation';expect(r.stages.avroToTableSpec!.target!.id).toBe(c.policy.toTableSpec.id);
+});

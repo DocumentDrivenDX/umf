@@ -1,0 +1,5757 @@
+{
+  "path": "native/linkml/examples/slot-values.json",
+  "reports": [
+    {
+      "format": "json",
+      "report": {
+        "className": "Parent",
+        "slotName": "id",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "identifier": {
+            "kind": "boolean",
+            "value": true
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          },
+          "required": {
+            "kind": "boolean",
+            "value": true
+          }
+        },
+        "derivations": [
+          {
+            "field": "identifier",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/id/identifier",
+            "rule": "base"
+          },
+          {
+            "field": "identifier",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/id/identifier",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/id/identifier",
+            "rule": "identifier-required"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "Parent",
+        "slotName": "id",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "identifier": {
+            "kind": "boolean",
+            "value": true
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          },
+          "required": {
+            "kind": "boolean",
+            "value": true
+          }
+        },
+        "derivations": [
+          {
+            "field": "identifier",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/id/identifier",
+            "rule": "base"
+          },
+          {
+            "field": "identifier",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/id/identifier",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/id/identifier",
+            "rule": "identifier-required"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "Parent",
+        "slotName": "child",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "required": {
+            "kind": "boolean",
+            "value": false
+          },
+          "multivalued": {
+            "kind": "boolean",
+            "value": true
+          },
+          "minimum_value": {
+            "kind": "number",
+            "value": "-10"
+          },
+          "description": {
+            "kind": "string",
+            "value": "own description"
+          },
+          "range": {
+            "kind": "string",
+            "value": "integer"
+          }
+        },
+        "derivations": [
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/child/required",
+            "rule": "base"
+          },
+          {
+            "field": "multivalued",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/child/multivalued",
+            "rule": "base"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "0"
+            },
+            "path": "/slots/child/minimum_value",
+            "rule": "base"
+          },
+          {
+            "field": "description",
+            "value": {
+              "kind": "string",
+              "value": "own description"
+            },
+            "path": "/slots/child/description",
+            "rule": "base"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/slots/base/range",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/base/required",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "multivalued",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/base/multivalued",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "-10"
+            },
+            "path": "/slots/base/minimum_value",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/classes/Parent/slot_usage/child/required",
+            "rule": "slot-usage"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "Parent",
+        "slotName": "child",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "required": {
+            "kind": "boolean",
+            "value": false
+          },
+          "multivalued": {
+            "kind": "boolean",
+            "value": true
+          },
+          "minimum_value": {
+            "kind": "number",
+            "value": "-10"
+          },
+          "description": {
+            "kind": "string",
+            "value": "own description"
+          },
+          "range": {
+            "kind": "string",
+            "value": "integer"
+          }
+        },
+        "derivations": [
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/child/required",
+            "rule": "base"
+          },
+          {
+            "field": "multivalued",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/child/multivalued",
+            "rule": "base"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "0"
+            },
+            "path": "/slots/child/minimum_value",
+            "rule": "base"
+          },
+          {
+            "field": "description",
+            "value": {
+              "kind": "string",
+              "value": "own description"
+            },
+            "path": "/slots/child/description",
+            "rule": "base"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/slots/base/range",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/base/required",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "multivalued",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/base/multivalued",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "-10"
+            },
+            "path": "/slots/base/minimum_value",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/classes/Parent/slot_usage/child/required",
+            "rule": "slot-usage"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "Parent",
+        "slotName": "age",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "range": {
+            "kind": "string",
+            "value": "integer"
+          },
+          "minimum_value": {
+            "kind": "number",
+            "value": "18"
+          },
+          "maximum_value": {
+            "kind": "number",
+            "value": "100"
+          },
+          "description": {
+            "kind": "string",
+            "value": "parent usage"
+          }
+        },
+        "derivations": [
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/slots/age/range",
+            "rule": "base"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "0"
+            },
+            "path": "/slots/age/minimum_value",
+            "rule": "base"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "150"
+            },
+            "path": "/slots/age/maximum_value",
+            "rule": "base"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/slots/age/range",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "150"
+            },
+            "path": "/slots/age/maximum_value",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "18"
+            },
+            "path": "/classes/Parent/slot_usage/age/minimum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "100"
+            },
+            "path": "/classes/Parent/slot_usage/age/maximum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "description",
+            "value": {
+              "kind": "string",
+              "value": "parent usage"
+            },
+            "path": "/classes/Parent/slot_usage/age/description",
+            "rule": "slot-usage"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "Parent",
+        "slotName": "age",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "range": {
+            "kind": "string",
+            "value": "integer"
+          },
+          "minimum_value": {
+            "kind": "number",
+            "value": "18"
+          },
+          "maximum_value": {
+            "kind": "number",
+            "value": "100"
+          },
+          "description": {
+            "kind": "string",
+            "value": "parent usage"
+          }
+        },
+        "derivations": [
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/slots/age/range",
+            "rule": "base"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "0"
+            },
+            "path": "/slots/age/minimum_value",
+            "rule": "base"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "150"
+            },
+            "path": "/slots/age/maximum_value",
+            "rule": "base"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/slots/age/range",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "150"
+            },
+            "path": "/slots/age/maximum_value",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "18"
+            },
+            "path": "/classes/Parent/slot_usage/age/minimum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "100"
+            },
+            "path": "/classes/Parent/slot_usage/age/maximum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "description",
+            "value": {
+              "kind": "string",
+              "value": "parent usage"
+            },
+            "path": "/classes/Parent/slot_usage/age/description",
+            "rule": "slot-usage"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "Parent",
+        "slotName": "defaulted",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "Parent",
+        "slotName": "defaulted",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "Parent",
+        "slotName": "listed",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "inlined": {
+            "kind": "boolean",
+            "value": true
+          },
+          "inlined_as_list": {
+            "kind": "boolean",
+            "value": true
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "inlined",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/listed/inlined",
+            "rule": "base"
+          },
+          {
+            "field": "inlined_as_list",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "base"
+          },
+          {
+            "field": "inlined_as_list",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          },
+          {
+            "field": "inlined",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "list-inlined"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "Parent",
+        "slotName": "listed",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "inlined": {
+            "kind": "boolean",
+            "value": true
+          },
+          "inlined_as_list": {
+            "kind": "boolean",
+            "value": true
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "inlined",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/listed/inlined",
+            "rule": "base"
+          },
+          {
+            "field": "inlined_as_list",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "base"
+          },
+          {
+            "field": "inlined_as_list",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          },
+          {
+            "field": "inlined",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "list-inlined"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "Parent",
+        "slotName": "keyed",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "key": {
+            "kind": "boolean",
+            "value": true
+          },
+          "required": {
+            "kind": "boolean",
+            "value": true
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "key",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "base"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/keyed/required",
+            "rule": "base"
+          },
+          {
+            "field": "key",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "key-required"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "Parent",
+        "slotName": "keyed",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "key": {
+            "kind": "boolean",
+            "value": true
+          },
+          "required": {
+            "kind": "boolean",
+            "value": true
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "key",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "base"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/keyed/required",
+            "rule": "base"
+          },
+          {
+            "field": "key",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "key-required"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "Child",
+        "slotName": "local",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "range": {
+            "kind": "string",
+            "value": "integer"
+          },
+          "required": {
+            "kind": "boolean",
+            "value": false
+          }
+        },
+        "derivations": [
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/classes/Child/attributes/local/range",
+            "rule": "base"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/classes/Child/attributes/local/required",
+            "rule": "base"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "Child",
+        "slotName": "local",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "range": {
+            "kind": "string",
+            "value": "integer"
+          },
+          "required": {
+            "kind": "boolean",
+            "value": false
+          }
+        },
+        "derivations": [
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/classes/Child/attributes/local/range",
+            "rule": "base"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/classes/Child/attributes/local/required",
+            "rule": "base"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "Child",
+        "slotName": "defaulted",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "description": {
+            "kind": "string",
+            "value": "attribute wins"
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "description",
+            "value": {
+              "kind": "string",
+              "value": "attribute wins"
+            },
+            "path": "/classes/Child/attributes/defaulted/description",
+            "rule": "base"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "Child",
+        "slotName": "defaulted",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "description": {
+            "kind": "string",
+            "value": "attribute wins"
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "description",
+            "value": {
+              "kind": "string",
+              "value": "attribute wins"
+            },
+            "path": "/classes/Child/attributes/defaulted/description",
+            "rule": "base"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "Child",
+        "slotName": "id",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "identifier": {
+            "kind": "boolean",
+            "value": true
+          },
+          "required": {
+            "kind": "boolean",
+            "value": true
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "identifier",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/id/identifier",
+            "rule": "base"
+          },
+          {
+            "field": "identifier",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/id/identifier",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/classes/Child/slot_usage/id/required",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/id/identifier",
+            "rule": "identifier-required"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "Child",
+        "slotName": "id",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "identifier": {
+            "kind": "boolean",
+            "value": true
+          },
+          "required": {
+            "kind": "boolean",
+            "value": true
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "identifier",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/id/identifier",
+            "rule": "base"
+          },
+          {
+            "field": "identifier",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/id/identifier",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/classes/Child/slot_usage/id/required",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/id/identifier",
+            "rule": "identifier-required"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "Child",
+        "slotName": "child",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "required": {
+            "kind": "boolean",
+            "value": false
+          },
+          "multivalued": {
+            "kind": "boolean",
+            "value": true
+          },
+          "minimum_value": {
+            "kind": "number",
+            "value": "-10"
+          },
+          "description": {
+            "kind": "string",
+            "value": "own description"
+          },
+          "range": {
+            "kind": "string",
+            "value": "integer"
+          }
+        },
+        "derivations": [
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/child/required",
+            "rule": "base"
+          },
+          {
+            "field": "multivalued",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/child/multivalued",
+            "rule": "base"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "0"
+            },
+            "path": "/slots/child/minimum_value",
+            "rule": "base"
+          },
+          {
+            "field": "description",
+            "value": {
+              "kind": "string",
+              "value": "own description"
+            },
+            "path": "/slots/child/description",
+            "rule": "base"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/slots/base/range",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/base/required",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "multivalued",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/base/multivalued",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "-10"
+            },
+            "path": "/slots/base/minimum_value",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/classes/Parent/slot_usage/child/required",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/classes/Child/slot_usage/child/required",
+            "rule": "slot-usage"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "Child",
+        "slotName": "child",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "required": {
+            "kind": "boolean",
+            "value": false
+          },
+          "multivalued": {
+            "kind": "boolean",
+            "value": true
+          },
+          "minimum_value": {
+            "kind": "number",
+            "value": "-10"
+          },
+          "description": {
+            "kind": "string",
+            "value": "own description"
+          },
+          "range": {
+            "kind": "string",
+            "value": "integer"
+          }
+        },
+        "derivations": [
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/child/required",
+            "rule": "base"
+          },
+          {
+            "field": "multivalued",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/child/multivalued",
+            "rule": "base"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "0"
+            },
+            "path": "/slots/child/minimum_value",
+            "rule": "base"
+          },
+          {
+            "field": "description",
+            "value": {
+              "kind": "string",
+              "value": "own description"
+            },
+            "path": "/slots/child/description",
+            "rule": "base"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/slots/base/range",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/base/required",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "multivalued",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/base/multivalued",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "-10"
+            },
+            "path": "/slots/base/minimum_value",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/classes/Parent/slot_usage/child/required",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/classes/Child/slot_usage/child/required",
+            "rule": "slot-usage"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "Child",
+        "slotName": "age",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "range": {
+            "kind": "string",
+            "value": "integer"
+          },
+          "minimum_value": {
+            "kind": "number",
+            "value": "21"
+          },
+          "maximum_value": {
+            "kind": "number",
+            "value": "80"
+          },
+          "description": {
+            "kind": "string",
+            "value": "child usage"
+          }
+        },
+        "derivations": [
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/slots/age/range",
+            "rule": "base"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "0"
+            },
+            "path": "/slots/age/minimum_value",
+            "rule": "base"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "150"
+            },
+            "path": "/slots/age/maximum_value",
+            "rule": "base"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/slots/age/range",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "150"
+            },
+            "path": "/slots/age/maximum_value",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "18"
+            },
+            "path": "/classes/Parent/slot_usage/age/minimum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "100"
+            },
+            "path": "/classes/Parent/slot_usage/age/maximum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "description",
+            "value": {
+              "kind": "string",
+              "value": "parent usage"
+            },
+            "path": "/classes/Parent/slot_usage/age/description",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "21"
+            },
+            "path": "/classes/Mixin/slot_usage/age/minimum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "90"
+            },
+            "path": "/classes/Mixin/slot_usage/age/maximum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "80"
+            },
+            "path": "/classes/Child/slot_usage/age/maximum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "description",
+            "value": {
+              "kind": "string",
+              "value": "child usage"
+            },
+            "path": "/classes/Child/slot_usage/age/description",
+            "rule": "slot-usage"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "Child",
+        "slotName": "age",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "range": {
+            "kind": "string",
+            "value": "integer"
+          },
+          "minimum_value": {
+            "kind": "number",
+            "value": "21"
+          },
+          "maximum_value": {
+            "kind": "number",
+            "value": "80"
+          },
+          "description": {
+            "kind": "string",
+            "value": "child usage"
+          }
+        },
+        "derivations": [
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/slots/age/range",
+            "rule": "base"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "0"
+            },
+            "path": "/slots/age/minimum_value",
+            "rule": "base"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "150"
+            },
+            "path": "/slots/age/maximum_value",
+            "rule": "base"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/slots/age/range",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "150"
+            },
+            "path": "/slots/age/maximum_value",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "18"
+            },
+            "path": "/classes/Parent/slot_usage/age/minimum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "100"
+            },
+            "path": "/classes/Parent/slot_usage/age/maximum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "description",
+            "value": {
+              "kind": "string",
+              "value": "parent usage"
+            },
+            "path": "/classes/Parent/slot_usage/age/description",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "21"
+            },
+            "path": "/classes/Mixin/slot_usage/age/minimum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "90"
+            },
+            "path": "/classes/Mixin/slot_usage/age/maximum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "80"
+            },
+            "path": "/classes/Child/slot_usage/age/maximum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "description",
+            "value": {
+              "kind": "string",
+              "value": "child usage"
+            },
+            "path": "/classes/Child/slot_usage/age/description",
+            "rule": "slot-usage"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "Child",
+        "slotName": "listed",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "inlined": {
+            "kind": "boolean",
+            "value": true
+          },
+          "inlined_as_list": {
+            "kind": "boolean",
+            "value": true
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "inlined",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/listed/inlined",
+            "rule": "base"
+          },
+          {
+            "field": "inlined_as_list",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "base"
+          },
+          {
+            "field": "inlined_as_list",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          },
+          {
+            "field": "inlined",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "list-inlined"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "Child",
+        "slotName": "listed",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "inlined": {
+            "kind": "boolean",
+            "value": true
+          },
+          "inlined_as_list": {
+            "kind": "boolean",
+            "value": true
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "inlined",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/listed/inlined",
+            "rule": "base"
+          },
+          {
+            "field": "inlined_as_list",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "base"
+          },
+          {
+            "field": "inlined_as_list",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          },
+          {
+            "field": "inlined",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "list-inlined"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "Child",
+        "slotName": "keyed",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "key": {
+            "kind": "boolean",
+            "value": true
+          },
+          "required": {
+            "kind": "boolean",
+            "value": true
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "key",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "base"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/keyed/required",
+            "rule": "base"
+          },
+          {
+            "field": "key",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "key-required"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "Child",
+        "slotName": "keyed",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "key": {
+            "kind": "boolean",
+            "value": true
+          },
+          "required": {
+            "kind": "boolean",
+            "value": true
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "key",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "base"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/keyed/required",
+            "rule": "base"
+          },
+          {
+            "field": "key",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "key-required"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "Plain",
+        "slotName": "child",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "required": {
+            "kind": "boolean",
+            "value": true
+          },
+          "multivalued": {
+            "kind": "boolean",
+            "value": true
+          },
+          "minimum_value": {
+            "kind": "number",
+            "value": "-10"
+          },
+          "description": {
+            "kind": "string",
+            "value": "own description"
+          },
+          "range": {
+            "kind": "string",
+            "value": "integer"
+          }
+        },
+        "derivations": [
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/child/required",
+            "rule": "base"
+          },
+          {
+            "field": "multivalued",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/child/multivalued",
+            "rule": "base"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "0"
+            },
+            "path": "/slots/child/minimum_value",
+            "rule": "base"
+          },
+          {
+            "field": "description",
+            "value": {
+              "kind": "string",
+              "value": "own description"
+            },
+            "path": "/slots/child/description",
+            "rule": "base"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/slots/base/range",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/base/required",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "multivalued",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/base/multivalued",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "-10"
+            },
+            "path": "/slots/base/minimum_value",
+            "rule": "slot-inheritance"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "Plain",
+        "slotName": "child",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "required": {
+            "kind": "boolean",
+            "value": true
+          },
+          "multivalued": {
+            "kind": "boolean",
+            "value": true
+          },
+          "minimum_value": {
+            "kind": "number",
+            "value": "-10"
+          },
+          "description": {
+            "kind": "string",
+            "value": "own description"
+          },
+          "range": {
+            "kind": "string",
+            "value": "integer"
+          }
+        },
+        "derivations": [
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/child/required",
+            "rule": "base"
+          },
+          {
+            "field": "multivalued",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/child/multivalued",
+            "rule": "base"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "0"
+            },
+            "path": "/slots/child/minimum_value",
+            "rule": "base"
+          },
+          {
+            "field": "description",
+            "value": {
+              "kind": "string",
+              "value": "own description"
+            },
+            "path": "/slots/child/description",
+            "rule": "base"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/slots/base/range",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/base/required",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "multivalued",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/base/multivalued",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "-10"
+            },
+            "path": "/slots/base/minimum_value",
+            "rule": "slot-inheritance"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "Plain",
+        "slotName": "age",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "range": {
+            "kind": "string",
+            "value": "integer"
+          },
+          "minimum_value": {
+            "kind": "number",
+            "value": "0"
+          },
+          "maximum_value": {
+            "kind": "number",
+            "value": "150"
+          }
+        },
+        "derivations": [
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/slots/age/range",
+            "rule": "base"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "0"
+            },
+            "path": "/slots/age/minimum_value",
+            "rule": "base"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "150"
+            },
+            "path": "/slots/age/maximum_value",
+            "rule": "base"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/slots/age/range",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "150"
+            },
+            "path": "/slots/age/maximum_value",
+            "rule": "slot-inheritance"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "Plain",
+        "slotName": "age",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "range": {
+            "kind": "string",
+            "value": "integer"
+          },
+          "minimum_value": {
+            "kind": "number",
+            "value": "0"
+          },
+          "maximum_value": {
+            "kind": "number",
+            "value": "150"
+          }
+        },
+        "derivations": [
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/slots/age/range",
+            "rule": "base"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "0"
+            },
+            "path": "/slots/age/minimum_value",
+            "rule": "base"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "150"
+            },
+            "path": "/slots/age/maximum_value",
+            "rule": "base"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/slots/age/range",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "150"
+            },
+            "path": "/slots/age/maximum_value",
+            "rule": "slot-inheritance"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "Plain",
+        "slotName": "defaulted",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "Plain",
+        "slotName": "defaulted",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "Plain",
+        "slotName": "listed",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "inlined": {
+            "kind": "boolean",
+            "value": true
+          },
+          "inlined_as_list": {
+            "kind": "boolean",
+            "value": true
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "inlined",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/listed/inlined",
+            "rule": "base"
+          },
+          {
+            "field": "inlined_as_list",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "base"
+          },
+          {
+            "field": "inlined_as_list",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          },
+          {
+            "field": "inlined",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "list-inlined"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "Plain",
+        "slotName": "listed",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "inlined": {
+            "kind": "boolean",
+            "value": true
+          },
+          "inlined_as_list": {
+            "kind": "boolean",
+            "value": true
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "inlined",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/listed/inlined",
+            "rule": "base"
+          },
+          {
+            "field": "inlined_as_list",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "base"
+          },
+          {
+            "field": "inlined_as_list",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          },
+          {
+            "field": "inlined",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "list-inlined"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "Plain",
+        "slotName": "keyed",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "key": {
+            "kind": "boolean",
+            "value": true
+          },
+          "required": {
+            "kind": "boolean",
+            "value": true
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "key",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "base"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/keyed/required",
+            "rule": "base"
+          },
+          {
+            "field": "key",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "key-required"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "Plain",
+        "slotName": "keyed",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "key": {
+            "kind": "boolean",
+            "value": true
+          },
+          "required": {
+            "kind": "boolean",
+            "value": true
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "key",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "base"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/keyed/required",
+            "rule": "base"
+          },
+          {
+            "field": "key",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "key-required"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "AttributeChild",
+        "slotName": "child",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "range": {
+            "kind": "string",
+            "value": "decimal"
+          },
+          "multivalued": {
+            "kind": "boolean",
+            "value": false
+          },
+          "required": {
+            "kind": "boolean",
+            "value": false
+          }
+        },
+        "derivations": [
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "decimal"
+            },
+            "path": "/classes/AttributeChild/attributes/child/range",
+            "rule": "base"
+          },
+          {
+            "field": "multivalued",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/classes/AttributeChild/attributes/child/multivalued",
+            "rule": "base"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/classes/Parent/slot_usage/child/required",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/classes/Child/slot_usage/child/required",
+            "rule": "slot-usage"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "AttributeChild",
+        "slotName": "child",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "range": {
+            "kind": "string",
+            "value": "decimal"
+          },
+          "multivalued": {
+            "kind": "boolean",
+            "value": false
+          },
+          "required": {
+            "kind": "boolean",
+            "value": false
+          }
+        },
+        "derivations": [
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "decimal"
+            },
+            "path": "/classes/AttributeChild/attributes/child/range",
+            "rule": "base"
+          },
+          {
+            "field": "multivalued",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/classes/AttributeChild/attributes/child/multivalued",
+            "rule": "base"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/classes/Parent/slot_usage/child/required",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/classes/Child/slot_usage/child/required",
+            "rule": "slot-usage"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "AttributeChild",
+        "slotName": "local",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "range": {
+            "kind": "string",
+            "value": "integer"
+          },
+          "required": {
+            "kind": "boolean",
+            "value": false
+          }
+        },
+        "derivations": [
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/classes/Child/attributes/local/range",
+            "rule": "base"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/classes/Child/attributes/local/required",
+            "rule": "base"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "AttributeChild",
+        "slotName": "local",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "range": {
+            "kind": "string",
+            "value": "integer"
+          },
+          "required": {
+            "kind": "boolean",
+            "value": false
+          }
+        },
+        "derivations": [
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/classes/Child/attributes/local/range",
+            "rule": "base"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/classes/Child/attributes/local/required",
+            "rule": "base"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "AttributeChild",
+        "slotName": "defaulted",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "description": {
+            "kind": "string",
+            "value": "attribute wins"
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "description",
+            "value": {
+              "kind": "string",
+              "value": "attribute wins"
+            },
+            "path": "/classes/Child/attributes/defaulted/description",
+            "rule": "base"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "AttributeChild",
+        "slotName": "defaulted",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "description": {
+            "kind": "string",
+            "value": "attribute wins"
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "description",
+            "value": {
+              "kind": "string",
+              "value": "attribute wins"
+            },
+            "path": "/classes/Child/attributes/defaulted/description",
+            "rule": "base"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "AttributeChild",
+        "slotName": "id",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "identifier": {
+            "kind": "boolean",
+            "value": true
+          },
+          "required": {
+            "kind": "boolean",
+            "value": true
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "identifier",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/id/identifier",
+            "rule": "base"
+          },
+          {
+            "field": "identifier",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/id/identifier",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/classes/Child/slot_usage/id/required",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/id/identifier",
+            "rule": "identifier-required"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "AttributeChild",
+        "slotName": "id",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "identifier": {
+            "kind": "boolean",
+            "value": true
+          },
+          "required": {
+            "kind": "boolean",
+            "value": true
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "identifier",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/id/identifier",
+            "rule": "base"
+          },
+          {
+            "field": "identifier",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/id/identifier",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/classes/Child/slot_usage/id/required",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/id/identifier",
+            "rule": "identifier-required"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "AttributeChild",
+        "slotName": "age",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "range": {
+            "kind": "string",
+            "value": "integer"
+          },
+          "minimum_value": {
+            "kind": "number",
+            "value": "21"
+          },
+          "maximum_value": {
+            "kind": "number",
+            "value": "80"
+          },
+          "description": {
+            "kind": "string",
+            "value": "child usage"
+          }
+        },
+        "derivations": [
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/slots/age/range",
+            "rule": "base"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "0"
+            },
+            "path": "/slots/age/minimum_value",
+            "rule": "base"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "150"
+            },
+            "path": "/slots/age/maximum_value",
+            "rule": "base"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/slots/age/range",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "150"
+            },
+            "path": "/slots/age/maximum_value",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "18"
+            },
+            "path": "/classes/Parent/slot_usage/age/minimum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "100"
+            },
+            "path": "/classes/Parent/slot_usage/age/maximum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "description",
+            "value": {
+              "kind": "string",
+              "value": "parent usage"
+            },
+            "path": "/classes/Parent/slot_usage/age/description",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "21"
+            },
+            "path": "/classes/Mixin/slot_usage/age/minimum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "90"
+            },
+            "path": "/classes/Mixin/slot_usage/age/maximum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "80"
+            },
+            "path": "/classes/Child/slot_usage/age/maximum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "description",
+            "value": {
+              "kind": "string",
+              "value": "child usage"
+            },
+            "path": "/classes/Child/slot_usage/age/description",
+            "rule": "slot-usage"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "AttributeChild",
+        "slotName": "age",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "range": {
+            "kind": "string",
+            "value": "integer"
+          },
+          "minimum_value": {
+            "kind": "number",
+            "value": "21"
+          },
+          "maximum_value": {
+            "kind": "number",
+            "value": "80"
+          },
+          "description": {
+            "kind": "string",
+            "value": "child usage"
+          }
+        },
+        "derivations": [
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/slots/age/range",
+            "rule": "base"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "0"
+            },
+            "path": "/slots/age/minimum_value",
+            "rule": "base"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "150"
+            },
+            "path": "/slots/age/maximum_value",
+            "rule": "base"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "integer"
+            },
+            "path": "/slots/age/range",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "150"
+            },
+            "path": "/slots/age/maximum_value",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "18"
+            },
+            "path": "/classes/Parent/slot_usage/age/minimum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "100"
+            },
+            "path": "/classes/Parent/slot_usage/age/maximum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "description",
+            "value": {
+              "kind": "string",
+              "value": "parent usage"
+            },
+            "path": "/classes/Parent/slot_usage/age/description",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "21"
+            },
+            "path": "/classes/Mixin/slot_usage/age/minimum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "90"
+            },
+            "path": "/classes/Mixin/slot_usage/age/maximum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "80"
+            },
+            "path": "/classes/Child/slot_usage/age/maximum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "description",
+            "value": {
+              "kind": "string",
+              "value": "child usage"
+            },
+            "path": "/classes/Child/slot_usage/age/description",
+            "rule": "slot-usage"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "AttributeChild",
+        "slotName": "listed",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "inlined": {
+            "kind": "boolean",
+            "value": true
+          },
+          "inlined_as_list": {
+            "kind": "boolean",
+            "value": true
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "inlined",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/listed/inlined",
+            "rule": "base"
+          },
+          {
+            "field": "inlined_as_list",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "base"
+          },
+          {
+            "field": "inlined_as_list",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          },
+          {
+            "field": "inlined",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "list-inlined"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "AttributeChild",
+        "slotName": "listed",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "inlined": {
+            "kind": "boolean",
+            "value": true
+          },
+          "inlined_as_list": {
+            "kind": "boolean",
+            "value": true
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "inlined",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/listed/inlined",
+            "rule": "base"
+          },
+          {
+            "field": "inlined_as_list",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "base"
+          },
+          {
+            "field": "inlined_as_list",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          },
+          {
+            "field": "inlined",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/listed/inlined_as_list",
+            "rule": "list-inlined"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "AttributeChild",
+        "slotName": "keyed",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "key": {
+            "kind": "boolean",
+            "value": true
+          },
+          "required": {
+            "kind": "boolean",
+            "value": true
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "key",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "base"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/keyed/required",
+            "rule": "base"
+          },
+          {
+            "field": "key",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "key-required"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "AttributeChild",
+        "slotName": "keyed",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "key": {
+            "kind": "boolean",
+            "value": true
+          },
+          "required": {
+            "kind": "boolean",
+            "value": true
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "key",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "base"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": false
+            },
+            "path": "/slots/keyed/required",
+            "rule": "base"
+          },
+          {
+            "field": "key",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/keyed/key",
+            "rule": "key-required"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "AllFields",
+        "slotName": "all_child",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "domain": {
+            "kind": "string",
+            "value": "Parent"
+          },
+          "inherited": {
+            "kind": "boolean",
+            "value": true
+          },
+          "readonly": {
+            "kind": "string",
+            "value": "true"
+          },
+          "ifabsent": {
+            "kind": "string",
+            "value": "string(default)"
+          },
+          "list_elements_unique": {
+            "kind": "boolean",
+            "value": true
+          },
+          "list_elements_ordered": {
+            "kind": "boolean",
+            "value": true
+          },
+          "shared": {
+            "kind": "boolean",
+            "value": true
+          },
+          "key": {
+            "kind": "boolean",
+            "value": true
+          },
+          "identifier": {
+            "kind": "boolean",
+            "value": true
+          },
+          "designates_type": {
+            "kind": "boolean",
+            "value": true
+          },
+          "role": {
+            "kind": "string",
+            "value": "semantic-role"
+          },
+          "relational_role": {
+            "kind": "string",
+            "value": "SUBJECT"
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          },
+          "required": {
+            "kind": "boolean",
+            "value": true
+          },
+          "recommended": {
+            "kind": "boolean",
+            "value": true
+          },
+          "multivalued": {
+            "kind": "boolean",
+            "value": true
+          },
+          "inlined": {
+            "kind": "boolean",
+            "value": true
+          },
+          "inlined_as_list": {
+            "kind": "boolean",
+            "value": true
+          },
+          "minimum_value": {
+            "kind": "number",
+            "value": "-1"
+          },
+          "maximum_value": {
+            "kind": "number",
+            "value": "99"
+          },
+          "pattern": {
+            "kind": "string",
+            "value": "^[a-z]+$"
+          },
+          "value_presence": {
+            "kind": "string",
+            "value": "PRESENT"
+          },
+          "equals_string": {
+            "kind": "string",
+            "value": "example"
+          },
+          "equals_number": {
+            "kind": "number",
+            "value": "3"
+          },
+          "equals_expression": {
+            "kind": "string",
+            "value": "{other}"
+          },
+          "exact_cardinality": {
+            "kind": "number",
+            "value": "1"
+          },
+          "minimum_cardinality": {
+            "kind": "number",
+            "value": "1"
+          },
+          "maximum_cardinality": {
+            "kind": "number",
+            "value": "2"
+          }
+        },
+        "derivations": [
+          {
+            "field": "domain",
+            "value": {
+              "kind": "string",
+              "value": "Parent"
+            },
+            "path": "/slots/all_base/domain",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "inherited",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/inherited",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "readonly",
+            "value": {
+              "kind": "string",
+              "value": "true"
+            },
+            "path": "/slots/all_base/readonly",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "ifabsent",
+            "value": {
+              "kind": "string",
+              "value": "string(default)"
+            },
+            "path": "/slots/all_base/ifabsent",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "list_elements_unique",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/list_elements_unique",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "list_elements_ordered",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/list_elements_ordered",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "shared",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/shared",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "key",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/key",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "identifier",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/identifier",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "designates_type",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/designates_type",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "role",
+            "value": {
+              "kind": "string",
+              "value": "semantic-role"
+            },
+            "path": "/slots/all_base/role",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "relational_role",
+            "value": {
+              "kind": "string",
+              "value": "SUBJECT"
+            },
+            "path": "/slots/all_base/relational_role",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/slots/all_base/range",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/required",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "recommended",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/recommended",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "multivalued",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/multivalued",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "inlined",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/inlined",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "inlined_as_list",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/inlined_as_list",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "-1"
+            },
+            "path": "/slots/all_base/minimum_value",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "99"
+            },
+            "path": "/slots/all_base/maximum_value",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "pattern",
+            "value": {
+              "kind": "string",
+              "value": "^[a-z]+$"
+            },
+            "path": "/slots/all_base/pattern",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "value_presence",
+            "value": {
+              "kind": "string",
+              "value": "PRESENT"
+            },
+            "path": "/slots/all_base/value_presence",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "equals_string",
+            "value": {
+              "kind": "string",
+              "value": "example"
+            },
+            "path": "/slots/all_base/equals_string",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "equals_number",
+            "value": {
+              "kind": "number",
+              "value": "3"
+            },
+            "path": "/slots/all_base/equals_number",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "equals_expression",
+            "value": {
+              "kind": "string",
+              "value": "{other}"
+            },
+            "path": "/slots/all_base/equals_expression",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "exact_cardinality",
+            "value": {
+              "kind": "number",
+              "value": "1"
+            },
+            "path": "/slots/all_base/exact_cardinality",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "minimum_cardinality",
+            "value": {
+              "kind": "number",
+              "value": "1"
+            },
+            "path": "/slots/all_base/minimum_cardinality",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "maximum_cardinality",
+            "value": {
+              "kind": "number",
+              "value": "2"
+            },
+            "path": "/slots/all_base/maximum_cardinality",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/identifier",
+            "rule": "identifier-required"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/key",
+            "rule": "key-required"
+          },
+          {
+            "field": "inlined",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/inlined_as_list",
+            "rule": "list-inlined"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "AllFields",
+        "slotName": "all_child",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "domain": {
+            "kind": "string",
+            "value": "Parent"
+          },
+          "inherited": {
+            "kind": "boolean",
+            "value": true
+          },
+          "readonly": {
+            "kind": "string",
+            "value": "true"
+          },
+          "ifabsent": {
+            "kind": "string",
+            "value": "string(default)"
+          },
+          "list_elements_unique": {
+            "kind": "boolean",
+            "value": true
+          },
+          "list_elements_ordered": {
+            "kind": "boolean",
+            "value": true
+          },
+          "shared": {
+            "kind": "boolean",
+            "value": true
+          },
+          "key": {
+            "kind": "boolean",
+            "value": true
+          },
+          "identifier": {
+            "kind": "boolean",
+            "value": true
+          },
+          "designates_type": {
+            "kind": "boolean",
+            "value": true
+          },
+          "role": {
+            "kind": "string",
+            "value": "semantic-role"
+          },
+          "relational_role": {
+            "kind": "string",
+            "value": "SUBJECT"
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          },
+          "required": {
+            "kind": "boolean",
+            "value": true
+          },
+          "recommended": {
+            "kind": "boolean",
+            "value": true
+          },
+          "multivalued": {
+            "kind": "boolean",
+            "value": true
+          },
+          "inlined": {
+            "kind": "boolean",
+            "value": true
+          },
+          "inlined_as_list": {
+            "kind": "boolean",
+            "value": true
+          },
+          "minimum_value": {
+            "kind": "number",
+            "value": "-1"
+          },
+          "maximum_value": {
+            "kind": "number",
+            "value": "99"
+          },
+          "pattern": {
+            "kind": "string",
+            "value": "^[a-z]+$"
+          },
+          "value_presence": {
+            "kind": "string",
+            "value": "PRESENT"
+          },
+          "equals_string": {
+            "kind": "string",
+            "value": "example"
+          },
+          "equals_number": {
+            "kind": "number",
+            "value": "3"
+          },
+          "equals_expression": {
+            "kind": "string",
+            "value": "{other}"
+          },
+          "exact_cardinality": {
+            "kind": "number",
+            "value": "1"
+          },
+          "minimum_cardinality": {
+            "kind": "number",
+            "value": "1"
+          },
+          "maximum_cardinality": {
+            "kind": "number",
+            "value": "2"
+          }
+        },
+        "derivations": [
+          {
+            "field": "domain",
+            "value": {
+              "kind": "string",
+              "value": "Parent"
+            },
+            "path": "/slots/all_base/domain",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "inherited",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/inherited",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "readonly",
+            "value": {
+              "kind": "string",
+              "value": "true"
+            },
+            "path": "/slots/all_base/readonly",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "ifabsent",
+            "value": {
+              "kind": "string",
+              "value": "string(default)"
+            },
+            "path": "/slots/all_base/ifabsent",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "list_elements_unique",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/list_elements_unique",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "list_elements_ordered",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/list_elements_ordered",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "shared",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/shared",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "key",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/key",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "identifier",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/identifier",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "designates_type",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/designates_type",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "role",
+            "value": {
+              "kind": "string",
+              "value": "semantic-role"
+            },
+            "path": "/slots/all_base/role",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "relational_role",
+            "value": {
+              "kind": "string",
+              "value": "SUBJECT"
+            },
+            "path": "/slots/all_base/relational_role",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/slots/all_base/range",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/required",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "recommended",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/recommended",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "multivalued",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/multivalued",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "inlined",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/inlined",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "inlined_as_list",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/inlined_as_list",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "-1"
+            },
+            "path": "/slots/all_base/minimum_value",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "99"
+            },
+            "path": "/slots/all_base/maximum_value",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "pattern",
+            "value": {
+              "kind": "string",
+              "value": "^[a-z]+$"
+            },
+            "path": "/slots/all_base/pattern",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "value_presence",
+            "value": {
+              "kind": "string",
+              "value": "PRESENT"
+            },
+            "path": "/slots/all_base/value_presence",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "equals_string",
+            "value": {
+              "kind": "string",
+              "value": "example"
+            },
+            "path": "/slots/all_base/equals_string",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "equals_number",
+            "value": {
+              "kind": "number",
+              "value": "3"
+            },
+            "path": "/slots/all_base/equals_number",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "equals_expression",
+            "value": {
+              "kind": "string",
+              "value": "{other}"
+            },
+            "path": "/slots/all_base/equals_expression",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "exact_cardinality",
+            "value": {
+              "kind": "number",
+              "value": "1"
+            },
+            "path": "/slots/all_base/exact_cardinality",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "minimum_cardinality",
+            "value": {
+              "kind": "number",
+              "value": "1"
+            },
+            "path": "/slots/all_base/minimum_cardinality",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "maximum_cardinality",
+            "value": {
+              "kind": "number",
+              "value": "2"
+            },
+            "path": "/slots/all_base/maximum_cardinality",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/identifier",
+            "rule": "identifier-required"
+          },
+          {
+            "field": "required",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/key",
+            "rule": "key-required"
+          },
+          {
+            "field": "inlined",
+            "value": {
+              "kind": "boolean",
+              "value": true
+            },
+            "path": "/slots/all_base/inlined_as_list",
+            "rule": "list-inlined"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "json",
+      "report": {
+        "className": "AllFields",
+        "slotName": "large",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "minimum_value": {
+            "kind": "number",
+            "value": "9007199254740995"
+          },
+          "maximum_value": {
+            "kind": "number",
+            "value": "18446744073709551614"
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "9007199254740993"
+            },
+            "path": "/slots/large/minimum_value",
+            "rule": "base"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "18446744073709551615"
+            },
+            "path": "/slots/large/maximum_value",
+            "rule": "base"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "9007199254740993"
+            },
+            "path": "/slots/large/minimum_value",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "18446744073709551615"
+            },
+            "path": "/slots/large/maximum_value",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "9007199254740995"
+            },
+            "path": "/classes/AllFields/slot_usage/large/minimum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "18446744073709551614"
+            },
+            "path": "/classes/AllFields/slot_usage/large/maximum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    },
+    {
+      "format": "yaml",
+      "report": {
+        "className": "AllFields",
+        "slotName": "large",
+        "scope": "document-scalar-slot-values",
+        "status": "resolved",
+        "complete": false,
+        "fields": {
+          "minimum_value": {
+            "kind": "number",
+            "value": "9007199254740995"
+          },
+          "maximum_value": {
+            "kind": "number",
+            "value": "18446744073709551614"
+          },
+          "range": {
+            "kind": "string",
+            "value": "string"
+          }
+        },
+        "derivations": [
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "9007199254740993"
+            },
+            "path": "/slots/large/minimum_value",
+            "rule": "base"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "18446744073709551615"
+            },
+            "path": "/slots/large/maximum_value",
+            "rule": "base"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "9007199254740993"
+            },
+            "path": "/slots/large/minimum_value",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "18446744073709551615"
+            },
+            "path": "/slots/large/maximum_value",
+            "rule": "slot-inheritance"
+          },
+          {
+            "field": "minimum_value",
+            "value": {
+              "kind": "number",
+              "value": "9007199254740995"
+            },
+            "path": "/classes/AllFields/slot_usage/large/minimum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "maximum_value",
+            "value": {
+              "kind": "number",
+              "value": "18446744073709551614"
+            },
+            "path": "/classes/AllFields/slot_usage/large/maximum_value",
+            "rule": "slot-usage"
+          },
+          {
+            "field": "range",
+            "value": {
+              "kind": "string",
+              "value": "string"
+            },
+            "path": "/default_range",
+            "rule": "default-range"
+          }
+        ],
+        "diagnostics": [
+          {
+            "code": "LINKML_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "YAML 1.1 date-only scalars become lexical strings in the JSON tree; their original spelling remains archived. Metamodel shape checks do not resolve imports, induce classes/slots, normalize defaults, validate instances or run generators; JS numeric precision limits apply and edits regenerate layout with original source retained"
+          },
+          {
+            "code": "LINKML_CLASS_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Document-local class-slot membership only, matching imports:false. Imports are not merged; cycles do not imply valid inheritance. Slot definitions, slot_usage, constraints, defaults and effective values are not induced. Source and declaration occurrences remain preserved."
+          },
+          {
+            "code": "LINKML_SLOT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "29 explicit scalar fields only. Source includes all omitted metadata. No import merging, structured constraints, aliases, owner/domain_of normalization, instance validation or inheritance legality is asserted. Unset scalar fields are omitted; native loader coercion is not performed."
+          }
+        ]
+      }
+    }
+  ]
+}

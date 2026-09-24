@@ -1,0 +1,218 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:generalized-rdf:dataset:0.1.0",
+  "type": "array",
+  "maxItems": 10000,
+  "items": {
+    "type": "object",
+    "properties": {
+      "subject": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "termType": {
+                "const": "NamedNode"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "termType",
+              "value"
+            ],
+            "additionalProperties": true
+          },
+          {
+            "type": "object",
+            "properties": {
+              "termType": {
+                "const": "BlankNode"
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "termType",
+              "value"
+            ],
+            "additionalProperties": true
+          }
+        ]
+      },
+      "predicate": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "termType": {
+                "const": "NamedNode"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "termType",
+              "value"
+            ],
+            "additionalProperties": true
+          },
+          {
+            "type": "object",
+            "properties": {
+              "termType": {
+                "const": "BlankNode"
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "termType",
+              "value"
+            ],
+            "additionalProperties": true
+          }
+        ]
+      },
+      "object": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "termType": {
+                "const": "NamedNode"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "termType",
+              "value"
+            ],
+            "additionalProperties": true
+          },
+          {
+            "type": "object",
+            "properties": {
+              "termType": {
+                "const": "BlankNode"
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "termType",
+              "value"
+            ],
+            "additionalProperties": true
+          },
+          {
+            "type": "object",
+            "properties": {
+              "termType": {
+                "const": "Literal"
+              },
+              "value": {
+                "type": "string"
+              },
+              "datatype": {
+                "type": "object",
+                "properties": {
+                  "termType": {
+                    "const": "NamedNode"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "termType",
+                  "value"
+                ],
+                "additionalProperties": true
+              },
+              "language": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "termType",
+              "value",
+              "datatype"
+            ],
+            "additionalProperties": true
+          }
+        ]
+      },
+      "graph": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "termType": {
+                "const": "NamedNode"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "termType",
+              "value"
+            ],
+            "additionalProperties": true
+          },
+          {
+            "type": "object",
+            "properties": {
+              "termType": {
+                "const": "BlankNode"
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "termType",
+              "value"
+            ],
+            "additionalProperties": true
+          },
+          {
+            "type": "object",
+            "properties": {
+              "termType": {
+                "const": "DefaultGraph"
+              },
+              "value": {
+                "const": ""
+              }
+            },
+            "required": [
+              "termType",
+              "value"
+            ],
+            "additionalProperties": true
+          }
+        ]
+      }
+    },
+    "required": [
+      "subject",
+      "predicate",
+      "object",
+      "graph"
+    ],
+    "additionalProperties": true
+  }
+}

@@ -1,0 +1,236 @@
+{
+  "source": {
+    "umf": "0.1.0",
+    "id": "references",
+    "vocabularies": {
+      "umf.openapi": {
+        "version": "0.1.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "schema",
+        "namespace": "",
+        "elements": [
+          {
+            "id": "schema",
+            "extensions": {
+              "umf.openapi": {
+                "profile": "openapi-json-yaml-0.1",
+                "root": {
+                  "kind": "object",
+                  "members": {
+                    "openapi": {
+                      "kind": "string",
+                      "value": "3.1.2"
+                    },
+                    "info": {
+                      "kind": "object",
+                      "members": {
+                        "title": {
+                          "kind": "string",
+                          "value": "References"
+                        },
+                        "version": {
+                          "kind": "string",
+                          "value": "1"
+                        }
+                      }
+                    },
+                    "paths": {
+                      "kind": "object",
+                      "members": {
+                        "/x": {
+                          "kind": "object",
+                          "members": {
+                            "get": {
+                              "kind": "object",
+                              "members": {
+                                "responses": {
+                                  "kind": "object",
+                                  "members": {
+                                    "200": {
+                                      "kind": "object",
+                                      "members": {
+                                        "$ref": {
+                                          "kind": "string",
+                                          "value": "middle.json#/answer"
+                                        },
+                                        "description": {
+                                          "kind": "string",
+                                          "value": "Outer override"
+                                        },
+                                        "x-native": {
+                                          "kind": "string",
+                                          "value": "retain"
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "originalSource": "{\"openapi\":\"3.1.2\",\"info\":{\"title\":\"References\",\"version\":\"1\"},\"paths\":{\"/x\":{\"get\":{\"responses\":{\"200\":{\"$ref\":\"middle.json#/answer\",\"description\":\"Outer override\",\"x-native\":\"retain\"}}}}}}",
+                "originalFormat": "json",
+                "baseUri": "https://example.test/api.json",
+                "resources": [
+                  {
+                    "uri": "https://example.test/middle.json",
+                    "root": {
+                      "kind": "object",
+                      "members": {
+                        "answer": {
+                          "kind": "object",
+                          "members": {
+                            "$ref": {
+                              "kind": "string",
+                              "value": "nested/target.json#/answer"
+                            },
+                            "description": {
+                              "kind": "string",
+                              "value": "Inner override"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "originalSource": "{\"answer\":{\"$ref\":\"nested/target.json#/answer\",\"description\":\"Inner override\"}}",
+                    "originalFormat": "json"
+                  },
+                  {
+                    "uri": "https://example.test/nested/target.json",
+                    "root": {
+                      "kind": "object",
+                      "members": {
+                        "answer": {
+                          "kind": "object",
+                          "members": {
+                            "description": {
+                              "kind": "string",
+                              "value": "Actual response"
+                            },
+                            "content": {
+                              "kind": "object",
+                              "members": {
+                                "application/json": {
+                                  "kind": "object",
+                                  "members": {
+                                    "schema": {
+                                      "kind": "object",
+                                      "members": {
+                                        "type": {
+                                          "kind": "string",
+                                          "value": "string"
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "originalSource": "{\"answer\":{\"description\":\"Actual response\",\"content\":{\"application/json\":{\"schema\":{\"type\":\"string\"}}}}}",
+                    "originalFormat": "json"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "result": {
+    "kind": "response",
+    "target": {
+      "uri": "https://example.test/nested/target.json",
+      "pointer": "/answer",
+      "node": {
+        "kind": "object",
+        "members": {
+          "description": {
+            "kind": "string",
+            "value": "Actual response"
+          },
+          "content": {
+            "kind": "object",
+            "members": {
+              "application/json": {
+                "kind": "object",
+                "members": {
+                  "schema": {
+                    "kind": "object",
+                    "members": {
+                      "type": {
+                        "kind": "string",
+                        "value": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "chain": [
+      {
+        "uri": "https://example.test/api.json",
+        "pointer": "/paths/~1x/get/responses/200",
+        "reference": {
+          "kind": "object",
+          "members": {
+            "$ref": {
+              "kind": "string",
+              "value": "middle.json#/answer"
+            },
+            "description": {
+              "kind": "string",
+              "value": "Outer override"
+            },
+            "x-native": {
+              "kind": "string",
+              "value": "retain"
+            }
+          }
+        }
+      },
+      {
+        "uri": "https://example.test/middle.json",
+        "pointer": "/answer",
+        "reference": {
+          "kind": "object",
+          "members": {
+            "$ref": {
+              "kind": "string",
+              "value": "nested/target.json#/answer"
+            },
+            "description": {
+              "kind": "string",
+              "value": "Inner override"
+            }
+          }
+        }
+      }
+    ],
+    "effectiveAnnotations": {
+      "description": "Outer override"
+    },
+    "complete": false,
+    "limitations": [
+      "The caller declares the Reference Object role; source position is not inferred",
+      "Nested references and embedded schema/dialect scopes are not resolved by this operation",
+      "Object syntax validation does not implement HTTP serialization, authorization or runtime behavior"
+    ]
+  }
+}

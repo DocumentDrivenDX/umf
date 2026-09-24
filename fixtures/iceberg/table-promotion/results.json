@@ -1,0 +1,485 @@
+{
+  "scope": "Authored primitive widening variants of pinned TableMetadataV2ValidMinimal; no data execution or commits",
+  "results": [
+    {
+      "id": "int-identity",
+      "path": "fixtures/iceberg/table-promotion/int-identity.source.json",
+      "fieldId": 1,
+      "nextSchemaId": 1,
+      "targetType": "long",
+      "report": {
+        "complete": false,
+        "previousSchemaId": 0,
+        "nextSchemaId": 1,
+        "fieldId": 1,
+        "sourceType": "int",
+        "targetType": "long",
+        "appendedSchemaPath": "/schemas/1",
+        "checkedPartitionFields": [
+          "/partition-specs/0/fields/0"
+        ],
+        "bindings": {
+          "status": "checked",
+          "complete": false,
+          "bindings": [
+            {
+              "fieldPath": "/partition-specs/0/fields/0",
+              "sourcePath": "/schemas/1/fields/0",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "identity",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "long"
+              }
+            },
+            {
+              "fieldPath": "/sort-orders/0/fields/0",
+              "sourcePath": "/schemas/1/fields/1",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "identity",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "long"
+              }
+            },
+            {
+              "fieldPath": "/sort-orders/0/fields/1",
+              "sourcePath": "/schemas/1/fields/2",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "bucket[4]",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "int"
+              }
+            }
+          ],
+          "diagnostics": [
+            {
+              "code": "ICEBERG_TABLE_CONTEXT_INCOMPLETE",
+              "path": "",
+              "severity": "warning",
+              "message": "Only retained IDs and current selections checked. Expired parents, historical schemas, transforms, files and commits are not validated; absent main is not inserted."
+            },
+            {
+              "code": "ICEBERG_TABLE_TRANSFORM_INCOMPLETE",
+              "path": "",
+              "severity": "warning",
+              "message": "Current field/type binding only; version feature availability, history, value execution and safe evolution remain unchecked"
+            }
+          ]
+        },
+        "limitations": [
+          "Metadata candidate only; no commit, concurrency check, timestamp update or file rewrite",
+          "Historical bounds retain their original byte encodings; reader decoding and value execution are not verified",
+          "Unknown type-dependent metadata and defaults remain unchanged and require review; v3 date/unknown promotions are not implemented"
+        ]
+      }
+    },
+    {
+      "id": "int-bucket",
+      "path": "fixtures/iceberg/table-promotion/int-bucket.source.json",
+      "fieldId": 1,
+      "nextSchemaId": 1,
+      "targetType": "long",
+      "report": {
+        "complete": false,
+        "previousSchemaId": 0,
+        "nextSchemaId": 1,
+        "fieldId": 1,
+        "sourceType": "int",
+        "targetType": "long",
+        "appendedSchemaPath": "/schemas/1",
+        "checkedPartitionFields": [
+          "/partition-specs/0/fields/0"
+        ],
+        "bindings": {
+          "status": "checked",
+          "complete": false,
+          "bindings": [
+            {
+              "fieldPath": "/partition-specs/0/fields/0",
+              "sourcePath": "/schemas/1/fields/0",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "bucket[16]",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "int"
+              }
+            },
+            {
+              "fieldPath": "/sort-orders/0/fields/0",
+              "sourcePath": "/schemas/1/fields/1",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "identity",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "long"
+              }
+            },
+            {
+              "fieldPath": "/sort-orders/0/fields/1",
+              "sourcePath": "/schemas/1/fields/2",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "bucket[4]",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "int"
+              }
+            }
+          ],
+          "diagnostics": [
+            {
+              "code": "ICEBERG_TABLE_CONTEXT_INCOMPLETE",
+              "path": "",
+              "severity": "warning",
+              "message": "Only retained IDs and current selections checked. Expired parents, historical schemas, transforms, files and commits are not validated; absent main is not inserted."
+            },
+            {
+              "code": "ICEBERG_TABLE_TRANSFORM_INCOMPLETE",
+              "path": "",
+              "severity": "warning",
+              "message": "Current field/type binding only; version feature availability, history, value execution and safe evolution remain unchecked"
+            }
+          ]
+        },
+        "limitations": [
+          "Metadata candidate only; no commit, concurrency check, timestamp update or file rewrite",
+          "Historical bounds retain their original byte encodings; reader decoding and value execution are not verified",
+          "Unknown type-dependent metadata and defaults remain unchanged and require review; v3 date/unknown promotions are not implemented"
+        ]
+      }
+    },
+    {
+      "id": "int-truncate",
+      "path": "fixtures/iceberg/table-promotion/int-truncate.source.json",
+      "fieldId": 1,
+      "nextSchemaId": 1,
+      "targetType": "long",
+      "report": {
+        "complete": false,
+        "previousSchemaId": 0,
+        "nextSchemaId": 1,
+        "fieldId": 1,
+        "sourceType": "int",
+        "targetType": "long",
+        "appendedSchemaPath": "/schemas/1",
+        "checkedPartitionFields": [
+          "/partition-specs/0/fields/0"
+        ],
+        "bindings": {
+          "status": "checked",
+          "complete": false,
+          "bindings": [
+            {
+              "fieldPath": "/partition-specs/0/fields/0",
+              "sourcePath": "/schemas/1/fields/0",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "truncate[4]",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "long"
+              }
+            },
+            {
+              "fieldPath": "/sort-orders/0/fields/0",
+              "sourcePath": "/schemas/1/fields/1",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "identity",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "long"
+              }
+            },
+            {
+              "fieldPath": "/sort-orders/0/fields/1",
+              "sourcePath": "/schemas/1/fields/2",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "bucket[4]",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "int"
+              }
+            }
+          ],
+          "diagnostics": [
+            {
+              "code": "ICEBERG_TABLE_CONTEXT_INCOMPLETE",
+              "path": "",
+              "severity": "warning",
+              "message": "Only retained IDs and current selections checked. Expired parents, historical schemas, transforms, files and commits are not validated; absent main is not inserted."
+            },
+            {
+              "code": "ICEBERG_TABLE_TRANSFORM_INCOMPLETE",
+              "path": "",
+              "severity": "warning",
+              "message": "Current field/type binding only; version feature availability, history, value execution and safe evolution remain unchecked"
+            }
+          ]
+        },
+        "limitations": [
+          "Metadata candidate only; no commit, concurrency check, timestamp update or file rewrite",
+          "Historical bounds retain their original byte encodings; reader decoding and value execution are not verified",
+          "Unknown type-dependent metadata and defaults remain unchanged and require review; v3 date/unknown promotions are not implemented"
+        ]
+      }
+    },
+    {
+      "id": "float-identity",
+      "path": "fixtures/iceberg/table-promotion/float-identity.source.json",
+      "fieldId": 1,
+      "nextSchemaId": 1,
+      "targetType": "double",
+      "report": {
+        "complete": false,
+        "previousSchemaId": 0,
+        "nextSchemaId": 1,
+        "fieldId": 1,
+        "sourceType": "float",
+        "targetType": "double",
+        "appendedSchemaPath": "/schemas/1",
+        "checkedPartitionFields": [
+          "/partition-specs/0/fields/0"
+        ],
+        "bindings": {
+          "status": "checked",
+          "complete": false,
+          "bindings": [
+            {
+              "fieldPath": "/partition-specs/0/fields/0",
+              "sourcePath": "/schemas/1/fields/0",
+              "assessment": {
+                "sourceType": "double",
+                "transform": "identity",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "double"
+              }
+            },
+            {
+              "fieldPath": "/sort-orders/0/fields/0",
+              "sourcePath": "/schemas/1/fields/1",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "identity",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "long"
+              }
+            },
+            {
+              "fieldPath": "/sort-orders/0/fields/1",
+              "sourcePath": "/schemas/1/fields/2",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "bucket[4]",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "int"
+              }
+            }
+          ],
+          "diagnostics": [
+            {
+              "code": "ICEBERG_TABLE_CONTEXT_INCOMPLETE",
+              "path": "",
+              "severity": "warning",
+              "message": "Only retained IDs and current selections checked. Expired parents, historical schemas, transforms, files and commits are not validated; absent main is not inserted."
+            },
+            {
+              "code": "ICEBERG_TABLE_TRANSFORM_INCOMPLETE",
+              "path": "",
+              "severity": "warning",
+              "message": "Current field/type binding only; version feature availability, history, value execution and safe evolution remain unchecked"
+            }
+          ]
+        },
+        "limitations": [
+          "Metadata candidate only; no commit, concurrency check, timestamp update or file rewrite",
+          "Historical bounds retain their original byte encodings; reader decoding and value execution are not verified",
+          "Unknown type-dependent metadata and defaults remain unchanged and require review; v3 date/unknown promotions are not implemented"
+        ]
+      }
+    },
+    {
+      "id": "decimal-bucket",
+      "path": "fixtures/iceberg/table-promotion/decimal-bucket.source.json",
+      "fieldId": 1,
+      "nextSchemaId": 1,
+      "targetType": "decimal(18, 2)",
+      "report": {
+        "complete": false,
+        "previousSchemaId": 0,
+        "nextSchemaId": 1,
+        "fieldId": 1,
+        "sourceType": "decimal(9, 2)",
+        "targetType": "decimal(18, 2)",
+        "appendedSchemaPath": "/schemas/1",
+        "checkedPartitionFields": [
+          "/partition-specs/0/fields/0"
+        ],
+        "bindings": {
+          "status": "checked",
+          "complete": false,
+          "bindings": [
+            {
+              "fieldPath": "/partition-specs/0/fields/0",
+              "sourcePath": "/schemas/1/fields/0",
+              "assessment": {
+                "sourceType": "decimal(18, 2)",
+                "transform": "bucket[16]",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "int"
+              }
+            },
+            {
+              "fieldPath": "/sort-orders/0/fields/0",
+              "sourcePath": "/schemas/1/fields/1",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "identity",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "long"
+              }
+            },
+            {
+              "fieldPath": "/sort-orders/0/fields/1",
+              "sourcePath": "/schemas/1/fields/2",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "bucket[4]",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "int"
+              }
+            }
+          ],
+          "diagnostics": [
+            {
+              "code": "ICEBERG_TABLE_CONTEXT_INCOMPLETE",
+              "path": "",
+              "severity": "warning",
+              "message": "Only retained IDs and current selections checked. Expired parents, historical schemas, transforms, files and commits are not validated; absent main is not inserted."
+            },
+            {
+              "code": "ICEBERG_TABLE_TRANSFORM_INCOMPLETE",
+              "path": "",
+              "severity": "warning",
+              "message": "Current field/type binding only; version feature availability, history, value execution and safe evolution remain unchecked"
+            }
+          ]
+        },
+        "limitations": [
+          "Metadata candidate only; no commit, concurrency check, timestamp update or file rewrite",
+          "Historical bounds retain their original byte encodings; reader decoding and value execution are not verified",
+          "Unknown type-dependent metadata and defaults remain unchanged and require review; v3 date/unknown promotions are not implemented"
+        ]
+      }
+    },
+    {
+      "id": "decimal-truncate",
+      "path": "fixtures/iceberg/table-promotion/decimal-truncate.source.json",
+      "fieldId": 1,
+      "nextSchemaId": 1,
+      "targetType": "decimal(18, 2)",
+      "report": {
+        "complete": false,
+        "previousSchemaId": 0,
+        "nextSchemaId": 1,
+        "fieldId": 1,
+        "sourceType": "decimal(9, 2)",
+        "targetType": "decimal(18, 2)",
+        "appendedSchemaPath": "/schemas/1",
+        "checkedPartitionFields": [
+          "/partition-specs/0/fields/0"
+        ],
+        "bindings": {
+          "status": "checked",
+          "complete": false,
+          "bindings": [
+            {
+              "fieldPath": "/partition-specs/0/fields/0",
+              "sourcePath": "/schemas/1/fields/0",
+              "assessment": {
+                "sourceType": "decimal(18, 2)",
+                "transform": "truncate[4]",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "decimal(18, 2)"
+              }
+            },
+            {
+              "fieldPath": "/sort-orders/0/fields/0",
+              "sourcePath": "/schemas/1/fields/1",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "identity",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "long"
+              }
+            },
+            {
+              "fieldPath": "/sort-orders/0/fields/1",
+              "sourcePath": "/schemas/1/fields/2",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "bucket[4]",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "int"
+              }
+            }
+          ],
+          "diagnostics": [
+            {
+              "code": "ICEBERG_TABLE_CONTEXT_INCOMPLETE",
+              "path": "",
+              "severity": "warning",
+              "message": "Only retained IDs and current selections checked. Expired parents, historical schemas, transforms, files and commits are not validated; absent main is not inserted."
+            },
+            {
+              "code": "ICEBERG_TABLE_TRANSFORM_INCOMPLETE",
+              "path": "",
+              "severity": "warning",
+              "message": "Current field/type binding only; version feature availability, history, value execution and safe evolution remain unchecked"
+            }
+          ]
+        },
+        "limitations": [
+          "Metadata candidate only; no commit, concurrency check, timestamp update or file rewrite",
+          "Historical bounds retain their original byte encodings; reader decoding and value execution are not verified",
+          "Unknown type-dependent metadata and defaults remain unchanged and require review; v3 date/unknown promotions are not implemented"
+        ]
+      }
+    }
+  ]
+}

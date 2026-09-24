@@ -1,0 +1,28 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ex: <https://example.org/> .
+ex:ancestor owl:propertyChainAxiom _:chain .
+ex:ancestor owl:propertyChainAxiom _:chain .
+_:chain rdf:first ex:parent ; rdf:rest _:tail .
+_:chain rdf:first ex:parent .
+_:tail rdf:first ex:ancestor ; rdf:rest rdf:nil .
+ex:ancestor owl:propertyChainAxiom (ex:parent ex:parent) .
+ex:inverseChain owl:propertyChainAxiom ([owl:inverseOf ex:parent] ex:parent) .
+ex:Person owl:hasKey (ex:country ex:identifier) .
+ex:Person owl:hasKey (ex:passport) .
+ex:Color owl:disjointUnionOf (ex:Red ex:Green ex:Blue) .
+[] a owl:Axiom ; owl:annotatedSource ex:ancestor ; owl:annotatedProperty owl:propertyChainAxiom ; owl:annotatedTarget _:chain ; ex:note "ordered composition" .
+ex:unknown ex:future "uninterpreted" .
+
+# Malformed local structures remain in the source and are reported independently.
+ex:emptyKey owl:hasKey () .
+ex:shortChain owl:propertyChainAxiom (ex:p) .
+ex:literalMember owl:hasKey ("not a property") .
+ex:literalHead owl:hasKey "not a list" .
+ex:cycle owl:hasKey _:cycle .
+_:cycle rdf:first ex:p ; rdf:rest _:cycle .
+ex:missingRest owl:hasKey _:missing .
+_:missing rdf:first ex:p .
+ex:conflict owl:hasKey _:conflict .
+_:conflict rdf:first ex:p, ex:q ; rdf:rest rdf:nil .
+_:anonymousUnion owl:disjointUnionOf (ex:A ex:B) .

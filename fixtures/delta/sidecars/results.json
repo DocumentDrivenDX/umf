@@ -1,0 +1,2143 @@
+{
+  "results": [
+    {
+      "status": "reconciled",
+      "complete": false,
+      "checkpoint": {
+        "version": "10",
+        "source": {
+          "umf": "0.1.0",
+          "id": "checkpoint-10",
+          "vocabularies": {
+            "umf.delta.log": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "log",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.delta.log": {
+                      "profile": "delta-jsonl-source",
+                      "text": "{\"checkpointMetadata\":{\"version\":10}}\n{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"v2Checkpoint\"],\"writerFeatures\":[\"v2Checkpoint\"]}}\n{\"metaData\":{\"id\":\"12345678-1234-1234-1234-123456789abc\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"name\":\"renamed\",\"description\":\"metadata replaced\"}}\n{\"txn\":{\"appId\":\"job\",\"version\":2}}\n{\"txn\":{\"appId\":\"other\",\"version\":9223372036854775807}}\n{\"sidecar\":{\"path\":\"part-0.parquet\",\"sizeInBytes\":4221,\"modificationTime\":0,\"tags\":{\"fixture\":\"authored\"}}}\n{\"sidecar\":{\"path\":\"part-1.parquet\",\"sizeInBytes\":3887,\"modificationTime\":0,\"tags\":{\"fixture\":\"authored\"}}}\n"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sources": [],
+      "sidecars": [
+        {
+          "path": "part-0.parquet",
+          "source": {
+            "umf": "0.1.0",
+            "id": "part-0.parquet",
+            "vocabularies": {
+              "umf.parquet": {
+                "version": "0.1.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "parquet",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "source",
+                    "extensions": {
+                      "umf.parquet": {
+                        "profile": "parquet-file-source",
+                        "encoding": "hex",
+                        "bytes": "504152311504151a151e4c150215001200000d3009000000622e706172717565741500151415182c15041510150615061c36022809622e706172717565741809622e706172717565740000000a24030000000302000102001504150015024c15001500120000001500151c15202c15041510150615061c36040000000e3402000000040003000000030200001504150015024c15001500120000001500151e15222c15041510150615061c36040000000f380200000004000400000003020000001504151015144c15021500120000081ce2010000000000001500151415182c15041510150615061c1808e2010000000000001808e20100000000000016022808e2010000000000001808e2010000000000000000000a24030000000302000102001504151015144c15021500120000081c00000000000000001500151415182c15041510150615061c1808000000000000000018080000000000000000160228080000000000000000180800000000000000000000000a24030000000302000102001500151015142c15041500150615061c1801001801001602280100180100000000081c0300000003020000150415ba011598014c150215001200005d78590000007b226e756d5265636f726473223a20312c20226d696e56616c75650110207b226964223a20327d0118046178521800546e756c6c436f756e74223a207b226964223a20307d7d1500151415182c15041510150615061c360228597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20327d2c20226d617856616c756573223a207b226964223a20327d2c20226e756c6c436f756e74223a207b226964223a20307d7d18597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20327d2c20226d617856616c756573223a207b226964223a20327d2c20226e756c6c436f756e74223a207b226964223a20307d7d0000000a240300000003020001020015041518151c4c150215001200000c2c080000007265766973696f6e1500152015242c15041510150615061c360228087265766973696f6e18087265766973696f6e000000103c0200000004000300000003030001020015041516151a4c150215001200000b2807000000757064617465641500152215262c15041510150615061c36022807757064617465641807757064617465640000001140020000000400040000000304000001020015041526152a4c1502150012000013480f000000726574697265642e706172717565741500151415182c15041510150615061c3602280f726574697265642e70617271756574180f726574697265642e706172717565740000000a24030000000308000102001504151015144c15021500120000081c01000000000000001500151415182c15041510150615061c1808010000000000000018080100000000000000160228080100000000000000180801000000000000000000000a24030000000308000102001500151015142c15041500150615061c1801001801001602280100180100000000081c0300000003080000150419fc1335001806736368656d6115040035021803616464150e00150c250218047061746825004c1c0000003502180f706172746974696f6e56616c756573150215024c2c000000350418096b65795f76616c7565150400150c250018036b657925004c1c000000150c2502180576616c756525004c1c00000015042502180473697a65001504250218106d6f64696669636174696f6e54696d650015002502180a646174614368616e676500150c25021805737461747325004c1c0000003502180474616773150215024c2c000000350418096b65795f76616c7565150400150c250018036b657925004c1c000000150c2502180576616c756525004c1c0000003502180672656d6f7665150600150c250218047061746825004c1c00000015042502181164656c6574696f6e54696d657374616d700015002502180a646174614368616e6765001604191c19cc26001c150c193500061019280361646404706174681502160416a00116a801264226081c36022809622e706172717565741809622e7061727175657400192c15041500150200150015101502003c16121906193602000200000026001c150c19350006101948036164640f706172746974696f6e56616c756573096b65795f76616c7565036b6579150216041662166826ce0126b0011c360400192c15041500150200150015101502003c16001926040019460200020000000026001c150c19350006101948036164640f706172746974696f6e56616c756573096b65795f76616c75650576616c7565150216041664166a26b6022698021c360400192c15041500150200150015101502003c1600192604001956020002000000000026001c150419350006101928036164640473697a651502160416ba0116c20126b2032682031c1808e2010000000000001808e20100000000000016022808e2010000000000001808e20100000000000000192c15041500150200150015101502003c2906193602000200000026001c15041935000610192803616464106d6f64696669636174696f6e54696d651502160416ba0116c20126f40426c4041c18080000000000000000180800000000000000001602280800000000000000001808000000000000000000192c15041500150200150015101502003c2906193602000200000026001c1500192506001928036164640a646174614368616e676515021604165216562686063c180100180100160228010018010000191c150015001502003c2906193602000200000026001c150c19350006101928036164640573746174731502160416840516e60426940826dc061c360228597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20327d2c20226d617856616c756573223a207b226964223a20327d2c20226e756c6c436f756e74223a207b226964223a20307d7d18597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20327d2c20226d617856616c756573223a207b226964223a20327d2c20226e756c6c436f756e74223a207b226964223a20307d7d00192c15041500150200150015101502003c16b2011906193602000200000026001c150c19350006101948036164640474616773096b65795f76616c7565036b65791502160416a60116ae0126fa0b26c20b1c360228087265766973696f6e18087265766973696f6e00192c15041500150200150015101502003c16101926040019460200000200000026001c150c19350006101948036164640474616773096b65795f76616c75650576616c75651502160416a20116aa0126a60d26f00c1c360228077570646174656418077570646174656400192c15041500150200150015101502003c160e192604001956020000000200000026001c150c193500061019280672656d6f766504706174681502160416c40116cc0126e00e269a0e1c3602280f726574697265642e70617271756574180f726574697265642e7061727175657400192c15041500150200150015101502003c161e1906193602000200000026001c1504193500061019280672656d6f76651164656c6574696f6e54696d657374616d701502160416ba0116c20126961026e60f1c18080100000000000000180801000000000000001602280801000000000000001808010000000000000000192c15041500150200150015101502003c2906193602000200000026001c15001925060019280672656d6f76650a646174614368616e6765150216041652165626a8113c180100180100160228010018010000191c150015001502003c2906193602000200000016c8111604260816f61100191c180c4152524f573a736368656d6118ec092f2f2f2f2f36674441414151414141414141414b41417741426741464141674143674141414141424241414d414141414341414941414141424141494141414142414141414149414141444d4141414142414141414d7a382f2f38414141454e48414141414351414141414541414141417741414149514141414245414141414641414141415941414142795a573176646d5541414d6a382f2f38412f662f2f4141414242684141414141634141414142414141414141414141414b414141415a47463059554e6f5957356e5a51414139507a2f2f797a392f2f3841414145434541414141435141414141454141414141414141414245414141426b5a57786c64476c76626c52706257567a64474674634141414144442b2f2f3841414141425141414141476a392f2f384141414546454141414142674141414145414141414141414141415141414142775958526f4141414141466a392f2f2b512f662f2f4141414244537741414141774141414142414141414163414141426f416741416c41454141466742414141594151414136414141414c77414141415141414141417741414147466b5a4143592f662f2f3050332f2f7741414152455541414141484141414141514141414142414141414641414141415141414142305957647a41414141414d54392f2f38772f762f2f414141414452674141414167414141414241414141414941414142414141414146414141414163414141426c626e52796157567a415054392f2f38732f762f2f4141414242524141414141594141414142414141414141414141414641414141646d467364575541414141632f762f2f6950372f2f774141414155514141414146414141414151414141414141414141417741414147746c655142412f762f2f6550372f2f7741414151555141414141474141414141514141414141414141414251414141484e305958527a414141416150372f2f36442b2f2f384141414547454141414142774141414145414141414141414141416f414141426b5958526851326868626d646c414143552f762f2f7a50372f2f77414141514951414141414a41414141415141414141414141414145414141414731765a476c6d61574e6864476c76626c5270625755414141414130502f2f2f774141414146414141414143502f2f2f7741414151495141414141494141414141514141414141414141414241414141484e70656d5541414141414341414d4141674142774149414141414141414141554141414142412f2f2f2f41414142455251414141416b41414141424141414141454141414163414141414477414141484268636e527064476c76626c5a686248566c637741382f2f2f2f71502f2f2f774141414130594141414149414141414151414141414341414141554141414142514141414148414141415a573530636d6c6c637742732f2f2f2f70502f2f2f7741414151555141414141474141414141514141414141414141414251414141485a686248566c414141416c502f2f2f78414146414149414141414277414d414141414541415141414141414141414252414141414155414141414241414141414141414141444141414161325635414d6a2f2f2f3851414251414341414741416341444141414142414145414141414141414151555141414141484141414141514141414141414141414241414141484268644767414141414142414145414151414141413d001820706172717565742d6370702d6172726f772076657273696f6e2032312e302e3019cc1c00001c00001c00001c00001c00001c00001c00001c00001c00001c00001c00001c000000f60b000050415231"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "path": "part-1.parquet",
+          "source": {
+            "umf": "0.1.0",
+            "id": "part-1.parquet",
+            "vocabularies": {
+              "umf.parquet": {
+                "version": "0.1.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "parquet",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "source",
+                    "extensions": {
+                      "umf.parquet": {
+                        "profile": "parquet-file-source",
+                        "encoding": "hex",
+                        "bytes": "504152311504151a151e4c150215001200000d3009000000612e706172717565741500151215162c15021510150615061c36002809612e706172717565741809612e7061727175657400000009200200000002020102001504150015024c15001500120000001500151a151e2c15021510150615061c36020000000d30020000000200020000000202001504150015024c15001500120000001500151a151e2c15021510150615061c36020000000d30020000000200020000000202001504151015144c15021500120000081ce2010000000000001500151215162c15021510150615061c1808e2010000000000001808e20100000000000016002808e2010000000000001808e20100000000000000000009200200000002020102001504151015144c15021500120000081c00000000000000001500151215162c15021510150615061c18080000000000000000180800000000000000001600280800000000000000001808000000000000000000000009200200000002020102001500150e15122c15021500150615061c1801011801011600280101180101000000071802000000020201150415ba011596014c150215001200005d78590000007b226e756d5265636f726473223a20312c20226d696e56616c756501100c7b2269640117007d0118046178521800546e756c6c436f756e74223a207b226964223a20307d7d1500151215162c15021510150615061c360028597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20317d2c20226d617856616c756573223a207b226964223a20317d2c20226e756c6c436f756e74223a207b226964223a20307d7d18597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20317d2c20226d617856616c756573223a207b226964223a20317d2c20226e756c6c436f756e74223a207b226964223a20307d7d00000009200200000002020102001504150015024c15001500120000001500151a151e2c15021510150615061c36020000000d30020000000200020000000201001504150015024c15001500120000001500151a151e2c15021510150615061c36020000000d30020000000200020000000201001504150015024c15001500120000001500150e15122c15021510150615061c36020000000718020000000200001504150015024c15001500120000001500150e15122c15021510150615061c36020000000718020000000200001500150c15102c15021500150615061c36020000000614020000000200150419fc1335001806736368656d6115040035021803616464150e00150c250218047061746825004c1c0000003502180f706172746974696f6e56616c756573150215024c2c000000350418096b65795f76616c7565150400150c250018036b657925004c1c000000150c2502180576616c756525004c1c00000015042502180473697a65001504250218106d6f64696669636174696f6e54696d650015002502180a646174614368616e676500150c25021805737461747325004c1c0000003502180474616773150215024c2c000000350418096b65795f76616c7565150400150c250018036b657925004c1c000000150c2502180576616c756525004c1c0000003502180672656d6f7665150600150c250218047061746825004c1c00000015042502181164656c6574696f6e54696d657374616d700015002502180a646174614368616e6765001602191c19cc26001c150c1935000610192803616464047061746815021602169e0116a601264226081c36002809612e706172717565741809612e7061727175657400192c15041500150200150015101502003c16121906193600000200000026001c150c19350006101948036164640f706172746974696f6e56616c756573096b65795f76616c7565036b6579150216021660166626cc0126ae011c360200192c15041500150200150015101502003c16001926020019460000020000000026001c150c19350006101948036164640f706172746974696f6e56616c756573096b65795f76616c75650576616c7565150216021660166626b2022694021c360200192c15041500150200150015101502003c1600192602001956000002000000000026001c150419350006101928036164640473697a651502160216b80116c00126aa0326fa021c1808e2010000000000001808e20100000000000016002808e2010000000000001808e20100000000000000192c15041500150200150015101502003c2906193600000200000026001c15041935000610192803616464106d6f64696669636174696f6e54696d651502160216b80116c00126ea0426ba041c18080000000000000000180800000000000000001600280800000000000000001808000000000000000000192c15041500150200150015101502003c2906193600000200000026001c1500192506001928036164640a646174614368616e6765150216021650165426fa053c180101180101160028010118010100191c150015001502003c2906193600000200000026001c150c19350006101928036164640573746174731502160216820516e20426840826ce061c360028597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20317d2c20226d617856616c756573223a207b226964223a20317d2c20226e756c6c436f756e74223a207b226964223a20307d7d18597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20317d2c20226d617856616c756573223a207b226964223a20317d2c20226e756c6c436f756e74223a207b226964223a20307d7d00192c15041500150200150015101502003c16b2011906193600000200000026001c150c19350006101948036164640474616773096b65795f76616c7565036b6579150216021660166626ce0b26b00b1c360200192c15041500150200150015101502003c16001926020019460002000000000026001c150c19350006101948036164640474616773096b65795f76616c75650576616c7565150216021660166626b40c26960c1c360200192c15041500150200150015101502003c1600192602001956000200000000000026001c150c193500061019280672656d6f76650470617468150216021654165a269a0d26fc0c1c360200192c15041500150200150015101502003c16001906193602000000000026001c1504193500061019280672656d6f76651164656c6574696f6e54696d657374616d70150216021654165a26f40d26d60d1c360200192c15041500150200150015101502003c2906193602000000000026001c15001925060019280672656d6f76650a646174614368616e6765150216021636163a26b00e3c360200191c150015001502003c2906193602000000000016be0e1602260816e20e00191c180c4152524f573a736368656d6118ec092f2f2f2f2f36674441414151414141414141414b41417741426741464141674143674141414141424241414d414141414341414941414141424141494141414142414141414149414141444d4141414142414141414d7a382f2f38414141454e48414141414351414141414541414141417741414149514141414245414141414641414141415941414142795a573176646d5541414d6a382f2f38412f662f2f4141414242684141414141634141414142414141414141414141414b414141415a47463059554e6f5957356e5a51414139507a2f2f797a392f2f3841414145434541414141435141414141454141414141414141414245414141426b5a57786c64476c76626c52706257567a64474674634141414144442b2f2f3841414141425141414141476a392f2f384141414546454141414142674141414145414141414141414141415141414142775958526f4141414141466a392f2f2b512f662f2f4141414244537741414141774141414142414141414163414141426f416741416c41454141466742414141594151414136414141414c77414141415141414141417741414147466b5a4143592f662f2f3050332f2f7741414152455541414141484141414141514141414142414141414641414141415141414142305957647a41414141414d54392f2f38772f762f2f414141414452674141414167414141414241414141414941414142414141414146414141414163414141426c626e52796157567a415054392f2f38732f762f2f4141414242524141414141594141414142414141414141414141414641414141646d467364575541414141632f762f2f6950372f2f774141414155514141414146414141414151414141414141414141417741414147746c655142412f762f2f6550372f2f7741414151555141414141474141414141514141414141414141414251414141484e305958527a414141416150372f2f36442b2f2f384141414547454141414142774141414145414141414141414141416f414141426b5958526851326868626d646c414143552f762f2f7a50372f2f77414141514951414141414a41414141415141414141414141414145414141414731765a476c6d61574e6864476c76626c5270625755414141414130502f2f2f774141414146414141414143502f2f2f7741414151495141414141494141414141514141414141414141414241414141484e70656d5541414141414341414d4141674142774149414141414141414141554141414142412f2f2f2f41414142455251414141416b41414141424141414141454141414163414141414477414141484268636e527064476c76626c5a686248566c637741382f2f2f2f71502f2f2f774141414130594141414149414141414151414141414341414141554141414142514141414148414141415a573530636d6c6c637742732f2f2f2f70502f2f2f7741414151555141414141474141414141514141414141414141414251414141485a686248566c414141416c502f2f2f78414146414149414141414277414d414141414541415141414141414141414252414141414155414141414241414141414141414141444141414161325635414d6a2f2f2f3851414251414341414741416341444141414142414145414141414141414151555141414141484141414141514141414141414141414241414141484268644767414141414142414145414151414141413d001820706172717565742d6370702d6172726f772076657273696f6e2032312e302e3019cc1c00001c00001c00001c00001c00001c00001c00001c00001c00001c00001c00001c000000720b000050415231"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "/checkpoint",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "/checkpoint",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+          "severity": "warning"
+        },
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/sidecars/0/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "path": "/sidecars/0/schema/3",
+          "severity": "warning",
+          "message": "Nested layout and value rules remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "path": "/sidecars/0/schema/11",
+          "severity": "warning",
+          "message": "Nested layout and value rules remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering"
+        },
+        {
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources"
+        },
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/sidecars/0/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        },
+        {
+          "code": "PARQUET_PHYSICAL_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Exact physical carriers decoded; logical validation, cross-column consistency and complete row assembly remain unverified"
+        },
+        {
+          "code": "PARQUET_ROW_LOGICAL_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Physical records assembled by schema index; logical validation and LIST/MAP projections remain separate"
+        },
+        {
+          "code": "PARQUET_VALUE_SCOPE",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Implemented logical views projected with physical scalars retained; unsupported meanings are opaque, other codecs/encodings remain unsupported and cross-system lowering is separate"
+        },
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "/sidecars/0",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_PARQUET_ACTION_VIEW",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Non-null action columns projected; known optional null fields normalized to absence with recorded paths. Annotated statistics conversions retain typed inputs and exact JSON outputs in scalarConversions. Native source is retained. Checkpoint protocol/state validity remains separate"
+        },
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/sidecars/1/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "path": "/sidecars/1/schema/3",
+          "severity": "warning",
+          "message": "Nested layout and value rules remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "path": "/sidecars/1/schema/11",
+          "severity": "warning",
+          "message": "Nested layout and value rules remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering"
+        },
+        {
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources"
+        },
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/sidecars/1/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        },
+        {
+          "code": "PARQUET_PHYSICAL_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Exact physical carriers decoded; logical validation, cross-column consistency and complete row assembly remain unverified"
+        },
+        {
+          "code": "PARQUET_ROW_LOGICAL_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Physical records assembled by schema index; logical validation and LIST/MAP projections remain separate"
+        },
+        {
+          "code": "PARQUET_VALUE_SCOPE",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Implemented logical views projected with physical scalars retained; unsupported meanings are opaque, other codecs/encodings remain unsupported and cross-system lowering is separate"
+        },
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "/sidecars/1",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_PARQUET_ACTION_VIEW",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Non-null action columns projected; known optional null fields normalized to absence with recorded paths. Annotated statistics conversions retain typed inputs and exact JSON outputs in scalarConversions. Native source is retained. Checkpoint protocol/state validity remains separate"
+        },
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "/derivedCheckpoint",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "/derivedCheckpoint",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_HISTORY_UNVERIFIED",
+          "path": "",
+          "message": "Action state only: feature requirements, encoded-path aliases, file contents, transaction legality and tombstone expiry remain unverified",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_SIDECAR_SCOPE",
+          "path": "",
+          "severity": "warning",
+          "message": "Exact supplied reference strings and byte sizes checked; URI aliases, physical placement, modification times and data-reader feature support remain unverified. Original checkpoint and sidecars are authoritative"
+        }
+      ],
+      "derivedCheckpoint": {
+        "version": "10",
+        "source": {
+          "umf": "0.1.0",
+          "id": "checkpoint-10-resolved",
+          "vocabularies": {
+            "umf.delta.log": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "log",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.delta.log": {
+                      "profile": "delta-jsonl-source",
+                      "text": "{\"checkpointMetadata\":{\"version\":10}}\n{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"v2Checkpoint\"],\"writerFeatures\":[\"v2Checkpoint\"]}}\n{\"metaData\":{\"id\":\"12345678-1234-1234-1234-123456789abc\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"name\":\"renamed\",\"description\":\"metadata replaced\"}}\n{\"txn\":{\"appId\":\"job\",\"version\":2}}\n{\"txn\":{\"appId\":\"other\",\"version\":9223372036854775807}}\n{\"add\":{\"path\":\"b.parquet\",\"partitionValues\":{},\"size\":482,\"modificationTime\":0,\"dataChange\":false,\"stats\":\"{\\\"numRecords\\\": 1, \\\"minValues\\\": {\\\"id\\\": 2}, \\\"maxValues\\\": {\\\"id\\\": 2}, \\\"nullCount\\\": {\\\"id\\\": 0}}\",\"tags\":{\"revision\":\"updated\"}}}\n{\"remove\":{\"path\":\"retired.parquet\",\"deletionTimestamp\":1,\"dataChange\":false}}\n{\"add\":{\"path\":\"a.parquet\",\"partitionValues\":{},\"size\":482,\"modificationTime\":0,\"dataChange\":true,\"stats\":\"{\\\"numRecords\\\": 1, \\\"minValues\\\": {\\\"id\\\": 1}, \\\"maxValues\\\": {\\\"id\\\": 1}, \\\"nullCount\\\": {\\\"id\\\": 0}}\"}}\n"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "origins": [
+        {
+          "line": 1,
+          "checkpointLine": 1
+        },
+        {
+          "line": 2,
+          "checkpointLine": 2
+        },
+        {
+          "line": 3,
+          "checkpointLine": 3
+        },
+        {
+          "line": 4,
+          "checkpointLine": 4
+        },
+        {
+          "line": 5,
+          "checkpointLine": 5
+        },
+        {
+          "line": 6,
+          "checkpointLine": 6,
+          "sidecar": 0,
+          "row": 1
+        },
+        {
+          "line": 7,
+          "checkpointLine": 6,
+          "sidecar": 0,
+          "row": 2
+        },
+        {
+          "line": 8,
+          "checkpointLine": 7,
+          "sidecar": 1,
+          "row": 1
+        }
+      ],
+      "omittedNullFields": [
+        {
+          "sidecar": 1,
+          "row": 1,
+          "path": "/add/tags"
+        }
+      ],
+      "scalarConversions": [],
+      "state": {
+        "version": "10",
+        "protocol": {
+          "kind": "object",
+          "members": {
+            "minReaderVersion": {
+              "kind": "number",
+              "value": "3"
+            },
+            "minWriterVersion": {
+              "kind": "number",
+              "value": "7"
+            },
+            "readerFeatures": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "string",
+                  "value": "v2Checkpoint"
+                }
+              ]
+            },
+            "writerFeatures": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "string",
+                  "value": "v2Checkpoint"
+                }
+              ]
+            }
+          }
+        },
+        "metaData": {
+          "kind": "object",
+          "members": {
+            "id": {
+              "kind": "string",
+              "value": "12345678-1234-1234-1234-123456789abc"
+            },
+            "format": {
+              "kind": "object",
+              "members": {
+                "provider": {
+                  "kind": "string",
+                  "value": "parquet"
+                },
+                "options": {
+                  "kind": "object",
+                  "members": {}
+                }
+              }
+            },
+            "schemaString": {
+              "kind": "string",
+              "value": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}"
+            },
+            "partitionColumns": {
+              "kind": "array",
+              "items": []
+            },
+            "configuration": {
+              "kind": "object",
+              "members": {}
+            },
+            "name": {
+              "kind": "string",
+              "value": "renamed"
+            },
+            "description": {
+              "kind": "string",
+              "value": "metadata replaced"
+            }
+          }
+        },
+        "adds": [
+          {
+            "kind": "object",
+            "members": {
+              "path": {
+                "kind": "string",
+                "value": "b.parquet"
+              },
+              "partitionValues": {
+                "kind": "object",
+                "members": {}
+              },
+              "size": {
+                "kind": "number",
+                "value": "482"
+              },
+              "modificationTime": {
+                "kind": "number",
+                "value": "0"
+              },
+              "dataChange": {
+                "kind": "boolean",
+                "value": false
+              },
+              "stats": {
+                "kind": "string",
+                "value": "{\"numRecords\": 1, \"minValues\": {\"id\": 2}, \"maxValues\": {\"id\": 2}, \"nullCount\": {\"id\": 0}}"
+              },
+              "tags": {
+                "kind": "object",
+                "members": {
+                  "revision": {
+                    "kind": "string",
+                    "value": "updated"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "kind": "object",
+            "members": {
+              "path": {
+                "kind": "string",
+                "value": "a.parquet"
+              },
+              "partitionValues": {
+                "kind": "object",
+                "members": {}
+              },
+              "size": {
+                "kind": "number",
+                "value": "482"
+              },
+              "modificationTime": {
+                "kind": "number",
+                "value": "0"
+              },
+              "dataChange": {
+                "kind": "boolean",
+                "value": true
+              },
+              "stats": {
+                "kind": "string",
+                "value": "{\"numRecords\": 1, \"minValues\": {\"id\": 1}, \"maxValues\": {\"id\": 1}, \"nullCount\": {\"id\": 0}}"
+              }
+            }
+          }
+        ],
+        "removes": [
+          {
+            "kind": "object",
+            "members": {
+              "path": {
+                "kind": "string",
+                "value": "retired.parquet"
+              },
+              "deletionTimestamp": {
+                "kind": "number",
+                "value": "1"
+              },
+              "dataChange": {
+                "kind": "boolean",
+                "value": false
+              }
+            }
+          }
+        ],
+        "transactions": [
+          {
+            "kind": "object",
+            "members": {
+              "appId": {
+                "kind": "string",
+                "value": "job"
+              },
+              "version": {
+                "kind": "number",
+                "value": "2"
+              }
+            }
+          },
+          {
+            "kind": "object",
+            "members": {
+              "appId": {
+                "kind": "string",
+                "value": "other"
+              },
+              "version": {
+                "kind": "number",
+                "value": "9223372036854775807"
+              }
+            }
+          }
+        ],
+        "domains": [],
+        "commitInfo": [],
+        "deferred": []
+      }
+    },
+    {
+      "status": "reconciled",
+      "complete": false,
+      "checkpoint": {
+        "version": "10",
+        "source": {
+          "umf": "0.1.0",
+          "id": "checkpoint-10",
+          "vocabularies": {
+            "umf.delta.log": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "log",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.delta.log": {
+                      "profile": "delta-jsonl-source",
+                      "text": "{\"checkpointMetadata\":{\"version\":10}}\n{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"v2Checkpoint\"],\"writerFeatures\":[\"v2Checkpoint\"]}}\n{\"metaData\":{\"id\":\"12345678-1234-1234-1234-123456789abc\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"name\":\"renamed\",\"description\":\"metadata replaced\"}}\n{\"txn\":{\"appId\":\"job\",\"version\":2}}\n{\"txn\":{\"appId\":\"other\",\"version\":9223372036854775807}}\n{\"sidecar\":{\"path\":\"part-0.parquet\",\"sizeInBytes\":4221,\"modificationTime\":0,\"tags\":{\"fixture\":\"authored\"}}}\n{\"sidecar\":{\"path\":\"part-1.parquet\",\"sizeInBytes\":3887,\"modificationTime\":0,\"tags\":{\"fixture\":\"authored\"}}}\n"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sources": [
+        {
+          "version": "11",
+          "source": {
+            "umf": "0.1.0",
+            "id": "commit-11",
+            "vocabularies": {
+              "umf.delta.log": {
+                "version": "0.1.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "log",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "source",
+                    "extensions": {
+                      "umf.delta.log": {
+                        "profile": "delta-jsonl-source",
+                        "text": "{\"remove\":{\"path\":\"b.parquet\",\"dataChange\":true,\"deletionTimestamp\":11}}\n{\"txn\":{\"appId\":\"job\",\"version\":1}}\n"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "sidecars": [
+        {
+          "path": "part-0.parquet",
+          "source": {
+            "umf": "0.1.0",
+            "id": "part-0.parquet",
+            "vocabularies": {
+              "umf.parquet": {
+                "version": "0.1.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "parquet",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "source",
+                    "extensions": {
+                      "umf.parquet": {
+                        "profile": "parquet-file-source",
+                        "encoding": "hex",
+                        "bytes": "504152311504151a151e4c150215001200000d3009000000622e706172717565741500151415182c15041510150615061c36022809622e706172717565741809622e706172717565740000000a24030000000302000102001504150015024c15001500120000001500151c15202c15041510150615061c36040000000e3402000000040003000000030200001504150015024c15001500120000001500151e15222c15041510150615061c36040000000f380200000004000400000003020000001504151015144c15021500120000081ce2010000000000001500151415182c15041510150615061c1808e2010000000000001808e20100000000000016022808e2010000000000001808e2010000000000000000000a24030000000302000102001504151015144c15021500120000081c00000000000000001500151415182c15041510150615061c1808000000000000000018080000000000000000160228080000000000000000180800000000000000000000000a24030000000302000102001500151015142c15041500150615061c1801001801001602280100180100000000081c0300000003020000150415ba011598014c150215001200005d78590000007b226e756d5265636f726473223a20312c20226d696e56616c75650110207b226964223a20327d0118046178521800546e756c6c436f756e74223a207b226964223a20307d7d1500151415182c15041510150615061c360228597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20327d2c20226d617856616c756573223a207b226964223a20327d2c20226e756c6c436f756e74223a207b226964223a20307d7d18597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20327d2c20226d617856616c756573223a207b226964223a20327d2c20226e756c6c436f756e74223a207b226964223a20307d7d0000000a240300000003020001020015041518151c4c150215001200000c2c080000007265766973696f6e1500152015242c15041510150615061c360228087265766973696f6e18087265766973696f6e000000103c0200000004000300000003030001020015041516151a4c150215001200000b2807000000757064617465641500152215262c15041510150615061c36022807757064617465641807757064617465640000001140020000000400040000000304000001020015041526152a4c1502150012000013480f000000726574697265642e706172717565741500151415182c15041510150615061c3602280f726574697265642e70617271756574180f726574697265642e706172717565740000000a24030000000308000102001504151015144c15021500120000081c01000000000000001500151415182c15041510150615061c1808010000000000000018080100000000000000160228080100000000000000180801000000000000000000000a24030000000308000102001500151015142c15041500150615061c1801001801001602280100180100000000081c0300000003080000150419fc1335001806736368656d6115040035021803616464150e00150c250218047061746825004c1c0000003502180f706172746974696f6e56616c756573150215024c2c000000350418096b65795f76616c7565150400150c250018036b657925004c1c000000150c2502180576616c756525004c1c00000015042502180473697a65001504250218106d6f64696669636174696f6e54696d650015002502180a646174614368616e676500150c25021805737461747325004c1c0000003502180474616773150215024c2c000000350418096b65795f76616c7565150400150c250018036b657925004c1c000000150c2502180576616c756525004c1c0000003502180672656d6f7665150600150c250218047061746825004c1c00000015042502181164656c6574696f6e54696d657374616d700015002502180a646174614368616e6765001604191c19cc26001c150c193500061019280361646404706174681502160416a00116a801264226081c36022809622e706172717565741809622e7061727175657400192c15041500150200150015101502003c16121906193602000200000026001c150c19350006101948036164640f706172746974696f6e56616c756573096b65795f76616c7565036b6579150216041662166826ce0126b0011c360400192c15041500150200150015101502003c16001926040019460200020000000026001c150c19350006101948036164640f706172746974696f6e56616c756573096b65795f76616c75650576616c7565150216041664166a26b6022698021c360400192c15041500150200150015101502003c1600192604001956020002000000000026001c150419350006101928036164640473697a651502160416ba0116c20126b2032682031c1808e2010000000000001808e20100000000000016022808e2010000000000001808e20100000000000000192c15041500150200150015101502003c2906193602000200000026001c15041935000610192803616464106d6f64696669636174696f6e54696d651502160416ba0116c20126f40426c4041c18080000000000000000180800000000000000001602280800000000000000001808000000000000000000192c15041500150200150015101502003c2906193602000200000026001c1500192506001928036164640a646174614368616e676515021604165216562686063c180100180100160228010018010000191c150015001502003c2906193602000200000026001c150c19350006101928036164640573746174731502160416840516e60426940826dc061c360228597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20327d2c20226d617856616c756573223a207b226964223a20327d2c20226e756c6c436f756e74223a207b226964223a20307d7d18597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20327d2c20226d617856616c756573223a207b226964223a20327d2c20226e756c6c436f756e74223a207b226964223a20307d7d00192c15041500150200150015101502003c16b2011906193602000200000026001c150c19350006101948036164640474616773096b65795f76616c7565036b65791502160416a60116ae0126fa0b26c20b1c360228087265766973696f6e18087265766973696f6e00192c15041500150200150015101502003c16101926040019460200000200000026001c150c19350006101948036164640474616773096b65795f76616c75650576616c75651502160416a20116aa0126a60d26f00c1c360228077570646174656418077570646174656400192c15041500150200150015101502003c160e192604001956020000000200000026001c150c193500061019280672656d6f766504706174681502160416c40116cc0126e00e269a0e1c3602280f726574697265642e70617271756574180f726574697265642e7061727175657400192c15041500150200150015101502003c161e1906193602000200000026001c1504193500061019280672656d6f76651164656c6574696f6e54696d657374616d701502160416ba0116c20126961026e60f1c18080100000000000000180801000000000000001602280801000000000000001808010000000000000000192c15041500150200150015101502003c2906193602000200000026001c15001925060019280672656d6f76650a646174614368616e6765150216041652165626a8113c180100180100160228010018010000191c150015001502003c2906193602000200000016c8111604260816f61100191c180c4152524f573a736368656d6118ec092f2f2f2f2f36674441414151414141414141414b41417741426741464141674143674141414141424241414d414141414341414941414141424141494141414142414141414149414141444d4141414142414141414d7a382f2f38414141454e48414141414351414141414541414141417741414149514141414245414141414641414141415941414142795a573176646d5541414d6a382f2f38412f662f2f4141414242684141414141634141414142414141414141414141414b414141415a47463059554e6f5957356e5a51414139507a2f2f797a392f2f3841414145434541414141435141414141454141414141414141414245414141426b5a57786c64476c76626c52706257567a64474674634141414144442b2f2f3841414141425141414141476a392f2f384141414546454141414142674141414145414141414141414141415141414142775958526f4141414141466a392f2f2b512f662f2f4141414244537741414141774141414142414141414163414141426f416741416c41454141466742414141594151414136414141414c77414141415141414141417741414147466b5a4143592f662f2f3050332f2f7741414152455541414141484141414141514141414142414141414641414141415141414142305957647a41414141414d54392f2f38772f762f2f414141414452674141414167414141414241414141414941414142414141414146414141414163414141426c626e52796157567a415054392f2f38732f762f2f4141414242524141414141594141414142414141414141414141414641414141646d467364575541414141632f762f2f6950372f2f774141414155514141414146414141414151414141414141414141417741414147746c655142412f762f2f6550372f2f7741414151555141414141474141414141514141414141414141414251414141484e305958527a414141416150372f2f36442b2f2f384141414547454141414142774141414145414141414141414141416f414141426b5958526851326868626d646c414143552f762f2f7a50372f2f77414141514951414141414a41414141415141414141414141414145414141414731765a476c6d61574e6864476c76626c5270625755414141414130502f2f2f774141414146414141414143502f2f2f7741414151495141414141494141414141514141414141414141414241414141484e70656d5541414141414341414d4141674142774149414141414141414141554141414142412f2f2f2f41414142455251414141416b41414141424141414141454141414163414141414477414141484268636e527064476c76626c5a686248566c637741382f2f2f2f71502f2f2f774141414130594141414149414141414151414141414341414141554141414142514141414148414141415a573530636d6c6c637742732f2f2f2f70502f2f2f7741414151555141414141474141414141514141414141414141414251414141485a686248566c414141416c502f2f2f78414146414149414141414277414d414141414541415141414141414141414252414141414155414141414241414141414141414141444141414161325635414d6a2f2f2f3851414251414341414741416341444141414142414145414141414141414151555141414141484141414141514141414141414141414241414141484268644767414141414142414145414151414141413d001820706172717565742d6370702d6172726f772076657273696f6e2032312e302e3019cc1c00001c00001c00001c00001c00001c00001c00001c00001c00001c00001c00001c000000f60b000050415231"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "path": "part-1.parquet",
+          "source": {
+            "umf": "0.1.0",
+            "id": "part-1.parquet",
+            "vocabularies": {
+              "umf.parquet": {
+                "version": "0.1.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "parquet",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "source",
+                    "extensions": {
+                      "umf.parquet": {
+                        "profile": "parquet-file-source",
+                        "encoding": "hex",
+                        "bytes": "504152311504151a151e4c150215001200000d3009000000612e706172717565741500151215162c15021510150615061c36002809612e706172717565741809612e7061727175657400000009200200000002020102001504150015024c15001500120000001500151a151e2c15021510150615061c36020000000d30020000000200020000000202001504150015024c15001500120000001500151a151e2c15021510150615061c36020000000d30020000000200020000000202001504151015144c15021500120000081ce2010000000000001500151215162c15021510150615061c1808e2010000000000001808e20100000000000016002808e2010000000000001808e20100000000000000000009200200000002020102001504151015144c15021500120000081c00000000000000001500151215162c15021510150615061c18080000000000000000180800000000000000001600280800000000000000001808000000000000000000000009200200000002020102001500150e15122c15021500150615061c1801011801011600280101180101000000071802000000020201150415ba011596014c150215001200005d78590000007b226e756d5265636f726473223a20312c20226d696e56616c756501100c7b2269640117007d0118046178521800546e756c6c436f756e74223a207b226964223a20307d7d1500151215162c15021510150615061c360028597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20317d2c20226d617856616c756573223a207b226964223a20317d2c20226e756c6c436f756e74223a207b226964223a20307d7d18597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20317d2c20226d617856616c756573223a207b226964223a20317d2c20226e756c6c436f756e74223a207b226964223a20307d7d00000009200200000002020102001504150015024c15001500120000001500151a151e2c15021510150615061c36020000000d30020000000200020000000201001504150015024c15001500120000001500151a151e2c15021510150615061c36020000000d30020000000200020000000201001504150015024c15001500120000001500150e15122c15021510150615061c36020000000718020000000200001504150015024c15001500120000001500150e15122c15021510150615061c36020000000718020000000200001500150c15102c15021500150615061c36020000000614020000000200150419fc1335001806736368656d6115040035021803616464150e00150c250218047061746825004c1c0000003502180f706172746974696f6e56616c756573150215024c2c000000350418096b65795f76616c7565150400150c250018036b657925004c1c000000150c2502180576616c756525004c1c00000015042502180473697a65001504250218106d6f64696669636174696f6e54696d650015002502180a646174614368616e676500150c25021805737461747325004c1c0000003502180474616773150215024c2c000000350418096b65795f76616c7565150400150c250018036b657925004c1c000000150c2502180576616c756525004c1c0000003502180672656d6f7665150600150c250218047061746825004c1c00000015042502181164656c6574696f6e54696d657374616d700015002502180a646174614368616e6765001602191c19cc26001c150c1935000610192803616464047061746815021602169e0116a601264226081c36002809612e706172717565741809612e7061727175657400192c15041500150200150015101502003c16121906193600000200000026001c150c19350006101948036164640f706172746974696f6e56616c756573096b65795f76616c7565036b6579150216021660166626cc0126ae011c360200192c15041500150200150015101502003c16001926020019460000020000000026001c150c19350006101948036164640f706172746974696f6e56616c756573096b65795f76616c75650576616c7565150216021660166626b2022694021c360200192c15041500150200150015101502003c1600192602001956000002000000000026001c150419350006101928036164640473697a651502160216b80116c00126aa0326fa021c1808e2010000000000001808e20100000000000016002808e2010000000000001808e20100000000000000192c15041500150200150015101502003c2906193600000200000026001c15041935000610192803616464106d6f64696669636174696f6e54696d651502160216b80116c00126ea0426ba041c18080000000000000000180800000000000000001600280800000000000000001808000000000000000000192c15041500150200150015101502003c2906193600000200000026001c1500192506001928036164640a646174614368616e6765150216021650165426fa053c180101180101160028010118010100191c150015001502003c2906193600000200000026001c150c19350006101928036164640573746174731502160216820516e20426840826ce061c360028597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20317d2c20226d617856616c756573223a207b226964223a20317d2c20226e756c6c436f756e74223a207b226964223a20307d7d18597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20317d2c20226d617856616c756573223a207b226964223a20317d2c20226e756c6c436f756e74223a207b226964223a20307d7d00192c15041500150200150015101502003c16b2011906193600000200000026001c150c19350006101948036164640474616773096b65795f76616c7565036b6579150216021660166626ce0b26b00b1c360200192c15041500150200150015101502003c16001926020019460002000000000026001c150c19350006101948036164640474616773096b65795f76616c75650576616c7565150216021660166626b40c26960c1c360200192c15041500150200150015101502003c1600192602001956000200000000000026001c150c193500061019280672656d6f76650470617468150216021654165a269a0d26fc0c1c360200192c15041500150200150015101502003c16001906193602000000000026001c1504193500061019280672656d6f76651164656c6574696f6e54696d657374616d70150216021654165a26f40d26d60d1c360200192c15041500150200150015101502003c2906193602000000000026001c15001925060019280672656d6f76650a646174614368616e6765150216021636163a26b00e3c360200191c150015001502003c2906193602000000000016be0e1602260816e20e00191c180c4152524f573a736368656d6118ec092f2f2f2f2f36674441414151414141414141414b41417741426741464141674143674141414141424241414d414141414341414941414141424141494141414142414141414149414141444d4141414142414141414d7a382f2f38414141454e48414141414351414141414541414141417741414149514141414245414141414641414141415941414142795a573176646d5541414d6a382f2f38412f662f2f4141414242684141414141634141414142414141414141414141414b414141415a47463059554e6f5957356e5a51414139507a2f2f797a392f2f3841414145434541414141435141414141454141414141414141414245414141426b5a57786c64476c76626c52706257567a64474674634141414144442b2f2f3841414141425141414141476a392f2f384141414546454141414142674141414145414141414141414141415141414142775958526f4141414141466a392f2f2b512f662f2f4141414244537741414141774141414142414141414163414141426f416741416c41454141466742414141594151414136414141414c77414141415141414141417741414147466b5a4143592f662f2f3050332f2f7741414152455541414141484141414141514141414142414141414641414141415141414142305957647a41414141414d54392f2f38772f762f2f414141414452674141414167414141414241414141414941414142414141414146414141414163414141426c626e52796157567a415054392f2f38732f762f2f4141414242524141414141594141414142414141414141414141414641414141646d467364575541414141632f762f2f6950372f2f774141414155514141414146414141414151414141414141414141417741414147746c655142412f762f2f6550372f2f7741414151555141414141474141414141514141414141414141414251414141484e305958527a414141416150372f2f36442b2f2f384141414547454141414142774141414145414141414141414141416f414141426b5958526851326868626d646c414143552f762f2f7a50372f2f77414141514951414141414a41414141415141414141414141414145414141414731765a476c6d61574e6864476c76626c5270625755414141414130502f2f2f774141414146414141414143502f2f2f7741414151495141414141494141414141514141414141414141414241414141484e70656d5541414141414341414d4141674142774149414141414141414141554141414142412f2f2f2f41414142455251414141416b41414141424141414141454141414163414141414477414141484268636e527064476c76626c5a686248566c637741382f2f2f2f71502f2f2f774141414130594141414149414141414151414141414341414141554141414142514141414148414141415a573530636d6c6c637742732f2f2f2f70502f2f2f7741414151555141414141474141414141514141414141414141414251414141485a686248566c414141416c502f2f2f78414146414149414141414277414d414141414541415141414141414141414252414141414155414141414241414141414141414141444141414161325635414d6a2f2f2f3851414251414341414741416341444141414142414145414141414141414151555141414141484141414141514141414141414141414241414141484268644767414141414142414145414151414141413d001820706172717565742d6370702d6172726f772076657273696f6e2032312e302e3019cc1c00001c00001c00001c00001c00001c00001c00001c00001c00001c00001c00001c000000720b000050415231"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "/checkpoint",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "/checkpoint",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+          "severity": "warning"
+        },
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/sidecars/0/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "path": "/sidecars/0/schema/3",
+          "severity": "warning",
+          "message": "Nested layout and value rules remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "path": "/sidecars/0/schema/11",
+          "severity": "warning",
+          "message": "Nested layout and value rules remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering"
+        },
+        {
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources"
+        },
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/sidecars/0/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        },
+        {
+          "code": "PARQUET_PHYSICAL_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Exact physical carriers decoded; logical validation, cross-column consistency and complete row assembly remain unverified"
+        },
+        {
+          "code": "PARQUET_ROW_LOGICAL_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Physical records assembled by schema index; logical validation and LIST/MAP projections remain separate"
+        },
+        {
+          "code": "PARQUET_VALUE_SCOPE",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Implemented logical views projected with physical scalars retained; unsupported meanings are opaque, other codecs/encodings remain unsupported and cross-system lowering is separate"
+        },
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "/sidecars/0",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_PARQUET_ACTION_VIEW",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Non-null action columns projected; known optional null fields normalized to absence with recorded paths. Annotated statistics conversions retain typed inputs and exact JSON outputs in scalarConversions. Native source is retained. Checkpoint protocol/state validity remains separate"
+        },
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/sidecars/1/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "path": "/sidecars/1/schema/3",
+          "severity": "warning",
+          "message": "Nested layout and value rules remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "path": "/sidecars/1/schema/11",
+          "severity": "warning",
+          "message": "Nested layout and value rules remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering"
+        },
+        {
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources"
+        },
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/sidecars/1/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        },
+        {
+          "code": "PARQUET_PHYSICAL_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Exact physical carriers decoded; logical validation, cross-column consistency and complete row assembly remain unverified"
+        },
+        {
+          "code": "PARQUET_ROW_LOGICAL_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Physical records assembled by schema index; logical validation and LIST/MAP projections remain separate"
+        },
+        {
+          "code": "PARQUET_VALUE_SCOPE",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Implemented logical views projected with physical scalars retained; unsupported meanings are opaque, other codecs/encodings remain unsupported and cross-system lowering is separate"
+        },
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "/sidecars/1",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_PARQUET_ACTION_VIEW",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Non-null action columns projected; known optional null fields normalized to absence with recorded paths. Annotated statistics conversions retain typed inputs and exact JSON outputs in scalarConversions. Native source is retained. Checkpoint protocol/state validity remains separate"
+        },
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "/derivedCheckpoint",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "/derivedCheckpoint",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "/sources/0",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "/sources/0",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_HISTORY_UNVERIFIED",
+          "path": "",
+          "message": "Action state only: feature requirements, encoded-path aliases, file contents, transaction legality and tombstone expiry remain unverified",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_SIDECAR_SCOPE",
+          "path": "",
+          "severity": "warning",
+          "message": "Exact supplied reference strings and byte sizes checked; URI aliases, physical placement, modification times and data-reader feature support remain unverified. Original checkpoint and sidecars are authoritative"
+        }
+      ],
+      "derivedCheckpoint": {
+        "version": "10",
+        "source": {
+          "umf": "0.1.0",
+          "id": "checkpoint-10-resolved",
+          "vocabularies": {
+            "umf.delta.log": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "log",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.delta.log": {
+                      "profile": "delta-jsonl-source",
+                      "text": "{\"checkpointMetadata\":{\"version\":10}}\n{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"v2Checkpoint\"],\"writerFeatures\":[\"v2Checkpoint\"]}}\n{\"metaData\":{\"id\":\"12345678-1234-1234-1234-123456789abc\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"name\":\"renamed\",\"description\":\"metadata replaced\"}}\n{\"txn\":{\"appId\":\"job\",\"version\":2}}\n{\"txn\":{\"appId\":\"other\",\"version\":9223372036854775807}}\n{\"add\":{\"path\":\"b.parquet\",\"partitionValues\":{},\"size\":482,\"modificationTime\":0,\"dataChange\":false,\"stats\":\"{\\\"numRecords\\\": 1, \\\"minValues\\\": {\\\"id\\\": 2}, \\\"maxValues\\\": {\\\"id\\\": 2}, \\\"nullCount\\\": {\\\"id\\\": 0}}\",\"tags\":{\"revision\":\"updated\"}}}\n{\"remove\":{\"path\":\"retired.parquet\",\"deletionTimestamp\":1,\"dataChange\":false}}\n{\"add\":{\"path\":\"a.parquet\",\"partitionValues\":{},\"size\":482,\"modificationTime\":0,\"dataChange\":true,\"stats\":\"{\\\"numRecords\\\": 1, \\\"minValues\\\": {\\\"id\\\": 1}, \\\"maxValues\\\": {\\\"id\\\": 1}, \\\"nullCount\\\": {\\\"id\\\": 0}}\"}}\n"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "origins": [
+        {
+          "line": 1,
+          "checkpointLine": 1
+        },
+        {
+          "line": 2,
+          "checkpointLine": 2
+        },
+        {
+          "line": 3,
+          "checkpointLine": 3
+        },
+        {
+          "line": 4,
+          "checkpointLine": 4
+        },
+        {
+          "line": 5,
+          "checkpointLine": 5
+        },
+        {
+          "line": 6,
+          "checkpointLine": 6,
+          "sidecar": 0,
+          "row": 1
+        },
+        {
+          "line": 7,
+          "checkpointLine": 6,
+          "sidecar": 0,
+          "row": 2
+        },
+        {
+          "line": 8,
+          "checkpointLine": 7,
+          "sidecar": 1,
+          "row": 1
+        }
+      ],
+      "omittedNullFields": [
+        {
+          "sidecar": 1,
+          "row": 1,
+          "path": "/add/tags"
+        }
+      ],
+      "scalarConversions": [],
+      "state": {
+        "version": "11",
+        "protocol": {
+          "kind": "object",
+          "members": {
+            "minReaderVersion": {
+              "kind": "number",
+              "value": "3"
+            },
+            "minWriterVersion": {
+              "kind": "number",
+              "value": "7"
+            },
+            "readerFeatures": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "string",
+                  "value": "v2Checkpoint"
+                }
+              ]
+            },
+            "writerFeatures": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "string",
+                  "value": "v2Checkpoint"
+                }
+              ]
+            }
+          }
+        },
+        "metaData": {
+          "kind": "object",
+          "members": {
+            "id": {
+              "kind": "string",
+              "value": "12345678-1234-1234-1234-123456789abc"
+            },
+            "format": {
+              "kind": "object",
+              "members": {
+                "provider": {
+                  "kind": "string",
+                  "value": "parquet"
+                },
+                "options": {
+                  "kind": "object",
+                  "members": {}
+                }
+              }
+            },
+            "schemaString": {
+              "kind": "string",
+              "value": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}"
+            },
+            "partitionColumns": {
+              "kind": "array",
+              "items": []
+            },
+            "configuration": {
+              "kind": "object",
+              "members": {}
+            },
+            "name": {
+              "kind": "string",
+              "value": "renamed"
+            },
+            "description": {
+              "kind": "string",
+              "value": "metadata replaced"
+            }
+          }
+        },
+        "adds": [
+          {
+            "kind": "object",
+            "members": {
+              "path": {
+                "kind": "string",
+                "value": "a.parquet"
+              },
+              "partitionValues": {
+                "kind": "object",
+                "members": {}
+              },
+              "size": {
+                "kind": "number",
+                "value": "482"
+              },
+              "modificationTime": {
+                "kind": "number",
+                "value": "0"
+              },
+              "dataChange": {
+                "kind": "boolean",
+                "value": true
+              },
+              "stats": {
+                "kind": "string",
+                "value": "{\"numRecords\": 1, \"minValues\": {\"id\": 1}, \"maxValues\": {\"id\": 1}, \"nullCount\": {\"id\": 0}}"
+              }
+            }
+          }
+        ],
+        "removes": [
+          {
+            "kind": "object",
+            "members": {
+              "path": {
+                "kind": "string",
+                "value": "retired.parquet"
+              },
+              "deletionTimestamp": {
+                "kind": "number",
+                "value": "1"
+              },
+              "dataChange": {
+                "kind": "boolean",
+                "value": false
+              }
+            }
+          },
+          {
+            "kind": "object",
+            "members": {
+              "path": {
+                "kind": "string",
+                "value": "b.parquet"
+              },
+              "dataChange": {
+                "kind": "boolean",
+                "value": true
+              },
+              "deletionTimestamp": {
+                "kind": "number",
+                "value": "11"
+              }
+            }
+          }
+        ],
+        "transactions": [
+          {
+            "kind": "object",
+            "members": {
+              "appId": {
+                "kind": "string",
+                "value": "job"
+              },
+              "version": {
+                "kind": "number",
+                "value": "1"
+              }
+            }
+          },
+          {
+            "kind": "object",
+            "members": {
+              "appId": {
+                "kind": "string",
+                "value": "other"
+              },
+              "version": {
+                "kind": "number",
+                "value": "9223372036854775807"
+              }
+            }
+          }
+        ],
+        "domains": [],
+        "commitInfo": [],
+        "deferred": []
+      }
+    },
+    {
+      "status": "reconciled",
+      "complete": false,
+      "checkpoint": {
+        "version": "10",
+        "source": {
+          "umf": "0.1.0",
+          "id": "checkpoint-10",
+          "vocabularies": {
+            "umf.delta.log": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "log",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.delta.log": {
+                      "profile": "delta-jsonl-source",
+                      "text": "{\"checkpointMetadata\":{\"version\":10}}\n{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"v2Checkpoint\"],\"writerFeatures\":[\"v2Checkpoint\"]}}\n{\"metaData\":{\"id\":\"12345678-1234-1234-1234-123456789abc\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"name\":\"renamed\",\"description\":\"metadata replaced\"}}\n{\"txn\":{\"appId\":\"job\",\"version\":2}}\n{\"txn\":{\"appId\":\"other\",\"version\":9223372036854775807}}\n{\"sidecar\":{\"path\":\"part-0.parquet\",\"sizeInBytes\":4221,\"modificationTime\":0,\"tags\":{\"fixture\":\"authored\"}}}\n{\"sidecar\":{\"path\":\"part-1.parquet\",\"sizeInBytes\":3887,\"modificationTime\":0,\"tags\":{\"fixture\":\"authored\"}}}\n"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sources": [
+        {
+          "version": "11",
+          "source": {
+            "umf": "0.1.0",
+            "id": "commit-11",
+            "vocabularies": {
+              "umf.delta.log": {
+                "version": "0.1.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "log",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "source",
+                    "extensions": {
+                      "umf.delta.log": {
+                        "profile": "delta-jsonl-source",
+                        "text": "{\"remove\":{\"path\":\"b.parquet\",\"dataChange\":true,\"deletionTimestamp\":11}}\n{\"txn\":{\"appId\":\"job\",\"version\":1}}\n"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "version": "12",
+          "source": {
+            "umf": "0.1.0",
+            "id": "commit-12",
+            "vocabularies": {
+              "umf.delta.log": {
+                "version": "0.1.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "log",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "source",
+                    "extensions": {
+                      "umf.delta.log": {
+                        "profile": "delta-jsonl-source",
+                        "text": "{\"commitInfo\":{\"operation\":\"CHECKPOINT RECOVERY\"}}\n"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "sidecars": [
+        {
+          "path": "part-0.parquet",
+          "source": {
+            "umf": "0.1.0",
+            "id": "part-0.parquet",
+            "vocabularies": {
+              "umf.parquet": {
+                "version": "0.1.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "parquet",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "source",
+                    "extensions": {
+                      "umf.parquet": {
+                        "profile": "parquet-file-source",
+                        "encoding": "hex",
+                        "bytes": "504152311504151a151e4c150215001200000d3009000000622e706172717565741500151415182c15041510150615061c36022809622e706172717565741809622e706172717565740000000a24030000000302000102001504150015024c15001500120000001500151c15202c15041510150615061c36040000000e3402000000040003000000030200001504150015024c15001500120000001500151e15222c15041510150615061c36040000000f380200000004000400000003020000001504151015144c15021500120000081ce2010000000000001500151415182c15041510150615061c1808e2010000000000001808e20100000000000016022808e2010000000000001808e2010000000000000000000a24030000000302000102001504151015144c15021500120000081c00000000000000001500151415182c15041510150615061c1808000000000000000018080000000000000000160228080000000000000000180800000000000000000000000a24030000000302000102001500151015142c15041500150615061c1801001801001602280100180100000000081c0300000003020000150415ba011598014c150215001200005d78590000007b226e756d5265636f726473223a20312c20226d696e56616c75650110207b226964223a20327d0118046178521800546e756c6c436f756e74223a207b226964223a20307d7d1500151415182c15041510150615061c360228597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20327d2c20226d617856616c756573223a207b226964223a20327d2c20226e756c6c436f756e74223a207b226964223a20307d7d18597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20327d2c20226d617856616c756573223a207b226964223a20327d2c20226e756c6c436f756e74223a207b226964223a20307d7d0000000a240300000003020001020015041518151c4c150215001200000c2c080000007265766973696f6e1500152015242c15041510150615061c360228087265766973696f6e18087265766973696f6e000000103c0200000004000300000003030001020015041516151a4c150215001200000b2807000000757064617465641500152215262c15041510150615061c36022807757064617465641807757064617465640000001140020000000400040000000304000001020015041526152a4c1502150012000013480f000000726574697265642e706172717565741500151415182c15041510150615061c3602280f726574697265642e70617271756574180f726574697265642e706172717565740000000a24030000000308000102001504151015144c15021500120000081c01000000000000001500151415182c15041510150615061c1808010000000000000018080100000000000000160228080100000000000000180801000000000000000000000a24030000000308000102001500151015142c15041500150615061c1801001801001602280100180100000000081c0300000003080000150419fc1335001806736368656d6115040035021803616464150e00150c250218047061746825004c1c0000003502180f706172746974696f6e56616c756573150215024c2c000000350418096b65795f76616c7565150400150c250018036b657925004c1c000000150c2502180576616c756525004c1c00000015042502180473697a65001504250218106d6f64696669636174696f6e54696d650015002502180a646174614368616e676500150c25021805737461747325004c1c0000003502180474616773150215024c2c000000350418096b65795f76616c7565150400150c250018036b657925004c1c000000150c2502180576616c756525004c1c0000003502180672656d6f7665150600150c250218047061746825004c1c00000015042502181164656c6574696f6e54696d657374616d700015002502180a646174614368616e6765001604191c19cc26001c150c193500061019280361646404706174681502160416a00116a801264226081c36022809622e706172717565741809622e7061727175657400192c15041500150200150015101502003c16121906193602000200000026001c150c19350006101948036164640f706172746974696f6e56616c756573096b65795f76616c7565036b6579150216041662166826ce0126b0011c360400192c15041500150200150015101502003c16001926040019460200020000000026001c150c19350006101948036164640f706172746974696f6e56616c756573096b65795f76616c75650576616c7565150216041664166a26b6022698021c360400192c15041500150200150015101502003c1600192604001956020002000000000026001c150419350006101928036164640473697a651502160416ba0116c20126b2032682031c1808e2010000000000001808e20100000000000016022808e2010000000000001808e20100000000000000192c15041500150200150015101502003c2906193602000200000026001c15041935000610192803616464106d6f64696669636174696f6e54696d651502160416ba0116c20126f40426c4041c18080000000000000000180800000000000000001602280800000000000000001808000000000000000000192c15041500150200150015101502003c2906193602000200000026001c1500192506001928036164640a646174614368616e676515021604165216562686063c180100180100160228010018010000191c150015001502003c2906193602000200000026001c150c19350006101928036164640573746174731502160416840516e60426940826dc061c360228597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20327d2c20226d617856616c756573223a207b226964223a20327d2c20226e756c6c436f756e74223a207b226964223a20307d7d18597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20327d2c20226d617856616c756573223a207b226964223a20327d2c20226e756c6c436f756e74223a207b226964223a20307d7d00192c15041500150200150015101502003c16b2011906193602000200000026001c150c19350006101948036164640474616773096b65795f76616c7565036b65791502160416a60116ae0126fa0b26c20b1c360228087265766973696f6e18087265766973696f6e00192c15041500150200150015101502003c16101926040019460200000200000026001c150c19350006101948036164640474616773096b65795f76616c75650576616c75651502160416a20116aa0126a60d26f00c1c360228077570646174656418077570646174656400192c15041500150200150015101502003c160e192604001956020000000200000026001c150c193500061019280672656d6f766504706174681502160416c40116cc0126e00e269a0e1c3602280f726574697265642e70617271756574180f726574697265642e7061727175657400192c15041500150200150015101502003c161e1906193602000200000026001c1504193500061019280672656d6f76651164656c6574696f6e54696d657374616d701502160416ba0116c20126961026e60f1c18080100000000000000180801000000000000001602280801000000000000001808010000000000000000192c15041500150200150015101502003c2906193602000200000026001c15001925060019280672656d6f76650a646174614368616e6765150216041652165626a8113c180100180100160228010018010000191c150015001502003c2906193602000200000016c8111604260816f61100191c180c4152524f573a736368656d6118ec092f2f2f2f2f36674441414151414141414141414b41417741426741464141674143674141414141424241414d414141414341414941414141424141494141414142414141414149414141444d4141414142414141414d7a382f2f38414141454e48414141414351414141414541414141417741414149514141414245414141414641414141415941414142795a573176646d5541414d6a382f2f38412f662f2f4141414242684141414141634141414142414141414141414141414b414141415a47463059554e6f5957356e5a51414139507a2f2f797a392f2f3841414145434541414141435141414141454141414141414141414245414141426b5a57786c64476c76626c52706257567a64474674634141414144442b2f2f3841414141425141414141476a392f2f384141414546454141414142674141414145414141414141414141415141414142775958526f4141414141466a392f2f2b512f662f2f4141414244537741414141774141414142414141414163414141426f416741416c41454141466742414141594151414136414141414c77414141415141414141417741414147466b5a4143592f662f2f3050332f2f7741414152455541414141484141414141514141414142414141414641414141415141414142305957647a41414141414d54392f2f38772f762f2f414141414452674141414167414141414241414141414941414142414141414146414141414163414141426c626e52796157567a415054392f2f38732f762f2f4141414242524141414141594141414142414141414141414141414641414141646d467364575541414141632f762f2f6950372f2f774141414155514141414146414141414151414141414141414141417741414147746c655142412f762f2f6550372f2f7741414151555141414141474141414141514141414141414141414251414141484e305958527a414141416150372f2f36442b2f2f384141414547454141414142774141414145414141414141414141416f414141426b5958526851326868626d646c414143552f762f2f7a50372f2f77414141514951414141414a41414141415141414141414141414145414141414731765a476c6d61574e6864476c76626c5270625755414141414130502f2f2f774141414146414141414143502f2f2f7741414151495141414141494141414141514141414141414141414241414141484e70656d5541414141414341414d4141674142774149414141414141414141554141414142412f2f2f2f41414142455251414141416b41414141424141414141454141414163414141414477414141484268636e527064476c76626c5a686248566c637741382f2f2f2f71502f2f2f774141414130594141414149414141414151414141414341414141554141414142514141414148414141415a573530636d6c6c637742732f2f2f2f70502f2f2f7741414151555141414141474141414141514141414141414141414251414141485a686248566c414141416c502f2f2f78414146414149414141414277414d414141414541415141414141414141414252414141414155414141414241414141414141414141444141414161325635414d6a2f2f2f3851414251414341414741416341444141414142414145414141414141414151555141414141484141414141514141414141414141414241414141484268644767414141414142414145414151414141413d001820706172717565742d6370702d6172726f772076657273696f6e2032312e302e3019cc1c00001c00001c00001c00001c00001c00001c00001c00001c00001c00001c00001c000000f60b000050415231"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "path": "part-1.parquet",
+          "source": {
+            "umf": "0.1.0",
+            "id": "part-1.parquet",
+            "vocabularies": {
+              "umf.parquet": {
+                "version": "0.1.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "parquet",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "source",
+                    "extensions": {
+                      "umf.parquet": {
+                        "profile": "parquet-file-source",
+                        "encoding": "hex",
+                        "bytes": "504152311504151a151e4c150215001200000d3009000000612e706172717565741500151215162c15021510150615061c36002809612e706172717565741809612e7061727175657400000009200200000002020102001504150015024c15001500120000001500151a151e2c15021510150615061c36020000000d30020000000200020000000202001504150015024c15001500120000001500151a151e2c15021510150615061c36020000000d30020000000200020000000202001504151015144c15021500120000081ce2010000000000001500151215162c15021510150615061c1808e2010000000000001808e20100000000000016002808e2010000000000001808e20100000000000000000009200200000002020102001504151015144c15021500120000081c00000000000000001500151215162c15021510150615061c18080000000000000000180800000000000000001600280800000000000000001808000000000000000000000009200200000002020102001500150e15122c15021500150615061c1801011801011600280101180101000000071802000000020201150415ba011596014c150215001200005d78590000007b226e756d5265636f726473223a20312c20226d696e56616c756501100c7b2269640117007d0118046178521800546e756c6c436f756e74223a207b226964223a20307d7d1500151215162c15021510150615061c360028597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20317d2c20226d617856616c756573223a207b226964223a20317d2c20226e756c6c436f756e74223a207b226964223a20307d7d18597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20317d2c20226d617856616c756573223a207b226964223a20317d2c20226e756c6c436f756e74223a207b226964223a20307d7d00000009200200000002020102001504150015024c15001500120000001500151a151e2c15021510150615061c36020000000d30020000000200020000000201001504150015024c15001500120000001500151a151e2c15021510150615061c36020000000d30020000000200020000000201001504150015024c15001500120000001500150e15122c15021510150615061c36020000000718020000000200001504150015024c15001500120000001500150e15122c15021510150615061c36020000000718020000000200001500150c15102c15021500150615061c36020000000614020000000200150419fc1335001806736368656d6115040035021803616464150e00150c250218047061746825004c1c0000003502180f706172746974696f6e56616c756573150215024c2c000000350418096b65795f76616c7565150400150c250018036b657925004c1c000000150c2502180576616c756525004c1c00000015042502180473697a65001504250218106d6f64696669636174696f6e54696d650015002502180a646174614368616e676500150c25021805737461747325004c1c0000003502180474616773150215024c2c000000350418096b65795f76616c7565150400150c250018036b657925004c1c000000150c2502180576616c756525004c1c0000003502180672656d6f7665150600150c250218047061746825004c1c00000015042502181164656c6574696f6e54696d657374616d700015002502180a646174614368616e6765001602191c19cc26001c150c1935000610192803616464047061746815021602169e0116a601264226081c36002809612e706172717565741809612e7061727175657400192c15041500150200150015101502003c16121906193600000200000026001c150c19350006101948036164640f706172746974696f6e56616c756573096b65795f76616c7565036b6579150216021660166626cc0126ae011c360200192c15041500150200150015101502003c16001926020019460000020000000026001c150c19350006101948036164640f706172746974696f6e56616c756573096b65795f76616c75650576616c7565150216021660166626b2022694021c360200192c15041500150200150015101502003c1600192602001956000002000000000026001c150419350006101928036164640473697a651502160216b80116c00126aa0326fa021c1808e2010000000000001808e20100000000000016002808e2010000000000001808e20100000000000000192c15041500150200150015101502003c2906193600000200000026001c15041935000610192803616464106d6f64696669636174696f6e54696d651502160216b80116c00126ea0426ba041c18080000000000000000180800000000000000001600280800000000000000001808000000000000000000192c15041500150200150015101502003c2906193600000200000026001c1500192506001928036164640a646174614368616e6765150216021650165426fa053c180101180101160028010118010100191c150015001502003c2906193600000200000026001c150c19350006101928036164640573746174731502160216820516e20426840826ce061c360028597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20317d2c20226d617856616c756573223a207b226964223a20317d2c20226e756c6c436f756e74223a207b226964223a20307d7d18597b226e756d5265636f726473223a20312c20226d696e56616c756573223a207b226964223a20317d2c20226d617856616c756573223a207b226964223a20317d2c20226e756c6c436f756e74223a207b226964223a20307d7d00192c15041500150200150015101502003c16b2011906193600000200000026001c150c19350006101948036164640474616773096b65795f76616c7565036b6579150216021660166626ce0b26b00b1c360200192c15041500150200150015101502003c16001926020019460002000000000026001c150c19350006101948036164640474616773096b65795f76616c75650576616c7565150216021660166626b40c26960c1c360200192c15041500150200150015101502003c1600192602001956000200000000000026001c150c193500061019280672656d6f76650470617468150216021654165a269a0d26fc0c1c360200192c15041500150200150015101502003c16001906193602000000000026001c1504193500061019280672656d6f76651164656c6574696f6e54696d657374616d70150216021654165a26f40d26d60d1c360200192c15041500150200150015101502003c2906193602000000000026001c15001925060019280672656d6f76650a646174614368616e6765150216021636163a26b00e3c360200191c150015001502003c2906193602000000000016be0e1602260816e20e00191c180c4152524f573a736368656d6118ec092f2f2f2f2f36674441414151414141414141414b41417741426741464141674143674141414141424241414d414141414341414941414141424141494141414142414141414149414141444d4141414142414141414d7a382f2f38414141454e48414141414351414141414541414141417741414149514141414245414141414641414141415941414142795a573176646d5541414d6a382f2f38412f662f2f4141414242684141414141634141414142414141414141414141414b414141415a47463059554e6f5957356e5a51414139507a2f2f797a392f2f3841414145434541414141435141414141454141414141414141414245414141426b5a57786c64476c76626c52706257567a64474674634141414144442b2f2f3841414141425141414141476a392f2f384141414546454141414142674141414145414141414141414141415141414142775958526f4141414141466a392f2f2b512f662f2f4141414244537741414141774141414142414141414163414141426f416741416c41454141466742414141594151414136414141414c77414141415141414141417741414147466b5a4143592f662f2f3050332f2f7741414152455541414141484141414141514141414142414141414641414141415141414142305957647a41414141414d54392f2f38772f762f2f414141414452674141414167414141414241414141414941414142414141414146414141414163414141426c626e52796157567a415054392f2f38732f762f2f4141414242524141414141594141414142414141414141414141414641414141646d467364575541414141632f762f2f6950372f2f774141414155514141414146414141414151414141414141414141417741414147746c655142412f762f2f6550372f2f7741414151555141414141474141414141514141414141414141414251414141484e305958527a414141416150372f2f36442b2f2f384141414547454141414142774141414145414141414141414141416f414141426b5958526851326868626d646c414143552f762f2f7a50372f2f77414141514951414141414a41414141415141414141414141414145414141414731765a476c6d61574e6864476c76626c5270625755414141414130502f2f2f774141414146414141414143502f2f2f7741414151495141414141494141414141514141414141414141414241414141484e70656d5541414141414341414d4141674142774149414141414141414141554141414142412f2f2f2f41414142455251414141416b41414141424141414141454141414163414141414477414141484268636e527064476c76626c5a686248566c637741382f2f2f2f71502f2f2f774141414130594141414149414141414151414141414341414141554141414142514141414148414141415a573530636d6c6c637742732f2f2f2f70502f2f2f7741414151555141414141474141414141514141414141414141414251414141485a686248566c414141416c502f2f2f78414146414149414141414277414d414141414541415141414141414141414252414141414155414141414241414141414141414141444141414161325635414d6a2f2f2f3851414251414341414741416341444141414142414145414141414141414151555141414141484141414141514141414141414141414241414141484268644767414141414142414145414151414141413d001820706172717565742d6370702d6172726f772076657273696f6e2032312e302e3019cc1c00001c00001c00001c00001c00001c00001c00001c00001c00001c00001c00001c000000720b000050415231"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "/checkpoint",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "/checkpoint",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+          "severity": "warning"
+        },
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/sidecars/0/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "path": "/sidecars/0/schema/3",
+          "severity": "warning",
+          "message": "Nested layout and value rules remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "path": "/sidecars/0/schema/11",
+          "severity": "warning",
+          "message": "Nested layout and value rules remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering"
+        },
+        {
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources"
+        },
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/sidecars/0/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        },
+        {
+          "code": "PARQUET_PHYSICAL_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Exact physical carriers decoded; logical validation, cross-column consistency and complete row assembly remain unverified"
+        },
+        {
+          "code": "PARQUET_ROW_LOGICAL_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Physical records assembled by schema index; logical validation and LIST/MAP projections remain separate"
+        },
+        {
+          "code": "PARQUET_VALUE_SCOPE",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Implemented logical views projected with physical scalars retained; unsupported meanings are opaque, other codecs/encodings remain unsupported and cross-system lowering is separate"
+        },
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "/sidecars/0",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_PARQUET_ACTION_VIEW",
+          "path": "/sidecars/0",
+          "severity": "warning",
+          "message": "Non-null action columns projected; known optional null fields normalized to absence with recorded paths. Annotated statistics conversions retain typed inputs and exact JSON outputs in scalarConversions. Native source is retained. Checkpoint protocol/state validity remains separate"
+        },
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/sidecars/1/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "path": "/sidecars/1/schema/3",
+          "severity": "warning",
+          "message": "Nested layout and value rules remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "path": "/sidecars/1/schema/11",
+          "severity": "warning",
+          "message": "Nested layout and value rules remain unverified"
+        },
+        {
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering"
+        },
+        {
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources"
+        },
+        {
+          "code": "PARQUET_UNINTERPRETED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values"
+        },
+        {
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated"
+        },
+        {
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified"
+        },
+        {
+          "code": "PARQUET_ROOT_REPETITION",
+          "path": "/sidecars/1/schema/0/repetition_type",
+          "severity": "warning",
+          "message": "REQUIRED root repetition retained; root contributes no definition/repetition level"
+        },
+        {
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified"
+        },
+        {
+          "code": "PARQUET_PAGE_PAYLOAD_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Page headers/boundaries and declared budgets checked; decompressed sizes, encodings, levels, values and CRCs remain unverified"
+        },
+        {
+          "code": "PARQUET_VALUES_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Physical bodies decoded within page budgets; present CRC32 checks passed. Value encodings, levels, dictionaries and scalar semantics remain unverified"
+        },
+        {
+          "code": "PARQUET_LEVEL_VALUES_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Level domains and row/null counts checked; cross-column structural consistency, dictionary indexes, physical values and complete row assembly remain unverified"
+        },
+        {
+          "code": "PARQUET_PHYSICAL_SEMANTICS_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Exact physical carriers decoded; logical validation, cross-column consistency and complete row assembly remain unverified"
+        },
+        {
+          "code": "PARQUET_ROW_LOGICAL_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Physical records assembled by schema index; logical validation and LIST/MAP projections remain separate"
+        },
+        {
+          "code": "PARQUET_VALUE_SCOPE",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Implemented logical views projected with physical scalars retained; unsupported meanings are opaque, other codecs/encodings remain unsupported and cross-system lowering is separate"
+        },
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "/sidecars/1",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_PARQUET_ACTION_VIEW",
+          "path": "/sidecars/1",
+          "severity": "warning",
+          "message": "Non-null action columns projected; known optional null fields normalized to absence with recorded paths. Annotated statistics conversions retain typed inputs and exact JSON outputs in scalarConversions. Native source is retained. Checkpoint protocol/state validity remains separate"
+        },
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "/derivedCheckpoint",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "/derivedCheckpoint",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "/sources/0",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "/sources/0",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "/sources/1",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "/sources/1",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_HISTORY_UNVERIFIED",
+          "path": "",
+          "message": "Action state only: feature requirements, encoded-path aliases, file contents, transaction legality and tombstone expiry remain unverified",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_SIDECAR_SCOPE",
+          "path": "",
+          "severity": "warning",
+          "message": "Exact supplied reference strings and byte sizes checked; URI aliases, physical placement, modification times and data-reader feature support remain unverified. Original checkpoint and sidecars are authoritative"
+        }
+      ],
+      "derivedCheckpoint": {
+        "version": "10",
+        "source": {
+          "umf": "0.1.0",
+          "id": "checkpoint-10-resolved",
+          "vocabularies": {
+            "umf.delta.log": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "log",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.delta.log": {
+                      "profile": "delta-jsonl-source",
+                      "text": "{\"checkpointMetadata\":{\"version\":10}}\n{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"v2Checkpoint\"],\"writerFeatures\":[\"v2Checkpoint\"]}}\n{\"metaData\":{\"id\":\"12345678-1234-1234-1234-123456789abc\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"name\":\"renamed\",\"description\":\"metadata replaced\"}}\n{\"txn\":{\"appId\":\"job\",\"version\":2}}\n{\"txn\":{\"appId\":\"other\",\"version\":9223372036854775807}}\n{\"add\":{\"path\":\"b.parquet\",\"partitionValues\":{},\"size\":482,\"modificationTime\":0,\"dataChange\":false,\"stats\":\"{\\\"numRecords\\\": 1, \\\"minValues\\\": {\\\"id\\\": 2}, \\\"maxValues\\\": {\\\"id\\\": 2}, \\\"nullCount\\\": {\\\"id\\\": 0}}\",\"tags\":{\"revision\":\"updated\"}}}\n{\"remove\":{\"path\":\"retired.parquet\",\"deletionTimestamp\":1,\"dataChange\":false}}\n{\"add\":{\"path\":\"a.parquet\",\"partitionValues\":{},\"size\":482,\"modificationTime\":0,\"dataChange\":true,\"stats\":\"{\\\"numRecords\\\": 1, \\\"minValues\\\": {\\\"id\\\": 1}, \\\"maxValues\\\": {\\\"id\\\": 1}, \\\"nullCount\\\": {\\\"id\\\": 0}}\"}}\n"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "origins": [
+        {
+          "line": 1,
+          "checkpointLine": 1
+        },
+        {
+          "line": 2,
+          "checkpointLine": 2
+        },
+        {
+          "line": 3,
+          "checkpointLine": 3
+        },
+        {
+          "line": 4,
+          "checkpointLine": 4
+        },
+        {
+          "line": 5,
+          "checkpointLine": 5
+        },
+        {
+          "line": 6,
+          "checkpointLine": 6,
+          "sidecar": 0,
+          "row": 1
+        },
+        {
+          "line": 7,
+          "checkpointLine": 6,
+          "sidecar": 0,
+          "row": 2
+        },
+        {
+          "line": 8,
+          "checkpointLine": 7,
+          "sidecar": 1,
+          "row": 1
+        }
+      ],
+      "omittedNullFields": [
+        {
+          "sidecar": 1,
+          "row": 1,
+          "path": "/add/tags"
+        }
+      ],
+      "scalarConversions": [],
+      "state": {
+        "version": "12",
+        "protocol": {
+          "kind": "object",
+          "members": {
+            "minReaderVersion": {
+              "kind": "number",
+              "value": "3"
+            },
+            "minWriterVersion": {
+              "kind": "number",
+              "value": "7"
+            },
+            "readerFeatures": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "string",
+                  "value": "v2Checkpoint"
+                }
+              ]
+            },
+            "writerFeatures": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "string",
+                  "value": "v2Checkpoint"
+                }
+              ]
+            }
+          }
+        },
+        "metaData": {
+          "kind": "object",
+          "members": {
+            "id": {
+              "kind": "string",
+              "value": "12345678-1234-1234-1234-123456789abc"
+            },
+            "format": {
+              "kind": "object",
+              "members": {
+                "provider": {
+                  "kind": "string",
+                  "value": "parquet"
+                },
+                "options": {
+                  "kind": "object",
+                  "members": {}
+                }
+              }
+            },
+            "schemaString": {
+              "kind": "string",
+              "value": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}"
+            },
+            "partitionColumns": {
+              "kind": "array",
+              "items": []
+            },
+            "configuration": {
+              "kind": "object",
+              "members": {}
+            },
+            "name": {
+              "kind": "string",
+              "value": "renamed"
+            },
+            "description": {
+              "kind": "string",
+              "value": "metadata replaced"
+            }
+          }
+        },
+        "adds": [
+          {
+            "kind": "object",
+            "members": {
+              "path": {
+                "kind": "string",
+                "value": "a.parquet"
+              },
+              "partitionValues": {
+                "kind": "object",
+                "members": {}
+              },
+              "size": {
+                "kind": "number",
+                "value": "482"
+              },
+              "modificationTime": {
+                "kind": "number",
+                "value": "0"
+              },
+              "dataChange": {
+                "kind": "boolean",
+                "value": true
+              },
+              "stats": {
+                "kind": "string",
+                "value": "{\"numRecords\": 1, \"minValues\": {\"id\": 1}, \"maxValues\": {\"id\": 1}, \"nullCount\": {\"id\": 0}}"
+              }
+            }
+          }
+        ],
+        "removes": [
+          {
+            "kind": "object",
+            "members": {
+              "path": {
+                "kind": "string",
+                "value": "retired.parquet"
+              },
+              "deletionTimestamp": {
+                "kind": "number",
+                "value": "1"
+              },
+              "dataChange": {
+                "kind": "boolean",
+                "value": false
+              }
+            }
+          },
+          {
+            "kind": "object",
+            "members": {
+              "path": {
+                "kind": "string",
+                "value": "b.parquet"
+              },
+              "dataChange": {
+                "kind": "boolean",
+                "value": true
+              },
+              "deletionTimestamp": {
+                "kind": "number",
+                "value": "11"
+              }
+            }
+          }
+        ],
+        "transactions": [
+          {
+            "kind": "object",
+            "members": {
+              "appId": {
+                "kind": "string",
+                "value": "job"
+              },
+              "version": {
+                "kind": "number",
+                "value": "1"
+              }
+            }
+          },
+          {
+            "kind": "object",
+            "members": {
+              "appId": {
+                "kind": "string",
+                "value": "other"
+              },
+              "version": {
+                "kind": "number",
+                "value": "9223372036854775807"
+              }
+            }
+          }
+        ],
+        "domains": [],
+        "commitInfo": [
+          {
+            "kind": "object",
+            "members": {
+              "operation": {
+                "kind": "string",
+                "value": "CHECKPOINT RECOVERY"
+              }
+            }
+          }
+        ],
+        "deferred": []
+      }
+    }
+  ]
+}

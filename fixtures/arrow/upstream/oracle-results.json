@@ -1,0 +1,918 @@
+{
+  "oracle": "pyarrow 21.0.0",
+  "commit": "9ff285c88565f0f6abc855918c6a342e70e4909c",
+  "cases": 182,
+  "equal": 179,
+  "results": [
+    {
+      "path": "0.14.1/generated_datetime.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "0.14.1/generated_datetime.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "0.14.1/generated_decimal.arrow_file",
+      "status": "umf-transform-blocked",
+      "rows": 7
+    },
+    {
+      "path": "0.14.1/generated_decimal.stream",
+      "status": "equal",
+      "rows": 7
+    },
+    {
+      "path": "0.14.1/generated_dictionary.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "0.14.1/generated_dictionary.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "0.14.1/generated_interval.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "0.14.1/generated_interval.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "0.14.1/generated_map.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "0.14.1/generated_map.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "0.14.1/generated_nested.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "0.14.1/generated_nested.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "0.14.1/generated_primitive.arrow_file",
+      "status": "equal",
+      "rows": 37
+    },
+    {
+      "path": "0.14.1/generated_primitive.stream",
+      "status": "equal",
+      "rows": 37
+    },
+    {
+      "path": "0.14.1/generated_primitive_no_batches.arrow_file",
+      "status": "umf-transform-blocked",
+      "rows": 0
+    },
+    {
+      "path": "0.14.1/generated_primitive_no_batches.stream",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "0.14.1/generated_primitive_zerolength.arrow_file",
+      "status": "umf-transform-blocked",
+      "rows": 0
+    },
+    {
+      "path": "0.14.1/generated_primitive_zerolength.stream",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "0.17.1/generated_union.arrow_file",
+      "status": "equal",
+      "rows": 11
+    },
+    {
+      "path": "0.17.1/generated_union.stream",
+      "status": "equal",
+      "rows": 11
+    },
+    {
+      "path": "1.0.0-bigendian/generated_custom_metadata.arrow_file",
+      "status": "equal",
+      "rows": 1
+    },
+    {
+      "path": "1.0.0-bigendian/generated_custom_metadata.stream",
+      "status": "equal",
+      "rows": 1
+    },
+    {
+      "path": "1.0.0-bigendian/generated_datetime.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-bigendian/generated_datetime.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-bigendian/generated_decimal.arrow_file",
+      "status": "equal",
+      "rows": 306
+    },
+    {
+      "path": "1.0.0-bigendian/generated_decimal.stream",
+      "status": "equal",
+      "rows": 306
+    },
+    {
+      "path": "1.0.0-bigendian/generated_decimal256.arrow_file",
+      "status": "equal",
+      "rows": 279
+    },
+    {
+      "path": "1.0.0-bigendian/generated_decimal256.stream",
+      "status": "equal",
+      "rows": 279
+    },
+    {
+      "path": "1.0.0-bigendian/generated_dictionary.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-bigendian/generated_dictionary.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-bigendian/generated_dictionary_unsigned.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-bigendian/generated_dictionary_unsigned.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-bigendian/generated_duplicate_fieldnames.arrow_file",
+      "status": "equal",
+      "rows": 1
+    },
+    {
+      "path": "1.0.0-bigendian/generated_duplicate_fieldnames.stream",
+      "status": "equal",
+      "rows": 1
+    },
+    {
+      "path": "1.0.0-bigendian/generated_extension.arrow_file",
+      "status": "equal",
+      "rows": 13
+    },
+    {
+      "path": "1.0.0-bigendian/generated_extension.stream",
+      "status": "equal",
+      "rows": 13
+    },
+    {
+      "path": "1.0.0-bigendian/generated_interval.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-bigendian/generated_interval.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-bigendian/generated_map.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-bigendian/generated_map.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-bigendian/generated_map_non_canonical.arrow_file",
+      "status": "equal",
+      "rows": 7
+    },
+    {
+      "path": "1.0.0-bigendian/generated_map_non_canonical.stream",
+      "status": "equal",
+      "rows": 7
+    },
+    {
+      "path": "1.0.0-bigendian/generated_nested.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-bigendian/generated_nested.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-bigendian/generated_nested_dictionary.arrow_file",
+      "status": "equal",
+      "rows": 23
+    },
+    {
+      "path": "1.0.0-bigendian/generated_nested_dictionary.stream",
+      "status": "equal",
+      "rows": 23
+    },
+    {
+      "path": "1.0.0-bigendian/generated_nested_large_offsets.arrow_file",
+      "status": "equal",
+      "rows": 13
+    },
+    {
+      "path": "1.0.0-bigendian/generated_nested_large_offsets.stream",
+      "status": "equal",
+      "rows": 13
+    },
+    {
+      "path": "1.0.0-bigendian/generated_null.arrow_file",
+      "status": "equal",
+      "rows": 10
+    },
+    {
+      "path": "1.0.0-bigendian/generated_null.stream",
+      "status": "equal",
+      "rows": 10
+    },
+    {
+      "path": "1.0.0-bigendian/generated_null_trivial.arrow_file",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "1.0.0-bigendian/generated_null_trivial.stream",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive.arrow_file",
+      "status": "equal",
+      "rows": 37
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive.stream",
+      "status": "equal",
+      "rows": 37
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive_large_offsets.arrow_file",
+      "status": "equal",
+      "rows": 37
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive_large_offsets.stream",
+      "status": "equal",
+      "rows": 37
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive_no_batches.arrow_file",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive_no_batches.stream",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive_zerolength.arrow_file",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive_zerolength.stream",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "1.0.0-bigendian/generated_recursive_nested.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-bigendian/generated_recursive_nested.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-bigendian/generated_union.arrow_file",
+      "status": "equal",
+      "rows": 11
+    },
+    {
+      "path": "1.0.0-bigendian/generated_union.stream",
+      "status": "equal",
+      "rows": 11
+    },
+    {
+      "path": "1.0.0-littleendian/generated_custom_metadata.arrow_file",
+      "status": "equal",
+      "rows": 1
+    },
+    {
+      "path": "1.0.0-littleendian/generated_custom_metadata.stream",
+      "status": "equal",
+      "rows": 1
+    },
+    {
+      "path": "1.0.0-littleendian/generated_datetime.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-littleendian/generated_datetime.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-littleendian/generated_decimal.arrow_file",
+      "status": "equal",
+      "rows": 306
+    },
+    {
+      "path": "1.0.0-littleendian/generated_decimal.stream",
+      "status": "equal",
+      "rows": 306
+    },
+    {
+      "path": "1.0.0-littleendian/generated_decimal256.arrow_file",
+      "status": "equal",
+      "rows": 279
+    },
+    {
+      "path": "1.0.0-littleendian/generated_decimal256.stream",
+      "status": "equal",
+      "rows": 279
+    },
+    {
+      "path": "1.0.0-littleendian/generated_dictionary.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-littleendian/generated_dictionary.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-littleendian/generated_dictionary_unsigned.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-littleendian/generated_dictionary_unsigned.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-littleendian/generated_duplicate_fieldnames.arrow_file",
+      "status": "equal",
+      "rows": 1
+    },
+    {
+      "path": "1.0.0-littleendian/generated_duplicate_fieldnames.stream",
+      "status": "equal",
+      "rows": 1
+    },
+    {
+      "path": "1.0.0-littleendian/generated_extension.arrow_file",
+      "status": "equal",
+      "rows": 13
+    },
+    {
+      "path": "1.0.0-littleendian/generated_extension.stream",
+      "status": "equal",
+      "rows": 13
+    },
+    {
+      "path": "1.0.0-littleendian/generated_interval.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-littleendian/generated_interval.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-littleendian/generated_map.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-littleendian/generated_map.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-littleendian/generated_map_non_canonical.arrow_file",
+      "status": "equal",
+      "rows": 7
+    },
+    {
+      "path": "1.0.0-littleendian/generated_map_non_canonical.stream",
+      "status": "equal",
+      "rows": 7
+    },
+    {
+      "path": "1.0.0-littleendian/generated_nested.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-littleendian/generated_nested.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-littleendian/generated_nested_dictionary.arrow_file",
+      "status": "equal",
+      "rows": 23
+    },
+    {
+      "path": "1.0.0-littleendian/generated_nested_dictionary.stream",
+      "status": "equal",
+      "rows": 23
+    },
+    {
+      "path": "1.0.0-littleendian/generated_nested_large_offsets.arrow_file",
+      "status": "equal",
+      "rows": 13
+    },
+    {
+      "path": "1.0.0-littleendian/generated_nested_large_offsets.stream",
+      "status": "equal",
+      "rows": 13
+    },
+    {
+      "path": "1.0.0-littleendian/generated_null.arrow_file",
+      "status": "equal",
+      "rows": 10
+    },
+    {
+      "path": "1.0.0-littleendian/generated_null.stream",
+      "status": "equal",
+      "rows": 10
+    },
+    {
+      "path": "1.0.0-littleendian/generated_null_trivial.arrow_file",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "1.0.0-littleendian/generated_null_trivial.stream",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive.arrow_file",
+      "status": "equal",
+      "rows": 37
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive.stream",
+      "status": "equal",
+      "rows": 37
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive_large_offsets.arrow_file",
+      "status": "equal",
+      "rows": 37
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive_large_offsets.stream",
+      "status": "equal",
+      "rows": 37
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive_no_batches.arrow_file",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive_no_batches.stream",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive_zerolength.arrow_file",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive_zerolength.stream",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "1.0.0-littleendian/generated_recursive_nested.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-littleendian/generated_recursive_nested.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "1.0.0-littleendian/generated_union.arrow_file",
+      "status": "equal",
+      "rows": 11
+    },
+    {
+      "path": "1.0.0-littleendian/generated_union.stream",
+      "status": "equal",
+      "rows": 11
+    },
+    {
+      "path": "2.0.0-compression/generated_lz4.arrow_file",
+      "status": "equal",
+      "rows": 60
+    },
+    {
+      "path": "2.0.0-compression/generated_lz4.stream",
+      "status": "equal",
+      "rows": 60
+    },
+    {
+      "path": "2.0.0-compression/generated_uncompressible_lz4.arrow_file",
+      "status": "equal",
+      "rows": 4
+    },
+    {
+      "path": "2.0.0-compression/generated_uncompressible_lz4.stream",
+      "status": "equal",
+      "rows": 4
+    },
+    {
+      "path": "2.0.0-compression/generated_uncompressible_zstd.arrow_file",
+      "status": "equal",
+      "rows": 4
+    },
+    {
+      "path": "2.0.0-compression/generated_uncompressible_zstd.stream",
+      "status": "equal",
+      "rows": 4
+    },
+    {
+      "path": "2.0.0-compression/generated_zstd.arrow_file",
+      "status": "equal",
+      "rows": 60
+    },
+    {
+      "path": "2.0.0-compression/generated_zstd.stream",
+      "status": "equal",
+      "rows": 60
+    },
+    {
+      "path": "4.0.0-shareddict/generated_shared_dict.arrow_file",
+      "status": "equal",
+      "rows": 2
+    },
+    {
+      "path": "4.0.0-shareddict/generated_shared_dict.stream",
+      "status": "equal",
+      "rows": 2
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary.arrow_file",
+      "status": "equal",
+      "rows": 37
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary.stream",
+      "status": "equal",
+      "rows": 37
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary_no_batches.arrow_file",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary_no_batches.stream",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary_view.arrow_file",
+      "status": "equal",
+      "rows": 263
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary_view.stream",
+      "status": "equal",
+      "rows": 263
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary_zerolength.arrow_file",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary_zerolength.stream",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "cpp-21.0.0/generated_custom_metadata.arrow_file",
+      "status": "equal",
+      "rows": 1
+    },
+    {
+      "path": "cpp-21.0.0/generated_custom_metadata.stream",
+      "status": "equal",
+      "rows": 1
+    },
+    {
+      "path": "cpp-21.0.0/generated_datetime.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_datetime.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal256.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal256.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal32.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal32.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal64.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal64.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_dictionary.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_dictionary.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_dictionary_unsigned.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_dictionary_unsigned.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_duplicate_fieldnames.arrow_file",
+      "status": "equal",
+      "rows": 1
+    },
+    {
+      "path": "cpp-21.0.0/generated_duplicate_fieldnames.stream",
+      "status": "equal",
+      "rows": 1
+    },
+    {
+      "path": "cpp-21.0.0/generated_duration.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_duration.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_extension.arrow_file",
+      "status": "equal",
+      "rows": 13
+    },
+    {
+      "path": "cpp-21.0.0/generated_extension.stream",
+      "status": "equal",
+      "rows": 13
+    },
+    {
+      "path": "cpp-21.0.0/generated_interval.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_interval.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_interval_mdn.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_interval_mdn.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_large_binary.arrow_file",
+      "status": "equal",
+      "rows": 37
+    },
+    {
+      "path": "cpp-21.0.0/generated_large_binary.stream",
+      "status": "equal",
+      "rows": 37
+    },
+    {
+      "path": "cpp-21.0.0/generated_list_view.arrow_file",
+      "status": "equal",
+      "rows": 263
+    },
+    {
+      "path": "cpp-21.0.0/generated_list_view.stream",
+      "status": "equal",
+      "rows": 263
+    },
+    {
+      "path": "cpp-21.0.0/generated_map.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_map.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_map_non_canonical.arrow_file",
+      "status": "equal",
+      "rows": 7
+    },
+    {
+      "path": "cpp-21.0.0/generated_map_non_canonical.stream",
+      "status": "equal",
+      "rows": 7
+    },
+    {
+      "path": "cpp-21.0.0/generated_nested.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_nested.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_nested_dictionary.arrow_file",
+      "status": "equal",
+      "rows": 23
+    },
+    {
+      "path": "cpp-21.0.0/generated_nested_dictionary.stream",
+      "status": "equal",
+      "rows": 23
+    },
+    {
+      "path": "cpp-21.0.0/generated_nested_large_offsets.arrow_file",
+      "status": "equal",
+      "rows": 13
+    },
+    {
+      "path": "cpp-21.0.0/generated_nested_large_offsets.stream",
+      "status": "equal",
+      "rows": 13
+    },
+    {
+      "path": "cpp-21.0.0/generated_null.arrow_file",
+      "status": "equal",
+      "rows": 10
+    },
+    {
+      "path": "cpp-21.0.0/generated_null.stream",
+      "status": "equal",
+      "rows": 10
+    },
+    {
+      "path": "cpp-21.0.0/generated_null_trivial.arrow_file",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "cpp-21.0.0/generated_null_trivial.stream",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "cpp-21.0.0/generated_primitive.arrow_file",
+      "status": "equal",
+      "rows": 37
+    },
+    {
+      "path": "cpp-21.0.0/generated_primitive.stream",
+      "status": "equal",
+      "rows": 37
+    },
+    {
+      "path": "cpp-21.0.0/generated_primitive_no_batches.arrow_file",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "cpp-21.0.0/generated_primitive_no_batches.stream",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "cpp-21.0.0/generated_primitive_zerolength.arrow_file",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "cpp-21.0.0/generated_primitive_zerolength.stream",
+      "status": "equal",
+      "rows": 0
+    },
+    {
+      "path": "cpp-21.0.0/generated_recursive_nested.arrow_file",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_recursive_nested.stream",
+      "status": "equal",
+      "rows": 17
+    },
+    {
+      "path": "cpp-21.0.0/generated_run_end_encoded.arrow_file",
+      "status": "equal",
+      "rows": 27
+    },
+    {
+      "path": "cpp-21.0.0/generated_run_end_encoded.stream",
+      "status": "equal",
+      "rows": 27
+    },
+    {
+      "path": "cpp-21.0.0/generated_union.arrow_file",
+      "status": "equal",
+      "rows": 11
+    },
+    {
+      "path": "cpp-21.0.0/generated_union.stream",
+      "status": "equal",
+      "rows": 11
+    }
+  ]
+}

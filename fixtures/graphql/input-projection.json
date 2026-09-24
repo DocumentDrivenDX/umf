@@ -1,0 +1,837 @@
+{
+  "status": "projected",
+  "source": {
+    "umf": "0.1.0",
+    "id": "input-source",
+    "vocabularies": {
+      "umf.graphql": {
+        "version": "0.1.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "schema",
+        "namespace": "",
+        "elements": [
+          {
+            "id": "schema",
+            "extensions": {
+              "umf.graphql": {
+                "profile": "graphql-js-17.0.2-sdl",
+                "ast": {
+                  "kind": "Document",
+                  "definitions": [
+                    {
+                      "kind": "EnumTypeDefinition",
+                      "name": {
+                        "kind": "Name",
+                        "value": "Mode"
+                      },
+                      "values": [
+                        {
+                          "kind": "EnumValueDefinition",
+                          "name": {
+                            "kind": "Name",
+                            "value": "FAST"
+                          }
+                        },
+                        {
+                          "kind": "EnumValueDefinition",
+                          "name": {
+                            "kind": "Name",
+                            "value": "SLOW"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "InputObjectTypeDefinition",
+                      "name": {
+                        "kind": "Name",
+                        "value": "Selector"
+                      },
+                      "directives": [
+                        {
+                          "kind": "Directive",
+                          "name": {
+                            "kind": "Name",
+                            "value": "oneOf"
+                          }
+                        }
+                      ],
+                      "fields": [
+                        {
+                          "kind": "InputValueDefinition",
+                          "name": {
+                            "kind": "Name",
+                            "value": "id"
+                          },
+                          "type": {
+                            "kind": "NamedType",
+                            "name": {
+                              "kind": "Name",
+                              "value": "ID"
+                            }
+                          }
+                        },
+                        {
+                          "kind": "InputValueDefinition",
+                          "name": {
+                            "kind": "Name",
+                            "value": "name"
+                          },
+                          "type": {
+                            "kind": "NamedType",
+                            "name": {
+                              "kind": "Name",
+                              "value": "String"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "InputObjectTypeDefinition",
+                      "name": {
+                        "kind": "Name",
+                        "value": "Filter"
+                      },
+                      "fields": [
+                        {
+                          "kind": "InputValueDefinition",
+                          "name": {
+                            "kind": "Name",
+                            "value": "required"
+                          },
+                          "type": {
+                            "kind": "NonNullType",
+                            "type": {
+                              "kind": "NamedType",
+                              "name": {
+                                "kind": "Name",
+                                "value": "String"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "kind": "InputValueDefinition",
+                          "name": {
+                            "kind": "Name",
+                            "value": "defaulted"
+                          },
+                          "type": {
+                            "kind": "NonNullType",
+                            "type": {
+                              "kind": "NamedType",
+                              "name": {
+                                "kind": "Name",
+                                "value": "Int"
+                              }
+                            }
+                          },
+                          "defaultValue": {
+                            "kind": "IntValue",
+                            "value": "7"
+                          }
+                        },
+                        {
+                          "kind": "InputValueDefinition",
+                          "name": {
+                            "kind": "Name",
+                            "value": "optional"
+                          },
+                          "type": {
+                            "kind": "NamedType",
+                            "name": {
+                              "kind": "Name",
+                              "value": "String"
+                            }
+                          }
+                        },
+                        {
+                          "kind": "InputValueDefinition",
+                          "name": {
+                            "kind": "Name",
+                            "value": "list"
+                          },
+                          "type": {
+                            "kind": "ListType",
+                            "type": {
+                              "kind": "NonNullType",
+                              "type": {
+                                "kind": "NamedType",
+                                "name": {
+                                  "kind": "Name",
+                                  "value": "Int"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "kind": "InputValueDefinition",
+                          "name": {
+                            "kind": "Name",
+                            "value": "nested"
+                          },
+                          "type": {
+                            "kind": "NamedType",
+                            "name": {
+                              "kind": "Name",
+                              "value": "Filter"
+                            }
+                          }
+                        },
+                        {
+                          "kind": "InputValueDefinition",
+                          "name": {
+                            "kind": "Name",
+                            "value": "selector"
+                          },
+                          "type": {
+                            "kind": "NamedType",
+                            "name": {
+                              "kind": "Name",
+                              "value": "Selector"
+                            }
+                          }
+                        },
+                        {
+                          "kind": "InputValueDefinition",
+                          "name": {
+                            "kind": "Name",
+                            "value": "id"
+                          },
+                          "type": {
+                            "kind": "NamedType",
+                            "name": {
+                              "kind": "Name",
+                              "value": "ID"
+                            }
+                          }
+                        },
+                        {
+                          "kind": "InputValueDefinition",
+                          "name": {
+                            "kind": "Name",
+                            "value": "mode"
+                          },
+                          "type": {
+                            "kind": "NamedType",
+                            "name": {
+                              "kind": "Name",
+                              "value": "Mode"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "ObjectTypeDefinition",
+                      "name": {
+                        "kind": "Name",
+                        "value": "Query"
+                      },
+                      "fields": [
+                        {
+                          "kind": "FieldDefinition",
+                          "name": {
+                            "kind": "Name",
+                            "value": "search"
+                          },
+                          "arguments": [
+                            {
+                              "kind": "InputValueDefinition",
+                              "name": {
+                                "kind": "Name",
+                                "value": "filter"
+                              },
+                              "type": {
+                                "kind": "NonNullType",
+                                "type": {
+                                  "kind": "NamedType",
+                                  "name": {
+                                    "kind": "Name",
+                                    "value": "Filter"
+                                  }
+                                }
+                              }
+                            }
+                          ],
+                          "type": {
+                            "kind": "NamedType",
+                            "name": {
+                              "kind": "Name",
+                              "value": "String"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "originalSource": "enum Mode { FAST SLOW }\ninput Selector @oneOf { id: ID name: String }\ninput Filter {\n  required: String!\n  defaulted: Int! = 7\n  optional: String\n  list: [Int!]\n  nested: Filter\n  selector: Selector\n  id: ID\n  mode: Mode\n}\ntype Query { search(filter: Filter!): String }\n"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "policy": {
+    "id": "input-document",
+    "schemaId": "https://example.test/graphql-input",
+    "inputType": "Filter!",
+    "list": "array-only",
+    "idEncoding": "string-or-integer",
+    "lossPolicy": "allow-reported-loss"
+  },
+  "issues": [
+    {
+      "path": "/types/Filter/fields/defaulted/default",
+      "code": "INPUT_DEFAULT",
+      "classification": "not-enforced",
+      "detail": "Omission is accepted where GraphQL supplies a default, but JSON validation does not insert or coerce that value",
+      "retainedInSource": true
+    },
+    {
+      "path": "/types/Filter/fields/list",
+      "code": "LIST_COERCION",
+      "classification": "representation-change",
+      "detail": "Target requires arrays; GraphQL also wraps a non-list input into a singleton list, recursively",
+      "retainedInSource": true
+    },
+    {
+      "path": "/types/Selector/fields/id",
+      "code": "ID_COERCION",
+      "classification": "representation-change",
+      "detail": "String/integer ID inputs are accepted, but integer-to-string coercion and host precision are not performed",
+      "retainedInSource": true
+    },
+    {
+      "path": "/types/Filter/fields/id",
+      "code": "ID_COERCION",
+      "classification": "representation-change",
+      "detail": "String/integer ID inputs are accepted, but integer-to-string coercion and host precision are not performed",
+      "retainedInSource": true
+    },
+    {
+      "path": "",
+      "code": "INPUT_MODEL_ONLY",
+      "classification": "not-enforced",
+      "detail": "Selected input shape does not represent operations, output selection, resolvers, directive behavior, variable/argument processing or source schema identity",
+      "retainedInSource": true
+    }
+  ],
+  "mappings": [
+    {
+      "name": "Filter",
+      "targetPointer": "/$defs/input_0"
+    },
+    {
+      "name": "Selector",
+      "targetPointer": "/$defs/input_1"
+    }
+  ],
+  "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/graphql-input\",\n  \"$ref\": \"#/$defs/input_0\",\n  \"$defs\": {\n    \"input_0\": {\n      \"title\": \"Filter\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"required\": {\n          \"type\": \"string\"\n        },\n        \"defaulted\": {\n          \"type\": \"integer\",\n          \"minimum\": -2147483648,\n          \"maximum\": 2147483647\n        },\n        \"optional\": {\n          \"anyOf\": [\n            {\n              \"type\": \"string\"\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        },\n        \"list\": {\n          \"anyOf\": [\n            {\n              \"type\": \"array\",\n              \"items\": {\n                \"type\": \"integer\",\n                \"minimum\": -2147483648,\n                \"maximum\": 2147483647\n              }\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        },\n        \"nested\": {\n          \"anyOf\": [\n            {\n              \"$ref\": \"#/$defs/input_0\"\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        },\n        \"selector\": {\n          \"anyOf\": [\n            {\n              \"$ref\": \"#/$defs/input_1\"\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        },\n        \"id\": {\n          \"anyOf\": [\n            {\n              \"anyOf\": [\n                {\n                  \"type\": \"string\"\n                },\n                {\n                  \"type\": \"integer\"\n                }\n              ]\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        },\n        \"mode\": {\n          \"anyOf\": [\n            {\n              \"type\": \"string\",\n              \"enum\": [\n                \"FAST\",\n                \"SLOW\"\n              ]\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        }\n      },\n      \"additionalProperties\": false,\n      \"required\": [\n        \"required\"\n      ]\n    },\n    \"input_1\": {\n      \"title\": \"Selector\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"id\": {\n          \"anyOf\": [\n            {\n              \"anyOf\": [\n                {\n                  \"type\": \"string\"\n                },\n                {\n                  \"type\": \"integer\"\n                }\n              ]\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        },\n        \"name\": {\n          \"anyOf\": [\n            {\n              \"type\": \"string\"\n            },\n            {\n              \"type\": \"null\"\n            }\n          ]\n        }\n      },\n      \"additionalProperties\": false,\n      \"minProperties\": 1,\n      \"maxProperties\": 1,\n      \"oneOf\": [\n        {\n          \"required\": [\n            \"id\"\n          ],\n          \"properties\": {\n            \"id\": {\n              \"not\": {\n                \"type\": \"null\"\n              }\n            }\n          }\n        },\n        {\n          \"required\": [\n            \"name\"\n          ],\n          \"properties\": {\n            \"name\": {\n              \"not\": {\n                \"type\": \"null\"\n              }\n            }\n          }\n        }\n      ]\n    }\n  }\n}\n",
+  "target": {
+    "umf": "0.1.0",
+    "id": "input-document",
+    "vocabularies": {
+      "umf.json-schema": {
+        "version": "0.1.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "schema",
+        "namespace": "https://example.test/graphql-input",
+        "elements": [
+          {
+            "id": "schema",
+            "extensions": {
+              "umf.json-schema": {
+                "dialect": "https://json-schema.org/draft/2020-12/schema",
+                "baseUri": "https://example.test/graphql-input",
+                "root": {
+                  "kind": "object",
+                  "members": {
+                    "$schema": {
+                      "kind": "string",
+                      "value": "https://json-schema.org/draft/2020-12/schema"
+                    },
+                    "$id": {
+                      "kind": "string",
+                      "value": "https://example.test/graphql-input"
+                    },
+                    "$ref": {
+                      "kind": "string",
+                      "value": "#/$defs/input_0"
+                    },
+                    "$defs": {
+                      "kind": "object",
+                      "members": {
+                        "input_0": {
+                          "kind": "object",
+                          "members": {
+                            "title": {
+                              "kind": "string",
+                              "value": "Filter"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "required": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "string"
+                                    }
+                                  }
+                                },
+                                "defaulted": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "integer"
+                                    },
+                                    "minimum": {
+                                      "kind": "number",
+                                      "value": "-2147483648"
+                                    },
+                                    "maximum": {
+                                      "kind": "number",
+                                      "value": "2147483647"
+                                    }
+                                  }
+                                },
+                                "optional": {
+                                  "kind": "object",
+                                  "members": {
+                                    "anyOf": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "string"
+                                            }
+                                          }
+                                        },
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "null"
+                                            }
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "list": {
+                                  "kind": "object",
+                                  "members": {
+                                    "anyOf": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "array"
+                                            },
+                                            "items": {
+                                              "kind": "object",
+                                              "members": {
+                                                "type": {
+                                                  "kind": "string",
+                                                  "value": "integer"
+                                                },
+                                                "minimum": {
+                                                  "kind": "number",
+                                                  "value": "-2147483648"
+                                                },
+                                                "maximum": {
+                                                  "kind": "number",
+                                                  "value": "2147483647"
+                                                }
+                                              }
+                                            }
+                                          }
+                                        },
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "null"
+                                            }
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "nested": {
+                                  "kind": "object",
+                                  "members": {
+                                    "anyOf": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "$ref": {
+                                              "kind": "string",
+                                              "value": "#/$defs/input_0"
+                                            }
+                                          }
+                                        },
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "null"
+                                            }
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "selector": {
+                                  "kind": "object",
+                                  "members": {
+                                    "anyOf": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "$ref": {
+                                              "kind": "string",
+                                              "value": "#/$defs/input_1"
+                                            }
+                                          }
+                                        },
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "null"
+                                            }
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "id": {
+                                  "kind": "object",
+                                  "members": {
+                                    "anyOf": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "anyOf": {
+                                              "kind": "array",
+                                              "items": [
+                                                {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "type": {
+                                                      "kind": "string",
+                                                      "value": "string"
+                                                    }
+                                                  }
+                                                },
+                                                {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "type": {
+                                                      "kind": "string",
+                                                      "value": "integer"
+                                                    }
+                                                  }
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        },
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "null"
+                                            }
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "mode": {
+                                  "kind": "object",
+                                  "members": {
+                                    "anyOf": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "string"
+                                            },
+                                            "enum": {
+                                              "kind": "array",
+                                              "items": [
+                                                {
+                                                  "kind": "string",
+                                                  "value": "FAST"
+                                                },
+                                                {
+                                                  "kind": "string",
+                                                  "value": "SLOW"
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        },
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "null"
+                                            }
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": false
+                            },
+                            "required": {
+                              "kind": "array",
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "required"
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        "input_1": {
+                          "kind": "object",
+                          "members": {
+                            "title": {
+                              "kind": "string",
+                              "value": "Selector"
+                            },
+                            "type": {
+                              "kind": "string",
+                              "value": "object"
+                            },
+                            "properties": {
+                              "kind": "object",
+                              "members": {
+                                "id": {
+                                  "kind": "object",
+                                  "members": {
+                                    "anyOf": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "anyOf": {
+                                              "kind": "array",
+                                              "items": [
+                                                {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "type": {
+                                                      "kind": "string",
+                                                      "value": "string"
+                                                    }
+                                                  }
+                                                },
+                                                {
+                                                  "kind": "object",
+                                                  "members": {
+                                                    "type": {
+                                                      "kind": "string",
+                                                      "value": "integer"
+                                                    }
+                                                  }
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        },
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "null"
+                                            }
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                },
+                                "name": {
+                                  "kind": "object",
+                                  "members": {
+                                    "anyOf": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "string"
+                                            }
+                                          }
+                                        },
+                                        {
+                                          "kind": "object",
+                                          "members": {
+                                            "type": {
+                                              "kind": "string",
+                                              "value": "null"
+                                            }
+                                          }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "additionalProperties": {
+                              "kind": "boolean",
+                              "value": false
+                            },
+                            "minProperties": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "maxProperties": {
+                              "kind": "number",
+                              "value": "1"
+                            },
+                            "oneOf": {
+                              "kind": "array",
+                              "items": [
+                                {
+                                  "kind": "object",
+                                  "members": {
+                                    "required": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "id"
+                                        }
+                                      ]
+                                    },
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "id": {
+                                          "kind": "object",
+                                          "members": {
+                                            "not": {
+                                              "kind": "object",
+                                              "members": {
+                                                "type": {
+                                                  "kind": "string",
+                                                  "value": "null"
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                {
+                                  "kind": "object",
+                                  "members": {
+                                    "required": {
+                                      "kind": "array",
+                                      "items": [
+                                        {
+                                          "kind": "string",
+                                          "value": "name"
+                                        }
+                                      ]
+                                    },
+                                    "properties": {
+                                      "kind": "object",
+                                      "members": {
+                                        "name": {
+                                          "kind": "object",
+                                          "members": {
+                                            "not": {
+                                              "kind": "object",
+                                              "members": {
+                                                "type": {
+                                                  "kind": "string",
+                                                  "value": "null"
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "resources": {}
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

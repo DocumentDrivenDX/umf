@@ -1,0 +1,125 @@
+{
+  "versions": {
+    "graphql-core": "3.2.12",
+    "jsonschema": "4.26.0"
+  },
+  "vectors": [
+    {
+      "name": "minimal",
+      "graphqlAccepted": true,
+      "jsonSchemaAccepted": true,
+      "requiredIssues": [
+        [
+          "INPUT_DEFAULT",
+          "/types/Filter/fields/defaulted/default"
+        ]
+      ]
+    },
+    {
+      "name": "nested",
+      "graphqlAccepted": true,
+      "jsonSchemaAccepted": true,
+      "requiredIssues": [
+        [
+          "INPUT_DEFAULT",
+          "/types/Filter/fields/defaulted/default"
+        ]
+      ]
+    },
+    {
+      "name": "missing-required",
+      "graphqlAccepted": false,
+      "jsonSchemaAccepted": false,
+      "requiredIssues": []
+    },
+    {
+      "name": "null-required",
+      "graphqlAccepted": false,
+      "jsonSchemaAccepted": false,
+      "requiredIssues": []
+    },
+    {
+      "name": "null-defaulted",
+      "graphqlAccepted": false,
+      "jsonSchemaAccepted": false,
+      "requiredIssues": []
+    },
+    {
+      "name": "null-element",
+      "graphqlAccepted": false,
+      "jsonSchemaAccepted": false,
+      "requiredIssues": []
+    },
+    {
+      "name": "singleton-list",
+      "graphqlAccepted": true,
+      "jsonSchemaAccepted": false,
+      "requiredIssues": [
+        [
+          "LIST_COERCION",
+          "/types/Filter/fields/list"
+        ],
+        [
+          "INPUT_DEFAULT",
+          "/types/Filter/fields/defaulted/default"
+        ]
+      ]
+    },
+    {
+      "name": "id-coercion",
+      "graphqlAccepted": true,
+      "jsonSchemaAccepted": true,
+      "requiredIssues": [
+        [
+          "INPUT_DEFAULT",
+          "/types/Filter/fields/defaulted/default"
+        ],
+        [
+          "ID_COERCION",
+          "/types/Filter/fields/id"
+        ]
+      ]
+    },
+    {
+      "name": "oneof-empty",
+      "graphqlAccepted": false,
+      "jsonSchemaAccepted": false,
+      "requiredIssues": []
+    },
+    {
+      "name": "oneof-null",
+      "graphqlAccepted": false,
+      "jsonSchemaAccepted": false,
+      "requiredIssues": []
+    },
+    {
+      "name": "oneof-many",
+      "graphqlAccepted": false,
+      "jsonSchemaAccepted": false,
+      "requiredIssues": []
+    },
+    {
+      "name": "oneof-id",
+      "graphqlAccepted": true,
+      "jsonSchemaAccepted": true,
+      "requiredIssues": [
+        [
+          "INPUT_DEFAULT",
+          "/types/Filter/fields/defaulted/default"
+        ]
+      ]
+    },
+    {
+      "name": "extra-field",
+      "graphqlAccepted": false,
+      "jsonSchemaAccepted": false,
+      "requiredIssues": []
+    }
+  ],
+  "negativeControls": [
+    "Removing LIST_COERCION fails observed-difference accounting",
+    "Removing INPUT_DEFAULT fails observed-difference accounting",
+    "Removing ID_COERCION fails observed-difference accounting"
+  ],
+  "scope": "Selected input binding; coercion differences are disclosed, not implemented"
+}

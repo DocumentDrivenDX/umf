@@ -1,0 +1,1107 @@
+[
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 20,
+        "name": "protocol",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 21,
+              "name": "minReaderVersion",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT32",
+                  "value": "1"
+                }
+              }
+            },
+            {
+              "index": 22,
+              "name": "minWriterVersion",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT32",
+                  "value": "2"
+                }
+              }
+            },
+            {
+              "index": 23,
+              "name": "writerFeatures",
+              "value": null
+            },
+            {
+              "index": 26,
+              "name": "readerFeatures",
+              "value": null
+            }
+          ]
+        }
+      },
+      {
+        "index": 29,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 32,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 100,
+        "name": "remove",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "metaData",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 2,
+              "name": "id",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "38643364326238612d663039312d346437642d386133372d343332613962656166313762"
+                }
+              }
+            },
+            {
+              "index": 3,
+              "name": "name",
+              "value": null
+            },
+            {
+              "index": 4,
+              "name": "description",
+              "value": null
+            },
+            {
+              "index": 5,
+              "name": "schemaString",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a22696e7465676572222c2274797065223a22696e7465676572222c226e756c6c61626c65223a66616c73652c226d65746164617461223a7b7d7d2c7b226e616d65223a226e756c6c222c2274797065223a22626f6f6c65616e222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22626f6f6c65616e222c2274797065223a22626f6f6c65616e222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22646f75626c65222c2274797065223a22646f75626c65222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22646563696d616c222c2274797065223a22646563696d616c28382c3529222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22737472696e67222c2274797065223a22737472696e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2262696e617279222c2274797065223a2262696e617279222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2264617465222c2274797065223a2264617465222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2274696d657374616d70222c2274797065223a2274696d657374616d70222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22737472756374222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a227374727563745f656c656d656e74222c2274797065223a22737472696e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226d6170222c2274797065223a7b2274797065223a226d6170222c226b657954797065223a22737472696e67222c2276616c756554797065223a22737472696e67222c2276616c7565436f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226172726179222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a22737472696e67222c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226e65737465645f737472756374222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a227374727563745f656c656d656e74222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a226e65737465645f7374727563745f656c656d656e74222c2274797065223a22737472696e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a227374727563745f6f665f61727261795f6f665f6d6170222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a227374727563745f656c656d656e74222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a7b2274797065223a226d6170222c226b657954797065223a22737472696e67222c2276616c756554797065223a22737472696e67222c2276616c7565436f6e7461696e734e756c6c223a747275657d2c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d"
+                }
+              }
+            },
+            {
+              "index": 6,
+              "name": "createdTime",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "1666652369483"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionColumns",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 8,
+                    "name": "list",
+                    "value": {
+                      "kind": "repeated",
+                      "items": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 10,
+              "name": "configuration",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 11,
+                    "name": "key_value",
+                    "value": {
+                      "kind": "repeated",
+                      "items": [
+                        {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 12,
+                              "name": "key",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "64656c74612e636865636b706f696e742e7772697465537461747341734a736f6e"
+                                }
+                              }
+                            },
+                            {
+                              "index": 13,
+                              "name": "value",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "66616c7365"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 12,
+                              "name": "key",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "64656c74612e636865636b706f696e742e777269746553746174734173537472756374"
+                                }
+                              }
+                            },
+                            {
+                              "index": 13,
+                              "name": "value",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "74727565"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 14,
+              "name": "format",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 15,
+                    "name": "provider",
+                    "value": {
+                      "kind": "physical",
+                      "value": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "70617271756574"
+                      }
+                    }
+                  },
+                  {
+                    "index": 16,
+                    "name": "options",
+                    "value": {
+                      "kind": "record",
+                      "fields": [
+                        {
+                          "index": 17,
+                          "name": "key_value",
+                          "value": {
+                            "kind": "repeated",
+                            "items": []
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 20,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 29,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 32,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 100,
+        "name": "remove",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 20,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 29,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 32,
+        "name": "add",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 33,
+              "name": "path",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "706172742d30303030302d32383932356433612d626466322d343131652d626361392d6230363734343463626362302d633030302e736e617070792e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 34,
+              "name": "size",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "5489"
+                }
+              }
+            },
+            {
+              "index": 35,
+              "name": "modificationTime",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "1666652374000"
+                }
+              }
+            },
+            {
+              "index": 36,
+              "name": "dataChange",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BOOLEAN",
+                  "value": false
+                }
+              }
+            },
+            {
+              "index": 37,
+              "name": "partitionValues",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 38,
+                    "name": "key_value",
+                    "value": {
+                      "kind": "repeated",
+                      "items": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 41,
+              "name": "tags",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 42,
+                    "name": "key_value",
+                    "value": {
+                      "kind": "repeated",
+                      "items": [
+                        {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 43,
+                              "name": "key",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "494e53455254494f4e5f54494d45"
+                                }
+                              }
+                            },
+                            {
+                              "index": 44,
+                              "name": "value",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "31363636363532333734303030303030"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 43,
+                              "name": "key",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "4f5054494d495a455f5441524745545f53495a45"
+                                }
+                              }
+                            },
+                            {
+                              "index": 44,
+                              "name": "value",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "323638343335343536"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 45,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 51,
+              "name": "stats_parsed",
+              "value": null
+            }
+          ]
+        }
+      },
+      {
+        "index": 100,
+        "name": "remove",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 20,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 29,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 32,
+        "name": "add",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 33,
+              "name": "path",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "706172742d30303030302d37613530393234372d346635382d343435332d393230322d3531643735646565353961662d633030302e736e617070792e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 34,
+              "name": "size",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "5489"
+                }
+              }
+            },
+            {
+              "index": 35,
+              "name": "modificationTime",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "1666652373000"
+                }
+              }
+            },
+            {
+              "index": 36,
+              "name": "dataChange",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BOOLEAN",
+                  "value": false
+                }
+              }
+            },
+            {
+              "index": 37,
+              "name": "partitionValues",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 38,
+                    "name": "key_value",
+                    "value": {
+                      "kind": "repeated",
+                      "items": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 41,
+              "name": "tags",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 42,
+                    "name": "key_value",
+                    "value": {
+                      "kind": "repeated",
+                      "items": [
+                        {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 43,
+                              "name": "key",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "494e53455254494f4e5f54494d45"
+                                }
+                              }
+                            },
+                            {
+                              "index": 44,
+                              "name": "value",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "31363636363532333733303030303030"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 43,
+                              "name": "key",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "4f5054494d495a455f5441524745545f53495a45"
+                                }
+                              }
+                            },
+                            {
+                              "index": 44,
+                              "name": "value",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "323638343335343536"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 45,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 51,
+              "name": "stats_parsed",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 52,
+                    "name": "numRecords",
+                    "value": {
+                      "kind": "physical",
+                      "value": {
+                        "type": "INT64",
+                        "value": "1"
+                      }
+                    }
+                  },
+                  {
+                    "index": 53,
+                    "name": "minValues",
+                    "value": {
+                      "kind": "record",
+                      "fields": [
+                        {
+                          "index": 54,
+                          "name": "integer",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT32",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 55,
+                          "name": "null",
+                          "value": null
+                        },
+                        {
+                          "index": 56,
+                          "name": "boolean",
+                          "value": null
+                        },
+                        {
+                          "index": 57,
+                          "name": "double",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "DOUBLE",
+                              "hex": "5839b4c876bef33f"
+                            }
+                          }
+                        },
+                        {
+                          "index": 58,
+                          "name": "decimal",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT32",
+                              "value": "-567800"
+                            }
+                          }
+                        },
+                        {
+                          "index": 59,
+                          "name": "string",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "BYTE_ARRAY",
+                              "hex": "737472696e67"
+                            }
+                          }
+                        },
+                        {
+                          "index": 60,
+                          "name": "date",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT32",
+                              "value": "19289"
+                            }
+                          }
+                        },
+                        {
+                          "index": 61,
+                          "name": "timestamp",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "1666652372846000"
+                            }
+                          }
+                        },
+                        {
+                          "index": 62,
+                          "name": "struct",
+                          "value": {
+                            "kind": "record",
+                            "fields": [
+                              {
+                                "index": 63,
+                                "name": "struct_element",
+                                "value": {
+                                  "kind": "physical",
+                                  "value": {
+                                    "type": "BYTE_ARRAY",
+                                    "hex": "7374727563745f76616c7565"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "index": 64,
+                          "name": "nested_struct",
+                          "value": {
+                            "kind": "record",
+                            "fields": [
+                              {
+                                "index": 65,
+                                "name": "struct_element",
+                                "value": {
+                                  "kind": "record",
+                                  "fields": [
+                                    {
+                                      "index": 66,
+                                      "name": "nested_struct_element",
+                                      "value": {
+                                        "kind": "physical",
+                                        "value": {
+                                          "type": "BYTE_ARRAY",
+                                          "hex": "6e65737465645f7374727563745f76616c7565"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "index": 67,
+                    "name": "maxValues",
+                    "value": {
+                      "kind": "record",
+                      "fields": [
+                        {
+                          "index": 68,
+                          "name": "integer",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT32",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 69,
+                          "name": "null",
+                          "value": null
+                        },
+                        {
+                          "index": 70,
+                          "name": "boolean",
+                          "value": null
+                        },
+                        {
+                          "index": 71,
+                          "name": "double",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "DOUBLE",
+                              "hex": "5839b4c876bef33f"
+                            }
+                          }
+                        },
+                        {
+                          "index": 72,
+                          "name": "decimal",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT32",
+                              "value": "-567800"
+                            }
+                          }
+                        },
+                        {
+                          "index": 73,
+                          "name": "string",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "BYTE_ARRAY",
+                              "hex": "737472696e67"
+                            }
+                          }
+                        },
+                        {
+                          "index": 74,
+                          "name": "date",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT32",
+                              "value": "19289"
+                            }
+                          }
+                        },
+                        {
+                          "index": 75,
+                          "name": "timestamp",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "1666652372846000"
+                            }
+                          }
+                        },
+                        {
+                          "index": 76,
+                          "name": "struct",
+                          "value": {
+                            "kind": "record",
+                            "fields": [
+                              {
+                                "index": 77,
+                                "name": "struct_element",
+                                "value": {
+                                  "kind": "physical",
+                                  "value": {
+                                    "type": "BYTE_ARRAY",
+                                    "hex": "7374727563745f76616c7565"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "index": 78,
+                          "name": "nested_struct",
+                          "value": {
+                            "kind": "record",
+                            "fields": [
+                              {
+                                "index": 79,
+                                "name": "struct_element",
+                                "value": {
+                                  "kind": "record",
+                                  "fields": [
+                                    {
+                                      "index": 80,
+                                      "name": "nested_struct_element",
+                                      "value": {
+                                        "kind": "physical",
+                                        "value": {
+                                          "type": "BYTE_ARRAY",
+                                          "hex": "6e65737465645f7374727563745f76616c7565"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "index": 81,
+                    "name": "nullCount",
+                    "value": {
+                      "kind": "record",
+                      "fields": [
+                        {
+                          "index": 82,
+                          "name": "integer",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 83,
+                          "name": "null",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "1"
+                            }
+                          }
+                        },
+                        {
+                          "index": 84,
+                          "name": "boolean",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 85,
+                          "name": "double",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 86,
+                          "name": "decimal",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 87,
+                          "name": "string",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 88,
+                          "name": "binary",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 89,
+                          "name": "date",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 90,
+                          "name": "timestamp",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 91,
+                          "name": "struct",
+                          "value": {
+                            "kind": "record",
+                            "fields": [
+                              {
+                                "index": 92,
+                                "name": "struct_element",
+                                "value": {
+                                  "kind": "physical",
+                                  "value": {
+                                    "type": "INT64",
+                                    "value": "0"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "index": 93,
+                          "name": "map",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 94,
+                          "name": "array",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 95,
+                          "name": "nested_struct",
+                          "value": {
+                            "kind": "record",
+                            "fields": [
+                              {
+                                "index": 96,
+                                "name": "struct_element",
+                                "value": {
+                                  "kind": "record",
+                                  "fields": [
+                                    {
+                                      "index": 97,
+                                      "name": "nested_struct_element",
+                                      "value": {
+                                        "kind": "physical",
+                                        "value": {
+                                          "type": "INT64",
+                                          "value": "0"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "index": 98,
+                          "name": "struct_of_array_of_map",
+                          "value": {
+                            "kind": "record",
+                            "fields": [
+                              {
+                                "index": 99,
+                                "name": "struct_element",
+                                "value": {
+                                  "kind": "physical",
+                                  "value": {
+                                    "type": "INT64",
+                                    "value": "0"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 100,
+        "name": "remove",
+        "value": null
+      }
+    ]
+  }
+]

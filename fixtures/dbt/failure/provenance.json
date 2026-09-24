@@ -1,0 +1,84 @@
+{
+  "command": [
+    "/home/erik/Projects/umf/.cache/dbt-venv/bin/dbt",
+    "build",
+    "--project-dir",
+    "/home/erik/Projects/umf/native/dbt/failure-project",
+    "--profiles-dir",
+    "/home/erik/Projects/umf/native/dbt/failure-project",
+    "--target-path",
+    "/home/erik/Projects/umf/.cache/dbt-failure-target",
+    "--log-path",
+    "/home/erik/Projects/umf/.cache/dbt-failure-logs"
+  ],
+  "exitCode": 1,
+  "statuses": {
+    "model.umf_failure.broken": "error",
+    "model.umf_failure.gated_parent": "success",
+    "model.umf_failure.healthy": "success",
+    "model.umf_failure.after_broken": "skipped",
+    "test.umf_failure.assert_failure": "fail",
+    "test.umf_failure.assert_pass": "pass",
+    "test.umf_failure.assert_warning": "warn",
+    "model.umf_failure.after_gate": "skipped"
+  },
+  "scope": "Authored isolated in-memory DuckDB build; failures are expected native outcomes; no remote warehouse",
+  "files": [
+    {
+      "path": "native/dbt/failure-project/dbt_project.yml",
+      "sha256": "47ad23018ed20e170f81c92815f1412cf1fe80af9e4dc311defebe30e7c8e87f"
+    },
+    {
+      "path": "native/dbt/failure-project/models/after_broken.sql",
+      "sha256": "a8d6f80dfd1e6f15c74ad7e45a8f8c40f864571a743dcb83cd102a26714d9179"
+    },
+    {
+      "path": "native/dbt/failure-project/models/after_gate.sql",
+      "sha256": "7efec25b6d9af105f8f4c12f513709534f387161984059c214d28921a084c02c"
+    },
+    {
+      "path": "native/dbt/failure-project/models/broken.sql",
+      "sha256": "fb1e34f4dab4296c0b47c93820adbd6ab2ff78a3a132e286ddd98b75e097bff8"
+    },
+    {
+      "path": "native/dbt/failure-project/models/gated_parent.sql",
+      "sha256": "479636cb85ce8d3b0f8db5ff13cf338b61254ad98d905630eac61f963e719e9d"
+    },
+    {
+      "path": "native/dbt/failure-project/models/healthy.sql",
+      "sha256": "479636cb85ce8d3b0f8db5ff13cf338b61254ad98d905630eac61f963e719e9d"
+    },
+    {
+      "path": "native/dbt/failure-project/profiles.yml",
+      "sha256": "779ffbe5ef25b9c7e5aefc427d4453036c3e10504bbfc6adec5daf78f9118b75"
+    },
+    {
+      "path": "native/dbt/failure-project/tests/assert_failure.sql",
+      "sha256": "40f38ddbec40a8ed5cdcc68060efbc8c5a10457104a9a5a4e2608d61f61b0336"
+    },
+    {
+      "path": "native/dbt/failure-project/tests/assert_pass.sql",
+      "sha256": "3681924d15cac33967f3046f39d8c7530611fd89bcf35958f07b30dea748701e"
+    },
+    {
+      "path": "native/dbt/failure-project/tests/assert_warning.sql",
+      "sha256": "fa7631504d06aaad0ee3ee4b35acd30f0a43807d44a01b5f924f44ba646cf42e"
+    },
+    {
+      "path": "fixtures/dbt/failure/run-results.json",
+      "sha256": "23721a76e13e7980a3c88270e40b031888ee5945a4ecac16ce0aacbe4faefb60"
+    },
+    {
+      "path": "fixtures/dbt/failure/manifest.json",
+      "sha256": "754babb24ae0d23f6b8f1876b95f5e807e0ea031d36131d30739403b99e71f63"
+    },
+    {
+      "path": "fixtures/dbt/failure/command.log",
+      "sha256": "520b4b7f940b0665bdf7501cd04d25f008380c08f4e48f7bc374de02d5ac4f4a"
+    },
+    {
+      "path": "native/dbt/oracle-requirements.txt",
+      "sha256": "4d47968c46440c839ba8abf847902ab5069ceda478c4674bf3312d81f54d6675"
+    }
+  ]
+}

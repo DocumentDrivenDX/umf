@@ -1,0 +1,221 @@
+{
+  "runtime": "dbt Core 1.10.0 WritableManifest; jsonschema 4.25.1 without format checker",
+  "sourceSha256": "3cb2f6904d9fd4cc4ec584c5532707ac9a6c266340435476ceb91519fd22769c",
+  "buildStatuses": {
+    "success": 6,
+    "pass": 5,
+    "no-op": 2
+  },
+  "sourceFormats": 2,
+  "results": [
+    {
+      "id": "edit-0",
+      "format": "json",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "d547b44e2a0f89990718065f8c27505897b064c4df68445e45510a70360a7df5"
+    },
+    {
+      "id": "edit-1",
+      "format": "json",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "fd8ec50423b14d9ab0f00e4fa12f6be74045e9f3e4f898bbaf7145ca9025ca00"
+    },
+    {
+      "id": "edit-2",
+      "format": "json",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "081bb819fc87c72e697de894b218e5a04edfdaa6c07ddc9a4449c5338dfd484f"
+    },
+    {
+      "id": "edit-3",
+      "format": "json",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "4ee941caf0c6cbb8c2899251d42ae0aa16648d778fcefa44b962d25c8cc6654b"
+    },
+    {
+      "id": "edit-4",
+      "format": "json",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "b0be7b44c0509e737763c2068e9c09f7f293790671952d198a7a7dc7a074e0c8"
+    },
+    {
+      "id": "edit-5",
+      "format": "json",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "5b7631a31be1ddb258f1da5cffed164fce6a9ecb8f681927fda08ec67f23332e"
+    },
+    {
+      "id": "edit-6",
+      "format": "json",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "0e9fdbb2334e5de4a44b698b03c55abda871cd95f74c8a894959c2d417280b83"
+    },
+    {
+      "id": "edit-7",
+      "format": "json",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "08100fbc9b4b032e04e1249ee4cde6315971a0075dc82c47aa2d17fc75df204e"
+    },
+    {
+      "id": "edit-8",
+      "format": "json",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "fcf32da2aa71c486969b1c619aa5f740bf341d086fbb210e451077615c06f4e4"
+    },
+    {
+      "id": "edit-9",
+      "format": "json",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "2c795a4736a6a9124a171a128016f7b435876dbe7319bee41a8fe06350795a6d"
+    },
+    {
+      "id": "edit-10",
+      "format": "json",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "b11625c7cec54beef3b6b3b25d0f51691b28e9025ff0ed0f9b73c80dcd100b5a"
+    },
+    {
+      "id": "edit-11",
+      "format": "json",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "d1b36f872cab2f873336ecebd8d31739e0edebc10ac78dde75823393cc75ea16"
+    },
+    {
+      "id": "edit-12",
+      "format": "json",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "f1c184544048a97499ffed9f1bf1839dc3890a7304f91c7e37100fee5ffb5c0e"
+    },
+    {
+      "id": "edit-0",
+      "format": "yaml",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "d547b44e2a0f89990718065f8c27505897b064c4df68445e45510a70360a7df5"
+    },
+    {
+      "id": "edit-1",
+      "format": "yaml",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "fd8ec50423b14d9ab0f00e4fa12f6be74045e9f3e4f898bbaf7145ca9025ca00"
+    },
+    {
+      "id": "edit-2",
+      "format": "yaml",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "081bb819fc87c72e697de894b218e5a04edfdaa6c07ddc9a4449c5338dfd484f"
+    },
+    {
+      "id": "edit-3",
+      "format": "yaml",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "4ee941caf0c6cbb8c2899251d42ae0aa16648d778fcefa44b962d25c8cc6654b"
+    },
+    {
+      "id": "edit-4",
+      "format": "yaml",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "b0be7b44c0509e737763c2068e9c09f7f293790671952d198a7a7dc7a074e0c8"
+    },
+    {
+      "id": "edit-5",
+      "format": "yaml",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "5b7631a31be1ddb258f1da5cffed164fce6a9ecb8f681927fda08ec67f23332e"
+    },
+    {
+      "id": "edit-6",
+      "format": "yaml",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "0e9fdbb2334e5de4a44b698b03c55abda871cd95f74c8a894959c2d417280b83"
+    },
+    {
+      "id": "edit-7",
+      "format": "yaml",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "08100fbc9b4b032e04e1249ee4cde6315971a0075dc82c47aa2d17fc75df204e"
+    },
+    {
+      "id": "edit-8",
+      "format": "yaml",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "fcf32da2aa71c486969b1c619aa5f740bf341d086fbb210e451077615c06f4e4"
+    },
+    {
+      "id": "edit-9",
+      "format": "yaml",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "2c795a4736a6a9124a171a128016f7b435876dbe7319bee41a8fe06350795a6d"
+    },
+    {
+      "id": "edit-10",
+      "format": "yaml",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "b11625c7cec54beef3b6b3b25d0f51691b28e9025ff0ed0f9b73c80dcd100b5a"
+    },
+    {
+      "id": "edit-11",
+      "format": "yaml",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "d1b36f872cab2f873336ecebd8d31739e0edebc10ac78dde75823393cc75ea16"
+    },
+    {
+      "id": "edit-12",
+      "format": "yaml",
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "onlyRequestedValueChanged": true,
+      "sha256": "f1c184544048a97499ffed9f1bf1839dc3890a7304f91c7e37100fee5ffb5c0e"
+    }
+  ],
+  "limits": "Exposure/saved query are no-ops; semantic metric execution is not tested"
+}

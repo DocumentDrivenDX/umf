@@ -1,0 +1,1574 @@
+{
+  "original": {
+    "schema": "swagger: \"2.0\"\ninfo:\n  version: 1.0.0\n  title: Swagger Petstore\n  description: A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification\n  termsOfService: http://swagger.io/terms/\n  contact:\n    name: Swagger API Team\n    email: apiteam@swagger.io\n    url: http://swagger.io\n  license:\n    name: Apache 2.0\n    url: https://www.apache.org/licenses/LICENSE-2.0.html\nhost: petstore.swagger.io\nbasePath: /api\nschemes:\n  - http\nconsumes:\n  - application/json\nproduces:\n  - application/json\npaths:\n  /pets:\n    get:\n      description: |\n        Returns all pets from the system that the user has access to\n        Nam sed condimentum est. Maecenas tempor sagittis sapien, nec rhoncus sem sagittis sit amet. Aenean at gravida augue, ac iaculis sem. Curabitur odio lorem, ornare eget elementum nec, cursus id lectus. Duis mi turpis, pulvinar ac eros ac, tincidunt varius justo. In hac habitasse platea dictumst. Integer at adipiscing ante, a sagittis ligula. Aenean pharetra tempor ante molestie imperdiet. Vivamus id aliquam diam. Cras quis velit non tortor eleifend sagittis. Praesent at enim pharetra urna volutpat venenatis eget eget mauris. In eleifend fermentum facilisis. Praesent enim enim, gravida ac sodales sed, placerat id erat. Suspendisse lacus dolor, consectetur non augue vel, vehicula interdum libero. Morbi euismod sagittis libero sed lacinia.\n\n        Sed tempus felis lobortis leo pulvinar rutrum. Nam mattis velit nisl, eu condimentum ligula luctus nec. Phasellus semper velit eget aliquet faucibus. In a mattis elit. Phasellus vel urna viverra, condimentum lorem id, rhoncus nibh. Ut pellentesque posuere elementum. Sed a varius odio. Morbi rhoncus ligula libero, vel eleifend nunc tristique vitae. Fusce et sem dui. Aenean nec scelerisque tortor. Fusce malesuada accumsan magna vel tempus. Quisque mollis felis eu dolor tristique, sit amet auctor felis gravida. Sed libero lorem, molestie sed nisl in, accumsan tempor nisi. Fusce sollicitudin massa ut lacinia mattis. Sed vel eleifend lorem. Pellentesque vitae felis pretium, pulvinar elit eu, euismod sapien.\n      operationId: findPets\n      parameters:\n        - $ref: 'parameters.yaml#/tagsParam'\n        - $ref: 'parameters.yaml#/limitsParam'\n      responses:\n        \"200\":\n          description: pet response\n          schema:\n            type: array\n            items:\n              $ref: 'Pet.yaml'\n        default:\n          description: unexpected error\n          schema:\n            $ref: '../common/Error.yaml'\n    post:\n      description: Creates a new pet in the store.  Duplicates are allowed\n      operationId: addPet\n      parameters:\n        - name: pet\n          in: body\n          description: Pet to add to the store\n          required: true\n          schema:\n            $ref: 'NewPet.yaml'\n      responses:\n        \"200\":\n          description: pet response\n          schema:\n            $ref: 'Pet.yaml'\n        default:\n          description: unexpected error\n          schema:\n            $ref: '../common/Error.yaml'\n  /pets/{id}:\n    get:\n      description: Returns a user based on a single ID, if the user does not have access to the pet\n      operationId: find pet by id\n      parameters:\n        - name: id\n          in: path\n          description: ID of pet to fetch\n          required: true\n          type: integer\n          format: int64\n      responses:\n        \"200\":\n          description: pet response\n          schema:\n            $ref: 'Pet.yaml'\n        default:\n          description: unexpected error\n          schema:\n            $ref: '../common/Error.yaml'\n    delete:\n      description: deletes a single pet based on the ID supplied\n      operationId: deletePet\n      parameters:\n        - name: id\n          in: path\n          description: ID of pet to delete\n          required: true\n          type: integer\n          format: int64\n      responses:\n        \"204\":\n          description: pet deleted\n        default:\n          description: unexpected error\n          schema:\n            $ref: '../common/Error.yaml'\n",
+    "format": "yaml",
+    "baseUri": "https://example.test/petstore/spec/swagger.yaml",
+    "resources": [
+      {
+        "uri": "https://example.test/petstore/spec/Pet.yaml",
+        "text": "type: object\nrequired:\n  - id\n  - name\nproperties:\n  id:\n    type: integer\n    format: int64\n  name:\n    type: string\n  tag:\n    type: string\n",
+        "format": "yaml"
+      },
+      {
+        "uri": "https://example.test/petstore/spec/NewPet.yaml",
+        "text": "type: object\nallOf:\n  - $ref: 'Pet.yaml'\n  - required:\n      - name\n    properties:\n      description:\n        type: integer\n        format: int64\n",
+        "format": "yaml"
+      },
+      {
+        "uri": "https://example.test/petstore/spec/parameters.yaml",
+        "text": "tagsParam:\n  name: tags\n  in: query\n  description: tags to filter by\n  required: false\n  type: array\n  collectionFormat: csv\n  items:\n    type: string\nlimitsParam:\n  name: limit\n  in: query\n  description: maximum number of results to return\n  required: false\n  type: integer\n  format: int32\n",
+        "format": "yaml"
+      },
+      {
+        "uri": "https://example.test/petstore/common/Error.yaml",
+        "text": "type: object\nrequired:\n  - code\n  - message\nproperties:\n  code:\n    type: integer\n    format: int32\n  message:\n    type: string\n",
+        "format": "yaml"
+      }
+    ],
+    "source": {
+      "umf": "0.1.0",
+      "id": "petstore",
+      "vocabularies": {
+        "umf.openapi": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "schema",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "schema",
+              "extensions": {
+                "umf.openapi": {
+                  "profile": "openapi-json-yaml-0.1",
+                  "root": {
+                    "kind": "object",
+                    "members": {
+                      "swagger": {
+                        "kind": "string",
+                        "value": "2.0"
+                      },
+                      "info": {
+                        "kind": "object",
+                        "members": {
+                          "version": {
+                            "kind": "string",
+                            "value": "1.0.0"
+                          },
+                          "title": {
+                            "kind": "string",
+                            "value": "Swagger Petstore"
+                          },
+                          "description": {
+                            "kind": "string",
+                            "value": "A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification"
+                          },
+                          "termsOfService": {
+                            "kind": "string",
+                            "value": "http://swagger.io/terms/"
+                          },
+                          "contact": {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "Swagger API Team"
+                              },
+                              "email": {
+                                "kind": "string",
+                                "value": "apiteam@swagger.io"
+                              },
+                              "url": {
+                                "kind": "string",
+                                "value": "http://swagger.io"
+                              }
+                            }
+                          },
+                          "license": {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "Apache 2.0"
+                              },
+                              "url": {
+                                "kind": "string",
+                                "value": "https://www.apache.org/licenses/LICENSE-2.0.html"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "host": {
+                        "kind": "string",
+                        "value": "petstore.swagger.io"
+                      },
+                      "basePath": {
+                        "kind": "string",
+                        "value": "/api"
+                      },
+                      "schemes": {
+                        "kind": "array",
+                        "items": [
+                          {
+                            "kind": "string",
+                            "value": "http"
+                          }
+                        ]
+                      },
+                      "consumes": {
+                        "kind": "array",
+                        "items": [
+                          {
+                            "kind": "string",
+                            "value": "application/json"
+                          }
+                        ]
+                      },
+                      "produces": {
+                        "kind": "array",
+                        "items": [
+                          {
+                            "kind": "string",
+                            "value": "application/json"
+                          }
+                        ]
+                      },
+                      "paths": {
+                        "kind": "object",
+                        "members": {
+                          "/pets": {
+                            "kind": "object",
+                            "members": {
+                              "get": {
+                                "kind": "object",
+                                "members": {
+                                  "description": {
+                                    "kind": "string",
+                                    "value": "Returns all pets from the system that the user has access to\nNam sed condimentum est. Maecenas tempor sagittis sapien, nec rhoncus sem sagittis sit amet. Aenean at gravida augue, ac iaculis sem. Curabitur odio lorem, ornare eget elementum nec, cursus id lectus. Duis mi turpis, pulvinar ac eros ac, tincidunt varius justo. In hac habitasse platea dictumst. Integer at adipiscing ante, a sagittis ligula. Aenean pharetra tempor ante molestie imperdiet. Vivamus id aliquam diam. Cras quis velit non tortor eleifend sagittis. Praesent at enim pharetra urna volutpat venenatis eget eget mauris. In eleifend fermentum facilisis. Praesent enim enim, gravida ac sodales sed, placerat id erat. Suspendisse lacus dolor, consectetur non augue vel, vehicula interdum libero. Morbi euismod sagittis libero sed lacinia.\n\nSed tempus felis lobortis leo pulvinar rutrum. Nam mattis velit nisl, eu condimentum ligula luctus nec. Phasellus semper velit eget aliquet faucibus. In a mattis elit. Phasellus vel urna viverra, condimentum lorem id, rhoncus nibh. Ut pellentesque posuere elementum. Sed a varius odio. Morbi rhoncus ligula libero, vel eleifend nunc tristique vitae. Fusce et sem dui. Aenean nec scelerisque tortor. Fusce malesuada accumsan magna vel tempus. Quisque mollis felis eu dolor tristique, sit amet auctor felis gravida. Sed libero lorem, molestie sed nisl in, accumsan tempor nisi. Fusce sollicitudin massa ut lacinia mattis. Sed vel eleifend lorem. Pellentesque vitae felis pretium, pulvinar elit eu, euismod sapien.\n"
+                                  },
+                                  "operationId": {
+                                    "kind": "string",
+                                    "value": "findPets"
+                                  },
+                                  "parameters": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "$ref": {
+                                            "kind": "string",
+                                            "value": "parameters.yaml#/tagsParam"
+                                          }
+                                        }
+                                      },
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "$ref": {
+                                            "kind": "string",
+                                            "value": "parameters.yaml#/limitsParam"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "responses": {
+                                    "kind": "object",
+                                    "members": {
+                                      "200": {
+                                        "kind": "object",
+                                        "members": {
+                                          "description": {
+                                            "kind": "string",
+                                            "value": "pet response"
+                                          },
+                                          "schema": {
+                                            "kind": "object",
+                                            "members": {
+                                              "type": {
+                                                "kind": "string",
+                                                "value": "array"
+                                              },
+                                              "items": {
+                                                "kind": "object",
+                                                "members": {
+                                                  "$ref": {
+                                                    "kind": "string",
+                                                    "value": "Pet.yaml"
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "default": {
+                                        "kind": "object",
+                                        "members": {
+                                          "description": {
+                                            "kind": "string",
+                                            "value": "unexpected error"
+                                          },
+                                          "schema": {
+                                            "kind": "object",
+                                            "members": {
+                                              "$ref": {
+                                                "kind": "string",
+                                                "value": "../common/Error.yaml"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "post": {
+                                "kind": "object",
+                                "members": {
+                                  "description": {
+                                    "kind": "string",
+                                    "value": "Creates a new pet in the store.  Duplicates are allowed"
+                                  },
+                                  "operationId": {
+                                    "kind": "string",
+                                    "value": "addPet"
+                                  },
+                                  "parameters": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "name": {
+                                            "kind": "string",
+                                            "value": "pet"
+                                          },
+                                          "in": {
+                                            "kind": "string",
+                                            "value": "body"
+                                          },
+                                          "description": {
+                                            "kind": "string",
+                                            "value": "Pet to add to the store"
+                                          },
+                                          "required": {
+                                            "kind": "boolean",
+                                            "value": true
+                                          },
+                                          "schema": {
+                                            "kind": "object",
+                                            "members": {
+                                              "$ref": {
+                                                "kind": "string",
+                                                "value": "NewPet.yaml"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "responses": {
+                                    "kind": "object",
+                                    "members": {
+                                      "200": {
+                                        "kind": "object",
+                                        "members": {
+                                          "description": {
+                                            "kind": "string",
+                                            "value": "pet response"
+                                          },
+                                          "schema": {
+                                            "kind": "object",
+                                            "members": {
+                                              "$ref": {
+                                                "kind": "string",
+                                                "value": "Pet.yaml"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "default": {
+                                        "kind": "object",
+                                        "members": {
+                                          "description": {
+                                            "kind": "string",
+                                            "value": "unexpected error"
+                                          },
+                                          "schema": {
+                                            "kind": "object",
+                                            "members": {
+                                              "$ref": {
+                                                "kind": "string",
+                                                "value": "../common/Error.yaml"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "/pets/{id}": {
+                            "kind": "object",
+                            "members": {
+                              "get": {
+                                "kind": "object",
+                                "members": {
+                                  "description": {
+                                    "kind": "string",
+                                    "value": "Returns a user based on a single ID, if the user does not have access to the pet"
+                                  },
+                                  "operationId": {
+                                    "kind": "string",
+                                    "value": "find pet by id"
+                                  },
+                                  "parameters": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "name": {
+                                            "kind": "string",
+                                            "value": "id"
+                                          },
+                                          "in": {
+                                            "kind": "string",
+                                            "value": "path"
+                                          },
+                                          "description": {
+                                            "kind": "string",
+                                            "value": "ID of pet to fetch"
+                                          },
+                                          "required": {
+                                            "kind": "boolean",
+                                            "value": true
+                                          },
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "integer"
+                                          },
+                                          "format": {
+                                            "kind": "string",
+                                            "value": "int64"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "responses": {
+                                    "kind": "object",
+                                    "members": {
+                                      "200": {
+                                        "kind": "object",
+                                        "members": {
+                                          "description": {
+                                            "kind": "string",
+                                            "value": "pet response"
+                                          },
+                                          "schema": {
+                                            "kind": "object",
+                                            "members": {
+                                              "$ref": {
+                                                "kind": "string",
+                                                "value": "Pet.yaml"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "default": {
+                                        "kind": "object",
+                                        "members": {
+                                          "description": {
+                                            "kind": "string",
+                                            "value": "unexpected error"
+                                          },
+                                          "schema": {
+                                            "kind": "object",
+                                            "members": {
+                                              "$ref": {
+                                                "kind": "string",
+                                                "value": "../common/Error.yaml"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "delete": {
+                                "kind": "object",
+                                "members": {
+                                  "description": {
+                                    "kind": "string",
+                                    "value": "deletes a single pet based on the ID supplied"
+                                  },
+                                  "operationId": {
+                                    "kind": "string",
+                                    "value": "deletePet"
+                                  },
+                                  "parameters": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "name": {
+                                            "kind": "string",
+                                            "value": "id"
+                                          },
+                                          "in": {
+                                            "kind": "string",
+                                            "value": "path"
+                                          },
+                                          "description": {
+                                            "kind": "string",
+                                            "value": "ID of pet to delete"
+                                          },
+                                          "required": {
+                                            "kind": "boolean",
+                                            "value": true
+                                          },
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "integer"
+                                          },
+                                          "format": {
+                                            "kind": "string",
+                                            "value": "int64"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "responses": {
+                                    "kind": "object",
+                                    "members": {
+                                      "204": {
+                                        "kind": "object",
+                                        "members": {
+                                          "description": {
+                                            "kind": "string",
+                                            "value": "pet deleted"
+                                          }
+                                        }
+                                      },
+                                      "default": {
+                                        "kind": "object",
+                                        "members": {
+                                          "description": {
+                                            "kind": "string",
+                                            "value": "unexpected error"
+                                          },
+                                          "schema": {
+                                            "kind": "object",
+                                            "members": {
+                                              "$ref": {
+                                                "kind": "string",
+                                                "value": "../common/Error.yaml"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "originalSource": "swagger: \"2.0\"\ninfo:\n  version: 1.0.0\n  title: Swagger Petstore\n  description: A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification\n  termsOfService: http://swagger.io/terms/\n  contact:\n    name: Swagger API Team\n    email: apiteam@swagger.io\n    url: http://swagger.io\n  license:\n    name: Apache 2.0\n    url: https://www.apache.org/licenses/LICENSE-2.0.html\nhost: petstore.swagger.io\nbasePath: /api\nschemes:\n  - http\nconsumes:\n  - application/json\nproduces:\n  - application/json\npaths:\n  /pets:\n    get:\n      description: |\n        Returns all pets from the system that the user has access to\n        Nam sed condimentum est. Maecenas tempor sagittis sapien, nec rhoncus sem sagittis sit amet. Aenean at gravida augue, ac iaculis sem. Curabitur odio lorem, ornare eget elementum nec, cursus id lectus. Duis mi turpis, pulvinar ac eros ac, tincidunt varius justo. In hac habitasse platea dictumst. Integer at adipiscing ante, a sagittis ligula. Aenean pharetra tempor ante molestie imperdiet. Vivamus id aliquam diam. Cras quis velit non tortor eleifend sagittis. Praesent at enim pharetra urna volutpat venenatis eget eget mauris. In eleifend fermentum facilisis. Praesent enim enim, gravida ac sodales sed, placerat id erat. Suspendisse lacus dolor, consectetur non augue vel, vehicula interdum libero. Morbi euismod sagittis libero sed lacinia.\n\n        Sed tempus felis lobortis leo pulvinar rutrum. Nam mattis velit nisl, eu condimentum ligula luctus nec. Phasellus semper velit eget aliquet faucibus. In a mattis elit. Phasellus vel urna viverra, condimentum lorem id, rhoncus nibh. Ut pellentesque posuere elementum. Sed a varius odio. Morbi rhoncus ligula libero, vel eleifend nunc tristique vitae. Fusce et sem dui. Aenean nec scelerisque tortor. Fusce malesuada accumsan magna vel tempus. Quisque mollis felis eu dolor tristique, sit amet auctor felis gravida. Sed libero lorem, molestie sed nisl in, accumsan tempor nisi. Fusce sollicitudin massa ut lacinia mattis. Sed vel eleifend lorem. Pellentesque vitae felis pretium, pulvinar elit eu, euismod sapien.\n      operationId: findPets\n      parameters:\n        - $ref: 'parameters.yaml#/tagsParam'\n        - $ref: 'parameters.yaml#/limitsParam'\n      responses:\n        \"200\":\n          description: pet response\n          schema:\n            type: array\n            items:\n              $ref: 'Pet.yaml'\n        default:\n          description: unexpected error\n          schema:\n            $ref: '../common/Error.yaml'\n    post:\n      description: Creates a new pet in the store.  Duplicates are allowed\n      operationId: addPet\n      parameters:\n        - name: pet\n          in: body\n          description: Pet to add to the store\n          required: true\n          schema:\n            $ref: 'NewPet.yaml'\n      responses:\n        \"200\":\n          description: pet response\n          schema:\n            $ref: 'Pet.yaml'\n        default:\n          description: unexpected error\n          schema:\n            $ref: '../common/Error.yaml'\n  /pets/{id}:\n    get:\n      description: Returns a user based on a single ID, if the user does not have access to the pet\n      operationId: find pet by id\n      parameters:\n        - name: id\n          in: path\n          description: ID of pet to fetch\n          required: true\n          type: integer\n          format: int64\n      responses:\n        \"200\":\n          description: pet response\n          schema:\n            $ref: 'Pet.yaml'\n        default:\n          description: unexpected error\n          schema:\n            $ref: '../common/Error.yaml'\n    delete:\n      description: deletes a single pet based on the ID supplied\n      operationId: deletePet\n      parameters:\n        - name: id\n          in: path\n          description: ID of pet to delete\n          required: true\n          type: integer\n          format: int64\n      responses:\n        \"204\":\n          description: pet deleted\n        default:\n          description: unexpected error\n          schema:\n            $ref: '../common/Error.yaml'\n",
+                  "originalFormat": "yaml",
+                  "baseUri": "https://example.test/petstore/spec/swagger.yaml",
+                  "resources": [
+                    {
+                      "uri": "https://example.test/petstore/spec/Pet.yaml",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "object"
+                          },
+                          "required": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "string",
+                                "value": "id"
+                              },
+                              {
+                                "kind": "string",
+                                "value": "name"
+                              }
+                            ]
+                          },
+                          "properties": {
+                            "kind": "object",
+                            "members": {
+                              "id": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "integer"
+                                  },
+                                  "format": {
+                                    "kind": "string",
+                                    "value": "int64"
+                                  }
+                                }
+                              },
+                              "name": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                }
+                              },
+                              "tag": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "originalSource": "type: object\nrequired:\n  - id\n  - name\nproperties:\n  id:\n    type: integer\n    format: int64\n  name:\n    type: string\n  tag:\n    type: string\n",
+                      "originalFormat": "yaml"
+                    },
+                    {
+                      "uri": "https://example.test/petstore/spec/NewPet.yaml",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "object"
+                          },
+                          "allOf": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "$ref": {
+                                    "kind": "string",
+                                    "value": "Pet.yaml"
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "required": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "name"
+                                      }
+                                    ]
+                                  },
+                                  "properties": {
+                                    "kind": "object",
+                                    "members": {
+                                      "description": {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "integer"
+                                          },
+                                          "format": {
+                                            "kind": "string",
+                                            "value": "int64"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "originalSource": "type: object\nallOf:\n  - $ref: 'Pet.yaml'\n  - required:\n      - name\n    properties:\n      description:\n        type: integer\n        format: int64\n",
+                      "originalFormat": "yaml"
+                    },
+                    {
+                      "uri": "https://example.test/petstore/spec/parameters.yaml",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "tagsParam": {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "tags"
+                              },
+                              "in": {
+                                "kind": "string",
+                                "value": "query"
+                              },
+                              "description": {
+                                "kind": "string",
+                                "value": "tags to filter by"
+                              },
+                              "required": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "array"
+                              },
+                              "collectionFormat": {
+                                "kind": "string",
+                                "value": "csv"
+                              },
+                              "items": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "limitsParam": {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "limit"
+                              },
+                              "in": {
+                                "kind": "string",
+                                "value": "query"
+                              },
+                              "description": {
+                                "kind": "string",
+                                "value": "maximum number of results to return"
+                              },
+                              "required": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "integer"
+                              },
+                              "format": {
+                                "kind": "string",
+                                "value": "int32"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "originalSource": "tagsParam:\n  name: tags\n  in: query\n  description: tags to filter by\n  required: false\n  type: array\n  collectionFormat: csv\n  items:\n    type: string\nlimitsParam:\n  name: limit\n  in: query\n  description: maximum number of results to return\n  required: false\n  type: integer\n  format: int32\n",
+                      "originalFormat": "yaml"
+                    },
+                    {
+                      "uri": "https://example.test/petstore/common/Error.yaml",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "object"
+                          },
+                          "required": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "string",
+                                "value": "code"
+                              },
+                              {
+                                "kind": "string",
+                                "value": "message"
+                              }
+                            ]
+                          },
+                          "properties": {
+                            "kind": "object",
+                            "members": {
+                              "code": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "integer"
+                                  },
+                                  "format": {
+                                    "kind": "string",
+                                    "value": "int32"
+                                  }
+                                }
+                              },
+                              "message": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "originalSource": "type: object\nrequired:\n  - code\n  - message\nproperties:\n  code:\n    type: integer\n    format: int32\n  message:\n    type: string\n",
+                      "originalFormat": "yaml"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "diagnostics": [
+      {
+        "code": "OPENAPI_RESOURCE_CONTEXT",
+        "path": "/resources",
+        "message": "Explicit resources are retained; URI/pointer lookup does not validate their contextual types, nested schema IDs, anchors, dynamic scope or reference closure",
+        "severity": "warning"
+      },
+      {
+        "code": "OPENAPI_VALIDATION_LIMIT",
+        "path": "/root",
+        "message": "Pinned official-schema checks do not prove reference resolution, URI formats, security execution, parameter serialization or all normative prose rules; known 3.1/3.2 embedded dialect keyword syntax is checked, while instances, unknown dialects and referenced resource contexts remain incomplete; legacy schemas check their declared Schema Object subset; extension content remains source-owned",
+        "severity": "warning"
+      },
+      {
+        "code": "SOURCE_ARTIFACT_REQUIRED",
+        "path": "",
+        "severity": "warning",
+        "message": "Retain source UMF for unrelated metadata and archived native layout"
+      }
+    ]
+  },
+  "edited": {
+    "schema": "swagger: \"2.0\"\ninfo:\n  version: 1.0.0\n  title: Swagger Petstore\n  description: A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification\n  termsOfService: http://swagger.io/terms/\n  contact:\n    name: Swagger API Team\n    email: apiteam@swagger.io\n    url: http://swagger.io\n  license:\n    name: Apache 2.0\n    url: https://www.apache.org/licenses/LICENSE-2.0.html\nhost: petstore.swagger.io\nbasePath: /api\nschemes:\n  - http\nconsumes:\n  - application/json\nproduces:\n  - application/json\npaths:\n  /pets:\n    get:\n      description: |\n        Returns all pets from the system that the user has access to\n        Nam sed condimentum est. Maecenas tempor sagittis sapien, nec rhoncus sem sagittis sit amet. Aenean at gravida augue, ac iaculis sem. Curabitur odio lorem, ornare eget elementum nec, cursus id lectus. Duis mi turpis, pulvinar ac eros ac, tincidunt varius justo. In hac habitasse platea dictumst. Integer at adipiscing ante, a sagittis ligula. Aenean pharetra tempor ante molestie imperdiet. Vivamus id aliquam diam. Cras quis velit non tortor eleifend sagittis. Praesent at enim pharetra urna volutpat venenatis eget eget mauris. In eleifend fermentum facilisis. Praesent enim enim, gravida ac sodales sed, placerat id erat. Suspendisse lacus dolor, consectetur non augue vel, vehicula interdum libero. Morbi euismod sagittis libero sed lacinia.\n\n        Sed tempus felis lobortis leo pulvinar rutrum. Nam mattis velit nisl, eu condimentum ligula luctus nec. Phasellus semper velit eget aliquet faucibus. In a mattis elit. Phasellus vel urna viverra, condimentum lorem id, rhoncus nibh. Ut pellentesque posuere elementum. Sed a varius odio. Morbi rhoncus ligula libero, vel eleifend nunc tristique vitae. Fusce et sem dui. Aenean nec scelerisque tortor. Fusce malesuada accumsan magna vel tempus. Quisque mollis felis eu dolor tristique, sit amet auctor felis gravida. Sed libero lorem, molestie sed nisl in, accumsan tempor nisi. Fusce sollicitudin massa ut lacinia mattis. Sed vel eleifend lorem. Pellentesque vitae felis pretium, pulvinar elit eu, euismod sapien.\n      operationId: findPets\n      parameters:\n        - $ref: 'parameters.yaml#/tagsParam'\n        - $ref: 'parameters.yaml#/limitsParam'\n      responses:\n        \"200\":\n          description: pet response\n          schema:\n            type: array\n            items:\n              $ref: 'Pet.yaml'\n        default:\n          description: unexpected error\n          schema:\n            $ref: '../common/Error.yaml'\n    post:\n      description: Creates a new pet in the store.  Duplicates are allowed\n      operationId: addPet\n      parameters:\n        - name: pet\n          in: body\n          description: Pet to add to the store\n          required: true\n          schema:\n            $ref: 'NewPet.yaml'\n      responses:\n        \"200\":\n          description: pet response\n          schema:\n            $ref: 'Pet.yaml'\n        default:\n          description: unexpected error\n          schema:\n            $ref: '../common/Error.yaml'\n  /pets/{id}:\n    get:\n      description: Returns a user based on a single ID, if the user does not have access to the pet\n      operationId: find pet by id\n      parameters:\n        - name: id\n          in: path\n          description: ID of pet to fetch\n          required: true\n          type: integer\n          format: int64\n      responses:\n        \"200\":\n          description: pet response\n          schema:\n            $ref: 'Pet.yaml'\n        default:\n          description: unexpected error\n          schema:\n            $ref: '../common/Error.yaml'\n    delete:\n      description: deletes a single pet based on the ID supplied\n      operationId: deletePet\n      parameters:\n        - name: id\n          in: path\n          description: ID of pet to delete\n          required: true\n          type: integer\n          format: int64\n      responses:\n        \"204\":\n          description: pet deleted\n        default:\n          description: unexpected error\n          schema:\n            $ref: '../common/Error.yaml'\n",
+    "format": "yaml",
+    "baseUri": "https://example.test/petstore/spec/swagger.yaml",
+    "resources": [
+      {
+        "uri": "https://example.test/petstore/spec/Pet.yaml",
+        "text": "{\"type\":\"object\",\"required\":[\"id\",\"name\"],\"properties\":{\"id\":{\"type\":\"string\",\"format\":\"int64\"},\"name\":{\"type\":\"string\"},\"tag\":{\"type\":\"string\"}}}\n",
+        "format": "yaml"
+      },
+      {
+        "uri": "https://example.test/petstore/spec/NewPet.yaml",
+        "text": "type: object\nallOf:\n  - $ref: 'Pet.yaml'\n  - required:\n      - name\n    properties:\n      description:\n        type: integer\n        format: int64\n",
+        "format": "yaml"
+      },
+      {
+        "uri": "https://example.test/petstore/spec/parameters.yaml",
+        "text": "tagsParam:\n  name: tags\n  in: query\n  description: tags to filter by\n  required: false\n  type: array\n  collectionFormat: csv\n  items:\n    type: string\nlimitsParam:\n  name: limit\n  in: query\n  description: maximum number of results to return\n  required: false\n  type: integer\n  format: int32\n",
+        "format": "yaml"
+      },
+      {
+        "uri": "https://example.test/petstore/common/Error.yaml",
+        "text": "type: object\nrequired:\n  - code\n  - message\nproperties:\n  code:\n    type: integer\n    format: int32\n  message:\n    type: string\n",
+        "format": "yaml"
+      }
+    ],
+    "source": {
+      "umf": "0.1.0",
+      "id": "petstore",
+      "vocabularies": {
+        "umf.openapi": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "schema",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "schema",
+              "extensions": {
+                "umf.openapi": {
+                  "profile": "openapi-json-yaml-0.1",
+                  "root": {
+                    "kind": "object",
+                    "members": {
+                      "swagger": {
+                        "kind": "string",
+                        "value": "2.0"
+                      },
+                      "info": {
+                        "kind": "object",
+                        "members": {
+                          "version": {
+                            "kind": "string",
+                            "value": "1.0.0"
+                          },
+                          "title": {
+                            "kind": "string",
+                            "value": "Swagger Petstore"
+                          },
+                          "description": {
+                            "kind": "string",
+                            "value": "A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification"
+                          },
+                          "termsOfService": {
+                            "kind": "string",
+                            "value": "http://swagger.io/terms/"
+                          },
+                          "contact": {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "Swagger API Team"
+                              },
+                              "email": {
+                                "kind": "string",
+                                "value": "apiteam@swagger.io"
+                              },
+                              "url": {
+                                "kind": "string",
+                                "value": "http://swagger.io"
+                              }
+                            }
+                          },
+                          "license": {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "Apache 2.0"
+                              },
+                              "url": {
+                                "kind": "string",
+                                "value": "https://www.apache.org/licenses/LICENSE-2.0.html"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "host": {
+                        "kind": "string",
+                        "value": "petstore.swagger.io"
+                      },
+                      "basePath": {
+                        "kind": "string",
+                        "value": "/api"
+                      },
+                      "schemes": {
+                        "kind": "array",
+                        "items": [
+                          {
+                            "kind": "string",
+                            "value": "http"
+                          }
+                        ]
+                      },
+                      "consumes": {
+                        "kind": "array",
+                        "items": [
+                          {
+                            "kind": "string",
+                            "value": "application/json"
+                          }
+                        ]
+                      },
+                      "produces": {
+                        "kind": "array",
+                        "items": [
+                          {
+                            "kind": "string",
+                            "value": "application/json"
+                          }
+                        ]
+                      },
+                      "paths": {
+                        "kind": "object",
+                        "members": {
+                          "/pets": {
+                            "kind": "object",
+                            "members": {
+                              "get": {
+                                "kind": "object",
+                                "members": {
+                                  "description": {
+                                    "kind": "string",
+                                    "value": "Returns all pets from the system that the user has access to\nNam sed condimentum est. Maecenas tempor sagittis sapien, nec rhoncus sem sagittis sit amet. Aenean at gravida augue, ac iaculis sem. Curabitur odio lorem, ornare eget elementum nec, cursus id lectus. Duis mi turpis, pulvinar ac eros ac, tincidunt varius justo. In hac habitasse platea dictumst. Integer at adipiscing ante, a sagittis ligula. Aenean pharetra tempor ante molestie imperdiet. Vivamus id aliquam diam. Cras quis velit non tortor eleifend sagittis. Praesent at enim pharetra urna volutpat venenatis eget eget mauris. In eleifend fermentum facilisis. Praesent enim enim, gravida ac sodales sed, placerat id erat. Suspendisse lacus dolor, consectetur non augue vel, vehicula interdum libero. Morbi euismod sagittis libero sed lacinia.\n\nSed tempus felis lobortis leo pulvinar rutrum. Nam mattis velit nisl, eu condimentum ligula luctus nec. Phasellus semper velit eget aliquet faucibus. In a mattis elit. Phasellus vel urna viverra, condimentum lorem id, rhoncus nibh. Ut pellentesque posuere elementum. Sed a varius odio. Morbi rhoncus ligula libero, vel eleifend nunc tristique vitae. Fusce et sem dui. Aenean nec scelerisque tortor. Fusce malesuada accumsan magna vel tempus. Quisque mollis felis eu dolor tristique, sit amet auctor felis gravida. Sed libero lorem, molestie sed nisl in, accumsan tempor nisi. Fusce sollicitudin massa ut lacinia mattis. Sed vel eleifend lorem. Pellentesque vitae felis pretium, pulvinar elit eu, euismod sapien.\n"
+                                  },
+                                  "operationId": {
+                                    "kind": "string",
+                                    "value": "findPets"
+                                  },
+                                  "parameters": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "$ref": {
+                                            "kind": "string",
+                                            "value": "parameters.yaml#/tagsParam"
+                                          }
+                                        }
+                                      },
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "$ref": {
+                                            "kind": "string",
+                                            "value": "parameters.yaml#/limitsParam"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "responses": {
+                                    "kind": "object",
+                                    "members": {
+                                      "200": {
+                                        "kind": "object",
+                                        "members": {
+                                          "description": {
+                                            "kind": "string",
+                                            "value": "pet response"
+                                          },
+                                          "schema": {
+                                            "kind": "object",
+                                            "members": {
+                                              "type": {
+                                                "kind": "string",
+                                                "value": "array"
+                                              },
+                                              "items": {
+                                                "kind": "object",
+                                                "members": {
+                                                  "$ref": {
+                                                    "kind": "string",
+                                                    "value": "Pet.yaml"
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "default": {
+                                        "kind": "object",
+                                        "members": {
+                                          "description": {
+                                            "kind": "string",
+                                            "value": "unexpected error"
+                                          },
+                                          "schema": {
+                                            "kind": "object",
+                                            "members": {
+                                              "$ref": {
+                                                "kind": "string",
+                                                "value": "../common/Error.yaml"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "post": {
+                                "kind": "object",
+                                "members": {
+                                  "description": {
+                                    "kind": "string",
+                                    "value": "Creates a new pet in the store.  Duplicates are allowed"
+                                  },
+                                  "operationId": {
+                                    "kind": "string",
+                                    "value": "addPet"
+                                  },
+                                  "parameters": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "name": {
+                                            "kind": "string",
+                                            "value": "pet"
+                                          },
+                                          "in": {
+                                            "kind": "string",
+                                            "value": "body"
+                                          },
+                                          "description": {
+                                            "kind": "string",
+                                            "value": "Pet to add to the store"
+                                          },
+                                          "required": {
+                                            "kind": "boolean",
+                                            "value": true
+                                          },
+                                          "schema": {
+                                            "kind": "object",
+                                            "members": {
+                                              "$ref": {
+                                                "kind": "string",
+                                                "value": "NewPet.yaml"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "responses": {
+                                    "kind": "object",
+                                    "members": {
+                                      "200": {
+                                        "kind": "object",
+                                        "members": {
+                                          "description": {
+                                            "kind": "string",
+                                            "value": "pet response"
+                                          },
+                                          "schema": {
+                                            "kind": "object",
+                                            "members": {
+                                              "$ref": {
+                                                "kind": "string",
+                                                "value": "Pet.yaml"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "default": {
+                                        "kind": "object",
+                                        "members": {
+                                          "description": {
+                                            "kind": "string",
+                                            "value": "unexpected error"
+                                          },
+                                          "schema": {
+                                            "kind": "object",
+                                            "members": {
+                                              "$ref": {
+                                                "kind": "string",
+                                                "value": "../common/Error.yaml"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "/pets/{id}": {
+                            "kind": "object",
+                            "members": {
+                              "get": {
+                                "kind": "object",
+                                "members": {
+                                  "description": {
+                                    "kind": "string",
+                                    "value": "Returns a user based on a single ID, if the user does not have access to the pet"
+                                  },
+                                  "operationId": {
+                                    "kind": "string",
+                                    "value": "find pet by id"
+                                  },
+                                  "parameters": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "name": {
+                                            "kind": "string",
+                                            "value": "id"
+                                          },
+                                          "in": {
+                                            "kind": "string",
+                                            "value": "path"
+                                          },
+                                          "description": {
+                                            "kind": "string",
+                                            "value": "ID of pet to fetch"
+                                          },
+                                          "required": {
+                                            "kind": "boolean",
+                                            "value": true
+                                          },
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "integer"
+                                          },
+                                          "format": {
+                                            "kind": "string",
+                                            "value": "int64"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "responses": {
+                                    "kind": "object",
+                                    "members": {
+                                      "200": {
+                                        "kind": "object",
+                                        "members": {
+                                          "description": {
+                                            "kind": "string",
+                                            "value": "pet response"
+                                          },
+                                          "schema": {
+                                            "kind": "object",
+                                            "members": {
+                                              "$ref": {
+                                                "kind": "string",
+                                                "value": "Pet.yaml"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      "default": {
+                                        "kind": "object",
+                                        "members": {
+                                          "description": {
+                                            "kind": "string",
+                                            "value": "unexpected error"
+                                          },
+                                          "schema": {
+                                            "kind": "object",
+                                            "members": {
+                                              "$ref": {
+                                                "kind": "string",
+                                                "value": "../common/Error.yaml"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "delete": {
+                                "kind": "object",
+                                "members": {
+                                  "description": {
+                                    "kind": "string",
+                                    "value": "deletes a single pet based on the ID supplied"
+                                  },
+                                  "operationId": {
+                                    "kind": "string",
+                                    "value": "deletePet"
+                                  },
+                                  "parameters": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "name": {
+                                            "kind": "string",
+                                            "value": "id"
+                                          },
+                                          "in": {
+                                            "kind": "string",
+                                            "value": "path"
+                                          },
+                                          "description": {
+                                            "kind": "string",
+                                            "value": "ID of pet to delete"
+                                          },
+                                          "required": {
+                                            "kind": "boolean",
+                                            "value": true
+                                          },
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "integer"
+                                          },
+                                          "format": {
+                                            "kind": "string",
+                                            "value": "int64"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "responses": {
+                                    "kind": "object",
+                                    "members": {
+                                      "204": {
+                                        "kind": "object",
+                                        "members": {
+                                          "description": {
+                                            "kind": "string",
+                                            "value": "pet deleted"
+                                          }
+                                        }
+                                      },
+                                      "default": {
+                                        "kind": "object",
+                                        "members": {
+                                          "description": {
+                                            "kind": "string",
+                                            "value": "unexpected error"
+                                          },
+                                          "schema": {
+                                            "kind": "object",
+                                            "members": {
+                                              "$ref": {
+                                                "kind": "string",
+                                                "value": "../common/Error.yaml"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "originalSource": "swagger: \"2.0\"\ninfo:\n  version: 1.0.0\n  title: Swagger Petstore\n  description: A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification\n  termsOfService: http://swagger.io/terms/\n  contact:\n    name: Swagger API Team\n    email: apiteam@swagger.io\n    url: http://swagger.io\n  license:\n    name: Apache 2.0\n    url: https://www.apache.org/licenses/LICENSE-2.0.html\nhost: petstore.swagger.io\nbasePath: /api\nschemes:\n  - http\nconsumes:\n  - application/json\nproduces:\n  - application/json\npaths:\n  /pets:\n    get:\n      description: |\n        Returns all pets from the system that the user has access to\n        Nam sed condimentum est. Maecenas tempor sagittis sapien, nec rhoncus sem sagittis sit amet. Aenean at gravida augue, ac iaculis sem. Curabitur odio lorem, ornare eget elementum nec, cursus id lectus. Duis mi turpis, pulvinar ac eros ac, tincidunt varius justo. In hac habitasse platea dictumst. Integer at adipiscing ante, a sagittis ligula. Aenean pharetra tempor ante molestie imperdiet. Vivamus id aliquam diam. Cras quis velit non tortor eleifend sagittis. Praesent at enim pharetra urna volutpat venenatis eget eget mauris. In eleifend fermentum facilisis. Praesent enim enim, gravida ac sodales sed, placerat id erat. Suspendisse lacus dolor, consectetur non augue vel, vehicula interdum libero. Morbi euismod sagittis libero sed lacinia.\n\n        Sed tempus felis lobortis leo pulvinar rutrum. Nam mattis velit nisl, eu condimentum ligula luctus nec. Phasellus semper velit eget aliquet faucibus. In a mattis elit. Phasellus vel urna viverra, condimentum lorem id, rhoncus nibh. Ut pellentesque posuere elementum. Sed a varius odio. Morbi rhoncus ligula libero, vel eleifend nunc tristique vitae. Fusce et sem dui. Aenean nec scelerisque tortor. Fusce malesuada accumsan magna vel tempus. Quisque mollis felis eu dolor tristique, sit amet auctor felis gravida. Sed libero lorem, molestie sed nisl in, accumsan tempor nisi. Fusce sollicitudin massa ut lacinia mattis. Sed vel eleifend lorem. Pellentesque vitae felis pretium, pulvinar elit eu, euismod sapien.\n      operationId: findPets\n      parameters:\n        - $ref: 'parameters.yaml#/tagsParam'\n        - $ref: 'parameters.yaml#/limitsParam'\n      responses:\n        \"200\":\n          description: pet response\n          schema:\n            type: array\n            items:\n              $ref: 'Pet.yaml'\n        default:\n          description: unexpected error\n          schema:\n            $ref: '../common/Error.yaml'\n    post:\n      description: Creates a new pet in the store.  Duplicates are allowed\n      operationId: addPet\n      parameters:\n        - name: pet\n          in: body\n          description: Pet to add to the store\n          required: true\n          schema:\n            $ref: 'NewPet.yaml'\n      responses:\n        \"200\":\n          description: pet response\n          schema:\n            $ref: 'Pet.yaml'\n        default:\n          description: unexpected error\n          schema:\n            $ref: '../common/Error.yaml'\n  /pets/{id}:\n    get:\n      description: Returns a user based on a single ID, if the user does not have access to the pet\n      operationId: find pet by id\n      parameters:\n        - name: id\n          in: path\n          description: ID of pet to fetch\n          required: true\n          type: integer\n          format: int64\n      responses:\n        \"200\":\n          description: pet response\n          schema:\n            $ref: 'Pet.yaml'\n        default:\n          description: unexpected error\n          schema:\n            $ref: '../common/Error.yaml'\n    delete:\n      description: deletes a single pet based on the ID supplied\n      operationId: deletePet\n      parameters:\n        - name: id\n          in: path\n          description: ID of pet to delete\n          required: true\n          type: integer\n          format: int64\n      responses:\n        \"204\":\n          description: pet deleted\n        default:\n          description: unexpected error\n          schema:\n            $ref: '../common/Error.yaml'\n",
+                  "originalFormat": "yaml",
+                  "baseUri": "https://example.test/petstore/spec/swagger.yaml",
+                  "resources": [
+                    {
+                      "uri": "https://example.test/petstore/spec/Pet.yaml",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "object"
+                          },
+                          "required": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "string",
+                                "value": "id"
+                              },
+                              {
+                                "kind": "string",
+                                "value": "name"
+                              }
+                            ]
+                          },
+                          "properties": {
+                            "kind": "object",
+                            "members": {
+                              "id": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "string"
+                                  },
+                                  "format": {
+                                    "kind": "string",
+                                    "value": "int64"
+                                  }
+                                }
+                              },
+                              "name": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                }
+                              },
+                              "tag": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "originalSource": "type: object\nrequired:\n  - id\n  - name\nproperties:\n  id:\n    type: integer\n    format: int64\n  name:\n    type: string\n  tag:\n    type: string\n",
+                      "originalFormat": "yaml"
+                    },
+                    {
+                      "uri": "https://example.test/petstore/spec/NewPet.yaml",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "object"
+                          },
+                          "allOf": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "$ref": {
+                                    "kind": "string",
+                                    "value": "Pet.yaml"
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "required": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "name"
+                                      }
+                                    ]
+                                  },
+                                  "properties": {
+                                    "kind": "object",
+                                    "members": {
+                                      "description": {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "integer"
+                                          },
+                                          "format": {
+                                            "kind": "string",
+                                            "value": "int64"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "originalSource": "type: object\nallOf:\n  - $ref: 'Pet.yaml'\n  - required:\n      - name\n    properties:\n      description:\n        type: integer\n        format: int64\n",
+                      "originalFormat": "yaml"
+                    },
+                    {
+                      "uri": "https://example.test/petstore/spec/parameters.yaml",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "tagsParam": {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "tags"
+                              },
+                              "in": {
+                                "kind": "string",
+                                "value": "query"
+                              },
+                              "description": {
+                                "kind": "string",
+                                "value": "tags to filter by"
+                              },
+                              "required": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "array"
+                              },
+                              "collectionFormat": {
+                                "kind": "string",
+                                "value": "csv"
+                              },
+                              "items": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "limitsParam": {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "limit"
+                              },
+                              "in": {
+                                "kind": "string",
+                                "value": "query"
+                              },
+                              "description": {
+                                "kind": "string",
+                                "value": "maximum number of results to return"
+                              },
+                              "required": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "integer"
+                              },
+                              "format": {
+                                "kind": "string",
+                                "value": "int32"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "originalSource": "tagsParam:\n  name: tags\n  in: query\n  description: tags to filter by\n  required: false\n  type: array\n  collectionFormat: csv\n  items:\n    type: string\nlimitsParam:\n  name: limit\n  in: query\n  description: maximum number of results to return\n  required: false\n  type: integer\n  format: int32\n",
+                      "originalFormat": "yaml"
+                    },
+                    {
+                      "uri": "https://example.test/petstore/common/Error.yaml",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "object"
+                          },
+                          "required": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "string",
+                                "value": "code"
+                              },
+                              {
+                                "kind": "string",
+                                "value": "message"
+                              }
+                            ]
+                          },
+                          "properties": {
+                            "kind": "object",
+                            "members": {
+                              "code": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "integer"
+                                  },
+                                  "format": {
+                                    "kind": "string",
+                                    "value": "int32"
+                                  }
+                                }
+                              },
+                              "message": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "originalSource": "type: object\nrequired:\n  - code\n  - message\nproperties:\n  code:\n    type: integer\n    format: int32\n  message:\n    type: string\n",
+                      "originalFormat": "yaml"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "diagnostics": [
+      {
+        "code": "OPENAPI_RESOURCE_CONTEXT",
+        "path": "/resources",
+        "message": "Explicit resources are retained; URI/pointer lookup does not validate their contextual types, nested schema IDs, anchors, dynamic scope or reference closure",
+        "severity": "warning"
+      },
+      {
+        "code": "OPENAPI_VALIDATION_LIMIT",
+        "path": "/root",
+        "message": "Pinned official-schema checks do not prove reference resolution, URI formats, security execution, parameter serialization or all normative prose rules; known 3.1/3.2 embedded dialect keyword syntax is checked, while instances, unknown dialects and referenced resource contexts remain incomplete; legacy schemas check their declared Schema Object subset; extension content remains source-owned",
+        "severity": "warning"
+      },
+      {
+        "code": "OPENAPI_SOURCE_LAYOUT",
+        "path": "",
+        "severity": "warning",
+        "message": "Edited native output uses JSON syntax; original layout and comments remain in source archive"
+      },
+      {
+        "code": "SOURCE_ARTIFACT_REQUIRED",
+        "path": "",
+        "severity": "warning",
+        "message": "Retain source UMF for unrelated metadata and archived native layout"
+      }
+    ]
+  }
+}

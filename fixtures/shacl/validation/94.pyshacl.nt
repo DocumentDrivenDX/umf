@@ -1,0 +1,18 @@
+_:N83c9c5136cc14beda1007473bd3e3bf9 <http://www.w3.org/ns/shacl#focusNode> <http://www.w3.org/2000/01/rdf-schema#Resource> .
+_:N83c9c5136cc14beda1007473bd3e3bf9 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:N63d0e3ada06b4ebe837b9fcc5bc7e790 <http://www.w3.org/ns/shacl#focusNode> "String" .
+_:N83c9c5136cc14beda1007473bd3e3bf9 <http://www.w3.org/ns/shacl#value> <http://www.w3.org/2000/01/rdf-schema#Resource> .
+_:N83c9c5136cc14beda1007473bd3e3bf9 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N63d0e3ada06b4ebe837b9fcc5bc7e790 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N83c9c5136cc14beda1007473bd3e3bf9 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N63d0e3ada06b4ebe837b9fcc5bc7e790 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nad50c000d716408092128bd7d9be93ce <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Nad50c000d716408092128bd7d9be93ce <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N63d0e3ada06b4ebe837b9fcc5bc7e790 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:N83c9c5136cc14beda1007473bd3e3bf9 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/targets/targetObjectsOf-001.test#TestShape> .
+_:N63d0e3ada06b4ebe837b9fcc5bc7e790 <http://www.w3.org/ns/shacl#resultMessage> "Value is not Literal with datatype xsd:integer" .
+_:N63d0e3ada06b4ebe837b9fcc5bc7e790 <http://www.w3.org/ns/shacl#value> "String" .
+_:N63d0e3ada06b4ebe837b9fcc5bc7e790 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/targets/targetObjectsOf-001.test#TestShape> .
+_:N83c9c5136cc14beda1007473bd3e3bf9 <http://www.w3.org/ns/shacl#resultMessage> "Value is not Literal with datatype xsd:integer" .
+_:Nad50c000d716408092128bd7d9be93ce <http://www.w3.org/ns/shacl#result> _:N83c9c5136cc14beda1007473bd3e3bf9 .
+_:Nad50c000d716408092128bd7d9be93ce <http://www.w3.org/ns/shacl#result> _:N63d0e3ada06b4ebe837b9fcc5bc7e790 .

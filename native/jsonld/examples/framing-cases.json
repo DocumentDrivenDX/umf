@@ -1,0 +1,242 @@
+[
+  {
+    "id": "exact-values",
+    "source": "{\"@id\":\"urn:s\",\"urn:p\":[9007199254740993,333333333.33333329,-0,1e400,1e-400]}",
+    "options": {
+      "frame": "{\"@context\":{\"p\":\"urn:p\"},\"@id\":\"urn:s\"}"
+    },
+    "expected": "{\"@context\":{\"p\":\"urn:p\"},\"@id\":\"urn:s\",\"p\":[9007199254740993,333333333.33333329,-0,1e400,1e-400]}",
+    "edit": {
+      "pointer": "/urn:p/0",
+      "text": "9007199254740995"
+    },
+    "editedExpected": "{\"@context\":{\"p\":\"urn:p\"},\"@id\":\"urn:s\",\"p\":[9007199254740995,333333333.33333329,-0,1e400,1e-400]}"
+  },
+  {
+    "id": "exact-match",
+    "source": "[{\"@id\":\"urn:s\",\"urn:p\":9007199254740993},{\"@id\":\"urn:t\",\"urn:p\":9007199254740992}]",
+    "options": {
+      "frame": "{\"@context\":{\"p\":\"urn:p\"},\"p\":{\"@value\":9007199254740993.0}}"
+    },
+    "expected": "{\"@context\":{\"p\":\"urn:p\"},\"@id\":\"urn:s\",\"p\":9007199254740993}"
+  },
+  {
+    "id": "precise-default",
+    "source": "{\"@id\":\"urn:s\",\"urn:p\":\"v\"}",
+    "options": {
+      "frame": "{\"@context\":{\"q\":\"urn:q\"},\"@id\":\"urn:s\",\"q\":{\"@default\":1e400}}"
+    },
+    "expected": "{\"@context\":{\"q\":\"urn:q\"},\"@id\":\"urn:s\",\"urn:p\":\"v\",\"q\":1e400}"
+  },
+  {
+    "id": "explicit-selection",
+    "source": "{\"@id\":\"urn:s\",\"urn:p\":\"yes\",\"urn:q\":\"retained in source\"}",
+    "options": {
+      "frame": "{\"@id\":\"urn:s\",\"urn:p\":{}}",
+      "explicit": true
+    },
+    "expected": "{\"@id\":\"urn:s\",\"urn:p\":\"yes\"}"
+  },
+  {
+    "id": "default-graph",
+    "source": "[{\"@id\":\"urn:s\",\"urn:p\":\"default\"},{\"@id\":\"urn:g\",\"@graph\":[{\"@id\":\"urn:s\",\"urn:p\":\"named\"}]}]",
+    "options": {
+      "frame": "{\"@id\":\"urn:s\"}",
+      "frameDefault": true
+    },
+    "expected": "{\"@id\":\"urn:s\",\"urn:p\":\"default\"}"
+  },
+  {
+    "id": "merged-graph",
+    "source": "[{\"@id\":\"urn:s\",\"urn:p\":\"default\"},{\"@id\":\"urn:g\",\"@graph\":[{\"@id\":\"urn:s\",\"urn:p\":\"named\"}]}]",
+    "options": {
+      "frame": "{\"@id\":\"urn:s\"}"
+    },
+    "expected": "{\"@id\":\"urn:s\",\"urn:p\":[\"default\",\"named\"]}"
+  },
+  {
+    "id": "cycle",
+    "source": "[{\"@id\":\"urn:a\",\"urn:p\":{\"@id\":\"urn:b\"},\"urn:name\":\"A\"},{\"@id\":\"urn:b\",\"urn:p\":{\"@id\":\"urn:a\"},\"urn:name\":\"B\"}]",
+    "options": {
+      "frame": "{\"@context\":{\"p\":\"urn:p\",\"name\":\"urn:name\"},\"@id\":\"urn:a\",\"p\":{}}",
+      "embed": "@always"
+    },
+    "expected": "{\"@context\":{\"p\":\"urn:p\",\"name\":\"urn:name\"},\"@id\":\"urn:a\",\"name\":\"A\",\"p\":{\"@id\":\"urn:b\",\"name\":\"B\",\"p\":{\"@id\":\"urn:a\"}}}"
+  },
+  {
+    "id": "require-all",
+    "source": "[{\"@id\":\"urn:a\",\"urn:p\":\"x\",\"urn:q\":\"y\"},{\"@id\":\"urn:b\",\"urn:p\":\"x\"}]",
+    "options": {
+      "frame": "{\"urn:p\":{},\"urn:q\":{}}",
+      "requireAll": true
+    },
+    "expected": "{\"@id\":\"urn:a\",\"urn:p\":\"x\",\"urn:q\":\"y\"}"
+  },
+  {
+    "id": "remote-frame-context",
+    "source": "{\"@id\":\"urn:s\",\"urn:p\":\"v\"}",
+    "options": {
+      "frame": "{\"@context\":\"https://example.org/context\",\"@id\":\"urn:s\"}"
+    },
+    "inputs": {
+      "contexts": [
+        {
+          "url": "https://example.org/context",
+          "text": "{\"@context\":{\"p\":\"urn:p\"}}"
+        }
+      ]
+    },
+    "expected": "{\"@context\":\"https://example.org/context\",\"@id\":\"urn:s\",\"p\":\"v\"}"
+  },
+  {
+    "id": "missing-frame-context",
+    "source": "{\"urn:p\":\"v\"}",
+    "options": {
+      "frame": "{\"@context\":\"https://example.org/missing\"}"
+    },
+    "blocked": true
+  },
+  {
+    "id": "loss-reject",
+    "source": "{\"urn:p\":\"v\",\"unmapped\":\"retained\"}",
+    "options": {
+      "frame": "{}",
+      "lossPolicy": "reject"
+    },
+    "blocked": true
+  },
+  {
+    "id": "opaque-list",
+    "source": "{\"@id\":\"urn:s\",\"urn:p\":{\"@type\":\"@json\",\"@value\":{\"a\":[9007199254740993,1e400],\"@language\":\"EN\"}},\"urn:q\":{\"@list\":[1e400,9007199254740993,1e400]}}",
+    "options": {
+      "frame": "{\"@context\":{\"p\":{\"@id\":\"urn:p\",\"@type\":\"@json\"},\"q\":{\"@id\":\"urn:q\",\"@container\":\"@list\"}},\"@id\":\"urn:s\"}"
+    },
+    "expected": "{\"@context\":{\"p\":{\"@id\":\"urn:p\",\"@type\":\"@json\"},\"q\":{\"@id\":\"urn:q\",\"@container\":\"@list\"}},\"@id\":\"urn:s\",\"p\":{\"a\":[9007199254740993,1e400],\"@language\":\"EN\"},\"q\":[1e400,9007199254740993,1e400]}"
+  },
+  {
+    "id": "invalid-last-empty",
+    "source": "[]",
+    "options": {
+      "frame": "{\"@embed\": \"@last\"}"
+    },
+    "blocked": true,
+    "expectedNative": "accepted"
+  },
+  {
+    "id": "invalid-link-empty",
+    "source": "[]",
+    "options": {
+      "frame": "{\"@embed\": \"@link\"}"
+    },
+    "blocked": true,
+    "expectedNative": "accepted"
+  },
+  {
+    "id": "invalid-nested-empty",
+    "source": "[]",
+    "options": {
+      "frame": "{\"urn:p\": {\"@embed\": \"invalid\"}}"
+    },
+    "blocked": true,
+    "expectedNative": "accepted"
+  },
+  {
+    "id": "invalid-aliased-empty",
+    "source": "[]",
+    "options": {
+      "frame": "{\"@context\": {\"e\": \"@embed\", \"p\": \"urn:p\"}, \"p\": {\"e\": \"invalid\"}}"
+    },
+    "blocked": true,
+    "expectedNative": "accepted"
+  },
+  {
+    "id": "invalid-explicit-empty",
+    "source": "[]",
+    "options": {
+      "frame": "{\"@explicit\": \"yes\"}"
+    },
+    "blocked": true,
+    "expectedNative": "accepted"
+  },
+  {
+    "id": "invalid-require-empty",
+    "source": "[]",
+    "options": {
+      "frame": "{\"@requireAll\": 1}"
+    },
+    "blocked": true,
+    "expectedNative": "accepted"
+  },
+  {
+    "id": "invalid-omit-empty",
+    "source": "[]",
+    "options": {
+      "frame": "{\"@omitDefault\": null}"
+    },
+    "blocked": true,
+    "expectedNative": "accepted"
+  },
+  {
+    "id": "invalid-embed-array",
+    "source": "[]",
+    "options": {
+      "frame": "{\"@embed\": [\"@once\", \"@never\"]}"
+    },
+    "blocked": true,
+    "expectedNative": "accepted"
+  },
+  {
+    "id": "invalid-flag-array",
+    "source": "[]",
+    "options": {
+      "frame": "{\"@explicit\": [true, false]}"
+    },
+    "blocked": true,
+    "expectedNative": "accepted"
+  },
+  {
+    "id": "legacy-empty-control",
+    "source": "[]",
+    "inputs": {
+      "processingMode": "json-ld-1.0"
+    },
+    "options": {
+      "frame": "{\"@embed\":\"@last\"}"
+    },
+    "expected": "{\"@graph\":[]}"
+  },
+  {
+    "id": "opaque-default-control",
+    "source": "{\"@id\":\"urn:s\",\"urn:p\":\"v\"}",
+    "options": {
+      "frame": "{\"@context\": {\"q\": \"urn:q\"}, \"@id\": \"urn:s\", \"q\": {\"@default\": {\"@type\": \"@json\", \"@value\": {\"@embed\": \"@link\", \"@explicit\": \"literal\"}}}}"
+    },
+    "expected": "{\"@context\": {\"q\": \"urn:q\"}, \"@id\": \"urn:s\", \"urn:p\": \"v\", \"q\": {\"@type\": \"@json\", \"@value\": {\"@embed\": \"@link\", \"@explicit\": \"literal\"}}}"
+  },
+  {
+    "id": "opaque-pattern-control",
+    "source": "{\"@id\":\"urn:s\",\"urn:p\":{\"@type\":\"@json\",\"@value\":{\"@embed\":\"@link\",\"@explicit\":\"literal\"}}}",
+    "options": {
+      "frame": "{\"@context\": {\"p\": \"urn:p\"}, \"p\": {\"@type\": \"@json\", \"@value\": {\"@embed\": \"@link\", \"@explicit\": \"literal\"}}}"
+    },
+    "expected": "{\"@context\": {\"p\": \"urn:p\"}, \"@id\": \"urn:s\", \"p\": {\"@type\": \"@json\", \"@value\": {\"@embed\": \"@link\", \"@explicit\": \"literal\"}}}"
+  },
+  {
+    "id": "invalid-nested-id",
+    "source": "[]",
+    "options": {
+      "frame": "{\"urn:p\":{\"@id\":\"_:invalid\"}}"
+    },
+    "blocked": true,
+    "expectedNative": "accepted"
+  },
+  {
+    "id": "invalid-nested-type",
+    "source": "[]",
+    "options": {
+      "frame": "{\"urn:p\":{\"@type\":\"_:invalid\"}}"
+    },
+    "blocked": true,
+    "expectedNative": "accepted"
+  }
+]

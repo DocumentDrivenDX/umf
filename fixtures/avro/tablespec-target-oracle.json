@@ -1,0 +1,50 @@
+{
+  "modelSha256": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b",
+  "mappingSha256": "eaa36bcbd96d2b09d22161c5200a2be6a0788d7fd5ee46292d62428bb24cbbe7",
+  "cases": [
+    {
+      "id": "orders",
+      "format": "json",
+      "columns": 13,
+      "nativeModelsAgree": true
+    },
+    {
+      "id": "orders",
+      "format": "yaml",
+      "columns": 13,
+      "nativeModelsAgree": true
+    },
+    {
+      "id": "dependency",
+      "format": "json",
+      "columns": 1,
+      "nativeModelsAgree": true
+    },
+    {
+      "id": "dependency",
+      "format": "yaml",
+      "columns": 1,
+      "nativeModelsAgree": true
+    },
+    {
+      "id": "temporal",
+      "format": "json",
+      "columns": 4,
+      "nativeModelsAgree": true
+    },
+    {
+      "id": "temporal",
+      "format": "yaml",
+      "columns": 4,
+      "nativeModelsAgree": true
+    }
+  ],
+  "simpleHelpers": {
+    "title": "StringType()",
+    "count": "IntegerType()",
+    "flag": "BooleanType()",
+    "score": "FloatType()",
+    "optional": "StringType()"
+  },
+  "scope": "Pinned TableSpec Pydantic models validate generated schemas/recoveries and Spark helper carrier families; no TableSpec row, pipeline or logical-value execution"
+}

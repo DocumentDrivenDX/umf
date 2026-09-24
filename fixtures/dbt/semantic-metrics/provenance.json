@@ -1,0 +1,55 @@
+{
+  "command": [
+    "/home/erik/Projects/umf/.cache/dbt-venv/bin/dbt",
+    "parse",
+    "--no-partial-parse",
+    "--project-dir",
+    "/home/erik/Projects/umf/native/dbt/metrics-project",
+    "--profiles-dir",
+    "/home/erik/Projects/umf/native/dbt/metrics-project",
+    "--target-path",
+    "/home/erik/Projects/umf/.cache/dbt-semantic-metrics-target",
+    "--log-path",
+    "/home/erik/Projects/umf/.cache/dbt-semantic-metrics-logs"
+  ],
+  "exitCode": 0,
+  "scope": "Native dbt parse of synthetic project; no SQL or MetricFlow execution",
+  "files": [
+    {
+      "path": "native/dbt/metrics-project/dbt_project.yml",
+      "sha256": "9e1e6a3e30e3219ba6d0c21f1186ba59804403a812646b647d1918246cdcd008"
+    },
+    {
+      "path": "native/dbt/metrics-project/models/events.sql",
+      "sha256": "3b4c833305fbc9d7094965cddd8653917e25fbcb4a06b8dff8b49b291f28f433"
+    },
+    {
+      "path": "native/dbt/metrics-project/models/metricflow_time_spine.sql",
+      "sha256": "bb71bcbc3b28d6846dabb3b2f7e65397fd4eb7cd7cb4e794f2c16c2246eecf68"
+    },
+    {
+      "path": "native/dbt/metrics-project/models/metrics.yml",
+      "sha256": "18d9a453dfb58ab96c47be30dc70896ef102a3f8a4eaa5de4ac114f11b6baa24"
+    },
+    {
+      "path": "native/dbt/metrics-project/profiles.yml",
+      "sha256": "1481e3806e6f1ea74432710bb016c724f5394f80e1cdda04f9d58d8d856ed0a5"
+    },
+    {
+      "path": "fixtures/dbt/semantic-metrics/semantic-manifest.json",
+      "sha256": "f7af06d50a83deb92a6f7fa8ba73f013c6e497af4163cc11b726d8033410e942"
+    },
+    {
+      "path": "fixtures/dbt/semantic-metrics/manifest.json",
+      "sha256": "573b035a384125c7d445425f61ecea3e03d0aa8bec170e15144eef4de7523f59"
+    },
+    {
+      "path": "fixtures/dbt/semantic-metrics/command.log",
+      "sha256": "6c5218476da6105388c0903533026627ab5dd96a82f54a9e5e869c2d3d9b9df3"
+    },
+    {
+      "path": "native/dbt/oracle-requirements.txt",
+      "sha256": "4d47968c46440c839ba8abf847902ab5069ceda478c4674bf3312d81f54d6675"
+    }
+  ]
+}

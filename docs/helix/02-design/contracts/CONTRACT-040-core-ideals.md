@@ -823,3 +823,29 @@ with earlier native availability/container operations are not claimed.
 This completes the SQL Server facet binding only. Avro, Parquet, the separate
 facet ideal admission/delivery gate and Key remain required. Native equivalence
 is unclaimed; native payloads and unknown content remain recoverable.
+
+
+### Avro facet binding profile and acceptance boundary
+
+The experimental core 0.5.0 Avro facet profile separates declared schema meaning,
+Apache Avro 1.12.0 datum-writer behavior and fastavro 1.12.2 schemaless-writer
+behavior. Native classification retains selected locations, named dependencies,
+union branches and unknown refinements. Authored projection emits one non-null
+scalar Field in a record, with explicit native-type, metadata-only or carrier-only
+encoding. It does not infer author intent from observed native bounds.
+
+Signed 32/64-bit declaration domains can match int/long; narrower and unsigned
+widths require residuals. Variable string/byte maximum lengths are not enforced
+by custom metadata. Fixed length is not maximum length, except the qualified
+zero-length binary case. Decimal declaration matches remain separate from writer
+conversion, physical-byte bypass and precision enforcement. Fixed sizes and emitted
+decimal precision are capped at 4096 in this implementation profile. The permanent
+binary64-to-binary32 counterexample remains an exact-input failure.
+
+Strict mode blocks loss; report mode retains explicit residuals. Invalid carriers
+block both modes. Recovery verifies the full retained ideal receipt and emitted
+text; native recovery preserves original text and dependencies. Neither recovery
+is source authentication or a native-equivalence claim. The
+[Avro evidence record](../../04-build/evidence/avro-facet-discovery.md) records
+current qualification and unresolved acceptance checks. This profile definition
+alone does not admit facets or complete five-system delivery.

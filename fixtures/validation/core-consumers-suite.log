@@ -1,0 +1,54 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core/core.test.ts:
+(pass) US-001-AC1: JSON and YAML retain unknown extension and core fields without claiming understanding [13.28ms]
+(pass) US-001-AC2: names in independent contexts coexist; identity and references are checked [27.49ms]
+(pass) US-001-AC2: native semantics are not inferred by extension structural validation [16.27ms]
+(pass) US-001-AC2: undeclared versions, duplicate registration, invalid schema and scope fail explicitly [16.37ms]
+(pass) US-001-AC3: safe edits are atomic, checked and reflected in both serializations [12.70ms]
+(pass) US-001-AC3: unknown dependencies block edits even if the edited extension is known [10.23ms]
+(pass) US-001-AC2: validator exceptions never become successful validation [6.17ms]
+(pass) US-001-AC4: duplicate keys and non-JSON YAML are rejected [2.27ms]
+(pass) US-001-AC4: numeric boundaries fail instead of rounding and interoperable decimals survive [1.09ms]
+(pass) US-001-AC4: non-JSON programmatic values cannot disappear during serialization [0.14ms]
+(pass) US-001-AC4: dangerous property names are retained as data, never inherited behavior [0.25ms]
+(pass) US-001-AC4: document depth and size limits fail explicitly [0.91ms]
+(pass) US-001-AC1: generated unknown content survives repeated portable serialization [106.74ms]
+(pass) registry captures a frozen copy, independent of subsequent package edits [8.54ms]
+(pass) published minimal document fixture validates with independent namespaces and references [1.42ms]
+(pass) US-001-AC1: YAML preserves long leading-indented multiline native comments [0.51ms]
+(pass) US-001-AC2: JSON equality handles reference objects and method-like data keys safely [8.65ms]
+
+tests/core/native-json.test.ts:
+(pass) CONTRACT-001: shared exact JSON tree is representation-identical across three extensions [9.72ms]
+(pass) US-024-AC4: explicit YAML 1.1 preserves underscored boundaries without changing the default profile [0.54ms]
+(pass) US-024-AC4: date-only string projection is explicit and does not admit general timestamps [0.21ms]
+(pass) US-024-AC4: PyYAML boolean vocabulary leaves single-letter axis names unchanged [0.41ms]
+
+tests/core/scalar.test.ts:
+(pass) CONTRACT-001 scalar families are interpreted core metadata and survive both formats [3.04ms]
+(pass) CONTRACT-001 unknown scalar families remain recoverable and explicitly incomplete [0.39ms]
+
+tests/core/selection.test.ts:
+(pass) CONTRACT-001 selection preserves distinct contexts, core reference boundaries, cycles and unknown meaning [4.94ms]
+(pass) CONTRACT-001 malformed queries and unresolved core sources fail without invoking accessors [142.47ms]
+(pass) CONTRACT-001 callers can supply semantic validation without confusing selection with native dependency discovery [11.28ms]
+(pass) CONTRACT-001 shared scalar selection keeps native recoveries intact across the five priority systems [1279.12ms]
+
+tests/consumers/orders.test.ts:
+(pass) CONTRACT-036 seven authored consumers retain mixed native context across both UMF formats [2478.80ms]
+(pass) CONTRACT-036 executable row transform rejects loss, coercion and overflow; snapshots remain isolated [265.43ms]
+(pass) CONTRACT-036 safe native metadata edits propagate while inconsistent sources fail [830.64ms]
+
+tests/consumers/tablespec-chain.test.ts:
+(pass) CONTRACT-039 priority-system chains retain native source, every stage and qualified diagnostics [2550.94ms]
+(pass) CONTRACT-039 blocked stages retain evidence without exposing a partial final target [1324.29ms]
+
+tests/consumers/projection-boundaries.test.ts:
+(pass) Priority projection identifier policies require absolute end in runtime and published schemas [59.20ms]
+(pass) CONTRACT-038 missing decimal scale is distinct from null and logical annotations require exact strings [834.98ms]
+
+ 34 pass
+ 0 fail
+ 586 expect() calls
+Ran 34 tests across 7 files. [10.76s]

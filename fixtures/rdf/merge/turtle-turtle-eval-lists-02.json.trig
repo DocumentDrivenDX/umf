@@ -1,0 +1,11 @@
+_:m_0_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:m_0_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:m_0_1 .
+_:m_0_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> "2" .
+_:m_0_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:m_0_2 .
+_:m_0_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.w3.org/2013/TurtleTests/o> .
+_:m_0_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+<http://www.w3.org/2013/TurtleTests/s> <http://www.w3.org/2013/TurtleTests/p> _:m_0_0 .
+_:m_1_0 <urn:example:related> <urn:example:resource> .
+<urn:example:populated> { _:m_1_0 <urn:example:label> "Original label" . }
+<urn:example:empty> {}
+_:m_1_0 {}

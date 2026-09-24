@@ -1,0 +1,33 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b24558 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b24558 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b24558 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b24558 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeConstraintComponent> .
+_:b24558 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/node-001.test#Issue-assignedTo> .
+_:b24558 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/node-001.test#Issue_1> .
+_:b24558 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/node-001.test#assignedTo> .
+_:b24558 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have shape " .
+_:b24558 <http://www.w3.org/ns/shacl#detail> _:b24556 .
+_:b24558 <http://www.w3.org/ns/shacl#detail> _:b24557 .
+_:b24558 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/property/node-001.test#Anon> .
+_:b24556 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b24556 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b24556 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinCountConstraintComponent> .
+_:b24556 <http://www.w3.org/ns/shacl#sourceShape> _:s_g_1 .
+_:b24556 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/node-001.test#Anon> .
+_:b24556 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/node-001.test#email> .
+_:b24556 <http://www.w3.org/ns/shacl#resultMessage> "Less than 1 values" .
+_:b24557 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b24557 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b24557 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinCountConstraintComponent> .
+_:b24557 <http://www.w3.org/ns/shacl#sourceShape> _:s_g_2 .
+_:b24557 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/node-001.test#Anon> .
+_:b24557 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/node-001.test#lastName> .
+_:b24557 <http://www.w3.org/ns/shacl#resultMessage> "Less than 1 values" .
+_:s_g_1 <http://www.w3.org/ns/shacl#path> <http://datashapes.org/sh/tests/core/property/node-001.test#email> .
+_:s_g_1 <http://www.w3.org/ns/shacl#minCount> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:s_g_1 <http://www.w3.org/ns/shacl#maxCount> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:s_g_2 <http://www.w3.org/ns/shacl#path> <http://datashapes.org/sh/tests/core/property/node-001.test#lastName> .
+_:s_g_2 <http://www.w3.org/ns/shacl#minCount> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:s_g_2 <http://www.w3.org/ns/shacl#maxCount> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .

@@ -1,0 +1,62 @@
+{
+  "oracle": "Python protobuf 7.36.2",
+  "cases": 42,
+  "beforeAndAfter": "passed",
+  "checks": {
+    "proto2-required-uninitialized": false,
+    "proto2-required-path": [
+      "id"
+    ],
+    "proto2-default-int64-exact": 9223372036854775807,
+    "proto2-default-absent": false,
+    "proto2-default-bytes": "00ff",
+    "proto2-explicit-default-present": true,
+    "proto2-explicit-default-wire": "0a017810ffffffffffffffff7f",
+    "proto2-clear-default-wire": "0a0178",
+    "proto2-int64-overflow": "rejected",
+    "proto2-packed-zigzag": "0a01782203000102",
+    "proto2-group-default": true,
+    "proto2-empty-group-wire": "0a01782b2c",
+    "proto2-enum-alias": 0,
+    "proto2-closed-enum-assignment": "rejected",
+    "proto2-unknown-enum-not-present": false,
+    "proto2-unknown-enum-retained": "0a01783863",
+    "proto2-oneof-selection": "token",
+    "proto2-oneof-clears-previous": false,
+    "proto2-oneof-empty-present": "0a01784a00",
+    "proto2-extension-wire": "0a0178a206016e",
+    "proto2-extension-reopen": "n",
+    "proto2-custom-option": "stable identifier",
+    "proto3-implicit-empty-omitted": "",
+    "proto3-implicit-hasfield": "rejected",
+    "proto3-optional-absent": false,
+    "proto3-optional-zero-present": true,
+    "proto3-optional-zero-wire": "1000",
+    "proto3-optional-clear": "",
+    "proto3-map-exact-int64": -9223372036854775808,
+    "proto3-uint64-maximum": 18446744073709551615,
+    "proto3-uint64-negative": "rejected",
+    "proto3-uint64-overflow": "rejected",
+    "proto3-oneof-wire-last-wins": "webhook",
+    "proto3-oneof-wire-value": "62",
+    "proto3-unknown-wire-retained": "980607",
+    "edition-explicit-name-present": true,
+    "edition-implicit-amount-hasfield": "rejected",
+    "edition-mixed-presence-wire": "0a00",
+    "edition-expanded-repeated-wire": "18011802",
+    "edition-closed-enum-assignment": "rejected",
+    "service-input-streaming": true,
+    "service-output-streaming": true
+  },
+  "negativeControls": [
+    {
+      "artifact": "default.pb",
+      "detected": "('proto2-default-int64-exact', 17, 9223372036854775807)"
+    },
+    {
+      "artifact": "presence.pb",
+      "detected": "Field umf.fixture.modern.Order.quantity does not have presence."
+    }
+  ],
+  "scope": "Authored proto2, proto3, Edition 2023 descriptors; native runtime behavior, not source parser conformance"
+}

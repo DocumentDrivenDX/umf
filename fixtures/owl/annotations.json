@@ -1,0 +1,718 @@
+{
+  "profile": "owl-annotations-1",
+  "complete": false,
+  "source": {
+    "umf": "0.1.0",
+    "id": "annotations",
+    "vocabularies": {
+      "umf.owl": {
+        "version": "0.1.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "dataset",
+        "namespace": "",
+        "elements": [
+          {
+            "id": "dataset",
+            "extensions": {
+              "umf.owl": {
+                "profile": "rdf11-turtle",
+                "baseIRI": "https://example.org/",
+                "blankNodeScope": "annotations",
+                "quads": [
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/A"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/B"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/ax1"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#Axiom"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/ax1"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#annotatedSource"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/A"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/ax1"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#annotatedProperty"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/ax1"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#annotatedTarget"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/B"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/ax1"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "https://example.org/confidence"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "0.90",
+                      "datatype": "http://www.w3.org/2001/XMLSchema#decimal"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/ax1"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "https://example.org/source"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/manual"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/ax2"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#Axiom"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/ax2"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#annotatedSource"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/A"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/ax2"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#annotatedProperty"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/ax2"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#annotatedTarget"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/B"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/ax2"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "https://example.org/source"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/other"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/ann"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#Annotation"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/ann"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#annotatedSource"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/ax1"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/ann"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#annotatedProperty"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/confidence"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/ann"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#annotatedTarget"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "0.90",
+                      "datatype": "http://www.w3.org/2001/XMLSchema#decimal"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/ann"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "https://example.org/reviewer"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "Ana",
+                      "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+                      "language": "en"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/deep"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#Annotation"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/deep"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#annotatedSource"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/ann"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/deep"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#annotatedProperty"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/reviewer"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/deep"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#annotatedTarget"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "Ana",
+                      "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+                      "language": "en"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/deep"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "https://example.org/version"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "9007199254740993",
+                      "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/unmatched"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#Annotation"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/unmatched"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#annotatedSource"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/ax1"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/unmatched"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#annotatedProperty"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/confidence"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/unmatched"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#annotatedTarget"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "0.9",
+                      "datatype": "http://www.w3.org/2001/XMLSchema#decimal"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/unmatched"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "https://example.org/reviewer"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "must not merge",
+                      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/bad"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#Axiom"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/bad"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#annotatedSource"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/A"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/bad"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#annotatedTarget"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/B"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/bad"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "https://example.org/note"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "missing predicate",
+                      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  }
+                ],
+                "originalSource": "@prefix owl: <http://www.w3.org/2002/07/owl#> .\n@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n@prefix ex: <https://example.org/> .\n@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\nex:A rdfs:subClassOf ex:B .\nex:ax1 a owl:Axiom ; owl:annotatedSource ex:A ; owl:annotatedProperty rdfs:subClassOf ; owl:annotatedTarget ex:B ; ex:confidence \"0.90\"^^xsd:decimal ; ex:source ex:manual .\nex:ax2 a owl:Axiom ; owl:annotatedSource ex:A ; owl:annotatedProperty rdfs:subClassOf ; owl:annotatedTarget ex:B ; ex:source ex:other .\nex:ann a owl:Annotation ; owl:annotatedSource ex:ax1 ; owl:annotatedProperty ex:confidence ; owl:annotatedTarget \"0.90\"^^xsd:decimal ; ex:reviewer \"Ana\"@en .\nex:deep a owl:Annotation ; owl:annotatedSource ex:ann ; owl:annotatedProperty ex:reviewer ; owl:annotatedTarget \"Ana\"@en ; ex:version \"9007199254740993\"^^xsd:integer .\nex:unmatched a owl:Annotation ; owl:annotatedSource ex:ax1 ; owl:annotatedProperty ex:confidence ; owl:annotatedTarget \"0.9\"^^xsd:decimal ; ex:reviewer \"must not merge\" .\nex:bad a owl:Axiom ; owl:annotatedSource ex:A ; owl:annotatedTarget ex:B ; ex:note \"missing predicate\" .\n",
+                "owlVersion": "2"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "blankNodeScope": "annotations",
+  "quadIndex": 0,
+  "roots": [
+    {
+      "kind": "iri",
+      "value": "https://example.org/ax1"
+    },
+    {
+      "kind": "iri",
+      "value": "https://example.org/ax2"
+    }
+  ],
+  "records": [
+    {
+      "node": {
+        "kind": "iri",
+        "value": "https://example.org/ax1"
+      },
+      "kind": "Axiom",
+      "target": {
+        "subject": {
+          "kind": "iri",
+          "value": "https://example.org/A"
+        },
+        "predicate": {
+          "kind": "iri",
+          "value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+        },
+        "object": {
+          "kind": "iri",
+          "value": "https://example.org/B"
+        }
+      },
+      "assertedQuadIndexes": [
+        0
+      ],
+      "annotationQuadIndexes": [
+        5,
+        6
+      ],
+      "nested": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/ann"
+        }
+      ]
+    },
+    {
+      "node": {
+        "kind": "iri",
+        "value": "https://example.org/ax2"
+      },
+      "kind": "Axiom",
+      "target": {
+        "subject": {
+          "kind": "iri",
+          "value": "https://example.org/A"
+        },
+        "predicate": {
+          "kind": "iri",
+          "value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+        },
+        "object": {
+          "kind": "iri",
+          "value": "https://example.org/B"
+        }
+      },
+      "assertedQuadIndexes": [
+        0
+      ],
+      "annotationQuadIndexes": [
+        11
+      ],
+      "nested": []
+    },
+    {
+      "node": {
+        "kind": "iri",
+        "value": "https://example.org/ann"
+      },
+      "kind": "Annotation",
+      "target": {
+        "subject": {
+          "kind": "iri",
+          "value": "https://example.org/ax1"
+        },
+        "predicate": {
+          "kind": "iri",
+          "value": "https://example.org/confidence"
+        },
+        "object": {
+          "kind": "literal",
+          "value": "0.90",
+          "datatype": "http://www.w3.org/2001/XMLSchema#decimal"
+        }
+      },
+      "assertedQuadIndexes": [
+        5
+      ],
+      "annotationQuadIndexes": [
+        16
+      ],
+      "nested": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/deep"
+        }
+      ]
+    },
+    {
+      "node": {
+        "kind": "iri",
+        "value": "https://example.org/deep"
+      },
+      "kind": "Annotation",
+      "target": {
+        "subject": {
+          "kind": "iri",
+          "value": "https://example.org/ann"
+        },
+        "predicate": {
+          "kind": "iri",
+          "value": "https://example.org/reviewer"
+        },
+        "object": {
+          "kind": "literal",
+          "value": "Ana",
+          "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+          "language": "en"
+        }
+      },
+      "assertedQuadIndexes": [
+        16
+      ],
+      "annotationQuadIndexes": [
+        21
+      ],
+      "nested": []
+    }
+  ],
+  "malformed": [
+    {
+      "kind": "iri",
+      "value": "https://example.org/bad"
+    }
+  ]
+}

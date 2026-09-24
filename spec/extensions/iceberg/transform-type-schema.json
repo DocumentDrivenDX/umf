@@ -1,0 +1,17 @@
+{
+ "$schema":"https://json-schema.org/draft/2020-12/schema",
+ "$id":"urn:umf:iceberg:transform-type:0.1.0",
+ "title":"Iceberg single-source transform type inspection",
+ "type":"object",
+ "required":["sourceType","transform","status","complete","reason"],
+ "additionalProperties":false,
+ "properties":{
+  "sourceType":{"type":"string"},
+  "transform":{"type":"string"},
+  "status":{"enum":["compatible","incompatible","uninterpreted"]},
+  "resultType":{"type":"string"},
+  "complete":{"const":false},
+  "reason":{"type":"string"}
+ },
+ "allOf":[{"if":{"properties":{"status":{"const":"compatible"}}},"then":{"properties":{"resultType":{}},"required":["resultType"]},"else":{"not":{"properties":{"resultType":{}},"required":["resultType"]}}}]
+}

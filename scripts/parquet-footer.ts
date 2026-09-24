@@ -1,0 +1,4 @@
+import {captureParquet,decodeParquetFooter} from '../src';
+const base='fixtures/parquet/footer/',m=await Bun.file(base+'manifest.json').json(),results=[];
+for(const c of m.results){const doc=captureParquet(new Uint8Array(await Bun.file(c.path).arrayBuffer()),{id:c.id}),r=decodeParquetFooter(doc),expected=await Bun.file(base+c.id+'.expected.json').json();if(r.status!=='decoded'||JSON.stringify({value:r.value,consumedBytes:r.consumedBytes,trailingBytes:r.trailingBytes})!==JSON.stringify(expected))throw Error('Native tree differs: '+c.id);results.push({id:c.id,path:c.path,consumedBytes:r.consumedBytes,trailingBytes:r.trailingBytes});}
+if(results.length!==40)throw Error('Corpus changed');await Bun.write(base+'results.json',JSON.stringify({files:results.length,results},null,2)+'\n');console.log({files:results.length});

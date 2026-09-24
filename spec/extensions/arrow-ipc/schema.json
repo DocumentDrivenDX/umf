@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:arrow-ipc:0.1.0",
+  "title": "Arrow IPC source capture; structural validity is not native validity",
+  "type": "object",
+  "required": [
+    "profile",
+    "encoding",
+    "bytes"
+  ],
+  "properties": {
+    "profile": {
+      "const": "arrow-ipc-source"
+    },
+    "encoding": {
+      "const": "hex"
+    },
+    "bytes": {
+      "type": "string",
+      "maxLength": 2000000,
+      "pattern": "^(?:[0-9a-f]{2})*$"
+    }
+  },
+  "additionalProperties": true
+}

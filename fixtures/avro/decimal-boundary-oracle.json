@@ -1,0 +1,127 @@
+{
+  "avro": "1.12.0",
+  "fastavro": "1.12.2",
+  "cases": [
+    {
+      "case": "missing",
+      "engine": "apache",
+      "acceptedDecimal": true,
+      "hex": "0201",
+      "value": "1",
+      "warnings": []
+    },
+    {
+      "case": "missing",
+      "engine": "fastavro",
+      "acceptedDecimal": true,
+      "hex": "0201",
+      "value": "1",
+      "warnings": []
+    },
+    {
+      "case": "zero",
+      "engine": "apache",
+      "acceptedDecimal": true,
+      "hex": "0201",
+      "value": "1",
+      "warnings": []
+    },
+    {
+      "case": "zero",
+      "engine": "fastavro",
+      "acceptedDecimal": true,
+      "hex": "0201",
+      "value": "1",
+      "warnings": []
+    },
+    {
+      "case": "null",
+      "engine": "apache",
+      "acceptedDecimal": false,
+      "errorType": "AvroTypeException",
+      "message": "The datum \"1\" provided for \"None\" is not an example of the schema {\n  \"type\": \"bytes\",\n  \"logicalType\": \"decimal\",\n  \"precision\": 4,\n  \"scale\": null\n}",
+      "warnings": [
+        "Invalid decimal scale None. Must be a non-negative integer."
+      ]
+    },
+    {
+      "case": "null",
+      "engine": "fastavro",
+      "acceptedDecimal": false,
+      "errorType": "TypeError",
+      "message": "unsupported operand type(s) for +: 'int' and 'NoneType'",
+      "warnings": []
+    },
+    {
+      "case": "boolean",
+      "engine": "apache",
+      "acceptedDecimal": true,
+      "hex": "0201",
+      "value": "1",
+      "warnings": []
+    },
+    {
+      "case": "boolean",
+      "engine": "fastavro",
+      "acceptedDecimal": true,
+      "hex": "0201",
+      "value": "1",
+      "warnings": []
+    },
+    {
+      "case": "string",
+      "engine": "apache",
+      "acceptedDecimal": false,
+      "errorType": "AvroTypeException",
+      "message": "The datum \"1\" provided for \"None\" is not an example of the schema {\n  \"type\": \"bytes\",\n  \"logicalType\": \"decimal\",\n  \"precision\": 4,\n  \"scale\": \"0\"\n}",
+      "warnings": [
+        "Invalid decimal scale 0. Must be a non-negative integer."
+      ]
+    },
+    {
+      "case": "string",
+      "engine": "fastavro",
+      "acceptedDecimal": false,
+      "errorType": "SchemaParseException",
+      "message": "decimal scale must be a positive integer, not 0",
+      "warnings": []
+    },
+    {
+      "case": "array",
+      "engine": "apache",
+      "acceptedDecimal": false,
+      "errorType": "AvroTypeException",
+      "message": "The datum \"1\" provided for \"None\" is not an example of the schema {\n  \"type\": \"bytes\",\n  \"logicalType\": \"decimal\",\n  \"precision\": 4,\n  \"scale\": []\n}",
+      "warnings": [
+        "Invalid decimal scale []. Must be a non-negative integer."
+      ]
+    },
+    {
+      "case": "array",
+      "engine": "fastavro",
+      "acceptedDecimal": false,
+      "errorType": "TypeError",
+      "message": "unsupported operand type(s) for +: 'int' and 'list'",
+      "warnings": []
+    },
+    {
+      "case": "object",
+      "engine": "apache",
+      "acceptedDecimal": false,
+      "errorType": "AvroTypeException",
+      "message": "The datum \"1\" provided for \"None\" is not an example of the schema {\n  \"type\": \"bytes\",\n  \"logicalType\": \"decimal\",\n  \"precision\": 4,\n  \"scale\": {}\n}",
+      "warnings": [
+        "Invalid decimal scale {}. Must be a non-negative integer."
+      ]
+    },
+    {
+      "case": "object",
+      "engine": "fastavro",
+      "acceptedDecimal": false,
+      "errorType": "TypeError",
+      "message": "unsupported operand type(s) for +: 'int' and 'dict'",
+      "warnings": []
+    }
+  ],
+  "scope": "Missing/zero scale agree on decimal encoding. Malformed-scale parser outcomes are recorded, not used to infer valid Avro semantics; the projection rejects all explicit non-integer scales."
+}

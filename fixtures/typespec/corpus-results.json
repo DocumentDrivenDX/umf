@@ -1,0 +1,4015 @@
+{
+  "commit": "5ee1157f337e461e50a7d57c2be2ae95e5026a4a",
+  "compiler": "@typespec/compiler@1.16.0",
+  "fileCount": 112,
+  "sourceFileCount": 51,
+  "programs": [
+    {
+      "entry": "authentication/main.tsp",
+      "sourceFiles": [
+        "interface-auth.tsp",
+        "main.tsp",
+        "operation-auth.tsp",
+        "service-auth.tsp"
+      ],
+      "contextFiles": [
+        "authentication/sample-config.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/interface-auth.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/operation-auth.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/service-auth.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @useAuth",
+          "file": "/project/interface-auth.tsp",
+          "start": 110,
+          "end": 117
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @useAuth",
+          "file": "/project/operation-auth.tsp",
+          "start": 107,
+          "end": 114
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @useAuth",
+          "file": "/project/service-auth.tsp",
+          "start": 86,
+          "end": 93
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/interface-auth.tsp",
+          "start": 32,
+          "end": 36
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/interface-auth.tsp",
+          "start": 189,
+          "end": 194
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @useAuth",
+          "file": "/project/interface-auth.tsp",
+          "start": 221,
+          "end": 228
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/interface-auth.tsp",
+          "start": 286,
+          "end": 291
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/operation-auth.tsp",
+          "start": 32,
+          "end": 36
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier OAuth2Auth",
+          "file": "/project/operation-auth.tsp",
+          "start": 230,
+          "end": 240
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/operation-auth.tsp",
+          "start": 510,
+          "end": 515
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @useAuth",
+          "file": "/project/operation-auth.tsp",
+          "start": 574,
+          "end": 581
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/operation-auth.tsp",
+          "start": 642,
+          "end": 647
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @useAuth",
+          "file": "/project/operation-auth.tsp",
+          "start": 703,
+          "end": 710
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/operation-auth.tsp",
+          "start": 732,
+          "end": 737
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/service-auth.tsp",
+          "start": 32,
+          "end": 36
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier OAuth2FlowType",
+          "file": "/project/service-auth.tsp",
+          "start": 366,
+          "end": 380
+        }
+      ]
+    },
+    {
+      "entry": "binary/main.tsp",
+      "sourceFiles": [
+        "binary.tsp",
+        "main.tsp"
+      ],
+      "contextFiles": [
+        "binary/sample-config.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/binary.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/binary.tsp",
+          "start": 246,
+          "end": 251
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/binary.tsp",
+          "start": 32,
+          "end": 36
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/binary.tsp",
+          "start": 172,
+          "end": 176
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @header",
+          "file": "/project/binary.tsp",
+          "start": 193,
+          "end": 199
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/binary.tsp",
+          "start": 333,
+          "end": 337
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/binary.tsp",
+          "start": 288,
+          "end": 293
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/binary.tsp",
+          "start": 307,
+          "end": 311
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/binary.tsp",
+          "start": 369,
+          "end": 374
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/binary.tsp",
+          "start": 391,
+          "end": 395
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/binary.tsp",
+          "start": 469,
+          "end": 474
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/binary.tsp",
+          "start": 492,
+          "end": 496
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/binary.tsp",
+          "start": 615,
+          "end": 620
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/binary.tsp",
+          "start": 636,
+          "end": 640
+        }
+      ]
+    },
+    {
+      "entry": "documentation/main.tsp",
+      "sourceFiles": [
+        "docs.tsp",
+        "main.tsp"
+      ],
+      "contextFiles": [
+        "documentation/sample-config.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/docs.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/docs.tsp",
+          "start": 107,
+          "end": 112
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/docs.tsp",
+          "start": 32,
+          "end": 36
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/docs.tsp",
+          "start": 170,
+          "end": 175
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/docs.tsp",
+          "start": 247,
+          "end": 252
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @statusCode",
+          "file": "/project/docs.tsp",
+          "start": 898,
+          "end": 908
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/docs.tsp",
+          "start": 342,
+          "end": 347
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @statusCode",
+          "file": "/project/docs.tsp",
+          "start": 807,
+          "end": 817
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/docs.tsp",
+          "start": 434,
+          "end": 439
+        }
+      ]
+    },
+    {
+      "entry": "emitters/graphql/main.tsp",
+      "sourceFiles": [
+        "main.tsp"
+      ],
+      "contextFiles": [
+        "emitters/graphql/sample-config.yaml",
+        "emitters/graphql/tspconfig.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/graphql\"",
+          "file": "/project/main.tsp",
+          "start": 0,
+          "end": 27
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @schema",
+          "file": "/project/main.tsp",
+          "start": 46,
+          "end": 52
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier GraphQL",
+          "file": "/project/main.tsp",
+          "start": 35,
+          "end": 42
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @query",
+          "file": "/project/main.tsp",
+          "start": 365,
+          "end": 370
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @query",
+          "file": "/project/main.tsp",
+          "start": 408,
+          "end": 413
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @query",
+          "file": "/project/main.tsp",
+          "start": 471,
+          "end": 476
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @mutation",
+          "file": "/project/main.tsp",
+          "start": 516,
+          "end": 524
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @mutation",
+          "file": "/project/main.tsp",
+          "start": 592,
+          "end": 600
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @mutation",
+          "file": "/project/main.tsp",
+          "start": 676,
+          "end": 684
+        }
+      ]
+    },
+    {
+      "entry": "emitters/json-schema/main.tsp",
+      "sourceFiles": [
+        "main.tsp"
+      ],
+      "contextFiles": [
+        "emitters/json-schema/sample-config.yaml",
+        "emitters/json-schema/tspconfig.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/json-schema\"",
+          "file": "/project/main.tsp",
+          "start": 0,
+          "end": 31
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @jsonSchema",
+          "file": "/project/main.tsp",
+          "start": 53,
+          "end": 63
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier JsonSchema",
+          "file": "/project/main.tsp",
+          "start": 39,
+          "end": 49
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @uniqueItems",
+          "file": "/project/main.tsp",
+          "start": 381,
+          "end": 392
+        }
+      ]
+    },
+    {
+      "entry": "emitters/protobuf-kiosk/main.tsp",
+      "sourceFiles": [
+        "main.tsp"
+      ],
+      "contextFiles": [
+        "emitters/protobuf-kiosk/sample-config.yaml",
+        "emitters/protobuf-kiosk/tspconfig.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/protobuf\"",
+          "file": "/project/main.tsp",
+          "start": 0,
+          "end": 28
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @package",
+          "file": "/project/main.tsp",
+          "start": 48,
+          "end": 55
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Protobuf",
+          "file": "/project/main.tsp",
+          "start": 36,
+          "end": 44
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Namespace TypeSpec doesn't have member Protobuf",
+          "file": "/project/main.tsp",
+          "start": 104,
+          "end": 121
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 1204,
+          "end": 1209
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 1228,
+          "end": 1233
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 1556,
+          "end": 1561
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 1582,
+          "end": 1587
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 1254,
+          "end": 1259
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier WellKnown",
+          "file": "/project/main.tsp",
+          "start": 1303,
+          "end": 1312
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 1284,
+          "end": 1289
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier WellKnown",
+          "file": "/project/main.tsp",
+          "start": 1346,
+          "end": 1355
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 1324,
+          "end": 1329
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier WellKnown",
+          "file": "/project/main.tsp",
+          "start": 288,
+          "end": 297
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 313,
+          "end": 318
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 379,
+          "end": 384
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 448,
+          "end": 453
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 1386,
+          "end": 1391
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 1410,
+          "end": 1415
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 1436,
+          "end": 1441
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 1462,
+          "end": 1467
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier WellKnown",
+          "file": "/project/main.tsp",
+          "start": 1510,
+          "end": 1519
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 1488,
+          "end": 1493
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier WellKnown",
+          "file": "/project/main.tsp",
+          "start": 577,
+          "end": 586
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 602,
+          "end": 607
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 664,
+          "end": 669
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 730,
+          "end": 735
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 837,
+          "end": 842
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 866,
+          "end": 871
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 980,
+          "end": 985
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 1638,
+          "end": 1643
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @field",
+          "file": "/project/main.tsp",
+          "start": 1139,
+          "end": 1144
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @stream",
+          "file": "/project/main.tsp",
+          "start": 1092,
+          "end": 1098
+        }
+      ]
+    },
+    {
+      "entry": "encoded-names/main.tsp",
+      "sourceFiles": [
+        "encoded-names.tsp",
+        "main.tsp"
+      ],
+      "contextFiles": [
+        "encoded-names/sample-config.yaml"
+      ],
+      "status": "compiled",
+      "diagnostics": []
+    },
+    {
+      "entry": "encoding/main.tsp",
+      "sourceFiles": [
+        "encoding.tsp",
+        "main.tsp"
+      ],
+      "contextFiles": [
+        "encoding/sample-config.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/encoding.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/encoding.tsp",
+          "start": 32,
+          "end": 36
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @header",
+          "file": "/project/encoding.tsp",
+          "start": 213,
+          "end": 219
+        }
+      ]
+    },
+    {
+      "entry": "getting-started/http-service/main.tsp",
+      "sourceFiles": [
+        "main.tsp"
+      ],
+      "contextFiles": [
+        "getting-started/http-service/sample-config.yaml",
+        "getting-started/http-service/tspconfig.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/http\"",
+          "file": "/project/main.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/main.tsp",
+          "start": 32,
+          "end": 36
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/main.tsp",
+          "start": 266,
+          "end": 271
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @get",
+          "file": "/project/main.tsp",
+          "start": 346,
+          "end": 349
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/main.tsp",
+          "start": 414,
+          "end": 418
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @get",
+          "file": "/project/main.tsp",
+          "start": 404,
+          "end": 407
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/main.tsp",
+          "start": 494,
+          "end": 498
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/main.tsp",
+          "start": 481,
+          "end": 485
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/main.tsp",
+          "start": 576,
+          "end": 580
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier MergePatchUpdate",
+          "file": "/project/main.tsp",
+          "start": 610,
+          "end": 626
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/main.tsp",
+          "start": 597,
+          "end": 601
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @patch",
+          "file": "/project/main.tsp",
+          "start": 562,
+          "end": 567
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/main.tsp",
+          "start": 698,
+          "end": 702
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @delete",
+          "file": "/project/main.tsp",
+          "start": 683,
+          "end": 689
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/main.tsp",
+          "start": 805,
+          "end": 809
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/main.tsp",
+          "start": 764,
+          "end": 769
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/main.tsp",
+          "start": 789,
+          "end": 793
+        }
+      ]
+    },
+    {
+      "entry": "getting-started/rest-framework/main.tsp",
+      "sourceFiles": [
+        "main.tsp"
+      ],
+      "contextFiles": [
+        "getting-started/rest-framework/sample-config.yaml",
+        "getting-started/rest-framework/tspconfig.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/http\"",
+          "file": "/project/main.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/main.tsp",
+          "start": 25,
+          "end": 49
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/main.tsp",
+          "start": 57,
+          "end": 61
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Rest",
+          "file": "/project/main.tsp",
+          "start": 69,
+          "end": 73
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @get",
+          "file": "/project/main.tsp",
+          "start": 356,
+          "end": 359
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/main.tsp",
+          "start": 363,
+          "end": 368
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Resource",
+          "file": "/project/main.tsp",
+          "start": 308,
+          "end": 316
+        },
+        {
+          "code": "extends-interface",
+          "severity": "error",
+          "message": "Interfaces can only extend other interfaces",
+          "file": "/project/main.tsp",
+          "start": 308,
+          "end": 350
+        }
+      ]
+    },
+    {
+      "entry": "grpc-kiosk-example/main.tsp",
+      "sourceFiles": [
+        "kiosk.tsp",
+        "main.tsp",
+        "types.tsp"
+      ],
+      "contextFiles": [
+        "grpc-kiosk-example/README.md",
+        "grpc-kiosk-example/kiosk.proto",
+        "grpc-kiosk-example/kiosk.swagger.json",
+        "grpc-kiosk-example/openapi.json",
+        "grpc-kiosk-example/sample-config.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/openapi\"",
+          "file": "/project/types.tsp",
+          "start": 0,
+          "end": 27
+        },
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/kiosk.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/kiosk.tsp",
+          "start": 110,
+          "end": 115
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/types.tsp",
+          "start": 35,
+          "end": 39
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/kiosk.tsp",
+          "start": 32,
+          "end": 36
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/kiosk.tsp",
+          "start": 271,
+          "end": 275
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/kiosk.tsp",
+          "start": 229,
+          "end": 234
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/kiosk.tsp",
+          "start": 248,
+          "end": 252
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/kiosk.tsp",
+          "start": 343,
+          "end": 348
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/kiosk.tsp",
+          "start": 445,
+          "end": 450
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/kiosk.tsp",
+          "start": 543,
+          "end": 548
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @delete",
+          "file": "/project/kiosk.tsp",
+          "start": 567,
+          "end": 573
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/kiosk.tsp",
+          "start": 732,
+          "end": 736
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/kiosk.tsp",
+          "start": 692,
+          "end": 697
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/kiosk.tsp",
+          "start": 710,
+          "end": 714
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/kiosk.tsp",
+          "start": 801,
+          "end": 806
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/kiosk.tsp",
+          "start": 887,
+          "end": 892
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/kiosk.tsp",
+          "start": 980,
+          "end": 985
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @delete",
+          "file": "/project/kiosk.tsp",
+          "start": 1003,
+          "end": 1009
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/kiosk.tsp",
+          "start": 2492,
+          "end": 2496
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/kiosk.tsp",
+          "start": 1117,
+          "end": 1122
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/kiosk.tsp",
+          "start": 1145,
+          "end": 1149
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/kiosk.tsp",
+          "start": 1291,
+          "end": 1296
+        }
+      ]
+    },
+    {
+      "entry": "grpc-library-example/main.tsp",
+      "sourceFiles": [
+        "library.tsp",
+        "main.tsp"
+      ],
+      "contextFiles": [
+        "grpc-library-example/README.md",
+        "grpc-library-example/library.proto",
+        "grpc-library-example/library.swagger.json",
+        "grpc-library-example/openapi.json",
+        "grpc-library-example/sample-config.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/library.tsp",
+          "start": 153,
+          "end": 177
+        },
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/openapi\"",
+          "file": "/project/library.tsp",
+          "start": 178,
+          "end": 205
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/library.tsp",
+          "start": 702,
+          "end": 707
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/library.tsp",
+          "start": 213,
+          "end": 217
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/library.tsp",
+          "start": 3961,
+          "end": 3965
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/library.tsp",
+          "start": 822,
+          "end": 827
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/library.tsp",
+          "start": 842,
+          "end": 846
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/library.tsp",
+          "start": 4109,
+          "end": 4113
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/library.tsp",
+          "start": 982,
+          "end": 987
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @query",
+          "file": "/project/library.tsp",
+          "start": 6633,
+          "end": 6638
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @query",
+          "file": "/project/library.tsp",
+          "start": 6954,
+          "end": 6959
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/library.tsp",
+          "start": 1221,
+          "end": 1226
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/library.tsp",
+          "start": 4429,
+          "end": 4433
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/library.tsp",
+          "start": 1387,
+          "end": 1392
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @delete",
+          "file": "/project/library.tsp",
+          "start": 1407,
+          "end": 1413
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/library.tsp",
+          "start": 4649,
+          "end": 4653
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/library.tsp",
+          "start": 4750,
+          "end": 4754
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/library.tsp",
+          "start": 1861,
+          "end": 1866
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/library.tsp",
+          "start": 1894,
+          "end": 1898
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/library.tsp",
+          "start": 4936,
+          "end": 4940
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/library.tsp",
+          "start": 4995,
+          "end": 4999
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/library.tsp",
+          "start": 2017,
+          "end": 2022
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/library.tsp",
+          "start": 2050,
+          "end": 2054
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/library.tsp",
+          "start": 5139,
+          "end": 5143
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/library.tsp",
+          "start": 2185,
+          "end": 2190
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/library.tsp",
+          "start": 5311,
+          "end": 5315
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/library.tsp",
+          "start": 2503,
+          "end": 2508
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/library.tsp",
+          "start": 6117,
+          "end": 6121
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/library.tsp",
+          "start": 2605,
+          "end": 2610
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @delete",
+          "file": "/project/library.tsp",
+          "start": 2721,
+          "end": 2727
+        }
+      ]
+    },
+    {
+      "entry": "init/main.tsp",
+      "sourceFiles": [
+        "main.tsp"
+      ],
+      "contextFiles": [
+        "init/sample-config.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/http\"",
+          "file": "/project/main.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/main.tsp",
+          "start": 32,
+          "end": 36
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/main.tsp",
+          "start": 265,
+          "end": 270
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @get",
+          "file": "/project/main.tsp",
+          "start": 344,
+          "end": 347
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/main.tsp",
+          "start": 410,
+          "end": 414
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @get",
+          "file": "/project/main.tsp",
+          "start": 400,
+          "end": 403
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/main.tsp",
+          "start": 489,
+          "end": 493
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/main.tsp",
+          "start": 476,
+          "end": 480
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/main.tsp",
+          "start": 570,
+          "end": 574
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier MergePatchUpdate",
+          "file": "/project/main.tsp",
+          "start": 604,
+          "end": 620
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/main.tsp",
+          "start": 591,
+          "end": 595
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @patch",
+          "file": "/project/main.tsp",
+          "start": 556,
+          "end": 561
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/main.tsp",
+          "start": 691,
+          "end": 695
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @delete",
+          "file": "/project/main.tsp",
+          "start": 676,
+          "end": 682
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/main.tsp",
+          "start": 792,
+          "end": 796
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/main.tsp",
+          "start": 755,
+          "end": 760
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/main.tsp",
+          "start": 778,
+          "end": 782
+        }
+      ]
+    },
+    {
+      "entry": "language/api-versioning/main.tsp",
+      "sourceFiles": [
+        "main.tsp"
+      ],
+      "contextFiles": [
+        "language/api-versioning/sample-config.yaml",
+        "language/api-versioning/tspconfig.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/http\"",
+          "file": "/project/main.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/main.tsp",
+          "start": 25,
+          "end": 49
+        },
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/versioning\"",
+          "file": "/project/main.tsp",
+          "start": 50,
+          "end": 80
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @versioned",
+          "file": "/project/main.tsp",
+          "start": 126,
+          "end": 135
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/main.tsp",
+          "start": 88,
+          "end": 92
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Rest",
+          "file": "/project/main.tsp",
+          "start": 100,
+          "end": 104
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Versioning",
+          "file": "/project/main.tsp",
+          "start": 112,
+          "end": 122
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @added",
+          "file": "/project/main.tsp",
+          "start": 320,
+          "end": 325
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @added",
+          "file": "/project/main.tsp",
+          "start": 496,
+          "end": 501
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @get",
+          "file": "/project/main.tsp",
+          "start": 518,
+          "end": 521
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/main.tsp",
+          "start": 525,
+          "end": 530
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Resource",
+          "file": "/project/main.tsp",
+          "start": 448,
+          "end": 456
+        },
+        {
+          "code": "extends-interface",
+          "severity": "error",
+          "message": "Interfaces can only extend other interfaces",
+          "file": "/project/main.tsp",
+          "start": 448,
+          "end": 490
+        }
+      ]
+    },
+    {
+      "entry": "language/discriminated-unions/main.tsp",
+      "sourceFiles": [
+        "main.tsp"
+      ],
+      "contextFiles": [
+        "language/discriminated-unions/sample-config.yaml",
+        "language/discriminated-unions/tspconfig.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/http\"",
+          "file": "/project/main.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/openapi3\"",
+          "file": "/project/main.tsp",
+          "start": 25,
+          "end": 53
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/main.tsp",
+          "start": 61,
+          "end": 65
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/main.tsp",
+          "start": 538,
+          "end": 542
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @get",
+          "file": "/project/main.tsp",
+          "start": 525,
+          "end": 528
+        }
+      ]
+    },
+    {
+      "entry": "local-typespec/main.tsp",
+      "sourceFiles": [
+        "main.tsp",
+        "test.tsp"
+      ],
+      "contextFiles": [
+        "local-typespec/.vscode/settings.json",
+        "local-typespec/README.md",
+        "local-typespec/package.json",
+        "local-typespec/sample-config.yaml"
+      ],
+      "status": "syntax-rejected",
+      "error": "UmfError: [{\"code\":\"TYPESPEC_token-expected\",\"path\":\"/files/test.tsp\",\"severity\":\"error\",\"message\":\"'{', '=', 'extends', or 'is' expected.\"},{\"code\":\"TYPESPEC_COMPILATION_REQUIRED\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Syntax preservation does not establish compiler validity; call compileTypeSpecDocument with supplied imports\"}]"
+    },
+    {
+      "entry": "multipart/main.tsp",
+      "sourceFiles": [
+        "main.tsp"
+      ],
+      "contextFiles": [
+        "multipart/sample-config.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/main.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/main.tsp",
+          "start": 32,
+          "end": 36
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier File",
+          "file": "/project/main.tsp",
+          "start": 58,
+          "end": 62
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier HttpPart",
+          "file": "/project/main.tsp",
+          "start": 116,
+          "end": 124
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier HttpPart",
+          "file": "/project/main.tsp",
+          "start": 150,
+          "end": 158
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier HttpPart",
+          "file": "/project/main.tsp",
+          "start": 176,
+          "end": 184
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier HttpPart",
+          "file": "/project/main.tsp",
+          "start": 205,
+          "end": 213
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @header",
+          "file": "/project/main.tsp",
+          "start": 290,
+          "end": 296
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @multipartBody",
+          "file": "/project/main.tsp",
+          "start": 334,
+          "end": 347
+        }
+      ]
+    },
+    {
+      "entry": "openapi-extensions/main.tsp",
+      "sourceFiles": [
+        "main.tsp",
+        "openapi-extensions.tsp"
+      ],
+      "contextFiles": [
+        "openapi-extensions/sample-config.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/openapi-extensions.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/openapi\"",
+          "file": "/project/openapi-extensions.tsp",
+          "start": 25,
+          "end": 52
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier OpenAPI",
+          "file": "/project/openapi-extensions.tsp",
+          "start": 60,
+          "end": 67
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @extension",
+          "file": "/project/openapi-extensions.tsp",
+          "start": 189,
+          "end": 198
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @extension",
+          "file": "/project/openapi-extensions.tsp",
+          "start": 224,
+          "end": 233
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @extension",
+          "file": "/project/openapi-extensions.tsp",
+          "start": 254,
+          "end": 263
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @extension",
+          "file": "/project/openapi-extensions.tsp",
+          "start": 283,
+          "end": 292
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @extension",
+          "file": "/project/openapi-extensions.tsp",
+          "start": 320,
+          "end": 329
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @extension",
+          "file": "/project/openapi-extensions.tsp",
+          "start": 372,
+          "end": 381
+        }
+      ]
+    },
+    {
+      "entry": "param-decorators/main.tsp",
+      "sourceFiles": [
+        "main.tsp",
+        "param-decorators.tsp"
+      ],
+      "contextFiles": [
+        "param-decorators/sample-config.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/param-decorators.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/param-decorators.tsp",
+          "start": 114,
+          "end": 119
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/param-decorators.tsp",
+          "start": 106,
+          "end": 110
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @query",
+          "file": "/project/param-decorators.tsp",
+          "start": 303,
+          "end": 308
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier OkResponse",
+          "file": "/project/param-decorators.tsp",
+          "start": 332,
+          "end": 342
+        },
+        {
+          "code": "intersect-non-model",
+          "severity": "error",
+          "message": "Cannot intersect non-model types (including union types).",
+          "file": "/project/param-decorators.tsp",
+          "start": 332,
+          "end": 342
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/param-decorators.tsp",
+          "start": 156,
+          "end": 161
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/param-decorators.tsp",
+          "start": 412,
+          "end": 416
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier OkResponse",
+          "file": "/project/param-decorators.tsp",
+          "start": 431,
+          "end": 441
+        },
+        {
+          "code": "intersect-non-model",
+          "severity": "error",
+          "message": "Cannot intersect non-model types (including union types).",
+          "file": "/project/param-decorators.tsp",
+          "start": 431,
+          "end": 441
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/param-decorators.tsp",
+          "start": 356,
+          "end": 361
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @put",
+          "file": "/project/param-decorators.tsp",
+          "start": 375,
+          "end": 378
+        }
+      ]
+    },
+    {
+      "entry": "petstore/petstore.tsp",
+      "sourceFiles": [
+        "petstore.tsp"
+      ],
+      "contextFiles": [
+        "petstore/decorators.js",
+        "petstore/notes.md",
+        "petstore/package.json",
+        "petstore/petstore.json",
+        "petstore/sample-config.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/petstore.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/openapi\"",
+          "file": "/project/petstore.tsp",
+          "start": 25,
+          "end": 52
+        },
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"./decorators.js\"",
+          "file": "/project/petstore.tsp",
+          "start": 53,
+          "end": 78
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/petstore.tsp",
+          "start": 942,
+          "end": 947
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/petstore.tsp",
+          "start": 1301,
+          "end": 1306
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/petstore.tsp",
+          "start": 86,
+          "end": 90
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @statusCode",
+          "file": "/project/petstore.tsp",
+          "start": 725,
+          "end": 735
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/petstore.tsp",
+          "start": 747,
+          "end": 751
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/petstore.tsp",
+          "start": 893,
+          "end": 897
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier OkResponse",
+          "file": "/project/petstore.tsp",
+          "start": 1031,
+          "end": 1041
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @delete",
+          "file": "/project/petstore.tsp",
+          "start": 1001,
+          "end": 1007
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @query",
+          "file": "/project/petstore.tsp",
+          "start": 1089,
+          "end": 1094
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @fancyDoc",
+          "file": "/project/petstore.tsp",
+          "start": 1055,
+          "end": 1063
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier NotModifiedResponse",
+          "file": "/project/petstore.tsp",
+          "start": 1212,
+          "end": 1231
+        },
+        {
+          "code": "intersect-non-model",
+          "severity": "error",
+          "message": "Cannot intersect non-model types (including union types).",
+          "file": "/project/petstore.tsp",
+          "start": 1212,
+          "end": 1231
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/petstore.tsp",
+          "start": 1268,
+          "end": 1272
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/petstore.tsp",
+          "start": 1252,
+          "end": 1256
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/petstore.tsp",
+          "start": 1372,
+          "end": 1376
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @query",
+          "file": "/project/petstore.tsp",
+          "start": 1393,
+          "end": 1398
+        }
+      ]
+    },
+    {
+      "entry": "polymorphism/main.tsp",
+      "sourceFiles": [
+        "main.tsp",
+        "polymorphism.tsp"
+      ],
+      "contextFiles": [
+        "polymorphism/sample-config.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/polymorphism.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/polymorphism.tsp",
+          "start": 314,
+          "end": 319
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/polymorphism.tsp",
+          "start": 32,
+          "end": 36
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Rest",
+          "file": "/project/polymorphism.tsp",
+          "start": 44,
+          "end": 48
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/polymorphism.tsp",
+          "start": 366,
+          "end": 370
+        }
+      ]
+    },
+    {
+      "entry": "rest-metadata-emitter/main.tsp",
+      "sourceFiles": [
+        "main.tsp"
+      ],
+      "contextFiles": [
+        "rest-metadata-emitter/rest-metadata-emitter-sample.ts",
+        "rest-metadata-emitter/sample-config.yaml",
+        "rest-metadata-emitter/tspconfig.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/versioning\"",
+          "file": "/project/main.tsp",
+          "start": 0,
+          "end": 30
+        },
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/main.tsp",
+          "start": 31,
+          "end": 55
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @versioned",
+          "file": "/project/main.tsp",
+          "start": 169,
+          "end": 178
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/main.tsp",
+          "start": 63,
+          "end": 67
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Versioning",
+          "file": "/project/main.tsp",
+          "start": 75,
+          "end": 85
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/main.tsp",
+          "start": 309,
+          "end": 313
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @added",
+          "file": "/project/main.tsp",
+          "start": 399,
+          "end": 404
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/main.tsp",
+          "start": 438,
+          "end": 443
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/main.tsp",
+          "start": 479,
+          "end": 483
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/main.tsp",
+          "start": 529,
+          "end": 533
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @get",
+          "file": "/project/main.tsp",
+          "start": 516,
+          "end": 519
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/main.tsp",
+          "start": 663,
+          "end": 668
+        }
+      ]
+    },
+    {
+      "entry": "rest/petstore/petstore.tsp",
+      "sourceFiles": [
+        "petstore.tsp"
+      ],
+      "contextFiles": [
+        "rest/petstore/package.json",
+        "rest/petstore/sample-config.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/petstore.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/openapi\"",
+          "file": "/project/petstore.tsp",
+          "start": 25,
+          "end": 52
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/petstore.tsp",
+          "start": 123,
+          "end": 127
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Rest",
+          "file": "/project/petstore.tsp",
+          "start": 135,
+          "end": 139
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Rest",
+          "file": "/project/petstore.tsp",
+          "start": 147,
+          "end": 151
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @resource",
+          "file": "/project/petstore.tsp",
+          "start": 230,
+          "end": 238
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @resource",
+          "file": "/project/petstore.tsp",
+          "start": 390,
+          "end": 398
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @parentResource",
+          "file": "/project/petstore.tsp",
+          "start": 408,
+          "end": 422
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @resource",
+          "file": "/project/petstore.tsp",
+          "start": 506,
+          "end": 514
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @resource",
+          "file": "/project/petstore.tsp",
+          "start": 605,
+          "end": 613
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @segment",
+          "file": "/project/petstore.tsp",
+          "start": 716,
+          "end": 723
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier ResourceOperations",
+          "file": "/project/petstore.tsp",
+          "start": 840,
+          "end": 858
+        },
+        {
+          "code": "extends-interface",
+          "severity": "error",
+          "message": "Interfaces can only extend other interfaces",
+          "file": "/project/petstore.tsp",
+          "start": 840,
+          "end": 878
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier ExtensionResourceCreateOrUpdate",
+          "file": "/project/petstore.tsp",
+          "start": 915,
+          "end": 946
+        },
+        {
+          "code": "extends-interface",
+          "severity": "error",
+          "message": "Interfaces can only extend other interfaces",
+          "file": "/project/petstore.tsp",
+          "start": 915,
+          "end": 975
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier ExtensionResourceList",
+          "file": "/project/petstore.tsp",
+          "start": 981,
+          "end": 1002
+        },
+        {
+          "code": "extends-interface",
+          "severity": "error",
+          "message": "Interfaces can only extend other interfaces",
+          "file": "/project/petstore.tsp",
+          "start": 981,
+          "end": 1031
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier SingletonResourceOperations",
+          "file": "/project/petstore.tsp",
+          "start": 1067,
+          "end": 1094
+        },
+        {
+          "code": "extends-interface",
+          "severity": "error",
+          "message": "Interfaces can only extend other interfaces",
+          "file": "/project/petstore.tsp",
+          "start": 1067,
+          "end": 1125
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier ParentKeysOf",
+          "file": "/project/petstore.tsp",
+          "start": 1233,
+          "end": 1245
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @query",
+          "file": "/project/petstore.tsp",
+          "start": 1253,
+          "end": 1258
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier CollectionWithNextLink",
+          "file": "/project/petstore.tsp",
+          "start": 1286,
+          "end": 1308
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @autoRoute",
+          "file": "/project/petstore.tsp",
+          "start": 1191,
+          "end": 1200
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @listsResource",
+          "file": "/project/petstore.tsp",
+          "start": 1204,
+          "end": 1217
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier ResourceRead",
+          "file": "/project/petstore.tsp",
+          "start": 1153,
+          "end": 1165
+        },
+        {
+          "code": "extends-interface",
+          "severity": "error",
+          "message": "Interfaces can only extend other interfaces",
+          "file": "/project/petstore.tsp",
+          "start": 1153,
+          "end": 1185
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier SingletonResourceOperations",
+          "file": "/project/petstore.tsp",
+          "start": 1369,
+          "end": 1396
+        },
+        {
+          "code": "extends-interface",
+          "severity": "error",
+          "message": "Interfaces can only extend other interfaces",
+          "file": "/project/petstore.tsp",
+          "start": 1369,
+          "end": 1427
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier ResourceCreateOrUpdate",
+          "file": "/project/petstore.tsp",
+          "start": 1461,
+          "end": 1483
+        },
+        {
+          "code": "extends-interface",
+          "severity": "error",
+          "message": "Interfaces can only extend other interfaces",
+          "file": "/project/petstore.tsp",
+          "start": 1461,
+          "end": 1507
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier ResourceList",
+          "file": "/project/petstore.tsp",
+          "start": 1513,
+          "end": 1525
+        },
+        {
+          "code": "extends-interface",
+          "severity": "error",
+          "message": "Interfaces can only extend other interfaces",
+          "file": "/project/petstore.tsp",
+          "start": 1513,
+          "end": 1549
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier ResourceOperations",
+          "file": "/project/petstore.tsp",
+          "start": 1579,
+          "end": 1597
+        },
+        {
+          "code": "extends-interface",
+          "severity": "error",
+          "message": "Interfaces can only extend other interfaces",
+          "file": "/project/petstore.tsp",
+          "start": 1579,
+          "end": 1619
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier ExtensionResourceCreateOrUpdate",
+          "file": "/project/petstore.tsp",
+          "start": 1658,
+          "end": 1689
+        },
+        {
+          "code": "extends-interface",
+          "severity": "error",
+          "message": "Interfaces can only extend other interfaces",
+          "file": "/project/petstore.tsp",
+          "start": 1658,
+          "end": 1720
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier ExtensionResourceList",
+          "file": "/project/petstore.tsp",
+          "start": 1726,
+          "end": 1747
+        },
+        {
+          "code": "extends-interface",
+          "severity": "error",
+          "message": "Interfaces can only extend other interfaces",
+          "file": "/project/petstore.tsp",
+          "start": 1726,
+          "end": 1778
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier SingletonResourceOperations",
+          "file": "/project/petstore.tsp",
+          "start": 1816,
+          "end": 1843
+        },
+        {
+          "code": "extends-interface",
+          "severity": "error",
+          "message": "Interfaces can only extend other interfaces",
+          "file": "/project/petstore.tsp",
+          "start": 1816,
+          "end": 1876
+        }
+      ]
+    },
+    {
+      "entry": "signatures/main.tsp",
+      "sourceFiles": [
+        "main.tsp",
+        "signatures.tsp"
+      ],
+      "contextFiles": [
+        "signatures/sample-config.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/signatures.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/signatures.tsp",
+          "start": 32,
+          "end": 36
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/signatures.tsp",
+          "start": 303,
+          "end": 307
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @get",
+          "file": "/project/signatures.tsp",
+          "start": 190,
+          "end": 193
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/signatures.tsp",
+          "start": 541,
+          "end": 545
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/signatures.tsp",
+          "start": 425,
+          "end": 429
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/signatures.tsp",
+          "start": 673,
+          "end": 678
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/signatures.tsp",
+          "start": 943,
+          "end": 948
+        }
+      ]
+    },
+    {
+      "entry": "status-code-ranges/main.tsp",
+      "sourceFiles": [
+        "main.tsp",
+        "status-code-ranges.tsp"
+      ],
+      "contextFiles": [
+        "status-code-ranges/sample-config.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/status-code-ranges.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/status-code-ranges.tsp",
+          "start": 32,
+          "end": 36
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @statusCode",
+          "file": "/project/status-code-ranges.tsp",
+          "start": 98,
+          "end": 108
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @statusCode",
+          "file": "/project/status-code-ranges.tsp",
+          "start": 193,
+          "end": 203
+        }
+      ]
+    },
+    {
+      "entry": "string-template/main.tsp",
+      "sourceFiles": [
+        "main.tsp"
+      ],
+      "contextFiles": [
+        "string-template/sample-config.yaml"
+      ],
+      "status": "compiled",
+      "diagnostics": []
+    },
+    {
+      "entry": "tags/main.tsp",
+      "sourceFiles": [
+        "main.tsp",
+        "tagged-operations.tsp"
+      ],
+      "contextFiles": [
+        "tags/sample-config.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/tagged-operations.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/tagged-operations.tsp",
+          "start": 99,
+          "end": 104
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/tagged-operations.tsp",
+          "start": 366,
+          "end": 371
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/tagged-operations.tsp",
+          "start": 548,
+          "end": 553
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/tagged-operations.tsp",
+          "start": 32,
+          "end": 36
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/tagged-operations.tsp",
+          "start": 207,
+          "end": 211
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @get",
+          "file": "/project/tagged-operations.tsp",
+          "start": 192,
+          "end": 195
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/tagged-operations.tsp",
+          "start": 339,
+          "end": 343
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/tagged-operations.tsp",
+          "start": 321,
+          "end": 325
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @get",
+          "file": "/project/tagged-operations.tsp",
+          "start": 417,
+          "end": 420
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/tagged-operations.tsp",
+          "start": 507,
+          "end": 511
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/tagged-operations.tsp",
+          "start": 489,
+          "end": 493
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/tagged-operations.tsp",
+          "start": 741,
+          "end": 745
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/tagged-operations.tsp",
+          "start": 714,
+          "end": 718
+        }
+      ]
+    },
+    {
+      "entry": "todoApp/main.tsp",
+      "sourceFiles": [
+        "main.tsp"
+      ],
+      "contextFiles": [
+        "todoApp/sample-config.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/http\"",
+          "file": "/project/main.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/main.tsp",
+          "start": 25,
+          "end": 49
+        },
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/openapi3\"",
+          "file": "/project/main.tsp",
+          "start": 50,
+          "end": 78
+        },
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/openapi\"",
+          "file": "/project/main.tsp",
+          "start": 79,
+          "end": 106
+        },
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/json-schema\"",
+          "file": "/project/main.tsp",
+          "start": 107,
+          "end": 138
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @useAuth",
+          "file": "/project/main.tsp",
+          "start": 204,
+          "end": 211
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @jsonSchema",
+          "file": "/project/main.tsp",
+          "start": 275,
+          "end": 285
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @useAuth",
+          "file": "/project/main.tsp",
+          "start": 3331,
+          "end": 3338
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/main.tsp",
+          "start": 4080,
+          "end": 4085
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/main.tsp",
+          "start": 6187,
+          "end": 6192
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/main.tsp",
+          "start": 145,
+          "end": 149
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier JsonSchema",
+          "file": "/project/main.tsp",
+          "start": 157,
+          "end": 167
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @jsonSchema",
+          "file": "/project/main.tsp",
+          "start": 304,
+          "end": 314
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @jsonSchema",
+          "file": "/project/main.tsp",
+          "start": 2188,
+          "end": 2198
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @jsonSchema",
+          "file": "/project/main.tsp",
+          "start": 2284,
+          "end": 2294
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @jsonSchema",
+          "file": "/project/main.tsp",
+          "start": 911,
+          "end": 921
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier HttpPart",
+          "file": "/project/main.tsp",
+          "start": 2060,
+          "end": 2068
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier HttpPart",
+          "file": "/project/main.tsp",
+          "start": 2096,
+          "end": 2104
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier HttpPart",
+          "file": "/project/main.tsp",
+          "start": 2168,
+          "end": 2176
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @jsonSchema",
+          "file": "/project/main.tsp",
+          "start": 2407,
+          "end": 2417
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier OpenAPI",
+          "file": "/project/main.tsp",
+          "start": 2863,
+          "end": 2870
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @jsonSchema",
+          "file": "/project/main.tsp",
+          "start": 2642,
+          "end": 2652
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @statusCode",
+          "file": "/project/main.tsp",
+          "start": 3061,
+          "end": 3071
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @statusCode",
+          "file": "/project/main.tsp",
+          "start": 3217,
+          "end": 3227
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier OkResponse",
+          "file": "/project/main.tsp",
+          "start": 3499,
+          "end": 3509
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier ConflictResponse",
+          "file": "/project/main.tsp",
+          "start": 3694,
+          "end": 3710
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @statusCode",
+          "file": "/project/main.tsp",
+          "start": 3860,
+          "end": 3870
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/main.tsp",
+          "start": 3959,
+          "end": 3963
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/main.tsp",
+          "start": 3922,
+          "end": 3927
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/main.tsp",
+          "start": 3941,
+          "end": 3945
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @query",
+          "file": "/project/main.tsp",
+          "start": 4195,
+          "end": 4200
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @query",
+          "file": "/project/main.tsp",
+          "start": 4272,
+          "end": 4277
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @statusCode",
+          "file": "/project/main.tsp",
+          "start": 5220,
+          "end": 5230
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @statusCode",
+          "file": "/project/main.tsp",
+          "start": 5299,
+          "end": 5309
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @header",
+          "file": "/project/main.tsp",
+          "start": 5556,
+          "end": 5562
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @sharedRoute",
+          "file": "/project/main.tsp",
+          "start": 5514,
+          "end": 5525
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/main.tsp",
+          "start": 5529,
+          "end": 5533
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @header",
+          "file": "/project/main.tsp",
+          "start": 5751,
+          "end": 5757
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @multipartBody",
+          "file": "/project/main.tsp",
+          "start": 5799,
+          "end": 5812
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @sharedRoute",
+          "file": "/project/main.tsp",
+          "start": 5709,
+          "end": 5720
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/main.tsp",
+          "start": 5724,
+          "end": 5728
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/main.tsp",
+          "start": 5914,
+          "end": 5918
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @get",
+          "file": "/project/main.tsp",
+          "start": 5902,
+          "end": 5905
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/main.tsp",
+          "start": 5991,
+          "end": 5995
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier MergePatchUpdate",
+          "file": "/project/main.tsp",
+          "start": 6026,
+          "end": 6042
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/main.tsp",
+          "start": 6014,
+          "end": 6018
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @patch",
+          "file": "/project/main.tsp",
+          "start": 5974,
+          "end": 5979
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/main.tsp",
+          "start": 6086,
+          "end": 6090
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier NoContentResponse",
+          "file": "/project/main.tsp",
+          "start": 6135,
+          "end": 6152
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @delete",
+          "file": "/project/main.tsp",
+          "start": 6068,
+          "end": 6074
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/main.tsp",
+          "start": 6262,
+          "end": 6266
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @header",
+          "file": "/project/main.tsp",
+          "start": 6434,
+          "end": 6440
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/main.tsp",
+          "start": 6481,
+          "end": 6485
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/main.tsp",
+          "start": 6514,
+          "end": 6518
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier NoContentResponse",
+          "file": "/project/main.tsp",
+          "start": 6571,
+          "end": 6588
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @sharedRoute",
+          "file": "/project/main.tsp",
+          "start": 6376,
+          "end": 6387
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/main.tsp",
+          "start": 6393,
+          "end": 6397
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @header",
+          "file": "/project/main.tsp",
+          "start": 6679,
+          "end": 6685
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/main.tsp",
+          "start": 6729,
+          "end": 6733
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @multipartBody",
+          "file": "/project/main.tsp",
+          "start": 6762,
+          "end": 6775
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier NoContentResponse",
+          "file": "/project/main.tsp",
+          "start": 6840,
+          "end": 6857
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @sharedRoute",
+          "file": "/project/main.tsp",
+          "start": 6621,
+          "end": 6632
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/main.tsp",
+          "start": 6638,
+          "end": 6642
+        }
+      ]
+    },
+    {
+      "entry": "use-versioned-lib/main.tsp",
+      "sourceFiles": [
+        "library.tsp",
+        "main.tsp"
+      ],
+      "contextFiles": [
+        "use-versioned-lib/sample-config.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/versioning\"",
+          "file": "/project/main.tsp",
+          "start": 0,
+          "end": 30
+        },
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/main.tsp",
+          "start": 31,
+          "end": 55
+        },
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/versioning\"",
+          "file": "/project/library.tsp",
+          "start": 0,
+          "end": 30
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @useDependency",
+          "file": "/project/main.tsp",
+          "start": 177,
+          "end": 190
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @versioned",
+          "file": "/project/library.tsp",
+          "start": 52,
+          "end": 61
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Versioning",
+          "file": "/project/main.tsp",
+          "start": 87,
+          "end": 97
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/main.tsp",
+          "start": 245,
+          "end": 249
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @added",
+          "file": "/project/library.tsp",
+          "start": 164,
+          "end": 169
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Versioning",
+          "file": "/project/library.tsp",
+          "start": 38,
+          "end": 48
+        }
+      ]
+    },
+    {
+      "entry": "versioning/main.tsp",
+      "sourceFiles": [
+        "library.tsp",
+        "main.tsp"
+      ],
+      "contextFiles": [
+        "versioning/sample-config.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/versioning\"",
+          "file": "/project/main.tsp",
+          "start": 0,
+          "end": 30
+        },
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/main.tsp",
+          "start": 31,
+          "end": 55
+        },
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/versioning\"",
+          "file": "/project/library.tsp",
+          "start": 0,
+          "end": 30
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @versioned",
+          "file": "/project/main.tsp",
+          "start": 155,
+          "end": 164
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @versioned",
+          "file": "/project/library.tsp",
+          "start": 52,
+          "end": 61
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Versioning",
+          "file": "/project/main.tsp",
+          "start": 87,
+          "end": 97
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Rest",
+          "file": "/project/main.tsp",
+          "start": 105,
+          "end": 109
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/main.tsp",
+          "start": 205,
+          "end": 209
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @useDependency",
+          "file": "/project/main.tsp",
+          "start": 231,
+          "end": 244
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @useDependency",
+          "file": "/project/main.tsp",
+          "start": 279,
+          "end": 292
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @header",
+          "file": "/project/main.tsp",
+          "start": 353,
+          "end": 359
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @added",
+          "file": "/project/library.tsp",
+          "start": 164,
+          "end": 169
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @madeOptional",
+          "file": "/project/main.tsp",
+          "start": 553,
+          "end": 565
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @added",
+          "file": "/project/main.tsp",
+          "start": 606,
+          "end": 611
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @added",
+          "file": "/project/main.tsp",
+          "start": 654,
+          "end": 659
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/main.tsp",
+          "start": 741,
+          "end": 746
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier OkResponse",
+          "file": "/project/main.tsp",
+          "start": 896,
+          "end": 906
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @added",
+          "file": "/project/main.tsp",
+          "start": 817,
+          "end": 822
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/main.tsp",
+          "start": 839,
+          "end": 843
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/main.tsp",
+          "start": 847,
+          "end": 852
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier OkResponse",
+          "file": "/project/main.tsp",
+          "start": 993,
+          "end": 1003
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @removed",
+          "file": "/project/main.tsp",
+          "start": 912,
+          "end": 919
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/main.tsp",
+          "start": 936,
+          "end": 940
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/main.tsp",
+          "start": 944,
+          "end": 949
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Versioning",
+          "file": "/project/library.tsp",
+          "start": 38,
+          "end": 48
+        }
+      ]
+    },
+    {
+      "entry": "visibility/main.tsp",
+      "sourceFiles": [
+        "main.tsp",
+        "visibility.tsp"
+      ],
+      "contextFiles": [
+        "visibility/sample-config.yaml"
+      ],
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/http\"",
+          "file": "/project/visibility.tsp",
+          "start": 0,
+          "end": 24
+        },
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"@typespec/rest\"",
+          "file": "/project/visibility.tsp",
+          "start": 25,
+          "end": 49
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @route",
+          "file": "/project/visibility.tsp",
+          "start": 987,
+          "end": 992
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Http",
+          "file": "/project/visibility.tsp",
+          "start": 57,
+          "end": 61
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier Rest",
+          "file": "/project/visibility.tsp",
+          "start": 69,
+          "end": 73
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @path",
+          "file": "/project/visibility.tsp",
+          "start": 1042,
+          "end": 1046
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @query",
+          "file": "/project/visibility.tsp",
+          "start": 1065,
+          "end": 1070
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @get",
+          "file": "/project/visibility.tsp",
+          "start": 1024,
+          "end": 1027
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/visibility.tsp",
+          "start": 1156,
+          "end": 1160
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @post",
+          "file": "/project/visibility.tsp",
+          "start": 1140,
+          "end": 1144
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/visibility.tsp",
+          "start": 1220,
+          "end": 1224
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @put",
+          "file": "/project/visibility.tsp",
+          "start": 1205,
+          "end": 1208
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Namespace TypeSpec doesn't have member Rest",
+          "file": "/project/visibility.tsp",
+          "start": 1279,
+          "end": 1292
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown identifier MergePatchUpdate",
+          "file": "/project/visibility.tsp",
+          "start": 1420,
+          "end": 1436
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @body",
+          "file": "/project/visibility.tsp",
+          "start": 1407,
+          "end": 1411
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Namespace TypeSpec doesn't have member Rest",
+          "file": "/project/visibility.tsp",
+          "start": 1352,
+          "end": 1365
+        }
+      ]
+    }
+  ],
+  "scope": "All upstream samples/specs archived; only supplied .tsp source bundles compiled. Context/config/JS files retained as corpus evidence, not interpreted or executed by this adapter"
+}

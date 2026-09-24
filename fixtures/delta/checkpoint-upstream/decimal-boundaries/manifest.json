@@ -1,0 +1,33 @@
+{
+  "runtime": "PyArrow 21.0.0",
+  "cases": [
+    {
+      "id": "int32",
+      "precision": 8,
+      "scale": 5,
+      "physicalType": "INT32",
+      "sha256": "ac05603a878e434d37f765e03eb2e3bc9994f7c595c86dd287f8d87c82fc9369"
+    },
+    {
+      "id": "int64",
+      "precision": 18,
+      "scale": 5,
+      "physicalType": "INT64",
+      "sha256": "b54df982ac33095acddb099e4bafb42cb10e3ac5ba364353abdf02c71e6733f9"
+    },
+    {
+      "id": "fixed128",
+      "precision": 38,
+      "scale": 9,
+      "physicalType": "FIXED_LEN_BYTE_ARRAY",
+      "sha256": "1c2fb8672975af52bdac5ff79a5bd07ff12ae47191ab178fca36a0468553364f"
+    },
+    {
+      "id": "fixed256",
+      "precision": 70,
+      "scale": 20,
+      "physicalType": "FIXED_LEN_BYTE_ARRAY",
+      "sha256": "dd99ba01a8ab616d19bc728ea0ba728fcb7461d41284ac6153c4bbe1b310db88"
+    }
+  ]
+}

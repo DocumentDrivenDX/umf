@@ -1,0 +1,1580 @@
+{
+  "processor": "PyLD 2.0.4",
+  "numberLoader": "Python integers and Decimal for values not preserved by float JSON serialization; comparison uses Decimal",
+  "results": [
+    {
+      "id": "t0001",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0002",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0003",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0004",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0005",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0006",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0007",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0008",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0009",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0010",
+      "native": "rejected",
+      "error": "('Could not compact framed output.',)\nType: jsonld.FrameError\nCause: ('Absolute IRI confused with prefix.',)\nType: jsonld.SyntaxError\nCode: IRI confused with prefix\nDetails: {'iri': 'dcterms:creator', 'term': 'dcterms', 'context': frozendict.frozendict({'mappings': {'dcterms': {'reverse': False, 'protected': False, '_prefix': True, '_term_has_colon': False, '@id': 'http://purl.org/dc/terms/'}, 'dcterms:creator': {'reverse': False, 'protected': False, '_prefix': False, '_term_has_colon': True, '@id': 'http://purl.org/dc/terms/creator', '@type': '@id'}, 'foaf': {'reverse': False, 'protected': False, '_prefix': True, '_term_has_colon': False, '@id': 'http://xmlns.com/foaf/0.1/'}, 'ps': {'reverse': False, 'protected': False, '_prefix': True, '_term_has_colon': False, '@id': 'http://purl.org/payswarm#'}}, 'processingMode': 'json-ld-1.0', '_uuid': 'b5bd132a-b53d-11f1-b403-2dffd827bab6'})}  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 1069, in frame\n    result = self.compact(framed, ctx, options)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 733, in compact\n    compacted = self._compact(active_ctx, None, expanded, options)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 1778, in _compact\n    e = self._compact(active_ctx, active_property, e, options)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 2004, in _compact\n    item_active_property = self._compact_iri(\n                           ^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 4877, in _compact_iri\n    raise JsonLdError(\n",
+      "umf": "blocked"
+    },
+    {
+      "id": "t0011",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0012",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0013",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0014",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0015",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0016",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0017",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0018",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0019",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0020",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0021",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0022",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0023",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0024",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0025",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0026",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0027",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0028",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0029",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0030",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0031",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0032",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0033",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0034",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0035",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0036",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0037",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0038",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0039",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0040",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0041",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0042",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0043",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0044",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0045",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0046",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0047",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0048",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0049",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0050",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0051",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0052",
+      "native": "rejected",
+      "error": "('Invalid JSON-LD syntax; invalid @id in frame.',)\nType: jsonld.SyntaxError\nCode: invalid frame\nDetails: {'frame': [{'@id': ['http://example.org/Sub1', '_:Sub2']}]}",
+      "umf": "blocked"
+    },
+    {
+      "id": "t0053",
+      "native": "rejected",
+      "error": "('Invalid JSON-LD syntax; invalid @type in frame.',)\nType: jsonld.SyntaxError\nCode: invalid frame\nDetails: {'frame': [{'@type': ['http://example.org/Type1', '_:Type2']}]}",
+      "umf": "blocked"
+    },
+    {
+      "id": "t0054",
+      "native": "rejected",
+      "error": "('Invalid JSON-LD syntax; invalid value of @embed',)\nType: jsonld.SyntaxError\nCode: invalid @embed value\nDetails: {'frame': {'@embed': ['@sometimes']}, 'embed': '@sometimes'}",
+      "umf": "blocked"
+    },
+    {
+      "id": "t0055",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0056",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0057",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0058",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0059",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0060",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0061",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0062",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0063",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0064",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0065",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0066",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0067",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0068",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "t0069",
+      "native": "rejected",
+      "error": "('Invalid JSON-LD syntax; invalid @type in frame.',)\nType: jsonld.SyntaxError\nCode: invalid frame\nDetails: {'frame': [{'@type': ['@json'], '@value': {}}]}",
+      "umf": "candidate"
+    },
+    {
+      "id": "t0070",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "teo01",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "tg001",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "tg002",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "tg003",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "tg004",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "tg005",
+      "native": "accepted",
+      "umf": "blocked",
+      "officialExpected": true,
+      "exports": []
+    },
+    {
+      "id": "tg006",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "tg007",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "tg008",
+      "native": "accepted",
+      "umf": "blocked",
+      "officialExpected": true,
+      "exports": []
+    },
+    {
+      "id": "tg009",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "tg010",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "tin01",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "tin02",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "tin03",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "tp020",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "tp021",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "tp046",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "tp049",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "tp050",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "tra01",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "tra02",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    },
+    {
+      "id": "tra03",
+      "native": "accepted",
+      "umf": "candidate",
+      "officialExpected": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true,
+          "officialEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true,
+          "officialEqual": true
+        }
+      ]
+    }
+  ]
+}

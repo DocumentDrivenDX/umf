@@ -1,0 +1,106 @@
+[
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "stats",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 2,
+              "name": "value",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT32",
+                  "value": "99999999"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "stats",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 2,
+              "name": "value",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT32",
+                  "value": "-99999999"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "stats",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 2,
+              "name": "value",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT32",
+                  "value": "0"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "stats",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 2,
+              "name": "value",
+              "value": null
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "stats",
+        "value": null
+      }
+    ]
+  }
+]

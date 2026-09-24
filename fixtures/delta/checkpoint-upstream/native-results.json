@@ -1,0 +1,322 @@
+{
+  "runtime": "PyArrow 21.0.0",
+  "files": 35,
+  "rows": 991,
+  "results": [
+    {
+      "id": "0",
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000010.checkpoint.parquet",
+      "rows": 102,
+      "sha256": "4c217257e9ed15793d8584c77d1d75dc842cd6f966a047f7b86394d0264397ed",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "1",
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000010.checkpoint.parquet",
+      "rows": 102,
+      "sha256": "4c217257e9ed15793d8584c77d1d75dc842cd6f966a047f7b86394d0264397ed",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "2",
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000010.checkpoint.parquet",
+      "rows": 102,
+      "sha256": "4c217257e9ed15793d8584c77d1d75dc842cd6f966a047f7b86394d0264397ed",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "3",
+      "path": "crates/core/tests/data_err_logs/table_d/_delta_log/00000000000000000000.checkpoint.parquet",
+      "rows": 2,
+      "sha256": "c477c60042a8cf7181eb9479494399cb663a7ba8712744271a2f2d79f590137f",
+      "codecs": [
+        "UNCOMPRESSED"
+      ]
+    },
+    {
+      "id": "4",
+      "path": "crates/core/tests/data_err_logs/table_e/_delta_log/00000000000000000000.checkpoint.parquet",
+      "rows": 3,
+      "sha256": "20fc2f695d8e2752b4bcd1ee6afbab8a4b1a4220876b318482f3335e3d623a1b",
+      "codecs": [
+        "UNCOMPRESSED"
+      ]
+    },
+    {
+      "id": "5",
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000010.checkpoint.parquet",
+      "rows": 13,
+      "sha256": "a463eb4708fe9ecf8a1232b4195055002741b1282ba5cd36e1a94fd316d4b1c2",
+      "codecs": [
+        "UNCOMPRESSED"
+      ]
+    },
+    {
+      "id": "6",
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000010.checkpoint.parquet",
+      "rows": 102,
+      "sha256": "4c217257e9ed15793d8584c77d1d75dc842cd6f966a047f7b86394d0264397ed",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "7",
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000009999.checkpoint.parquet",
+      "rows": 102,
+      "sha256": "4c217257e9ed15793d8584c77d1d75dc842cd6f966a047f7b86394d0264397ed",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "8",
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000010.checkpoint.parquet",
+      "rows": 102,
+      "sha256": "4c217257e9ed15793d8584c77d1d75dc842cd6f966a047f7b86394d0264397ed",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "9",
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000009999.checkpoint.parquet",
+      "rows": 2,
+      "sha256": "c477c60042a8cf7181eb9479494399cb663a7ba8712744271a2f2d79f590137f",
+      "codecs": [
+        "UNCOMPRESSED"
+      ]
+    },
+    {
+      "id": "10",
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000010.checkpoint.parquet",
+      "rows": 102,
+      "sha256": "4c217257e9ed15793d8584c77d1d75dc842cd6f966a047f7b86394d0264397ed",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "11",
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000009999.checkpoint.parquet",
+      "rows": 3,
+      "sha256": "20fc2f695d8e2752b4bcd1ee6afbab8a4b1a4220876b318482f3335e3d623a1b",
+      "codecs": [
+        "UNCOMPRESSED"
+      ]
+    },
+    {
+      "id": "12",
+      "path": "crates/test/tests/data/checkpoint-cdf-table/_delta_log/00000000000000000003.checkpoint.parquet",
+      "rows": 11,
+      "sha256": "26b18770956222e96b593be88f74e660359b8c5f93c4e434b2b56b7ad8c0e363",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "13",
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/_sidecars/00000000000000000006.checkpoint.0000000001.0000000001.1a1516f4-8a39-48f0-9ccd-cc3790d824c7.parquet",
+      "rows": 5,
+      "sha256": "2933abbaf4a5d5889f0df42f80df8a96518f092a4789c7a0a2b82e512030ad89",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "14",
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/_sidecars/00000000000000000008.checkpoint.0000000001.0000000001.d55fb2cb-b8d3-4362-8572-c52142a9da1f.parquet",
+      "rows": 7,
+      "sha256": "7e90e80541ae811d80a3d6df3927aa5166793d45aecbd72f407c6a34977a705f",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "15",
+      "path": "crates/test/tests/data/checkpoint_with_partitions/_delta_log/00000000000000000002.checkpoint.parquet",
+      "rows": 4,
+      "sha256": "99a0fcbfe39484a93b598c785495a3a33ee4420668062885b741c5ef29109470",
+      "codecs": [
+        "UNCOMPRESSED"
+      ]
+    },
+    {
+      "id": "16",
+      "path": "crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000005.checkpoint.parquet",
+      "rows": 7,
+      "sha256": "37fc42f87f3a9c8c95d8a03b03e69ba163c17dd1a0e19111d2fc198f24074c87",
+      "codecs": [
+        "UNCOMPRESSED"
+      ]
+    },
+    {
+      "id": "17",
+      "path": "crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000010.checkpoint.parquet",
+      "rows": 12,
+      "sha256": "f34282665eee3c136268ac5e5e32316bd7666e7667d8066502cbf123d80ccf7e",
+      "codecs": [
+        "UNCOMPRESSED"
+      ]
+    },
+    {
+      "id": "18",
+      "path": "crates/test/tests/data/delta-0.2.0/_delta_log/00000000000000000003.checkpoint.parquet",
+      "rows": 10,
+      "sha256": "7911bc9369cf8851a18fab2c2b731502ca8d08ac7818c5dc0d053d27a3606010",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "19",
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000010.checkpoint.parquet",
+      "rows": 12,
+      "sha256": "6c305559225a6989713153e1488ad41950bddc2864ce42361d5d142a0f1efa1a",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "20",
+      "path": "crates/test/tests/data/delta-checkpoint-stats-optional/_delta_log/00000000000000000002.checkpoint.parquet",
+      "rows": 4,
+      "sha256": "37a1e05e6c12087bc12f81a7bbadefa0bbeaa3785616d74ff58cfd1c0424d21a",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "21",
+      "path": "crates/test/tests/data/issue_1374/_delta_log/00000000000000000001.checkpoint.parquet",
+      "rows": 4,
+      "sha256": "6e688f6927cafd006550802a252b914b45d6d79993b6d0409fb4048e8b2cfb28",
+      "codecs": [
+        "UNCOMPRESSED"
+      ]
+    },
+    {
+      "id": "22",
+      "path": "crates/test/tests/data/latest_not_checkpointed/_delta_log/00000000000000000002.checkpoint.parquet",
+      "rows": 4,
+      "sha256": "cf2e5b457c6af893ac56ca5f87357824476cc0446e55ce6fdb8081ea656c4787",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "23",
+      "path": "crates/test/tests/data/python-0.25.5-checkpoint/_delta_log/00000000000000000000.checkpoint.parquet",
+      "rows": 3,
+      "sha256": "6d6d6cfe3fd77f62c24711fbf85f75d0cf1acf43cfc5e2f1ca505c2be0005a66",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "24",
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000010.checkpoint.parquet",
+      "rows": 13,
+      "sha256": "b7be7b2614c6b8fd13facd17f4e9f6c936f5a3abdc19da68e46d1b599987bd11",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "25",
+      "path": "crates/test/tests/data/spark-shredded-variant-preview-delta/_delta_log/00000000000000000002.checkpoint.parquet",
+      "rows": 6,
+      "sha256": "1a72efc906f1ca3c843204e9b8cd97c3855a7261aa873bce9ce79808e6fab271",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "26",
+      "path": "crates/test/tests/data/spark-variant-checkpoint/_delta_log/00000000000000000002.checkpoint.parquet",
+      "rows": 6,
+      "sha256": "9a2290450b5fde8bad85a4c106c51425806bf4ae5ecb4c4d1b43b1eddbc0ea55",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "27",
+      "path": "crates/test/tests/data/table-with-domain-metadata/_delta_log/00000000000000000108.checkpoint.parquet",
+      "rows": 114,
+      "sha256": "427eba303fc07a216e928a68c3c3db5f6992aa79052263db0985751e4c65d7bb",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "28",
+      "path": "crates/test/tests/data/table_failed_last_checkpoint_update/_delta_log/00000000000000000001.checkpoint.parquet",
+      "rows": 4,
+      "sha256": "e568986b5d8b10f333fad396f0cc1d5e5d1206ffb652ee1111bf601461a39030",
+      "codecs": [
+        "UNCOMPRESSED"
+      ]
+    },
+    {
+      "id": "29",
+      "path": "crates/test/tests/data/table_failed_last_checkpoint_update/_delta_log/00000000000000000003.checkpoint.parquet",
+      "rows": 6,
+      "sha256": "96586696d59564dc2f0cfdb14fd9d18a443437b2535e452ab477c8a28c70242f",
+      "codecs": [
+        "UNCOMPRESSED"
+      ]
+    },
+    {
+      "id": "30",
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000010.checkpoint.parquet",
+      "rows": 5,
+      "sha256": "5332276f28cf1f16a2beb6b060048dc6c383d9db0b2c3312a1d33cc38159e3be",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "31",
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000020.checkpoint.parquet",
+      "rows": 5,
+      "sha256": "5332276f28cf1f16a2beb6b060048dc6c383d9db0b2c3312a1d33cc38159e3be",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "32",
+      "path": "crates/test/tests/data/v2-classic-checkpoint-json/_delta_log/00000000000000000001.checkpoint.parquet",
+      "rows": 4,
+      "sha256": "9ba79ee8580a82b3e48a5ba49c442fe28c6d32174632157a66f25b2228f00997",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "33",
+      "path": "crates/test/tests/data/v2-classic-checkpoint-json/_delta_log/_sidecars/00000000000000000001.checkpoint.0000000001.0000000001.c1bacf45-f3a9-4846-bd44-87cdacd4620f.parquet",
+      "rows": 4,
+      "sha256": "0556d8555da108067f84ab7553f08ac60055a4a12e4fe6fcb612fefd4115a1d1",
+      "codecs": [
+        "SNAPPY"
+      ]
+    },
+    {
+      "id": "34",
+      "path": "crates/test/tests/data/with_checkpoint_no_last_checkpoint/_delta_log/00000000000000000002.checkpoint.parquet",
+      "rows": 4,
+      "sha256": "cf2e5b457c6af893ac56ca5f87357824476cc0446e55ce6fdb8081ea656c4787",
+      "codecs": [
+        "SNAPPY"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,500 @@
+{
+  "producer": "pyarrow 21.0.0",
+  "cases": [
+    {
+      "file": "int64.stream.arrow.0.bin",
+      "source": "int64.stream.arrow",
+      "kind": "schema",
+      "rootType": "Message",
+      "sha256": "9e50c0499815435875da91ea6238e2619eeb359a859585e32bfe63eea0d66aaf"
+    },
+    {
+      "file": "int64.stream.arrow.1.bin",
+      "source": "int64.stream.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "26593796130dcb54332f4956e81f7363eb519d4bc8aaff0d8a71572439f0235e"
+    },
+    {
+      "file": "int64.stream.arrow.2.bin",
+      "source": "int64.stream.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "26593796130dcb54332f4956e81f7363eb519d4bc8aaff0d8a71572439f0235e"
+    },
+    {
+      "file": "int64.file.arrow.0.bin",
+      "source": "int64.file.arrow",
+      "kind": "schema",
+      "rootType": "Message",
+      "sha256": "9e50c0499815435875da91ea6238e2619eeb359a859585e32bfe63eea0d66aaf"
+    },
+    {
+      "file": "int64.file.arrow.1.bin",
+      "source": "int64.file.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "26593796130dcb54332f4956e81f7363eb519d4bc8aaff0d8a71572439f0235e"
+    },
+    {
+      "file": "int64.file.arrow.2.bin",
+      "source": "int64.file.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "26593796130dcb54332f4956e81f7363eb519d4bc8aaff0d8a71572439f0235e"
+    },
+    {
+      "file": "int64.file.arrow.footer.bin",
+      "source": "int64.file.arrow",
+      "kind": "footer",
+      "rootType": "Footer",
+      "sha256": "02fc06e4e655f66d1caefe79cb6298e092b0e6f5c93d21d4f2b007dfb7066f43"
+    },
+    {
+      "file": "dictionary.stream.arrow.0.bin",
+      "source": "dictionary.stream.arrow",
+      "kind": "schema",
+      "rootType": "Message",
+      "sha256": "cdcc1c68341dc90a6d711603d6e710ec92d2f6026ec0a42772998b02bc60a614"
+    },
+    {
+      "file": "dictionary.stream.arrow.1.bin",
+      "source": "dictionary.stream.arrow",
+      "kind": "dictionary",
+      "rootType": "Message",
+      "sha256": "d96d502501da4dca8c59087cb865a9746329c39141bf491fc69b6bfacbab7b4d"
+    },
+    {
+      "file": "dictionary.stream.arrow.2.bin",
+      "source": "dictionary.stream.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "33420982c32bbe18729ea3df9e13df4e60cf9d76cc78213cf1792499025367e7"
+    },
+    {
+      "file": "dictionary.stream.arrow.3.bin",
+      "source": "dictionary.stream.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "33420982c32bbe18729ea3df9e13df4e60cf9d76cc78213cf1792499025367e7"
+    },
+    {
+      "file": "dictionary.file.arrow.0.bin",
+      "source": "dictionary.file.arrow",
+      "kind": "schema",
+      "rootType": "Message",
+      "sha256": "cdcc1c68341dc90a6d711603d6e710ec92d2f6026ec0a42772998b02bc60a614"
+    },
+    {
+      "file": "dictionary.file.arrow.1.bin",
+      "source": "dictionary.file.arrow",
+      "kind": "dictionary",
+      "rootType": "Message",
+      "sha256": "d96d502501da4dca8c59087cb865a9746329c39141bf491fc69b6bfacbab7b4d"
+    },
+    {
+      "file": "dictionary.file.arrow.2.bin",
+      "source": "dictionary.file.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "33420982c32bbe18729ea3df9e13df4e60cf9d76cc78213cf1792499025367e7"
+    },
+    {
+      "file": "dictionary.file.arrow.3.bin",
+      "source": "dictionary.file.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "33420982c32bbe18729ea3df9e13df4e60cf9d76cc78213cf1792499025367e7"
+    },
+    {
+      "file": "dictionary.file.arrow.footer.bin",
+      "source": "dictionary.file.arrow",
+      "kind": "footer",
+      "rootType": "Footer",
+      "sha256": "efe845cb843ea43dbe5e4e70926a07d5784f183567109d7c74ac9a17c8219d89"
+    },
+    {
+      "file": "list.stream.arrow.0.bin",
+      "source": "list.stream.arrow",
+      "kind": "schema",
+      "rootType": "Message",
+      "sha256": "7652aca44e80f9ffb57cd67b5fa5e96017c3a77c37708437335a8b5878867a2f"
+    },
+    {
+      "file": "list.stream.arrow.1.bin",
+      "source": "list.stream.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "de778f6ba71e2ca3cede87a605ec75db62f27d065edbe63825cdeb90f81c3258"
+    },
+    {
+      "file": "list.stream.arrow.2.bin",
+      "source": "list.stream.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "de778f6ba71e2ca3cede87a605ec75db62f27d065edbe63825cdeb90f81c3258"
+    },
+    {
+      "file": "list.file.arrow.0.bin",
+      "source": "list.file.arrow",
+      "kind": "schema",
+      "rootType": "Message",
+      "sha256": "7652aca44e80f9ffb57cd67b5fa5e96017c3a77c37708437335a8b5878867a2f"
+    },
+    {
+      "file": "list.file.arrow.1.bin",
+      "source": "list.file.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "de778f6ba71e2ca3cede87a605ec75db62f27d065edbe63825cdeb90f81c3258"
+    },
+    {
+      "file": "list.file.arrow.2.bin",
+      "source": "list.file.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "de778f6ba71e2ca3cede87a605ec75db62f27d065edbe63825cdeb90f81c3258"
+    },
+    {
+      "file": "list.file.arrow.footer.bin",
+      "source": "list.file.arrow",
+      "kind": "footer",
+      "rootType": "Footer",
+      "sha256": "1962d0ddc2f2f1155788a65dbf83bf6ebe47f79adfd975cbae1aa613c09b3805"
+    },
+    {
+      "file": "struct.stream.arrow.0.bin",
+      "source": "struct.stream.arrow",
+      "kind": "schema",
+      "rootType": "Message",
+      "sha256": "3f02cac5c506f080884c4658f1068f0e517a18427cc3e7f3c7e898f0e84ef322"
+    },
+    {
+      "file": "struct.stream.arrow.1.bin",
+      "source": "struct.stream.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "e02ea370a0e1dc37f9a03767437a7554c35c5d65d6d51688e0473e05a5c0cca3"
+    },
+    {
+      "file": "struct.stream.arrow.2.bin",
+      "source": "struct.stream.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "e02ea370a0e1dc37f9a03767437a7554c35c5d65d6d51688e0473e05a5c0cca3"
+    },
+    {
+      "file": "struct.file.arrow.0.bin",
+      "source": "struct.file.arrow",
+      "kind": "schema",
+      "rootType": "Message",
+      "sha256": "3f02cac5c506f080884c4658f1068f0e517a18427cc3e7f3c7e898f0e84ef322"
+    },
+    {
+      "file": "struct.file.arrow.1.bin",
+      "source": "struct.file.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "e02ea370a0e1dc37f9a03767437a7554c35c5d65d6d51688e0473e05a5c0cca3"
+    },
+    {
+      "file": "struct.file.arrow.2.bin",
+      "source": "struct.file.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "e02ea370a0e1dc37f9a03767437a7554c35c5d65d6d51688e0473e05a5c0cca3"
+    },
+    {
+      "file": "struct.file.arrow.footer.bin",
+      "source": "struct.file.arrow",
+      "kind": "footer",
+      "rootType": "Footer",
+      "sha256": "bbdfa00e841b7b55f6ca4cf4b13e80d0254603c006f781f628a92c3d1ca72c6b"
+    },
+    {
+      "file": "map.stream.arrow.0.bin",
+      "source": "map.stream.arrow",
+      "kind": "schema",
+      "rootType": "Message",
+      "sha256": "f6a54e2160037e14513099ebb97533602a75d0b902136f1af71b0953a85e9940"
+    },
+    {
+      "file": "map.stream.arrow.1.bin",
+      "source": "map.stream.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "f96a71b88d6e89880a7048e7fc02310de25dda56b9fde0682410fe9c8dd02f7a"
+    },
+    {
+      "file": "map.stream.arrow.2.bin",
+      "source": "map.stream.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "f96a71b88d6e89880a7048e7fc02310de25dda56b9fde0682410fe9c8dd02f7a"
+    },
+    {
+      "file": "map.file.arrow.0.bin",
+      "source": "map.file.arrow",
+      "kind": "schema",
+      "rootType": "Message",
+      "sha256": "f6a54e2160037e14513099ebb97533602a75d0b902136f1af71b0953a85e9940"
+    },
+    {
+      "file": "map.file.arrow.1.bin",
+      "source": "map.file.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "f96a71b88d6e89880a7048e7fc02310de25dda56b9fde0682410fe9c8dd02f7a"
+    },
+    {
+      "file": "map.file.arrow.2.bin",
+      "source": "map.file.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "f96a71b88d6e89880a7048e7fc02310de25dda56b9fde0682410fe9c8dd02f7a"
+    },
+    {
+      "file": "map.file.arrow.footer.bin",
+      "source": "map.file.arrow",
+      "kind": "footer",
+      "rootType": "Footer",
+      "sha256": "cf08c76e5d7c9aed5cc577d37edd1c5ae3557016eea401ee5203d74e364e8634"
+    },
+    {
+      "file": "union.stream.arrow.0.bin",
+      "source": "union.stream.arrow",
+      "kind": "schema",
+      "rootType": "Message",
+      "sha256": "b585910392e00a8d4c31d62a34b83b78d8da604ce39251d080963b39759d3cd2"
+    },
+    {
+      "file": "union.stream.arrow.1.bin",
+      "source": "union.stream.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "d7a5ec703b41fdfc53c6a2ff8b3b55a0ec65d445e790a3b9965b025720cbe43e"
+    },
+    {
+      "file": "union.stream.arrow.2.bin",
+      "source": "union.stream.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "d7a5ec703b41fdfc53c6a2ff8b3b55a0ec65d445e790a3b9965b025720cbe43e"
+    },
+    {
+      "file": "union.file.arrow.0.bin",
+      "source": "union.file.arrow",
+      "kind": "schema",
+      "rootType": "Message",
+      "sha256": "b585910392e00a8d4c31d62a34b83b78d8da604ce39251d080963b39759d3cd2"
+    },
+    {
+      "file": "union.file.arrow.1.bin",
+      "source": "union.file.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "d7a5ec703b41fdfc53c6a2ff8b3b55a0ec65d445e790a3b9965b025720cbe43e"
+    },
+    {
+      "file": "union.file.arrow.2.bin",
+      "source": "union.file.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "d7a5ec703b41fdfc53c6a2ff8b3b55a0ec65d445e790a3b9965b025720cbe43e"
+    },
+    {
+      "file": "union.file.arrow.footer.bin",
+      "source": "union.file.arrow",
+      "kind": "footer",
+      "rootType": "Footer",
+      "sha256": "74670f841dc5048bae834ee9c415c1754fc8a4df861661a92594504a8df48d9c"
+    },
+    {
+      "file": "listview.stream.arrow.0.bin",
+      "source": "listview.stream.arrow",
+      "kind": "schema",
+      "rootType": "Message",
+      "sha256": "47d176c03371bfe109a351e8c9fbe9ed85ec62b55b26e0070612ba5348f4dea7"
+    },
+    {
+      "file": "listview.stream.arrow.1.bin",
+      "source": "listview.stream.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "c7bbbce8e0d2af0d89f3408c1321ffc7920e6836d245020ae8bb1f6b7764f06a"
+    },
+    {
+      "file": "listview.stream.arrow.2.bin",
+      "source": "listview.stream.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "c7bbbce8e0d2af0d89f3408c1321ffc7920e6836d245020ae8bb1f6b7764f06a"
+    },
+    {
+      "file": "listview.file.arrow.0.bin",
+      "source": "listview.file.arrow",
+      "kind": "schema",
+      "rootType": "Message",
+      "sha256": "47d176c03371bfe109a351e8c9fbe9ed85ec62b55b26e0070612ba5348f4dea7"
+    },
+    {
+      "file": "listview.file.arrow.1.bin",
+      "source": "listview.file.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "c7bbbce8e0d2af0d89f3408c1321ffc7920e6836d245020ae8bb1f6b7764f06a"
+    },
+    {
+      "file": "listview.file.arrow.2.bin",
+      "source": "listview.file.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "c7bbbce8e0d2af0d89f3408c1321ffc7920e6836d245020ae8bb1f6b7764f06a"
+    },
+    {
+      "file": "listview.file.arrow.footer.bin",
+      "source": "listview.file.arrow",
+      "kind": "footer",
+      "rootType": "Footer",
+      "sha256": "4ab0c0f66fd8cf9c96852b1670db421d78afce38fb1864d6207a63f05fed1beb"
+    },
+    {
+      "file": "largelistview.stream.arrow.0.bin",
+      "source": "largelistview.stream.arrow",
+      "kind": "schema",
+      "rootType": "Message",
+      "sha256": "b349f365ad14bd7ba9ab73b3411dd4e3bcdeb7ae56e8919f9f7da28a3bedf5e3"
+    },
+    {
+      "file": "largelistview.stream.arrow.1.bin",
+      "source": "largelistview.stream.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "747a160144916787fe668cd6910575e621d3e1a60c6b9ad9cc95be93cf733d8e"
+    },
+    {
+      "file": "largelistview.stream.arrow.2.bin",
+      "source": "largelistview.stream.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "747a160144916787fe668cd6910575e621d3e1a60c6b9ad9cc95be93cf733d8e"
+    },
+    {
+      "file": "largelistview.file.arrow.0.bin",
+      "source": "largelistview.file.arrow",
+      "kind": "schema",
+      "rootType": "Message",
+      "sha256": "b349f365ad14bd7ba9ab73b3411dd4e3bcdeb7ae56e8919f9f7da28a3bedf5e3"
+    },
+    {
+      "file": "largelistview.file.arrow.1.bin",
+      "source": "largelistview.file.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "747a160144916787fe668cd6910575e621d3e1a60c6b9ad9cc95be93cf733d8e"
+    },
+    {
+      "file": "largelistview.file.arrow.2.bin",
+      "source": "largelistview.file.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "747a160144916787fe668cd6910575e621d3e1a60c6b9ad9cc95be93cf733d8e"
+    },
+    {
+      "file": "largelistview.file.arrow.footer.bin",
+      "source": "largelistview.file.arrow",
+      "kind": "footer",
+      "rootType": "Footer",
+      "sha256": "10dfe54a21860ce169c2ac4515cac2a5578289b171277b25508727760efb5d4b"
+    },
+    {
+      "file": "runendencoded.stream.arrow.0.bin",
+      "source": "runendencoded.stream.arrow",
+      "kind": "schema",
+      "rootType": "Message",
+      "sha256": "6c63b3224bfc04a0d6828d0a767e0eeea7cf83f19f24985954ec303c9ffed620"
+    },
+    {
+      "file": "runendencoded.stream.arrow.1.bin",
+      "source": "runendencoded.stream.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "b8bf8660864e57d0b6b910b133b94ede7735ded831b53ada958f96bdd4945490"
+    },
+    {
+      "file": "runendencoded.stream.arrow.2.bin",
+      "source": "runendencoded.stream.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "b8bf8660864e57d0b6b910b133b94ede7735ded831b53ada958f96bdd4945490"
+    },
+    {
+      "file": "runendencoded.file.arrow.0.bin",
+      "source": "runendencoded.file.arrow",
+      "kind": "schema",
+      "rootType": "Message",
+      "sha256": "6c63b3224bfc04a0d6828d0a767e0eeea7cf83f19f24985954ec303c9ffed620"
+    },
+    {
+      "file": "runendencoded.file.arrow.1.bin",
+      "source": "runendencoded.file.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "b8bf8660864e57d0b6b910b133b94ede7735ded831b53ada958f96bdd4945490"
+    },
+    {
+      "file": "runendencoded.file.arrow.2.bin",
+      "source": "runendencoded.file.arrow",
+      "kind": "record batch",
+      "rootType": "Message",
+      "sha256": "b8bf8660864e57d0b6b910b133b94ede7735ded831b53ada958f96bdd4945490"
+    },
+    {
+      "file": "runendencoded.file.arrow.footer.bin",
+      "source": "runendencoded.file.arrow",
+      "kind": "footer",
+      "rootType": "Footer",
+      "sha256": "de16810f9b5d5f7d51e1844ff92997b96fc0ff9e97f7c6b5e0cdfbc7655b2543"
+    },
+    {
+      "file": "schema-exact.bin",
+      "source": "authored/schema-exact.json",
+      "producer": "flatc 23.5.26",
+      "kind": "authored metadata only; no accompanying data body",
+      "rootType": "Schema",
+      "sha256": "3b9fbcbfad72334ff40aba8e30e6e1db4177cfc53b41d0900cb8acbf236b46f2"
+    },
+    {
+      "file": "tensor.bin",
+      "source": "authored/tensor.json",
+      "producer": "flatc 23.5.26",
+      "kind": "authored metadata only; no accompanying data body",
+      "rootType": "Tensor",
+      "sha256": "255bc1778d1878d4d771a6349b2f488fe3697247217eb83d1fc23e459ac56a27"
+    },
+    {
+      "file": "SparseTensorIndexCOO.bin",
+      "source": "authored/SparseTensorIndexCOO.json",
+      "producer": "flatc 23.5.26",
+      "kind": "authored metadata only; no accompanying data body",
+      "rootType": "SparseTensor",
+      "sha256": "84bac9b00268ed3e8dbb916ece363d62f9a2f5c97bbfd4b9dbc180f966f324c4"
+    },
+    {
+      "file": "SparseMatrixIndexCSX.bin",
+      "source": "authored/SparseMatrixIndexCSX.json",
+      "producer": "flatc 23.5.26",
+      "kind": "authored metadata only; no accompanying data body",
+      "rootType": "SparseTensor",
+      "sha256": "431726075054fefee218d8c6202a7553acd1e3961e14c160d2f95037e2dffae3"
+    },
+    {
+      "file": "SparseTensorIndexCSF.bin",
+      "source": "authored/SparseTensorIndexCSF.json",
+      "producer": "flatc 23.5.26",
+      "kind": "authored metadata only; no accompanying data body",
+      "rootType": "SparseTensor",
+      "sha256": "8ddb9f6e06c32c5398f0eecc63529ae6f5adca2839c7d7232054b53205103e99"
+    }
+  ]
+}

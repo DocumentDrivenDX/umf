@@ -1,0 +1,33 @@
+_:Nf4d9f48676ac42d6a5054ecb26ec4208 <http://www.w3.org/ns/shacl#sourceShape> _:n06d6a445bd814da4bd16ce94021f8b77b2 .
+_:N831c42b570f14d08af40fed3502ba9eb <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Ne02d5d1fe82248b38692b51f7734603a <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/property/node-001.test#Anon> .
+_:Ne02d5d1fe82248b38692b51f7734603a <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/node-001.test#assignedTo> .
+_:Ne02d5d1fe82248b38692b51f7734603a <http://www.w3.org/ns/shacl#detail> _:Nd4e70c8efa1044d5b35f2100cbddc9b3 .
+_:Nd4e70c8efa1044d5b35f2100cbddc9b3 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/node-001.test#lastName> .
+_:Nd4e70c8efa1044d5b35f2100cbddc9b3 <http://www.w3.org/ns/shacl#sourceShape> _:n06d6a445bd814da4bd16ce94021f8b77b3 .
+_:Ne02d5d1fe82248b38692b51f7734603a <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nd4e70c8efa1044d5b35f2100cbddc9b3 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/node-001.test#Anon> .
+_:Ne02d5d1fe82248b38692b51f7734603a <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/node-001.test#Issue_1> .
+_:N831c42b570f14d08af40fed3502ba9eb <http://www.w3.org/ns/shacl#result> _:Ne02d5d1fe82248b38692b51f7734603a .
+_:Ne02d5d1fe82248b38692b51f7734603a <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/node-001.test#Issue-assignedTo> .
+_:Nd4e70c8efa1044d5b35f2100cbddc9b3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Ne02d5d1fe82248b38692b51f7734603a <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeConstraintComponent> .
+_:n06d6a445bd814da4bd16ce94021f8b77b2 <http://www.w3.org/ns/shacl#minCount> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:Nf4d9f48676ac42d6a5054ecb26ec4208 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nf4d9f48676ac42d6a5054ecb26ec4208 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/node-001.test#email> .
+_:Ne02d5d1fe82248b38692b51f7734603a <http://www.w3.org/ns/shacl#resultMessage> "Value does not conform to Shape [ rdfs:comment Literal(\"All assignees must have an email and a last name.\") ; sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:email ], [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:lastName ] ]. See details for more information." .
+_:Nd4e70c8efa1044d5b35f2100cbddc9b3 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinCountConstraintComponent> .
+_:Ne02d5d1fe82248b38692b51f7734603a <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:n06d6a445bd814da4bd16ce94021f8b77b3 <http://www.w3.org/ns/shacl#minCount> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:n06d6a445bd814da4bd16ce94021f8b77b2 <http://www.w3.org/ns/shacl#path> <http://datashapes.org/sh/tests/core/property/node-001.test#email> .
+_:Nd4e70c8efa1044d5b35f2100cbddc9b3 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:n06d6a445bd814da4bd16ce94021f8b77b3 <http://www.w3.org/ns/shacl#maxCount> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:Nf4d9f48676ac42d6a5054ecb26ec4208 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/node-001.test#Anon> .
+_:n06d6a445bd814da4bd16ce94021f8b77b2 <http://www.w3.org/ns/shacl#maxCount> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:Nf4d9f48676ac42d6a5054ecb26ec4208 <http://www.w3.org/ns/shacl#resultMessage> "Less than 1 values on ex:Anon->ex:email" .
+_:Ne02d5d1fe82248b38692b51f7734603a <http://www.w3.org/ns/shacl#detail> _:Nf4d9f48676ac42d6a5054ecb26ec4208 .
+_:n06d6a445bd814da4bd16ce94021f8b77b3 <http://www.w3.org/ns/shacl#path> <http://datashapes.org/sh/tests/core/property/node-001.test#lastName> .
+_:N831c42b570f14d08af40fed3502ba9eb <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Nd4e70c8efa1044d5b35f2100cbddc9b3 <http://www.w3.org/ns/shacl#resultMessage> "Less than 1 values on ex:Anon->ex:lastName" .
+_:Nf4d9f48676ac42d6a5054ecb26ec4208 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinCountConstraintComponent> .
+_:Nf4d9f48676ac42d6a5054ecb26ec4208 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .

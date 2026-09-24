@@ -1,0 +1,397 @@
+{
+  "files": 47,
+  "decoded": 44,
+  "results": [
+    {
+      "id": "upstream-0",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000010.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 56,
+      "materializedBytes": 17848,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-1",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000010.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 56,
+      "materializedBytes": 17848,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-2",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000010.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 56,
+      "materializedBytes": 17848,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-3",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_d/_delta_log/00000000000000000000.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 54,
+      "materializedBytes": 263,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-4",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_e/_delta_log/00000000000000000000.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 54,
+      "materializedBytes": 423,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-5",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000010.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 56,
+      "materializedBytes": 2122,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-6",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000010.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 56,
+      "materializedBytes": 17848,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-7",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000009999.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 56,
+      "materializedBytes": 17848,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-8",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000010.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 56,
+      "materializedBytes": 17848,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-9",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000009999.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 54,
+      "materializedBytes": 263,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-10",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000010.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 56,
+      "materializedBytes": 17848,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-11",
+      "path": "fixtures/delta/checkpoint-upstream/crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000009999.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 54,
+      "materializedBytes": 423,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-12",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/checkpoint-cdf-table/_delta_log/00000000000000000003.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 60,
+      "materializedBytes": 2818,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-13",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/checkpoint-v2-table/_delta_log/_sidecars/00000000000000000006.checkpoint.0000000001.0000000001.1a1516f4-8a39-48f0-9ccd-cc3790d824c7.parquet",
+      "status": "decoded",
+      "pages": 54,
+      "materializedBytes": 3216,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-14",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/checkpoint-v2-table/_delta_log/_sidecars/00000000000000000008.checkpoint.0000000001.0000000001.d55fb2cb-b8d3-4362-8572-c52142a9da1f.parquet",
+      "status": "decoded",
+      "pages": 54,
+      "materializedBytes": 4429,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-15",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/checkpoint_with_partitions/_delta_log/00000000000000000002.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 73,
+      "materializedBytes": 737,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-16",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000005.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 91,
+      "materializedBytes": 7143,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-17",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000010.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 91,
+      "materializedBytes": 13154,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-18",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/delta-0.2.0/_delta_log/00000000000000000003.checkpoint.parquet",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "PARQUET_PAGE_BOUNDS",
+          "path": "",
+          "severity": "error",
+          "message": "Dictionary must occur once at declared chunk start"
+        }
+      ]
+    },
+    {
+      "id": "upstream-19",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000010.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 99,
+      "materializedBytes": 7043,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-20",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/delta-checkpoint-stats-optional/_delta_log/00000000000000000002.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 141,
+      "materializedBytes": 4613,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-21",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/issue_1374/_delta_log/00000000000000000001.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 79,
+      "materializedBytes": 2032,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-22",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/latest_not_checkpointed/_delta_log/00000000000000000002.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 34,
+      "materializedBytes": 668,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-23",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/python-0.25.5-checkpoint/_delta_log/00000000000000000000.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 77,
+      "materializedBytes": 647,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-24",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000010.checkpoint.parquet",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "PARQUET_PAGE_BOUNDS",
+          "path": "",
+          "severity": "error",
+          "message": "Dictionary must occur once at declared chunk start"
+        }
+      ]
+    },
+    {
+      "id": "upstream-25",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/spark-shredded-variant-preview-delta/_delta_log/00000000000000000002.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 56,
+      "materializedBytes": 2673,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-26",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/spark-variant-checkpoint/_delta_log/00000000000000000002.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 56,
+      "materializedBytes": 2509,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-27",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/table-with-domain-metadata/_delta_log/00000000000000000108.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 80,
+      "materializedBytes": 65657,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-28",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/table_failed_last_checkpoint_update/_delta_log/00000000000000000001.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 97,
+      "materializedBytes": 2018,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-29",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/table_failed_last_checkpoint_update/_delta_log/00000000000000000003.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 97,
+      "materializedBytes": 3256,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-30",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000010.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 74,
+      "materializedBytes": 2143,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-31",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000020.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 74,
+      "materializedBytes": 2143,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-32",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/v2-classic-checkpoint-json/_delta_log/00000000000000000001.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 65,
+      "materializedBytes": 375,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-33",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/v2-classic-checkpoint-json/_delta_log/_sidecars/00000000000000000001.checkpoint.0000000001.0000000001.c1bacf45-f3a9-4846-bd44-87cdacd4620f.parquet",
+      "status": "decoded",
+      "pages": 34,
+      "materializedBytes": 788,
+      "diagnostics": []
+    },
+    {
+      "id": "upstream-34",
+      "path": "fixtures/delta/checkpoint-upstream/crates/test/tests/data/with_checkpoint_no_last_checkpoint/_delta_log/00000000000000000002.checkpoint.parquet",
+      "status": "decoded",
+      "pages": 34,
+      "materializedBytes": 668,
+      "diagnostics": []
+    },
+    {
+      "id": "int32",
+      "path": "fixtures/delta/checkpoint-upstream/decimal-boundaries/int32.parquet",
+      "status": "decoded",
+      "pages": 2,
+      "materializedBytes": 24,
+      "diagnostics": []
+    },
+    {
+      "id": "int64",
+      "path": "fixtures/delta/checkpoint-upstream/decimal-boundaries/int64.parquet",
+      "status": "decoded",
+      "pages": 2,
+      "materializedBytes": 48,
+      "diagnostics": []
+    },
+    {
+      "id": "fixed128",
+      "path": "fixtures/delta/checkpoint-upstream/decimal-boundaries/fixed128.parquet",
+      "status": "decoded",
+      "pages": 2,
+      "materializedBytes": 96,
+      "diagnostics": []
+    },
+    {
+      "id": "fixed256",
+      "path": "fixtures/delta/checkpoint-upstream/decimal-boundaries/fixed256.parquet",
+      "status": "decoded",
+      "pages": 2,
+      "materializedBytes": 180,
+      "diagnostics": []
+    },
+    {
+      "id": "rename-none",
+      "path": "fixtures/parquet/rename/none.parquet",
+      "status": "decoded",
+      "pages": 48,
+      "materializedBytes": 761,
+      "diagnostics": []
+    },
+    {
+      "id": "rename-snappy",
+      "path": "fixtures/parquet/rename/snappy.parquet",
+      "status": "decoded",
+      "pages": 48,
+      "materializedBytes": 761,
+      "diagnostics": []
+    },
+    {
+      "id": "rename-gzip",
+      "path": "fixtures/parquet/rename/gzip.parquet",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "PARQUET_PAGE_BODY",
+          "path": "",
+          "severity": "error",
+          "message": "Page codec 2 is not implemented by the bounded decoder"
+        }
+      ]
+    },
+    {
+      "id": "rename-embedded-schema",
+      "path": "fixtures/parquet/rename/embedded-schema.parquet",
+      "status": "decoded",
+      "pages": 16,
+      "materializedBytes": 691,
+      "diagnostics": []
+    },
+    {
+      "id": "page-1.0-dict-true",
+      "path": "fixtures/parquet/values-trial/page-1.0-dict-true.parquet",
+      "status": "decoded",
+      "pages": 40,
+      "materializedBytes": 366,
+      "diagnostics": []
+    },
+    {
+      "id": "page-1.0-dict-false",
+      "path": "fixtures/parquet/values-trial/page-1.0-dict-false.parquet",
+      "status": "decoded",
+      "pages": 20,
+      "materializedBytes": 189,
+      "diagnostics": []
+    },
+    {
+      "id": "page-2.0-dict-true",
+      "path": "fixtures/parquet/values-trial/page-2.0-dict-true.parquet",
+      "status": "decoded",
+      "pages": 40,
+      "materializedBytes": 366,
+      "diagnostics": []
+    },
+    {
+      "id": "page-2.0-dict-false",
+      "path": "fixtures/parquet/values-trial/page-2.0-dict-false.parquet",
+      "status": "decoded",
+      "pages": 20,
+      "materializedBytes": 189,
+      "diagnostics": []
+    }
+  ]
+}

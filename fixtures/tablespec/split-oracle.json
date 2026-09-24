@@ -1,0 +1,50 @@
+{
+  "loaderSha256": "1b133536ef2abede237889b3be07e3197cf1a33ba00b0b80bfc2a388ed2efefa",
+  "modelSha256": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b",
+  "cases": [
+    {
+      "id": "providers",
+      "format": "json",
+      "recoveryAgrees": true,
+      "editAgrees": true,
+      "columns": [
+        "GENDER",
+        "Id",
+        "NAME",
+        "ORGANIZATION",
+        "SPECIALITY"
+      ]
+    },
+    {
+      "id": "providers",
+      "format": "yaml",
+      "recoveryAgrees": true,
+      "editAgrees": true,
+      "columns": [
+        "GENDER",
+        "Id",
+        "NAME",
+        "ORGANIZATION",
+        "SPECIALITY"
+      ]
+    },
+    {
+      "id": "sidecars",
+      "format": "json",
+      "recoveryAgrees": true,
+      "editAgrees": true,
+      "columns": [
+        "value"
+      ]
+    },
+    {
+      "id": "sidecars",
+      "format": "yaml",
+      "recoveryAgrees": true,
+      "editAgrees": true,
+      "columns": [
+        "value"
+      ]
+    }
+  ]
+}

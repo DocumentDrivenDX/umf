@@ -1,0 +1,51 @@
+_:Nab937b40684a434c90c5fa3c3c179036 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N77804db95fa24cbe941bb3f0a0233f3c <http://www.w3.org/ns/shacl#result> _:Nd8913dd46268456494d16fc9dda207c1 .
+_:Nbbfc23dbbcbf435f9c82605eeb8182db <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nab937b40684a434c90c5fa3c3c179036 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxExclusiveConstraintComponent> .
+_:Nd8913dd46268456494d16fc9dda207c1 <http://www.w3.org/ns/shacl#value> "4"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:Nf638c661207d4fe0999582d3d211e478 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxExclusive-001.test#TestShape> .
+_:Nbbfc23dbbcbf435f9c82605eeb8182db <http://www.w3.org/ns/shacl#focusNode> "Hello" .
+_:N3d18ca962f744fd0a9f5a00da8c3f46e <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxExclusiveConstraintComponent> .
+_:N160d425473674caf9d8dfe4a4d8c6a0e <http://www.w3.org/ns/shacl#focusNode> _:n11e641eb92e54908a9f724833a7f622eb10 .
+_:n11e641eb92e54908a9f724833a7f622eb10 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://datashapes.org/sh/tests/core/node/maxExclusive-001.test#TestClass> .
+_:N77804db95fa24cbe941bb3f0a0233f3c <http://www.w3.org/ns/shacl#result> _:Nbbfc23dbbcbf435f9c82605eeb8182db .
+_:Nd8913dd46268456494d16fc9dda207c1 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nd8913dd46268456494d16fc9dda207c1 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxExclusiveConstraintComponent> .
+_:Nf638c661207d4fe0999582d3d211e478 <http://www.w3.org/ns/shacl#resultMessage> "Value is not < Literal(\"4\", datatype=xsd:integer)" .
+_:Nbbfc23dbbcbf435f9c82605eeb8182db <http://www.w3.org/ns/shacl#value> "Hello" .
+_:Nab937b40684a434c90c5fa3c3c179036 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxExclusive-001.test#TestShape> .
+_:N160d425473674caf9d8dfe4a4d8c6a0e <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxExclusiveConstraintComponent> .
+_:Nf638c661207d4fe0999582d3d211e478 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N3d18ca962f744fd0a9f5a00da8c3f46e <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N3d18ca962f744fd0a9f5a00da8c3f46e <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxExclusive-001.test#TestShape> .
+_:N77804db95fa24cbe941bb3f0a0233f3c <http://www.w3.org/ns/shacl#result> _:Nab937b40684a434c90c5fa3c3c179036 .
+_:N160d425473674caf9d8dfe4a4d8c6a0e <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N160d425473674caf9d8dfe4a4d8c6a0e <http://www.w3.org/ns/shacl#value> _:n11e641eb92e54908a9f724833a7f622eb10 .
+_:N77804db95fa24cbe941bb3f0a0233f3c <http://www.w3.org/ns/shacl#result> _:N3d18ca962f744fd0a9f5a00da8c3f46e .
+_:N77804db95fa24cbe941bb3f0a0233f3c <http://www.w3.org/ns/shacl#result> _:Nf638c661207d4fe0999582d3d211e478 .
+_:Nbbfc23dbbcbf435f9c82605eeb8182db <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxExclusiveConstraintComponent> .
+_:Nab937b40684a434c90c5fa3c3c179036 <http://www.w3.org/ns/shacl#resultMessage> "Value is not < Literal(\"4\", datatype=xsd:integer)" .
+_:Nbbfc23dbbcbf435f9c82605eeb8182db <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nd8913dd46268456494d16fc9dda207c1 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxExclusive-001.test#TestShape> .
+_:N77804db95fa24cbe941bb3f0a0233f3c <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Nab937b40684a434c90c5fa3c3c179036 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N160d425473674caf9d8dfe4a4d8c6a0e <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxExclusive-001.test#TestShape> .
+_:N3d18ca962f744fd0a9f5a00da8c3f46e <http://www.w3.org/ns/shacl#focusNode> "4.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+_:Nd8913dd46268456494d16fc9dda207c1 <http://www.w3.org/ns/shacl#resultMessage> "Value is not < Literal(\"4\", datatype=xsd:integer)" .
+_:Nf638c661207d4fe0999582d3d211e478 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/maxExclusive-001.test#John> .
+_:N3d18ca962f744fd0a9f5a00da8c3f46e <http://www.w3.org/ns/shacl#resultMessage> "Value is not < Literal(\"4\", datatype=xsd:integer)" .
+_:Nf638c661207d4fe0999582d3d211e478 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/maxExclusive-001.test#John> .
+_:N160d425473674caf9d8dfe4a4d8c6a0e <http://www.w3.org/ns/shacl#resultMessage> "Value is not < Literal(\"4\", datatype=xsd:integer)" .
+_:Nab937b40684a434c90c5fa3c3c179036 <http://www.w3.org/ns/shacl#focusNode> "4.1"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+_:N77804db95fa24cbe941bb3f0a0233f3c <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Nab937b40684a434c90c5fa3c3c179036 <http://www.w3.org/ns/shacl#value> "4.1"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+_:Nbbfc23dbbcbf435f9c82605eeb8182db <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxExclusive-001.test#TestShape> .
+_:Nd8913dd46268456494d16fc9dda207c1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nf638c661207d4fe0999582d3d211e478 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N160d425473674caf9d8dfe4a4d8c6a0e <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N77804db95fa24cbe941bb3f0a0233f3c <http://www.w3.org/ns/shacl#result> _:N160d425473674caf9d8dfe4a4d8c6a0e .
+_:N3d18ca962f744fd0a9f5a00da8c3f46e <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nd8913dd46268456494d16fc9dda207c1 <http://www.w3.org/ns/shacl#focusNode> "4"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:Nbbfc23dbbcbf435f9c82605eeb8182db <http://www.w3.org/ns/shacl#resultMessage> "Value is not < Literal(\"4\", datatype=xsd:integer)" .
+_:N3d18ca962f744fd0a9f5a00da8c3f46e <http://www.w3.org/ns/shacl#value> "4.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+_:Nf638c661207d4fe0999582d3d211e478 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxExclusiveConstraintComponent> .

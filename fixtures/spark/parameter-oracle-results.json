@@ -1,0 +1,208 @@
+{
+  "version": "4.0.1",
+  "nativeComparisons": 36,
+  "negativeScaleEnabled": {
+    "status": "accepted",
+    "output": "decimal(10,-2)"
+  },
+  "results": [
+    {
+      "id": "0",
+      "python": {
+        "status": "accepted",
+        "output": "decimal(38,38)"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "decimal(38,38)"
+      }
+    },
+    {
+      "id": "1",
+      "python": {
+        "status": "accepted",
+        "output": "decimal(39,0)"
+      },
+      "jvm": {
+        "status": "rejected",
+        "errorType": "Py4JJavaError"
+      }
+    },
+    {
+      "id": "2",
+      "python": {
+        "status": "accepted",
+        "output": "decimal(2,3)"
+      },
+      "jvm": {
+        "status": "rejected",
+        "errorType": "Py4JJavaError"
+      }
+    },
+    {
+      "id": "3",
+      "python": {
+        "status": "accepted",
+        "output": "decimal(10,-2)"
+      },
+      "jvm": {
+        "status": "rejected",
+        "errorType": "Py4JJavaError"
+      }
+    },
+    {
+      "id": "4",
+      "python": {
+        "status": "accepted",
+        "output": "decimal(0,0)"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "decimal(0,0)"
+      }
+    },
+    {
+      "id": "5",
+      "python": {
+        "status": "accepted",
+        "output": "decimal(2147483648,0)"
+      },
+      "jvm": {
+        "status": "rejected",
+        "errorType": "Py4JJavaError"
+      }
+    },
+    {
+      "id": "6",
+      "python": {
+        "status": "accepted",
+        "output": "decimal(10,-2147483649)"
+      },
+      "jvm": {
+        "status": "rejected",
+        "errorType": "Py4JJavaError"
+      }
+    },
+    {
+      "id": "7",
+      "python": {
+        "status": "accepted",
+        "output": "decimal(10,2)"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "decimal(10,2)"
+      }
+    },
+    {
+      "id": "8",
+      "python": {
+        "status": "accepted",
+        "output": "char(0)"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "char(0)"
+      }
+    },
+    {
+      "id": "9",
+      "python": {
+        "status": "accepted",
+        "output": "char(2147483647)"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "char(2147483647)"
+      }
+    },
+    {
+      "id": "10",
+      "python": {
+        "status": "accepted",
+        "output": "char(2147483648)"
+      },
+      "jvm": {
+        "status": "rejected",
+        "errorType": "Py4JJavaError"
+      }
+    },
+    {
+      "id": "11",
+      "python": {
+        "status": "accepted",
+        "output": "varchar(2147483648)"
+      },
+      "jvm": {
+        "status": "rejected",
+        "errorType": "Py4JJavaError"
+      }
+    },
+    {
+      "id": "12",
+      "python": {
+        "status": "accepted",
+        "output": "interval year to month"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "interval year to month"
+      }
+    },
+    {
+      "id": "13",
+      "python": {
+        "status": "accepted",
+        "output": "interval month to year"
+      },
+      "jvm": {
+        "status": "rejected",
+        "errorType": "Py4JJavaError"
+      }
+    },
+    {
+      "id": "14",
+      "python": {
+        "status": "accepted",
+        "output": "interval day to second"
+      },
+      "jvm": {
+        "status": "accepted",
+        "output": "interval day to second"
+      }
+    },
+    {
+      "id": "15",
+      "python": {
+        "status": "accepted",
+        "output": "interval second to day"
+      },
+      "jvm": {
+        "status": "rejected",
+        "errorType": "Py4JJavaError"
+      }
+    },
+    {
+      "id": "16",
+      "python": {
+        "status": "accepted",
+        "output": "interval day"
+      },
+      "jvm": {
+        "status": "rejected",
+        "errorType": "Py4JJavaError"
+      }
+    },
+    {
+      "id": "17",
+      "python": {
+        "status": "accepted",
+        "output": "interval month"
+      },
+      "jvm": {
+        "status": "rejected",
+        "errorType": "Py4JJavaError"
+      }
+    }
+  ]
+}

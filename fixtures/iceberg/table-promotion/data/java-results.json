@@ -1,0 +1,78 @@
+{
+  "reader" : "Apache Iceberg Java 1.11.0 GenericParquetReaders",
+  "javaVersion" : "21.0.2",
+  "scope" : "Local Parquet projection by field ID; no manifest pruning or table commit",
+  "results" : [ {
+    "id" : "int-identity",
+    "rows" : 7,
+    "sourceRead" : true,
+    "promotedFormatReads" : 2,
+    "physicalNamesDiffer" : true,
+    "fileSha256" : "6da49c263824142dfc9939f4db60f02185b1541a8a3f041aadfbb1147ce04bf0",
+    "metadataSha256" : {
+      "source" : "35dc85570039fd153a7e69dba3ed042fcf60273c7dd74747580ac6961cd591f2",
+      "json" : "25e33487ccac06929f152128840c42ebbcaa1588d4f0beae01ee062c89d02e7d",
+      "yaml" : "25e33487ccac06929f152128840c42ebbcaa1588d4f0beae01ee062c89d02e7d"
+    }
+  }, {
+    "id" : "int-bucket",
+    "rows" : 7,
+    "sourceRead" : true,
+    "promotedFormatReads" : 2,
+    "physicalNamesDiffer" : true,
+    "fileSha256" : "6da49c263824142dfc9939f4db60f02185b1541a8a3f041aadfbb1147ce04bf0",
+    "metadataSha256" : {
+      "source" : "05d8bd3b3bd069485f21c020c9d6a17ab552455c15d7e836d4e879f8a3be844a",
+      "json" : "5b97e6fc1d0de09eb9a40c1273529633f1eb4a0a466f04072d2af6ea97383465",
+      "yaml" : "5b97e6fc1d0de09eb9a40c1273529633f1eb4a0a466f04072d2af6ea97383465"
+    }
+  }, {
+    "id" : "int-truncate",
+    "rows" : 7,
+    "sourceRead" : true,
+    "promotedFormatReads" : 2,
+    "physicalNamesDiffer" : true,
+    "fileSha256" : "6da49c263824142dfc9939f4db60f02185b1541a8a3f041aadfbb1147ce04bf0",
+    "metadataSha256" : {
+      "source" : "51e30c6c2c4c4c966026bf2908854666a927d5246e3d4ad6daf8a21445202180",
+      "json" : "f6e4570ab0b6239348f484f9555569eb4c91a47b73b68685afeafdcce175df71",
+      "yaml" : "f6e4570ab0b6239348f484f9555569eb4c91a47b73b68685afeafdcce175df71"
+    }
+  }, {
+    "id" : "float-identity",
+    "rows" : 10,
+    "sourceRead" : true,
+    "promotedFormatReads" : 2,
+    "physicalNamesDiffer" : true,
+    "fileSha256" : "edbda4a647b2044abbda86e6b11bf05a388233288fa8f1001072910d36a122bf",
+    "metadataSha256" : {
+      "source" : "e680f406deb91da85bf3e276b994d52b38a19f44631d24842d5d972026e6c679",
+      "json" : "f57c04d0913da702afc24330f3433176385936bf8d508e56ce9d4f687d22658f",
+      "yaml" : "f57c04d0913da702afc24330f3433176385936bf8d508e56ce9d4f687d22658f"
+    }
+  }, {
+    "id" : "decimal-bucket",
+    "rows" : 7,
+    "sourceRead" : true,
+    "promotedFormatReads" : 2,
+    "physicalNamesDiffer" : true,
+    "fileSha256" : "3b56c1efbd8aba4f69ecfa5c30dbe2473b91f2493297d25ab2fb16c8036ecf72",
+    "metadataSha256" : {
+      "source" : "af247f522c8b8d8753449b26fb83971ee5f88835e67c99f03aa8e18d7acfe11f",
+      "json" : "c5e14bdc27fd988168f37a1bc6e355d0bbc9f44a47947d8cb63ecf7938b6b3dc",
+      "yaml" : "c5e14bdc27fd988168f37a1bc6e355d0bbc9f44a47947d8cb63ecf7938b6b3dc"
+    }
+  }, {
+    "id" : "decimal-truncate",
+    "rows" : 7,
+    "sourceRead" : true,
+    "promotedFormatReads" : 2,
+    "physicalNamesDiffer" : true,
+    "fileSha256" : "3b56c1efbd8aba4f69ecfa5c30dbe2473b91f2493297d25ab2fb16c8036ecf72",
+    "metadataSha256" : {
+      "source" : "da7aeaa599445d0dbc88490b42162189aa1cce891cddc80e3bed04c4e3faae25",
+      "json" : "37cf146f7dec8ff9c7afe5b8ff10fdadf8fbcb8c439fcc8878220a875098b6d5",
+      "yaml" : "37cf146f7dec8ff9c7afe5b8ff10fdadf8fbcb8c439fcc8878220a875098b6d5"
+    }
+  } ]
+}

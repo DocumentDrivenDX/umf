@@ -1,0 +1,16 @@
+{
+  "runtime" : "Apache Iceberg Java 1.11.0",
+  "javaVersion" : "21.0.2",
+  "results" : [ {
+    "id" : "nested",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "multi",
+    "umf" : "roundtripped",
+    "nativeAccepted" : false,
+    "nativeError" : "IllegalArgumentException: Cannot parse missing int: source-id"
+  } ]
+}

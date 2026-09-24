@@ -1,0 +1,6 @@
+<http://a.example/s> <http://a.example/p> <http://a.example/AZazÀÖØöø˿ͰͽͿ῿‌‍⁰↏Ⰰ⿯、퟿﨎﷏ﷰ￯\U00010000\U000efffd> .
+<http://example/graph> { <http://a.example/s> <http://a.example/p> <http://a.example/AZazÀÖØöø˿ͰͽͿ῿‌‍⁰↏Ⰰ⿯、퟿﨎﷏ﷰ￯\U00010000\U000efffd> . }
+_:m_1_0 <urn:example:related> <urn:example:resource> .
+<urn:example:populated> { _:m_1_0 <urn:example:label> "Original label" . }
+<urn:example:empty> {}
+_:m_1_0 {}

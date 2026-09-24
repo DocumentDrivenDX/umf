@@ -1,0 +1,26 @@
+// Authored integration-schema grammar; native IPC/data semantics require separate checks.
+const object=(properties:Record<string,any>,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:true});
+const S={type:'string'},I={type:'integer'},B={type:'boolean'};
+const unit={enum:['SECOND','MILLISECOND','MICROSECOND','NANOSECOND']};
+const types:Record<string,any>={};
+for(const name of ['null','NONE','bool','binary','largebinary','binaryview','utf8','largeutf8','utf8view','list','largelist','listview','largelistview','struct','struct_','runendencoded'])types[name]=object({name:{const:name}});
+types.int=object({name:{const:'int'},bitWidth:{enum:[8,16,32,64]},isSigned:B});
+types.floatingpoint=object({name:{const:'floatingpoint'},precision:{enum:['HALF','SINGLE','DOUBLE']}});
+types.decimal=object({name:{const:'decimal'},bitWidth:{enum:[32,64,128,256]},precision:{type:'integer',minimum:1,maximum:76},scale:{type:'integer',minimum:-2147483648,maximum:2147483647}},['name','precision','scale']);
+types.date=object({name:{const:'date'},unit:{enum:['DAY','MILLISECOND']}});
+types.time=object({name:{const:'time'},unit,bitWidth:{enum:[32,64]}});
+types.timestamp=object({name:{const:'timestamp'},unit,timezone:{type:['string','null']}},['name','unit']);
+types.duration=object({name:{const:'duration'},unit});
+types.interval=object({name:{const:'interval'},unit:{enum:['YEAR_MONTH','DAY_TIME','MONTH_DAY_NANO']}});
+types.fixedsizebinary=object({name:{const:'fixedsizebinary'},byteWidth:{type:'integer',minimum:0,maximum:2147483647}});
+types.fixedsizelist=object({name:{const:'fixedsizelist'},listSize:{type:'integer',minimum:0,maximum:2147483647}});
+types.map=object({name:{const:'map'},keysSorted:B},['name']);
+types.union=object({name:{const:'union'},mode:{enum:['DENSE','SPARSE']},typeIds:{type:'array',items:{type:'integer',minimum:0,maximum:127},uniqueItems:true}});
+const metadata={type:'array',items:object({key:S,value:S})};
+const field=object({name:S,nullable:B,type:{$ref:'#/$defs/type'},children:{type:'array',items:{$ref:'#/$defs/field'}},metadata,dictionary:object({id:I,indexType:types.int,isOrdered:B},['id'])},['name','nullable','type']);
+const schema:any={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:arrow:integration-schema:0.1.0',description:'Schema portion of Arrow integration JSON, including future type names and unknown properties retained without interpretation. Buffer/data validity and native IPC representability are separate.',...object({fields:{type:'array',items:{$ref:'#/$defs/field'}},metadata},['fields']),$defs:{field,type:{anyOf:[...Object.values(types),object({name:{type:'string',not:{enum:Object.keys(types)}}})]}}};
+const node=(await Bun.file('spec/extensions/postgresql/schema.json').json()).$defs.node;
+const payload={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:arrow:0.1.0',...object({profile:{const:'arrow-integration-schema'},root:{$ref:'#/$defs/node'}}),$defs:{node}};
+const manifest={id:'umf.arrow',version:'0.1.0',coreVersion:'0.1.0',description:'Arrow integration schema JSON with exact unknown content and ordered metadata',schema:payload,semantics:'CONTRACT-016. Exact schema JSON preservation is separate from native IPC and record-batch validity. Unknown types/properties and duplicate metadata remain authoritative in source.',scopes:['element'],capabilities:{validation:'semantic',directions:['import','export'],native:{system:'Apache Arrow integration schema JSON',version:'Grammar profile 0.1.0; native feasibility evidence JS 21.2.0 / PyArrow 21.0.0',subset:'Schema JSON only, exact metadata/type parameter retention and candidate edits. Guarded schema-only IPC export via an explicit pinned backend; no arbitrary IPC import or array/data support claimed.'},evidence:['tests/arrow/schema.test.ts','tests/arrow/ipc.test.ts','fixtures/arrow/capability-results.json','fixtures/arrow/public-ipc-oracle-results.json','fixtures/arrow/upstream/schema-results.json']}};
+for(const [name,value] of Object.entries({'integration-schema.json':schema,'schema.json':payload,'package.json':manifest}))await Bun.write('spec/extensions/arrow/'+name,JSON.stringify(value,null,2)+'\n');
+export {};

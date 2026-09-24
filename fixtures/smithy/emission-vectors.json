@@ -1,0 +1,14 @@
+[
+ {"name":"minimal","instance":{"id":"a"},"valid":true},
+ {"name":"required","instance":{},"valid":false},
+ {"name":"empty key","instance":{"id":""},"valid":false},
+ {"name":"long key","instance":{"id":"123456789"},"valid":false},
+ {"name":"native defaults permit fractional long","instance":{"id":"a","score":0.5},"valid":true},
+ {"name":"range upper","instance":{"id":"a","score":101},"valid":false},
+ {"name":"enum valid","instance":{"id":"a","state":"open"},"valid":true},
+ {"name":"enum invalid","instance":{"id":"a","state":"unknown"},"valid":false},
+ {"name":"union single branch","instance":{"id":"a","choice":{"text":"hello"}},"valid":true},
+ {"name":"union multiple branches","instance":{"id":"a","choice":{"text":"hello","count":2}},"valid":false},
+ {"name":"map key constraint","instance":{"id":"a","labels":{"":"bad"}},"valid":false},
+ {"name":"complete","instance":{"id":"a","score":42,"state":"closed","choice":{"count":2},"labels":{"tag":"value"}},"valid":true}
+]

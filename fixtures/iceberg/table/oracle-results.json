@@ -1,0 +1,124 @@
+{
+  "runtime": "PyIceberg 0.11.0",
+  "results": [
+    {
+      "id": "TableMetadataPartitionStatisticsFiles",
+      "umf": "roundtripped",
+      "nativeAccepted": true,
+      "nativeExported": true,
+      "nativeError": null,
+      "formatsAgree": 2,
+      "nativeReemissionCompared": true,
+      "editNativeParsed": true,
+      "editNativeExported": true
+    },
+    {
+      "id": "TableMetadataStatisticsFiles",
+      "umf": "roundtripped",
+      "nativeAccepted": false,
+      "nativeExported": false,
+      "nativeError": "1 validation error for TableMetadataWrapper\n2.statistics.0.blob-metadata.0.type\n  Input should be 'apache-datasketches-theta-v1' or 'deletion-vector-v1' [type=literal_error, input_value='ndv', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error",
+      "formatsAgree": 2,
+      "nativeReemissionCompared": false,
+      "editNativeParsed": false,
+      "editNativeExported": false
+    },
+    {
+      "id": "TableMetadataUnsupportedVersion",
+      "umf": "roundtripped",
+      "nativeAccepted": false,
+      "nativeExported": false,
+      "nativeError": "1 validation error for TableMetadataWrapper\n  Input tag '42' found using 'format_version' | 'format-version' does not match any of the expected tags: 1, 2, 3 [type=union_tag_invalid, input_value={'format-version': 42, 't...d': -1, 'snapshots': []}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/union_tag_invalid",
+      "formatsAgree": 2,
+      "nativeReemissionCompared": false,
+      "editNativeParsed": false,
+      "editNativeExported": false
+    },
+    {
+      "id": "TableMetadataV1MissingSchemaType",
+      "umf": "rejected",
+      "nativeAccepted": true,
+      "nativeExported": true,
+      "nativeError": null
+    },
+    {
+      "id": "TableMetadataV1Valid",
+      "umf": "roundtripped",
+      "nativeAccepted": true,
+      "nativeExported": true,
+      "nativeError": null,
+      "formatsAgree": 2,
+      "nativeReemissionCompared": true,
+      "editNativeParsed": true,
+      "editNativeExported": true
+    },
+    {
+      "id": "TableMetadataV2CurrentSchemaNotFound",
+      "umf": "rejected",
+      "nativeAccepted": false,
+      "nativeExported": false,
+      "nativeError": "current-schema-id 2 can't be found in the schemas"
+    },
+    {
+      "id": "TableMetadataV2MissingLastPartitionId",
+      "umf": "rejected",
+      "nativeAccepted": true,
+      "nativeExported": true,
+      "nativeError": null
+    },
+    {
+      "id": "TableMetadataV2MissingPartitionSpecs",
+      "umf": "rejected",
+      "nativeAccepted": false,
+      "nativeExported": false,
+      "nativeError": "default-spec-id 0 can't be found"
+    },
+    {
+      "id": "TableMetadataV2MissingSchemas",
+      "umf": "rejected",
+      "nativeAccepted": false,
+      "nativeExported": false,
+      "nativeError": "current-schema-id 0 can't be found in the schemas"
+    },
+    {
+      "id": "TableMetadataV2MissingSortOrder",
+      "umf": "rejected",
+      "nativeAccepted": true,
+      "nativeExported": true,
+      "nativeError": null
+    },
+    {
+      "id": "TableMetadataV2Valid",
+      "umf": "roundtripped",
+      "nativeAccepted": true,
+      "nativeExported": true,
+      "nativeError": null,
+      "formatsAgree": 2,
+      "nativeReemissionCompared": true,
+      "editNativeParsed": true,
+      "editNativeExported": true
+    },
+    {
+      "id": "TableMetadataV2ValidMinimal",
+      "umf": "roundtripped",
+      "nativeAccepted": true,
+      "nativeExported": true,
+      "nativeError": null,
+      "formatsAgree": 2,
+      "nativeReemissionCompared": true,
+      "editNativeParsed": true,
+      "editNativeExported": true
+    },
+    {
+      "id": "TableMetadataV3ValidMinimal",
+      "umf": "roundtripped",
+      "nativeAccepted": true,
+      "nativeExported": false,
+      "nativeError": "Writing V3 is not yet supported, see: https://github.com/apache/iceberg-python/issues/1551",
+      "formatsAgree": 2,
+      "nativeReemissionCompared": false,
+      "editNativeParsed": true,
+      "editNativeExported": false
+    }
+  ]
+}

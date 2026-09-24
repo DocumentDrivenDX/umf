@@ -1,0 +1,140 @@
+{
+  "runtime": "PyArrow 21.0.0 metadata loading",
+  "cases": [
+    {
+      "id": "extra-node",
+      "path": "fixtures/parquet/schema/negative/extra-node.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "accepted",
+        "paths": [
+          "stats.value"
+        ]
+      }
+    },
+    {
+      "id": "child-overrun",
+      "path": "fixtures/parquet/schema/negative/child-overrun.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "errorType": "OSError"
+      }
+    },
+    {
+      "id": "negative-children",
+      "path": "fixtures/parquet/schema/negative/negative-children.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "errorType": "OSError"
+      }
+    },
+    {
+      "id": "primitive-children",
+      "path": "fixtures/parquet/schema/negative/primitive-children.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "accepted",
+        "paths": [
+          "stats.value"
+        ]
+      }
+    },
+    {
+      "id": "missing-repetition",
+      "path": "fixtures/parquet/schema/negative/missing-repetition.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "accepted",
+        "paths": [
+          "stats.value"
+        ]
+      }
+    },
+    {
+      "id": "root-repeated",
+      "path": "fixtures/parquet/schema/negative/root-repeated.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "accepted",
+        "paths": [
+          "stats.value"
+        ]
+      }
+    },
+    {
+      "id": "unknown-physical",
+      "path": "fixtures/parquet/schema/negative/unknown-physical.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "errorType": "OSError"
+      }
+    },
+    {
+      "id": "wrong-column-path",
+      "path": "fixtures/parquet/schema/negative/wrong-column-path.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "accepted",
+        "paths": [
+          "stats.value"
+        ]
+      }
+    },
+    {
+      "id": "wrong-column-type",
+      "path": "fixtures/parquet/schema/negative/wrong-column-type.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "accepted",
+        "paths": [
+          "stats.value"
+        ]
+      }
+    },
+    {
+      "id": "row-count",
+      "path": "fixtures/parquet/schema/negative/row-count.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "accepted",
+        "paths": [
+          "stats.value"
+        ]
+      }
+    },
+    {
+      "id": "missing-column",
+      "path": "fixtures/parquet/schema/negative/missing-column.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "accepted",
+        "paths": [
+          "stats.value"
+        ]
+      }
+    },
+    {
+      "id": "fixed-no-length",
+      "path": "fixtures/parquet/schema/negative/fixed-no-length.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "errorType": "OSError"
+      }
+    },
+    {
+      "id": "literal-dot",
+      "path": "fixtures/parquet/schema/negative/literal-dot.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "paths": [
+          "stats.value.with.dot"
+        ]
+      }
+    }
+  ]
+}

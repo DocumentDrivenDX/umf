@@ -1,0 +1,73 @@
+[
+  {
+    "add": null,
+    "metaData": null,
+    "protocol": null,
+    "remove": {
+      "dataChange": false,
+      "deletionTimestamp": {
+        "$int64": "1674611459307"
+      },
+      "extendedFileMetadata": true,
+      "partitionValues": {},
+      "path": "part-00000-ad1a4bb7-07e8-4f40-b50b-49910d209e0c-c000.snappy.parquet",
+      "size": {
+        "$int64": "965"
+      },
+      "tags": null
+    },
+    "txn": null
+  },
+  {
+    "add": {
+      "dataChange": false,
+      "modificationTime": {
+        "$int64": "1674611458901"
+      },
+      "partitionValues": {},
+      "path": "part-00000-a190be9e-e3df-439e-b366-06a863f51e99-c000.snappy.parquet",
+      "size": {
+        "$int64": "976"
+      },
+      "stats": "{\"numRecords\":5,\"minValues\":{\"letter\":\"a\",\"int\":120,\"date\":\"1971-07-01\"},\"maxValues\":{\"letter\":\"c\",\"int\":667,\"date\":\"2018-02-01\"},\"nullCount\":{\"letter\":2,\"int\":0,\"date\":0}}",
+      "tags": null
+    },
+    "metaData": null,
+    "protocol": null,
+    "remove": null,
+    "txn": null
+  },
+  {
+    "add": null,
+    "metaData": null,
+    "protocol": {
+      "minReaderVersion": 1,
+      "minWriterVersion": 2
+    },
+    "remove": null,
+    "txn": null
+  },
+  {
+    "add": null,
+    "metaData": {
+      "configuration": {
+        "delta.checkpointInterval": "2"
+      },
+      "createdTime": {
+        "$int64": "1674611455081"
+      },
+      "description": null,
+      "format": {
+        "options": {},
+        "provider": "parquet"
+      },
+      "id": "84b09beb-329c-4b5e-b493-f58c6c78b8fd",
+      "name": null,
+      "partitionColumns": [],
+      "schemaString": "{\"type\":\"struct\",\"fields\":[{\"name\":\"letter\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"int\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"date\",\"type\":\"date\",\"nullable\":true,\"metadata\":{}}]}"
+    },
+    "protocol": null,
+    "remove": null,
+    "txn": null
+  }
+]

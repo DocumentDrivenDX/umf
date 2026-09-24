@@ -1,0 +1,101 @@
+{
+  "runtime": "deltalake 1.6.4",
+  "results": [
+    {
+      "id": "partitioned",
+      "version": 1,
+      "rows": 2,
+      "schema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": "long",
+            "nullable": true,
+            "metadata": {}
+          },
+          {
+            "name": "region",
+            "type": "string",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "protocol": {
+        "minReaderVersion": 1,
+        "minWriterVersion": 3
+      },
+      "metadata": {
+        "id": "a8c35597-a73e-4e77-b406-76f5213868fd",
+        "name": null,
+        "description": null,
+        "format": {
+          "provider": "parquet",
+          "options": {}
+        },
+        "schemaString": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"region\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}",
+        "partitionColumns": [
+          "region"
+        ],
+        "createdTime": 1789910455100,
+        "configuration": {
+          "delta.appendOnly": "true",
+          "delta.constraints.positive_id": "id > 0"
+        }
+      },
+      "invalidAppendRejected": true
+    },
+    {
+      "id": "timestamp-ntz",
+      "version": 1,
+      "rows": 2,
+      "schema": {
+        "type": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": "long",
+            "nullable": true,
+            "metadata": {}
+          },
+          {
+            "name": "local_time",
+            "type": "timestamp_ntz",
+            "nullable": true,
+            "metadata": {}
+          }
+        ]
+      },
+      "protocol": {
+        "minReaderVersion": 3,
+        "minWriterVersion": 7,
+        "readerFeatures": [
+          "timestampNtz"
+        ],
+        "writerFeatures": [
+          "checkConstraints",
+          "appendOnly",
+          "timestampNtz"
+        ]
+      },
+      "metadata": {
+        "id": "b962c8dd-7777-41c7-9d2b-63f1d3cc2e76",
+        "name": null,
+        "description": null,
+        "format": {
+          "provider": "parquet",
+          "options": {}
+        },
+        "schemaString": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"local_time\",\"type\":\"timestamp_ntz\",\"nullable\":true,\"metadata\":{}}]}",
+        "partitionColumns": [],
+        "createdTime": 1789910455213,
+        "configuration": {
+          "delta.constraints.positive_id": "id > 0",
+          "delta.appendOnly": "true"
+        }
+      },
+      "invalidAppendRejected": true
+    }
+  ]
+}

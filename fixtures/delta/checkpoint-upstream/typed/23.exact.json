@@ -1,0 +1,55 @@
+[
+  {
+    "add": null,
+    "metaData": null,
+    "protocol": {
+      "minReaderVersion": 1,
+      "minWriterVersion": 2,
+      "readerFeatures": null,
+      "writerFeatures": null
+    },
+    "remove": null,
+    "txn": null
+  },
+  {
+    "add": null,
+    "metaData": {
+      "configuration": {},
+      "createdTime": {
+        "$int64": "1753290963616"
+      },
+      "description": null,
+      "format": {
+        "options": {},
+        "provider": "parquet"
+      },
+      "id": "5d650ad7-a5bc-41ef-942d-8cb1911e929f",
+      "name": null,
+      "partitionColumns": [],
+      "schemaString": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}"
+    },
+    "protocol": null,
+    "remove": null,
+    "txn": null
+  },
+  {
+    "add": {
+      "dataChange": false,
+      "deletionVector": null,
+      "modificationTime": {
+        "$int64": "1753290963621"
+      },
+      "partitionValues": {},
+      "path": "part-00001-4ad27870-ff0a-4fe5-b4c7-04cadfd628a9-c000.snappy.parquet",
+      "size": {
+        "$int64": "514"
+      },
+      "stats": "{\"numRecords\":3,\"minValues\":{\"x\":1},\"maxValues\":{\"x\":3},\"nullCount\":{\"x\":0}}",
+      "tags": {}
+    },
+    "metaData": null,
+    "protocol": null,
+    "remove": null,
+    "txn": null
+  }
+]

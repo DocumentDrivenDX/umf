@@ -1,0 +1,2413 @@
+{
+  "cases": [
+    {
+      "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":1.0000000000000000001,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
+      "document": {
+        "umf": "0.1.0",
+        "id": "precision1.0000000000000000001",
+        "vocabularies": {
+          "umf.avro": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.avro": {
+                    "version": "1.12.0",
+                    "root": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "record"
+                        },
+                        "name": {
+                          "kind": "string",
+                          "value": "R"
+                        },
+                        "fields": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "value"
+                                },
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "fixed"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    },
+                                    "size": {
+                                      "kind": "number",
+                                      "value": "4"
+                                    },
+                                    "logicalType": {
+                                      "kind": "string",
+                                      "value": "decimal"
+                                    },
+                                    "precision": {
+                                      "kind": "number",
+                                      "value": "1.0000000000000000001"
+                                    },
+                                    "scale": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "ref"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "DecimalValue"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "optional"
+                                },
+                                "type": {
+                                  "kind": "array",
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "null"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "future": {
+                          "kind": "number",
+                          "value": "9007199254740993.123456789"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "avro.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "[null,\"/fields/0\"]",
+                "name": "value",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/1\"]",
+                "name": "ref",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/2\"]",
+                "name": "optional",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        null
+      ],
+      "key": "precision",
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":1.0000000000000000001,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":1.0000000000000000001,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        }
+      ]
+    },
+    {
+      "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":1e-400,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
+      "document": {
+        "umf": "0.1.0",
+        "id": "precision1e-400",
+        "vocabularies": {
+          "umf.avro": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.avro": {
+                    "version": "1.12.0",
+                    "root": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "record"
+                        },
+                        "name": {
+                          "kind": "string",
+                          "value": "R"
+                        },
+                        "fields": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "value"
+                                },
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "fixed"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    },
+                                    "size": {
+                                      "kind": "number",
+                                      "value": "4"
+                                    },
+                                    "logicalType": {
+                                      "kind": "string",
+                                      "value": "decimal"
+                                    },
+                                    "precision": {
+                                      "kind": "number",
+                                      "value": "1e-400"
+                                    },
+                                    "scale": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "ref"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "DecimalValue"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "optional"
+                                },
+                                "type": {
+                                  "kind": "array",
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "null"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "future": {
+                          "kind": "number",
+                          "value": "9007199254740993.123456789"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "avro.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "[null,\"/fields/0\"]",
+                "name": "value",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/1\"]",
+                "name": "ref",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/2\"]",
+                "name": "optional",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        null
+      ],
+      "key": "precision",
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":1e-400,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":1e-400,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        }
+      ]
+    },
+    {
+      "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":9007199254740993,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
+      "document": {
+        "umf": "0.1.0",
+        "id": "precision9007199254740993",
+        "vocabularies": {
+          "umf.avro": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.avro": {
+                    "version": "1.12.0",
+                    "root": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "record"
+                        },
+                        "name": {
+                          "kind": "string",
+                          "value": "R"
+                        },
+                        "fields": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "value"
+                                },
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "fixed"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    },
+                                    "size": {
+                                      "kind": "number",
+                                      "value": "4"
+                                    },
+                                    "logicalType": {
+                                      "kind": "string",
+                                      "value": "decimal"
+                                    },
+                                    "precision": {
+                                      "kind": "number",
+                                      "value": "9007199254740993"
+                                    },
+                                    "scale": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "ref"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "DecimalValue"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "optional"
+                                },
+                                "type": {
+                                  "kind": "array",
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "null"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "future": {
+                          "kind": "number",
+                          "value": "9007199254740993.123456789"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "avro.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "[null,\"/fields/0\"]",
+                "name": "value",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/1\"]",
+                "name": "ref",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/2\"]",
+                "name": "optional",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        null
+      ],
+      "key": "precision",
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":9007199254740993,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":9007199254740993,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        }
+      ]
+    },
+    {
+      "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":-0,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
+      "document": {
+        "umf": "0.1.0",
+        "id": "precision-0",
+        "vocabularies": {
+          "umf.avro": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.avro": {
+                    "version": "1.12.0",
+                    "root": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "record"
+                        },
+                        "name": {
+                          "kind": "string",
+                          "value": "R"
+                        },
+                        "fields": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "value"
+                                },
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "fixed"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    },
+                                    "size": {
+                                      "kind": "number",
+                                      "value": "4"
+                                    },
+                                    "logicalType": {
+                                      "kind": "string",
+                                      "value": "decimal"
+                                    },
+                                    "precision": {
+                                      "kind": "number",
+                                      "value": "-0"
+                                    },
+                                    "scale": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "ref"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "DecimalValue"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "optional"
+                                },
+                                "type": {
+                                  "kind": "array",
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "null"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "future": {
+                          "kind": "number",
+                          "value": "9007199254740993.123456789"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "avro.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "[null,\"/fields/0\"]",
+                "name": "value",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/1\"]",
+                "name": "ref",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/2\"]",
+                "name": "optional",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        null
+      ],
+      "key": "precision",
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":-0,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":-0,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        }
+      ]
+    },
+    {
+      "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":1.00e0,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
+      "document": {
+        "umf": "0.1.0",
+        "id": "precision1.00e0",
+        "vocabularies": {
+          "umf.avro": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.avro": {
+                    "version": "1.12.0",
+                    "root": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "record"
+                        },
+                        "name": {
+                          "kind": "string",
+                          "value": "R"
+                        },
+                        "fields": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "value"
+                                },
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "fixed"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    },
+                                    "size": {
+                                      "kind": "number",
+                                      "value": "4"
+                                    },
+                                    "logicalType": {
+                                      "kind": "string",
+                                      "value": "decimal"
+                                    },
+                                    "precision": {
+                                      "kind": "number",
+                                      "value": "1.00e0"
+                                    },
+                                    "scale": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "ref"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "DecimalValue"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "optional"
+                                },
+                                "type": {
+                                  "kind": "array",
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "null"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "future": {
+                          "kind": "number",
+                          "value": "9007199254740993.123456789"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "avro.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "[null,\"/fields/0\"]",
+                "name": "value",
+                "scalarType": "decimal",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/1\"]",
+                "name": "ref",
+                "scalarType": "decimal",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/2\"]",
+                "name": "optional",
+                "scalarType": "decimal",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "expected": [
+        "decimal",
+        "decimal",
+        "decimal"
+      ],
+      "key": "precision",
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":1.00e0,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":1.00e0,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        }
+      ]
+    },
+    {
+      "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1.0000000000000000001}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
+      "document": {
+        "umf": "0.1.0",
+        "id": "scale1.0000000000000000001",
+        "vocabularies": {
+          "umf.avro": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.avro": {
+                    "version": "1.12.0",
+                    "root": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "record"
+                        },
+                        "name": {
+                          "kind": "string",
+                          "value": "R"
+                        },
+                        "fields": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "value"
+                                },
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "fixed"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    },
+                                    "size": {
+                                      "kind": "number",
+                                      "value": "4"
+                                    },
+                                    "logicalType": {
+                                      "kind": "string",
+                                      "value": "decimal"
+                                    },
+                                    "precision": {
+                                      "kind": "number",
+                                      "value": "2"
+                                    },
+                                    "scale": {
+                                      "kind": "number",
+                                      "value": "1.0000000000000000001"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "ref"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "DecimalValue"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "optional"
+                                },
+                                "type": {
+                                  "kind": "array",
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "null"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "future": {
+                          "kind": "number",
+                          "value": "9007199254740993.123456789"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "avro.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "[null,\"/fields/0\"]",
+                "name": "value",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/1\"]",
+                "name": "ref",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/2\"]",
+                "name": "optional",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        null
+      ],
+      "key": "scale",
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1.0000000000000000001}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1.0000000000000000001}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        }
+      ]
+    },
+    {
+      "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1e-400}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
+      "document": {
+        "umf": "0.1.0",
+        "id": "scale1e-400",
+        "vocabularies": {
+          "umf.avro": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.avro": {
+                    "version": "1.12.0",
+                    "root": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "record"
+                        },
+                        "name": {
+                          "kind": "string",
+                          "value": "R"
+                        },
+                        "fields": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "value"
+                                },
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "fixed"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    },
+                                    "size": {
+                                      "kind": "number",
+                                      "value": "4"
+                                    },
+                                    "logicalType": {
+                                      "kind": "string",
+                                      "value": "decimal"
+                                    },
+                                    "precision": {
+                                      "kind": "number",
+                                      "value": "2"
+                                    },
+                                    "scale": {
+                                      "kind": "number",
+                                      "value": "1e-400"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "ref"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "DecimalValue"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "optional"
+                                },
+                                "type": {
+                                  "kind": "array",
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "null"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "future": {
+                          "kind": "number",
+                          "value": "9007199254740993.123456789"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "avro.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "[null,\"/fields/0\"]",
+                "name": "value",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/1\"]",
+                "name": "ref",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/2\"]",
+                "name": "optional",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        null
+      ],
+      "key": "scale",
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1e-400}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1e-400}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        }
+      ]
+    },
+    {
+      "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":9007199254740993}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
+      "document": {
+        "umf": "0.1.0",
+        "id": "scale9007199254740993",
+        "vocabularies": {
+          "umf.avro": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.avro": {
+                    "version": "1.12.0",
+                    "root": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "record"
+                        },
+                        "name": {
+                          "kind": "string",
+                          "value": "R"
+                        },
+                        "fields": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "value"
+                                },
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "fixed"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    },
+                                    "size": {
+                                      "kind": "number",
+                                      "value": "4"
+                                    },
+                                    "logicalType": {
+                                      "kind": "string",
+                                      "value": "decimal"
+                                    },
+                                    "precision": {
+                                      "kind": "number",
+                                      "value": "2"
+                                    },
+                                    "scale": {
+                                      "kind": "number",
+                                      "value": "9007199254740993"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "ref"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "DecimalValue"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "optional"
+                                },
+                                "type": {
+                                  "kind": "array",
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "null"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "future": {
+                          "kind": "number",
+                          "value": "9007199254740993.123456789"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "avro.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "[null,\"/fields/0\"]",
+                "name": "value",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/1\"]",
+                "name": "ref",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/2\"]",
+                "name": "optional",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        null
+      ],
+      "key": "scale",
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":9007199254740993}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":9007199254740993}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        }
+      ]
+    },
+    {
+      "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":-0}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
+      "document": {
+        "umf": "0.1.0",
+        "id": "scale-0",
+        "vocabularies": {
+          "umf.avro": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.avro": {
+                    "version": "1.12.0",
+                    "root": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "record"
+                        },
+                        "name": {
+                          "kind": "string",
+                          "value": "R"
+                        },
+                        "fields": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "value"
+                                },
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "fixed"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    },
+                                    "size": {
+                                      "kind": "number",
+                                      "value": "4"
+                                    },
+                                    "logicalType": {
+                                      "kind": "string",
+                                      "value": "decimal"
+                                    },
+                                    "precision": {
+                                      "kind": "number",
+                                      "value": "2"
+                                    },
+                                    "scale": {
+                                      "kind": "number",
+                                      "value": "-0"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "ref"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "DecimalValue"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "optional"
+                                },
+                                "type": {
+                                  "kind": "array",
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "null"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "future": {
+                          "kind": "number",
+                          "value": "9007199254740993.123456789"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "avro.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "[null,\"/fields/0\"]",
+                "name": "value",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/1\"]",
+                "name": "ref",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/2\"]",
+                "name": "optional",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        null
+      ],
+      "key": "scale",
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":-0}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":-0}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        }
+      ]
+    },
+    {
+      "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1.00e0}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
+      "document": {
+        "umf": "0.1.0",
+        "id": "scale1.00e0",
+        "vocabularies": {
+          "umf.avro": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.avro": {
+                    "version": "1.12.0",
+                    "root": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "record"
+                        },
+                        "name": {
+                          "kind": "string",
+                          "value": "R"
+                        },
+                        "fields": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "value"
+                                },
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "fixed"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    },
+                                    "size": {
+                                      "kind": "number",
+                                      "value": "4"
+                                    },
+                                    "logicalType": {
+                                      "kind": "string",
+                                      "value": "decimal"
+                                    },
+                                    "precision": {
+                                      "kind": "number",
+                                      "value": "2"
+                                    },
+                                    "scale": {
+                                      "kind": "number",
+                                      "value": "1.00e0"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "ref"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "DecimalValue"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "optional"
+                                },
+                                "type": {
+                                  "kind": "array",
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "null"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "future": {
+                          "kind": "number",
+                          "value": "9007199254740993.123456789"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "avro.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "[null,\"/fields/0\"]",
+                "name": "value",
+                "scalarType": "decimal",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/1\"]",
+                "name": "ref",
+                "scalarType": "decimal",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/2\"]",
+                "name": "optional",
+                "scalarType": "decimal",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "expected": [
+        "decimal",
+        "decimal",
+        "decimal"
+      ],
+      "key": "scale",
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1.00e0}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1.00e0}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        }
+      ]
+    },
+    {
+      "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":1.0000000000000000001,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
+      "document": {
+        "umf": "0.1.0",
+        "id": "size1.0000000000000000001",
+        "vocabularies": {
+          "umf.avro": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.avro": {
+                    "version": "1.12.0",
+                    "root": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "record"
+                        },
+                        "name": {
+                          "kind": "string",
+                          "value": "R"
+                        },
+                        "fields": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "value"
+                                },
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "fixed"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    },
+                                    "size": {
+                                      "kind": "number",
+                                      "value": "1.0000000000000000001"
+                                    },
+                                    "logicalType": {
+                                      "kind": "string",
+                                      "value": "decimal"
+                                    },
+                                    "precision": {
+                                      "kind": "number",
+                                      "value": "2"
+                                    },
+                                    "scale": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "ref"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "DecimalValue"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "optional"
+                                },
+                                "type": {
+                                  "kind": "array",
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "null"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "future": {
+                          "kind": "number",
+                          "value": "9007199254740993.123456789"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "avro.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "[null,\"/fields/0\"]",
+                "name": "value",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/1\"]",
+                "name": "ref",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/2\"]",
+                "name": "optional",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        null
+      ],
+      "key": "size",
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":1.0000000000000000001,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":1.0000000000000000001,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        }
+      ]
+    },
+    {
+      "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":1e-400,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
+      "document": {
+        "umf": "0.1.0",
+        "id": "size1e-400",
+        "vocabularies": {
+          "umf.avro": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.avro": {
+                    "version": "1.12.0",
+                    "root": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "record"
+                        },
+                        "name": {
+                          "kind": "string",
+                          "value": "R"
+                        },
+                        "fields": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "value"
+                                },
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "fixed"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    },
+                                    "size": {
+                                      "kind": "number",
+                                      "value": "1e-400"
+                                    },
+                                    "logicalType": {
+                                      "kind": "string",
+                                      "value": "decimal"
+                                    },
+                                    "precision": {
+                                      "kind": "number",
+                                      "value": "2"
+                                    },
+                                    "scale": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "ref"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "DecimalValue"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "optional"
+                                },
+                                "type": {
+                                  "kind": "array",
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "null"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "future": {
+                          "kind": "number",
+                          "value": "9007199254740993.123456789"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "avro.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "[null,\"/fields/0\"]",
+                "name": "value",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/1\"]",
+                "name": "ref",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/2\"]",
+                "name": "optional",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        null
+      ],
+      "key": "size",
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":1e-400,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":1e-400,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        }
+      ]
+    },
+    {
+      "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":9007199254740993,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
+      "document": {
+        "umf": "0.1.0",
+        "id": "size9007199254740993",
+        "vocabularies": {
+          "umf.avro": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.avro": {
+                    "version": "1.12.0",
+                    "root": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "record"
+                        },
+                        "name": {
+                          "kind": "string",
+                          "value": "R"
+                        },
+                        "fields": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "value"
+                                },
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "fixed"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    },
+                                    "size": {
+                                      "kind": "number",
+                                      "value": "9007199254740993"
+                                    },
+                                    "logicalType": {
+                                      "kind": "string",
+                                      "value": "decimal"
+                                    },
+                                    "precision": {
+                                      "kind": "number",
+                                      "value": "2"
+                                    },
+                                    "scale": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "ref"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "DecimalValue"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "optional"
+                                },
+                                "type": {
+                                  "kind": "array",
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "null"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "future": {
+                          "kind": "number",
+                          "value": "9007199254740993.123456789"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "avro.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "[null,\"/fields/0\"]",
+                "name": "value",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/1\"]",
+                "name": "ref",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/2\"]",
+                "name": "optional",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        null
+      ],
+      "key": "size",
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":9007199254740993,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":9007199254740993,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        }
+      ]
+    },
+    {
+      "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":-0,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
+      "document": {
+        "umf": "0.1.0",
+        "id": "size-0",
+        "vocabularies": {
+          "umf.avro": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.avro": {
+                    "version": "1.12.0",
+                    "root": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "record"
+                        },
+                        "name": {
+                          "kind": "string",
+                          "value": "R"
+                        },
+                        "fields": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "value"
+                                },
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "fixed"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    },
+                                    "size": {
+                                      "kind": "number",
+                                      "value": "-0"
+                                    },
+                                    "logicalType": {
+                                      "kind": "string",
+                                      "value": "decimal"
+                                    },
+                                    "precision": {
+                                      "kind": "number",
+                                      "value": "2"
+                                    },
+                                    "scale": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "ref"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "DecimalValue"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "optional"
+                                },
+                                "type": {
+                                  "kind": "array",
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "null"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "future": {
+                          "kind": "number",
+                          "value": "9007199254740993.123456789"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "avro.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "[null,\"/fields/0\"]",
+                "name": "value",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/1\"]",
+                "name": "ref",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/2\"]",
+                "name": "optional",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "expected": [
+        null,
+        null,
+        null
+      ],
+      "key": "size",
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":-0,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":-0,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        }
+      ]
+    },
+    {
+      "source": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":1.00e0,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}",
+      "document": {
+        "umf": "0.1.0",
+        "id": "size1.00e0",
+        "vocabularies": {
+          "umf.avro": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "schema",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "schema",
+                "extensions": {
+                  "umf.avro": {
+                    "version": "1.12.0",
+                    "root": {
+                      "kind": "object",
+                      "members": {
+                        "type": {
+                          "kind": "string",
+                          "value": "record"
+                        },
+                        "name": {
+                          "kind": "string",
+                          "value": "R"
+                        },
+                        "fields": {
+                          "kind": "array",
+                          "items": [
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "value"
+                                },
+                                "type": {
+                                  "kind": "object",
+                                  "members": {
+                                    "type": {
+                                      "kind": "string",
+                                      "value": "fixed"
+                                    },
+                                    "name": {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    },
+                                    "size": {
+                                      "kind": "number",
+                                      "value": "1.00e0"
+                                    },
+                                    "logicalType": {
+                                      "kind": "string",
+                                      "value": "decimal"
+                                    },
+                                    "precision": {
+                                      "kind": "number",
+                                      "value": "2"
+                                    },
+                                    "scale": {
+                                      "kind": "number",
+                                      "value": "1"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "ref"
+                                },
+                                "type": {
+                                  "kind": "string",
+                                  "value": "DecimalValue"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "object",
+                              "members": {
+                                "name": {
+                                  "kind": "string",
+                                  "value": "optional"
+                                },
+                                "type": {
+                                  "kind": "array",
+                                  "items": [
+                                    {
+                                      "kind": "string",
+                                      "value": "null"
+                                    },
+                                    {
+                                      "kind": "string",
+                                      "value": "DecimalValue"
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "future": {
+                          "kind": "number",
+                          "value": "9007199254740993.123456789"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "avro.fields",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "[null,\"/fields/0\"]",
+                "name": "value",
+                "scalarType": "decimal",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/1\"]",
+                "name": "ref",
+                "scalarType": "decimal",
+                "extensions": {}
+              },
+              {
+                "id": "[null,\"/fields/2\"]",
+                "name": "optional",
+                "scalarType": "decimal",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "expected": [
+        "decimal",
+        "decimal",
+        "decimal"
+      ],
+      "key": "size",
+      "exports": [
+        {
+          "format": "json",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":1.00e0,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        },
+        {
+          "format": "yaml",
+          "native": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"fixed\",\"name\":\"DecimalValue\",\"size\":1.00e0,\"logicalType\":\"decimal\",\"precision\":2,\"scale\":1}},{\"name\":\"ref\",\"type\":\"DecimalValue\"},{\"name\":\"optional\",\"type\":[\"null\",\"DecimalValue\"]}],\"future\":9007199254740993.123456789}\n"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,843 @@
+[
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 29,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 48,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 67,
+        "name": "protocol",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 68,
+              "name": "minReaderVersion",
+              "value": {
+                "kind": "int",
+                "bits": 32,
+                "value": "3",
+                "physical": {
+                  "type": "INT32",
+                  "value": "3"
+                }
+              }
+            },
+            {
+              "index": 69,
+              "name": "minWriterVersion",
+              "value": {
+                "kind": "int",
+                "bits": 32,
+                "value": "7",
+                "physical": {
+                  "type": "INT32",
+                  "value": "7"
+                }
+              }
+            },
+            {
+              "index": 70,
+              "name": "readerFeatures",
+              "value": {
+                "kind": "list",
+                "items": [
+                  {
+                    "kind": "string",
+                    "value": "variantShredding-preview",
+                    "physical": {
+                      "type": "BYTE_ARRAY",
+                      "hex": "76617269616e74536872656464696e672d70726576696577"
+                    }
+                  },
+                  {
+                    "kind": "string",
+                    "value": "variantType",
+                    "physical": {
+                      "type": "BYTE_ARRAY",
+                      "hex": "76617269616e7454797065"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 73,
+              "name": "writerFeatures",
+              "value": {
+                "kind": "list",
+                "items": [
+                  {
+                    "kind": "string",
+                    "value": "variantShredding-preview",
+                    "physical": {
+                      "type": "BYTE_ARRAY",
+                      "hex": "76617269616e74536872656464696e672d70726576696577"
+                    }
+                  },
+                  {
+                    "kind": "string",
+                    "value": "variantType",
+                    "physical": {
+                      "type": "BYTE_ARRAY",
+                      "hex": "76617269616e7454797065"
+                    }
+                  },
+                  {
+                    "kind": "string",
+                    "value": "appendOnly",
+                    "physical": {
+                      "type": "BYTE_ARRAY",
+                      "hex": "617070656e644f6e6c79"
+                    }
+                  },
+                  {
+                    "kind": "string",
+                    "value": "invariants",
+                    "physical": {
+                      "type": "BYTE_ARRAY",
+                      "hex": "696e76617269616e7473"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 76,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 29,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 48,
+        "name": "metaData",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 49,
+              "name": "id",
+              "value": {
+                "kind": "string",
+                "value": "757b2255-cffd-4165-90b4-b491beb21ba1",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "37353762323235352d636666642d343136352d393062342d623439316265623231626131"
+                }
+              }
+            },
+            {
+              "index": 50,
+              "name": "name",
+              "value": null
+            },
+            {
+              "index": 51,
+              "name": "description",
+              "value": null
+            },
+            {
+              "index": 52,
+              "name": "format",
+              "value": {
+                "kind": "struct",
+                "fields": [
+                  {
+                    "index": 53,
+                    "name": "provider",
+                    "value": {
+                      "kind": "string",
+                      "value": "parquet",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "70617271756574"
+                      }
+                    }
+                  },
+                  {
+                    "index": 54,
+                    "name": "options",
+                    "value": {
+                      "kind": "map",
+                      "duplicateKeys": "last-value",
+                      "entries": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 58,
+              "name": "schemaString",
+              "value": {
+                "kind": "string",
+                "value": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"v\",\"type\":\"variant\",\"nullable\":true,\"metadata\":{}},{\"name\":\"array_of_variants\",\"type\":{\"type\":\"array\",\"elementType\":\"variant\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"struct_of_variants\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"v\",\"type\":\"variant\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"map_of_variants\",\"type\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"variant\",\"valueContainsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"array_of_struct_of_variants\",\"type\":{\"type\":\"array\",\"elementType\":{\"type\":\"struct\",\"fields\":[{\"name\":\"v\",\"type\":\"variant\",\"nullable\":true,\"metadata\":{}}]},\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"struct_of_array_of_variants\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"v\",\"type\":{\"type\":\"array\",\"elementType\":\"variant\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}}]}",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a226964222c2274797065223a226c6f6e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2276222c2274797065223a2276617269616e74222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2261727261795f6f665f76617269616e7473222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a2276617269616e74222c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a227374727563745f6f665f76617269616e7473222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a2276222c2274797065223a2276617269616e74222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226d61705f6f665f76617269616e7473222c2274797065223a7b2274797065223a226d6170222c226b657954797065223a22737472696e67222c2276616c756554797065223a2276617269616e74222c2276616c7565436f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2261727261795f6f665f7374727563745f6f665f76617269616e7473222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a2276222c2274797065223a2276617269616e74222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a227374727563745f6f665f61727261795f6f665f76617269616e7473222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a2276222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a2276617269616e74222c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d"
+                }
+              }
+            },
+            {
+              "index": 59,
+              "name": "partitionColumns",
+              "value": {
+                "kind": "list",
+                "items": []
+              }
+            },
+            {
+              "index": 62,
+              "name": "configuration",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": [
+                  {
+                    "key": {
+                      "kind": "string",
+                      "value": "delta.enableVariantShredding",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "64656c74612e656e61626c6556617269616e74536872656464696e67"
+                      }
+                    },
+                    "value": {
+                      "kind": "string",
+                      "value": "true",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "74727565"
+                      }
+                    }
+                  },
+                  {
+                    "key": {
+                      "kind": "string",
+                      "value": "delta.checkpointInterval",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "64656c74612e636865636b706f696e74496e74657276616c"
+                      }
+                    },
+                    "value": {
+                      "kind": "string",
+                      "value": "2",
+                      "physical": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "32"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 66,
+              "name": "createdTime",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1747170231449",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1747170231449"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 67,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 76,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 6,
+              "name": "path",
+              "value": {
+                "kind": "string",
+                "value": "test%25file%25prefix-part-00000-24104cdb-691b-4410-a2a1-afc84fe2ea18-c000.snappy.parquet",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7465737425323566696c652532357072656669782d706172742d30303030302d32343130346364622d363931622d343431302d613261312d6166633834666532656131382d633030302e736e617070792e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionValues",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": []
+              }
+            },
+            {
+              "index": 11,
+              "name": "size",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "7430",
+                "physical": {
+                  "type": "INT64",
+                  "value": "7430"
+                }
+              }
+            },
+            {
+              "index": 12,
+              "name": "modificationTime",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1747170233554",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1747170233554"
+                }
+              }
+            },
+            {
+              "index": 13,
+              "name": "dataChange",
+              "value": {
+                "kind": "bool",
+                "value": false,
+                "physical": {
+                  "type": "BOOLEAN",
+                  "value": false
+                }
+              }
+            },
+            {
+              "index": 14,
+              "name": "tags",
+              "value": null
+            },
+            {
+              "index": 18,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 25,
+              "name": "baseRowId",
+              "value": null
+            },
+            {
+              "index": 26,
+              "name": "defaultRowCommitVersion",
+              "value": null
+            },
+            {
+              "index": 27,
+              "name": "clusteringProvider",
+              "value": null
+            },
+            {
+              "index": 28,
+              "name": "stats",
+              "value": {
+                "kind": "string",
+                "value": "{\"numRecords\":50,\"minValues\":{\"id\":0},\"maxValues\":{\"id\":49},\"nullCount\":{\"id\":0,\"v\":0,\"array_of_variants\":0,\"struct_of_variants\":{\"v\":0},\"map_of_variants\":0,\"array_of_struct_of_variants\":0,\"struct_of_array_of_variants\":{\"v\":0}}}",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a35302c226d696e56616c756573223a7b226964223a307d2c226d617856616c756573223a7b226964223a34397d2c226e756c6c436f756e74223a7b226964223a302c2276223a302c2261727261795f6f665f76617269616e7473223a302c227374727563745f6f665f76617269616e7473223a7b2276223a307d2c226d61705f6f665f76617269616e7473223a302c2261727261795f6f665f7374727563745f6f665f76617269616e7473223a302c227374727563745f6f665f61727261795f6f665f76617269616e7473223a7b2276223a307d7d7d"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 29,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 48,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 67,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 76,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 6,
+              "name": "path",
+              "value": {
+                "kind": "string",
+                "value": "test%25file%25prefix-part-00000-5ed80cd3-35e4-419e-bf56-e685f8634cbf-c000.snappy.parquet",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7465737425323566696c652532357072656669782d706172742d30303030302d35656438306364332d333565342d343139652d626635362d6536383566383633346362662d633030302e736e617070792e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionValues",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": []
+              }
+            },
+            {
+              "index": 11,
+              "name": "size",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "5060",
+                "physical": {
+                  "type": "INT64",
+                  "value": "5060"
+                }
+              }
+            },
+            {
+              "index": 12,
+              "name": "modificationTime",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1747170236539",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1747170236539"
+                }
+              }
+            },
+            {
+              "index": 13,
+              "name": "dataChange",
+              "value": {
+                "kind": "bool",
+                "value": false,
+                "physical": {
+                  "type": "BOOLEAN",
+                  "value": false
+                }
+              }
+            },
+            {
+              "index": 14,
+              "name": "tags",
+              "value": null
+            },
+            {
+              "index": 18,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 25,
+              "name": "baseRowId",
+              "value": null
+            },
+            {
+              "index": 26,
+              "name": "defaultRowCommitVersion",
+              "value": null
+            },
+            {
+              "index": 27,
+              "name": "clusteringProvider",
+              "value": null
+            },
+            {
+              "index": 28,
+              "name": "stats",
+              "value": {
+                "kind": "string",
+                "value": "{\"numRecords\":1,\"minValues\":{\"id\":0},\"maxValues\":{\"id\":0},\"nullCount\":{\"id\":0,\"v\":0,\"array_of_variants\":0,\"struct_of_variants\":{\"v\":0},\"map_of_variants\":0,\"array_of_struct_of_variants\":0,\"struct_of_array_of_variants\":{\"v\":0}}}",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a312c226d696e56616c756573223a7b226964223a307d2c226d617856616c756573223a7b226964223a307d2c226e756c6c436f756e74223a7b226964223a302c2276223a302c2261727261795f6f665f76617269616e7473223a302c227374727563745f6f665f76617269616e7473223a7b2276223a307d2c226d61705f6f665f76617269616e7473223a302c2261727261795f6f665f7374727563745f6f665f76617269616e7473223a302c227374727563745f6f665f61727261795f6f665f76617269616e7473223a7b2276223a307d7d7d"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 29,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 48,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 67,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 76,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 6,
+              "name": "path",
+              "value": {
+                "kind": "string",
+                "value": "test%25file%25prefix-part-00000-bda6fee1-d8d4-4a8b-a1fb-eb171758ef40-c000.snappy.parquet",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7465737425323566696c652532357072656669782d706172742d30303030302d62646136666565312d643864342d346138622d613166622d6562313731373538656634302d633030302e736e617070792e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionValues",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": []
+              }
+            },
+            {
+              "index": 11,
+              "name": "size",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "5060",
+                "physical": {
+                  "type": "INT64",
+                  "value": "5060"
+                }
+              }
+            },
+            {
+              "index": 12,
+              "name": "modificationTime",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1747170237486",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1747170237486"
+                }
+              }
+            },
+            {
+              "index": 13,
+              "name": "dataChange",
+              "value": {
+                "kind": "bool",
+                "value": false,
+                "physical": {
+                  "type": "BOOLEAN",
+                  "value": false
+                }
+              }
+            },
+            {
+              "index": 14,
+              "name": "tags",
+              "value": null
+            },
+            {
+              "index": 18,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 25,
+              "name": "baseRowId",
+              "value": null
+            },
+            {
+              "index": 26,
+              "name": "defaultRowCommitVersion",
+              "value": null
+            },
+            {
+              "index": 27,
+              "name": "clusteringProvider",
+              "value": null
+            },
+            {
+              "index": 28,
+              "name": "stats",
+              "value": {
+                "kind": "string",
+                "value": "{\"numRecords\":1,\"minValues\":{\"id\":1},\"maxValues\":{\"id\":1},\"nullCount\":{\"id\":0,\"v\":0,\"array_of_variants\":0,\"struct_of_variants\":{\"v\":0},\"map_of_variants\":0,\"array_of_struct_of_variants\":0,\"struct_of_array_of_variants\":{\"v\":0}}}",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a312c226d696e56616c756573223a7b226964223a317d2c226d617856616c756573223a7b226964223a317d2c226e756c6c436f756e74223a7b226964223a302c2276223a302c2261727261795f6f665f76617269616e7473223a302c227374727563745f6f665f76617269616e7473223a7b2276223a307d2c226d61705f6f665f76617269616e7473223a302c2261727261795f6f665f7374727563745f6f665f76617269616e7473223a302c227374727563745f6f665f61727261795f6f665f76617269616e7473223a7b2276223a307d7d7d"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 29,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 48,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 67,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 76,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 6,
+              "name": "path",
+              "value": {
+                "kind": "string",
+                "value": "test%25file%25prefix-part-00001-0ffdbb7b-af76-4d0b-9cbe-08bb2091c1c9-c000.snappy.parquet",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7465737425323566696c652532357072656669782d706172742d30303030312d30666664626237622d616637362d346430622d396362652d3038626232303931633163392d633030302e736e617070792e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionValues",
+              "value": {
+                "kind": "map",
+                "duplicateKeys": "last-value",
+                "entries": []
+              }
+            },
+            {
+              "index": 11,
+              "name": "size",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "7311",
+                "physical": {
+                  "type": "INT64",
+                  "value": "7311"
+                }
+              }
+            },
+            {
+              "index": 12,
+              "name": "modificationTime",
+              "value": {
+                "kind": "int",
+                "bits": 64,
+                "value": "1747170233554",
+                "physical": {
+                  "type": "INT64",
+                  "value": "1747170233554"
+                }
+              }
+            },
+            {
+              "index": 13,
+              "name": "dataChange",
+              "value": {
+                "kind": "bool",
+                "value": false,
+                "physical": {
+                  "type": "BOOLEAN",
+                  "value": false
+                }
+              }
+            },
+            {
+              "index": 14,
+              "name": "tags",
+              "value": null
+            },
+            {
+              "index": 18,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 25,
+              "name": "baseRowId",
+              "value": null
+            },
+            {
+              "index": 26,
+              "name": "defaultRowCommitVersion",
+              "value": null
+            },
+            {
+              "index": 27,
+              "name": "clusteringProvider",
+              "value": null
+            },
+            {
+              "index": 28,
+              "name": "stats",
+              "value": {
+                "kind": "string",
+                "value": "{\"numRecords\":50,\"minValues\":{\"id\":50},\"maxValues\":{\"id\":99},\"nullCount\":{\"id\":0,\"v\":0,\"array_of_variants\":0,\"struct_of_variants\":{\"v\":0},\"map_of_variants\":0,\"array_of_struct_of_variants\":0,\"struct_of_array_of_variants\":{\"v\":0}}}",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a35302c226d696e56616c756573223a7b226964223a35307d2c226d617856616c756573223a7b226964223a39397d2c226e756c6c436f756e74223a7b226964223a302c2276223a302c2261727261795f6f665f76617269616e7473223a302c227374727563745f6f665f76617269616e7473223a7b2276223a307d2c226d61705f6f665f76617269616e7473223a302c2261727261795f6f665f7374727563745f6f665f76617269616e7473223a302c227374727563745f6f665f61727261795f6f665f76617269616e7473223a7b2276223a307d7d7d"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 29,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 48,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 67,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 76,
+        "name": "domainMetadata",
+        "value": null
+      }
+    ]
+  }
+]

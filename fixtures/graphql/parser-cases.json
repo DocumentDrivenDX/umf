@@ -1,0 +1,254 @@
+{
+  "source": "src/language/__tests__/schema-parser-test.ts",
+  "method": "Direct static string/template arguments, including dedent tags without evaluation; dynamic references excluded with line numbers",
+  "skippedLines": [
+    15,
+    379,
+    403,
+    1028,
+    1065,
+    1142
+  ],
+  "cases": [
+    {
+      "line": 84,
+      "syntaxValid": true,
+      "text": "\n      type Hello {\n        world: String\n      }\n    "
+    },
+    {
+      "line": 114,
+      "syntaxValid": true,
+      "text": "\n      \"Description\"\n      type Hello {\n        world: String\n      }\n    "
+    },
+    {
+      "line": 130,
+      "syntaxValid": true,
+      "text": "\n      \"\"\"\n      Description\n      \"\"\"\n      # Even with comments between them\n      type Hello {\n        world: String\n      }\n    "
+    },
+    {
+      "line": 149,
+      "syntaxValid": true,
+      "text": "\n      \"Description\"\n      schema {\n        query: Foo\n      }\n    "
+    },
+    {
+      "line": 165,
+      "syntaxValid": false,
+      "text": "\"Description\" 1"
+    },
+    {
+      "line": 172,
+      "syntaxValid": true,
+      "text": "\n      extend type Hello {\n        world: String\n      }\n    "
+    },
+    {
+      "line": 201,
+      "syntaxValid": true,
+      "text": "extend type Hello implements Greeting"
+    },
+    {
+      "line": 220,
+      "syntaxValid": true,
+      "text": "extend interface Hello implements Greeting"
+    },
+    {
+      "line": 238,
+      "syntaxValid": true,
+      "text": "\n      extend type Hello implements Greeting\n\n      extend type Hello implements SecondGreeting\n    "
+    },
+    {
+      "line": 269,
+      "syntaxValid": false,
+      "text": "extend scalar Hello"
+    },
+    {
+      "line": 274,
+      "syntaxValid": false,
+      "text": "extend type Hello"
+    },
+    {
+      "line": 279,
+      "syntaxValid": false,
+      "text": "extend interface Hello"
+    },
+    {
+      "line": 284,
+      "syntaxValid": false,
+      "text": "extend union Hello"
+    },
+    {
+      "line": 289,
+      "syntaxValid": false,
+      "text": "extend enum Hello"
+    },
+    {
+      "line": 294,
+      "syntaxValid": false,
+      "text": "extend input Hello"
+    },
+    {
+      "line": 301,
+      "syntaxValid": true,
+      "text": "\n      extend interface Hello implements Greeting\n\n      extend interface Hello implements SecondGreeting\n    "
+    },
+    {
+      "line": 331,
+      "syntaxValid": false,
+      "text": "\n      \"Description\"\n      extend type Hello {\n        world: String\n      }\n    "
+    },
+    {
+      "line": 342,
+      "syntaxValid": false,
+      "text": "\n      extend \"Description\" type Hello {\n        world: String\n      }\n    "
+    },
+    {
+      "line": 353,
+      "syntaxValid": false,
+      "text": "\n      \"Description\"\n      extend interface Hello {\n        world: String\n      }\n    "
+    },
+    {
+      "line": 364,
+      "syntaxValid": false,
+      "text": "\n      extend \"Description\" interface Hello {\n        world: String\n      }\n    "
+    },
+    {
+      "line": 426,
+      "syntaxValid": false,
+      "text": "extend schema"
+    },
+    {
+      "line": 433,
+      "syntaxValid": false,
+      "text": "extend schema { unknown: SomeType }"
+    },
+    {
+      "line": 440,
+      "syntaxValid": true,
+      "text": "\n      type Hello {\n        world: String!\n      }\n    "
+    },
+    {
+      "line": 474,
+      "syntaxValid": true,
+      "text": "interface Hello implements World { field: String }"
+    },
+    {
+      "line": 499,
+      "syntaxValid": true,
+      "text": "type Hello implements World { field: String }"
+    },
+    {
+      "line": 525,
+      "syntaxValid": true,
+      "text": "type Hello implements Wo & rld { field: String }"
+    },
+    {
+      "line": 554,
+      "syntaxValid": true,
+      "text": "interface Hello implements Wo & rld { field: String }"
+    },
+    {
+      "line": 582,
+      "syntaxValid": true,
+      "text": "type Hello implements & Wo & rld { field: String }"
+    },
+    {
+      "line": 611,
+      "syntaxValid": true,
+      "text": "interface Hello implements & Wo & rld { field: String }"
+    },
+    {
+      "line": 641,
+      "syntaxValid": true,
+      "text": "enum Hello { WORLD }"
+    },
+    {
+      "line": 660,
+      "syntaxValid": true,
+      "text": "enum Hello { WO, RLD }"
+    },
+    {
+      "line": 682,
+      "syntaxValid": true,
+      "text": "\n      interface Hello {\n        world: String\n      }\n    "
+    },
+    {
+      "line": 712,
+      "syntaxValid": true,
+      "text": "\n      type Hello {\n        world(flag: Boolean): String\n      }\n    "
+    },
+    {
+      "line": 750,
+      "syntaxValid": true,
+      "text": "\n      type Hello {\n        world(flag: Boolean = true): String\n      }\n    "
+    },
+    {
+      "line": 792,
+      "syntaxValid": true,
+      "text": "\n      type Hello {\n        world(things: [String]): String\n      }\n    "
+    },
+    {
+      "line": 834,
+      "syntaxValid": true,
+      "text": "\n      type Hello {\n        world(argOne: Boolean, argTwo: Int): String\n      }\n    "
+    },
+    {
+      "line": 878,
+      "syntaxValid": true,
+      "text": "union Hello = World"
+    },
+    {
+      "line": 897,
+      "syntaxValid": true,
+      "text": "union Hello = Wo | Rld"
+    },
+    {
+      "line": 919,
+      "syntaxValid": true,
+      "text": "union Hello = | Wo | Rld"
+    },
+    {
+      "line": 941,
+      "syntaxValid": false,
+      "text": "union Hello = |"
+    },
+    {
+      "line": 948,
+      "syntaxValid": false,
+      "text": "union Hello = || Wo | Rld"
+    },
+    {
+      "line": 955,
+      "syntaxValid": false,
+      "text": "union Hello = Wo || Rld"
+    },
+    {
+      "line": 962,
+      "syntaxValid": false,
+      "text": "union Hello = | Wo | Rld |"
+    },
+    {
+      "line": 969,
+      "syntaxValid": true,
+      "text": "scalar Hello"
+    },
+    {
+      "line": 987,
+      "syntaxValid": true,
+      "text": "\ninput Hello {\n  world: String\n}"
+    },
+    {
+      "line": 1016,
+      "syntaxValid": false,
+      "text": "\n      input Hello {\n        world(foo: Int): String\n      }\n    "
+    },
+    {
+      "line": 1101,
+      "syntaxValid": false,
+      "text": "directive @foo on FIELD | INCORRECT_LOCATION"
+    },
+    {
+      "line": 1110,
+      "syntaxValid": true,
+      "text": "extend directive @foo @bar"
+    }
+  ]
+}

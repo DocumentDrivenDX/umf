@@ -1,0 +1,5 @@
+export {};
+const rdf=await Bun.file('spec/extensions/rdf/schema.json').json(),term=rdf.properties.quads.items.properties.object,node=rdf.properties.quads.items.properties.subject,predicate=rdf.properties.quads.items.properties.predicate;
+const obj=(properties:any)=>({type:'object',properties,required:Object.keys(properties),additionalProperties:false}),nodes={type:'array',items:node},indexes={type:'array',items:{type:'integer',minimum:0}};
+const record=obj({node,kind:{enum:['Axiom','Annotation']},target:obj({subject:node,predicate,object:term}),assertedQuadIndexes:indexes,annotationQuadIndexes:indexes,nested:nodes});
+await Bun.write('spec/extensions/owl/annotations-schema.json',JSON.stringify({$schema:rdf.$schema,$id:'urn:umf:owl:annotations:0.1.0',...obj({profile:{const:'owl-annotations-1'},complete:{const:false},source:{$ref:'urn:umf:core:0.1.0'},blankNodeScope:{type:'string'},quadIndex:{type:'integer',minimum:0},roots:nodes,records:{type:'array',items:record},malformed:nodes})},null,2)+'\n');

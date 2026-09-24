@@ -1,0 +1,6 @@
+<http://example.org/ex#a> <http://example.org/ex#b> "first long literal" .
+<http://example.org/ex#c> <http://example.org/ex#d> "second long literal" .
+_:m_1_0 <urn:example:related> <urn:example:resource> .
+<urn:example:populated> { _:m_1_0 <urn:example:label> "Original label" . }
+<urn:example:empty> {}
+_:m_1_0 {}

@@ -1,0 +1,440 @@
+[
+  {
+    "metaData": null,
+    "protocol": {
+      "minReaderVersion": 1,
+      "minWriterVersion": 2
+    },
+    "txn": null,
+    "add": null,
+    "remove": null
+  },
+  {
+    "metaData": {
+      "id": "853536c9-0abe-4e66-9732-1718e542e6aa",
+      "name": null,
+      "description": null,
+      "schemaString": "{\"type\":\"struct\",\"fields\":[{\"name\":\"some_struct\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"some_struct_member\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"some_struct_timestamp\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"value\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"ts\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}},{\"name\":\"date\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}",
+      "createdTime": {
+        "$int64": "1627668675432"
+      },
+      "partitionColumns": [
+        "date"
+      ],
+      "configuration": {},
+      "format": {
+        "provider": "parquet",
+        "options": {}
+      }
+    },
+    "protocol": null,
+    "txn": null,
+    "add": null,
+    "remove": null
+  },
+  {
+    "metaData": null,
+    "protocol": null,
+    "txn": null,
+    "add": {
+      "path": "date=2020-06-01/part-00000-b207ef5f-4458-4969-bd34-46439cdeb6a6.c000.snappy.parquet",
+      "size": {
+        "$int64": "1502"
+      },
+      "modificationTime": {
+        "$int64": "1627668686000"
+      },
+      "dataChange": false,
+      "stats": "{\"numRecords\":1,\"minValues\":{\"some_struct\":{\"some_struct_member\":\"x\",\"some_struct_timestamp\":\"2021-07-30T18:11:24.594Z\"},\"value\":\"x\",\"ts\":\"2021-07-30T18:11:24.594Z\"},\"maxValues\":{\"some_struct\":{\"some_struct_member\":\"x\",\"some_struct_timestamp\":\"2021-07-30T18:11:24.594Z\"},\"value\":\"x\",\"ts\":\"2021-07-30T18:11:24.594Z\"},\"nullCount\":{\"some_struct\":{\"some_struct_member\":0,\"some_struct_timestamp\":0},\"value\":0,\"ts\":0}}",
+      "partitionValues": {
+        "date": "2020-06-01"
+      },
+      "tags": null,
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "1"
+        },
+        "minValues": {
+          "some_struct": {
+            "some_struct_member": "x",
+            "some_struct_timestamp": {
+              "$timestamp": {
+                "unit": "us",
+                "value": "1627668684594000"
+              }
+            }
+          },
+          "value": "x",
+          "ts": {
+            "$timestamp": {
+              "unit": "us",
+              "value": "1627668684594000"
+            }
+          }
+        },
+        "maxValues": {
+          "some_struct": {
+            "some_struct_member": "x",
+            "some_struct_timestamp": {
+              "$timestamp": {
+                "unit": "us",
+                "value": "1627668684594000"
+              }
+            }
+          },
+          "value": "x",
+          "ts": {
+            "$timestamp": {
+              "unit": "us",
+              "value": "1627668684594000"
+            }
+          }
+        },
+        "nullCount": {
+          "some_struct": {
+            "some_struct_member": {
+              "$int64": "0"
+            },
+            "some_struct_timestamp": {
+              "$int64": "0"
+            }
+          },
+          "value": {
+            "$int64": "0"
+          },
+          "ts": {
+            "$int64": "0"
+          }
+        }
+      },
+      "partitionValues_parsed": {
+        "date": "2020-06-01"
+      }
+    },
+    "remove": null
+  },
+  {
+    "metaData": null,
+    "protocol": null,
+    "txn": null,
+    "add": {
+      "path": "date=2020-06-01/part-00000-762e2b03-6a04-4707-b676-5d38d1ef9fca.c000.snappy.parquet",
+      "size": {
+        "$int64": "1502"
+      },
+      "modificationTime": {
+        "$int64": "1627668688000"
+      },
+      "dataChange": false,
+      "stats": "{\"numRecords\":1,\"minValues\":{\"some_struct\":{\"some_struct_member\":\"x\",\"some_struct_timestamp\":\"2021-07-30T18:11:27.001Z\"},\"value\":\"x\",\"ts\":\"2021-07-30T18:11:27.001Z\"},\"maxValues\":{\"some_struct\":{\"some_struct_member\":\"x\",\"some_struct_timestamp\":\"2021-07-30T18:11:27.001Z\"},\"value\":\"x\",\"ts\":\"2021-07-30T18:11:27.001Z\"},\"nullCount\":{\"some_struct\":{\"some_struct_member\":0,\"some_struct_timestamp\":0},\"value\":0,\"ts\":0}}",
+      "partitionValues": {
+        "date": "2020-06-01"
+      },
+      "tags": null,
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "1"
+        },
+        "minValues": {
+          "some_struct": {
+            "some_struct_member": "x",
+            "some_struct_timestamp": {
+              "$timestamp": {
+                "unit": "us",
+                "value": "1627668687001000"
+              }
+            }
+          },
+          "value": "x",
+          "ts": {
+            "$timestamp": {
+              "unit": "us",
+              "value": "1627668687001000"
+            }
+          }
+        },
+        "maxValues": {
+          "some_struct": {
+            "some_struct_member": "x",
+            "some_struct_timestamp": {
+              "$timestamp": {
+                "unit": "us",
+                "value": "1627668687001000"
+              }
+            }
+          },
+          "value": "x",
+          "ts": {
+            "$timestamp": {
+              "unit": "us",
+              "value": "1627668687001000"
+            }
+          }
+        },
+        "nullCount": {
+          "some_struct": {
+            "some_struct_member": {
+              "$int64": "0"
+            },
+            "some_struct_timestamp": {
+              "$int64": "0"
+            }
+          },
+          "value": {
+            "$int64": "0"
+          },
+          "ts": {
+            "$int64": "0"
+          }
+        }
+      },
+      "partitionValues_parsed": {
+        "date": "2020-06-01"
+      }
+    },
+    "remove": null
+  },
+  {
+    "metaData": null,
+    "protocol": null,
+    "txn": null,
+    "add": {
+      "path": "date=2020-06-01/part-00000-ca044815-1585-4e08-aa15-904c5ec961e6.c000.snappy.parquet",
+      "size": {
+        "$int64": "1502"
+      },
+      "modificationTime": {
+        "$int64": "1627668691000"
+      },
+      "dataChange": false,
+      "stats": "{\"numRecords\":1,\"minValues\":{\"some_struct\":{\"some_struct_member\":\"x\",\"some_struct_timestamp\":\"2021-07-30T18:11:29.919Z\"},\"value\":\"x\",\"ts\":\"2021-07-30T18:11:29.919Z\"},\"maxValues\":{\"some_struct\":{\"some_struct_member\":\"x\",\"some_struct_timestamp\":\"2021-07-30T18:11:29.919Z\"},\"value\":\"x\",\"ts\":\"2021-07-30T18:11:29.919Z\"},\"nullCount\":{\"some_struct\":{\"some_struct_member\":0,\"some_struct_timestamp\":0},\"value\":0,\"ts\":0}}",
+      "partitionValues": {
+        "date": "2020-06-01"
+      },
+      "tags": null,
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "1"
+        },
+        "minValues": {
+          "some_struct": {
+            "some_struct_member": "x",
+            "some_struct_timestamp": {
+              "$timestamp": {
+                "unit": "us",
+                "value": "1627668689919000"
+              }
+            }
+          },
+          "value": "x",
+          "ts": {
+            "$timestamp": {
+              "unit": "us",
+              "value": "1627668689919000"
+            }
+          }
+        },
+        "maxValues": {
+          "some_struct": {
+            "some_struct_member": "x",
+            "some_struct_timestamp": {
+              "$timestamp": {
+                "unit": "us",
+                "value": "1627668689919000"
+              }
+            }
+          },
+          "value": "x",
+          "ts": {
+            "$timestamp": {
+              "unit": "us",
+              "value": "1627668689919000"
+            }
+          }
+        },
+        "nullCount": {
+          "some_struct": {
+            "some_struct_member": {
+              "$int64": "0"
+            },
+            "some_struct_timestamp": {
+              "$int64": "0"
+            }
+          },
+          "value": {
+            "$int64": "0"
+          },
+          "ts": {
+            "$int64": "0"
+          }
+        }
+      },
+      "partitionValues_parsed": {
+        "date": "2020-06-01"
+      }
+    },
+    "remove": null
+  },
+  {
+    "metaData": null,
+    "protocol": null,
+    "txn": null,
+    "add": {
+      "path": "date=2020-06-01/part-00000-ee6161de-c5be-4117-9ffe-e09b7475dbc7.c000.snappy.parquet",
+      "size": {
+        "$int64": "1502"
+      },
+      "modificationTime": {
+        "$int64": "1627668694000"
+      },
+      "dataChange": false,
+      "stats": "{\"numRecords\":1,\"minValues\":{\"some_struct\":{\"some_struct_member\":\"x\",\"some_struct_timestamp\":\"2021-07-30T18:11:33.223Z\"},\"value\":\"x\",\"ts\":\"2021-07-30T18:11:33.223Z\"},\"maxValues\":{\"some_struct\":{\"some_struct_member\":\"x\",\"some_struct_timestamp\":\"2021-07-30T18:11:33.223Z\"},\"value\":\"x\",\"ts\":\"2021-07-30T18:11:33.223Z\"},\"nullCount\":{\"some_struct\":{\"some_struct_member\":0,\"some_struct_timestamp\":0},\"value\":0,\"ts\":0}}",
+      "partitionValues": {
+        "date": "2020-06-01"
+      },
+      "tags": null,
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "1"
+        },
+        "minValues": {
+          "some_struct": {
+            "some_struct_member": "x",
+            "some_struct_timestamp": {
+              "$timestamp": {
+                "unit": "us",
+                "value": "1627668693223000"
+              }
+            }
+          },
+          "value": "x",
+          "ts": {
+            "$timestamp": {
+              "unit": "us",
+              "value": "1627668693223000"
+            }
+          }
+        },
+        "maxValues": {
+          "some_struct": {
+            "some_struct_member": "x",
+            "some_struct_timestamp": {
+              "$timestamp": {
+                "unit": "us",
+                "value": "1627668693223000"
+              }
+            }
+          },
+          "value": "x",
+          "ts": {
+            "$timestamp": {
+              "unit": "us",
+              "value": "1627668693223000"
+            }
+          }
+        },
+        "nullCount": {
+          "some_struct": {
+            "some_struct_member": {
+              "$int64": "0"
+            },
+            "some_struct_timestamp": {
+              "$int64": "0"
+            }
+          },
+          "value": {
+            "$int64": "0"
+          },
+          "ts": {
+            "$int64": "0"
+          }
+        }
+      },
+      "partitionValues_parsed": {
+        "date": "2020-06-01"
+      }
+    },
+    "remove": null
+  },
+  {
+    "metaData": null,
+    "protocol": null,
+    "txn": null,
+    "add": {
+      "path": "date=2020-06-01/part-00000-c7966c2b-09de-499d-8a90-5694ade6d659.c000.snappy.parquet",
+      "size": {
+        "$int64": "1502"
+      },
+      "modificationTime": {
+        "$int64": "1627668698000"
+      },
+      "dataChange": false,
+      "stats": "{\"numRecords\":1,\"minValues\":{\"some_struct\":{\"some_struct_member\":\"x\",\"some_struct_timestamp\":\"2021-07-30T18:11:36.588Z\"},\"value\":\"x\",\"ts\":\"2021-07-30T18:11:36.588Z\"},\"maxValues\":{\"some_struct\":{\"some_struct_member\":\"x\",\"some_struct_timestamp\":\"2021-07-30T18:11:36.588Z\"},\"value\":\"x\",\"ts\":\"2021-07-30T18:11:36.588Z\"},\"nullCount\":{\"some_struct\":{\"some_struct_member\":0,\"some_struct_timestamp\":0},\"value\":0,\"ts\":0}}",
+      "partitionValues": {
+        "date": "2020-06-01"
+      },
+      "tags": null,
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "1"
+        },
+        "minValues": {
+          "some_struct": {
+            "some_struct_member": "x",
+            "some_struct_timestamp": {
+              "$timestamp": {
+                "unit": "us",
+                "value": "1627668696588000"
+              }
+            }
+          },
+          "value": "x",
+          "ts": {
+            "$timestamp": {
+              "unit": "us",
+              "value": "1627668696588000"
+            }
+          }
+        },
+        "maxValues": {
+          "some_struct": {
+            "some_struct_member": "x",
+            "some_struct_timestamp": {
+              "$timestamp": {
+                "unit": "us",
+                "value": "1627668696588000"
+              }
+            }
+          },
+          "value": "x",
+          "ts": {
+            "$timestamp": {
+              "unit": "us",
+              "value": "1627668696588000"
+            }
+          }
+        },
+        "nullCount": {
+          "some_struct": {
+            "some_struct_member": {
+              "$int64": "0"
+            },
+            "some_struct_timestamp": {
+              "$int64": "0"
+            }
+          },
+          "value": {
+            "$int64": "0"
+          },
+          "ts": {
+            "$int64": "0"
+          }
+        }
+      },
+      "partitionValues_parsed": {
+        "date": "2020-06-01"
+      }
+    },
+    "remove": null
+  }
+]

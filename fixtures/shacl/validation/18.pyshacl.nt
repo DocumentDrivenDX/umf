@@ -1,0 +1,9 @@
+_:N2249b13fc4cd4f54bb53cc0b1072be9f <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N2249b13fc4cd4f54bb53cc0b1072be9f <http://www.w3.org/ns/shacl#focusNode> "Invalid String" .
+_:N1a44e34dd5f245e68aef34d8362cebf5 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N2249b13fc4cd4f54bb53cc0b1072be9f <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#HasValueConstraintComponent> .
+_:N2249b13fc4cd4f54bb53cc0b1072be9f <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/hasValue-001.test#TestShape> .
+_:N1a44e34dd5f245e68aef34d8362cebf5 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N2249b13fc4cd4f54bb53cc0b1072be9f <http://www.w3.org/ns/shacl#resultMessage> "Node Literal(\"Invalid String\") value is not a in the set of values: ['Literal(\"Test\")']" .
+_:N2249b13fc4cd4f54bb53cc0b1072be9f <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N1a44e34dd5f245e68aef34d8362cebf5 <http://www.w3.org/ns/shacl#result> _:N2249b13fc4cd4f54bb53cc0b1072be9f .

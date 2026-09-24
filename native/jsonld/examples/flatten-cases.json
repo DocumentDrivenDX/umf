@@ -1,0 +1,104 @@
+[
+  {
+    "id": "precise-duplicates",
+    "source": "{\"@id\":\"urn:s\",\"urn:p\":[9007199254740993,9007199254740993.0,9007199254740992,333333333.33333329,333333333.333333290,333333333.3333333,1e400,10e399,1e-400,10e-401]}",
+    "expected": "[{\"@id\":\"urn:s\",\"urn:p\":[{\"@value\":9007199254740993},{\"@value\":9007199254740992},{\"@value\":333333333.33333329},{\"@value\":333333333.3333333},{\"@value\":1e400},{\"@value\":1e-400}]}]",
+    "edit": {
+      "pointer": "/urn:p/1",
+      "text": "9007199254740994"
+    },
+    "editedExpected": "[{\"@id\":\"urn:s\",\"urn:p\":[{\"@value\":9007199254740993},{\"@value\":9007199254740994},{\"@value\":9007199254740992},{\"@value\":333333333.33333329},{\"@value\":333333333.3333333},{\"@value\":1e400},{\"@value\":1e-400}]}]"
+  },
+  {
+    "id": "signed-zero",
+    "source": "{\"@id\":\"urn:s\",\"urn:p\":[-0,0,-0.0]}",
+    "expected": "[{\"@id\":\"urn:s\",\"urn:p\":[{\"@value\":-0},{\"@value\":0}]}]"
+  },
+  {
+    "id": "ordered-list",
+    "source": "{\"@id\":\"urn:s\",\"urn:p\":{\"@list\":[9007199254740993,9007199254740993,1e400,1e-400]}}",
+    "expected": "[{\"@id\":\"urn:s\",\"urn:p\":[{\"@list\":[{\"@value\":9007199254740993},{\"@value\":9007199254740993},{\"@value\":1e400},{\"@value\":1e-400}]}]}]"
+  },
+  {
+    "id": "direction-distinction",
+    "source": "{\"@id\":\"urn:s\",\"urn:p\":[{\"@value\":\"text\",\"@direction\":\"ltr\"},{\"@value\":\"text\",\"@direction\":\"rtl\"}]}",
+    "expected": "[{\"@id\":\"urn:s\",\"urn:p\":[{\"@value\":\"text\",\"@direction\":\"ltr\"},{\"@value\":\"text\",\"@direction\":\"rtl\"}]}]"
+  },
+  {
+    "id": "opaque-json",
+    "source": "{\"@id\":\"urn:s\",\"urn:p\":[{\"@type\":\"@json\",\"@value\":{\"a\":[9007199254740993,1e400],\"@language\":\"EN\"}},{\"@type\":\"@json\",\"@value\":{\"@language\":\"EN\",\"a\":[9007199254740993.0,10e399]}},{\"@type\":\"@json\",\"@value\":{\"a\":[1e400,9007199254740993],\"@language\":\"EN\"}}]}",
+    "expected": "[{\"@id\":\"urn:s\",\"urn:p\":[{\"@type\":\"@json\",\"@value\":{\"a\":[9007199254740993,1e400],\"@language\":\"EN\"}},{\"@type\":\"@json\",\"@value\":{\"a\":[1e400,9007199254740993],\"@language\":\"EN\"}}]}]"
+  },
+  {
+    "id": "compact-exact",
+    "source": "{\"@id\":\"urn:s\",\"urn:p\":[9007199254740993,9007199254740993.0]}",
+    "options": {
+      "context": "{\"p\":\"urn:p\"}"
+    },
+    "expected": "{\"@context\":{\"p\":\"urn:p\"},\"@graph\":[{\"@id\":\"urn:s\",\"p\":9007199254740993}]}"
+  },
+  {
+    "id": "compact-array",
+    "source": "{\"@id\":\"urn:s\",\"urn:p\":[1e400,10e399]}",
+    "options": {
+      "context": "{\"p\":\"urn:p\"}",
+      "compactArrays": false
+    },
+    "expected": "{\"@context\":{\"p\":\"urn:p\"},\"@graph\":[{\"@id\":\"urn:s\",\"p\":[1e400]}]}"
+  },
+  {
+    "id": "remote-target",
+    "source": "{\"@id\":\"urn:s\",\"urn:p\":\"v\"}",
+    "options": {
+      "context": "\"https://example.org/target\""
+    },
+    "inputs": {
+      "contexts": [
+        {
+          "url": "https://example.org/target",
+          "text": "{\"@context\":{\"p\":\"urn:p\"}}"
+        }
+      ]
+    },
+    "expected": "{\"@context\":\"https://example.org/target\",\"@graph\":[{\"@id\":\"urn:s\",\"p\":\"v\"}]}"
+  },
+  {
+    "id": "named-graph",
+    "source": "[{\"@id\":\"urn:g\",\"@graph\":[{\"@id\":\"urn:s\",\"urn:p\":\"a\"}]},{\"@id\":\"urn:g\",\"@graph\":[{\"@id\":\"urn:s\",\"urn:q\":\"b\"}]}]",
+    "expected": "[{\"@id\":\"urn:g\",\"@graph\":[{\"@id\":\"urn:s\",\"urn:p\":[{\"@value\":\"a\"}],\"urn:q\":[{\"@value\":\"b\"}]}]}]"
+  },
+  {
+    "id": "blank-reverse",
+    "source": "{\"@id\":\"urn:s\",\"@reverse\":{\"urn:p\":{\"urn:q\":\"value\"}}}",
+    "expected": "[{\"@id\":\"_:b0\",\"urn:p\":[{\"@id\":\"urn:s\"}],\"urn:q\":[{\"@value\":\"value\"}]}]"
+  },
+  {
+    "id": "conflicting-index",
+    "source": "[{\"@id\":\"urn:s\",\"@index\":\"a\",\"urn:p\":\"x\"},{\"@id\":\"urn:s\",\"@index\":\"b\",\"urn:p\":\"y\"}]",
+    "blocked": true
+  },
+  {
+    "id": "missing-target",
+    "source": "{\"urn:p\":\"x\"}",
+    "options": {
+      "context": "\"https://example.org/missing\""
+    },
+    "blocked": true
+  },
+  {
+    "id": "loss-reject",
+    "source": "{\"urn:p\":\"x\",\"unmapped\":\"kept\"}",
+    "options": {
+      "lossPolicy": "reject"
+    },
+    "blocked": true
+  },
+  {
+    "id": "expand-context-once",
+    "source": "{\"@id\":\"\",\"p\":\"v\"}",
+    "inputs": {
+      "expandContext": "{\"@base\":null,\"p\":\"urn:p\"}"
+    },
+    "expected": "[{\"@id\":\"\",\"urn:p\":[{\"@value\":\"v\"}]}]"
+  }
+]

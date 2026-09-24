@@ -1,0 +1,47 @@
+18:18:06  Running with dbt=1.10.0
+18:18:07  Registered adapter: duckdb=1.9.3
+18:18:07  Unable to do partial parsing because saved manifest not found. Starting full parse.
+18:18:07  Found 5 models, 3 data tests, 429 macros
+18:18:07  
+18:18:07  Concurrency: 1 threads (target='dev')
+18:18:07  
+18:18:07  1 of 8 START sql view model main.broken ........................................ [RUN]
+18:18:07  1 of 8 ERROR creating sql view model main.broken ............................... [ERROR in 0.03s]
+18:18:07  2 of 8 START sql view model main.gated_parent .................................. [RUN]
+18:18:07  2 of 8 OK created sql view model main.gated_parent ............................. [OK in 0.02s]
+18:18:07  3 of 8 START sql view model main.healthy ....................................... [RUN]
+18:18:07  3 of 8 OK created sql view model main.healthy .................................. [OK in 0.01s]
+18:18:07  4 of 8 SKIP relation main.after_broken ......................................... [SKIP]
+18:18:07  5 of 8 START test assert_failure ............................................... [RUN]
+18:18:07  5 of 8 FAIL 1 assert_failure ................................................... [FAIL 1 in 0.02s]
+18:18:07  6 of 8 START test assert_pass .................................................. [RUN]
+18:18:07  6 of 8 PASS assert_pass ........................................................ [PASS in 0.01s]
+18:18:07  7 of 8 START test assert_warning ............................................... [RUN]
+18:18:07  7 of 8 WARN 1 assert_warning ................................................... [WARN 1 in 0.01s]
+18:18:07  8 of 8 SKIP relation main.after_gate ........................................... [SKIP]
+18:18:07  
+18:18:07  Finished running 3 data tests, 5 view models in 0 hours 0 minutes and 0.16 seconds (0.16s).
+18:18:07  
+18:18:07  Completed with 2 errors, 0 partial successes, and 1 warning:
+18:18:07  
+18:18:07  Failure in model broken (models/broken.sql)
+18:18:07    Runtime Error in model broken (models/broken.sql)
+  Catalog Error: Scalar Function with name umf_missing_fixture_function does not exist!
+  Did you mean "isfinite"?
+  
+  LINE 5:     select umf_missing_fixture_function() as id
+                     ^
+18:18:07  
+18:18:07    compiled code at /home/erik/Projects/umf/.cache/dbt-failure-target/compiled/umf_failure/models/broken.sql
+18:18:07  
+18:18:07  Failure in test assert_failure (tests/assert_failure.sql)
+18:18:07    Got 1 result, configured to fail if != 0
+18:18:07  
+18:18:07    compiled code at /home/erik/Projects/umf/.cache/dbt-failure-target/compiled/umf_failure/tests/assert_failure.sql
+18:18:07  
+18:18:07  Warning in test assert_warning (tests/assert_warning.sql)
+18:18:07  Got 1 result, configured to warn if != 0
+18:18:07  
+18:18:07    compiled code at /home/erik/Projects/umf/.cache/dbt-failure-target/compiled/umf_failure/tests/assert_warning.sql
+18:18:07  
+18:18:07  Done. PASS=3 WARN=1 ERROR=2 SKIP=2 NO-OP=0 TOTAL=8

@@ -1,0 +1,17 @@
+import {equalJsonLdText} from './jsonld-compare';
+import jsonld from 'jsonld';
+import {importJsonLdDocument,exportJsonLdDocument,proposeJsonLdFlatten,readDocument,writeDocument} from '../src';
+const manifest=await Bun.file('native/jsonld/sources/manifest.json').json(),flattenManifest=await Bun.file('native/jsonld/sources/flatten-manifest.jsonld').json(),cases=[];
+for(const c of flattenManifest.sequence){
+ const id=c['@id'].slice(1),path='native/jsonld/sources/'+c.input,raw=await Bun.file(path).text(),baseIRI=c.option?.base??manifest.baseIRI+c.input,processingMode=c.option?.processingMode??c.option?.specVersion??'json-ld-1.1',expandContext=c.option?.expandContext?await Bun.file('native/jsonld/sources/'+c.option.expandContext).text():undefined,contexts=new Map<string,{url:string;text:string}>();
+ // Discover requested resources solely within the pinned corpus. No network loader fallback.
+ const documentLoader=async(url:string)=>{if(!url.startsWith(manifest.baseIRI))throw Error('No corpus resource '+url);const relative=url.slice(manifest.baseIRI.length);if(relative.includes('..')||relative.includes('?')||relative.includes('#'))throw Error('Unsupported corpus URL '+url);const text=await Bun.file('native/jsonld/sources/'+relative).text();contexts.set(url,{url,text});return {contextUrl:null,documentUrl:url,document:JSON.parse(text)};};
+ try{await jsonld().expand(JSON.parse(raw),{base:baseIRI,processingMode,...(expandContext?{expandContext:JSON.parse(expandContext)}:{}),documentLoader});}catch{}
+ const flattenOptions={lossPolicy:'report' as const,compactArrays:c.option?.compactArrays??true,...(c.context?{context:await Bun.file('native/jsonld/sources/'+c.context).text()}:{})};
+ if(c.context)try{await jsonld().flatten(JSON.parse(raw),JSON.parse(flattenOptions.context!),{base:baseIRI,processingMode,documentLoader});}catch{}
+ const inputs={id,baseIRI,processingMode,contexts:[...contexts.values()],...(expandContext?{expandContext}:{})},d=importJsonLdDocument(raw,inputs),exports=[],report=await proposeJsonLdFlatten(d,flattenOptions);
+ for(const format of ['json','yaml'] as const){const source=readDocument(writeDocument(d,format),format);if(exportJsonLdDocument(source)!==raw)throw Error('Source differs');if(report.candidate){const out='fixtures/jsonld/flatten/'+id+'.'+format+'.jsonld';await Bun.write(out,exportJsonLdDocument(readDocument(writeDocument(report.candidate,format),format)));exports.push({format,path:out});}}
+ const expected=c.expect?await Bun.file('native/jsonld/sources/'+c.expect).text():undefined;
+ cases.push({id,path,inputs,flattenOptions,positive:c['@type'].includes('jld:PositiveEvaluationTest'),expectedPath:c.expect?'native/jsonld/sources/'+c.expect:undefined,expectedError:c.expectErrorCode,status:report.status,resourcesUsed:report.resourcesUsed,diagnostics:report.diagnostics,exports,...(report.candidate&&expected!==undefined?{matchesExpected:equalJsonLdText(exportJsonLdDocument(report.candidate),expected)}:{})});
+}
+await Bun.write('fixtures/jsonld/flatten/results.json',JSON.stringify({cases},null,2)+'\n');console.log({cases:cases.length,candidates:cases.filter(c=>c.status==='candidate').length,blocked:cases.filter(c=>c.status==='blocked').length,positiveBlocked:cases.filter(c=>c.positive&&c.status==='blocked').map(c=>c.id),negativeAccepted:cases.filter(c=>!c.positive&&c.status==='candidate').map(c=>c.id),mismatches:cases.filter(c=>c.matchesExpected===false).map(c=>c.id)});

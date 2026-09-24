@@ -1,0 +1,43 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/avro/native.test.ts:
+(pass) US-007-AC1: native Avro structure, metadata and logical types survive core serializations [221.33ms]
+(pass) US-007-AC2: precise long defaults and newer union defaults remain explicit incomplete profiles [112.66ms]
+(pass) US-007-AC3: edits are atomic, copies isolated, and unknown representation fields never discarded [178.41ms]
+
+tests/avro/corpus.test.ts:
+(pass) US-007-AC6: pinned Apache schema corpus survives with per-file interpretation status [2369.99ms]
+
+tests/avro/bundle.test.ts:
+(pass) US-007-AC7: explicit ordered dependencies resolve native names and survive intact [269.06ms]
+(pass) US-007-AC8: duplicate declarations and unknown dependency representation cannot imply complete support [81.92ms]
+
+tests/avro/projection.test.ts:
+(pass) US-008-AC1: Avro shapes project with explicit losses and independently validated instances [200.04ms]
+(pass) US-008-AC2: strict policy and unresolved interpretation block, dependencies and recursion stay qualified [173.80ms]
+(pass) US-008-AC5: official corpus projections retain sources and validate native targets [1652.40ms]
+
+tests/avro/metadata.test.ts:
+(pass) CONTRACT-007 core scalar metadata retains Avro field semantics [235.20ms]
+(pass) CONTRACT-007 nested records, namespaces and dependency fields retain source paths [37.36ms]
+(pass) CONTRACT-007 edits cannot silently reassociate attached field metadata [68.58ms]
+
+tests/avro/tablespec-projection.test.ts:
+(pass) CONTRACT-038 Avro record projections retain defaults, named dependencies and unknown metadata in source [527.93ms]
+(pass) CONTRACT-038 carrier families round trip through TableSpec with independent loss reports [116.72ms]
+(pass) CONTRACT-038 unsupported logical types, numeric widths, names and nullability cannot be guessed [451.30ms]
+
+tests/avro/temporal-metadata.test.ts:
+(pass) CONTRACT-007 temporal core classification requires exact annotation and carrier [5034.85ms]
+
+tests/avro/candidate-edit.test.ts:
+(pass) US-007-AC9 explicit Avro candidates preserve logical annotations, unknown metadata and exact defaults [736.51ms]
+(pass) US-007-AC9 candidates cannot erase representation content or attached field identity [233.53ms]
+
+tests/avro/integer-metadata.test.ts:
+(pass) CONTRACT-007 decimal metadata never promotes rounded precision, scale or fixed size [2023.71ms]
+
+ 19 pass
+ 0 fail
+ 760 expect() calls
+Ran 19 tests across 9 files. [15.52s]

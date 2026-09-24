@@ -1,0 +1,11 @@
+_:N98b9634960344866af790a61bf0de9d9 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/in-001.test#InvalidInstance1> .
+_:N98b9634960344866af790a61bf0de9d9 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#InConstraintComponent> .
+_:N98b9634960344866af790a61bf0de9d9 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N98b9634960344866af790a61bf0de9d9 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/in-001.test#ShapeClass-property> .
+_:N65982ffb2a8e40c7bddbc7fafdf06e88 <http://www.w3.org/ns/shacl#result> _:N98b9634960344866af790a61bf0de9d9 .
+_:N65982ffb2a8e40c7bddbc7fafdf06e88 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N98b9634960344866af790a61bf0de9d9 <http://www.w3.org/ns/shacl#resultMessage> "Value Literal(\"D\") not in list ['Literal(\"B\")', 'Literal(\"C\")', 'Literal(\"A\")']" .
+_:N98b9634960344866af790a61bf0de9d9 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N65982ffb2a8e40c7bddbc7fafdf06e88 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N98b9634960344866af790a61bf0de9d9 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/in-001.test#property> .
+_:N98b9634960344866af790a61bf0de9d9 <http://www.w3.org/ns/shacl#value> "D" .

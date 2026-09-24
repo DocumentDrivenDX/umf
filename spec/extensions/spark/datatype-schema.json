@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:spark:datatype-json:0.1.0",
+  "$ref": "#/$defs/type",
+  "$defs": {
+    "type": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "array"
+            },
+            "elementType": {
+              "$ref": "#/$defs/type"
+            },
+            "containsNull": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "type",
+            "elementType",
+            "containsNull"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "map"
+            },
+            "keyType": {
+              "$ref": "#/$defs/type"
+            },
+            "valueType": {
+              "$ref": "#/$defs/type"
+            },
+            "valueContainsNull": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "type",
+            "keyType",
+            "valueType",
+            "valueContainsNull"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "struct"
+            },
+            "fields": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/field"
+              }
+            }
+          },
+          "required": [
+            "type",
+            "fields"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "udt"
+            },
+            "class": {
+              "type": "string"
+            },
+            "pyClass": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "serializedClass": {
+              "type": "string"
+            },
+            "sqlType": {
+              "$ref": "#/$defs/type"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "minLength": 1,
+              "not": {
+                "enum": [
+                  "array",
+                  "map",
+                  "struct",
+                  "udt"
+                ]
+              }
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": true
+        }
+      ]
+    },
+    "field": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/$defs/type"
+        },
+        "nullable": {
+          "type": "boolean"
+        },
+        "metadata": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": true
+    }
+  }
+}

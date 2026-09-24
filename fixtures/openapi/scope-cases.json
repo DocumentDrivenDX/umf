@@ -1,0 +1,342 @@
+{
+  "native": {
+    "openapi": "3.2.1",
+    "$self": "https://example.test/semantic/api.json",
+    "info": {
+      "title": "Scope",
+      "version": "1"
+    },
+    "components": {
+      "schemas": {
+        "Root": {
+          "$id": "models/root",
+          "type": "object",
+          "$defs": {
+            "Child": {
+              "$id": "child",
+              "$anchor": "named",
+              "type": "string"
+            },
+            "Local": {
+              "$anchor": "local",
+              "type": "integer"
+            }
+          },
+          "properties": {
+            "value": {
+              "$ref": "child#named"
+            }
+          },
+          "examples": [
+            {
+              "$id": "not-a-schema",
+              "$anchor": "ignored"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "base": "https://example.test/retrieved/api.json",
+  "rows": [
+    {
+      "reference": "child#named",
+      "result": {
+        "source": {
+          "retrievalUri": "https://example.test/retrieved/api.json",
+          "pointer": "/components/schemas/Root",
+          "baseUri": "https://example.test/semantic/models/root",
+          "dialect": "https://spec.openapis.org/oas/3.2/dialect/2026-02-26"
+        },
+        "target": {
+          "retrievalUri": "https://example.test/retrieved/api.json",
+          "pointer": "/components/schemas/Root/$defs/Child",
+          "baseUri": "https://example.test/semantic/models/child",
+          "dialect": "https://spec.openapis.org/oas/3.2/dialect/2026-02-26"
+        },
+        "node": {
+          "kind": "object",
+          "members": {
+            "$id": {
+              "kind": "string",
+              "value": "child"
+            },
+            "$anchor": {
+              "kind": "string",
+              "value": "named"
+            },
+            "type": {
+              "kind": "string",
+              "value": "string"
+            }
+          }
+        },
+        "complete": false,
+        "limitations": [
+          "Static schema scope only; dynamic references require evaluation-time scope",
+          "Unclassified resource fragments are retained but not indexed",
+          "Known dialect schema positions only; HTTP and instance evaluation are not implemented"
+        ]
+      }
+    },
+    {
+      "reference": "#local",
+      "result": {
+        "source": {
+          "retrievalUri": "https://example.test/retrieved/api.json",
+          "pointer": "/components/schemas/Root",
+          "baseUri": "https://example.test/semantic/models/root",
+          "dialect": "https://spec.openapis.org/oas/3.2/dialect/2026-02-26"
+        },
+        "target": {
+          "retrievalUri": "https://example.test/retrieved/api.json",
+          "pointer": "/components/schemas/Root/$defs/Local",
+          "baseUri": "https://example.test/semantic/models/root",
+          "dialect": "https://spec.openapis.org/oas/3.2/dialect/2026-02-26"
+        },
+        "node": {
+          "kind": "object",
+          "members": {
+            "$anchor": {
+              "kind": "string",
+              "value": "local"
+            },
+            "type": {
+              "kind": "string",
+              "value": "integer"
+            }
+          }
+        },
+        "complete": false,
+        "limitations": [
+          "Static schema scope only; dynamic references require evaluation-time scope",
+          "Unclassified resource fragments are retained but not indexed",
+          "Known dialect schema positions only; HTTP and instance evaluation are not implemented"
+        ]
+      }
+    },
+    {
+      "reference": "#/$defs/Local",
+      "result": {
+        "source": {
+          "retrievalUri": "https://example.test/retrieved/api.json",
+          "pointer": "/components/schemas/Root",
+          "baseUri": "https://example.test/semantic/models/root",
+          "dialect": "https://spec.openapis.org/oas/3.2/dialect/2026-02-26"
+        },
+        "target": {
+          "retrievalUri": "https://example.test/retrieved/api.json",
+          "pointer": "/components/schemas/Root/$defs/Local",
+          "baseUri": "https://example.test/semantic/models/root",
+          "dialect": "https://spec.openapis.org/oas/3.2/dialect/2026-02-26"
+        },
+        "node": {
+          "kind": "object",
+          "members": {
+            "$anchor": {
+              "kind": "string",
+              "value": "local"
+            },
+            "type": {
+              "kind": "string",
+              "value": "integer"
+            }
+          }
+        },
+        "complete": false,
+        "limitations": [
+          "Static schema scope only; dynamic references require evaluation-time scope",
+          "Unclassified resource fragments are retained but not indexed",
+          "Known dialect schema positions only; HTTP and instance evaluation are not implemented"
+        ]
+      }
+    },
+    {
+      "reference": "https://example.test/retrieved/api.json#/components/schemas/Root/$defs/Child",
+      "result": {
+        "source": {
+          "retrievalUri": "https://example.test/retrieved/api.json",
+          "pointer": "/components/schemas/Root",
+          "baseUri": "https://example.test/semantic/models/root",
+          "dialect": "https://spec.openapis.org/oas/3.2/dialect/2026-02-26"
+        },
+        "target": {
+          "retrievalUri": "https://example.test/retrieved/api.json",
+          "pointer": "/components/schemas/Root/$defs/Child",
+          "baseUri": "https://example.test/semantic/models/child",
+          "dialect": "https://spec.openapis.org/oas/3.2/dialect/2026-02-26"
+        },
+        "node": {
+          "kind": "object",
+          "members": {
+            "$id": {
+              "kind": "string",
+              "value": "child"
+            },
+            "$anchor": {
+              "kind": "string",
+              "value": "named"
+            },
+            "type": {
+              "kind": "string",
+              "value": "string"
+            }
+          }
+        },
+        "complete": false,
+        "limitations": [
+          "Static schema scope only; dynamic references require evaluation-time scope",
+          "Unclassified resource fragments are retained but not indexed",
+          "Known dialect schema positions only; HTTP and instance evaluation are not implemented"
+        ]
+      }
+    },
+    {
+      "reference": "https://example.test/semantic/api.json#/components/schemas/Root",
+      "result": {
+        "source": {
+          "retrievalUri": "https://example.test/retrieved/api.json",
+          "pointer": "/components/schemas/Root",
+          "baseUri": "https://example.test/semantic/models/root",
+          "dialect": "https://spec.openapis.org/oas/3.2/dialect/2026-02-26"
+        },
+        "target": {
+          "retrievalUri": "https://example.test/retrieved/api.json",
+          "pointer": "/components/schemas/Root",
+          "baseUri": "https://example.test/semantic/models/root",
+          "dialect": "https://spec.openapis.org/oas/3.2/dialect/2026-02-26"
+        },
+        "node": {
+          "kind": "object",
+          "members": {
+            "$id": {
+              "kind": "string",
+              "value": "models/root"
+            },
+            "type": {
+              "kind": "string",
+              "value": "object"
+            },
+            "$defs": {
+              "kind": "object",
+              "members": {
+                "Child": {
+                  "kind": "object",
+                  "members": {
+                    "$id": {
+                      "kind": "string",
+                      "value": "child"
+                    },
+                    "$anchor": {
+                      "kind": "string",
+                      "value": "named"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "string"
+                    }
+                  }
+                },
+                "Local": {
+                  "kind": "object",
+                  "members": {
+                    "$anchor": {
+                      "kind": "string",
+                      "value": "local"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "properties": {
+              "kind": "object",
+              "members": {
+                "value": {
+                  "kind": "object",
+                  "members": {
+                    "$ref": {
+                      "kind": "string",
+                      "value": "child#named"
+                    }
+                  }
+                }
+              }
+            },
+            "examples": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "$id": {
+                      "kind": "string",
+                      "value": "not-a-schema"
+                    },
+                    "$anchor": {
+                      "kind": "string",
+                      "value": "ignored"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "complete": false,
+        "limitations": [
+          "Static schema scope only; dynamic references require evaluation-time scope",
+          "Unclassified resource fragments are retained but not indexed",
+          "Known dialect schema positions only; HTTP and instance evaluation are not implemented"
+        ]
+      }
+    },
+    {
+      "reference": "https://example.test/external.json#external",
+      "result": {
+        "source": {
+          "retrievalUri": "https://example.test/retrieved/api.json",
+          "pointer": "/components/schemas/Root",
+          "baseUri": "https://example.test/semantic/models/root",
+          "dialect": "https://spec.openapis.org/oas/3.2/dialect/2026-02-26"
+        },
+        "target": {
+          "retrievalUri": "https://example.test/external.json",
+          "pointer": "",
+          "baseUri": "https://example.test/canonical",
+          "dialect": "https://json-schema.org/draft/2020-12/schema"
+        },
+        "node": {
+          "kind": "object",
+          "members": {
+            "$schema": {
+              "kind": "string",
+              "value": "https://json-schema.org/draft/2020-12/schema"
+            },
+            "$id": {
+              "kind": "string",
+              "value": "https://example.test/canonical"
+            },
+            "$anchor": {
+              "kind": "string",
+              "value": "external"
+            },
+            "type": {
+              "kind": "string",
+              "value": "boolean"
+            }
+          }
+        },
+        "complete": false,
+        "limitations": [
+          "Static schema scope only; dynamic references require evaluation-time scope",
+          "Unclassified resource fragments are retained but not indexed",
+          "Known dialect schema positions only; HTTP and instance evaluation are not implemented"
+        ]
+      }
+    }
+  ]
+}

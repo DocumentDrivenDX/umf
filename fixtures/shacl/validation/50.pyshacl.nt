@@ -1,0 +1,11 @@
+_:n2d4402d6302b4f55b25d67431aec3793b1 <http://www.w3.org/ns/shacl#zeroOrMorePath> <http://datashapes.org/sh/tests/core/path/path-zeroOrMore-001.test#child> .
+_:N95fdccef7d414206b05b4e9357a053a7 <http://www.w3.org/ns/shacl#resultMessage> "Less than 2 values on ex:InvalidResource1->[ sh:zeroOrMorePath ex:child ]" .
+_:N95fdccef7d414206b05b4e9357a053a7 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/path/path-zeroOrMore-001.test#TestShape> .
+_:N515a8fc477a64752801acbc9795f122b <http://www.w3.org/ns/shacl#result> _:N95fdccef7d414206b05b4e9357a053a7 .
+_:N95fdccef7d414206b05b4e9357a053a7 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/path/path-zeroOrMore-001.test#InvalidResource1> .
+_:N95fdccef7d414206b05b4e9357a053a7 <http://www.w3.org/ns/shacl#resultPath> _:n2d4402d6302b4f55b25d67431aec3793b1 .
+_:N95fdccef7d414206b05b4e9357a053a7 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N95fdccef7d414206b05b4e9357a053a7 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinCountConstraintComponent> .
+_:N95fdccef7d414206b05b4e9357a053a7 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N515a8fc477a64752801acbc9795f122b <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N515a8fc477a64752801acbc9795f122b <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .

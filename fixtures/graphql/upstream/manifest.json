@@ -1,0 +1,28 @@
+{
+  "repository": "https://github.com/graphql/graphql-js",
+  "tag": "v17.0.2",
+  "commit": "71606d736c79b77588a15b32b9c9497e397adae0",
+  "scope": "Both benchmark .graphql artifacts, SDL grammar test source and kitchenSinkSDL source; no outcome-based filtering",
+  "files": [
+    {
+      "path": "benchmark/github-schema.graphql",
+      "sha256": "be75f2edfe41abea3cab2ffb6ca449d73c0d6fc2ba4fcb2e06b48e58c3c67b1e"
+    },
+    {
+      "path": "benchmark/kitchen-sink.graphql",
+      "sha256": "c831a7fa6e8ea5360370b7db4e39b726d2689559f06ee20228362c0486a5fb2d"
+    },
+    {
+      "path": "src/language/__tests__/schema-parser-test.ts",
+      "sha256": "14f47bec53584c03a7fdc4c7686ee683ef57c36ca7d9ab310f7b977d4adc84d1"
+    },
+    {
+      "path": "src/__testUtils__/kitchenSinkSDL.ts",
+      "sha256": "9bc435d1f65f44387d3eed30ecb979533ff62049d1ea53bba3726e10e1eed2ab"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "35a11da7e877009ddc57405844209908cfc567adda0ec1daf410368c9f5b0d01"
+    }
+  ]
+}

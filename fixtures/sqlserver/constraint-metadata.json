@@ -1,0 +1,651 @@
+{
+  "complete": false,
+  "tables": [
+    {
+      "path": "/tables/0",
+      "table": {
+        "schema": "sales",
+        "name": "Child"
+      },
+      "available": {
+        "keys": true,
+        "foreign_keys": true,
+        "checks": true
+      },
+      "keys": [
+        {
+          "kind": "object",
+          "members": {
+            "name": {
+              "kind": "string",
+              "value": "PK_Child"
+            },
+            "kind": {
+              "kind": "string",
+              "value": "PK"
+            },
+            "is_system_named": {
+              "kind": "boolean",
+              "value": false
+            },
+            "index_type": {
+              "kind": "string",
+              "value": "CLUSTERED"
+            },
+            "is_disabled": {
+              "kind": "boolean",
+              "value": false
+            },
+            "ignore_dup_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "columns": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "key_ordinal": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "id"
+                    },
+                    "is_descending_key": {
+                      "kind": "boolean",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "foreign_keys": [
+        {
+          "kind": "object",
+          "members": {
+            "name": {
+              "kind": "string",
+              "value": "FK_Child_Parent"
+            },
+            "is_system_named": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_disabled": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_not_trusted": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_not_for_replication": {
+              "kind": "boolean",
+              "value": false
+            },
+            "delete_action": {
+              "kind": "string",
+              "value": "CASCADE"
+            },
+            "update_action": {
+              "kind": "string",
+              "value": "CASCADE"
+            },
+            "referenced_schema": {
+              "kind": "string",
+              "value": "sales"
+            },
+            "referenced_table": {
+              "kind": "string",
+              "value": "Parent"
+            },
+            "columns": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "ordinal": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "2"
+                    },
+                    "column_name": {
+                      "kind": "string",
+                      "value": "parent_b"
+                    },
+                    "referenced_column_id": {
+                      "kind": "number",
+                      "value": "2"
+                    },
+                    "referenced_column_name": {
+                      "kind": "string",
+                      "value": "b"
+                    }
+                  }
+                },
+                {
+                  "kind": "object",
+                  "members": {
+                    "ordinal": {
+                      "kind": "number",
+                      "value": "2"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "3"
+                    },
+                    "column_name": {
+                      "kind": "string",
+                      "value": "parent_a"
+                    },
+                    "referenced_column_id": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "referenced_column_name": {
+                      "kind": "string",
+                      "value": "a"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "checks": [
+        {
+          "kind": "object",
+          "members": {
+            "name": {
+              "kind": "string",
+              "value": "CK_Child_disabled"
+            },
+            "is_system_named": {
+              "kind": "boolean",
+              "value": false
+            },
+            "parent_column_id": {
+              "kind": "number",
+              "value": "1"
+            },
+            "definition": {
+              "kind": "string",
+              "value": "([id]>(0))"
+            },
+            "is_disabled": {
+              "kind": "boolean",
+              "value": true
+            },
+            "is_not_trusted": {
+              "kind": "boolean",
+              "value": true
+            },
+            "is_not_for_replication": {
+              "kind": "boolean",
+              "value": false
+            },
+            "uses_database_collation": {
+              "kind": "boolean",
+              "value": true
+            }
+          }
+        },
+        {
+          "kind": "object",
+          "members": {
+            "name": {
+              "kind": "string",
+              "value": "CK_Child_other"
+            },
+            "is_system_named": {
+              "kind": "boolean",
+              "value": false
+            },
+            "parent_column_id": {
+              "kind": "number",
+              "value": "5"
+            },
+            "definition": {
+              "kind": "string",
+              "value": "([other]>(0))"
+            },
+            "is_disabled": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_not_trusted": {
+              "kind": "boolean",
+              "value": true
+            },
+            "is_not_for_replication": {
+              "kind": "boolean",
+              "value": false
+            },
+            "uses_database_collation": {
+              "kind": "boolean",
+              "value": true
+            }
+          }
+        },
+        {
+          "kind": "object",
+          "members": {
+            "name": {
+              "kind": "string",
+              "value": "CK_Child_qty"
+            },
+            "is_system_named": {
+              "kind": "boolean",
+              "value": false
+            },
+            "parent_column_id": {
+              "kind": "number",
+              "value": "4"
+            },
+            "definition": {
+              "kind": "string",
+              "value": "([qty]>=(0))"
+            },
+            "is_disabled": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_not_trusted": {
+              "kind": "boolean",
+              "value": true
+            },
+            "is_not_for_replication": {
+              "kind": "boolean",
+              "value": true
+            },
+            "uses_database_collation": {
+              "kind": "boolean",
+              "value": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "/tables/1",
+      "table": {
+        "schema": "sales",
+        "name": "Parent"
+      },
+      "available": {
+        "keys": true,
+        "foreign_keys": true,
+        "checks": true
+      },
+      "keys": [
+        {
+          "kind": "object",
+          "members": {
+            "name": {
+              "kind": "string",
+              "value": "PK_Parent"
+            },
+            "kind": {
+              "kind": "string",
+              "value": "PK"
+            },
+            "is_system_named": {
+              "kind": "boolean",
+              "value": false
+            },
+            "index_type": {
+              "kind": "string",
+              "value": "CLUSTERED"
+            },
+            "is_disabled": {
+              "kind": "boolean",
+              "value": false
+            },
+            "ignore_dup_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "columns": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "key_ordinal": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "a"
+                    },
+                    "is_descending_key": {
+                      "kind": "boolean",
+                      "value": false
+                    }
+                  }
+                },
+                {
+                  "kind": "object",
+                  "members": {
+                    "key_ordinal": {
+                      "kind": "number",
+                      "value": "2"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "2"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "b"
+                    },
+                    "is_descending_key": {
+                      "kind": "boolean",
+                      "value": true
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "kind": "object",
+          "members": {
+            "name": {
+              "kind": "string",
+              "value": "UQ_Parent_code"
+            },
+            "kind": {
+              "kind": "string",
+              "value": "UQ"
+            },
+            "is_system_named": {
+              "kind": "boolean",
+              "value": false
+            },
+            "index_type": {
+              "kind": "string",
+              "value": "NONCLUSTERED"
+            },
+            "is_disabled": {
+              "kind": "boolean",
+              "value": false
+            },
+            "ignore_dup_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "columns": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "key_ordinal": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "3"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "code"
+                    },
+                    "is_descending_key": {
+                      "kind": "boolean",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "kind": "object",
+          "members": {
+            "name": {
+              "kind": "string",
+              "value": "UQ_Parent_reverse"
+            },
+            "kind": {
+              "kind": "string",
+              "value": "UQ"
+            },
+            "is_system_named": {
+              "kind": "boolean",
+              "value": false
+            },
+            "index_type": {
+              "kind": "string",
+              "value": "NONCLUSTERED"
+            },
+            "is_disabled": {
+              "kind": "boolean",
+              "value": false
+            },
+            "ignore_dup_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "columns": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "key_ordinal": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "2"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "b"
+                    },
+                    "is_descending_key": {
+                      "kind": "boolean",
+                      "value": false
+                    }
+                  }
+                },
+                {
+                  "kind": "object",
+                  "members": {
+                    "key_ordinal": {
+                      "kind": "number",
+                      "value": "2"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "a"
+                    },
+                    "is_descending_key": {
+                      "kind": "boolean",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "foreign_keys": [],
+      "checks": []
+    },
+    {
+      "path": "/tables/2",
+      "table": {
+        "schema": "sales",
+        "name": "Untrusted"
+      },
+      "available": {
+        "keys": true,
+        "foreign_keys": true,
+        "checks": true
+      },
+      "keys": [
+        {
+          "kind": "object",
+          "members": {
+            "name": {
+              "kind": "string",
+              "value": "PK_Untrusted"
+            },
+            "kind": {
+              "kind": "string",
+              "value": "PK"
+            },
+            "is_system_named": {
+              "kind": "boolean",
+              "value": false
+            },
+            "index_type": {
+              "kind": "string",
+              "value": "CLUSTERED"
+            },
+            "is_disabled": {
+              "kind": "boolean",
+              "value": false
+            },
+            "ignore_dup_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "columns": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "key_ordinal": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "id"
+                    },
+                    "is_descending_key": {
+                      "kind": "boolean",
+                      "value": false
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "foreign_keys": [
+        {
+          "kind": "object",
+          "members": {
+            "name": {
+              "kind": "string",
+              "value": "FK_Untrusted_Parent"
+            },
+            "is_system_named": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_disabled": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_not_trusted": {
+              "kind": "boolean",
+              "value": true
+            },
+            "is_not_for_replication": {
+              "kind": "boolean",
+              "value": false
+            },
+            "delete_action": {
+              "kind": "string",
+              "value": "NO_ACTION"
+            },
+            "update_action": {
+              "kind": "string",
+              "value": "NO_ACTION"
+            },
+            "referenced_schema": {
+              "kind": "string",
+              "value": "sales"
+            },
+            "referenced_table": {
+              "kind": "string",
+              "value": "Parent"
+            },
+            "columns": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "ordinal": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "2"
+                    },
+                    "column_name": {
+                      "kind": "string",
+                      "value": "parent_code"
+                    },
+                    "referenced_column_id": {
+                      "kind": "number",
+                      "value": "3"
+                    },
+                    "referenced_column_name": {
+                      "kind": "string",
+                      "value": "code"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "checks": []
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+_:N621812d6e882427eb93f371844aff175 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N621812d6e882427eb93f371844aff175 <http://www.w3.org/ns/shacl#result> _:N7c8dd3a97c7c487ba8999e69c60082b1 .
+_:N7c8dd3a97c7c487ba8999e69c60082b1 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/maxCount-002.test#InvalidResource> .
+_:N7c8dd3a97c7c487ba8999e69c60082b1 <http://www.w3.org/ns/shacl#resultMessage> "More than 0 values on ex:InvalidResource->owl:versionInfo" .
+_:N7c8dd3a97c7c487ba8999e69c60082b1 <http://www.w3.org/ns/shacl#resultPath> <http://www.w3.org/2002/07/owl#versionInfo> .
+_:N7c8dd3a97c7c487ba8999e69c60082b1 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxCountConstraintComponent> .
+_:N7c8dd3a97c7c487ba8999e69c60082b1 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N7c8dd3a97c7c487ba8999e69c60082b1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N621812d6e882427eb93f371844aff175 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N7c8dd3a97c7c487ba8999e69c60082b1 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/maxCount-002.test#TestShape-versionInfo> .

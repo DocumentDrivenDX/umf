@@ -1,0 +1,1362 @@
+{
+  "complete": false,
+  "tables": [
+    {
+      "path": "/tables/0",
+      "table": {
+        "schema": "sales",
+        "name": "Analytics"
+      },
+      "available": true,
+      "indexes": [
+        {
+          "kind": "object",
+          "members": {
+            "index_id": {
+              "kind": "number",
+              "value": "1"
+            },
+            "name": {
+              "kind": "string",
+              "value": "CCI_Analytics"
+            },
+            "type": {
+              "kind": "number",
+              "value": "5"
+            },
+            "type_desc": {
+              "kind": "string",
+              "value": "CLUSTERED COLUMNSTORE"
+            },
+            "is_unique": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_primary_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_unique_constraint": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_disabled": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_hypothetical": {
+              "kind": "boolean",
+              "value": false
+            },
+            "ignore_dup_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "fill_factor": {
+              "kind": "number",
+              "value": "0"
+            },
+            "is_padded": {
+              "kind": "boolean",
+              "value": false
+            },
+            "allow_row_locks": {
+              "kind": "boolean",
+              "value": false
+            },
+            "allow_page_locks": {
+              "kind": "boolean",
+              "value": false
+            },
+            "has_filter": {
+              "kind": "boolean",
+              "value": false
+            },
+            "filter_definition": {
+              "kind": "null"
+            },
+            "compression_delay": {
+              "kind": "number",
+              "value": "0"
+            },
+            "optimize_for_sequential_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "data_space_id": {
+              "kind": "number",
+              "value": "1"
+            },
+            "data_space_name": {
+              "kind": "string",
+              "value": "PRIMARY"
+            },
+            "data_space_type": {
+              "kind": "string",
+              "value": "ROWS_FILEGROUP"
+            },
+            "columns": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "index_column_id": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "region"
+                    },
+                    "key_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "partition_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "is_descending_key": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "is_included_column": {
+                      "kind": "boolean",
+                      "value": true
+                    },
+                    "column_store_order_ordinal": {
+                      "kind": "number",
+                      "value": "1"
+                    }
+                  }
+                },
+                {
+                  "kind": "object",
+                  "members": {
+                    "index_column_id": {
+                      "kind": "number",
+                      "value": "2"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "2"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "amount"
+                    },
+                    "key_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "partition_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "is_descending_key": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "is_included_column": {
+                      "kind": "boolean",
+                      "value": true
+                    },
+                    "column_store_order_ordinal": {
+                      "kind": "number",
+                      "value": "2"
+                    }
+                  }
+                },
+                {
+                  "kind": "object",
+                  "members": {
+                    "index_column_id": {
+                      "kind": "number",
+                      "value": "3"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "3"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "note"
+                    },
+                    "key_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "partition_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "is_descending_key": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "is_included_column": {
+                      "kind": "boolean",
+                      "value": true
+                    },
+                    "column_store_order_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "/tables/1",
+      "table": {
+        "schema": "sales",
+        "name": "Disabled"
+      },
+      "available": true,
+      "indexes": [
+        {
+          "kind": "object",
+          "members": {
+            "index_id": {
+              "kind": "number",
+              "value": "0"
+            },
+            "name": {
+              "kind": "null"
+            },
+            "type": {
+              "kind": "number",
+              "value": "0"
+            },
+            "type_desc": {
+              "kind": "string",
+              "value": "HEAP"
+            },
+            "is_unique": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_primary_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_unique_constraint": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_disabled": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_hypothetical": {
+              "kind": "boolean",
+              "value": false
+            },
+            "ignore_dup_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "fill_factor": {
+              "kind": "number",
+              "value": "0"
+            },
+            "is_padded": {
+              "kind": "boolean",
+              "value": false
+            },
+            "allow_row_locks": {
+              "kind": "boolean",
+              "value": true
+            },
+            "allow_page_locks": {
+              "kind": "boolean",
+              "value": true
+            },
+            "has_filter": {
+              "kind": "boolean",
+              "value": false
+            },
+            "filter_definition": {
+              "kind": "null"
+            },
+            "compression_delay": {
+              "kind": "null"
+            },
+            "optimize_for_sequential_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "data_space_id": {
+              "kind": "number",
+              "value": "1"
+            },
+            "data_space_name": {
+              "kind": "string",
+              "value": "PRIMARY"
+            },
+            "data_space_type": {
+              "kind": "string",
+              "value": "ROWS_FILEGROUP"
+            },
+            "columns": {
+              "kind": "array",
+              "items": []
+            }
+          }
+        },
+        {
+          "kind": "object",
+          "members": {
+            "index_id": {
+              "kind": "number",
+              "value": "2"
+            },
+            "name": {
+              "kind": "string",
+              "value": "UX_Disabled_code"
+            },
+            "type": {
+              "kind": "number",
+              "value": "2"
+            },
+            "type_desc": {
+              "kind": "string",
+              "value": "NONCLUSTERED"
+            },
+            "is_unique": {
+              "kind": "boolean",
+              "value": true
+            },
+            "is_primary_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_unique_constraint": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_disabled": {
+              "kind": "boolean",
+              "value": true
+            },
+            "is_hypothetical": {
+              "kind": "boolean",
+              "value": false
+            },
+            "ignore_dup_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "fill_factor": {
+              "kind": "number",
+              "value": "0"
+            },
+            "is_padded": {
+              "kind": "boolean",
+              "value": false
+            },
+            "allow_row_locks": {
+              "kind": "boolean",
+              "value": true
+            },
+            "allow_page_locks": {
+              "kind": "boolean",
+              "value": true
+            },
+            "has_filter": {
+              "kind": "boolean",
+              "value": false
+            },
+            "filter_definition": {
+              "kind": "null"
+            },
+            "compression_delay": {
+              "kind": "null"
+            },
+            "optimize_for_sequential_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "data_space_id": {
+              "kind": "number",
+              "value": "1"
+            },
+            "data_space_name": {
+              "kind": "string",
+              "value": "PRIMARY"
+            },
+            "data_space_type": {
+              "kind": "string",
+              "value": "ROWS_FILEGROUP"
+            },
+            "columns": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "index_column_id": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "2"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "code"
+                    },
+                    "key_ordinal": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "partition_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "is_descending_key": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "is_included_column": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "column_store_order_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "/tables/2",
+      "table": {
+        "schema": "sales",
+        "name": "Events"
+      },
+      "available": true,
+      "indexes": [
+        {
+          "kind": "object",
+          "members": {
+            "index_id": {
+              "kind": "number",
+              "value": "1"
+            },
+            "name": {
+              "kind": "string",
+              "value": "CX_Events"
+            },
+            "type": {
+              "kind": "number",
+              "value": "1"
+            },
+            "type_desc": {
+              "kind": "string",
+              "value": "CLUSTERED"
+            },
+            "is_unique": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_primary_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_unique_constraint": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_disabled": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_hypothetical": {
+              "kind": "boolean",
+              "value": false
+            },
+            "ignore_dup_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "fill_factor": {
+              "kind": "number",
+              "value": "0"
+            },
+            "is_padded": {
+              "kind": "boolean",
+              "value": false
+            },
+            "allow_row_locks": {
+              "kind": "boolean",
+              "value": true
+            },
+            "allow_page_locks": {
+              "kind": "boolean",
+              "value": true
+            },
+            "has_filter": {
+              "kind": "boolean",
+              "value": false
+            },
+            "filter_definition": {
+              "kind": "null"
+            },
+            "compression_delay": {
+              "kind": "null"
+            },
+            "optimize_for_sequential_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "data_space_id": {
+              "kind": "number",
+              "value": "65601"
+            },
+            "data_space_name": {
+              "kind": "string",
+              "value": "ps_events"
+            },
+            "data_space_type": {
+              "kind": "string",
+              "value": "PARTITION_SCHEME"
+            },
+            "columns": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "index_column_id": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "id"
+                    },
+                    "key_ordinal": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "partition_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "is_descending_key": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "is_included_column": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "column_store_order_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    }
+                  }
+                },
+                {
+                  "kind": "object",
+                  "members": {
+                    "index_column_id": {
+                      "kind": "number",
+                      "value": "2"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "2"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "day_id"
+                    },
+                    "key_ordinal": {
+                      "kind": "number",
+                      "value": "2"
+                    },
+                    "partition_ordinal": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "is_descending_key": {
+                      "kind": "boolean",
+                      "value": true
+                    },
+                    "is_included_column": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "column_store_order_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "/tables/3",
+      "table": {
+        "schema": "sales",
+        "name": "Heap"
+      },
+      "available": true,
+      "indexes": [
+        {
+          "kind": "object",
+          "members": {
+            "index_id": {
+              "kind": "number",
+              "value": "0"
+            },
+            "name": {
+              "kind": "null"
+            },
+            "type": {
+              "kind": "number",
+              "value": "0"
+            },
+            "type_desc": {
+              "kind": "string",
+              "value": "HEAP"
+            },
+            "is_unique": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_primary_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_unique_constraint": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_disabled": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_hypothetical": {
+              "kind": "boolean",
+              "value": false
+            },
+            "ignore_dup_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "fill_factor": {
+              "kind": "number",
+              "value": "0"
+            },
+            "is_padded": {
+              "kind": "boolean",
+              "value": false
+            },
+            "allow_row_locks": {
+              "kind": "boolean",
+              "value": true
+            },
+            "allow_page_locks": {
+              "kind": "boolean",
+              "value": true
+            },
+            "has_filter": {
+              "kind": "boolean",
+              "value": false
+            },
+            "filter_definition": {
+              "kind": "null"
+            },
+            "compression_delay": {
+              "kind": "null"
+            },
+            "optimize_for_sequential_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "data_space_id": {
+              "kind": "number",
+              "value": "1"
+            },
+            "data_space_name": {
+              "kind": "string",
+              "value": "PRIMARY"
+            },
+            "data_space_type": {
+              "kind": "string",
+              "value": "ROWS_FILEGROUP"
+            },
+            "columns": {
+              "kind": "array",
+              "items": []
+            }
+          }
+        },
+        {
+          "kind": "object",
+          "members": {
+            "index_id": {
+              "kind": "number",
+              "value": "2"
+            },
+            "name": {
+              "kind": "string",
+              "value": "IX_Heap_cover"
+            },
+            "type": {
+              "kind": "number",
+              "value": "2"
+            },
+            "type_desc": {
+              "kind": "string",
+              "value": "NONCLUSTERED"
+            },
+            "is_unique": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_primary_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_unique_constraint": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_disabled": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_hypothetical": {
+              "kind": "boolean",
+              "value": false
+            },
+            "ignore_dup_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "fill_factor": {
+              "kind": "number",
+              "value": "0"
+            },
+            "is_padded": {
+              "kind": "boolean",
+              "value": false
+            },
+            "allow_row_locks": {
+              "kind": "boolean",
+              "value": true
+            },
+            "allow_page_locks": {
+              "kind": "boolean",
+              "value": true
+            },
+            "has_filter": {
+              "kind": "boolean",
+              "value": false
+            },
+            "filter_definition": {
+              "kind": "null"
+            },
+            "compression_delay": {
+              "kind": "null"
+            },
+            "optimize_for_sequential_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "data_space_id": {
+              "kind": "number",
+              "value": "1"
+            },
+            "data_space_name": {
+              "kind": "string",
+              "value": "PRIMARY"
+            },
+            "data_space_type": {
+              "kind": "string",
+              "value": "ROWS_FILEGROUP"
+            },
+            "columns": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "index_column_id": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "id"
+                    },
+                    "key_ordinal": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "partition_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "is_descending_key": {
+                      "kind": "boolean",
+                      "value": true
+                    },
+                    "is_included_column": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "column_store_order_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    }
+                  }
+                },
+                {
+                  "kind": "object",
+                  "members": {
+                    "index_column_id": {
+                      "kind": "number",
+                      "value": "2"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "2"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "note"
+                    },
+                    "key_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "partition_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "is_descending_key": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "is_included_column": {
+                      "kind": "boolean",
+                      "value": true
+                    },
+                    "column_store_order_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "/tables/4",
+      "table": {
+        "schema": "sales",
+        "name": "Items"
+      },
+      "available": true,
+      "indexes": [
+        {
+          "kind": "object",
+          "members": {
+            "index_id": {
+              "kind": "number",
+              "value": "1"
+            },
+            "name": {
+              "kind": "string",
+              "value": "PK_Items"
+            },
+            "type": {
+              "kind": "number",
+              "value": "1"
+            },
+            "type_desc": {
+              "kind": "string",
+              "value": "CLUSTERED"
+            },
+            "is_unique": {
+              "kind": "boolean",
+              "value": true
+            },
+            "is_primary_key": {
+              "kind": "boolean",
+              "value": true
+            },
+            "is_unique_constraint": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_disabled": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_hypothetical": {
+              "kind": "boolean",
+              "value": false
+            },
+            "ignore_dup_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "fill_factor": {
+              "kind": "number",
+              "value": "0"
+            },
+            "is_padded": {
+              "kind": "boolean",
+              "value": false
+            },
+            "allow_row_locks": {
+              "kind": "boolean",
+              "value": true
+            },
+            "allow_page_locks": {
+              "kind": "boolean",
+              "value": true
+            },
+            "has_filter": {
+              "kind": "boolean",
+              "value": false
+            },
+            "filter_definition": {
+              "kind": "null"
+            },
+            "compression_delay": {
+              "kind": "null"
+            },
+            "optimize_for_sequential_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "data_space_id": {
+              "kind": "number",
+              "value": "1"
+            },
+            "data_space_name": {
+              "kind": "string",
+              "value": "PRIMARY"
+            },
+            "data_space_type": {
+              "kind": "string",
+              "value": "ROWS_FILEGROUP"
+            },
+            "columns": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "index_column_id": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "id"
+                    },
+                    "key_ordinal": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "partition_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "is_descending_key": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "is_included_column": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "column_store_order_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "kind": "object",
+          "members": {
+            "index_id": {
+              "kind": "number",
+              "value": "2"
+            },
+            "name": {
+              "kind": "string",
+              "value": "UX_Items_active_email"
+            },
+            "type": {
+              "kind": "number",
+              "value": "2"
+            },
+            "type_desc": {
+              "kind": "string",
+              "value": "NONCLUSTERED"
+            },
+            "is_unique": {
+              "kind": "boolean",
+              "value": true
+            },
+            "is_primary_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_unique_constraint": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_disabled": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_hypothetical": {
+              "kind": "boolean",
+              "value": false
+            },
+            "ignore_dup_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "fill_factor": {
+              "kind": "number",
+              "value": "80"
+            },
+            "is_padded": {
+              "kind": "boolean",
+              "value": true
+            },
+            "allow_row_locks": {
+              "kind": "boolean",
+              "value": true
+            },
+            "allow_page_locks": {
+              "kind": "boolean",
+              "value": true
+            },
+            "has_filter": {
+              "kind": "boolean",
+              "value": true
+            },
+            "filter_definition": {
+              "kind": "string",
+              "value": "([active]=(1) AND [email] IS NOT NULL)"
+            },
+            "compression_delay": {
+              "kind": "null"
+            },
+            "optimize_for_sequential_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "data_space_id": {
+              "kind": "number",
+              "value": "1"
+            },
+            "data_space_name": {
+              "kind": "string",
+              "value": "PRIMARY"
+            },
+            "data_space_type": {
+              "kind": "string",
+              "value": "ROWS_FILEGROUP"
+            },
+            "columns": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "index_column_id": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "2"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "email"
+                    },
+                    "key_ordinal": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "partition_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "is_descending_key": {
+                      "kind": "boolean",
+                      "value": true
+                    },
+                    "is_included_column": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "column_store_order_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    }
+                  }
+                },
+                {
+                  "kind": "object",
+                  "members": {
+                    "index_column_id": {
+                      "kind": "number",
+                      "value": "2"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "4"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "payload"
+                    },
+                    "key_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "partition_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "is_descending_key": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "is_included_column": {
+                      "kind": "boolean",
+                      "value": true
+                    },
+                    "column_store_order_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "kind": "object",
+          "members": {
+            "index_id": {
+              "kind": "number",
+              "value": "3"
+            },
+            "name": {
+              "kind": "string",
+              "value": "IX_Items_disabled"
+            },
+            "type": {
+              "kind": "number",
+              "value": "2"
+            },
+            "type_desc": {
+              "kind": "string",
+              "value": "NONCLUSTERED"
+            },
+            "is_unique": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_primary_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_unique_constraint": {
+              "kind": "boolean",
+              "value": false
+            },
+            "is_disabled": {
+              "kind": "boolean",
+              "value": true
+            },
+            "is_hypothetical": {
+              "kind": "boolean",
+              "value": false
+            },
+            "ignore_dup_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "fill_factor": {
+              "kind": "number",
+              "value": "0"
+            },
+            "is_padded": {
+              "kind": "boolean",
+              "value": false
+            },
+            "allow_row_locks": {
+              "kind": "boolean",
+              "value": true
+            },
+            "allow_page_locks": {
+              "kind": "boolean",
+              "value": true
+            },
+            "has_filter": {
+              "kind": "boolean",
+              "value": false
+            },
+            "filter_definition": {
+              "kind": "null"
+            },
+            "compression_delay": {
+              "kind": "null"
+            },
+            "optimize_for_sequential_key": {
+              "kind": "boolean",
+              "value": false
+            },
+            "data_space_id": {
+              "kind": "number",
+              "value": "1"
+            },
+            "data_space_name": {
+              "kind": "string",
+              "value": "PRIMARY"
+            },
+            "data_space_type": {
+              "kind": "string",
+              "value": "ROWS_FILEGROUP"
+            },
+            "columns": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "index_column_id": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "4"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "payload"
+                    },
+                    "key_ordinal": {
+                      "kind": "number",
+                      "value": "1"
+                    },
+                    "partition_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "is_descending_key": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "is_included_column": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "column_store_order_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    }
+                  }
+                },
+                {
+                  "kind": "object",
+                  "members": {
+                    "index_column_id": {
+                      "kind": "number",
+                      "value": "2"
+                    },
+                    "column_id": {
+                      "kind": "number",
+                      "value": "3"
+                    },
+                    "name": {
+                      "kind": "string",
+                      "value": "active"
+                    },
+                    "key_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "partition_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    },
+                    "is_descending_key": {
+                      "kind": "boolean",
+                      "value": false
+                    },
+                    "is_included_column": {
+                      "kind": "boolean",
+                      "value": true
+                    },
+                    "column_store_order_ordinal": {
+                      "kind": "number",
+                      "value": "0"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

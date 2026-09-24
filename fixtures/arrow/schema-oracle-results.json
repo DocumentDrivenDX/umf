@@ -1,0 +1,301 @@
+{
+  "oracle": "pyarrow 21.0.0",
+  "cases": 49,
+  "scope": "Schema-only IPC, metadata and native schema equality. No record batches, dictionary data, unknown FlatBuffer fields or browser evidence.",
+  "results": [
+    {
+      "id": "type-0",
+      "schema": "value: null\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-1",
+      "schema": "value: bool\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-2",
+      "schema": "value: string\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-3",
+      "schema": "value: large_string\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-4",
+      "schema": "value: binary\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-5",
+      "schema": "value: large_binary\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-6",
+      "schema": "value: string_view\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-7",
+      "schema": "value: binary_view\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-8",
+      "schema": "value: int8\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-9",
+      "schema": "value: uint8\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-10",
+      "schema": "value: int16\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-11",
+      "schema": "value: uint16\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-12",
+      "schema": "value: int32\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-13",
+      "schema": "value: uint32\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-14",
+      "schema": "value: int64\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-15",
+      "schema": "value: uint64\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-16",
+      "schema": "value: halffloat\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-17",
+      "schema": "value: float\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-18",
+      "schema": "value: double\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-19",
+      "schema": "value: decimal32(9, 4)\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-20",
+      "schema": "value: decimal64(18, 4)\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-21",
+      "schema": "value: decimal128(38, 4)\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-22",
+      "schema": "value: decimal256(76, 4)\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-23",
+      "schema": "value: date32[day]\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-24",
+      "schema": "value: date64[ms]\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-25",
+      "schema": "value: time32[s]\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-26",
+      "schema": "value: timestamp[s, tz=America/New_York]\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-27",
+      "schema": "value: duration[s]\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-28",
+      "schema": "value: time32[ms]\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-29",
+      "schema": "value: timestamp[ms, tz=America/New_York]\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-30",
+      "schema": "value: duration[ms]\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-31",
+      "schema": "value: time64[us]\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-32",
+      "schema": "value: timestamp[us, tz=America/New_York]\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-33",
+      "schema": "value: duration[us]\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-34",
+      "schema": "value: time64[ns]\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-35",
+      "schema": "value: timestamp[ns, tz=America/New_York]\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-36",
+      "schema": "value: duration[ns]\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-37",
+      "schema": "value: month_interval\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-38",
+      "schema": "value: day_time_interval\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-39",
+      "schema": "value: month_day_nano_interval\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-40",
+      "schema": "value: fixed_size_binary[16]\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-41",
+      "schema": "value: list<item: int32>\n  child 0, item: int32\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-42",
+      "schema": "value: large_list<item: int32>\n  child 0, item: int32\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-43",
+      "schema": "value: fixed_size_list<item: int32>[3]\n  child 0, item: int32\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-44",
+      "schema": "value: struct<item: int32>\n  child 0, item: int32\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-45",
+      "schema": "value: dense_union<item: int32=5>\n  child 0, item: int32\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "type-46",
+      "schema": "value: sparse_union<item: int32=5>\n  child 0, item: int32\n  -- field metadata --\n  ARROW:extension:name: 'example.semantic'\n  ARROW:extension:metadata: '{\"unit\":\"money\"}'\n  unicode: 'caf\u00e9'\n-- schema metadata --\nschema-note: 'preserve'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "duplicate-metadata",
+      "schema": "item: int32\n  -- field metadata --\n  same: 'second'",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    },
+    {
+      "id": "dictionary-large-id",
+      "schema": "dict: dictionary<values=string, indices=int32, ordered=1>",
+      "metadataEqual": true,
+      "nativeReemissionEqual": true
+    }
+  ]
+}

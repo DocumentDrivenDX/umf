@@ -1,0 +1,305 @@
+{
+  "runtime": "PyArrow 21.0.0",
+  "cases": [
+    {
+      "id": "list-three-element",
+      "path": "fixtures/parquet/containers/list-three-element.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "nullable": true,
+        "type": {
+          "kind": "list",
+          "elementNullable": true,
+          "element": {
+            "kind": "int32"
+          }
+        }
+      }
+    },
+    {
+      "id": "list-three-renamed",
+      "path": "fixtures/parquet/containers/list-three-renamed.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "nullable": true,
+        "type": {
+          "kind": "list",
+          "elementNullable": false,
+          "element": {
+            "kind": "int32"
+          }
+        }
+      }
+    },
+    {
+      "id": "list-primitive",
+      "path": "fixtures/parquet/containers/list-primitive.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "nullable": true,
+        "type": {
+          "kind": "list",
+          "elementNullable": false,
+          "element": {
+            "kind": "int32"
+          }
+        }
+      }
+    },
+    {
+      "id": "list-tuple",
+      "path": "fixtures/parquet/containers/list-tuple.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "nullable": true,
+        "type": {
+          "kind": "list",
+          "elementNullable": false,
+          "element": {
+            "kind": "struct",
+            "fields": [
+              {
+                "name": "a",
+                "nullable": false,
+                "type": {
+                  "kind": "int32"
+                }
+              },
+              {
+                "name": "b",
+                "nullable": true,
+                "type": {
+                  "kind": "int32"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "list-array",
+      "path": "fixtures/parquet/containers/list-array.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "nullable": true,
+        "type": {
+          "kind": "list",
+          "elementNullable": false,
+          "element": {
+            "kind": "struct",
+            "fields": [
+              {
+                "name": "a",
+                "nullable": true,
+                "type": {
+                  "kind": "int32"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "list-items_tuple",
+      "path": "fixtures/parquet/containers/list-items_tuple.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "nullable": true,
+        "type": {
+          "kind": "list",
+          "elementNullable": false,
+          "element": {
+            "kind": "struct",
+            "fields": [
+              {
+                "name": "a",
+                "nullable": true,
+                "type": {
+                  "kind": "int32"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "list-nested-repeated",
+      "path": "fixtures/parquet/containers/list-nested-repeated.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "nullable": true,
+        "type": {
+          "kind": "list",
+          "elementNullable": false,
+          "element": {
+            "kind": "list",
+            "elementNullable": false,
+            "element": {
+              "kind": "int32"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "list-wrong-child-repetition",
+      "path": "fixtures/parquet/containers/list-wrong-child-repetition.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "message": "Non-repeated nodes in a LIST-annotated group are not supported."
+      }
+    },
+    {
+      "id": "list-two-children",
+      "path": "fixtures/parquet/containers/list-two-children.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "message": "LIST-annotated groups must have a single child."
+      }
+    },
+    {
+      "id": "list-repeated-outer",
+      "path": "fixtures/parquet/containers/list-repeated-outer.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "message": "LIST-annotated groups must not be repeated."
+      }
+    },
+    {
+      "id": "map-canonical",
+      "path": "fixtures/parquet/containers/map-canonical.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "nullable": true,
+        "type": {
+          "kind": "map",
+          "valueNullable": true,
+          "key": {
+            "kind": "int32"
+          },
+          "value": {
+            "kind": "int32"
+          }
+        }
+      }
+    },
+    {
+      "id": "map-legacy-outer",
+      "path": "fixtures/parquet/containers/map-legacy-outer.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "nullable": true,
+        "type": {
+          "kind": "map",
+          "valueNullable": true,
+          "key": {
+            "kind": "int32"
+          },
+          "value": {
+            "kind": "int32"
+          }
+        }
+      }
+    },
+    {
+      "id": "map-renamed",
+      "path": "fixtures/parquet/containers/map-renamed.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "nullable": false,
+        "type": {
+          "kind": "map",
+          "valueNullable": false,
+          "key": {
+            "kind": "int32"
+          },
+          "value": {
+            "kind": "int32"
+          }
+        }
+      }
+    },
+    {
+      "id": "map-key-only",
+      "path": "fixtures/parquet/containers/map-key-only.parquet",
+      "expected": "checked",
+      "native": {
+        "status": "accepted",
+        "nullable": true,
+        "type": {
+          "kind": "list",
+          "elementNullable": false,
+          "element": {
+            "kind": "int32"
+          }
+        }
+      }
+    },
+    {
+      "id": "map-nullable-key",
+      "path": "fixtures/parquet/containers/map-nullable-key.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "message": "Map keys must be annotated as required."
+      }
+    },
+    {
+      "id": "map-repeated-value",
+      "path": "fixtures/parquet/containers/map-repeated-value.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "accepted",
+        "nullable": true,
+        "type": {
+          "kind": "map",
+          "valueNullable": false,
+          "key": {
+            "kind": "int32"
+          },
+          "value": {
+            "kind": "list",
+            "elementNullable": false,
+            "element": {
+              "kind": "int32"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "map-extra-field",
+      "path": "fixtures/parquet/containers/map-extra-field.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "message": "Key-value map node must have 1 or 2 child elements. Found: 3"
+      }
+    },
+    {
+      "id": "map-repeated-outer",
+      "path": "fixtures/parquet/containers/map-repeated-outer.parquet",
+      "expected": "blocked",
+      "native": {
+        "status": "rejected",
+        "message": "MAP-annotated groups must not be repeated."
+      }
+    }
+  ]
+}

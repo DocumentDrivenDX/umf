@@ -1,0 +1,27 @@
+{
+  "pyarrow": "21.0.0",
+  "sourceSha256": "883517d1c24839c6ea1d89d0d0999e1a780ab9828f1ae7e8b18a74d011bc8ad1",
+  "cases": [
+    {
+      "format": "json",
+      "edited": false,
+      "schemaAndMetadataEqual": true
+    },
+    {
+      "format": "json",
+      "edited": true,
+      "schemaAndMetadataEqual": true
+    },
+    {
+      "format": "yaml",
+      "edited": false,
+      "schemaAndMetadataEqual": true
+    },
+    {
+      "format": "yaml",
+      "edited": true,
+      "schemaAndMetadataEqual": true
+    }
+  ],
+  "scope": "Native reading of re-encoded, optionally renamed embedded Arrow schemas; no Parquet file or row rewrite."
+}

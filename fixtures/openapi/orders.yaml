@@ -1,0 +1,65 @@
+# Original OpenAPI fixture; retain this comment on unchanged export.
+openapi: 3.1.2
+info:
+  title: Orders API
+  version: '1.0'
+servers:
+  - url: https://example.test/v1
+paths:
+  /orders/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema: {type: string}
+    get:
+      operationId: getOrder
+      security: [{bearer: []}]
+      responses:
+        '200':
+          description: Order found
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Order'}
+          links:
+            update: {operationId: updateOrder, parameters: {id: '$response.body#/id'}}
+    post:
+      operationId: updateOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/Order'}
+      responses:
+        '204': {description: Updated}
+      callbacks:
+        changed:
+          '{$request.body#/callback}':
+            post:
+              requestBody:
+                content:
+                  application/json: {schema: {type: object}}
+              responses:
+                '202': {description: Accepted}
+webhooks:
+  orderCreated:
+    post:
+      requestBody:
+        content:
+          application/json: {schema: {$ref: '#/components/schemas/Order'}}
+      responses:
+        '200': {description: Received}
+components:
+  securitySchemes:
+    bearer: {type: http, scheme: bearer, bearerFormat: JWT}
+  schemas:
+    Order:
+      type: object
+      required: [id]
+      properties:
+        id: {type: string}
+        parent: {$ref: '#/components/schemas/Order'}
+        total: {type: [number, 'null'], minimum: 0}
+      unevaluatedProperties: false
+      x-domain: {aggregate: Order, context: sales}
+x-future: {preserve: [true, null, '雪']}

@@ -1,0 +1,81 @@
+txn: struct<appId: string, version: int64, lastUpdated: int64>
+  child 0, appId: string
+  child 1, version: int64
+  child 2, lastUpdated: int64
+add: struct<path: string, partitionValues: map<string, string ('partitionValues')>, size: int64, modifica (... 362 chars omitted)
+  child 0, path: string
+  child 1, partitionValues: map<string, string ('partitionValues')>
+      child 0, partitionValues: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+  child 2, size: int64
+  child 3, modificationTime: int64
+  child 4, dataChange: bool
+  child 5, tags: map<string, string ('tags')>
+      child 0, tags: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+  child 6, deletionVector: struct<storageType: string, pathOrInlineDv: string, offset: int32, sizeInBytes: int32, cardinality:  (... 26 chars omitted)
+      child 0, storageType: string
+      child 1, pathOrInlineDv: string
+      child 2, offset: int32
+      child 3, sizeInBytes: int32
+      child 4, cardinality: int64
+      child 5, maxRowIndex: int64
+  child 7, baseRowId: int64
+  child 8, defaultRowCommitVersion: int64
+  child 9, clusteringProvider: string
+  child 10, stats: string
+  child 11, partitionValues_parsed: struct<birthday: date32[day]>
+      child 0, birthday: date32[day]
+remove: struct<path: string, deletionTimestamp: int64, dataChange: bool, extendedFileMetadata: bool, partiti (... 257 chars omitted)
+  child 0, path: string
+  child 1, deletionTimestamp: int64
+  child 2, dataChange: bool
+  child 3, extendedFileMetadata: bool
+  child 4, partitionValues: map<string, string ('partitionValues')>
+      child 0, partitionValues: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+  child 5, size: int64
+  child 6, deletionVector: struct<storageType: string, pathOrInlineDv: string, offset: int32, sizeInBytes: int32, cardinality:  (... 26 chars omitted)
+      child 0, storageType: string
+      child 1, pathOrInlineDv: string
+      child 2, offset: int32
+      child 3, sizeInBytes: int32
+      child 4, cardinality: int64
+      child 5, maxRowIndex: int64
+  child 7, baseRowId: int64
+  child 8, defaultRowCommitVersion: int64
+metaData: struct<id: string, name: string, description: string, format: struct<provider: string, options: map< (... 166 chars omitted)
+  child 0, id: string
+  child 1, name: string
+  child 2, description: string
+  child 3, format: struct<provider: string, options: map<string, string ('options')>>
+      child 0, provider: string
+      child 1, options: map<string, string ('options')>
+          child 0, options: struct<key: string not null, value: string> not null
+              child 0, key: string not null
+              child 1, value: string
+  child 4, schemaString: string
+  child 5, partitionColumns: list<element: string>
+      child 0, element: string
+  child 6, configuration: map<string, string ('configuration')>
+      child 0, configuration: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+  child 7, createdTime: int64
+protocol: struct<minReaderVersion: int32, minWriterVersion: int32, readerFeatures: list<element: string>, writ (... 34 chars omitted)
+  child 0, minReaderVersion: int32
+  child 1, minWriterVersion: int32
+  child 2, readerFeatures: list<element: string>
+      child 0, element: string
+  child 3, writerFeatures: list<element: string>
+      child 0, element: string
+domainMetadata: struct<domain: string, configuration: string, removed: bool>
+  child 0, domain: string
+  child 1, configuration: string
+  child 2, removed: bool
+-- schema metadata --
+org.apache.spark.version: '3.5.1'
+org.apache.spark.sql.parquet.row.metadata: '{"type":"struct","fields":[{"' + 4802

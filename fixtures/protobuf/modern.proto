@@ -1,0 +1,15 @@
+syntax = "proto3";
+package umf.fixture.modern;
+import "legacy.proto";
+message Order {
+  string id = 1;
+  optional int32 quantity = 2;
+  map<string, int64> totals = 3;
+  oneof destination { string email = 4; bytes webhook = 5; }
+  repeated umf.fixture.legacy.Legacy previous = 6;
+  message Line { string sku = 1; uint64 count = 2; }
+  repeated Line lines = 7;
+  reserved 8 to 12;
+  reserved "removed";
+}
+service Orders { rpc Exchange(stream Order) returns (stream Order); }

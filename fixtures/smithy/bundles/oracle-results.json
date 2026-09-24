@@ -1,0 +1,75 @@
+{
+  "oracle": "software.amazon.smithy:smithy-model:1.73.0",
+  "jars": {
+    "jsonschema": "47584feccfe5879ba438d6ab11a646f890bd606ff39c82849c75be1f642fb493",
+    "model": "816e2cbbf8a62895d484e481e1d7beb1e4e929dec0cfbdda8c160d69402f750b",
+    "utils": "1d89fa0624ebf8e0f3032cc6b8283ee58335d3ee43e1826b24b1e951b3bdf8d2"
+  },
+  "cases": [
+    {
+      "name": "0-original",
+      "valid": true,
+      "events": [],
+      "modelSha256": "679e906ef316698fc04958810125a1105a2761a2e01b311b8754bd19615c37a8"
+    },
+    {
+      "name": "0-restored",
+      "valid": true,
+      "events": [],
+      "modelSha256": "679e906ef316698fc04958810125a1105a2761a2e01b311b8754bd19615c37a8"
+    },
+    {
+      "name": "0-edited",
+      "valid": true,
+      "events": [],
+      "modelSha256": "b0ccc282bc4e0a483cdff628dfb79d708b01d978c4ebf05795cb124bc55ce356"
+    },
+    {
+      "name": "0-invalid",
+      "valid": false,
+      "events": [
+        "ERROR:Target.UnresolvedShape"
+      ]
+    },
+    {
+      "name": "0-conflict",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ]
+    },
+    {
+      "name": "1-original",
+      "valid": true,
+      "events": [],
+      "modelSha256": "ae5c46f638bb8f85d3d5c33932c2d526e065f7fbf27880f5ffdc065534a588d9"
+    },
+    {
+      "name": "1-restored",
+      "valid": true,
+      "events": [],
+      "modelSha256": "ae5c46f638bb8f85d3d5c33932c2d526e065f7fbf27880f5ffdc065534a588d9"
+    },
+    {
+      "name": "1-edited",
+      "valid": true,
+      "events": [],
+      "modelSha256": "84a27f1fefbbc148a6328767dab50b843f80da33d0c84b12f959896c6e06fec0"
+    },
+    {
+      "name": "1-invalid",
+      "valid": false,
+      "events": [
+        "ERROR:Target.UnresolvedShape"
+      ]
+    },
+    {
+      "name": "1-conflict",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ]
+    }
+  ],
+  "scope": "Two upstream ASTs with an explicitly authored Widget dependency. Native original/restored assembly agrees; dependency edits change models; unresolved references and conflicting definitions fail. Standalone corpus baseline remains unchanged."
+}

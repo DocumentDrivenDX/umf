@@ -1,0 +1,18 @@
+_:Nb67bb1d1ee474293bf944fd4f064b1b0 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N92af592db72b4a549ab8a7491c326346 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/and-002.test#InvalidInstance2> .
+_:N92af592db72b4a549ab8a7491c326346 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N92af592db72b4a549ab8a7491c326346 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nb67bb1d1ee474293bf944fd4f064b1b0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N229a46f9a7224cd6b452a40a28ebd843 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N92af592db72b4a549ab8a7491c326346 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/and-002.test#AndShape> .
+_:N229a46f9a7224cd6b452a40a28ebd843 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Nb67bb1d1ee474293bf944fd4f064b1b0 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#AndConstraintComponent> .
+_:N92af592db72b4a549ab8a7491c326346 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/and-002.test#InvalidInstance2> .
+_:Nb67bb1d1ee474293bf944fd4f064b1b0 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/and-002.test#InvalidInstance1> .
+_:N92af592db72b4a549ab8a7491c326346 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#AndConstraintComponent> .
+_:N92af592db72b4a549ab8a7491c326346 <http://www.w3.org/ns/shacl#resultMessage> "Node ex:InvalidInstance2 must conform to all shapes in ex:SuperShape , [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:property ] ]" .
+_:Nb67bb1d1ee474293bf944fd4f064b1b0 <http://www.w3.org/ns/shacl#resultMessage> "Node ex:InvalidInstance1 must conform to all shapes in ex:SuperShape , [ sh:property [ sh:maxCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:property ] ]" .
+_:N229a46f9a7224cd6b452a40a28ebd843 <http://www.w3.org/ns/shacl#result> _:Nb67bb1d1ee474293bf944fd4f064b1b0 .
+_:Nb67bb1d1ee474293bf944fd4f064b1b0 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/and-002.test#InvalidInstance1> .
+_:N229a46f9a7224cd6b452a40a28ebd843 <http://www.w3.org/ns/shacl#result> _:N92af592db72b4a549ab8a7491c326346 .
+_:Nb67bb1d1ee474293bf944fd4f064b1b0 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/and-002.test#AndShape> .

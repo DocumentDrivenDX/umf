@@ -1,0 +1,69 @@
+{
+  "commands": [
+    [
+      "/home/erik/Projects/umf/.cache/dbt-venv/bin/dbt",
+      "build",
+      "--project-dir",
+      "/home/erik/Projects/umf/native/dbt/project",
+      "--profiles-dir",
+      "/home/erik/Projects/umf/.cache/dbt-artifact-profile",
+      "--target-path",
+      "/home/erik/Projects/umf/.cache/dbt-artifact-target",
+      "--log-path",
+      "/home/erik/Projects/umf/.cache/dbt-artifact-logs"
+    ],
+    [
+      "/home/erik/Projects/umf/.cache/dbt-venv/bin/dbt",
+      "docs",
+      "generate",
+      "--project-dir",
+      "/home/erik/Projects/umf/native/dbt/project",
+      "--profiles-dir",
+      "/home/erik/Projects/umf/.cache/dbt-artifact-profile",
+      "--target-path",
+      "/home/erik/Projects/umf/.cache/dbt-artifact-target",
+      "--log-path",
+      "/home/erik/Projects/umf/.cache/dbt-artifact-logs"
+    ]
+  ],
+  "database": "/home/erik/Projects/umf/.cache/dbt-artifact-1e80d31e-1d47-48ef-800c-3fa4b195bac7.duckdb",
+  "scope": "Fresh generated local DuckDB database; no remote warehouse; original fixtures unchanged",
+  "files": [
+    {
+      "path": "native/dbt/project/dbt_project.yml",
+      "sha256": "6f8143601394a732126500476037da1895c071588d31f5cf79d438c0c7eebcf5"
+    },
+    {
+      "path": "native/dbt/project/models/order_totals.sql",
+      "sha256": "f3ceb620cdeeaa07a39e11c7ec627a462dde7eb3a40c36c6bcc967ed5f403daa"
+    },
+    {
+      "path": "native/dbt/project/models/schema.yml",
+      "sha256": "dd3b6677d57c2b1b1db8901c71ad7500305c5b3e59811a1635a50ace3ba279dd"
+    },
+    {
+      "path": "native/dbt/project/profiles.yml",
+      "sha256": "c3059c76db02a584240989d09d8ae1ff8b5595f088c679bd24b08be679763437"
+    },
+    {
+      "path": "native/dbt/project/seeds/orders.csv",
+      "sha256": "fcde59d7f51aad037c8c0cca42e61e99cbec9cae1706a06736b025369869c113"
+    },
+    {
+      "path": "fixtures/dbt/artifacts/run-results.json",
+      "sha256": "0608c07929d7b0ce2eba45b53b43eb3aa5e8cd76e1fa4890cafbcb0145b48b17"
+    },
+    {
+      "path": "fixtures/dbt/artifacts/catalog.json",
+      "sha256": "31143bbe26fc454d2a38d28d110b9b0b4fae158a0f0c93963ee4362b88359040"
+    },
+    {
+      "path": "fixtures/dbt/artifacts/catalog-manifest.json",
+      "sha256": "05539990c895581d2cb68384ec82edddfaa6428ba86564f3c459613052b99b5c"
+    },
+    {
+      "path": "native/dbt/oracle-requirements.txt",
+      "sha256": "4d47968c46440c839ba8abf847902ab5069ceda478c4674bf3312d81f54d6675"
+    }
+  ]
+}

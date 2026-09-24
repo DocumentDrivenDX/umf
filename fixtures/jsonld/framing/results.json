@@ -1,0 +1,3369 @@
+{
+  "cases": [
+    {
+      "id": "t0001",
+      "path": "native/jsonld/framing-sources/frame/0001-in.jsonld",
+      "inputs": {
+        "id": "t0001",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0001-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"dcterms\": \"http://purl.org/dc/terms/\",\n    \"ex\": \"http://example.org/vocab#\"\n  },\n  \"@type\": \"ex:Library\",\n  \"ex:contains\": {\n    \"@type\": \"ex:Book\",\n    \"ex:contains\": {\n      \"@type\": \"ex:Chapter\"\n    }\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0001-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0001.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0001.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0002",
+      "path": "native/jsonld/framing-sources/frame/0002-in.jsonld",
+      "inputs": {
+        "id": "t0002",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0002-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"dcterms\": \"http://purl.org/dc/terms/\",\n    \"ex\": \"http://example.org/vocab#\"\n  },\n  \"@type\": \"ex:Library\",\n  \"ex:contains\": {\n    \"@type\": \"ex:Book\",\n    \"ex:contains\": {\n      \"@type\": \"ex:Chapter\"\n    }\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0002-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0002.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0002.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0003",
+      "path": "native/jsonld/framing-sources/frame/0003-in.jsonld",
+      "inputs": {
+        "id": "t0003",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0003-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"dcterms\": \"http://purl.org/dc/terms/\",\n    \"ex\": \"http://example.org/vocab#\"\n  },\n  \"@type\": \"ex:DoesNotExist\"\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0003-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0003.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0003.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0004",
+      "path": "native/jsonld/framing-sources/frame/0004-in.jsonld",
+      "inputs": {
+        "id": "t0004",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0004-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"dcterms\": \"http://purl.org/dc/terms/\",\n    \"ex\": \"http://example.org/vocab#\",\n    \"ex:contains\": {\"@type\": \"@id\"}\n  },\n  \"@type\": \"ex:Library\"\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0004-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0004.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0004.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0005",
+      "path": "native/jsonld/framing-sources/frame/0005-in.jsonld",
+      "inputs": {
+        "id": "t0005",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0005-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"dcterms\": \"http://purl.org/dc/terms/\",\n    \"ex\": \"http://example.org/vocab#\"\n  },\n  \"@explicit\": true,\n  \"@type\": \"ex:Library\",\n  \"ex:contains\": {\n    \"@explicit\": true,\n    \"@type\": \"ex:Book\",\n    \"dcterms:title\": {},\n    \"ex:contains\": {\n      \"@explicit\": true,\n      \"@type\": \"ex:Chapter\",\n      \"dcterms:title\": {},\n      \"ex:null\": {}\n    }\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0005-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0005.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0005.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0006",
+      "path": "native/jsonld/framing-sources/frame/0006-in.jsonld",
+      "inputs": {
+        "id": "t0006",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0006-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"dcterms\": \"http://purl.org/dc/terms/\",\n    \"ex\": \"http://example.org/vocab#\"\n  },\n  \"@type\": \"ex:Library\",\n  \"ex:contains\": {\n    \"@type\": \"ex:Book\",\n    \"ex:contains\": {\n      \"@type\": \"ex:Chapter\"\n    }\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0006-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0006.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0006.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0007",
+      "path": "native/jsonld/framing-sources/frame/0007-in.jsonld",
+      "inputs": {
+        "id": "t0007",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0007-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"dcterms\": \"http://purl.org/dc/terms/\",\n    \"ex\": \"http://example.org/vocab#\"\n  },\n  \"@type\": \"ex:Library\",\n  \"ex:contains\": {\n    \"@type\": \"ex:Book\",\n    \"ex:contains\": {\n      \"@type\": \"ex:Chapter\"\n    }\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0007-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0007.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0007.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0008",
+      "path": "native/jsonld/framing-sources/frame/0008-in.jsonld",
+      "inputs": {
+        "id": "t0008",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0008-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"ex\": \"http://example.org/vocab#\",\n    \"ex:embedded\": {\"@container\": \"@set\"},\n    \"ex:literal\": {\"@container\": \"@set\"},\n    \"ex:mixed\": {\"@container\": \"@set\"},\n    \"ex:single\": {\"@container\": \"@set\"}\n  },\n  \"@type\": \"ex:Example\",\n  \"ex:embedded\": {},\n  \"ex:literal\": {},\n  \"ex:mixed\": {\"@embed\": false},\n  \"ex:single\": {}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0008-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0008.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0008.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0009",
+      "path": "native/jsonld/framing-sources/frame/0009-in.jsonld",
+      "inputs": {
+        "id": "t0009",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0009-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"ex\": \"http://example.org/vocab#\",\n    \"ex:p7\": {\"@container\": \"@set\"}\n  },\n  \"@type\": \"ex:Example1\",\n  \"ex:p2\": {\n    \"@default\": \"custom-default\"\n  },\n  \"ex:p3\": {\n    \"@default\": 3\n  },\n  \"ex:p4\": {\n    \"@omitDefault\": true\n  },\n  \"ex:p5\": {},\n  \"ex:p6\": {\n    \"@type\": \"ex:Example2\",\n    \"ex:p3\": {\n      \"@default\": 4\n    }\n  },\n  \"ex:p7\": {\"@type\": \"ex:Example3\"}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0009-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0009.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0009.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0010",
+      "path": "native/jsonld/framing-sources/frame/0010-in.jsonld",
+      "inputs": {
+        "id": "t0010",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0010-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"dcterms\": \"http://purl.org/dc/terms/\",\n    \"dcterms:creator\": {\n      \"@type\": \"@id\"\n    },\n    \"foaf\": \"http://xmlns.com/foaf/0.1/\",\n    \"ps\": \"http://purl.org/payswarm#\"\n  },\n  \"@id\": \"http://example.com/asset\",\n  \"@type\": \"ps:Asset\",\n  \"dcterms:creator\": {}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0010-out.jsonld",
+      "status": "blocked",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Absolute IRI \"dcterms:creator\" confused with prefix \"dcterms\"."
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "t0011",
+      "path": "native/jsonld/framing-sources/frame/0011-in.jsonld",
+      "inputs": {
+        "id": "t0011",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0011-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"ex\": \"http://www.example.com/#\"\n  },\n  \"@type\": \"ex:Thing\",\n  \"ex:embed\": {\n    \"@embed\": true\n  },\n  \"ex:noembed\": {\n    \"@embed\": false\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0011-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0011.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0011.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0012",
+      "path": "native/jsonld/framing-sources/frame/0012-in.jsonld",
+      "inputs": {
+        "id": "t0012",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0012-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"sp\": \"http://smartplatforms.org/terms#\"\n  },\n  \"@type\": [\"sp:Medication\", \"sp:Fulfillment\"],\n  \"sp:hasFulfillment\": {\"@omitDefault\": true, \"@embed\": false},\n  \"sp:hasMedication\": {\"@omitDefault\": true, \"@embed\": false}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0012-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0012.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0012.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0013",
+      "path": "native/jsonld/framing-sources/frame/0013-in.jsonld",
+      "inputs": {
+        "id": "t0013",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0013-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"ex\": \"http://example.org/\"\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0013-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "object with only @id: Dropping object with only @id."
+        },
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0013.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0013.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0014",
+      "path": "native/jsonld/framing-sources/frame/0014-in.jsonld",
+      "inputs": {
+        "id": "t0014",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0014-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"ex\": \"http://example.org/\"\n  },\n  \"@type\": [\"ex:Node\"]\n}\n",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0014-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0014.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0014.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0015",
+      "path": "native/jsonld/framing-sources/frame/0015-in.jsonld",
+      "inputs": {
+        "id": "t0015",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0015-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"api\": \"http://smartplatforms.org/terms/api#\",\n    \"dcterms\": \"http://purl.org/dc/terms/\",\n    \"foaf\": \"http://xmlns.com/foaf/0.1/\",\n    \"owl\": \"http://www.w3.org/2002/07/owl#\",\n    \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\",\n    \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\",\n    \"sp\": \"http://smartplatforms.org/terms#\",\n    \"sp:abnormalInterpretation\": {\"@type\": \"@id\"},\n    \"sp:address\": {\"@type\": \"@id\"},\n    \"sp:alertLevel\": {\"@type\": \"@id\"},\n    \"sp:allergicReaction\": {\"@type\": \"@id\"},\n    \"sp:allergyExclusionName\": {\"@type\": \"@id\"},\n    \"sp:belongsTo\": {\"@type\": \"@id\"},\n    \"sp:bloodPressure\": {\"@type\": \"@id\"},\n    \"sp:bodyMassIndex\": {\"@type\": \"@id\"},\n    \"sp:bodyPosition\": {\"@type\": \"@id\"},\n    \"sp:bodySite\": {\"@type\": \"@id\"},\n    \"sp:category\": {\"@type\": \"@id\"},\n    \"sp:code\": {\"@type\": \"@id\"},\n    \"sp:created\": {\"@type\": \"@id\"},\n    \"sp:denominator\": {\"@type\": \"@id\"},\n    \"sp:diastolic\": {\"@type\": \"@id\"},\n    \"sp:drugAllergen\": {\"@type\": \"@id\"},\n    \"sp:drugClass\": {\"@type\": \"@id\"},\n    \"sp:drugClassAllergen\": {\"@type\": \"@id\"},\n    \"sp:drugName\": {\"@type\": \"@id\"},\n    \"sp:encounter\": {\"@type\": \"@id\"},\n    \"sp:encounterType\": {\"@type\": \"@id\"},\n    \"sp:facility\": {\"@type\": \"@id\"},\n    \"sp:foodAllergen\": {\"@type\": \"@id\"},\n    \"sp:frequency\": {\"@type\": \"@id\"},\n    \"sp:fulfillment\": {\"@type\": \"@id\"},\n    \"sp:hasStatement\": {\"@type\": \"@id\"},\n    \"sp:heartRate\": {\"@type\": \"@id\"},\n    \"sp:height\": {\"@type\": \"@id\"},\n    \"sp:labName\": {\"@type\": \"@id\"},\n    \"sp:labResult\": {\"@type\": \"@id\"},\n    \"sp:labSpecimenCollected\": {\"@type\": \"@id\"},\n    \"sp:labStatus\": {\"@type\": \"@id\"},\n    \"sp:maximum\": {\"@type\": \"@id\"},\n    \"sp:medicalRecordNumber\": {\"@type\": \"@id\"},\n    \"sp:medication\": {\"@type\": \"@id\"},\n    \"sp:method\": {\"@type\": \"@id\"},\n    \"sp:minimum\": {\"@type\": \"@id\"},\n    \"sp:narrativeResult\": {\"@type\": \"@id\"},\n    \"sp:nominalResult\": {\"@type\": \"@id\"},\n    \"sp:nonCriticalRange\": {\"@type\": \"@id\"},\n    \"sp:normalRange\": {\"@type\": \"@id\"},\n    \"sp:numerator\": {\"@type\": \"@id\"},\n    \"sp:ordinalResult\": {\"@type\": \"@id\"},\n    \"sp:organization\": {\"@type\": \"@id\"},\n    \"sp:oxygenSaturation\": {\"@type\": \"@id\"},\n    \"sp:participant\": {\"@type\": \"@id\"},\n    \"sp:person\": {\"@type\": \"@id\"},\n    \"sp:pharmacy\": {\"@type\": \"@id\"},\n    \"sp:problemName\": {\"@type\": \"@id\"},\n    \"sp:provenance\": {\"@type\": \"@id\"},\n    \"sp:provider\": {\"@type\": \"@id\"},\n    \"sp:quantitativeResult\": {\"@type\": \"@id\"},\n    \"sp:quantity\": {\"@type\": \"@id\"},\n    \"sp:quantityDispensed\": {\"@type\": \"@id\"},\n    \"sp:respiratoryRate\": {\"@type\": \"@id\"},\n    \"sp:severity\": {\"@type\": \"@id\"},\n    \"sp:specimenCollected\": {\"@type\": \"@id\"},\n    \"sp:systolic\": {\"@type\": \"@id\"},\n    \"sp:temperature\": {\"@type\": \"@id\"},\n    \"sp:translationFidelity\": {\"@type\": \"@id\"},\n    \"sp:valueAndUnit\": {\"@type\": \"@id\"},\n    \"sp:vitalName\": {\"@type\": \"@id\"},\n    \"sp:weight\": {\"@type\": \"@id\"},\n    \"spcode\": \"http://smartplatforms.org/terms/codes/\",\n    \"vcard\": \"http://www.w3.org/2006/vcard/ns#\",\n    \"vcard:adr\": {\"@type\": \"@id\"},\n    \"vcard:n\": {\"@type\": \"@id\"},\n    \"vcard:tel\": {\"@type\": \"@id\"}\n  },\n  \"@type\": [\n    \"sp:Statement\",\n    \"sp:Fulfillment\",\n    \"sp:Alert\",\n    \"sp:AllergyExclusion\",\n    \"sp:Demographics\",\n    \"sp:Problem\",\n    \"sp:Medication\",\n    \"sp:VitalSigns\",\n    \"sp:MedicalRecord\",\n    \"sp:LabResult\",\n    \"sp:Allergy\",\n    \"sp:Encounter\"\n  ]\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0015-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0015.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0015.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0016",
+      "path": "native/jsonld/framing-sources/frame/0016-in.jsonld",
+      "inputs": {
+        "id": "t0016",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0016-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"dcterms\": \"http://purl.org/dc/terms/\",\n    \"ex\": \"http://example.org/vocab#\"\n  },\n  \"@type\": {},\n  \"ex:contains\": {}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0016-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0016.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0016.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0017",
+      "path": "native/jsonld/framing-sources/frame/0017-in.jsonld",
+      "inputs": {
+        "id": "t0017",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0017-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"dcterms\": \"http://purl.org/dc/terms/\",\n    \"ex\": \"http://example.org/vocab#\"\n  },\n  \"@type\": \"ex:Library\",\n  \"ex:contains\": {\n    \"@type\": \"ex:Book\",\n    \"ex:contains\": {\n      \"@type\": \"ex:Chapter\"\n    }\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0017-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0017.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0017.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0018",
+      "path": "native/jsonld/framing-sources/frame/0018-in.jsonld",
+      "inputs": {
+        "id": "t0018",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0018-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@type\": [\"http://example.org/vocab#Library\"],\n  \"http://example.org/vocab#contains\": [{}]\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0018-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "object with only @id: Dropping object with only @id."
+        },
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0018.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0018.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0019",
+      "path": "native/jsonld/framing-sources/frame/0019-in.jsonld",
+      "inputs": {
+        "id": "t0019",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0019-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"ex\": \"http://example.org/terms#\"\n  },\n  \"@type\": \"ex:Node\"\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0019-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0019.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0019.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0020",
+      "path": "native/jsonld/framing-sources/frame/0020-in.jsonld",
+      "inputs": {
+        "id": "t0020",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0020-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0020-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0020.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0020.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0021",
+      "path": "native/jsonld/framing-sources/frame/0021-in.jsonld",
+      "inputs": {
+        "id": "t0021",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0021-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"dcterms\": \"http://purl.org/dc/terms/\",\n    \"ex\": \"http://example.org/vocab#\",\n    \"ex:list\": {\"@container\": \"@list\"}\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0021-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0021.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0021.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0022",
+      "path": "native/jsonld/framing-sources/frame/0022-in.jsonld",
+      "inputs": {
+        "id": "t0022",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0022-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"@id\": \"ex:Sub1\"\n}\n",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0022-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0022.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0022.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0023",
+      "path": "native/jsonld/framing-sources/frame/0023-in.jsonld",
+      "inputs": {
+        "id": "t0023",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0023-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"ex:p\": [],\n  \"ex:q\": {}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0023-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0023.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0023.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0024",
+      "path": "native/jsonld/framing-sources/frame/0024-in.jsonld",
+      "inputs": {
+        "id": "t0024",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0024-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"@requireAll\": false,\n  \"ex:p\": {},\n  \"ex:q\": {}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0024-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0024.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0024.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0025",
+      "path": "native/jsonld/framing-sources/frame/0025-in.jsonld",
+      "inputs": {
+        "id": "t0025",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0025-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"@requireAll\": true,\n  \"ex:p\": {\"@default\": \"Foo\"},\n  \"ex:q\": {\"@default\": \"Bar\"}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0025-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0025.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0025.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0026",
+      "path": "native/jsonld/framing-sources/frame/0026-in.jsonld",
+      "inputs": {
+        "id": "t0026",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0026-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"@explicit\": true,\n  \"@type\": \"ex:Type1\"\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0026-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0026.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0026.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0027",
+      "path": "native/jsonld/framing-sources/frame/0027-in.jsonld",
+      "inputs": {
+        "id": "t0027",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0027-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"@type\": \"ex:Type1\",\n  \"ex:null\": []\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0027-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0027.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0027.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0028",
+      "path": "native/jsonld/framing-sources/frame/0028-in.jsonld",
+      "inputs": {
+        "id": "t0028",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0028-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"@type\": \"ex:Type1\",\n  \"@reverse\": {\"ex:includes\": {}}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0028-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0028.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0028.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0029",
+      "path": "native/jsonld/framing-sources/frame/0029-in.jsonld",
+      "inputs": {
+        "id": "t0029",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0029-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"ex\": \"http://example.org/\",\n    \"excludes\": {\"@reverse\": \"ex:includes\"}\n  },\n  \"@type\": \"ex:Type1\",\n  \"excludes\": {}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0029-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0029.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0029.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0030",
+      "path": "native/jsonld/framing-sources/frame/0030-in.jsonld",
+      "inputs": {
+        "id": "t0030",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0030-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"ex\": \"http://www.example.com/#\"\n  },\n  \"@type\": \"ex:Thing\",\n  \"ex:embed\": {\n    \"@embed\": \"@always\"\n  },\n  \"ex:noembed\": {\n    \"@embed\": \"@never\"\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0030-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0030.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0030.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0031",
+      "path": "native/jsonld/framing-sources/frame/0031-in.jsonld",
+      "inputs": {
+        "id": "t0031",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0031-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"@type\": []\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0031-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0031.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0031.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0032",
+      "path": "native/jsonld/framing-sources/frame/0032-in.jsonld",
+      "inputs": {
+        "id": "t0032",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0032-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"@id\": \"ex:Sub1\"\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0032-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0032.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0032.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0033",
+      "path": "native/jsonld/framing-sources/frame/0033-in.jsonld",
+      "inputs": {
+        "id": "t0033",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0033-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"@id\": [\"ex:Sub1\", \"ex:Sub2\"]\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0033-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0033.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0033.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0034",
+      "path": "native/jsonld/framing-sources/frame/0034-in.jsonld",
+      "inputs": {
+        "id": "t0034",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0034-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"ex:p\": [],\n  \"ex:q\": {}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0034-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0034.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0034.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0035",
+      "path": "native/jsonld/framing-sources/frame/0035-in.jsonld",
+      "inputs": {
+        "id": "t0035",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0035-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"ex:p\": {\n    \"ex:q\": {}\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0035-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0035.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0035.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0036",
+      "path": "native/jsonld/framing-sources/frame/0036-in.jsonld",
+      "inputs": {
+        "id": "t0036",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0036-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"@id\": \"ex:Sub1\",\n  \"ex:p\": \"P\",\n  \"ex:q\": {\"@value\": \"Q\", \"@type\": \"ex:q\"},\n  \"ex:r\": {\"@value\": \"R\", \"@language\": \"r\"}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0036-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0036.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0036.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0037",
+      "path": "native/jsonld/framing-sources/frame/0037-in.jsonld",
+      "inputs": {
+        "id": "t0037",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0037-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"ex:p\": {\"@value\": {}},\n  \"ex:q\": {\"@value\": {}, \"@type\": \"ex:q\"},\n  \"ex:r\": {\"@value\": {}, \"@language\": \"r\"}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0037-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0037.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0037.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0038",
+      "path": "native/jsonld/framing-sources/frame/0038-in.jsonld",
+      "inputs": {
+        "id": "t0038",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0038-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"ex:q\": {\"@value\": \"Q\", \"@type\": {}}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0038-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0038.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0038.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0039",
+      "path": "native/jsonld/framing-sources/frame/0039-in.jsonld",
+      "inputs": {
+        "id": "t0039",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0039-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"ex:r\": {\"@value\": \"R\", \"@language\": {}}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0039-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0039.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0039.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0040",
+      "path": "native/jsonld/framing-sources/frame/0040-in.jsonld",
+      "inputs": {
+        "id": "t0040",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0040-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"ex:p\": {\"@value\": {}, \"@type\": []},\n  \"ex:q\": {\"@value\": {}, \"@type\": \"ex:q\"},\n  \"ex:r\": {\"@value\": {}, \"@language\": \"r\"}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0040-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0040.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0040.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0041",
+      "path": "native/jsonld/framing-sources/frame/0041-in.jsonld",
+      "inputs": {
+        "id": "t0041",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0041-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"ex:p\": {\"@value\": {}, \"@language\": []},\n  \"ex:q\": {\"@value\": {}, \"@type\": \"ex:q\"},\n  \"ex:r\": {\"@value\": {}, \"@language\": \"r\"}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0041-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0041.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0041.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0042",
+      "path": "native/jsonld/framing-sources/frame/0042-in.jsonld",
+      "inputs": {
+        "id": "t0042",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0042-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"ex:p\": {\"@value\": [\"P\", \"Q\", \"R\"]},\n  \"ex:q\": {\"@value\": [\"P\", \"Q\", \"R\"], \"@type\": \"ex:q\"},\n  \"ex:r\": {\"@value\": [\"P\", \"Q\", \"R\"], \"@language\": \"r\"}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0042-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0042.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0042.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0043",
+      "path": "native/jsonld/framing-sources/frame/0043-in.jsonld",
+      "inputs": {
+        "id": "t0043",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0043-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"ex:q\": {\"@value\": \"Q\", \"@type\": [\"ex:q\", \"ex:Q\"]}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0043-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0043.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0043.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0044",
+      "path": "native/jsonld/framing-sources/frame/0044-in.jsonld",
+      "inputs": {
+        "id": "t0044",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0044-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"ex:r\": {\"@value\": \"R\", \"@language\": [\"p\", \"q\", \"r\"]}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0044-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0044.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0044.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0045",
+      "path": "native/jsonld/framing-sources/frame/0045-in.jsonld",
+      "inputs": {
+        "id": "t0045",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0045-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"ex:p\": {\"@value\": {}},\n  \"ex:q\": {\"@value\": {}, \"@type\": \"ex:q\"},\n  \"ex:r\": {\"@value\": {}, \"@language\": \"R\"}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0045-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0045.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0045.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0046",
+      "path": "native/jsonld/framing-sources/frame/0046-in.jsonld",
+      "inputs": {
+        "id": "t0046",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0046-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"@vocab\": \"urn:\"},\n  \"@type\": \"Class\"\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0046-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0046.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0046.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0047",
+      "path": "native/jsonld/framing-sources/frame/0047-in.jsonld",
+      "inputs": {
+        "id": "t0047",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0047-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"@vocab\": \"urn:\"},\n  \"@type\": \"Class\",\n  \"@graph\": {}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0047-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0047.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0047.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0048",
+      "path": "native/jsonld/framing-sources/frame/0048-in.jsonld",
+      "inputs": {
+        "id": "t0048",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0048-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"@vocab\": \"urn:\"},\n  \"@type\": \"Class\",\n  \"preserve\": {\n    \"@graph\": {}\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0048-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0048.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0048.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0049",
+      "path": "native/jsonld/framing-sources/frame/0049-in.jsonld",
+      "inputs": {
+        "id": "t0049",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0049-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"@vocab\": \"urn:\"},\n  \"@type\": \"Class\",\n  \"preserve\": {\n    \"deep\": {\n      \"@graph\": {}\n    }\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0049-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0049.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0049.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0050",
+      "path": "native/jsonld/framing-sources/frame/0050-in.jsonld",
+      "inputs": {
+        "id": "t0050",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0050-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"@vocab\": \"http://example.org/\"},\n  \"@type\": \"Library\",\n  \"contains\": {\n    \"@id\": \"http://example.org/graphs/books\",\n    \"@graph\": {\"@type\": \"Book\"}\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0050-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0050.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0050.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0051",
+      "path": "native/jsonld/framing-sources/frame/0051-in.jsonld",
+      "inputs": {
+        "id": "t0051",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0051-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"schema\": \"http://schema.org/\",\n    \"name\": \"schema:name\",\n    \"url\": { \"@id\": \"schema:url\", \"@type\": \"schema:URL\"}\n  },\n  \"name\": {},\n  \"url\": {\"@default\": {\"@value\": \"http://example.com\", \"@type\": \"schema:URL\"}}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0051-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0051.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0051.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0052",
+      "path": "native/jsonld/framing-sources/frame/0052-in.jsonld",
+      "inputs": {
+        "id": "t0052",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0052-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"@id\": [\"ex:Sub1\", \"_:Sub2\"]\n}",
+        "lossPolicy": "report"
+      },
+      "positive": false,
+      "expectedError": "invalid frame",
+      "status": "blocked",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid JSON-LD syntax; invalid @id in frame."
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "t0053",
+      "path": "native/jsonld/framing-sources/frame/0053-in.jsonld",
+      "inputs": {
+        "id": "t0053",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0053-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"@type\": [\"ex:Type1\", \"_:Type2\"]\n}",
+        "lossPolicy": "report"
+      },
+      "positive": false,
+      "expectedError": "invalid frame",
+      "status": "blocked",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid JSON-LD syntax; invalid @type in frame."
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "t0054",
+      "path": "native/jsonld/framing-sources/frame/0054-in.jsonld",
+      "inputs": {
+        "id": "t0054",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0054-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"ex\": \"http://www.example.com/#\"\n  },\n  \"@type\": \"ex:Thing\",\n  \"ex:embed\": {\n    \"@embed\": \"@sometimes\"\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": false,
+      "expectedError": "invalid @embed value",
+      "status": "blocked",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid JSON-LD syntax; invalid value of @embed."
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "t0055",
+      "path": "native/jsonld/framing-sources/frame/0055-in.jsonld",
+      "inputs": {
+        "id": "t0055",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0055-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"ex:mixedlist\": {}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0055-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0055.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0055.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0056",
+      "path": "native/jsonld/framing-sources/frame/0056-in.jsonld",
+      "inputs": {
+        "id": "t0056",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0056-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"@version\": 1.1,\n    \"ex\": \"http://example.org/\"\n  },\n  \"@requireAll\": false,\n  \"ex:list-v\": {\"@list\": [\"V\"]},\n  \"ex:list-l\": {\"@list\": [{\"@value\": \"L\", \"@language\": \"l\"}]},\n  \"ex:list-t\": {\"@list\": [{\"@value\": \"T\", \"@type\": \"ex:t\"}]},\n  \"ex:list-i\": {\"@list\": [{\"@id\": \"I\", \"@type\": \"ex:T\"}]}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0056-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0056.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0056.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0057",
+      "path": "native/jsonld/framing-sources/frame/0057-in.jsonld",
+      "inputs": {
+        "id": "t0057",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0057-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"@version\": 1.1,\n    \"ex\": \"http://example.org/\"\n  },\n  \"@requireAll\": false,\n  \"ex:list-v\": {\"@list\": [\"V\"]},\n  \"ex:list-l\": {\"@list\": [{\"@value\": \"L\", \"@language\": \"l\"}]},\n  \"ex:list-t\": {\"@list\": [{\"@value\": \"T\", \"@type\": \"ex:t\"}]},\n  \"ex:list-i\": {\"@list\": [{\"@id\": \"I\", \"@type\": \"ex:T\"}]}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0057-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0057.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0057.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0058",
+      "path": "native/jsonld/framing-sources/frame/0058-in.jsonld",
+      "inputs": {
+        "id": "t0058",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0058-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"@version\": 1.1,\n    \"ex\": \"http://example.org/\"\n  },\n  \"@requireAll\": false,\n  \"ex:list-v\": {\"@list\": [\"V\"]},\n  \"ex:list-l\": {\"@list\": [{\"@value\": \"L\", \"@language\": \"l\"}]},\n  \"ex:list-t\": {\"@list\": [{\"@value\": \"T\", \"@type\": \"ex:t\"}]},\n  \"ex:list-i\": {\"@list\": [{\"@id\": \"I\", \"@type\": \"ex:T\"}]}\n}",
+        "lossPolicy": "report",
+        "omitGraph": false
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0058-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0058.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0058.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0059",
+      "path": "native/jsonld/framing-sources/frame/0059-in.jsonld",
+      "inputs": {
+        "id": "t0059",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0059-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"ex\": \"http://www.example.com/#\"\n  },\n  \"@type\": \"ex:Thing\",\n  \"@embed\": \"@last\"\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0059-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0059.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0059.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0060",
+      "path": "native/jsonld/framing-sources/frame/0060-in.jsonld",
+      "inputs": {
+        "id": "t0060",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0060-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"ex\": \"http://www.example.com/#\"\n  },\n  \"@type\": \"ex:Thing\",\n  \"@embed\": \"@once\"\n}",
+        "lossPolicy": "report",
+        "ordered": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0060-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0060.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0060.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0061",
+      "path": "native/jsonld/framing-sources/frame/0061-in.jsonld",
+      "inputs": {
+        "id": "t0061",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0061-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"@base\": \"http://example.org/\",\n    \"@vocab\": \"http://example.org/vocab#\",\n    \"@version\": 1.1\n  },\n  \"characters\": {\n    \"format\": {\n      \"char\": {\n        \"@id\": {},\n        \"states\": {\n          \"@default\": {}\n        }\n      }\n    }\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0061-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0061.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0061.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0062",
+      "path": "native/jsonld/framing-sources/frame/0062-in.jsonld",
+      "inputs": {
+        "id": "t0062",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0062-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"@version\": 1.1,\n    \"@vocab\": \"http://example.org/vocab#\",\n    \"Production\": {\n      \"@context\": {\n        \"part\": {\n          \"@type\": \"@id\", \n          \"@container\": \"@set\"\n        }\n      }\n    }\n  },\n  \"@id\": \"http://example.org/1\"\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0062-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0062.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0062.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0063",
+      "path": "native/jsonld/framing-sources/frame/0063-in.jsonld",
+      "inputs": {
+        "id": "t0063",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0063-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"@version\": 1.1,\n    \"ex\": \"http://example.org/vocab#\",\n    \"ex:p3\": {\"@container\": \"@set\"}\n  },\n  \"@type\": \"ex:Example\",\n  \"ex:p1\": \"non-default\",\n  \"ex:p2\": {\"@default\": \"@null\"},\n  \"ex:p3\": {\"@default\": [\"@null\"]}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0063-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0063.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0063.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0064",
+      "path": "native/jsonld/framing-sources/frame/0064-in.jsonld",
+      "inputs": {
+        "id": "t0064",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0064-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"@type\": {\"@default\": \"ex:Foo\"},\n  \"ex:foo\": \"bar\"\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0064-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0064.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0064.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0065",
+      "path": "native/jsonld/framing-sources/frame/0065-in.jsonld",
+      "inputs": {
+        "id": "t0065",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0065-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"@vocab\": \"https://schema.org/\"\n  },\n  \"givenName\": \"John\"\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0065-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0065.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0065.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0066",
+      "path": "native/jsonld/framing-sources/frame/0066-in.jsonld",
+      "inputs": {
+        "id": "t0066",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0066-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "\n{\n  \"@context\": {\n    \"@vocab\": \"https://schema.org/\"\n  },\n  \"follows\": { \"@id\": \"https://schema.org/JANE\" }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0066-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0066.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0066.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0067",
+      "path": "native/jsonld/framing-sources/frame/0067-in.jsonld",
+      "inputs": {
+        "id": "t0067",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0067-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "\n{\n  \"@context\": {\n    \"@vocab\": \"https://schema.org/\"\n  },\n  \"follows\": {\n    \"@list\": [{\n      \"@id\": \"https://schema.org/JANE\"\n    }]\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0067-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0067.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0067.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0068",
+      "path": "native/jsonld/framing-sources/frame/0068-in.jsonld",
+      "inputs": {
+        "id": "t0068",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0068-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"ex\": \"http://example.com#\",\n    \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n  },\n  \"@id\": \"ex:entity1\"\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0068-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0068.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0068.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0069",
+      "path": "native/jsonld/framing-sources/frame/0069-in.jsonld",
+      "inputs": {
+        "id": "t0069",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0069-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"ex\": \"http://example.org/vocab#\",\n    \"ex:info\": {\"@type\": \"@json\"}\n  },\n  \"http://example.org/vocab#info\": {\n    \"@value\": {},\n    \"@type\": \"@json\"\n  }\n}\n",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0069-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0069.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0069.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0070",
+      "path": "native/jsonld/framing-sources/frame/0070-in.jsonld",
+      "inputs": {
+        "id": "t0070",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0070-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{}\n",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/0070-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/t0070.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/t0070.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "teo01",
+      "path": "native/jsonld/framing-sources/frame/eo01-in.jsonld",
+      "inputs": {
+        "id": "teo01",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/eo01-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"@version\": 1.1,\n    \"ex\": \"http://www.example.com/#\"\n  },\n  \"@type\": \"ex:Thing\",\n  \"ex:embed\": {\n    \"@embed\": true\n  },\n  \"ex:noembed\": {\n    \"@embed\": false\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/eo01-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/teo01.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/teo01.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tg001",
+      "path": "native/jsonld/framing-sources/frame/g001-in.jsonld",
+      "inputs": {
+        "id": "tg001",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/g001-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"dcterms\": \"http://purl.org/dc/terms/\",\n    \"ex\": \"http://example.org/vocab#\"\n  },\n  \"@type\": \"ex:Library\",\n  \"ex:contains\": {\n    \"@type\": \"ex:Book\",\n    \"ex:contains\": {\n      \"@type\": \"ex:Chapter\"\n    }\n  }\n}",
+        "lossPolicy": "report",
+        "omitGraph": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/g001-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/tg001.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/tg001.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tg002",
+      "path": "native/jsonld/framing-sources/frame/g002-in.jsonld",
+      "inputs": {
+        "id": "tg002",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/g002-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"dcterms\": \"http://purl.org/dc/terms/\",\n    \"ex\": \"http://example.org/vocab#\"\n  },\n  \"@type\": \"ex:Library\",\n  \"@embed\": \"@always\",\n  \"ex:contains\": {\n    \"@type\": \"ex:Book\",\n    \"@embed\": \"@always\",\n    \"ex:contains\": {\n      \"@type\": \"ex:Chapter\",\n      \"@embed\": \"@always\"\n    },\n    \"ex:bookmark\": {\n      \"@type\": \"ex:Chapter\",\n      \"@embed\": \"@always\"\n    }\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/g002-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/tg002.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/tg002.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tg003",
+      "path": "native/jsonld/framing-sources/frame/g003-in.jsonld",
+      "inputs": {
+        "id": "tg003",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/g003-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"dcterms\": \"http://purl.org/dc/terms/\",\n    \"ex\": \"http://example.org/vocab#\"\n  },\n  \"@type\": \"ex:Library\",\n  \"@embed\": \"@always\",\n  \"ex:contains\": {\n    \"@type\": \"ex:Book\",\n    \"@embed\": \"@always\",\n    \"ex:contains\": {\n      \"@type\": \"ex:Chapter\",\n      \"@embed\": \"@always\"\n    },\n    \"ex:topic\": {\n      \"@type\": \"ex:Library\",\n      \"@embed\": \"@always\"\n    }\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/g003-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/tg003.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/tg003.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tg004",
+      "path": "native/jsonld/framing-sources/frame/g004-in.jsonld",
+      "inputs": {
+        "id": "tg004",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/g004-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"dcterms\": \"http://purl.org/dc/terms/\",\n    \"ex\": \"http://example.org/vocab#\"\n  },\n  \"@type\": \"ex:Library\",\n  \"@embed\": \"@always\",\n  \"ex:contains\": {\n    \"@type\": \"ex:Book\",\n    \"@embed\": \"@always\",\n    \"ex:contains\": {\n      \"@type\": \"ex:Chapter\",\n      \"@embed\": \"@always\",\n      \"ex:topic\": {\n        \"@type\": \"ex:Library\",\n        \"@embed\": \"@always\"\n      }\n    }\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/g004-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/tg004.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/tg004.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tg005",
+      "path": "native/jsonld/framing-sources/frame/g005-in.jsonld",
+      "inputs": {
+        "id": "tg005",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/g005-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"dcterms\": \"http://purl.org/dc/terms/\",\n    \"ex\": \"http://example.org/vocab#\"\n  },\n  \"@type\": \"ex:Library\",\n  \"@embed\": \"@always\",\n  \"ex:contains\": {\n    \"@type\": \"ex:Book\",\n    \"@omitDefault\": \"true\",\n    \"@embed\": \"@always\",\n    \"ex:contains\": {\n      \"@type\": \"ex:Chapter\",\n      \"@embed\": \"@always\",\n      \"ex:topic\": {\n        \"@type\": \"ex:Library\",\n        \"@embed\": \"@always\"\n      }\n    }\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/g005-out.jsonld",
+      "status": "blocked",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid frame flag value."
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "tg006",
+      "path": "native/jsonld/framing-sources/frame/g006-in.jsonld",
+      "inputs": {
+        "id": "tg006",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/g006-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"dcterms\": \"http://purl.org/dc/terms/\",\n    \"ex\": \"http://example.org/vocab#\"\n  },\n  \"@type\": \"ex:Town\",\n  \"@embed\": \"@always\",\n  \"ex:hasLibrary\": {\n    \"@type\": \"ex:Library\",\n    \"@embed\": \"@always\",\n    \"ex:contains\": {\n      \"@type\": \"ex:Book\",\n      \"@embed\": \"@always\",\n      \"ex:contains\": {\n        \"@type\": \"ex:Chapter\",\n        \"@embed\": \"@always\",\n        \"ex:topic\": {\n          \"@type\": \"ex:Library\",\n          \"@embed\": \"@always\"\n        }\n      }\n    }\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/g006-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/tg006.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/tg006.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tg007",
+      "path": "native/jsonld/framing-sources/frame/g007-in.jsonld",
+      "inputs": {
+        "id": "tg007",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/g007-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"dcterms\": \"http://purl.org/dc/terms/\",\n    \"ex\": \"http://example.org/vocab#\"\n  },\n  \"@type\": \"ex:Library\",\n  \"@embed\": \"@always\",\n  \"ex:contains\": {\n    \"@type\": \"ex:Book\",\n    \"@embed\": \"@always\",\n    \"ex:bookmark\": {\n      \"@type\": \"ex:Chapter\",\n      \"@embed\": \"@always\"\n    },\n    \"ex:contains\": {\n      \"@type\": \"ex:Chapter\",\n      \"@embed\": \"@always\",\n      \"ex:topic\" : {\n        \"@type\": \"ex:Topic\",\n        \"@embed\": \"@always\"\n      }\n    }\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/g007-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/tg007.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/tg007.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tg008",
+      "path": "native/jsonld/framing-sources/frame/g008-in.jsonld",
+      "inputs": {
+        "id": "tg008",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/g008-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"dcterms\": \"http://purl.org/dc/terms/\",\n    \"ex\": \"http://example.org/vocab#\",\n    \"ex:relatesTo\": {\"@type\": \"@id\"}\n  },\n  \"@type\": \"ex:Library\",\n  \"@embed\": \"@always\",\n  \"ex:contains\": {\n    \"@type\": \"ex:Book\",\n    \"@embed\": \"@always\",\n    \"ex:bookmark\": {\n      \"@type\": \"ex:Chapter\",\n      \"@embed\": \"@always\"\n    },\n    \"ex:contains\": {\n      \"@type\": \"ex:Chapter\",\n      \"@embed\": \"@always\",\n      \"dcterms:subject\": {\n        \"@omitDefault\": \"true\",\n        \"@embed\": \"@always\",\n        \"@type\": \"ex:Library\"\n      },\n      \"ex:topic\" : {\n        \"@type\": \"ex:Topic\",\n        \"@embed\": \"@always\",\n        \"ex:relatesTo\" : {\n          \"@omitDefault\": \"true\",\n          \"@embed\": \"@always\",\n          \"@type\": \"ex:Library\"\n        }\n      }\n    }\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/g008-out.jsonld",
+      "status": "blocked",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid frame flag value."
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "tg009",
+      "path": "native/jsonld/framing-sources/frame/g009-in.jsonld",
+      "inputs": {
+        "id": "tg009",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/g009-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"ex\": \"http://example.com/\",\n    \"embed\": {\n      \"@id\": \"ex:embed\",\n      \"@container\": \"@set\"\n    },\n    \"shouldExist\": \"ex:shouldExist\"\n  },\n  \"@type\": \"http://example.com/TreeRoot\",\n  \"@embed\": \"@always\",\n  \"embed\": {\n    \"@embed\": \"@always\"\n  }\n}\n",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/g009-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/tg009.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/tg009.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tg010",
+      "path": "native/jsonld/framing-sources/frame/g010-in.jsonld",
+      "inputs": {
+        "id": "tg010",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/g010-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"@version\": 1.1,\n    \"proof\": {\"@id\": \"ex:proof\", \"@container\": \"@graph\"}\n  },\n  \"@graph\": {\n    \"subject\": {},\n    \"proof\": {}\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/g010-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "invalid property: Dropping property that did not expand into an absolute IRI or keyword."
+        },
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/tg010.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/tg010.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tin01",
+      "path": "native/jsonld/framing-sources/frame/in01-in.jsonld",
+      "inputs": {
+        "id": "tin01",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/in01-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"@version\": 1.1,\n    \"@vocab\": \"http://example.org/\",\n    \"included\": {\"@id\": \"@included\", \"@container\": \"@set\"}\n  },\n  \"@requireAll\": true,\n  \"foo\": \"bar\",\n  \"prop\": \"value\",\n  \"@included\": [{\n    \"@requireAll\": true,\n    \"foo\": \"bar\",\n    \"prop\": \"value2\"\n  }]\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/in01-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/tin01.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/tin01.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tin02",
+      "path": "native/jsonld/framing-sources/frame/in02-in.jsonld",
+      "inputs": {
+        "id": "tin02",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/in02-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"@version\": 1.1,\n    \"@vocab\": \"http://example.org/\"\n  },\n  \"@requireAll\": true,\n  \"foo\": \"bar\",\n  \"prop\": \"value\",\n  \"@included\": [{\n    \"@requireAll\": true,\n    \"foo\": \"bar\",\n    \"prop\": \"value2\"\n  }]\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/in02-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/tin02.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/tin02.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tin03",
+      "path": "native/jsonld/framing-sources/frame/in03-in.jsonld",
+      "inputs": {
+        "id": "tin03",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/in03-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"@version\": 1.1,\n    \"@vocab\": \"http://example.org/vocab#\",\n    \"@base\": \"http://example.org/base/\",\n    \"id\": \"@id\",\n    \"type\": \"@type\",\n    \"included\": {\"@id\": \"@included\", \"@container\": \"@set\"},\n    \"author\": {\"@type\": \"@id\"},\n    \"self\": {\"@type\": \"@id\"},\n    \"related\": {\"@type\": \"@id\"}\n  },\n  \"type\": \"articles\",\n  \"included\": {\n    \"@requireAll\": true,\n    \"type\": [\"comments\", \"people\"],\n    \"self\": {}\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/in03-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/tin03.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/tin03.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tp020",
+      "path": "native/jsonld/framing-sources/frame/0020-in.jsonld",
+      "inputs": {
+        "id": "tp020",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0020-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/p020-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/tp020.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/tp020.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tp021",
+      "path": "native/jsonld/framing-sources/frame/0021-in.jsonld",
+      "inputs": {
+        "id": "tp021",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0021-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"dcterms\": \"http://purl.org/dc/terms/\",\n    \"ex\": \"http://example.org/vocab#\",\n    \"ex:list\": {\"@container\": \"@list\"}\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/p021-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/tp021.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/tp021.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tp046",
+      "path": "native/jsonld/framing-sources/frame/0046-in.jsonld",
+      "inputs": {
+        "id": "tp046",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0046-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"@vocab\": \"urn:\"},\n  \"@type\": \"Class\"\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/p046-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/tp046.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/tp046.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tp049",
+      "path": "native/jsonld/framing-sources/frame/0049-in.jsonld",
+      "inputs": {
+        "id": "tp049",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/0049-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"@vocab\": \"urn:\"},\n  \"@type\": \"Class\",\n  \"preserve\": {\n    \"deep\": {\n      \"@graph\": {}\n    }\n  }\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/p049-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/tp049.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/tp049.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tp050",
+      "path": "native/jsonld/framing-sources/frame/p050-in.jsonld",
+      "inputs": {
+        "id": "tp050",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/p050-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"@vocab\": \"http://example/\",\n    \"id\": \"@id\"\n  },\n  \"id\": {},\n  \"name\": {}\n}\n",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/p050-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/tp050.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/tp050.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tra01",
+      "path": "native/jsonld/framing-sources/frame/ra01-in.jsonld",
+      "inputs": {
+        "id": "tra01",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/ra01-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"@requireAll\": true,\n  \"@type\": \"ex:Type\",\n  \"ex:p\": {}\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/ra01-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/tra01.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/tra01.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tra02",
+      "path": "native/jsonld/framing-sources/frame/ra02-in.jsonld",
+      "inputs": {
+        "id": "tra02",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/ra02-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\"ex\": \"http://example.org/\"},\n  \"@requireAll\": true,\n  \"@id\": [\"ex:Sub1\", \"ex:Sub2\"],\n  \"@type\": \"ex:Type\"\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/ra02-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/tra02.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/tra02.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tra03",
+      "path": "native/jsonld/framing-sources/frame/ra03-in.jsonld",
+      "inputs": {
+        "id": "tra03",
+        "baseIRI": "https://w3c.github.io/json-ld-framing/tests/frame/ra03-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "options": {
+        "frame": "{\n  \"@context\": {\n    \"@version\": 1.1,\n    \"@vocab\": \"https://schema.org/\"\n  },\n  \"@type\": \"Person\",\n  \"@requireAll\": true,\n  \"givenName\": \"John\",\n  \"familyName\": \"Doe\"\n}",
+        "lossPolicy": "report"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/framing-sources/frame/ra03-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/tra03.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/tra03.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    }
+  ]
+}

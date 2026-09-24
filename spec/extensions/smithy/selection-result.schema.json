@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:smithy:selection-result:0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "selector",
+    "assembly",
+    "issues",
+    "complete"
+  ],
+  "properties": {
+    "status": {
+      "enum": [
+        "selected",
+        "blocked"
+      ]
+    },
+    "selector": {
+      "type": "string",
+      "minLength": 1
+    },
+    "assembly": {
+      "$ref": "urn:umf:smithy:assembly-result:0.1.0"
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "severity",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          }
+        }
+      }
+    },
+    "complete": {
+      "const": false
+    },
+    "shapeIds": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "^[A-Za-z_][A-Za-z_0-9]*(\\.[A-Za-z_][A-Za-z_0-9]*)*#[A-Za-z_][A-Za-z_0-9]*(\\$[A-Za-z_][A-Za-z_0-9]*)?$"
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "selected"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "shapeIds"
+        ],
+        "properties": {
+          "assembly": {
+            "properties": {
+              "status": {
+                "const": "assembled"
+              }
+            }
+          },
+          "issues": {
+            "maxItems": 0
+          }
+        }
+      },
+      "else": {
+        "not": {
+          "required": [
+            "shapeIds"
+          ]
+        }
+      }
+    }
+  ]
+}

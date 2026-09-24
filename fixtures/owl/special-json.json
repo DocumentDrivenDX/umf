@@ -1,0 +1,1104 @@
+{
+  "profile": "owl-special-axioms-1",
+  "complete": false,
+  "source": {
+    "umf": "0.1.0",
+    "id": "special",
+    "vocabularies": {
+      "umf.owl": {
+        "version": "0.1.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "dataset",
+        "namespace": "",
+        "elements": [
+          {
+            "id": "dataset",
+            "extensions": {
+              "umf.owl": {
+                "profile": "rdf11-turtle",
+                "baseIRI": "https://example.org/",
+                "blankNodeScope": "special",
+                "quads": [
+                  {
+                    "subject": {
+                      "kind": "iri",
+                      "value": "https://example.org/alice"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "https://example.org/knows"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/bob"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006e00006500006700004f00006200006a"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#NegativePropertyAssertion"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006e00006500006700004f00006200006a"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#sourceIndividual"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/alice"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006e00006500006700004f00006200006a"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#assertionProperty"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/knows"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006e00006500006700004f00006200006a"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#targetIndividual"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/carol"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006e000065000067000044000061000074000061"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#NegativePropertyAssertion"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006e000065000067000044000061000074000061"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#sourceIndividual"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/alice"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006e000065000067000044000061000074000061"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#assertionProperty"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/age"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006e000065000067000044000061000074000061"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#targetValue"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "42",
+                      "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006400006900006600006600006500007200006500006e000074"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#AllDifferent"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_0"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/alice"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_0"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+                    },
+                    "object": {
+                      "kind": "blank",
+                      "value": "g_1"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_1"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/bob"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_1"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+                    },
+                    "object": {
+                      "kind": "blank",
+                      "value": "g_2"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_2"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/carol"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_2"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006400006900006600006600006500007200006500006e000074"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#members"
+                    },
+                    "object": {
+                      "kind": "blank",
+                      "value": "g_0"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006400006900006600006600006500007200006500006e00007400004400006900007300007400006900006e000063000074"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#AllDifferent"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_3"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/alice"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_3"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+                    },
+                    "object": {
+                      "kind": "blank",
+                      "value": "g_4"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_4"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/bob"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_4"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006400006900006600006600006500007200006500006e00007400004400006900007300007400006900006e000063000074"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#distinctMembers"
+                    },
+                    "object": {
+                      "kind": "blank",
+                      "value": "g_3"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006300006c000061000073000073000065000073"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#AllDisjointClasses"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_5"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/Person"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_5"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+                    },
+                    "object": {
+                      "kind": "blank",
+                      "value": "g_6"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_6"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/Robot"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_6"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+                    },
+                    "object": {
+                      "kind": "blank",
+                      "value": "g_7"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_7"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/Place"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_7"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006300006c000061000073000073000065000073"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#members"
+                    },
+                    "object": {
+                      "kind": "blank",
+                      "value": "g_5"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00007000007200006f000070000065000072000074000069000065000073"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#AllDisjointProperties"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_8"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/knows"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_8"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+                    },
+                    "object": {
+                      "kind": "blank",
+                      "value": "g_9"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_9"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/hates"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_9"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00007000007200006f000070000065000072000074000069000065000073"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#members"
+                    },
+                    "object": {
+                      "kind": "blank",
+                      "value": "g_8"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006d00006100006c00006600006f00007200006d00006500006400004c000069000073000074"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#AllDifferent"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006d00006100006c00006600006f00007200006d00006500006400004c000069000073000074"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#members"
+                    },
+                    "object": {
+                      "kind": "blank",
+                      "value": "e_00006c000069000073000074"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006c000069000073000074"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/alice"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006c000069000073000074"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+                    },
+                    "object": {
+                      "kind": "blank",
+                      "value": "e_00006c000069000073000074"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006d00006100006c00006600006f00007200006d000065000064000054000061000072000067000065000074"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#NegativePropertyAssertion"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006d00006100006c00006600006f00007200006d000065000064000054000061000072000067000065000074"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#sourceIndividual"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/alice"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006d00006100006c00006600006f00007200006d000065000064000054000061000072000067000065000074"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#assertionProperty"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/knows"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006d00006100006c00006600006f00007200006d000065000064000054000061000072000067000065000074"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#targetIndividual"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/bob"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006d00006100006c00006600006f00007200006d000065000064000054000061000072000067000065000074"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#targetValue"
+                    },
+                    "object": {
+                      "kind": "literal",
+                      "value": "bob",
+                      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006d00006100006c00006600006f00007200006d000065000064000054000079000070000065"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#AllDifferent"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006d00006100006c00006600006f00007200006d000065000064000054000079000070000065"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#AllDisjointClasses"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_10"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/alice"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_10"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+                    },
+                    "object": {
+                      "kind": "blank",
+                      "value": "g_11"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_11"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "https://example.org/bob"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "g_11"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+                    },
+                    "object": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  },
+                  {
+                    "subject": {
+                      "kind": "blank",
+                      "value": "e_00006d00006100006c00006600006f00007200006d000065000064000054000079000070000065"
+                    },
+                    "predicate": {
+                      "kind": "iri",
+                      "value": "http://www.w3.org/2002/07/owl#members"
+                    },
+                    "object": {
+                      "kind": "blank",
+                      "value": "g_10"
+                    },
+                    "graph": {
+                      "kind": "default"
+                    }
+                  }
+                ],
+                "originalSource": "@prefix owl: <http://www.w3.org/2002/07/owl#> .\n@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n@prefix ex: <https://example.org/> .\n@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\n\nex:alice ex:knows ex:bob .\n_:negObj a owl:NegativePropertyAssertion ; owl:sourceIndividual ex:alice ; owl:assertionProperty ex:knows ; owl:targetIndividual ex:carol .\n_:negData a owl:NegativePropertyAssertion ; owl:sourceIndividual ex:alice ; owl:assertionProperty ex:age ; owl:targetValue \"42\"^^xsd:integer .\n_:different a owl:AllDifferent ; owl:members (ex:alice ex:bob ex:carol) .\n_:differentDistinct a owl:AllDifferent ; owl:distinctMembers (ex:alice ex:bob) .\n_:classes a owl:AllDisjointClasses ; owl:members (ex:Person ex:Robot ex:Place) .\n_:properties a owl:AllDisjointProperties ; owl:members (ex:knows ex:hates) .\n_:malformedList a owl:AllDifferent ; owl:members _:list .\n_:list rdf:first ex:alice ; rdf:rest _:list .\n_:malformedTarget a owl:NegativePropertyAssertion ; owl:sourceIndividual ex:alice ; owl:assertionProperty ex:knows ; owl:targetIndividual ex:bob ; owl:targetValue \"bob\" .\n_:malformedType a owl:AllDifferent, owl:AllDisjointClasses ; owl:members (ex:alice ex:bob) .\n",
+                "owlVersion": "2"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "blankNodeScope": "special",
+  "axioms": [
+    {
+      "kind": "negativePropertyAssertion",
+      "node": {
+        "kind": "blank",
+        "value": "e_00006e00006500006700004f00006200006a"
+      },
+      "sourceIndividual": {
+        "kind": "iri",
+        "value": "https://example.org/alice"
+      },
+      "assertionProperty": {
+        "kind": "iri",
+        "value": "https://example.org/knows"
+      },
+      "target": {
+        "kind": "iri",
+        "value": "https://example.org/carol"
+      },
+      "targetKind": "individual",
+      "quadIndexes": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "kind": "negativePropertyAssertion",
+      "node": {
+        "kind": "blank",
+        "value": "e_00006e000065000067000044000061000074000061"
+      },
+      "sourceIndividual": {
+        "kind": "iri",
+        "value": "https://example.org/alice"
+      },
+      "assertionProperty": {
+        "kind": "iri",
+        "value": "https://example.org/age"
+      },
+      "target": {
+        "kind": "literal",
+        "value": "42",
+        "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+      },
+      "targetKind": "value",
+      "quadIndexes": [
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "kind": "allDifferent",
+      "node": {
+        "kind": "blank",
+        "value": "e_00006400006900006600006600006500007200006500006e000074"
+      },
+      "members": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/alice"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/bob"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/carol"
+        }
+      ],
+      "memberPredicate": "members",
+      "quadIndexes": [
+        9,
+        16
+      ]
+    },
+    {
+      "kind": "allDifferent",
+      "node": {
+        "kind": "blank",
+        "value": "e_00006400006900006600006600006500007200006500006e00007400004400006900007300007400006900006e000063000074"
+      },
+      "members": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/alice"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/bob"
+        }
+      ],
+      "memberPredicate": "distinctMembers",
+      "quadIndexes": [
+        17,
+        22
+      ]
+    },
+    {
+      "kind": "allDisjointClasses",
+      "node": {
+        "kind": "blank",
+        "value": "e_00006300006c000061000073000073000065000073"
+      },
+      "members": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/Person"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/Robot"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/Place"
+        }
+      ],
+      "memberPredicate": "members",
+      "quadIndexes": [
+        23,
+        30
+      ]
+    },
+    {
+      "kind": "allDisjointProperties",
+      "node": {
+        "kind": "blank",
+        "value": "e_00007000007200006f000070000065000072000074000069000065000073"
+      },
+      "members": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/knows"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/hates"
+        }
+      ],
+      "memberPredicate": "members",
+      "quadIndexes": [
+        31,
+        36
+      ]
+    }
+  ],
+  "malformed": [
+    {
+      "kind": "blank",
+      "value": "e_00006d00006100006c00006600006f00007200006d00006500006400004c000069000073000074"
+    },
+    {
+      "kind": "blank",
+      "value": "e_00006d00006100006c00006600006f00007200006d000065000064000054000061000072000067000065000074"
+    },
+    {
+      "kind": "blank",
+      "value": "e_00006d00006100006c00006600006f00007200006d000065000064000054000079000070000065"
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "processor": "PyLD 2.0.4",
+  "loader": "Unmodified Python JSON integer/float parsing; comparisons retain literal lexical strings; UMF policy rejection is distinguished from native syntax rejection",
+  "results": [
+    {
+      "id": "typed-double-precision",
+      "umf": "candidate",
+      "numericPolicy": "strict",
+      "lossPolicy": "report",
+      "native": "rejected",
+      "error": "must be real number, not str"
+    },
+    {
+      "id": "binary-integer",
+      "umf": "candidate",
+      "numericPolicy": "binary64",
+      "lossPolicy": "report",
+      "native": "accepted",
+      "path": "fixtures/jsonld/to-rdf/native-binary-integer.nq",
+      "values": [
+        "9007199254740993"
+      ],
+      "expectedValuesEqual": false
+    },
+    {
+      "id": "binary-integer-reject",
+      "umf": "blocked",
+      "numericPolicy": "binary64",
+      "lossPolicy": "reject",
+      "native": "accepted",
+      "path": "fixtures/jsonld/to-rdf/native-binary-integer-reject.nq",
+      "values": [
+        "9007199254740993"
+      ],
+      "expectedValuesEqual": null
+    },
+    {
+      "id": "binary-zero",
+      "umf": "candidate",
+      "numericPolicy": "binary64",
+      "lossPolicy": "report",
+      "native": "accepted",
+      "path": "fixtures/jsonld/to-rdf/native-binary-zero.nq",
+      "values": [
+        "0"
+      ],
+      "expectedValuesEqual": true
+    },
+    {
+      "id": "binary-underflow",
+      "umf": "candidate",
+      "numericPolicy": "binary64",
+      "lossPolicy": "report",
+      "native": "accepted",
+      "path": "fixtures/jsonld/to-rdf/native-binary-underflow.nq",
+      "values": [
+        "0.0E0"
+      ],
+      "expectedValuesEqual": false
+    },
+    {
+      "id": "binary-overflow",
+      "umf": "blocked",
+      "numericPolicy": "binary64",
+      "lossPolicy": "report",
+      "native": "accepted",
+      "path": "fixtures/jsonld/to-rdf/native-binary-overflow.nq",
+      "values": [
+        "INF"
+      ],
+      "expectedValuesEqual": null
+    },
+    {
+      "id": "strict-small",
+      "umf": "candidate",
+      "numericPolicy": "strict",
+      "lossPolicy": "reject",
+      "native": "accepted",
+      "path": "fixtures/jsonld/to-rdf/native-strict-small.nq",
+      "values": [
+        "1.000000000000000E-07"
+      ],
+      "expectedValuesEqual": false
+    },
+    {
+      "id": "double-string",
+      "umf": "candidate",
+      "numericPolicy": "strict",
+      "lossPolicy": "reject",
+      "native": "rejected",
+      "error": "must be real number, not str"
+    },
+    {
+      "id": "double-nonfinite",
+      "umf": "candidate",
+      "numericPolicy": "strict",
+      "lossPolicy": "reject",
+      "native": "rejected",
+      "error": "must be real number, not str"
+    },
+    {
+      "id": "binary-forced-double",
+      "umf": "candidate",
+      "numericPolicy": "binary64",
+      "lossPolicy": "report",
+      "native": "accepted",
+      "path": "fixtures/jsonld/to-rdf/native-binary-forced-double.nq",
+      "values": [
+        "1.0E18"
+      ],
+      "expectedValuesEqual": true
+    },
+    {
+      "id": "binary-large-integer",
+      "umf": "candidate",
+      "numericPolicy": "binary64",
+      "lossPolicy": "report",
+      "native": "accepted",
+      "path": "fixtures/jsonld/to-rdf/native-binary-large-integer.nq",
+      "values": [
+        "1000000000000000100"
+      ],
+      "expectedValuesEqual": false
+    },
+    {
+      "id": "strict-large-integer",
+      "umf": "blocked",
+      "numericPolicy": "strict",
+      "lossPolicy": "report",
+      "native": "accepted",
+      "path": "fixtures/jsonld/to-rdf/native-strict-large-integer.nq",
+      "values": [
+        "1000000000000000100"
+      ],
+      "expectedValuesEqual": null
+    },
+    {
+      "id": "binary-json",
+      "umf": "candidate",
+      "numericPolicy": "binary64",
+      "lossPolicy": "report",
+      "native": "accepted",
+      "path": "fixtures/jsonld/to-rdf/native-binary-json.nq",
+      "values": [
+        "{\"a\":[333333333.3333333,0,0]}"
+      ],
+      "expectedValuesEqual": true
+    },
+    {
+      "id": "binary-json-reject",
+      "umf": "blocked",
+      "numericPolicy": "binary64",
+      "lossPolicy": "reject",
+      "native": "accepted",
+      "path": "fixtures/jsonld/to-rdf/native-binary-json-reject.nq",
+      "values": [
+        "{\"n\":333333333.3333333}"
+      ],
+      "expectedValuesEqual": null
+    },
+    {
+      "id": "strict-small-rounding",
+      "umf": "blocked",
+      "numericPolicy": "strict",
+      "lossPolicy": "report",
+      "native": "accepted",
+      "path": "fixtures/jsonld/to-rdf/native-strict-small-rounding.nq",
+      "values": [
+        "9.999999999999999E-22"
+      ],
+      "expectedValuesEqual": null
+    },
+    {
+      "id": "binary-small-rounding",
+      "umf": "candidate",
+      "numericPolicy": "binary64",
+      "lossPolicy": "report",
+      "native": "accepted",
+      "path": "fixtures/jsonld/to-rdf/native-binary-small-rounding.nq",
+      "values": [
+        "9.999999999999999E-22"
+      ],
+      "expectedValuesEqual": true
+    }
+  ]
+}

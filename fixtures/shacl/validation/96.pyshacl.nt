@@ -1,0 +1,18 @@
+_:N9a6c5a18fd2a45eaba1e4ef7369d4851 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxCountConstraintComponent> .
+_:N9a6c5a18fd2a45eaba1e4ef7369d4851 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N82796a8cb2584887bdb9caa17e4bf347 <http://www.w3.org/ns/shacl#result> _:N17465352652c44c985f1fd9e02067dd3 .
+_:N17465352652c44c985f1fd9e02067dd3 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxCountConstraintComponent> .
+_:N17465352652c44c985f1fd9e02067dd3 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N17465352652c44c985f1fd9e02067dd3 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#InvalidInstance2> .
+_:N82796a8cb2584887bdb9caa17e4bf347 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N82796a8cb2584887bdb9caa17e4bf347 <http://www.w3.org/ns/shacl#result> _:N9a6c5a18fd2a45eaba1e4ef7369d4851 .
+_:N17465352652c44c985f1fd9e02067dd3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N9a6c5a18fd2a45eaba1e4ef7369d4851 <http://www.w3.org/ns/shacl#resultMessage> "More than 1 values on ex:InvalidInstance1->ex:myProperty" .
+_:N9a6c5a18fd2a45eaba1e4ef7369d4851 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N9a6c5a18fd2a45eaba1e4ef7369d4851 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#myProperty> .
+_:N9a6c5a18fd2a45eaba1e4ef7369d4851 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#TestShape-myProperty> .
+_:N17465352652c44c985f1fd9e02067dd3 <http://www.w3.org/ns/shacl#resultMessage> "More than 1 values on ex:InvalidInstance2->ex:myProperty" .
+_:N17465352652c44c985f1fd9e02067dd3 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#myProperty> .
+_:N17465352652c44c985f1fd9e02067dd3 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#TestShape-myProperty> .
+_:N82796a8cb2584887bdb9caa17e4bf347 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N9a6c5a18fd2a45eaba1e4ef7369d4851 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#InvalidInstance1> .

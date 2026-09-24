@@ -1,0 +1,1583 @@
+{
+  "cases": [
+    {
+      "id": "authored",
+      "nativeSource": "{\"version\":\"1.0\",\"table_name\":\"Types\",\"columns\":[{\"name\":\"flag\",\"data_type\":\"BOOLEAN\",\"nullable\":{\"MD\":false,\"MP\":true}},{\"name\":\"count\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"large\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"single\",\"data_type\":\"FLOAT\",\"nullable\":false},{\"name\":\"wide\",\"data_type\":\"FLOAT\",\"nullable\":false},{\"name\":\"amount\",\"data_type\":\"DECIMAL\",\"precision\":18,\"scale\":4,\"nullable\":false},{\"name\":\"day\",\"data_type\":\"DATE\",\"format\":\"YYYYMMDD\",\"nullable\":false},{\"name\":\"date_text\",\"data_type\":\"DATE\",\"nullable\":false},{\"name\":\"instant\",\"data_type\":\"TIMESTAMP\",\"nullable\":false},{\"name\":\"local_time\",\"data_type\":\"DATETIME\",\"nullable\":false},{\"name\":\"vector\",\"data_type\":\"EMBEDDING\",\"dimension\":3,\"nullable\":false},{\"name\":\"title\",\"data_type\":\"VARCHAR\",\"length\":20,\"nullable\":false}]}",
+      "format": "json",
+      "result": {
+        "status": "projected",
+        "source": {
+          "umf": "0.1.0",
+          "id": "authored",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Types"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "flag"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "BOOLEAN"
+                          },
+                          "nullable": {
+                            "kind": "object",
+                            "members": {
+                              "MD": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "MP": {
+                                "kind": "boolean",
+                                "value": true
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "count"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "INTEGER"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "large"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "INTEGER"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "single"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "FLOAT"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "wide"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "FLOAT"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "amount"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "DECIMAL"
+                          },
+                          "precision": {
+                            "kind": "number",
+                            "value": "18"
+                          },
+                          "scale": {
+                            "kind": "number",
+                            "value": "4"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "day"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "DATE"
+                          },
+                          "format": {
+                            "kind": "string",
+                            "value": "YYYYMMDD"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "date_text"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "DATE"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "instant"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "TIMESTAMP"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "local_time"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "DATETIME"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "vector"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "EMBEDDING"
+                          },
+                          "dimension": {
+                            "kind": "number",
+                            "value": "3"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "title"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "VARCHAR"
+                          },
+                          "length": {
+                            "kind": "number",
+                            "value": "20"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": false
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\"version\":\"1.0\",\"table_name\":\"Types\",\"columns\":[{\"name\":\"flag\",\"data_type\":\"BOOLEAN\",\"nullable\":{\"MD\":false,\"MP\":true}},{\"name\":\"count\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"large\",\"data_type\":\"INTEGER\",\"nullable\":false},{\"name\":\"single\",\"data_type\":\"FLOAT\",\"nullable\":false},{\"name\":\"wide\",\"data_type\":\"FLOAT\",\"nullable\":false},{\"name\":\"amount\",\"data_type\":\"DECIMAL\",\"precision\":18,\"scale\":4,\"nullable\":false},{\"name\":\"day\",\"data_type\":\"DATE\",\"format\":\"YYYYMMDD\",\"nullable\":false},{\"name\":\"date_text\",\"data_type\":\"DATE\",\"nullable\":false},{\"name\":\"instant\",\"data_type\":\"TIMESTAMP\",\"nullable\":false},{\"name\":\"local_time\",\"data_type\":\"DATETIME\",\"nullable\":false},{\"name\":\"vector\",\"data_type\":\"EMBEDDING\",\"dimension\":3,\"nullable\":false},{\"name\":\"title\",\"data_type\":\"VARCHAR\",\"length\":20,\"nullable\":false}]}",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Types",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "flag",
+                  "scalarType": "boolean",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:1",
+                  "name": "count",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:2",
+                  "name": "large",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:3",
+                  "name": "single",
+                  "scalarType": "float",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:4",
+                  "name": "wide",
+                  "scalarType": "float",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:5",
+                  "name": "amount",
+                  "scalarType": "decimal",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:6",
+                  "name": "day",
+                  "scalarType": "date",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:7",
+                  "name": "date_text",
+                  "scalarType": "date",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:8",
+                  "name": "instant",
+                  "scalarType": "timestamp",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:9",
+                  "name": "local_time",
+                  "scalarType": "timestamp",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:10",
+                  "name": "vector",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:11",
+                  "name": "title",
+                  "scalarType": "string",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "id": "target",
+          "recordName": "TableSpecRecord",
+          "namespace": "example.tablespec",
+          "context": "MD",
+          "lossPolicy": "allow-reported-loss",
+          "fields": {
+            "flag": {
+              "name": "flag",
+              "representation": "boolean",
+              "nullable": "source"
+            },
+            "count": {
+              "name": "count",
+              "representation": "int32",
+              "nullable": "source"
+            },
+            "large": {
+              "name": "large",
+              "representation": "int64",
+              "nullable": "source"
+            },
+            "single": {
+              "name": "single",
+              "representation": "float32",
+              "nullable": "source"
+            },
+            "wide": {
+              "name": "wide",
+              "representation": "float64",
+              "nullable": "source"
+            },
+            "amount": {
+              "name": "amount",
+              "representation": "decimal",
+              "nullable": "source"
+            },
+            "day": {
+              "name": "day",
+              "representation": "date",
+              "nullable": "source"
+            },
+            "date_text": {
+              "name": "date_text",
+              "representation": "string",
+              "nullable": "source"
+            },
+            "instant": {
+              "name": "instant",
+              "representation": "timestamp-micros",
+              "nullable": "source"
+            },
+            "local_time": {
+              "name": "local_time",
+              "representation": "local-timestamp-micros",
+              "nullable": "source"
+            },
+            "vector": {
+              "name": "vector",
+              "representation": "embedding-float32",
+              "nullable": "source",
+              "itemsNullable": true
+            },
+            "title": {
+              "name": "title",
+              "representation": "string",
+              "nullable": "source"
+            }
+          }
+        },
+        "issues": [
+          {
+            "path": "",
+            "code": "TABLESPEC_EXECUTION",
+            "classification": "not-enforced",
+            "detail": "Native Pydantic validation/coercion, constraints, relationships, derivations, pipelines and split-loader migrations are not executed by this schema projection",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "SCHEMA_ONLY",
+            "classification": "representation-change",
+            "detail": "Native values require a separate encoder; the copied source UMF remains required for native meaning",
+            "retainedInSource": true
+          },
+          {
+            "path": "/version",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/table_name",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/0/nullable",
+            "code": "CONTEXT_SELECTED",
+            "classification": "annotation-only",
+            "detail": "Only the selected context is represented; other context meanings remain in source",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/1",
+            "code": "INTEGER_PROFILE",
+            "classification": "not-enforced",
+            "detail": "Selected integer width is a binding choice; the pinned Spark helper uses 32 bits and other execution rules remain source-owned",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/2",
+            "code": "INTEGER_PROFILE",
+            "classification": "not-enforced",
+            "detail": "Selected integer width is a binding choice; the pinned Spark helper uses 32 bits and other execution rules remain source-owned",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/3",
+            "code": "FLOAT_PROFILE",
+            "classification": "not-enforced",
+            "detail": "Selected floating width does not establish native rounding, non-finite or execution semantics",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/4",
+            "code": "FLOAT_PROFILE",
+            "classification": "not-enforced",
+            "detail": "Selected floating width does not establish native rounding, non-finite or execution semantics",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/5",
+            "code": "DECIMAL_ENCODING",
+            "classification": "representation-change",
+            "detail": "Values require signed big-endian unscaled decimal bytes; native coercion/rounding and engine precision limits remain source-owned",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/6",
+            "code": "DATE_REPRESENTATION",
+            "classification": "representation-change",
+            "detail": "TableSpec helper profiles disagree on date storage; selected logical dates require parsing and epoch-day encoding",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/6/format",
+            "code": "NATIVE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native field metadata remains in source without Avro interpretation",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/7",
+            "code": "TEXT_REPRESENTATION",
+            "classification": "representation-change",
+            "detail": "Native length, formats, conversion and lexical validation are not enforced by Avro string",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/8",
+            "code": "TIMESTAMP_REPRESENTATION",
+            "classification": "representation-change",
+            "detail": "Caller selects instant/local-wall-clock microseconds; native parsing, timezone, range and precision correspondence is not established",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/9",
+            "code": "TIMESTAMP_REPRESENTATION",
+            "classification": "representation-change",
+            "detail": "Caller selects instant/local-wall-clock microseconds; native parsing, timezone, range and precision correspondence is not established",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/10",
+            "code": "EMBEDDING_DIMENSION",
+            "classification": "not-enforced",
+            "detail": "Avro array does not enforce native dimension 3",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/10",
+            "code": "EMBEDDING_PROFILE",
+            "classification": "representation-change",
+            "detail": "Float32 elements and their nullability are explicit bindings; vector execution semantics remain in source",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/11",
+            "code": "TEXT_REFINEMENTS",
+            "classification": "not-enforced",
+            "detail": "Native length, formats, conversion and lexical validation are not enforced by Avro string",
+            "retainedInSource": true
+          }
+        ],
+        "mappings": [
+          {
+            "index": 0,
+            "column": "flag",
+            "field": "flag",
+            "representation": "boolean",
+            "nullable": false
+          },
+          {
+            "index": 1,
+            "column": "count",
+            "field": "count",
+            "representation": "int32",
+            "nullable": false
+          },
+          {
+            "index": 2,
+            "column": "large",
+            "field": "large",
+            "representation": "int64",
+            "nullable": false
+          },
+          {
+            "index": 3,
+            "column": "single",
+            "field": "single",
+            "representation": "float32",
+            "nullable": false
+          },
+          {
+            "index": 4,
+            "column": "wide",
+            "field": "wide",
+            "representation": "float64",
+            "nullable": false
+          },
+          {
+            "index": 5,
+            "column": "amount",
+            "field": "amount",
+            "representation": "decimal",
+            "nullable": false
+          },
+          {
+            "index": 6,
+            "column": "day",
+            "field": "day",
+            "representation": "date",
+            "nullable": false
+          },
+          {
+            "index": 7,
+            "column": "date_text",
+            "field": "date_text",
+            "representation": "string",
+            "nullable": false
+          },
+          {
+            "index": 8,
+            "column": "instant",
+            "field": "instant",
+            "representation": "timestamp-micros",
+            "nullable": false
+          },
+          {
+            "index": 9,
+            "column": "local_time",
+            "field": "local_time",
+            "representation": "local-timestamp-micros",
+            "nullable": false
+          },
+          {
+            "index": 10,
+            "column": "vector",
+            "field": "vector",
+            "representation": "embedding-float32",
+            "nullable": false
+          },
+          {
+            "index": 11,
+            "column": "title",
+            "field": "title",
+            "representation": "string",
+            "nullable": false
+          }
+        ],
+        "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"TableSpecRecord\",\n  \"namespace\": \"example.tablespec\",\n  \"fields\": [\n    {\n      \"name\": \"flag\",\n      \"type\": \"boolean\"\n    },\n    {\n      \"name\": \"count\",\n      \"type\": \"int\"\n    },\n    {\n      \"name\": \"large\",\n      \"type\": \"long\"\n    },\n    {\n      \"name\": \"single\",\n      \"type\": \"float\"\n    },\n    {\n      \"name\": \"wide\",\n      \"type\": \"double\"\n    },\n    {\n      \"name\": \"amount\",\n      \"type\": {\n        \"type\": \"bytes\",\n        \"logicalType\": \"decimal\",\n        \"precision\": 18,\n        \"scale\": 4\n      }\n    },\n    {\n      \"name\": \"day\",\n      \"type\": {\n        \"type\": \"int\",\n        \"logicalType\": \"date\"\n      }\n    },\n    {\n      \"name\": \"date_text\",\n      \"type\": \"string\"\n    },\n    {\n      \"name\": \"instant\",\n      \"type\": {\n        \"type\": \"long\",\n        \"logicalType\": \"timestamp-micros\"\n      }\n    },\n    {\n      \"name\": \"local_time\",\n      \"type\": {\n        \"type\": \"long\",\n        \"logicalType\": \"local-timestamp-micros\"\n      }\n    },\n    {\n      \"name\": \"vector\",\n      \"type\": {\n        \"type\": \"array\",\n        \"items\": [\n          \"null\",\n          \"float\"\n        ]\n      }\n    },\n    {\n      \"name\": \"title\",\n      \"type\": \"string\"\n    }\n  ]\n}\n",
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "TableSpecRecord"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "example.tablespec"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "flag"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "boolean"
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "count"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "int"
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "large"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "long"
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "single"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "float"
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "wide"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "double"
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "amount"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "bytes"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "decimal"
+                                      },
+                                      "precision": {
+                                        "kind": "number",
+                                        "value": "18"
+                                      },
+                                      "scale": {
+                                        "kind": "number",
+                                        "value": "4"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "day"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "int"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "date"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "date_text"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "instant"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "long"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "timestamp-micros"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "local_time"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "long"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "local-timestamp-micros"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "vector"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "array"
+                                      },
+                                      "items": {
+                                        "kind": "array",
+                                        "items": [
+                                          {
+                                            "kind": "string",
+                                            "value": "null"
+                                          },
+                                          {
+                                            "kind": "string",
+                                            "value": "float"
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "title"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "flag",
+                  "scalarType": "boolean",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/1\"]",
+                  "name": "count",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/2\"]",
+                  "name": "large",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/3\"]",
+                  "name": "single",
+                  "scalarType": "float",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/4\"]",
+                  "name": "wide",
+                  "scalarType": "float",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/5\"]",
+                  "name": "amount",
+                  "scalarType": "decimal",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/6\"]",
+                  "name": "day",
+                  "scalarType": "date",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/7\"]",
+                  "name": "date_text",
+                  "scalarType": "string",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/8\"]",
+                  "name": "instant",
+                  "scalarType": "timestamp",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/9\"]",
+                  "name": "local_time",
+                  "scalarType": "timestamp",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/10\"]",
+                  "name": "vector",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/11\"]",
+                  "name": "title",
+                  "scalarType": "string",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "exports": [
+        {
+          "format": "json",
+          "schema": "{\"type\":\"record\",\"name\":\"TableSpecRecord\",\"namespace\":\"example.tablespec\",\"fields\":[{\"name\":\"flag\",\"type\":\"boolean\"},{\"name\":\"count\",\"type\":\"int\"},{\"name\":\"large\",\"type\":\"long\"},{\"name\":\"single\",\"type\":\"float\"},{\"name\":\"wide\",\"type\":\"double\"},{\"name\":\"amount\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":18,\"scale\":4}},{\"name\":\"day\",\"type\":{\"type\":\"int\",\"logicalType\":\"date\"}},{\"name\":\"date_text\",\"type\":\"string\"},{\"name\":\"instant\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\"}},{\"name\":\"local_time\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros\"}},{\"name\":\"vector\",\"type\":{\"type\":\"array\",\"items\":[\"null\",\"float\"]}},{\"name\":\"title\",\"type\":\"string\"}]}\n"
+        },
+        {
+          "format": "yaml",
+          "schema": "{\"type\":\"record\",\"name\":\"TableSpecRecord\",\"namespace\":\"example.tablespec\",\"fields\":[{\"name\":\"flag\",\"type\":\"boolean\"},{\"name\":\"count\",\"type\":\"int\"},{\"name\":\"large\",\"type\":\"long\"},{\"name\":\"single\",\"type\":\"float\"},{\"name\":\"wide\",\"type\":\"double\"},{\"name\":\"amount\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":18,\"scale\":4}},{\"name\":\"day\",\"type\":{\"type\":\"int\",\"logicalType\":\"date\"}},{\"name\":\"date_text\",\"type\":\"string\"},{\"name\":\"instant\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\"}},{\"name\":\"local_time\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros\"}},{\"name\":\"vector\",\"type\":{\"type\":\"array\",\"items\":[\"null\",\"float\"]}},{\"name\":\"title\",\"type\":\"string\"}]}\n"
+        }
+      ]
+    },
+    {
+      "id": "providers",
+      "nativeSource": "version: \"1.0\"\ntable_name: Providers\ndescription: Healthcare provider directory\ncolumns:\n  - name: provider_id\n    data_type: VARCHAR\n    length: 20\n    description: Unique provider identifier\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_name\n    data_type: VARCHAR\n    length: 200\n    description: Provider full name\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_npi\n    data_type: VARCHAR\n    length: 10\n    description: National Provider Identifier\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n  - name: state_code\n    data_type: VARCHAR\n    length: 2\n    description: Provider state code\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n    sample_values:\n      - \"CA\"\n      - \"NY\"\n      - \"TX\"\n",
+      "format": "yaml",
+      "result": {
+        "status": "projected",
+        "source": {
+          "umf": "0.1.0",
+          "id": "providers",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Providers"
+                  },
+                  "description": {
+                    "kind": "string",
+                    "value": "Healthcare provider directory"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "provider_id"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "VARCHAR"
+                          },
+                          "length": {
+                            "kind": "number",
+                            "value": "20"
+                          },
+                          "description": {
+                            "kind": "string",
+                            "value": "Unique provider identifier"
+                          },
+                          "nullable": {
+                            "kind": "object",
+                            "members": {
+                              "MD": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "MP": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "ME": {
+                                "kind": "boolean",
+                                "value": false
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "provider_name"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "VARCHAR"
+                          },
+                          "length": {
+                            "kind": "number",
+                            "value": "200"
+                          },
+                          "description": {
+                            "kind": "string",
+                            "value": "Provider full name"
+                          },
+                          "nullable": {
+                            "kind": "object",
+                            "members": {
+                              "MD": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "MP": {
+                                "kind": "boolean",
+                                "value": false
+                              },
+                              "ME": {
+                                "kind": "boolean",
+                                "value": false
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "provider_npi"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "VARCHAR"
+                          },
+                          "length": {
+                            "kind": "number",
+                            "value": "10"
+                          },
+                          "description": {
+                            "kind": "string",
+                            "value": "National Provider Identifier"
+                          },
+                          "nullable": {
+                            "kind": "object",
+                            "members": {
+                              "MD": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "MP": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "ME": {
+                                "kind": "boolean",
+                                "value": true
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "state_code"
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "VARCHAR"
+                          },
+                          "length": {
+                            "kind": "number",
+                            "value": "2"
+                          },
+                          "description": {
+                            "kind": "string",
+                            "value": "Provider state code"
+                          },
+                          "nullable": {
+                            "kind": "object",
+                            "members": {
+                              "MD": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "MP": {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              "ME": {
+                                "kind": "boolean",
+                                "value": true
+                              }
+                            }
+                          },
+                          "sample_values": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "string",
+                                "value": "CA"
+                              },
+                              {
+                                "kind": "string",
+                                "value": "NY"
+                              },
+                              {
+                                "kind": "string",
+                                "value": "TX"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "version: \"1.0\"\ntable_name: Providers\ndescription: Healthcare provider directory\ncolumns:\n  - name: provider_id\n    data_type: VARCHAR\n    length: 20\n    description: Unique provider identifier\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_name\n    data_type: VARCHAR\n    length: 200\n    description: Provider full name\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_npi\n    data_type: VARCHAR\n    length: 10\n    description: National Provider Identifier\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n  - name: state_code\n    data_type: VARCHAR\n    length: 2\n    description: Provider state code\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n    sample_values:\n      - \"CA\"\n      - \"NY\"\n      - \"TX\"\n",
+              "originalFormat": "yaml"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Providers",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "provider_id",
+                  "description": "Unique provider identifier",
+                  "scalarType": "string",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:1",
+                  "name": "provider_name",
+                  "description": "Provider full name",
+                  "scalarType": "string",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:2",
+                  "name": "provider_npi",
+                  "description": "National Provider Identifier",
+                  "scalarType": "string",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:3",
+                  "name": "state_code",
+                  "description": "Provider state code",
+                  "scalarType": "string",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "id": "target",
+          "recordName": "TableSpecRecord",
+          "namespace": "example.tablespec",
+          "context": "MD",
+          "lossPolicy": "allow-reported-loss",
+          "fields": {
+            "provider_id": {
+              "name": "provider_id",
+              "representation": "string",
+              "nullable": "source"
+            },
+            "provider_name": {
+              "name": "provider_name",
+              "representation": "string",
+              "nullable": "source"
+            },
+            "provider_npi": {
+              "name": "provider_npi",
+              "representation": "string",
+              "nullable": "source"
+            },
+            "state_code": {
+              "name": "state_code",
+              "representation": "string",
+              "nullable": "source"
+            }
+          }
+        },
+        "issues": [
+          {
+            "path": "",
+            "code": "TABLESPEC_EXECUTION",
+            "classification": "not-enforced",
+            "detail": "Native Pydantic validation/coercion, constraints, relationships, derivations, pipelines and split-loader migrations are not executed by this schema projection",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "SCHEMA_ONLY",
+            "classification": "representation-change",
+            "detail": "Native values require a separate encoder; the copied source UMF remains required for native meaning",
+            "retainedInSource": true
+          },
+          {
+            "path": "/version",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/table_name",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/description",
+            "code": "NATIVE_TABLE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native table metadata remains in source without Avro interpretation; target record identity is supplied by policy",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/0/nullable",
+            "code": "CONTEXT_SELECTED",
+            "classification": "annotation-only",
+            "detail": "Only the selected context is represented; other context meanings remain in source",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/0",
+            "code": "TEXT_REFINEMENTS",
+            "classification": "not-enforced",
+            "detail": "Native length, formats, conversion and lexical validation are not enforced by Avro string",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/1/nullable",
+            "code": "CONTEXT_SELECTED",
+            "classification": "annotation-only",
+            "detail": "Only the selected context is represented; other context meanings remain in source",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/1",
+            "code": "TEXT_REFINEMENTS",
+            "classification": "not-enforced",
+            "detail": "Native length, formats, conversion and lexical validation are not enforced by Avro string",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/2/nullable",
+            "code": "CONTEXT_SELECTED",
+            "classification": "annotation-only",
+            "detail": "Only the selected context is represented; other context meanings remain in source",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/2",
+            "code": "TEXT_REFINEMENTS",
+            "classification": "not-enforced",
+            "detail": "Native length, formats, conversion and lexical validation are not enforced by Avro string",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/3/nullable",
+            "code": "CONTEXT_SELECTED",
+            "classification": "annotation-only",
+            "detail": "Only the selected context is represented; other context meanings remain in source",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/3",
+            "code": "TEXT_REFINEMENTS",
+            "classification": "not-enforced",
+            "detail": "Native length, formats, conversion and lexical validation are not enforced by Avro string",
+            "retainedInSource": true
+          },
+          {
+            "path": "/columns/3/sample_values",
+            "code": "NATIVE_METADATA",
+            "classification": "not-enforced",
+            "detail": "Native field metadata remains in source without Avro interpretation",
+            "retainedInSource": true
+          }
+        ],
+        "mappings": [
+          {
+            "index": 0,
+            "column": "provider_id",
+            "field": "provider_id",
+            "representation": "string",
+            "nullable": false
+          },
+          {
+            "index": 1,
+            "column": "provider_name",
+            "field": "provider_name",
+            "representation": "string",
+            "nullable": false
+          },
+          {
+            "index": 2,
+            "column": "provider_npi",
+            "field": "provider_npi",
+            "representation": "string",
+            "nullable": true
+          },
+          {
+            "index": 3,
+            "column": "state_code",
+            "field": "state_code",
+            "representation": "string",
+            "nullable": true
+          }
+        ],
+        "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"TableSpecRecord\",\n  \"namespace\": \"example.tablespec\",\n  \"fields\": [\n    {\n      \"name\": \"provider_id\",\n      \"type\": \"string\",\n      \"doc\": \"Unique provider identifier\"\n    },\n    {\n      \"name\": \"provider_name\",\n      \"type\": \"string\",\n      \"doc\": \"Provider full name\"\n    },\n    {\n      \"name\": \"provider_npi\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ],\n      \"doc\": \"National Provider Identifier\"\n    },\n    {\n      \"name\": \"state_code\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ],\n      \"doc\": \"Provider state code\"\n    }\n  ]\n}\n",
+        "target": {
+          "umf": "0.1.0",
+          "id": "target",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "TableSpecRecord"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "example.tablespec"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "provider_id"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "string"
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "Unique provider identifier"
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "provider_name"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "string"
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "Provider full name"
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "provider_npi"
+                                  },
+                                  "type": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "null"
+                                      },
+                                      {
+                                        "kind": "string",
+                                        "value": "string"
+                                      }
+                                    ]
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "National Provider Identifier"
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "state_code"
+                                  },
+                                  "type": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "null"
+                                      },
+                                      {
+                                        "kind": "string",
+                                        "value": "string"
+                                      }
+                                    ]
+                                  },
+                                  "doc": {
+                                    "kind": "string",
+                                    "value": "Provider state code"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "provider_id",
+                  "description": "Unique provider identifier",
+                  "scalarType": "string",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/1\"]",
+                  "name": "provider_name",
+                  "description": "Provider full name",
+                  "scalarType": "string",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/2\"]",
+                  "name": "provider_npi",
+                  "description": "National Provider Identifier",
+                  "scalarType": "string",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/3\"]",
+                  "name": "state_code",
+                  "description": "Provider state code",
+                  "scalarType": "string",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "exports": [
+        {
+          "format": "json",
+          "schema": "{\"type\":\"record\",\"name\":\"TableSpecRecord\",\"namespace\":\"example.tablespec\",\"fields\":[{\"name\":\"provider_id\",\"type\":\"string\",\"doc\":\"Unique provider identifier\"},{\"name\":\"provider_name\",\"type\":\"string\",\"doc\":\"Provider full name\"},{\"name\":\"provider_npi\",\"type\":[\"null\",\"string\"],\"doc\":\"National Provider Identifier\"},{\"name\":\"state_code\",\"type\":[\"null\",\"string\"],\"doc\":\"Provider state code\"}]}\n"
+        },
+        {
+          "format": "yaml",
+          "schema": "{\"type\":\"record\",\"name\":\"TableSpecRecord\",\"namespace\":\"example.tablespec\",\"fields\":[{\"name\":\"provider_id\",\"type\":\"string\",\"doc\":\"Unique provider identifier\"},{\"name\":\"provider_name\",\"type\":\"string\",\"doc\":\"Provider full name\"},{\"name\":\"provider_npi\",\"type\":[\"null\",\"string\"],\"doc\":\"National Provider Identifier\"},{\"name\":\"state_code\",\"type\":[\"null\",\"string\"],\"doc\":\"Provider state code\"}]}\n"
+        }
+      ]
+    }
+  ]
+}

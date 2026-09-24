@@ -1,0 +1,1434 @@
+[
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 20,
+        "name": "protocol",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 21,
+              "name": "minReaderVersion",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT32",
+                  "value": "1"
+                }
+              }
+            },
+            {
+              "index": 22,
+              "name": "minWriterVersion",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT32",
+                  "value": "2"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 23,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 26,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 63,
+        "name": "remove",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "metaData",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 2,
+              "name": "id",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "39386339666165622d373934302d343365622d393839382d353062326139396330613765"
+                }
+              }
+            },
+            {
+              "index": 3,
+              "name": "name",
+              "value": null
+            },
+            {
+              "index": 4,
+              "name": "description",
+              "value": null
+            },
+            {
+              "index": 5,
+              "name": "schemaString",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a226964222c2274797065223a22737472696e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a227072696365222c2274797065223a226c6f6e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22736f6c64222c2274797065223a22696e7465676572222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2264656c65746564222c2274797065223a22626f6f6c65616e222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d"
+                }
+              }
+            },
+            {
+              "index": 6,
+              "name": "createdTime",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "1709986334419"
+                }
+              }
+            },
+            {
+              "index": 7,
+              "name": "partitionColumns",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 8,
+                    "name": "list",
+                    "value": {
+                      "kind": "repeated",
+                      "items": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 10,
+              "name": "configuration",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 11,
+                    "name": "entries",
+                    "value": {
+                      "kind": "repeated",
+                      "items": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 14,
+              "name": "format",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 15,
+                    "name": "provider",
+                    "value": {
+                      "kind": "physical",
+                      "value": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "70617271756574"
+                      }
+                    }
+                  },
+                  {
+                    "index": 16,
+                    "name": "options",
+                    "value": {
+                      "kind": "record",
+                      "fields": [
+                        {
+                          "index": 17,
+                          "name": "entries",
+                          "value": {
+                            "kind": "repeated",
+                            "items": []
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 20,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 23,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 26,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 63,
+        "name": "remove",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 20,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 23,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 26,
+        "name": "add",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 27,
+              "name": "path",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "706172742d30303030312d62656139336133332d393131322d343161352d616361362d6332643166326334333837332d633030302e736e617070792e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 28,
+              "name": "size",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "1432"
+                }
+              }
+            },
+            {
+              "index": 29,
+              "name": "modificationTime",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "1709986423962"
+                }
+              }
+            },
+            {
+              "index": 30,
+              "name": "dataChange",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BOOLEAN",
+                  "value": false
+                }
+              }
+            },
+            {
+              "index": 31,
+              "name": "stats",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a352c226d696e56616c756573223a7b226964223a2231222c22736f6c64223a302c2264656c65746564223a66616c73652c227072696365223a307d2c226d617856616c756573223a7b2264656c65746564223a66616c73652c226964223a2235222c227072696365223a342c22736f6c64223a347d2c226e756c6c436f756e74223a7b226964223a302c227072696365223a302c22736f6c64223a302c2264656c65746564223a307d7d"
+                }
+              }
+            },
+            {
+              "index": 32,
+              "name": "partitionValues",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 33,
+                    "name": "entries",
+                    "value": {
+                      "kind": "repeated",
+                      "items": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 36,
+              "name": "tags",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 37,
+                    "name": "entries",
+                    "value": {
+                      "kind": "repeated",
+                      "items": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 40,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 46,
+              "name": "stats_parsed",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 47,
+                    "name": "numRecords",
+                    "value": {
+                      "kind": "physical",
+                      "value": {
+                        "type": "INT64",
+                        "value": "5"
+                      }
+                    }
+                  },
+                  {
+                    "index": 48,
+                    "name": "minValues",
+                    "value": {
+                      "kind": "record",
+                      "fields": [
+                        {
+                          "index": 49,
+                          "name": "id",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "BYTE_ARRAY",
+                              "hex": "31"
+                            }
+                          }
+                        },
+                        {
+                          "index": 50,
+                          "name": "price",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 51,
+                          "name": "sold",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT32",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 52,
+                          "name": "deleted",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "BOOLEAN",
+                              "value": false
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "index": 53,
+                    "name": "maxValues",
+                    "value": {
+                      "kind": "record",
+                      "fields": [
+                        {
+                          "index": 54,
+                          "name": "id",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "BYTE_ARRAY",
+                              "hex": "35"
+                            }
+                          }
+                        },
+                        {
+                          "index": 55,
+                          "name": "price",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "4"
+                            }
+                          }
+                        },
+                        {
+                          "index": 56,
+                          "name": "sold",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT32",
+                              "value": "4"
+                            }
+                          }
+                        },
+                        {
+                          "index": 57,
+                          "name": "deleted",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "BOOLEAN",
+                              "value": false
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "index": 58,
+                    "name": "nullCount",
+                    "value": {
+                      "kind": "record",
+                      "fields": [
+                        {
+                          "index": 59,
+                          "name": "id",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 60,
+                          "name": "price",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 61,
+                          "name": "sold",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 62,
+                          "name": "deleted",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 63,
+        "name": "remove",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 20,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 23,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 26,
+        "name": "add",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 27,
+              "name": "path",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "706172742d30303030312d36373931623337652d663331382d346432622d383761302d3839626532303563333338622d633030302e736e617070792e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 28,
+              "name": "size",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "1432"
+                }
+              }
+            },
+            {
+              "index": 29,
+              "name": "modificationTime",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "1709986423857"
+                }
+              }
+            },
+            {
+              "index": 30,
+              "name": "dataChange",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BOOLEAN",
+                  "value": false
+                }
+              }
+            },
+            {
+              "index": 31,
+              "name": "stats",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a352c226d696e56616c756573223a7b2264656c65746564223a66616c73652c227072696365223a302c226964223a2231222c22736f6c64223a307d2c226d617856616c756573223a7b22736f6c64223a342c226964223a2235222c227072696365223a342c2264656c65746564223a66616c73657d2c226e756c6c436f756e74223a7b226964223a302c227072696365223a302c22736f6c64223a302c2264656c65746564223a307d7d"
+                }
+              }
+            },
+            {
+              "index": 32,
+              "name": "partitionValues",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 33,
+                    "name": "entries",
+                    "value": {
+                      "kind": "repeated",
+                      "items": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 36,
+              "name": "tags",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 37,
+                    "name": "entries",
+                    "value": {
+                      "kind": "repeated",
+                      "items": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 40,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 46,
+              "name": "stats_parsed",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 47,
+                    "name": "numRecords",
+                    "value": {
+                      "kind": "physical",
+                      "value": {
+                        "type": "INT64",
+                        "value": "5"
+                      }
+                    }
+                  },
+                  {
+                    "index": 48,
+                    "name": "minValues",
+                    "value": {
+                      "kind": "record",
+                      "fields": [
+                        {
+                          "index": 49,
+                          "name": "id",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "BYTE_ARRAY",
+                              "hex": "31"
+                            }
+                          }
+                        },
+                        {
+                          "index": 50,
+                          "name": "price",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 51,
+                          "name": "sold",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT32",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 52,
+                          "name": "deleted",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "BOOLEAN",
+                              "value": false
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "index": 53,
+                    "name": "maxValues",
+                    "value": {
+                      "kind": "record",
+                      "fields": [
+                        {
+                          "index": 54,
+                          "name": "id",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "BYTE_ARRAY",
+                              "hex": "35"
+                            }
+                          }
+                        },
+                        {
+                          "index": 55,
+                          "name": "price",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "4"
+                            }
+                          }
+                        },
+                        {
+                          "index": 56,
+                          "name": "sold",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT32",
+                              "value": "4"
+                            }
+                          }
+                        },
+                        {
+                          "index": 57,
+                          "name": "deleted",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "BOOLEAN",
+                              "value": false
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "index": 58,
+                    "name": "nullCount",
+                    "value": {
+                      "kind": "record",
+                      "fields": [
+                        {
+                          "index": 59,
+                          "name": "id",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 60,
+                          "name": "price",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 61,
+                          "name": "sold",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 62,
+                          "name": "deleted",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 63,
+        "name": "remove",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 20,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 23,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 26,
+        "name": "add",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 27,
+              "name": "path",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "706172742d30303030312d66656436643131322d643234342d346335342d383130642d3235626133663061343031362d633030302e736e617070792e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 28,
+              "name": "size",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "1432"
+                }
+              }
+            },
+            {
+              "index": 29,
+              "name": "modificationTime",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "1709986334474"
+                }
+              }
+            },
+            {
+              "index": 30,
+              "name": "dataChange",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BOOLEAN",
+                  "value": false
+                }
+              }
+            },
+            {
+              "index": 31,
+              "name": "stats",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a352c226d696e56616c756573223a7b2264656c65746564223a66616c73652c227072696365223a302c226964223a2231222c22736f6c64223a307d2c226d617856616c756573223a7b227072696365223a342c226964223a2235222c22736f6c64223a342c2264656c65746564223a66616c73657d2c226e756c6c436f756e74223a7b226964223a302c22736f6c64223a302c2264656c65746564223a302c227072696365223a307d7d"
+                }
+              }
+            },
+            {
+              "index": 32,
+              "name": "partitionValues",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 33,
+                    "name": "entries",
+                    "value": {
+                      "kind": "repeated",
+                      "items": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 36,
+              "name": "tags",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 37,
+                    "name": "entries",
+                    "value": {
+                      "kind": "repeated",
+                      "items": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 40,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 46,
+              "name": "stats_parsed",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 47,
+                    "name": "numRecords",
+                    "value": {
+                      "kind": "physical",
+                      "value": {
+                        "type": "INT64",
+                        "value": "5"
+                      }
+                    }
+                  },
+                  {
+                    "index": 48,
+                    "name": "minValues",
+                    "value": {
+                      "kind": "record",
+                      "fields": [
+                        {
+                          "index": 49,
+                          "name": "id",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "BYTE_ARRAY",
+                              "hex": "31"
+                            }
+                          }
+                        },
+                        {
+                          "index": 50,
+                          "name": "price",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 51,
+                          "name": "sold",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT32",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 52,
+                          "name": "deleted",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "BOOLEAN",
+                              "value": false
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "index": 53,
+                    "name": "maxValues",
+                    "value": {
+                      "kind": "record",
+                      "fields": [
+                        {
+                          "index": 54,
+                          "name": "id",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "BYTE_ARRAY",
+                              "hex": "35"
+                            }
+                          }
+                        },
+                        {
+                          "index": 55,
+                          "name": "price",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "4"
+                            }
+                          }
+                        },
+                        {
+                          "index": 56,
+                          "name": "sold",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT32",
+                              "value": "4"
+                            }
+                          }
+                        },
+                        {
+                          "index": 57,
+                          "name": "deleted",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "BOOLEAN",
+                              "value": false
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "index": 58,
+                    "name": "nullCount",
+                    "value": {
+                      "kind": "record",
+                      "fields": [
+                        {
+                          "index": 59,
+                          "name": "id",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 60,
+                          "name": "price",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 61,
+                          "name": "sold",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 62,
+                          "name": "deleted",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 63,
+        "name": "remove",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 20,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 23,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 26,
+        "name": "add",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 27,
+              "name": "path",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "706172742d30303030312d39633930613834642d363939392d343633632d626432642d6636383333336536643033642d633030302e736e617070792e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 28,
+              "name": "size",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "1432"
+                }
+              }
+            },
+            {
+              "index": 29,
+              "name": "modificationTime",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "1709986334424"
+                }
+              }
+            },
+            {
+              "index": 30,
+              "name": "dataChange",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BOOLEAN",
+                  "value": false
+                }
+              }
+            },
+            {
+              "index": 31,
+              "name": "stats",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b226e756d5265636f726473223a352c226d696e56616c756573223a7b2264656c65746564223a66616c73652c226964223a2231222c22736f6c64223a302c227072696365223a307d2c226d617856616c756573223a7b227072696365223a342c226964223a2235222c2264656c65746564223a66616c73652c22736f6c64223a347d2c226e756c6c436f756e74223a7b2264656c65746564223a302c226964223a302c227072696365223a302c22736f6c64223a307d7d"
+                }
+              }
+            },
+            {
+              "index": 32,
+              "name": "partitionValues",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 33,
+                    "name": "entries",
+                    "value": {
+                      "kind": "repeated",
+                      "items": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 36,
+              "name": "tags",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 37,
+                    "name": "entries",
+                    "value": {
+                      "kind": "repeated",
+                      "items": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 40,
+              "name": "deletionVector",
+              "value": null
+            },
+            {
+              "index": 46,
+              "name": "stats_parsed",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 47,
+                    "name": "numRecords",
+                    "value": {
+                      "kind": "physical",
+                      "value": {
+                        "type": "INT64",
+                        "value": "5"
+                      }
+                    }
+                  },
+                  {
+                    "index": 48,
+                    "name": "minValues",
+                    "value": {
+                      "kind": "record",
+                      "fields": [
+                        {
+                          "index": 49,
+                          "name": "id",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "BYTE_ARRAY",
+                              "hex": "31"
+                            }
+                          }
+                        },
+                        {
+                          "index": 50,
+                          "name": "price",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 51,
+                          "name": "sold",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT32",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 52,
+                          "name": "deleted",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "BOOLEAN",
+                              "value": false
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "index": 53,
+                    "name": "maxValues",
+                    "value": {
+                      "kind": "record",
+                      "fields": [
+                        {
+                          "index": 54,
+                          "name": "id",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "BYTE_ARRAY",
+                              "hex": "35"
+                            }
+                          }
+                        },
+                        {
+                          "index": 55,
+                          "name": "price",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "4"
+                            }
+                          }
+                        },
+                        {
+                          "index": 56,
+                          "name": "sold",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT32",
+                              "value": "4"
+                            }
+                          }
+                        },
+                        {
+                          "index": 57,
+                          "name": "deleted",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "BOOLEAN",
+                              "value": false
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "index": 58,
+                    "name": "nullCount",
+                    "value": {
+                      "kind": "record",
+                      "fields": [
+                        {
+                          "index": 59,
+                          "name": "id",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 60,
+                          "name": "price",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 61,
+                          "name": "sold",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        },
+                        {
+                          "index": 62,
+                          "name": "deleted",
+                          "value": {
+                            "kind": "physical",
+                            "value": {
+                              "type": "INT64",
+                              "value": "0"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 63,
+        "name": "remove",
+        "value": null
+      }
+    ]
+  }
+]

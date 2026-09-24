@@ -1,0 +1,524 @@
+{
+  "oracle": "RDFLib SPARQL 1.1 property paths and graph queries",
+  "version": "7.6.0",
+  "claim": "Independent target sets, not official validation reports",
+  "results": [
+    {
+      "source": "native/shacl/targets-shapes.ttl",
+      "shape": "https://example.org/explicit",
+      "native": [
+        {
+          "kind": "literal",
+          "value": "9007199254740993",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+        },
+        {
+          "kind": "literal",
+          "value": "absent literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#string"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/absent"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/targets-shapes.ttl",
+      "shape": "https://example.org/class",
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/c"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/targets-shapes.ttl",
+      "shape": "https://example.org/subjects",
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/targets-shapes.ttl",
+      "shape": "https://example.org/objects",
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "literal",
+          "value": "value",
+          "datatype": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/targets-shapes.ttl",
+      "shape": "https://example.org/union",
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/c"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        },
+        {
+          "kind": "literal",
+          "value": "value",
+          "datatype": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/targets-shapes.ttl",
+      "shape": "https://example.org/Implicit",
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/c"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/targets-shapes.ttl",
+      "shape": "https://example.org/ShapeType",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/targets-shapes.ttl",
+      "shape": "https://example.org/ClassType",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/targets-shapes.ttl",
+      "shape": "https://example.org/ShapeOnlySub",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/targets-shapes.ttl",
+      "shape": "https://example.org/inactive",
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/absent"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/targets-shapes.ttl",
+      "shape": "https://example.org/none",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/multipleTargets-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/multipleTargets-001.test#InvalidResource1",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/multipleTargets-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/multipleTargets-001.test#TestShape",
+      "native": [
+        {
+          "kind": "iri",
+          "value": "http://datashapes.org/sh/tests/core/targets/multipleTargets-001.test#ValidResource1"
+        },
+        {
+          "kind": "iri",
+          "value": "http://datashapes.org/sh/tests/core/targets/multipleTargets-001.test#ValidResource2"
+        },
+        {
+          "kind": "iri",
+          "value": "http://datashapes.org/sh/tests/core/targets/multipleTargets-001.test#InvalidResource1"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/multipleTargets-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/multipleTargets-001.test#ValidResource1",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/multipleTargets-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/multipleTargets-001.test#ValidResource2",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/multipleTargets-001.ttl",
+      "shape": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/multipleTargets-001.ttl",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/multipleTargets-001.ttl",
+      "shape": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/multipleTargets-001",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetClass-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetClass-001.test#InvalidInstance1",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetClass-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetClass-001.test#MyClass",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetClass-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetClass-001.test#MyShape",
+      "native": [
+        {
+          "kind": "iri",
+          "value": "http://datashapes.org/sh/tests/core/targets/targetClass-001.test#ValidInstance1"
+        },
+        {
+          "kind": "iri",
+          "value": "http://datashapes.org/sh/tests/core/targets/targetClass-001.test#InvalidInstance1"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetClass-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetClass-001.test#MyShape-myProperty",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetClass-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetClass-001.test#ValidInstance1",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetClass-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetClass-001.test#ValidInstance2",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetClass-001.ttl",
+      "shape": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetClass-001.ttl",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetClass-001.ttl",
+      "shape": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetClass-001",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetClassImplicit-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetClassImplicit-001.test#InvalidInstance",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetClassImplicit-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetClassImplicit-001.test#SubClass",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetClassImplicit-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetClassImplicit-001.test#SuperClass",
+      "native": [
+        {
+          "kind": "iri",
+          "value": "http://datashapes.org/sh/tests/core/targets/targetClassImplicit-001.test#ValidInstance"
+        },
+        {
+          "kind": "iri",
+          "value": "http://datashapes.org/sh/tests/core/targets/targetClassImplicit-001.test#InvalidInstance"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetClassImplicit-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetClassImplicit-001.test#ValidInstance",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetClassImplicit-001.ttl",
+      "shape": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetClassImplicit-001.ttl",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetClassImplicit-001.ttl",
+      "shape": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetClassImplicit-001",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetNode-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetNode-001.test#InvalidResource1",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetNode-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetNode-001.test#TestShape",
+      "native": [
+        {
+          "kind": "iri",
+          "value": "http://datashapes.org/sh/tests/core/targets/targetNode-001.test#ValidResource1"
+        },
+        {
+          "kind": "iri",
+          "value": "http://datashapes.org/sh/tests/core/targets/targetNode-001.test#InvalidResource1"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetNode-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetNode-001.test#TestShape-label",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetNode-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetNode-001.test#ValidResource1",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetNode-001.ttl",
+      "shape": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetNode-001.ttl",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetNode-001.ttl",
+      "shape": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetNode-001",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetObjectsOf-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetObjectsOf-001.test#InvalidResource1",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetObjectsOf-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetObjectsOf-001.test#InvalidResource2",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetObjectsOf-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetObjectsOf-001.test#TestShape",
+      "native": [
+        {
+          "kind": "literal",
+          "value": "String",
+          "datatype": "http://www.w3.org/2001/XMLSchema#string"
+        },
+        {
+          "kind": "literal",
+          "value": "100",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+        },
+        {
+          "kind": "iri",
+          "value": "http://www.w3.org/2000/01/rdf-schema#Resource"
+        },
+        {
+          "kind": "literal",
+          "value": "42",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetObjectsOf-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetObjectsOf-001.test#ValidResource1",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetObjectsOf-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetObjectsOf-001.test#testProperty",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetObjectsOf-001.ttl",
+      "shape": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetObjectsOf-001.ttl",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetObjectsOf-001.ttl",
+      "shape": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetObjectsOf-001",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-001.test#InvalidInstance1",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-001.test#MyClass",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-001.test#TestShape",
+      "native": [
+        {
+          "kind": "iri",
+          "value": "http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-001.test#ValidInstance1"
+        },
+        {
+          "kind": "iri",
+          "value": "http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-001.test#InvalidInstance1"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-001.test#TestShape-myProperty",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-001.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-001.test#ValidInstance1",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-001.ttl",
+      "shape": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-001.ttl",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-001.ttl",
+      "shape": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-001",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-002.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#InvalidInstance1",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-002.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#InvalidInstance2",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-002.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#MyClass",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-002.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#TestShape",
+      "native": [
+        {
+          "kind": "iri",
+          "value": "http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#ValidInstance1"
+        },
+        {
+          "kind": "iri",
+          "value": "http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#InvalidInstance1"
+        },
+        {
+          "kind": "iri",
+          "value": "http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#InvalidInstance2"
+        },
+        {
+          "kind": "iri",
+          "value": "http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#ValidInstance2"
+        }
+      ],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-002.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#TestShape-myProperty",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-002.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#ValidInstance1",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-002.ttl",
+      "shape": "http://datashapes.org/sh/tests/core/targets/targetSubjectsOf-002.test#ValidInstance2",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-002.ttl",
+      "shape": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-002.ttl",
+      "native": [],
+      "equal": true
+    },
+    {
+      "source": "native/shacl/sources/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-002.ttl",
+      "shape": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-002",
+      "native": [],
+      "equal": true
+    }
+  ]
+}

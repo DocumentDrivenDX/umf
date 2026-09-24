@@ -1,0 +1,19 @@
+{
+  "descriptorTag": "17-6.1.0",
+  "descriptorSha256": "f8382251fd044d5e9465a4bdb26728f06f70e8ed599e1486b394b84596c8557d",
+  "codecSha256": "80e80bd0c710c25a5cd2c217d33e38c62fbeef4edbd8ac834c848d21a887eb43",
+  "messages": 272,
+  "enums": 71,
+  "fields": 1665,
+  "wireVectors": 4560,
+  "checks": [
+    "Exact field inventory",
+    "Enum names and numeric values",
+    "Individual field wire tags and scalar encodings"
+  ],
+  "limitations": [
+    "Empty nested-message probes do not establish semantic validity",
+    "Not an exhaustive native AST corpus",
+    "No database execution"
+  ]
+}

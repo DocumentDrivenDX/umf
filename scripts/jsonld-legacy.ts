@@ -1,0 +1,10 @@
+import {importJsonLdDocument,exportJsonLdDocument,proposeJsonLdExpansion,proposeJsonLdNodeEdit,readDocument,writeDocument} from '../src';
+const cases=await Bun.file('native/jsonld/examples/legacy-cases.json').json(),results=[];
+function sort(v:any):any{return Array.isArray(v)?v.map(sort):v&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,sort(v[k])])):v;}
+for(const c of cases)for(const mode of ['10','11']){if(c.only11&&mode==='10')continue;const options={id:c.id,baseIRI:'https://example.org/source',processingMode:mode==='10'?'json-ld-1.0':'json-ld-1.1'} as const,source=importJsonLdDocument(JSON.stringify(c.source),options),r=await proposeJsonLdExpansion(source,{lossPolicy:'report'}),exports=[],edits=[];
+ if(c['blocked'+mode]){if(r.status!=='blocked')throw Error('Mode constraint lost');results.push({id:c.id,mode,status:r.status,diagnostics:r.diagnostics});continue;}
+ if(!r.candidate||JSON.stringify(sort(JSON.parse(exportJsonLdDocument(r.candidate))))!==JSON.stringify(sort(c['expect'+mode])))throw Error(c.id+mode+': '+JSON.stringify(r));
+ for(const format of ['json','yaml'] as const){const path='fixtures/jsonld/legacy/'+c.id+'.'+mode+'.'+format+'.jsonld';await Bun.write(path,exportJsonLdDocument(readDocument(writeDocument(r.candidate,format),format)));exports.push({format,path});}
+ if(c.edit&&c['edited'+mode]){const edited=proposeJsonLdNodeEdit(source,c.edit.pointer,c.edit.text).document,e=await proposeJsonLdExpansion(edited,{lossPolicy:'report'});if(!e.candidate||JSON.stringify(sort(JSON.parse(exportJsonLdDocument(e.candidate))))!==JSON.stringify(sort(c['edited'+mode])))throw Error('Edit differs');for(const format of ['json','yaml'] as const){const path='fixtures/jsonld/legacy/'+c.id+'.'+mode+'.'+format+'.edited.jsonld';await Bun.write(path,exportJsonLdDocument(readDocument(writeDocument(e.candidate,format),format)));edits.push({format,path});}}
+ results.push({id:c.id,mode,status:r.status,exports,edits});}
+await Bun.write('fixtures/jsonld/legacy/results.json',JSON.stringify({results},null,2)+'\n');console.log({cases:results.length,candidates:results.filter(r=>r.status==='candidate').length});

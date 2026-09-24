@@ -1,0 +1,4 @@
+export {};
+const assessment=await Bun.file('spec/extensions/iceberg/transform-type-schema.json').json();delete assessment.$id;delete assessment.$schema;
+const diagnostics=(await Bun.file('spec/extensions/iceberg-table/context-schema.json').json()).properties.diagnostics;
+await Bun.write('spec/extensions/iceberg-table/transform-binding-schema.json',JSON.stringify({$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:iceberg:transform-binding:0.1.0',type:'object',required:['status','complete','bindings','diagnostics'],additionalProperties:false,properties:{status:{enum:['checked','blocked']},complete:{const:false},bindings:{type:'array',items:{type:'object',required:['fieldPath','sourcePath','assessment'],additionalProperties:false,properties:{fieldPath:{type:'string'},sourcePath:{type:'string'},assessment}}},diagnostics}},null,2)+'\n');

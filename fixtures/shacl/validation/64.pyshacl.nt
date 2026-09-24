@@ -1,0 +1,38 @@
+_:N8832a5e0d8d2499da0908ddadc028a19 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/lessThan-002.test#TestShape-first> .
+_:N8832a5e0d8d2499da0908ddadc028a19 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N2c9cae3af0aa410c8468aba6ab1f2e2c <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/lessThan-002.test#InvalidInstance1> .
+_:N3ba1fc8e746a49ebafe2dd67c6973503 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/lessThan-002.test#InvalidInstance1> .
+_:Nbb3e3b5a873842fe9d0f6a87dffefa2f <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N8832a5e0d8d2499da0908ddadc028a19 <http://www.w3.org/ns/shacl#resultMessage> "Value of ex:InvalidInstance1->ex:second <= Literal(\"1\", datatype=xsd:integer)" .
+_:N2c9cae3af0aa410c8468aba6ab1f2e2c <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/lessThan-002.test#TestShape-first> .
+_:Nbb3e3b5a873842fe9d0f6a87dffefa2f <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N3ba1fc8e746a49ebafe2dd67c6973503 <http://www.w3.org/ns/shacl#value> "2"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:N2c9cae3af0aa410c8468aba6ab1f2e2c <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N3ba1fc8e746a49ebafe2dd67c6973503 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/lessThan-002.test#TestShape-first> .
+_:N8832a5e0d8d2499da0908ddadc028a19 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/lessThan-002.test#first> .
+_:N3ba1fc8e746a49ebafe2dd67c6973503 <http://www.w3.org/ns/shacl#resultMessage> "Value of ex:InvalidInstance1->ex:second <= Literal(\"2\", datatype=xsd:integer)" .
+_:Nf611a29836e345bfb41c8ad5f2c6fb81 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/lessThan-002.test#InvalidInstance1> .
+_:Nf611a29836e345bfb41c8ad5f2c6fb81 <http://www.w3.org/ns/shacl#resultMessage> "Value of ex:InvalidInstance1->ex:second <= Literal(\"2\", datatype=xsd:integer)" .
+_:N3ba1fc8e746a49ebafe2dd67c6973503 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nbb3e3b5a873842fe9d0f6a87dffefa2f <http://www.w3.org/ns/shacl#result> _:N2c9cae3af0aa410c8468aba6ab1f2e2c .
+_:Nf611a29836e345bfb41c8ad5f2c6fb81 <http://www.w3.org/ns/shacl#value> "2"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:N8832a5e0d8d2499da0908ddadc028a19 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LessThanConstraintComponent> .
+_:N2c9cae3af0aa410c8468aba6ab1f2e2c <http://www.w3.org/ns/shacl#resultMessage> "Value of ex:InvalidInstance1->ex:second <= Literal(\"1\", datatype=xsd:integer)" .
+_:Nf611a29836e345bfb41c8ad5f2c6fb81 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/lessThan-002.test#TestShape-first> .
+_:Nf611a29836e345bfb41c8ad5f2c6fb81 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N8832a5e0d8d2499da0908ddadc028a19 <http://www.w3.org/ns/shacl#value> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:N2c9cae3af0aa410c8468aba6ab1f2e2c <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/lessThan-002.test#first> .
+_:N8832a5e0d8d2499da0908ddadc028a19 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N2c9cae3af0aa410c8468aba6ab1f2e2c <http://www.w3.org/ns/shacl#value> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:N3ba1fc8e746a49ebafe2dd67c6973503 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/lessThan-002.test#first> .
+_:N2c9cae3af0aa410c8468aba6ab1f2e2c <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LessThanConstraintComponent> .
+_:N3ba1fc8e746a49ebafe2dd67c6973503 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LessThanConstraintComponent> .
+_:Nf611a29836e345bfb41c8ad5f2c6fb81 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/lessThan-002.test#first> .
+_:Nf611a29836e345bfb41c8ad5f2c6fb81 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LessThanConstraintComponent> .
+_:Nbb3e3b5a873842fe9d0f6a87dffefa2f <http://www.w3.org/ns/shacl#result> _:Nf611a29836e345bfb41c8ad5f2c6fb81 .
+_:Nbb3e3b5a873842fe9d0f6a87dffefa2f <http://www.w3.org/ns/shacl#result> _:N8832a5e0d8d2499da0908ddadc028a19 .
+_:N2c9cae3af0aa410c8468aba6ab1f2e2c <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nf611a29836e345bfb41c8ad5f2c6fb81 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N8832a5e0d8d2499da0908ddadc028a19 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/lessThan-002.test#InvalidInstance1> .
+_:Nbb3e3b5a873842fe9d0f6a87dffefa2f <http://www.w3.org/ns/shacl#result> _:N3ba1fc8e746a49ebafe2dd67c6973503 .
+_:N3ba1fc8e746a49ebafe2dd67c6973503 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .

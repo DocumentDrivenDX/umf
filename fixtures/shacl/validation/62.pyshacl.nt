@@ -1,0 +1,29 @@
+_:Nf23abecbc09f45299b91fe175e09c514 <http://www.w3.org/ns/shacl#result> _:Nbd5ea94af1794a2597b7d1e81179eb81 .
+_:Nf23abecbc09f45299b91fe175e09c514 <http://www.w3.org/ns/shacl#result> _:N9b4110a3d5704ccca6736af05604e116 .
+_:N9b4110a3d5704ccca6736af05604e116 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/languageIn-001.test#Berg> .
+_:Nbd5ea94af1794a2597b7d1e81179eb81 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LanguageInConstraintComponent> .
+_:Nc47fa34295bb4c24b87444a00cc71cc8 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nf23abecbc09f45299b91fe175e09c514 <http://www.w3.org/ns/shacl#result> _:Nc47fa34295bb4c24b87444a00cc71cc8 .
+_:Nc47fa34295bb4c24b87444a00cc71cc8 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nc47fa34295bb4c24b87444a00cc71cc8 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/languageIn-001.test#Berg> .
+_:N9b4110a3d5704ccca6736af05604e116 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/property/languageIn-001.test#BergLabel> .
+_:Nbd5ea94af1794a2597b7d1e81179eb81 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/languageIn-001.test#NewZealandLanguagesShape-prefLabel> .
+_:N9b4110a3d5704ccca6736af05604e116 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/languageIn-001.test#NewZealandLanguagesShape-prefLabel> .
+_:N9b4110a3d5704ccca6736af05604e116 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LanguageInConstraintComponent> .
+_:Nc47fa34295bb4c24b87444a00cc71cc8 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LanguageInConstraintComponent> .
+_:Nbd5ea94af1794a2597b7d1e81179eb81 <http://www.w3.org/ns/shacl#value> "Berg"@de .
+_:Nbd5ea94af1794a2597b7d1e81179eb81 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nc47fa34295bb4c24b87444a00cc71cc8 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/languageIn-001.test#prefLabel> .
+_:Nf23abecbc09f45299b91fe175e09c514 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N9b4110a3d5704ccca6736af05604e116 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nc47fa34295bb4c24b87444a00cc71cc8 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/languageIn-001.test#NewZealandLanguagesShape-prefLabel> .
+_:Nf23abecbc09f45299b91fe175e09c514 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Nbd5ea94af1794a2597b7d1e81179eb81 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nc47fa34295bb4c24b87444a00cc71cc8 <http://www.w3.org/ns/shacl#value> "Berg" .
+_:Nbd5ea94af1794a2597b7d1e81179eb81 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/languageIn-001.test#prefLabel> .
+_:Nbd5ea94af1794a2597b7d1e81179eb81 <http://www.w3.org/ns/shacl#resultMessage> "String language is not in ( Literal(\"en\") Literal(\"mi\") )" .
+_:N9b4110a3d5704ccca6736af05604e116 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/languageIn-001.test#prefLabel> .
+_:Nbd5ea94af1794a2597b7d1e81179eb81 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/languageIn-001.test#Berg> .
+_:N9b4110a3d5704ccca6736af05604e116 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N9b4110a3d5704ccca6736af05604e116 <http://www.w3.org/ns/shacl#resultMessage> "String language is not in ( Literal(\"en\") Literal(\"mi\") )" .
+_:Nc47fa34295bb4c24b87444a00cc71cc8 <http://www.w3.org/ns/shacl#resultMessage> "String language is not in ( Literal(\"en\") Literal(\"mi\") )" .

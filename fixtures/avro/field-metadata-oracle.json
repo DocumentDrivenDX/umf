@@ -1,0 +1,153 @@
+{
+  "avro": "1.12.0",
+  "fields": [
+    {
+      "name": "f0",
+      "carrier": "boolean",
+      "logicalType": null
+    },
+    {
+      "name": "f1",
+      "carrier": "int",
+      "logicalType": null
+    },
+    {
+      "name": "f2",
+      "carrier": "long",
+      "logicalType": null
+    },
+    {
+      "name": "f3",
+      "carrier": "float",
+      "logicalType": null
+    },
+    {
+      "name": "f4",
+      "carrier": "double",
+      "logicalType": null
+    },
+    {
+      "name": "f5",
+      "carrier": "string",
+      "logicalType": null
+    },
+    {
+      "name": "f6",
+      "carrier": "bytes",
+      "logicalType": null
+    },
+    {
+      "name": "f7",
+      "carrier": "union",
+      "logicalType": null
+    },
+    {
+      "name": "f8",
+      "carrier": "union",
+      "logicalType": null
+    },
+    {
+      "name": "f9",
+      "carrier": "union",
+      "logicalType": null
+    },
+    {
+      "name": "f10",
+      "carrier": "array",
+      "logicalType": null
+    },
+    {
+      "name": "f11",
+      "carrier": "map",
+      "logicalType": null
+    },
+    {
+      "name": "f12",
+      "carrier": "int",
+      "logicalType": "date"
+    },
+    {
+      "name": "f13",
+      "carrier": "int",
+      "logicalType": "time-millis"
+    },
+    {
+      "name": "f14",
+      "carrier": "long",
+      "logicalType": "time-micros"
+    },
+    {
+      "name": "f15",
+      "carrier": "long",
+      "logicalType": null
+    },
+    {
+      "name": "f16",
+      "carrier": "long",
+      "logicalType": null
+    },
+    {
+      "name": "f17",
+      "carrier": "bytes",
+      "logicalType": "decimal"
+    },
+    {
+      "name": "f18",
+      "carrier": "fixed",
+      "logicalType": "decimal"
+    },
+    {
+      "name": "f19",
+      "carrier": "fixed",
+      "logicalType": "decimal"
+    },
+    {
+      "name": "f20",
+      "carrier": "fixed",
+      "logicalType": null
+    },
+    {
+      "name": "f21",
+      "carrier": "enum",
+      "logicalType": null
+    },
+    {
+      "name": "f22",
+      "carrier": "bytes",
+      "logicalType": null
+    },
+    {
+      "name": "f23",
+      "carrier": "bytes",
+      "logicalType": null
+    },
+    {
+      "name": "f24",
+      "carrier": "fixed",
+      "logicalType": null
+    },
+    {
+      "name": "f25",
+      "carrier": "null",
+      "logicalType": null
+    }
+  ],
+  "cases": [
+    {
+      "format": "json",
+      "nativeSchemaAgrees": true
+    },
+    {
+      "format": "yaml",
+      "nativeSchemaAgrees": true
+    }
+  ],
+  "warnings": [
+    "Invalid decimal precision 3. Max is 2.",
+    "Invalid decimal scale 3. Cannot be greater than precision 2.",
+    "Unknown future, using bytes.",
+    "Unknown local-timestamp-micros, using long.",
+    "Unknown timestamp-nanos, using long."
+  ],
+  "scope": "Native schema parsing and recovery; scalar family expectations are separately tested against the specification, not inferred from native acceptance."
+}

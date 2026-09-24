@@ -1,0 +1,2097 @@
+{
+  "cases": [
+    {
+      "file": "stored.parquet",
+      "source": {
+        "umf": "0.1.0",
+        "id": "stored.parquet",
+        "vocabularies": {
+          "umf.parquet": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "parquet",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "source",
+                "extensions": {
+                  "umf.parquet": {
+                    "profile": "parquet-file-source",
+                    "encoding": "hex",
+                    "bytes": "504152311504151015104c1504150012000001000000020000001500152015202c15061510150615061c180402000000180401000000160228040200000018040100000000000002000000030203000000030f000103021504151015104c15021500120000d2040000000000001500151215122c15041510150615061c1808d2040000000000001808d20400000000000016022808d2040000000000001808d2040000000000000000000200000003010102001504152015204c15041500120000000000000000000087d61200000000001500151215122c15041510150615061c180887d6120000000000180800000000000000001600280887d6120000000000180800000000000000000000000200000004010103021504151415144c15041500120000010000006101000000621500151215122c15041510150615061c36002801621801610000000200000004010103021504197c35001806736368656d61150800350218066576656e7473150215064c3c000000350418046c697374150200150225021807656c656d656e7400150425021807656c6170736564001504250218076372656174656425144c8c111c2c0000000000150c250218056c6162656c25004c1c0000001604191c194c26001c150219350006101938066576656e7473046c69737407656c656d656e741500160616a60116a601263426081c180402000000180401000000160228040200000018040100000000192c15041500150200150015101502003c2926040219460200000400000026001c15041935000610191807656c61707365641500160416b80116b80126da0126ae011c1808d2040000000000001808d20400000000000016022808d2040000000000001808d20400000000000000192c15041500150200150015101502003c29061926020200000026001c15041935000610191807637265617465641500160416c80116c80126a20326e6021c180887d6120000000000180800000000000000001600280887d61200000000001808000000000000000000192c15041500150200150015101502003c29061926000400000026001c150c19350006101918056c6162656c150016041678167826de0426ae041c360028016218016100192c15041500150200150015101502003c1604190619260004000000169e0516042608169e0500192c180d6675747572652e736368656d611808707265736572766500180c4152524f573a736368656d6118b8052f2f2f2f2f77414341414151414141414141414b414134414267414641416741436741414141414242414151414141414141414b414177414141414541416741436741414145414141414145414141414151414141415141414142342f2f2f2f4741414141415141414141494141414163484a6c63325679646d5541414141414451414141475a31644856795a53357a5932686c62574541414141454141414146414541414e774141414349414141414741414141414141456741594141674142674148414177414141415141425141456741414141414141515555414141415841414141416741414141554141414141414141414155414141427359574a6c62414141414145414141414d414141414341414d4141514143414149414141414741414141415141414141494141414163484a6c63325679646d5541414141414441414141475a31644856795a53356d615756735a414141414142512f2f2f2f54502f2f2f77414141516f5141414141494141414141514141414141414141414277414141474e795a5746305a5751414341414d414159414341414941414141414141434141514141414151414141415157316c636d6c6a5953394f5a5864665757397961774141414143632f2f2f2f41414142456841414141416741414141424141414141414141414148414141415a57786863484e6c5a414141414159414341414741415941414141414141494130502f2f2f7741414152555541414141494141414141514141414142414141414b414141414159414141426c646d567564484d414141514142414145414141414541415541416741426741484141774141414151414241414141414141414543454141414143414141414145414141414141414141415141414142706447567441414141414167414441414941416341434141414141414141414567414141414141414141413d3d001820706172717565742d6370702d6172726f772076657273696f6e2032312e302e30194c1c00001c00001c00001c0000002005000050415231"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "policy": {
+        "id": "arrow-loss",
+        "recordName": "Sample",
+        "namespace": "example",
+        "fieldNames": {},
+        "maps": "entry-arrays",
+        "lossPolicy": "allow-reported-loss"
+      },
+      "result": {
+        "status": "projected",
+        "source": {
+          "umf": "0.1.0",
+          "id": "stored.parquet",
+          "vocabularies": {
+            "umf.parquet": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "parquet",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.parquet": {
+                      "profile": "parquet-file-source",
+                      "encoding": "hex",
+                      "bytes": "504152311504151015104c1504150012000001000000020000001500152015202c15061510150615061c180402000000180401000000160228040200000018040100000000000002000000030203000000030f000103021504151015104c15021500120000d2040000000000001500151215122c15041510150615061c1808d2040000000000001808d20400000000000016022808d2040000000000001808d2040000000000000000000200000003010102001504152015204c15041500120000000000000000000087d61200000000001500151215122c15041510150615061c180887d6120000000000180800000000000000001600280887d6120000000000180800000000000000000000000200000004010103021504151415144c15041500120000010000006101000000621500151215122c15041510150615061c36002801621801610000000200000004010103021504197c35001806736368656d61150800350218066576656e7473150215064c3c000000350418046c697374150200150225021807656c656d656e7400150425021807656c6170736564001504250218076372656174656425144c8c111c2c0000000000150c250218056c6162656c25004c1c0000001604191c194c26001c150219350006101938066576656e7473046c69737407656c656d656e741500160616a60116a601263426081c180402000000180401000000160228040200000018040100000000192c15041500150200150015101502003c2926040219460200000400000026001c15041935000610191807656c61707365641500160416b80116b80126da0126ae011c1808d2040000000000001808d20400000000000016022808d2040000000000001808d20400000000000000192c15041500150200150015101502003c29061926020200000026001c15041935000610191807637265617465641500160416c80116c80126a20326e6021c180887d6120000000000180800000000000000001600280887d61200000000001808000000000000000000192c15041500150200150015101502003c29061926000400000026001c150c19350006101918056c6162656c150016041678167826de0426ae041c360028016218016100192c15041500150200150015101502003c1604190619260004000000169e0516042608169e0500192c180d6675747572652e736368656d611808707265736572766500180c4152524f573a736368656d6118b8052f2f2f2f2f77414341414151414141414141414b414134414267414641416741436741414141414242414151414141414141414b414177414141414541416741436741414145414141414145414141414151414141415141414142342f2f2f2f4741414141415141414141494141414163484a6c63325679646d5541414141414451414141475a31644856795a53357a5932686c62574541414141454141414146414541414e774141414349414141414741414141414141456741594141674142674148414177414141415141425141456741414141414141515555414141415841414141416741414141554141414141414141414155414141427359574a6c62414141414145414141414d414141414341414d4141514143414149414141414741414141415141414141494141414163484a6c63325679646d5541414141414441414141475a31644856795a53356d615756735a414141414142512f2f2f2f54502f2f2f77414141516f5141414141494141414141514141414141414141414277414141474e795a5746305a5751414341414d414159414341414941414141414141434141514141414151414141415157316c636d6c6a5953394f5a5864665757397961774141414143632f2f2f2f41414142456841414141416741414141424141414141414141414148414141415a57786863484e6c5a414141414159414341414741415941414141414141494130502f2f2f7741414152555541414141494141414141514141414142414141414b414141414159414141426c646d567564484d414141514142414145414141414541415541416741426741484141774141414151414241414141414141414543454141414143414141414145414141414141414141415141414142706447567441414141414167414441414941416341434141414141414141414567414141414141414141413d3d001820706172717565742d6370702d6172726f772076657273696f6e2032312e302e30194c1c00001c00001c00001c0000002005000050415231"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "id": "arrow-loss",
+          "recordName": "Sample",
+          "namespace": "example",
+          "fieldNames": {},
+          "maps": "entry-arrays",
+          "lossPolicy": "allow-reported-loss"
+        },
+        "issues": [
+          {
+            "path": "",
+            "code": "PARQUET_UNINTERPRETED",
+            "classification": "not-enforced",
+            "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+            "classification": "not-enforced",
+            "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+            "classification": "not-enforced",
+            "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+            "retainedInSource": true
+          },
+          {
+            "path": "/schema/0/repetition_type",
+            "code": "PARQUET_ROOT_REPETITION",
+            "classification": "not-enforced",
+            "detail": "REQUIRED root repetition retained; root contributes no definition/repetition level",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+            "classification": "not-enforced",
+            "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+            "retainedInSource": true
+          },
+          {
+            "path": "/schema/1",
+            "code": "PARQUET_LOGICAL_UNVERIFIED",
+            "classification": "not-enforced",
+            "detail": "Nested layout and value rules remain unverified",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+            "classification": "not-enforced",
+            "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+            "classification": "not-enforced",
+            "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+            "retainedInSource": true
+          },
+          {
+            "path": "/key_value_metadata/1/value",
+            "code": "EMBEDDED_ARROW_SCHEMA_NOT_PROJECTED",
+            "classification": "representation-change",
+            "detail": "Avro is derived from the physical Parquet schema. The independent embedded Arrow declaration, custom metadata and schema/data correspondence remain in source; no field correspondence or semantic equivalence is inferred.",
+            "retainedInSource": true
+          },
+          {
+            "path": "/key_value_metadata/1/value",
+            "code": "ARROW_LIST_REFINEMENT_NOT_PROJECTED",
+            "classification": "not-enforced",
+            "detail": "Embedded Arrow /fields/0 (\"events\"): LargeList width/layout are not enforced by an Avro array.",
+            "retainedInSource": true
+          },
+          {
+            "path": "/key_value_metadata/1/value",
+            "code": "ARROW_DURATION_NOT_PROJECTED",
+            "classification": "not-enforced",
+            "detail": "Embedded Arrow /fields/1 (\"elapsed\"): duration unit MICROSECOND is not a physical integer or Avro duration semantic; any row binding must preserve the unit explicitly.",
+            "retainedInSource": true
+          },
+          {
+            "path": "/key_value_metadata/1/value",
+            "code": "ARROW_TIMEZONE_NOT_PROJECTED",
+            "classification": "not-enforced",
+            "detail": "Embedded Arrow /fields/2 (\"created\"): named timezone \"America/New_York\" is not retained by Avro instant timestamps.",
+            "retainedInSource": true
+          },
+          {
+            "path": "/schema/0",
+            "code": "SCHEMA_ONLY",
+            "classification": "representation-change",
+            "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+            "retainedInSource": true
+          },
+          {
+            "path": "/schema/1",
+            "code": "LIST_LAYOUT",
+            "classification": "representation-change",
+            "detail": "Native LIST wrappers and repetition levels lower to an Avro array; source layout remains in the capture",
+            "retainedInSource": true
+          },
+          {
+            "path": "/schema/5",
+            "code": "TEMPORAL_INTERPRETATION",
+            "classification": "not-enforced",
+            "detail": "Native UTC-adjustment, time-of-day bounds and target runtime range/annotation support require a value encoder; no units are rounded",
+            "retainedInSource": true
+          }
+        ],
+        "mappings": [
+          {
+            "index": 1,
+            "path": [
+              "events"
+            ]
+          },
+          {
+            "index": 3,
+            "path": [
+              "events",
+              "list",
+              "element"
+            ]
+          },
+          {
+            "index": 4,
+            "path": [
+              "elapsed"
+            ]
+          },
+          {
+            "index": 5,
+            "path": [
+              "created"
+            ]
+          },
+          {
+            "index": 6,
+            "path": [
+              "label"
+            ]
+          }
+        ],
+        "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Sample\",\n  \"namespace\": \"example\",\n  \"fields\": [\n    {\n      \"name\": \"events\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": [\n            \"null\",\n            \"int\"\n          ]\n        }\n      ]\n    },\n    {\n      \"name\": \"elapsed\",\n      \"type\": [\n        \"null\",\n        \"long\"\n      ]\n    },\n    {\n      \"name\": \"created\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"timestamp-micros\"\n        }\n      ]\n    },\n    {\n      \"name\": \"label\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n",
+        "target": {
+          "umf": "0.1.0",
+          "id": "arrow-loss",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Sample"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "example"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "events"
+                                  },
+                                  "type": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "null"
+                                      },
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "array"
+                                          },
+                                          "items": {
+                                            "kind": "array",
+                                            "items": [
+                                              {
+                                                "kind": "string",
+                                                "value": "null"
+                                              },
+                                              {
+                                                "kind": "string",
+                                                "value": "int"
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "elapsed"
+                                  },
+                                  "type": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "null"
+                                      },
+                                      {
+                                        "kind": "string",
+                                        "value": "long"
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "created"
+                                  },
+                                  "type": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "null"
+                                      },
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "long"
+                                          },
+                                          "logicalType": {
+                                            "kind": "string",
+                                            "value": "timestamp-micros"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "label"
+                                  },
+                                  "type": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "null"
+                                      },
+                                      {
+                                        "kind": "string",
+                                        "value": "string"
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "events",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/1\"]",
+                  "name": "elapsed",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/2\"]",
+                  "name": "created",
+                  "scalarType": "timestamp",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/3\"]",
+                  "name": "label",
+                  "scalarType": "string",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "file": "physical-only.parquet",
+      "source": {
+        "umf": "0.1.0",
+        "id": "physical-only.parquet",
+        "vocabularies": {
+          "umf.parquet": {
+            "version": "0.1.0"
+          }
+        },
+        "modules": [
+          {
+            "id": "parquet",
+            "namespace": "",
+            "elements": [
+              {
+                "id": "source",
+                "extensions": {
+                  "umf.parquet": {
+                    "profile": "parquet-file-source",
+                    "encoding": "hex",
+                    "bytes": "504152311504151015104c1504150012000001000000020000001500152015202c15061510150615061c180402000000180401000000160228040200000018040100000000000002000000030203000000030f000103021504151015104c15021500120000d2040000000000001500151215122c15041510150615061c1808d2040000000000001808d20400000000000016022808d2040000000000001808d2040000000000000000000200000003010102001504152015204c15041500120000000000000000000087d61200000000001500151215122c15041510150615061c180887d6120000000000180800000000000000001600280887d6120000000000180800000000000000000000000200000004010103021504151415144c15041500120000010000006101000000621500151215122c15041510150615061c36002801621801610000000200000004010103021504197c35001806736368656d61150800350218066576656e7473150215064c3c000000350418046c697374150200150225021807656c656d656e7400150425021807656c6170736564001504250218076372656174656425144c8c111c2c0000000000150c250218056c6162656c25004c1c0000001604191c194c26001c150219350006101938066576656e7473046c69737407656c656d656e741500160616a60116a601263426081c180402000000180401000000160228040200000018040100000000192c15041500150200150015101502003c2926040219460200000400000026001c15041935000610191807656c61707365641500160416b80116b80126da0126ae011c1808d2040000000000001808d20400000000000016022808d2040000000000001808d20400000000000000192c15041500150200150015101502003c29061926020200000026001c15041935000610191807637265617465641500160416c80116c80126a20326e6021c180887d6120000000000180800000000000000001600280887d61200000000001808000000000000000000192c15041500150200150015101502003c29061926000400000026001c150c19350006101918056c6162656c150016041678167826de0426ae041c360028016218016100192c15041500150200150015101502003c1604190619260004000000169e0516042608169e05002820706172717565742d6370702d6172726f772076657273696f6e2032312e302e30194c1c00001c00001c00001c0000003a02000050415231"
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "policy": {
+        "id": "arrow-loss",
+        "recordName": "Sample",
+        "namespace": "example",
+        "fieldNames": {},
+        "maps": "entry-arrays",
+        "lossPolicy": "allow-reported-loss"
+      },
+      "result": {
+        "status": "projected",
+        "source": {
+          "umf": "0.1.0",
+          "id": "physical-only.parquet",
+          "vocabularies": {
+            "umf.parquet": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "parquet",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.parquet": {
+                      "profile": "parquet-file-source",
+                      "encoding": "hex",
+                      "bytes": "504152311504151015104c1504150012000001000000020000001500152015202c15061510150615061c180402000000180401000000160228040200000018040100000000000002000000030203000000030f000103021504151015104c15021500120000d2040000000000001500151215122c15041510150615061c1808d2040000000000001808d20400000000000016022808d2040000000000001808d2040000000000000000000200000003010102001504152015204c15041500120000000000000000000087d61200000000001500151215122c15041510150615061c180887d6120000000000180800000000000000001600280887d6120000000000180800000000000000000000000200000004010103021504151415144c15041500120000010000006101000000621500151215122c15041510150615061c36002801621801610000000200000004010103021504197c35001806736368656d61150800350218066576656e7473150215064c3c000000350418046c697374150200150225021807656c656d656e7400150425021807656c6170736564001504250218076372656174656425144c8c111c2c0000000000150c250218056c6162656c25004c1c0000001604191c194c26001c150219350006101938066576656e7473046c69737407656c656d656e741500160616a60116a601263426081c180402000000180401000000160228040200000018040100000000192c15041500150200150015101502003c2926040219460200000400000026001c15041935000610191807656c61707365641500160416b80116b80126da0126ae011c1808d2040000000000001808d20400000000000016022808d2040000000000001808d20400000000000000192c15041500150200150015101502003c29061926020200000026001c15041935000610191807637265617465641500160416c80116c80126a20326e6021c180887d6120000000000180800000000000000001600280887d61200000000001808000000000000000000192c15041500150200150015101502003c29061926000400000026001c150c19350006101918056c6162656c150016041678167826de0426ae041c360028016218016100192c15041500150200150015101502003c1604190619260004000000169e0516042608169e05002820706172717565742d6370702d6172726f772076657273696f6e2032312e302e30194c1c00001c00001c00001c0000003a02000050415231"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "id": "arrow-loss",
+          "recordName": "Sample",
+          "namespace": "example",
+          "fieldNames": {},
+          "maps": "entry-arrays",
+          "lossPolicy": "allow-reported-loss"
+        },
+        "issues": [
+          {
+            "path": "",
+            "code": "PARQUET_UNINTERPRETED",
+            "classification": "not-enforced",
+            "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+            "classification": "not-enforced",
+            "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+            "classification": "not-enforced",
+            "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+            "retainedInSource": true
+          },
+          {
+            "path": "/schema/0/repetition_type",
+            "code": "PARQUET_ROOT_REPETITION",
+            "classification": "not-enforced",
+            "detail": "REQUIRED root repetition retained; root contributes no definition/repetition level",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+            "classification": "not-enforced",
+            "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+            "retainedInSource": true
+          },
+          {
+            "path": "/schema/1",
+            "code": "PARQUET_LOGICAL_UNVERIFIED",
+            "classification": "not-enforced",
+            "detail": "Nested layout and value rules remain unverified",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+            "classification": "not-enforced",
+            "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+            "classification": "not-enforced",
+            "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+            "retainedInSource": true
+          },
+          {
+            "path": "/schema/0",
+            "code": "SCHEMA_ONLY",
+            "classification": "representation-change",
+            "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+            "retainedInSource": true
+          },
+          {
+            "path": "/schema/1",
+            "code": "LIST_LAYOUT",
+            "classification": "representation-change",
+            "detail": "Native LIST wrappers and repetition levels lower to an Avro array; source layout remains in the capture",
+            "retainedInSource": true
+          },
+          {
+            "path": "/schema/5",
+            "code": "TEMPORAL_INTERPRETATION",
+            "classification": "not-enforced",
+            "detail": "Native UTC-adjustment, time-of-day bounds and target runtime range/annotation support require a value encoder; no units are rounded",
+            "retainedInSource": true
+          }
+        ],
+        "mappings": [
+          {
+            "index": 1,
+            "path": [
+              "events"
+            ]
+          },
+          {
+            "index": 3,
+            "path": [
+              "events",
+              "list",
+              "element"
+            ]
+          },
+          {
+            "index": 4,
+            "path": [
+              "elapsed"
+            ]
+          },
+          {
+            "index": 5,
+            "path": [
+              "created"
+            ]
+          },
+          {
+            "index": 6,
+            "path": [
+              "label"
+            ]
+          }
+        ],
+        "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Sample\",\n  \"namespace\": \"example\",\n  \"fields\": [\n    {\n      \"name\": \"events\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": [\n            \"null\",\n            \"int\"\n          ]\n        }\n      ]\n    },\n    {\n      \"name\": \"elapsed\",\n      \"type\": [\n        \"null\",\n        \"long\"\n      ]\n    },\n    {\n      \"name\": \"created\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"timestamp-micros\"\n        }\n      ]\n    },\n    {\n      \"name\": \"label\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n",
+        "target": {
+          "umf": "0.1.0",
+          "id": "arrow-loss",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Sample"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "example"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "events"
+                                  },
+                                  "type": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "null"
+                                      },
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "array"
+                                          },
+                                          "items": {
+                                            "kind": "array",
+                                            "items": [
+                                              {
+                                                "kind": "string",
+                                                "value": "null"
+                                              },
+                                              {
+                                                "kind": "string",
+                                                "value": "int"
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "elapsed"
+                                  },
+                                  "type": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "null"
+                                      },
+                                      {
+                                        "kind": "string",
+                                        "value": "long"
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "created"
+                                  },
+                                  "type": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "null"
+                                      },
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "long"
+                                          },
+                                          "logicalType": {
+                                            "kind": "string",
+                                            "value": "timestamp-micros"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "label"
+                                  },
+                                  "type": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "null"
+                                      },
+                                      {
+                                        "kind": "string",
+                                        "value": "string"
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "events",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/1\"]",
+                  "name": "elapsed",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/2\"]",
+                  "name": "created",
+                  "scalarType": "timestamp",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/3\"]",
+                  "name": "label",
+                  "scalarType": "string",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "chain": {
+    "status": "projected",
+    "source": {
+      "umf": "0.1.0",
+      "id": "stored.parquet",
+      "vocabularies": {
+        "umf.parquet": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "parquet",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "source",
+              "extensions": {
+                "umf.parquet": {
+                  "profile": "parquet-file-source",
+                  "encoding": "hex",
+                  "bytes": "504152311504151015104c1504150012000001000000020000001500152015202c15061510150615061c180402000000180401000000160228040200000018040100000000000002000000030203000000030f000103021504151015104c15021500120000d2040000000000001500151215122c15041510150615061c1808d2040000000000001808d20400000000000016022808d2040000000000001808d2040000000000000000000200000003010102001504152015204c15041500120000000000000000000087d61200000000001500151215122c15041510150615061c180887d6120000000000180800000000000000001600280887d6120000000000180800000000000000000000000200000004010103021504151415144c15041500120000010000006101000000621500151215122c15041510150615061c36002801621801610000000200000004010103021504197c35001806736368656d61150800350218066576656e7473150215064c3c000000350418046c697374150200150225021807656c656d656e7400150425021807656c6170736564001504250218076372656174656425144c8c111c2c0000000000150c250218056c6162656c25004c1c0000001604191c194c26001c150219350006101938066576656e7473046c69737407656c656d656e741500160616a60116a601263426081c180402000000180401000000160228040200000018040100000000192c15041500150200150015101502003c2926040219460200000400000026001c15041935000610191807656c61707365641500160416b80116b80126da0126ae011c1808d2040000000000001808d20400000000000016022808d2040000000000001808d20400000000000000192c15041500150200150015101502003c29061926020200000026001c15041935000610191807637265617465641500160416c80116c80126a20326e6021c180887d6120000000000180800000000000000001600280887d61200000000001808000000000000000000192c15041500150200150015101502003c29061926000400000026001c150c19350006101918056c6162656c150016041678167826de0426ae041c360028016218016100192c15041500150200150015101502003c1604190619260004000000169e0516042608169e0500192c180d6675747572652e736368656d611808707265736572766500180c4152524f573a736368656d6118b8052f2f2f2f2f77414341414151414141414141414b414134414267414641416741436741414141414242414151414141414141414b414177414141414541416741436741414145414141414145414141414151414141415141414142342f2f2f2f4741414141415141414141494141414163484a6c63325679646d5541414141414451414141475a31644856795a53357a5932686c62574541414141454141414146414541414e774141414349414141414741414141414141456741594141674142674148414177414141415141425141456741414141414141515555414141415841414141416741414141554141414141414141414155414141427359574a6c62414141414145414141414d414141414341414d4141514143414149414141414741414141415141414141494141414163484a6c63325679646d5541414141414441414141475a31644856795a53356d615756735a414141414142512f2f2f2f54502f2f2f77414141516f5141414141494141414141514141414141414141414277414141474e795a5746305a5751414341414d414159414341414941414141414141434141514141414151414141415157316c636d6c6a5953394f5a5864665757397961774141414143632f2f2f2f41414142456841414141416741414141424141414141414141414148414141415a57786863484e6c5a414141414159414341414741415941414141414141494130502f2f2f7741414152555541414141494141414141514141414142414141414b414141414159414141426c646d567564484d414141514142414145414141414541415541416741426741484141774141414151414241414141414141414543454141414143414141414145414141414141414141415141414142706447567441414141414167414441414941416341434141414141414141414567414141414141414141413d3d001820706172717565742d6370702d6172726f772076657273696f6e2032312e302e30194c1c00001c00001c00001c0000002005000050415231"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "policy": {
+      "sourceKind": "parquet",
+      "toAvro": {
+        "id": "arrow-loss",
+        "recordName": "Sample",
+        "namespace": "example",
+        "fieldNames": {},
+        "maps": "entry-arrays",
+        "lossPolicy": "allow-reported-loss"
+      },
+      "toTableSpec": {
+        "id": "table",
+        "tableName": "Sample",
+        "fields": {
+          "events": {
+            "name": "events",
+            "representation": "json-text"
+          },
+          "elapsed": {
+            "name": "elapsed",
+            "representation": "json-text"
+          },
+          "created": {
+            "name": "created",
+            "representation": "timestamp"
+          },
+          "label": {
+            "name": "label",
+            "representation": "string"
+          }
+        },
+        "lossPolicy": "allow-reported-loss"
+      }
+    },
+    "stages": {
+      "sourceToAvro": {
+        "status": "projected",
+        "source": {
+          "umf": "0.1.0",
+          "id": "stored.parquet",
+          "vocabularies": {
+            "umf.parquet": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "parquet",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.parquet": {
+                      "profile": "parquet-file-source",
+                      "encoding": "hex",
+                      "bytes": "504152311504151015104c1504150012000001000000020000001500152015202c15061510150615061c180402000000180401000000160228040200000018040100000000000002000000030203000000030f000103021504151015104c15021500120000d2040000000000001500151215122c15041510150615061c1808d2040000000000001808d20400000000000016022808d2040000000000001808d2040000000000000000000200000003010102001504152015204c15041500120000000000000000000087d61200000000001500151215122c15041510150615061c180887d6120000000000180800000000000000001600280887d6120000000000180800000000000000000000000200000004010103021504151415144c15041500120000010000006101000000621500151215122c15041510150615061c36002801621801610000000200000004010103021504197c35001806736368656d61150800350218066576656e7473150215064c3c000000350418046c697374150200150225021807656c656d656e7400150425021807656c6170736564001504250218076372656174656425144c8c111c2c0000000000150c250218056c6162656c25004c1c0000001604191c194c26001c150219350006101938066576656e7473046c69737407656c656d656e741500160616a60116a601263426081c180402000000180401000000160228040200000018040100000000192c15041500150200150015101502003c2926040219460200000400000026001c15041935000610191807656c61707365641500160416b80116b80126da0126ae011c1808d2040000000000001808d20400000000000016022808d2040000000000001808d20400000000000000192c15041500150200150015101502003c29061926020200000026001c15041935000610191807637265617465641500160416c80116c80126a20326e6021c180887d6120000000000180800000000000000001600280887d61200000000001808000000000000000000192c15041500150200150015101502003c29061926000400000026001c150c19350006101918056c6162656c150016041678167826de0426ae041c360028016218016100192c15041500150200150015101502003c1604190619260004000000169e0516042608169e0500192c180d6675747572652e736368656d611808707265736572766500180c4152524f573a736368656d6118b8052f2f2f2f2f77414341414151414141414141414b414134414267414641416741436741414141414242414151414141414141414b414177414141414541416741436741414145414141414145414141414151414141415141414142342f2f2f2f4741414141415141414141494141414163484a6c63325679646d5541414141414451414141475a31644856795a53357a5932686c62574541414141454141414146414541414e774141414349414141414741414141414141456741594141674142674148414177414141415141425141456741414141414141515555414141415841414141416741414141554141414141414141414155414141427359574a6c62414141414145414141414d414141414341414d4141514143414149414141414741414141415141414141494141414163484a6c63325679646d5541414141414441414141475a31644856795a53356d615756735a414141414142512f2f2f2f54502f2f2f77414141516f5141414141494141414141514141414141414141414277414141474e795a5746305a5751414341414d414159414341414941414141414141434141514141414151414141415157316c636d6c6a5953394f5a5864665757397961774141414143632f2f2f2f41414142456841414141416741414141424141414141414141414148414141415a57786863484e6c5a414141414159414341414741415941414141414141494130502f2f2f7741414152555541414141494141414141514141414142414141414b414141414159414141426c646d567564484d414141514142414145414141414541415541416741426741484141774141414151414241414141414141414543454141414143414141414145414141414141414141415141414142706447567441414141414167414441414941416341434141414141414141414567414141414141414141413d3d001820706172717565742d6370702d6172726f772076657273696f6e2032312e302e30194c1c00001c00001c00001c0000002005000050415231"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "id": "arrow-loss",
+          "recordName": "Sample",
+          "namespace": "example",
+          "fieldNames": {},
+          "maps": "entry-arrays",
+          "lossPolicy": "allow-reported-loss"
+        },
+        "issues": [
+          {
+            "path": "",
+            "code": "PARQUET_UNINTERPRETED",
+            "classification": "not-enforced",
+            "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+            "classification": "not-enforced",
+            "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+            "classification": "not-enforced",
+            "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+            "retainedInSource": true
+          },
+          {
+            "path": "/schema/0/repetition_type",
+            "code": "PARQUET_ROOT_REPETITION",
+            "classification": "not-enforced",
+            "detail": "REQUIRED root repetition retained; root contributes no definition/repetition level",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+            "classification": "not-enforced",
+            "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+            "retainedInSource": true
+          },
+          {
+            "path": "/schema/1",
+            "code": "PARQUET_LOGICAL_UNVERIFIED",
+            "classification": "not-enforced",
+            "detail": "Nested layout and value rules remain unverified",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+            "classification": "not-enforced",
+            "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+            "classification": "not-enforced",
+            "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+            "retainedInSource": true
+          },
+          {
+            "path": "/key_value_metadata/1/value",
+            "code": "EMBEDDED_ARROW_SCHEMA_NOT_PROJECTED",
+            "classification": "representation-change",
+            "detail": "Avro is derived from the physical Parquet schema. The independent embedded Arrow declaration, custom metadata and schema/data correspondence remain in source; no field correspondence or semantic equivalence is inferred.",
+            "retainedInSource": true
+          },
+          {
+            "path": "/key_value_metadata/1/value",
+            "code": "ARROW_LIST_REFINEMENT_NOT_PROJECTED",
+            "classification": "not-enforced",
+            "detail": "Embedded Arrow /fields/0 (\"events\"): LargeList width/layout are not enforced by an Avro array.",
+            "retainedInSource": true
+          },
+          {
+            "path": "/key_value_metadata/1/value",
+            "code": "ARROW_DURATION_NOT_PROJECTED",
+            "classification": "not-enforced",
+            "detail": "Embedded Arrow /fields/1 (\"elapsed\"): duration unit MICROSECOND is not a physical integer or Avro duration semantic; any row binding must preserve the unit explicitly.",
+            "retainedInSource": true
+          },
+          {
+            "path": "/key_value_metadata/1/value",
+            "code": "ARROW_TIMEZONE_NOT_PROJECTED",
+            "classification": "not-enforced",
+            "detail": "Embedded Arrow /fields/2 (\"created\"): named timezone \"America/New_York\" is not retained by Avro instant timestamps.",
+            "retainedInSource": true
+          },
+          {
+            "path": "/schema/0",
+            "code": "SCHEMA_ONLY",
+            "classification": "representation-change",
+            "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+            "retainedInSource": true
+          },
+          {
+            "path": "/schema/1",
+            "code": "LIST_LAYOUT",
+            "classification": "representation-change",
+            "detail": "Native LIST wrappers and repetition levels lower to an Avro array; source layout remains in the capture",
+            "retainedInSource": true
+          },
+          {
+            "path": "/schema/5",
+            "code": "TEMPORAL_INTERPRETATION",
+            "classification": "not-enforced",
+            "detail": "Native UTC-adjustment, time-of-day bounds and target runtime range/annotation support require a value encoder; no units are rounded",
+            "retainedInSource": true
+          }
+        ],
+        "mappings": [
+          {
+            "index": 1,
+            "path": [
+              "events"
+            ]
+          },
+          {
+            "index": 3,
+            "path": [
+              "events",
+              "list",
+              "element"
+            ]
+          },
+          {
+            "index": 4,
+            "path": [
+              "elapsed"
+            ]
+          },
+          {
+            "index": 5,
+            "path": [
+              "created"
+            ]
+          },
+          {
+            "index": 6,
+            "path": [
+              "label"
+            ]
+          }
+        ],
+        "nativeSchema": "{\n  \"type\": \"record\",\n  \"name\": \"Sample\",\n  \"namespace\": \"example\",\n  \"fields\": [\n    {\n      \"name\": \"events\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"array\",\n          \"items\": [\n            \"null\",\n            \"int\"\n          ]\n        }\n      ]\n    },\n    {\n      \"name\": \"elapsed\",\n      \"type\": [\n        \"null\",\n        \"long\"\n      ]\n    },\n    {\n      \"name\": \"created\",\n      \"type\": [\n        \"null\",\n        {\n          \"type\": \"long\",\n          \"logicalType\": \"timestamp-micros\"\n        }\n      ]\n    },\n    {\n      \"name\": \"label\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ]\n    }\n  ]\n}\n",
+        "target": {
+          "umf": "0.1.0",
+          "id": "arrow-loss",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Sample"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "example"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "events"
+                                  },
+                                  "type": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "null"
+                                      },
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "array"
+                                          },
+                                          "items": {
+                                            "kind": "array",
+                                            "items": [
+                                              {
+                                                "kind": "string",
+                                                "value": "null"
+                                              },
+                                              {
+                                                "kind": "string",
+                                                "value": "int"
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "elapsed"
+                                  },
+                                  "type": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "null"
+                                      },
+                                      {
+                                        "kind": "string",
+                                        "value": "long"
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "created"
+                                  },
+                                  "type": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "null"
+                                      },
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "long"
+                                          },
+                                          "logicalType": {
+                                            "kind": "string",
+                                            "value": "timestamp-micros"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "label"
+                                  },
+                                  "type": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "null"
+                                      },
+                                      {
+                                        "kind": "string",
+                                        "value": "string"
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "events",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/1\"]",
+                  "name": "elapsed",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/2\"]",
+                  "name": "created",
+                  "scalarType": "timestamp",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/3\"]",
+                  "name": "label",
+                  "scalarType": "string",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "avroToTableSpec": {
+        "status": "projected",
+        "source": {
+          "umf": "0.1.0",
+          "id": "arrow-loss",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Sample"
+                          },
+                          "namespace": {
+                            "kind": "string",
+                            "value": "example"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "events"
+                                  },
+                                  "type": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "null"
+                                      },
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "array"
+                                          },
+                                          "items": {
+                                            "kind": "array",
+                                            "items": [
+                                              {
+                                                "kind": "string",
+                                                "value": "null"
+                                              },
+                                              {
+                                                "kind": "string",
+                                                "value": "int"
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "elapsed"
+                                  },
+                                  "type": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "null"
+                                      },
+                                      {
+                                        "kind": "string",
+                                        "value": "long"
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "created"
+                                  },
+                                  "type": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "null"
+                                      },
+                                      {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "long"
+                                          },
+                                          "logicalType": {
+                                            "kind": "string",
+                                            "value": "timestamp-micros"
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "label"
+                                  },
+                                  "type": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "null"
+                                      },
+                                      {
+                                        "kind": "string",
+                                        "value": "string"
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "events",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/1\"]",
+                  "name": "elapsed",
+                  "scalarType": "integer",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/2\"]",
+                  "name": "created",
+                  "scalarType": "timestamp",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/3\"]",
+                  "name": "label",
+                  "scalarType": "string",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "id": "table",
+          "tableName": "Sample",
+          "fields": {
+            "events": {
+              "name": "events",
+              "representation": "json-text"
+            },
+            "elapsed": {
+              "name": "elapsed",
+              "representation": "json-text"
+            },
+            "created": {
+              "name": "created",
+              "representation": "timestamp"
+            },
+            "label": {
+              "name": "label",
+              "representation": "string"
+            }
+          },
+          "lossPolicy": "allow-reported-loss"
+        },
+        "issues": [
+          {
+            "path": "/root/fields/2/type/1/logicalType",
+            "code": "AVRO_LOGICAL_TYPE",
+            "classification": "not-enforced",
+            "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "RECORD_IDENTITY",
+            "classification": "not-enforced",
+            "detail": "TableSpec table name is explicit; Avro namespaces, aliases, record/error identity, recursion, binary framing and schema resolution remain in source",
+            "retainedInSource": true
+          },
+          {
+            "path": "",
+            "code": "SCHEMA_ONLY",
+            "classification": "representation-change",
+            "detail": "No row encoding/coercion, writer-field presence, reader defaults or TableSpec pipeline execution is established",
+            "retainedInSource": true
+          },
+          {
+            "path": "/fields/0/type",
+            "code": "UNION_IDENTITY",
+            "classification": "not-enforced",
+            "detail": "Nullability is derived from a null branch; TableSpec does not preserve union order, branch tags or overlapping alternatives",
+            "retainedInSource": true
+          },
+          {
+            "path": "/fields/0",
+            "code": "JSON_TEXT_ENCODING",
+            "classification": "representation-change",
+            "detail": "Non-null values require an explicit Avro JSON encoder (including tags, names, bytes and exact numbers). Null remains null; target text does not enforce the source shape",
+            "retainedInSource": true
+          },
+          {
+            "path": "/fields/1/type",
+            "code": "UNION_IDENTITY",
+            "classification": "not-enforced",
+            "detail": "Nullability is derived from a null branch; TableSpec does not preserve union order, branch tags or overlapping alternatives",
+            "retainedInSource": true
+          },
+          {
+            "path": "/fields/1",
+            "code": "JSON_TEXT_ENCODING",
+            "classification": "representation-change",
+            "detail": "Non-null values require an explicit Avro JSON encoder (including tags, names, bytes and exact numbers). Null remains null; target text does not enforce the source shape",
+            "retainedInSource": true
+          },
+          {
+            "path": "/fields/2/type",
+            "code": "UNION_IDENTITY",
+            "classification": "not-enforced",
+            "detail": "Nullability is derived from a null branch; TableSpec does not preserve union order, branch tags or overlapping alternatives",
+            "retainedInSource": true
+          },
+          {
+            "path": "/fields/2",
+            "code": "TEMPORAL_REPRESENTATION",
+            "classification": "representation-change",
+            "detail": "Source units, range and instant/local distinction are not enforced by the target type token; parsing/timezone/precision conversion requires a separate binding",
+            "retainedInSource": true
+          },
+          {
+            "path": "/fields/3/type",
+            "code": "UNION_IDENTITY",
+            "classification": "not-enforced",
+            "detail": "Nullability is derived from a null branch; TableSpec does not preserve union order, branch tags or overlapping alternatives",
+            "retainedInSource": true
+          }
+        ],
+        "mappings": [
+          {
+            "sourcePath": "/fields/0",
+            "field": "events",
+            "column": "events",
+            "representation": "json-text",
+            "nullable": true
+          },
+          {
+            "sourcePath": "/fields/1",
+            "field": "elapsed",
+            "column": "elapsed",
+            "representation": "json-text",
+            "nullable": true
+          },
+          {
+            "sourcePath": "/fields/2",
+            "field": "created",
+            "column": "created",
+            "representation": "timestamp",
+            "nullable": true
+          },
+          {
+            "sourcePath": "/fields/3",
+            "field": "label",
+            "column": "label",
+            "representation": "string",
+            "nullable": true
+          }
+        ],
+        "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Sample\",\n  \"columns\": [\n    {\n      \"name\": \"events\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"elapsed\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"created\",\n      \"nullable\": true,\n      \"data_type\": \"TIMESTAMP\"\n    },\n    {\n      \"name\": \"label\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    }\n  ]\n}\n",
+        "target": {
+          "umf": "0.1.0",
+          "id": "table",
+          "vocabularies": {
+            "umf.tablespec": {
+              "version": "0.1.0"
+            }
+          },
+          "extensions": {
+            "umf.tablespec": {
+              "profile": "tablespec-table-1",
+              "root": {
+                "kind": "object",
+                "members": {
+                  "version": {
+                    "kind": "string",
+                    "value": "1.0"
+                  },
+                  "table_name": {
+                    "kind": "string",
+                    "value": "Sample"
+                  },
+                  "columns": {
+                    "kind": "array",
+                    "items": [
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "events"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": true
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "TEXT"
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "elapsed"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": true
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "TEXT"
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "created"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": true
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "TIMESTAMP"
+                          }
+                        }
+                      },
+                      {
+                        "kind": "object",
+                        "members": {
+                          "name": {
+                            "kind": "string",
+                            "value": "label"
+                          },
+                          "nullable": {
+                            "kind": "boolean",
+                            "value": true
+                          },
+                          "data_type": {
+                            "kind": "string",
+                            "value": "TEXT"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "originalSource": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Sample\",\n  \"columns\": [\n    {\n      \"name\": \"events\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"elapsed\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"created\",\n      \"nullable\": true,\n      \"data_type\": \"TIMESTAMP\"\n    },\n    {\n      \"name\": \"label\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    }\n  ]\n}\n",
+              "originalFormat": "json"
+            }
+          },
+          "modules": [
+            {
+              "id": "table",
+              "namespace": "Sample",
+              "elements": [
+                {
+                  "id": "column:0",
+                  "name": "events",
+                  "scalarType": "string",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:1",
+                  "name": "elapsed",
+                  "scalarType": "string",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:2",
+                  "name": "created",
+                  "scalarType": "timestamp",
+                  "extensions": {}
+                },
+                {
+                  "id": "column:3",
+                  "name": "label",
+                  "scalarType": "string",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "issues": [
+      {
+        "stage": "sourceToAvro",
+        "sourceDocumentPath": "/stages/sourceToAvro/source",
+        "issue": {
+          "path": "",
+          "code": "PARQUET_UNINTERPRETED",
+          "classification": "not-enforced",
+          "detail": "Footer location alone does not validate Thrift metadata, schemas, pages, encryption, signatures or native values",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "sourceToAvro",
+        "sourceDocumentPath": "/stages/sourceToAvro/source",
+        "issue": {
+          "path": "",
+          "code": "PARQUET_FOOTER_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Unknown IDs, duplicates, ordering and exact values are retained; the Parquet IDL and logical schema are not validated",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "sourceToAvro",
+        "sourceDocumentPath": "/stages/sourceToAvro/source",
+        "issue": {
+          "path": "",
+          "code": "PARQUET_METADATA_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Known IDL shapes mapped; schema-tree consistency, logical constraints, native reading and safe edits remain unverified",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "sourceToAvro",
+        "sourceDocumentPath": "/stages/sourceToAvro/source",
+        "issue": {
+          "path": "/schema/0/repetition_type",
+          "code": "PARQUET_ROOT_REPETITION",
+          "classification": "not-enforced",
+          "detail": "REQUIRED root repetition retained; root contributes no definition/repetition level",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "sourceToAvro",
+        "sourceDocumentPath": "/stages/sourceToAvro/source",
+        "issue": {
+          "path": "",
+          "code": "PARQUET_LOGICAL_SEMANTICS_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Physical topology and available column links checked; logical annotations, page values, offsets and safe transforms remain unverified",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "sourceToAvro",
+        "sourceDocumentPath": "/stages/sourceToAvro/source",
+        "issue": {
+          "path": "/schema/1",
+          "code": "PARQUET_LOGICAL_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Nested layout and value rules remain unverified",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "sourceToAvro",
+        "sourceDocumentPath": "/stages/sourceToAvro/source",
+        "issue": {
+          "path": "",
+          "code": "PARQUET_LOGICAL_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "Annotation checks do not verify values, statistics, sort order or safe cross-system lowering",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "sourceToAvro",
+        "sourceDocumentPath": "/stages/sourceToAvro/source",
+        "issue": {
+          "path": "",
+          "code": "PARQUET_CONTAINER_VALUES_UNVERIFIED",
+          "classification": "not-enforced",
+          "detail": "LIST/MAP schema interpretation does not decode values or verify key duplicates; partial views may accompany blocked sources",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "sourceToAvro",
+        "sourceDocumentPath": "/stages/sourceToAvro/source",
+        "issue": {
+          "path": "/key_value_metadata/1/value",
+          "code": "EMBEDDED_ARROW_SCHEMA_NOT_PROJECTED",
+          "classification": "representation-change",
+          "detail": "Avro is derived from the physical Parquet schema. The independent embedded Arrow declaration, custom metadata and schema/data correspondence remain in source; no field correspondence or semantic equivalence is inferred.",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "sourceToAvro",
+        "sourceDocumentPath": "/stages/sourceToAvro/source",
+        "issue": {
+          "path": "/key_value_metadata/1/value",
+          "code": "ARROW_LIST_REFINEMENT_NOT_PROJECTED",
+          "classification": "not-enforced",
+          "detail": "Embedded Arrow /fields/0 (\"events\"): LargeList width/layout are not enforced by an Avro array.",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "sourceToAvro",
+        "sourceDocumentPath": "/stages/sourceToAvro/source",
+        "issue": {
+          "path": "/key_value_metadata/1/value",
+          "code": "ARROW_DURATION_NOT_PROJECTED",
+          "classification": "not-enforced",
+          "detail": "Embedded Arrow /fields/1 (\"elapsed\"): duration unit MICROSECOND is not a physical integer or Avro duration semantic; any row binding must preserve the unit explicitly.",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "sourceToAvro",
+        "sourceDocumentPath": "/stages/sourceToAvro/source",
+        "issue": {
+          "path": "/key_value_metadata/1/value",
+          "code": "ARROW_TIMEZONE_NOT_PROJECTED",
+          "classification": "not-enforced",
+          "detail": "Embedded Arrow /fields/2 (\"created\"): named timezone \"America/New_York\" is not retained by Avro instant timestamps.",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "sourceToAvro",
+        "sourceDocumentPath": "/stages/sourceToAvro/source",
+        "issue": {
+          "path": "/schema/0",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "Schema lowering only: page encodings, column metadata, statistics, field IDs, sort order, unknown metadata and stored values remain in the source; a separate encoder is required",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "sourceToAvro",
+        "sourceDocumentPath": "/stages/sourceToAvro/source",
+        "issue": {
+          "path": "/schema/1",
+          "code": "LIST_LAYOUT",
+          "classification": "representation-change",
+          "detail": "Native LIST wrappers and repetition levels lower to an Avro array; source layout remains in the capture",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "sourceToAvro",
+        "sourceDocumentPath": "/stages/sourceToAvro/source",
+        "issue": {
+          "path": "/schema/5",
+          "code": "TEMPORAL_INTERPRETATION",
+          "classification": "not-enforced",
+          "detail": "Native UTC-adjustment, time-of-day bounds and target runtime range/annotation support require a value encoder; no units are rounded",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "avroToTableSpec",
+        "sourceDocumentPath": "/stages/avroToTableSpec/source",
+        "issue": {
+          "path": "/root/fields/2/type/1/logicalType",
+          "code": "AVRO_LOGICAL_TYPE",
+          "classification": "not-enforced",
+          "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "avroToTableSpec",
+        "sourceDocumentPath": "/stages/avroToTableSpec/source",
+        "issue": {
+          "path": "",
+          "code": "RECORD_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "TableSpec table name is explicit; Avro namespaces, aliases, record/error identity, recursion, binary framing and schema resolution remain in source",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "avroToTableSpec",
+        "sourceDocumentPath": "/stages/avroToTableSpec/source",
+        "issue": {
+          "path": "",
+          "code": "SCHEMA_ONLY",
+          "classification": "representation-change",
+          "detail": "No row encoding/coercion, writer-field presence, reader defaults or TableSpec pipeline execution is established",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "avroToTableSpec",
+        "sourceDocumentPath": "/stages/avroToTableSpec/source",
+        "issue": {
+          "path": "/fields/0/type",
+          "code": "UNION_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Nullability is derived from a null branch; TableSpec does not preserve union order, branch tags or overlapping alternatives",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "avroToTableSpec",
+        "sourceDocumentPath": "/stages/avroToTableSpec/source",
+        "issue": {
+          "path": "/fields/0",
+          "code": "JSON_TEXT_ENCODING",
+          "classification": "representation-change",
+          "detail": "Non-null values require an explicit Avro JSON encoder (including tags, names, bytes and exact numbers). Null remains null; target text does not enforce the source shape",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "avroToTableSpec",
+        "sourceDocumentPath": "/stages/avroToTableSpec/source",
+        "issue": {
+          "path": "/fields/1/type",
+          "code": "UNION_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Nullability is derived from a null branch; TableSpec does not preserve union order, branch tags or overlapping alternatives",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "avroToTableSpec",
+        "sourceDocumentPath": "/stages/avroToTableSpec/source",
+        "issue": {
+          "path": "/fields/1",
+          "code": "JSON_TEXT_ENCODING",
+          "classification": "representation-change",
+          "detail": "Non-null values require an explicit Avro JSON encoder (including tags, names, bytes and exact numbers). Null remains null; target text does not enforce the source shape",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "avroToTableSpec",
+        "sourceDocumentPath": "/stages/avroToTableSpec/source",
+        "issue": {
+          "path": "/fields/2/type",
+          "code": "UNION_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Nullability is derived from a null branch; TableSpec does not preserve union order, branch tags or overlapping alternatives",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "avroToTableSpec",
+        "sourceDocumentPath": "/stages/avroToTableSpec/source",
+        "issue": {
+          "path": "/fields/2",
+          "code": "TEMPORAL_REPRESENTATION",
+          "classification": "representation-change",
+          "detail": "Source units, range and instant/local distinction are not enforced by the target type token; parsing/timezone/precision conversion requires a separate binding",
+          "retainedInSource": true
+        }
+      },
+      {
+        "stage": "avroToTableSpec",
+        "sourceDocumentPath": "/stages/avroToTableSpec/source",
+        "issue": {
+          "path": "/fields/3/type",
+          "code": "UNION_IDENTITY",
+          "classification": "not-enforced",
+          "detail": "Nullability is derived from a null branch; TableSpec does not preserve union order, branch tags or overlapping alternatives",
+          "retainedInSource": true
+        }
+      }
+    ],
+    "target": {
+      "umf": "0.1.0",
+      "id": "table",
+      "vocabularies": {
+        "umf.tablespec": {
+          "version": "0.1.0"
+        }
+      },
+      "extensions": {
+        "umf.tablespec": {
+          "profile": "tablespec-table-1",
+          "root": {
+            "kind": "object",
+            "members": {
+              "version": {
+                "kind": "string",
+                "value": "1.0"
+              },
+              "table_name": {
+                "kind": "string",
+                "value": "Sample"
+              },
+              "columns": {
+                "kind": "array",
+                "items": [
+                  {
+                    "kind": "object",
+                    "members": {
+                      "name": {
+                        "kind": "string",
+                        "value": "events"
+                      },
+                      "nullable": {
+                        "kind": "boolean",
+                        "value": true
+                      },
+                      "data_type": {
+                        "kind": "string",
+                        "value": "TEXT"
+                      }
+                    }
+                  },
+                  {
+                    "kind": "object",
+                    "members": {
+                      "name": {
+                        "kind": "string",
+                        "value": "elapsed"
+                      },
+                      "nullable": {
+                        "kind": "boolean",
+                        "value": true
+                      },
+                      "data_type": {
+                        "kind": "string",
+                        "value": "TEXT"
+                      }
+                    }
+                  },
+                  {
+                    "kind": "object",
+                    "members": {
+                      "name": {
+                        "kind": "string",
+                        "value": "created"
+                      },
+                      "nullable": {
+                        "kind": "boolean",
+                        "value": true
+                      },
+                      "data_type": {
+                        "kind": "string",
+                        "value": "TIMESTAMP"
+                      }
+                    }
+                  },
+                  {
+                    "kind": "object",
+                    "members": {
+                      "name": {
+                        "kind": "string",
+                        "value": "label"
+                      },
+                      "nullable": {
+                        "kind": "boolean",
+                        "value": true
+                      },
+                      "data_type": {
+                        "kind": "string",
+                        "value": "TEXT"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "originalSource": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Sample\",\n  \"columns\": [\n    {\n      \"name\": \"events\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"elapsed\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"created\",\n      \"nullable\": true,\n      \"data_type\": \"TIMESTAMP\"\n    },\n    {\n      \"name\": \"label\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    }\n  ]\n}\n",
+          "originalFormat": "json"
+        }
+      },
+      "modules": [
+        {
+          "id": "table",
+          "namespace": "Sample",
+          "elements": [
+            {
+              "id": "column:0",
+              "name": "events",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "column:1",
+              "name": "elapsed",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "column:2",
+              "name": "created",
+              "scalarType": "timestamp",
+              "extensions": {}
+            },
+            {
+              "id": "column:3",
+              "name": "label",
+              "scalarType": "string",
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    },
+    "nativeSchema": "{\n  \"version\": \"1.0\",\n  \"table_name\": \"Sample\",\n  \"columns\": [\n    {\n      \"name\": \"events\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"elapsed\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    },\n    {\n      \"name\": \"created\",\n      \"nullable\": true,\n      \"data_type\": \"TIMESTAMP\"\n    },\n    {\n      \"name\": \"label\",\n      \"nullable\": true,\n      \"data_type\": \"TEXT\"\n    }\n  ]\n}\n"
+  }
+}

@@ -1,0 +1,1557 @@
+{
+  "files": 307,
+  "valid": 305,
+  "invalid": 2,
+  "scope": "Independent JSON Schema checks; no Delta runtime or transaction validation",
+  "results": [
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000004.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000005.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000006.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000007.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000008.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000009.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000010.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000011.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000012.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000013.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000004.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000005.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000006.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000008.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000009.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000010.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000011.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000012.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000013.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000004.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000005.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000006.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000007.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000008.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000009.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000010.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000011.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000013.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_d/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_e/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000004.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000005.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000006.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000007.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000008.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000009.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000010.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000011.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000012.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000013.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000004.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000005.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000006.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000007.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000008.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000009.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000010.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000011.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000012.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000013.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000009999.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000004.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000005.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000006.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000007.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000008.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000009.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000010.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000011.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000012.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000013.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000009999.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000004.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000005.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000006.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000007.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000008.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000009.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000010.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000011.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000012.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000013.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000009999.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/COVID-19_NYT/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdc_ict_table/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdc_ict_table/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdc_ict_table/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdc_ict_table/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-non-partitioned/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-non-partitioned/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-non-partitioned/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-non-partitioned/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-non-partitioned/_delta_log/00000000000000000004.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000004.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000005.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000006.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000007.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000008.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000009.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000010.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000011.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000012.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000013.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000014.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000015.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000016.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000017.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000018.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000019.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000020.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000021.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000022.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000023.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000024.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table-with-cdc-and-dvs/_delta_log/00000000000000000025.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/cdf-table/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-cdf-table/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-cdf-table/_delta_log/00000000000000000004.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-cdf-table/_delta_log/00000000000000000005.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000004.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000005.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000006.checkpoint.f5ee283b-37c7-46af-b64c-8f77c6a5c43a.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000006.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000007.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000008.checkpoint.e5ac4dc4-be27-4106-8a55-609707487f83.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000008.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/00000000000000000009.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/_autostats/00000000000000000007.0000000000.stats.json",
+      "valid": false,
+      "errors": [
+        {
+          "line": 1,
+          "path": [],
+          "validator": "maxProperties"
+        }
+      ]
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint_with_partitions/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoint_with_partitions/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000004.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000005.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000006.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000007.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000008.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000009.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000010.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000011.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints/_delta_log/00000000000000000012.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000005.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000006.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000007.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000008.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000009.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000010.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000011.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000012.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/concurrent_workers/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.2.0/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.2.0/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.2.0/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.2.0/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.8-empty/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.8-empty/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.8.0-date/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.8.0-null-partition/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.8.0-numeric-partition/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.8.0-partitioned/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.8.0-special-partition/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.8.0/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-0.8.0/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000004.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000005.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000006.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000007.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000008.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000009.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000010.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000011.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000012.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-2.2.0-partitioned-types/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-checkpoint-stats-optional/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-checkpoint-stats-optional/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-checkpoint-stats-optional/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-live-table/_delta_log/00000000000000000000.json",
+      "valid": false,
+      "errors": [
+        {
+          "line": 3,
+          "path": [
+            "metaData"
+          ],
+          "validator": "required"
+        }
+      ]
+    },
+    {
+      "path": "crates/test/tests/data/delta-live-table/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-stats-optional/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-stats-optional/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/delta-stats-optional/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/golden/data-reader-array-primitives/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/http_requests/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/http_requests/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/issue-2152/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/issue_1374/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/issue_1374/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/latest_not_checkpointed/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/latest_not_checkpointed/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/latest_not_checkpointed/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/latest_not_checkpointed/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/partition-type-primitives/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/python-0.25.5-checkpoint/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/python-0.25.5-checkpoint/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_commit/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table/_delta_log/.tmp/00000000000000000005.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table/_delta_log/00000000000000000004.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_features/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_features/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_features/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_features/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_features/_delta_log/00000000000000000004.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_cdc/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_cdc/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_cdc/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000004.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000005.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000006.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000007.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000008.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000009.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000010.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/spark-shredded-variant-preview-delta/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/spark-shredded-variant-preview-delta/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/spark-shredded-variant-preview-delta/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/spark-variant-checkpoint/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/spark-variant-checkpoint/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/spark-variant-checkpoint/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/spark-variant-stable-feature-checkpoint/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/spark-variant-stable-feature-checkpoint/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table-with-dv-small/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table-with-dv-small/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table-without-dv-small/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_failed_last_checkpoint_update/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_failed_last_checkpoint_update/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_failed_last_checkpoint_update/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_failed_last_checkpoint_update/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_column_mapping/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000004.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000005.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000006.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000007.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000008.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000009.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000010.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000011.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000012.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000013.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000014.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000015.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000016.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000017.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000018.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000019.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000020.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_edge_timestamps/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_liquid_clustering/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_null_stats_in_notnull_struct/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_null_stats_in_notnull_struct/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_partitioning_mapping/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_partitioning_mapping/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_partitioning_mapping/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_partitioning_mapping/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/table_with_partitioning_mapping/_delta_log/00000000000000000004.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/v2-classic-checkpoint-json/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/v2-classic-checkpoint-json/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/with_checkpoint_no_last_checkpoint/_delta_log/00000000000000000000.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/with_checkpoint_no_last_checkpoint/_delta_log/00000000000000000001.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/with_checkpoint_no_last_checkpoint/_delta_log/00000000000000000002.json",
+      "valid": true,
+      "errors": []
+    },
+    {
+      "path": "crates/test/tests/data/with_checkpoint_no_last_checkpoint/_delta_log/00000000000000000003.json",
+      "valid": true,
+      "errors": []
+    }
+  ]
+}

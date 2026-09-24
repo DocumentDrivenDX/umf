@@ -1,0 +1,27 @@
+{
+  "runtime": "dbt Core 1.10.0 WritableManifest; jsonschema 4.25.1 without format checker",
+  "sourceSha256": "11a84dcfa848c4603fd1a13faf5033e8fc5d8499246e247ec28cf58cb0d747d8",
+  "buildResults": 6,
+  "nodes": 6,
+  "macros": 429,
+  "results": [
+    {
+      "format": "json",
+      "sourceEqual": true,
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "descriptionOnlyEdit": true,
+      "roundtripSha256": "b0771fb019abe1c7e4689919d1f2b0261783c42f49a0bf0c1f9418d960f509a3",
+      "editedSha256": "e9ce544cbee22388e02568cfb5bdd2e332e98011ad2d81a4e608de70a3340e4b"
+    },
+    {
+      "format": "yaml",
+      "sourceEqual": true,
+      "nativeSchemaValid": true,
+      "nativeParserEqual": true,
+      "descriptionOnlyEdit": true,
+      "roundtripSha256": "b0771fb019abe1c7e4689919d1f2b0261783c42f49a0bf0c1f9418d960f509a3",
+      "editedSha256": "e9ce544cbee22388e02568cfb5bdd2e332e98011ad2d81a4e608de70a3340e4b"
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "image": "postgres@sha256:304ab813518754228f9f792f79d6da36359b82d8ecf418096c636725f8c930ad",
+  "serverVersion": 170004,
+  "query": "SELECT json_agg(x ORDER BY table_schema,table_name,position) FROM (\n SELECT ns.nspname AS table_schema,c.relname AS table_name,a.attnum AS position,a.attname AS column_name,tn.nspname AS type_schema,t.typname AS type_name\n FROM pg_class c JOIN pg_namespace ns ON ns.oid=c.relnamespace JOIN pg_attribute a ON a.attrelid=c.oid\n JOIN pg_type t ON t.oid=a.atttypid JOIN pg_namespace tn ON tn.oid=t.typnamespace\n WHERE ns.nspname IN ('sales','support') AND c.relkind='r' AND a.attnum>0 AND NOT a.attisdropped) x;",
+  "columns": [
+    {
+      "table_schema": "sales",
+      "table_name": "base",
+      "position": 1,
+      "column_name": "inherited",
+      "type_schema": "pg_catalog",
+      "type_name": "int4"
+    },
+    {
+      "table_schema": "sales",
+      "table_name": "orders",
+      "position": 1,
+      "column_name": "id",
+      "type_schema": "pg_catalog",
+      "type_name": "int8"
+    },
+    {
+      "table_schema": "sales",
+      "table_name": "orders",
+      "position": 2,
+      "column_name": "amount",
+      "type_schema": "pg_catalog",
+      "type_name": "numeric"
+    },
+    {
+      "table_schema": "sales",
+      "table_name": "orders",
+      "position": 3,
+      "column_name": "label",
+      "type_schema": "pg_catalog",
+      "type_name": "text"
+    },
+    {
+      "table_schema": "sales",
+      "table_name": "orders",
+      "position": 4,
+      "column_name": "catalog_text",
+      "type_schema": "pg_catalog",
+      "type_name": "text"
+    },
+    {
+      "table_schema": "sales",
+      "table_name": "orders",
+      "position": 5,
+      "column_name": "items",
+      "type_schema": "pg_catalog",
+      "type_name": "_int4"
+    },
+    {
+      "table_schema": "sales",
+      "table_name": "orders",
+      "position": 6,
+      "column_name": "custom",
+      "type_schema": "sales",
+      "type_name": "text"
+    },
+    {
+      "table_schema": "sales",
+      "table_name": "orders",
+      "position": 7,
+      "column_name": "flag",
+      "type_schema": "pg_catalog",
+      "type_name": "bool"
+    },
+    {
+      "table_schema": "sales",
+      "table_name": "orders",
+      "position": 8,
+      "column_name": "created",
+      "type_schema": "pg_catalog",
+      "type_name": "timestamptz"
+    },
+    {
+      "table_schema": "sales",
+      "table_name": "orders",
+      "position": 9,
+      "column_name": "inherited",
+      "type_schema": "pg_catalog",
+      "type_name": "int4"
+    },
+    {
+      "table_schema": "sales",
+      "table_name": "orders",
+      "position": 10,
+      "column_name": "extra",
+      "type_schema": "pg_catalog",
+      "type_name": "int4"
+    },
+    {
+      "table_schema": "sales",
+      "table_name": "resolution_probe",
+      "position": 1,
+      "column_name": "value",
+      "type_schema": "sales",
+      "type_name": "text"
+    },
+    {
+      "table_schema": "support",
+      "table_name": "tickets",
+      "position": 1,
+      "column_name": "id",
+      "type_schema": "pg_catalog",
+      "type_name": "int4"
+    },
+    {
+      "table_schema": "support",
+      "table_name": "tickets",
+      "position": 2,
+      "column_name": "subject",
+      "type_schema": "pg_catalog",
+      "type_name": "text"
+    }
+  ],
+  "nativeDdlReplay": true,
+  "searchPathShadowsText": true,
+  "declaredOrderColumns": 8,
+  "executedOrderColumns": 10,
+  "scope": "Authored syntax versus native catalog resolution; declaration inventory does not execute DDL"
+}

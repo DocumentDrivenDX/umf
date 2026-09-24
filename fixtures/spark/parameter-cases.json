@@ -1,0 +1,74 @@
+[
+  {
+    "id": "0",
+    "input": "decimal(38,38)"
+  },
+  {
+    "id": "1",
+    "input": "decimal(39,0)"
+  },
+  {
+    "id": "2",
+    "input": "decimal(2,3)"
+  },
+  {
+    "id": "3",
+    "input": "decimal(10,-2)"
+  },
+  {
+    "id": "4",
+    "input": "decimal(0,0)"
+  },
+  {
+    "id": "5",
+    "input": "decimal(2147483648,0)"
+  },
+  {
+    "id": "6",
+    "input": "decimal(10,-2147483649)"
+  },
+  {
+    "id": "7",
+    "input": "decimal( 10 , 2 )"
+  },
+  {
+    "id": "8",
+    "input": "char(0)"
+  },
+  {
+    "id": "9",
+    "input": "char(2147483647)"
+  },
+  {
+    "id": "10",
+    "input": "char(2147483648)"
+  },
+  {
+    "id": "11",
+    "input": "varchar(2147483648)"
+  },
+  {
+    "id": "12",
+    "input": "interval year to month"
+  },
+  {
+    "id": "13",
+    "input": "interval month to year"
+  },
+  {
+    "id": "14",
+    "input": "interval day to second"
+  },
+  {
+    "id": "15",
+    "input": "interval second to day"
+  },
+  {
+    "id": "16",
+    "input": "interval day to day"
+  },
+  {
+    "id": "17",
+    "input": "interval month to day"
+  }
+]

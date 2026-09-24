@@ -1,0 +1,1688 @@
+[
+  {
+    "rowGroup": 0,
+    "column": 0,
+    "offset": 4,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "INT64",
+        "value": "0"
+      },
+      {
+        "type": "INT64",
+        "value": "1"
+      },
+      {
+        "type": "INT64",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "rowGroup": 0,
+    "column": 0,
+    "offset": 48,
+    "kind": "data",
+    "values": [
+      {
+        "type": "INT64",
+        "value": "0"
+      },
+      {
+        "type": "INT64",
+        "value": "1"
+      },
+      {
+        "type": "INT64",
+        "value": "2"
+      }
+    ],
+    "levels": {
+      "rowGroup": 0,
+      "column": 0,
+      "offset": 48,
+      "repetition": [
+        0,
+        0,
+        0
+      ],
+      "definition": [
+        0,
+        0,
+        0
+      ],
+      "repetitionPadding": [],
+      "definitionPadding": [],
+      "valuesOffset": 0,
+      "nonNullValues": 3,
+      "rowStarts": 3
+    },
+    "dictionaryIndexes": [
+      0,
+      1,
+      2
+    ],
+    "dictionaryPadding": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "rowGroup": 0,
+    "column": 1,
+    "offset": 75,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "e6b3a8e696872030"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "e6b3a8e696872032"
+      }
+    ]
+  },
+  {
+    "rowGroup": 0,
+    "column": 1,
+    "offset": 119,
+    "kind": "data",
+    "values": [
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "e6b3a8e696872030"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "e6b3a8e696872032"
+      }
+    ],
+    "levels": {
+      "rowGroup": 0,
+      "column": 1,
+      "offset": 119,
+      "repetition": [
+        0,
+        0,
+        0
+      ],
+      "definition": [
+        2,
+        0,
+        2
+      ],
+      "repetitionPadding": [],
+      "definitionPadding": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "valuesOffset": 7,
+      "nonNullValues": 2,
+      "rowStarts": 3
+    },
+    "dictionaryIndexes": [
+      0,
+      1
+    ],
+    "dictionaryPadding": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "rowGroup": 0,
+    "column": 2,
+    "offset": 152,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "FIXED_LEN_BYTE_ARRAY",
+        "hex": "000000003039"
+      }
+    ]
+  },
+  {
+    "rowGroup": 0,
+    "column": 2,
+    "offset": 178,
+    "kind": "data",
+    "values": [
+      {
+        "type": "FIXED_LEN_BYTE_ARRAY",
+        "hex": "000000003039"
+      },
+      {
+        "type": "FIXED_LEN_BYTE_ARRAY",
+        "hex": "000000003039"
+      }
+    ],
+    "levels": {
+      "rowGroup": 0,
+      "column": 2,
+      "offset": 178,
+      "repetition": [
+        0,
+        0,
+        0
+      ],
+      "definition": [
+        2,
+        0,
+        2
+      ],
+      "repetitionPadding": [],
+      "definitionPadding": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "valuesOffset": 7,
+      "nonNullValues": 2,
+      "rowStarts": 3
+    },
+    "dictionaryIndexes": [
+      0,
+      0
+    ],
+    "dictionaryPadding": []
+  },
+  {
+    "rowGroup": 0,
+    "column": 3,
+    "offset": 211,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "61"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "62"
+      }
+    ]
+  },
+  {
+    "rowGroup": 0,
+    "column": 3,
+    "offset": 241,
+    "kind": "data",
+    "values": [
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "61"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "62"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "61"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "62"
+      }
+    ],
+    "levels": {
+      "rowGroup": 0,
+      "column": 3,
+      "offset": 241,
+      "repetition": [
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        0
+      ],
+      "definition": [
+        3,
+        2,
+        3,
+        3,
+        2,
+        3,
+        0
+      ],
+      "repetitionPadding": [
+        0
+      ],
+      "definitionPadding": [
+        0
+      ],
+      "valuesOffset": 13,
+      "nonNullValues": 4,
+      "rowStarts": 3
+    },
+    "dictionaryIndexes": [
+      0,
+      1,
+      0,
+      1
+    ],
+    "dictionaryPadding": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "rowGroup": 0,
+    "column": 4,
+    "offset": 280,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "6669727374"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "7365636f6e64"
+      }
+    ]
+  },
+  {
+    "rowGroup": 0,
+    "column": 4,
+    "offset": 319,
+    "kind": "data",
+    "values": [
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "6669727374"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "7365636f6e64"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "6669727374"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "7365636f6e64"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "6669727374"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "7365636f6e64"
+      }
+    ],
+    "levels": {
+      "rowGroup": 0,
+      "column": 4,
+      "offset": 319,
+      "repetition": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "definition": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "repetitionPadding": [
+        0,
+        0
+      ],
+      "definitionPadding": [],
+      "valuesOffset": 12,
+      "nonNullValues": 6,
+      "rowStarts": 3
+    },
+    "dictionaryIndexes": [
+      0,
+      1,
+      0,
+      1,
+      0,
+      1
+    ],
+    "dictionaryPadding": [
+      0,
+      0
+    ]
+  },
+  {
+    "rowGroup": 0,
+    "column": 5,
+    "offset": 357,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "INT32",
+        "value": "0"
+      },
+      {
+        "type": "INT32",
+        "value": "1"
+      },
+      {
+        "type": "INT32",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "rowGroup": 0,
+    "column": 5,
+    "offset": 389,
+    "kind": "data",
+    "values": [
+      {
+        "type": "INT32",
+        "value": "0"
+      },
+      {
+        "type": "INT32",
+        "value": "1"
+      },
+      {
+        "type": "INT32",
+        "value": "2"
+      }
+    ],
+    "levels": {
+      "rowGroup": 0,
+      "column": 5,
+      "offset": 389,
+      "repetition": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "definition": [
+        3,
+        2,
+        3,
+        2,
+        3,
+        2
+      ],
+      "repetitionPadding": [
+        0,
+        0
+      ],
+      "definitionPadding": [
+        0,
+        0
+      ],
+      "valuesOffset": 13,
+      "nonNullValues": 3,
+      "rowStarts": 3
+    },
+    "dictionaryIndexes": [
+      0,
+      1,
+      2
+    ],
+    "dictionaryPadding": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "rowGroup": 0,
+    "column": 6,
+    "offset": 429,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "INT64",
+        "value": "1767268800000000"
+      },
+      {
+        "type": "INT64",
+        "value": "1767268802000000"
+      }
+    ]
+  },
+  {
+    "rowGroup": 0,
+    "column": 6,
+    "offset": 465,
+    "kind": "data",
+    "values": [
+      {
+        "type": "INT64",
+        "value": "1767268800000000"
+      },
+      {
+        "type": "INT64",
+        "value": "1767268802000000"
+      }
+    ],
+    "levels": {
+      "rowGroup": 0,
+      "column": 6,
+      "offset": 465,
+      "repetition": [
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "definition": [
+        4,
+        2,
+        1,
+        4,
+        2
+      ],
+      "repetitionPadding": [
+        0,
+        0,
+        0
+      ],
+      "definitionPadding": [
+        0,
+        0,
+        0
+      ],
+      "valuesOffset": 14,
+      "nonNullValues": 2,
+      "rowStarts": 3
+    },
+    "dictionaryIndexes": [
+      0,
+      1
+    ],
+    "dictionaryPadding": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "rowGroup": 0,
+    "column": 7,
+    "offset": 505,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "INT32",
+        "value": "0"
+      },
+      {
+        "type": "INT32",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "rowGroup": 0,
+    "column": 7,
+    "offset": 533,
+    "kind": "data",
+    "values": [
+      {
+        "type": "INT32",
+        "value": "0"
+      },
+      {
+        "type": "INT32",
+        "value": "2"
+      }
+    ],
+    "levels": {
+      "rowGroup": 0,
+      "column": 7,
+      "offset": 533,
+      "repetition": [
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "definition": [
+        4,
+        2,
+        1,
+        4,
+        2
+      ],
+      "repetitionPadding": [
+        0,
+        0,
+        0
+      ],
+      "definitionPadding": [
+        0,
+        0,
+        0
+      ],
+      "valuesOffset": 14,
+      "nonNullValues": 2,
+      "rowStarts": 3
+    },
+    "dictionaryIndexes": [
+      0,
+      1
+    ],
+    "dictionaryPadding": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "rowGroup": 1,
+    "column": 0,
+    "offset": 573,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "INT64",
+        "value": "3"
+      },
+      {
+        "type": "INT64",
+        "value": "4"
+      },
+      {
+        "type": "INT64",
+        "value": "5"
+      }
+    ]
+  },
+  {
+    "rowGroup": 1,
+    "column": 0,
+    "offset": 617,
+    "kind": "data",
+    "values": [
+      {
+        "type": "INT64",
+        "value": "3"
+      },
+      {
+        "type": "INT64",
+        "value": "4"
+      },
+      {
+        "type": "INT64",
+        "value": "5"
+      }
+    ],
+    "levels": {
+      "rowGroup": 1,
+      "column": 0,
+      "offset": 617,
+      "repetition": [
+        0,
+        0,
+        0
+      ],
+      "definition": [
+        0,
+        0,
+        0
+      ],
+      "repetitionPadding": [],
+      "definitionPadding": [],
+      "valuesOffset": 0,
+      "nonNullValues": 3,
+      "rowStarts": 3
+    },
+    "dictionaryIndexes": [
+      0,
+      1,
+      2
+    ],
+    "dictionaryPadding": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "rowGroup": 1,
+    "column": 1,
+    "offset": 644,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "e6b3a8e696872033"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "e6b3a8e696872034"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "e6b3a8e696872035"
+      }
+    ]
+  },
+  {
+    "rowGroup": 1,
+    "column": 1,
+    "offset": 700,
+    "kind": "data",
+    "values": [
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "e6b3a8e696872033"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "e6b3a8e696872034"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "e6b3a8e696872035"
+      }
+    ],
+    "levels": {
+      "rowGroup": 1,
+      "column": 1,
+      "offset": 700,
+      "repetition": [
+        0,
+        0,
+        0
+      ],
+      "definition": [
+        2,
+        2,
+        2
+      ],
+      "repetitionPadding": [],
+      "definitionPadding": [],
+      "valuesOffset": 6,
+      "nonNullValues": 3,
+      "rowStarts": 3
+    },
+    "dictionaryIndexes": [
+      0,
+      1,
+      2
+    ],
+    "dictionaryPadding": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "rowGroup": 1,
+    "column": 2,
+    "offset": 733,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "FIXED_LEN_BYTE_ARRAY",
+        "hex": "000000003039"
+      }
+    ]
+  },
+  {
+    "rowGroup": 1,
+    "column": 2,
+    "offset": 759,
+    "kind": "data",
+    "values": [
+      {
+        "type": "FIXED_LEN_BYTE_ARRAY",
+        "hex": "000000003039"
+      },
+      {
+        "type": "FIXED_LEN_BYTE_ARRAY",
+        "hex": "000000003039"
+      },
+      {
+        "type": "FIXED_LEN_BYTE_ARRAY",
+        "hex": "000000003039"
+      }
+    ],
+    "levels": {
+      "rowGroup": 1,
+      "column": 2,
+      "offset": 759,
+      "repetition": [
+        0,
+        0,
+        0
+      ],
+      "definition": [
+        2,
+        2,
+        2
+      ],
+      "repetitionPadding": [],
+      "definitionPadding": [],
+      "valuesOffset": 6,
+      "nonNullValues": 3,
+      "rowStarts": 3
+    },
+    "dictionaryIndexes": [
+      0,
+      0,
+      0
+    ],
+    "dictionaryPadding": []
+  },
+  {
+    "rowGroup": 1,
+    "column": 3,
+    "offset": 791,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "61"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "62"
+      }
+    ]
+  },
+  {
+    "rowGroup": 1,
+    "column": 3,
+    "offset": 821,
+    "kind": "data",
+    "values": [
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "61"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "62"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "61"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "62"
+      }
+    ],
+    "levels": {
+      "rowGroup": 1,
+      "column": 3,
+      "offset": 821,
+      "repetition": [
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "definition": [
+        1,
+        3,
+        2,
+        3,
+        3,
+        2,
+        3
+      ],
+      "repetitionPadding": [
+        0
+      ],
+      "definitionPadding": [
+        0
+      ],
+      "valuesOffset": 13,
+      "nonNullValues": 4,
+      "rowStarts": 3
+    },
+    "dictionaryIndexes": [
+      0,
+      1,
+      0,
+      1
+    ],
+    "dictionaryPadding": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "rowGroup": 1,
+    "column": 4,
+    "offset": 860,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "6669727374"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "7365636f6e64"
+      }
+    ]
+  },
+  {
+    "rowGroup": 1,
+    "column": 4,
+    "offset": 899,
+    "kind": "data",
+    "values": [
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "6669727374"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "7365636f6e64"
+      }
+    ],
+    "levels": {
+      "rowGroup": 1,
+      "column": 4,
+      "offset": 899,
+      "repetition": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "definition": [
+        2,
+        2,
+        0,
+        1
+      ],
+      "repetitionPadding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "definitionPadding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "valuesOffset": 13,
+      "nonNullValues": 2,
+      "rowStarts": 3
+    },
+    "dictionaryIndexes": [
+      0,
+      1
+    ],
+    "dictionaryPadding": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "rowGroup": 1,
+    "column": 5,
+    "offset": 937,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "INT32",
+        "value": "3"
+      }
+    ]
+  },
+  {
+    "rowGroup": 1,
+    "column": 5,
+    "offset": 961,
+    "kind": "data",
+    "values": [
+      {
+        "type": "INT32",
+        "value": "3"
+      }
+    ],
+    "levels": {
+      "rowGroup": 1,
+      "column": 5,
+      "offset": 961,
+      "repetition": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "definition": [
+        3,
+        2,
+        0,
+        1
+      ],
+      "repetitionPadding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "definitionPadding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "valuesOffset": 13,
+      "nonNullValues": 1,
+      "rowStarts": 3
+    },
+    "dictionaryIndexes": [
+      0
+    ],
+    "dictionaryPadding": []
+  },
+  {
+    "rowGroup": 1,
+    "column": 6,
+    "offset": 1000,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "INT64",
+        "value": "1767268804000000"
+      }
+    ]
+  },
+  {
+    "rowGroup": 1,
+    "column": 6,
+    "offset": 1028,
+    "kind": "data",
+    "values": [
+      {
+        "type": "INT64",
+        "value": "1767268804000000"
+      }
+    ],
+    "levels": {
+      "rowGroup": 1,
+      "column": 6,
+      "offset": 1028,
+      "repetition": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "definition": [
+        1,
+        4,
+        2,
+        1
+      ],
+      "repetitionPadding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "definitionPadding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "valuesOffset": 14,
+      "nonNullValues": 1,
+      "rowStarts": 3
+    },
+    "dictionaryIndexes": [
+      0
+    ],
+    "dictionaryPadding": []
+  },
+  {
+    "rowGroup": 1,
+    "column": 7,
+    "offset": 1068,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "INT32",
+        "value": "4"
+      }
+    ]
+  },
+  {
+    "rowGroup": 1,
+    "column": 7,
+    "offset": 1092,
+    "kind": "data",
+    "values": [
+      {
+        "type": "INT32",
+        "value": "4"
+      }
+    ],
+    "levels": {
+      "rowGroup": 1,
+      "column": 7,
+      "offset": 1092,
+      "repetition": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "definition": [
+        1,
+        4,
+        2,
+        1
+      ],
+      "repetitionPadding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "definitionPadding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "valuesOffset": 14,
+      "nonNullValues": 1,
+      "rowStarts": 3
+    },
+    "dictionaryIndexes": [
+      0
+    ],
+    "dictionaryPadding": []
+  },
+  {
+    "rowGroup": 2,
+    "column": 0,
+    "offset": 1132,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "INT64",
+        "value": "6"
+      },
+      {
+        "type": "INT64",
+        "value": "7"
+      }
+    ]
+  },
+  {
+    "rowGroup": 2,
+    "column": 0,
+    "offset": 1168,
+    "kind": "data",
+    "values": [
+      {
+        "type": "INT64",
+        "value": "6"
+      },
+      {
+        "type": "INT64",
+        "value": "7"
+      }
+    ],
+    "levels": {
+      "rowGroup": 2,
+      "column": 0,
+      "offset": 1168,
+      "repetition": [
+        0,
+        0
+      ],
+      "definition": [
+        0,
+        0
+      ],
+      "repetitionPadding": [],
+      "definitionPadding": [],
+      "valuesOffset": 0,
+      "nonNullValues": 2,
+      "rowStarts": 2
+    },
+    "dictionaryIndexes": [
+      0,
+      1
+    ],
+    "dictionaryPadding": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "rowGroup": 2,
+    "column": 1,
+    "offset": 1194,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "e6b3a8e696872036"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "e6b3a8e696872037"
+      }
+    ]
+  },
+  {
+    "rowGroup": 2,
+    "column": 1,
+    "offset": 1238,
+    "kind": "data",
+    "values": [
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "e6b3a8e696872036"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "e6b3a8e696872037"
+      }
+    ],
+    "levels": {
+      "rowGroup": 2,
+      "column": 1,
+      "offset": 1238,
+      "repetition": [
+        0,
+        0
+      ],
+      "definition": [
+        2,
+        2
+      ],
+      "repetitionPadding": [],
+      "definitionPadding": [],
+      "valuesOffset": 6,
+      "nonNullValues": 2,
+      "rowStarts": 2
+    },
+    "dictionaryIndexes": [
+      0,
+      1
+    ],
+    "dictionaryPadding": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "rowGroup": 2,
+    "column": 2,
+    "offset": 1270,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "FIXED_LEN_BYTE_ARRAY",
+        "hex": "000000003039"
+      }
+    ]
+  },
+  {
+    "rowGroup": 2,
+    "column": 2,
+    "offset": 1296,
+    "kind": "data",
+    "values": [
+      {
+        "type": "FIXED_LEN_BYTE_ARRAY",
+        "hex": "000000003039"
+      },
+      {
+        "type": "FIXED_LEN_BYTE_ARRAY",
+        "hex": "000000003039"
+      }
+    ],
+    "levels": {
+      "rowGroup": 2,
+      "column": 2,
+      "offset": 1296,
+      "repetition": [
+        0,
+        0
+      ],
+      "definition": [
+        2,
+        2
+      ],
+      "repetitionPadding": [],
+      "definitionPadding": [],
+      "valuesOffset": 6,
+      "nonNullValues": 2,
+      "rowStarts": 2
+    },
+    "dictionaryIndexes": [
+      0,
+      0
+    ],
+    "dictionaryPadding": []
+  },
+  {
+    "rowGroup": 2,
+    "column": 3,
+    "offset": 1328,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "61"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "62"
+      }
+    ]
+  },
+  {
+    "rowGroup": 2,
+    "column": 3,
+    "offset": 1358,
+    "kind": "data",
+    "values": [
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "61"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "62"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "61"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "62"
+      }
+    ],
+    "levels": {
+      "rowGroup": 2,
+      "column": 3,
+      "offset": 1358,
+      "repetition": [
+        0,
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "definition": [
+        3,
+        2,
+        3,
+        3,
+        2,
+        3
+      ],
+      "repetitionPadding": [
+        0,
+        0
+      ],
+      "definitionPadding": [
+        0,
+        0
+      ],
+      "valuesOffset": 13,
+      "nonNullValues": 4,
+      "rowStarts": 2
+    },
+    "dictionaryIndexes": [
+      0,
+      1,
+      0,
+      1
+    ],
+    "dictionaryPadding": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "rowGroup": 2,
+    "column": 4,
+    "offset": 1397,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "6669727374"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "7365636f6e64"
+      }
+    ]
+  },
+  {
+    "rowGroup": 2,
+    "column": 4,
+    "offset": 1436,
+    "kind": "data",
+    "values": [
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "6669727374"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "7365636f6e64"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "6669727374"
+      },
+      {
+        "type": "BYTE_ARRAY",
+        "hex": "7365636f6e64"
+      }
+    ],
+    "levels": {
+      "rowGroup": 2,
+      "column": 4,
+      "offset": 1436,
+      "repetition": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "definition": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "repetitionPadding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "definitionPadding": [],
+      "valuesOffset": 12,
+      "nonNullValues": 4,
+      "rowStarts": 2
+    },
+    "dictionaryIndexes": [
+      0,
+      1,
+      0,
+      1
+    ],
+    "dictionaryPadding": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "rowGroup": 2,
+    "column": 5,
+    "offset": 1474,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "INT32",
+        "value": "6"
+      },
+      {
+        "type": "INT32",
+        "value": "7"
+      }
+    ]
+  },
+  {
+    "rowGroup": 2,
+    "column": 5,
+    "offset": 1502,
+    "kind": "data",
+    "values": [
+      {
+        "type": "INT32",
+        "value": "6"
+      },
+      {
+        "type": "INT32",
+        "value": "7"
+      }
+    ],
+    "levels": {
+      "rowGroup": 2,
+      "column": 5,
+      "offset": 1502,
+      "repetition": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "definition": [
+        3,
+        2,
+        3,
+        2
+      ],
+      "repetitionPadding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "definitionPadding": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "valuesOffset": 13,
+      "nonNullValues": 2,
+      "rowStarts": 2
+    },
+    "dictionaryIndexes": [
+      0,
+      1
+    ],
+    "dictionaryPadding": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "rowGroup": 2,
+    "column": 6,
+    "offset": 1541,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "INT64",
+        "value": "1767268806000000"
+      }
+    ]
+  },
+  {
+    "rowGroup": 2,
+    "column": 6,
+    "offset": 1569,
+    "kind": "data",
+    "values": [
+      {
+        "type": "INT64",
+        "value": "1767268806000000"
+      }
+    ],
+    "levels": {
+      "rowGroup": 2,
+      "column": 6,
+      "offset": 1569,
+      "repetition": [
+        0,
+        1,
+        0
+      ],
+      "definition": [
+        4,
+        2,
+        1
+      ],
+      "repetitionPadding": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "definitionPadding": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "valuesOffset": 14,
+      "nonNullValues": 1,
+      "rowStarts": 2
+    },
+    "dictionaryIndexes": [
+      0
+    ],
+    "dictionaryPadding": []
+  },
+  {
+    "rowGroup": 2,
+    "column": 7,
+    "offset": 1609,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "INT32",
+        "value": "6"
+      }
+    ]
+  },
+  {
+    "rowGroup": 2,
+    "column": 7,
+    "offset": 1632,
+    "kind": "data",
+    "values": [
+      {
+        "type": "INT32",
+        "value": "6"
+      }
+    ],
+    "levels": {
+      "rowGroup": 2,
+      "column": 7,
+      "offset": 1632,
+      "repetition": [
+        0,
+        1,
+        0
+      ],
+      "definition": [
+        4,
+        2,
+        1
+      ],
+      "repetitionPadding": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "definitionPadding": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "valuesOffset": 14,
+      "nonNullValues": 1,
+      "rowStarts": 2
+    },
+    "dictionaryIndexes": [
+      0
+    ],
+    "dictionaryPadding": []
+  }
+]

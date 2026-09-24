@@ -1,0 +1,13 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b7216 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b7216 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b7216 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b7216 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LessThanConstraintComponent> .
+_:b7216 <http://www.w3.org/ns/shacl#sourceShape> _:s_g_0 .
+_:b7216 <http://www.w3.org/ns/shacl#focusNode> <https://example.org/a> .
+_:b7216 <http://www.w3.org/ns/shacl#resultPath> <https://example.org/p> .
+_:b7216 <http://www.w3.org/ns/shacl#value> "0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+_:b7216 <http://www.w3.org/ns/shacl#resultMessage> "Value is not less than value of <https://example.org/q>" .
+_:s_g_0 <http://www.w3.org/ns/shacl#path> <https://example.org/p> .
+_:s_g_0 <http://www.w3.org/ns/shacl#lessThan> <https://example.org/q> .

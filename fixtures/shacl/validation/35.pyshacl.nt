@@ -1,0 +1,10 @@
+_:N168b354f79b74a7bbf4aae996d4dd5dc <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/pattern-002.test#TestShape> .
+_:N168b354f79b74a7bbf4aae996d4dd5dc <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nf4480fe31f73446da67f07ed8db673f4 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N168b354f79b74a7bbf4aae996d4dd5dc <http://www.w3.org/ns/shacl#resultMessage> "Value does not match pattern 'Aldi'" .
+_:Nf4480fe31f73446da67f07ed8db673f4 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Nf4480fe31f73446da67f07ed8db673f4 <http://www.w3.org/ns/shacl#result> _:N168b354f79b74a7bbf4aae996d4dd5dc .
+_:N168b354f79b74a7bbf4aae996d4dd5dc <http://www.w3.org/ns/shacl#focusNode> "Alti" .
+_:N168b354f79b74a7bbf4aae996d4dd5dc <http://www.w3.org/ns/shacl#value> "Alti" .
+_:N168b354f79b74a7bbf4aae996d4dd5dc <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#PatternConstraintComponent> .
+_:N168b354f79b74a7bbf4aae996d4dd5dc <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .

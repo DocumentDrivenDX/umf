@@ -1,0 +1,2959 @@
+{
+  "oracle": "software.amazon.smithy:smithy-model:1.73.0",
+  "jars": {
+    "jsonschema": "47584feccfe5879ba438d6ab11a646f890bd606ff39c82849c75be1f642fb493",
+    "model": "816e2cbbf8a62895d484e481e1d7beb1e4e929dec0cfbdda8c160d69402f750b",
+    "utils": "1d89fa0624ebf8e0f3032cc6b8283ee58335d3ee43e1826b24b1e951b3bdf8d2"
+  },
+  "commit": "dd2d50a93db313ee21b41916af158442e14669e1",
+  "runtimeSha256": "602a90b691aaeeaaab841b472d68592236a520f2c59ce9ae1e69addc7e654898",
+  "cases": [
+    {
+      "file": "fixtures/smithy/invalid-upstream/apply/apply-block-missing-closing.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/apply/apply-missing-newline.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model",
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model",
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/apply/apply-missing-space.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/apply/apply-missing-trait-value.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/control/control-colon-newline.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/control/control-missing-value.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/control/control-newline.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/control/control-statement-before-others.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/control/control-version-defined-twice.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/control/control-with-invalid-key.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/control/control-with-invalid-key2.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/control/control-with-no-colon.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/control/no-newline-after-control.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/defaults/default-in-v1.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/defaults/default-incomplete-node.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/defaults/default-missing-structure-close.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/defaults/default-missing-value.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/defaults/default-with-newline-before-value.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/defaults/missing-newline-after-assignment.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/elision/elide-nonexistent-id.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/elision/elided-property-type-conflicts.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/elision/elided-type-conflicts.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/elision/eliding-with-resources-in-v1.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/elision/eliding-without-resources-v1.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/elision/for-after-with.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/elision/for-referencing-non-resource.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model",
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model",
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/elision/list-member-elision-in-v1.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/elision/structure-member-elision-in-v1.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/enums/enum-with-bad-values.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:EnumShape"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:EnumShape"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/enums/enum-with-duplicates.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/enums/enum-with-newline-before-value.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/enums/enum-without-member.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/enums/idl-enums-in-v1.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/enums/int-enum-without-member.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/enums/intEnum-with-bad-value.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:EnumShape"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:EnumShape"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/enums/intEnum-with-duplicates.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/enums/intEnum-with-float.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:EnumShape"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:EnumShape"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/enums/intEnum-with-long.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:EnumShape"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:EnumShape"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/enums/missing-newline-after-assignment.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/inline-io/inline-error.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/inline-io/inline-io-in-explicit-1-0.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/inline-io/inline-io-in-implicit-1-0.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/inline-io/inline-name-override.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/inline-io/inline-single-error.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/inline-io/inline-structure-member.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/inline-io/walrus-operator-in-node.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/lists/list-empty-members.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/lists/no-sets-in-v2.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/lists/set-empty-members.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/maps/map-empty-members.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/maps/map-unclosed-parameters1.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/maps/map-unclosed-parameters2.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/maps/map-unclosed-parameters3.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/maps/map-unclosed-parameters4.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/metadata/invalid-object-shape-id-key.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/metadata/invalid-object-text-block-key.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/metadata/invalid-unquoted-shape-id.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/metadata/metadata-multiple-lines.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/metadata/metadata-must-come-before-namespace.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/metadata/metadata-with-invalid-key.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/metadata/no-newline-after-metadata.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/metadata/not-newline-after-metadata.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model",
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model",
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/metadata/space-after-metadata-quoted.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/metadata/space-after-metadata-unquoted.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/metadata/space-after-node-array-keyword.smithy",
+      "valid": false,
+      "events": [
+        "DANGER:SyntacticShapeIdTarget"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "DANGER:SyntacticShapeIdTarget"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/dangling-with.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/invalid-statement-after-structure-name.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/member-mixin-conflict-1.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/member-mixin-conflict-2.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/missing-rest-of-with-word.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/mix-types.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/mixins-trait-in-explicit-1-0.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/mixins-trait-in-implicit-1-0.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/mixins-usage-in-explicit-1-0.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/mixins-usage-in-implicit-1-0.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/operation-mixin-with-io.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/resource-mixin-with-properties.smithy",
+      "exceptionClass": "java.lang.IllegalStateException",
+      "exceptionMessage": "Resource shapes with the mixin trait may not define any properties. Resource mixin shape `smithy.example#MixinResource` defines one or more properties.",
+      "valid": false,
+      "events": [],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [],
+      "issues": [
+        {
+          "code": "SMITHY_ASSEMBLY_FAILED",
+          "path": "",
+          "severity": "error",
+          "message": "Error: Resource shapes with the mixin trait may not define any properties. Resource mixin shape `smithy.example#MixinResource` defines one or more properties."
+        }
+      ],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-but-no-ids.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-bigDecimal.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-bigInteger.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-blob.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-boolean.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-byte.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-document.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-double.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-float.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-integer.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-list.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-long.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-map.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-resource.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-service.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-short.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-string.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-structure.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-timestamp.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-union.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/namespace/namespace-before-shapes.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/namespace/namespace-before-traits.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/namespace/namespace-defined-twice.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/namespace/namespace-multiple-lines.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/namespace/namespace-no-newline.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/namespace/namespace-syntax-error.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/namespace/unclosed-string1.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/namespace/unclosed-string2-invalid-single-quote.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/namespace/unclosed-string3.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/numbers/decimal-with-no-digit-after.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/numbers/exponent-with-no-digit.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/numbers/exponent-with-sign-then-no-digit.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/numbers/leading-decimal.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/numbers/negative-with-no-digit.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/operations/input-defined-twice.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/operations/invalid-operation-properties.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/operations/missing-ws-after-input.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/parse-errors/absolute-shape-name.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/parse-errors/expected-shape-id-after-type.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/parse-errors/expected-shape-name-but-eof.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/parse-errors/invalid-newline-after-shape-type.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model",
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model",
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/parse-errors/missing-space-after-string.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/parse-errors/missing-space-after-structure.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/parse-errors/shape-name-syntax.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/parse-errors/shape-name-syntax2.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/parse-errors/shape-name-syntax3.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/parse-errors/statement-unknown.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/parse-errors/syntax-error-token.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/invalid-escape-apostrophe.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/invalid-escape-space.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/invalid-unicode-escape.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/invalid-unicode-escape2.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/invalid-unicode-escape3.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/invalid-unicode-escape4.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/invalid-unicode-escape5.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/text-block-empty.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/text-block-invalid-unicode.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/text-block-missing-newline.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/unclosed-string.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/unclosed-string2.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/unclosed-string3.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/unclosed-text-block.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-invalid-object-key1.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-invalid-object-key2.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-invalid-object-key3.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-unclosed-list1.smithy",
+      "valid": false,
+      "events": [
+        "DANGER:SyntacticShapeIdTarget",
+        "DANGER:SyntacticShapeIdTarget",
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "DANGER:SyntacticShapeIdTarget",
+        "DANGER:SyntacticShapeIdTarget",
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-unclosed-list2.smithy",
+      "valid": false,
+      "events": [
+        "DANGER:SyntacticShapeIdTarget",
+        "DANGER:SyntacticShapeIdTarget",
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "DANGER:SyntacticShapeIdTarget",
+        "DANGER:SyntacticShapeIdTarget",
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-unclosed-list3.smithy",
+      "valid": false,
+      "events": [
+        "DANGER:SyntacticShapeIdTarget",
+        "DANGER:SyntacticShapeIdTarget",
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "DANGER:SyntacticShapeIdTarget",
+        "DANGER:SyntacticShapeIdTarget",
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-unclosed-list4.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-unclosed-object1.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-unclosed-object2.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-unclosed-object3.smithy",
+      "valid": false,
+      "events": [
+        "DANGER:SyntacticShapeIdTarget",
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "DANGER:SyntacticShapeIdTarget",
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-unclosed-object4.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-unclosed-object5.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-unclosed-object6.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/invalid-trait-shape-id-key.smithy",
+      "valid": false,
+      "events": [
+        "DANGER:SyntacticShapeIdTarget",
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "DANGER:SyntacticShapeIdTarget",
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/invalid-trait-textblock-key.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/trait-name-syntax.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/trait-on-eof.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/trait-trailing.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/traits-on-apply.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/traits-on-metadata.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/traits-on-namespace.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/conflicting-shape-def.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/conflicting-trait-def.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/conflicting-use.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-after-shape.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-after-traitdef.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-empty-namespace.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-invalid-namespace.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-missing-after-namespace.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-missing-namespace.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-missing-newline.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model",
+        "WARNING:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model",
+        "WARNING:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-missing-space.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-multiple-lines-comment.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-multiple-lines.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-must-come-after-namespace.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-statement-invalid-id.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-with-member.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/version/idl-int-enums-in-v1.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/version/invalid-version-type.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/version/properties-v2-only.json",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/version/properties-v2-only.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/version/unsupported-version.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/version/version-set-more-than-once.smithy",
+      "valid": false,
+      "events": [
+        "ERROR:Model"
+      ],
+      "modelSha256": null,
+      "agrees": true,
+      "actualStatus": "blocked",
+      "actualEvents": [
+        "ERROR:Model"
+      ],
+      "issues": [],
+      "sourcePreserved": true,
+      "noPartialModel": true
+    }
+  ],
+  "agreement": 182,
+  "total": 182,
+  "nativeRejected": 182,
+  "scope": "Every model file in the pinned upstream loader/invalid subtree assembled standalone, after exact UMF YAML source archive round trip. Native event severity/ID multisets compared. Directory naming is not an assumed rejection result; warnings may leave models valid. Same Smithy implementation on different VMs, not independent implementation evidence."
+}

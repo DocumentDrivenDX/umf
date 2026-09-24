@@ -1,0 +1,392 @@
+{
+  "scope": "Descriptive package status wording only; qualification comes from separate acceptance evidence",
+  "oldText": "binding acceptance remains pending",
+  "newText": "binding qualification is recorded separately in versioned acceptance evidence",
+  "previousBundleSha256": "0c5ff5a8e1317565a5fba695b788645635847f5da29b721508cd2f2042364096",
+  "changedInputs": {
+    "scripts/core-ideals/facets-avro-schema.ts": {
+      "previousSha256": "056c5de10e384b6b1658fbee595e325f30496305d66cfe7992edd9b7f56e838e",
+      "currentSha256": "fdaeaa75310ed2d3e8b5f5302ab5d47be5ac93d136385310efea21043ac28f36"
+    },
+    "spec/extensions/avro-facets/package.json": {
+      "previousSha256": "040c50a035988606e715bf4a675087a2bec5b501455291155cab590a840463e2",
+      "currentSha256": "83862c82e105c376c04ad625f3993e8206cac42c6d508d15db8f5a3bd07a4ebf"
+    }
+  },
+  "originalCommands": 86,
+  "additionalCommandsExpected": 47,
+  "completed": false,
+  "bindingAccepted": false,
+  "runs": [
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-avro-schema.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "$ bun node_modules/typescript/bin/tsc --noEmit && bun node_modules/typescript/bin/tsc -p tsconfig.tools.json\n"
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "test:schemas"
+      ],
+      "exitCode": 0,
+      "stdout": "{\n  \"packages\": 46,\n  \"passed\": 46,\n  \"failures\": []\n}\n{\n  \"schemas\": 274,\n  \"passed\": 274,\n  \"failures\": []\n}\n",
+      "stderr": "$ bun scripts/audit-extension-packages.ts && bun scripts/audit-json-schemas.ts\n"
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "stdout": "Browser ESM built: 11012401 bytes; declarations emitted.\n",
+      "stderr": "$ bun scripts/build.ts\n"
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "build:postgresql"
+      ],
+      "exitCode": 0,
+      "stdout": "Optional PostgreSQL parser/deparser browser runtime built\n",
+      "stderr": "$ bun scripts/build-postgresql.ts\n"
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/facets-avro.test.ts",
+        "./tests/core-ideals/facets-avro-projection.test.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "bun test v1.3.14 (0d9b296a)\n",
+      "stderr": "\ntests/core-ideals/facets-avro.test.ts:\n(pass) declaration and writer profiles separate native domain from enforcement counterexamples [693.08ms]\n(pass) fixed, union and explicit item selection retain native refinements [344.70ms]\n(pass) original source texts, dependency order, unknown numeric tokens and defaults recover exactly [359.09ms]\n(pass) authored bounds require fresh provenance and cannot be silently overwritten [319.20ms]\n(pass) shape conflicts, archive changes, invalid profiles and unsafe inputs refuse [202.45ms]\n(pass) closed operation and extension schemas constrain real classification output [57.64ms]\n(pass) unannotated precision metadata stays unknown and authored losses point back to the ideal [165.28ms]\n\ntests/core-ideals/facets-avro-projection.test.ts:\n(pass) authored domains distinguish exact carriers from unenforced approximations [47.63ms]\n(pass) fixed bounds preserve lower-bound losses and refuse impossible or oversized carriers [8.88ms]\n(pass) all profile, encoding and mode combinations recover authored ideals with explicit losses [454.86ms]\n(pass) receipt integrity, unknown metadata, invalid names and exact-input counterexamples remain explicit [6.56ms]\n\n 11 pass\n 0 fail\n 263 expect() calls\nRan 11 tests across 2 files. [5.78s]\n"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-field-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"scope\":\"Experimental Field envelope validation and legacy collision recovery only; explicit migration/rollback; authored provenance and typed lookup; no native classification or binding claim\",\"browser\":\"148.0.7778.0\",\"checks\":{\"decisions\":40,\"recoveries\":56,\"transitions\":40,\"kindLookups\":28,\"authorDeclarations\":40,\"hostGlobalsAbsent\":true},\"externalRequests\":[]}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-tablespec-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"browser\":\"148.0.7778.0\",\"checks\":{\"classifications\":32,\"recoveries\":64,\"conflicts\":2,\"records\":32}}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-tablespec-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"fieldBlocks\":10,\"projections\":40,\"idealRecoveries\":60,\"lossPolicies\":2,\"recordCases\":8,\"recordRecoveries\":8,\"recordBlocks\":4}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-avro-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"fields\":13,\"recoveries\":26,\"conflicts\":2,\"records\":7,\"recordRecoveries\":14}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-avro-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"recordCases\":9,\"recordRecoveries\":10,\"recordBlocks\":4,\"projections\":15,\"recoveries\":30,\"lossPolicies\":4,\"identifierRefusals\":4}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/avro-record-type-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"fields\":5,\"recoveries\":10,\"blocked\":12}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-parquet-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"fields\":26,\"recoveries\":52,\"blocked\":27,\"records\":21,\"recordRecoveries\":42,\"blockedRecords\":22,\"recordTypes\":5,\"typeRecoveries\":10,\"blockedTypes\":22}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-parquet-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"fields\":36,\"recoveries\":72,\"records\":5,\"blockedRecords\":4,\"recordRecoveries\":10}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-postgresql-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"composites\":4,\"compositeRecoveries\":8,\"columns\":20,\"recoveries\":40,\"conflicts\":2,\"records\":4,\"recordRecoveries\":8,\"viewBlocked\":true,\"staleReceiptBlocked\":true}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-postgresql-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"namespaceChecks\":4,\"namespaceRecoveries\":4,\"projections\":15,\"recoveries\":30,\"lossPolicies\":2,\"identifierRefusals\":4,\"recordCases\":7,\"recordRecoveries\":8,\"recordBlocks\":3}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/postgresql-ddl-kinds-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"cases\":24,\"recoveries\":28,\"blocked\":10}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-sqlserver-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"records\":3,\"recordRecoveries\":6,\"columns\":34,\"recoveries\":68,\"conflicts\":2,\"staleReceiptBlocked\":true}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-sqlserver-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"namespaceChecks\":4,\"namespaceRecoveries\":4,\"recordCases\":8,\"recordRecoveries\":8,\"recordBlocks\":4,\"projections\":14,\"recoveries\":28,\"lossPolicies\":2,\"identifierRefusals\":4}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-nullability-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"scope\":\"Experimental nullability envelope, typed inspection/authoring, explicit migration/rollback and JSON/YAML preservation; native bindings remain pending\",\"browser\":\"148.0.7778.0\",\"checks\":{\"decisions\":150,\"recoveries\":218,\"legacyCollisions\":90,\"refusals\":41,\"transitions\":100,\"tamperedReceipts\":100,\"inspections\":109,\"authorDeclarations\":60},\"externalRequests\":[]}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-selection-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"cases\":5,\"recoveries\":10,\"refusals\":5,\"legacyVerified\":true}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-field-operations-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"cases\":18,\"recoveries\":36,\"refusals\":72,\"versionedReceipts\":true}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-tablespec-classification-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"cases\":504,\"recoveries\":544,\"blocks\":232,\"tampered\":272}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-tablespec-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"cases\":204,\"recoveries\":292,\"blocks\":58,\"tampered\":146}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-postgresql-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"nativeCasesRetained\":18,\"catalogTreeRecoveries\":2,\"classificationCases\":176,\"classified\":91,\"blocked\":85,\"exactSourceRecoveries\":182,\"forgedRefusals\":91}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-postgresql-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"cases\":73,\"blocked\":13,\"recoveries\":120,\"forgedRefusals\":60,\"identifierRefusals\":4}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-sqlserver-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"nativeCasesRetained\":24,\"catalogTreeRecoveries\":2,\"sidecarPreserved\":true,\"classificationCases\":288,\"classified\":156,\"blocked\":132,\"exactSourceRecoveries\":312,\"forgedRefusals\":156}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-sqlserver-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"cases\":79,\"blocked\":16,\"recoveries\":126,\"forgedRefusals\":63,\"identifierRefusals\":6}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-avro-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"cases\":304,\"classified\":171,\"blocked\":133,\"recoveries\":342,\"forgedRefusals\":171}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-avro-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"cases\":88,\"blocked\":20,\"recoveries\":136,\"forgedRefusals\":68,\"identifierRefusals\":5}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-parquet-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"files\":100,\"columns\":132,\"recoveries\":200,\"classificationCases\":640,\"classified\":360,\"blocked\":280,\"classificationRecoveries\":720,\"forgedRefusals\":360}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-parquet-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"cases\":91,\"blocked\":25,\"recoveries\":132,\"forgedRefusals\":66,\"identifierRefusals\":3}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-cardinality-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"recoveries\":18,\"transitions\":16,\"refusals\":14,\"getterCalls\":0}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-cardinality-operations-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"recoveries\":18,\"transitions\":16,\"refusals\":14,\"getterCalls\":0,\"authorRecoveries\":8,\"authorRefusals\":5}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-field-operations-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"cases\":45,\"recoveries\":90,\"availabilityRecoveries\":24,\"itemRecordRecoveries\":2,\"refusals\":253,\"versionedReceipts\":true}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-selection-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"cases\":12,\"recoveries\":24,\"refusals\":16,\"legacyVerified\":true}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-tablespec-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"cases\":336,\"recoveries\":452,\"blocks\":110,\"tampered\":226}\n{\"cases\":78,\"recoveries\":88,\"blocks\":34,\"tampered\":44}\n{\"classification\":{\"cases\":336,\"recoveries\":452,\"blocks\":110,\"tampered\":226},\"projection\":{\"cases\":78,\"recoveries\":88,\"blocks\":34,\"tampered\":44}}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-postgresql-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"resolved\":26,\"refused\":5,\"classified\":26,\"recovered\":26,\"strictScalars\":18,\"exactUnknownToken\":true}\n{\"cases\":48,\"blocked\":22,\"recoveries\":52,\"forgedRefusals\":26,\"identifierRefusals\":4}\n{\"catalog\":{\"resolved\":26,\"refused\":5,\"classified\":26,\"recovered\":26,\"strictScalars\":18,\"exactUnknownToken\":true},\"projection\":{\"cases\":48,\"blocked\":22,\"recoveries\":52,\"forgedRefusals\":26,\"identifierRefusals\":4}}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-sqlserver-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"classified\":36,\"blocked\":20,\"recoveries\":72,\"forgedRefusals\":36}\n{\"cases\":104,\"blocked\":36,\"recoveries\":136,\"forgedRefusals\":68,\"identifierRefusals\":6}\n{\"classification\":{\"classified\":36,\"blocked\":20,\"recoveries\":72,\"forgedRefusals\":36},\"projection\":{\"cases\":104,\"blocked\":36,\"recoveries\":136,\"forgedRefusals\":68,\"identifierRefusals\":6}}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-avro-browser.ts"
+      ],
+      "exitCode": 0,
+      "stdout": "{\"cases\":20,\"duplicateStreams\":2,\"valueDisagreements\":1,\"floatNarrowings\":1,\"externalRequests\":0}\n{\"cases\":80,\"classified\":58,\"blocked\":22,\"recoveries\":116,\"forgedRefusals\":58}\n{\"cases\":78,\"projected\":52,\"blocked\":26,\"recoveries\":104,\"nativeRecoveries\":104,\"forgedRefusals\":52}\n{\"profile\":{\"rows\":[{\"id\":\"empty-array\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"00\",\"decoded\":{\"value\":[]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"ordered-duplicates\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"0604020400\",\"decoded\":{\"value\":[2,1,2]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"nullable-array-items\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"array\",\"items\":[{\"kind\":\"string\",\"value\":\"null\"},{\"kind\":\"string\",\"value\":\"long\"}]}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"array\",\"items\":[{\"kind\":\"string\",\"value\":\"null\"},{\"kind\":\"string\",\"value\":\"long\"}]}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"060002040000\",\"decoded\":{\"value\":[null,2,null]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"nested-arrays\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":3,\"hex\":\"0400060402040000\",\"decoded\":{\"value\":[[],[2,1,2]]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"array-of-maps\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":3,\"hex\":\"0400020261020000\",\"decoded\":{\"value\":[{},{\"a\":1}]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"map-of-arrays\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/values\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}}}}],\"shape\":\"map\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":3,\"hex\":\"040261060402040002620000\",\"decoded\":{\"value\":{\"a\":[2,1,2],\"b\":[]}},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"empty-map\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/values\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"map\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"00\",\"decoded\":{\"value\":{}},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"exact-string-keys\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/values\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"map\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"0604c3a9020665cc8104000600\",\"decoded\":{\"value\":{\"\u00e9\":1,\"e\u0301\":2,\"\":3}},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"special-property-keys\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/values\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"map\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"06125f5f70726f746f5f5f0216636f6e7374727563746f720410746f537472696e670600\",\"decoded\":{\"value\":{\"constructor\":2,\"toString\":3}},\"keys\":[\"value\"],\"exactInputRecovery\":false,\"nativeValueAgreement\":false},{\"id\":\"nullable-map-values\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"array\",\"items\":[{\"kind\":\"string\",\"value\":\"null\"},{\"kind\":\"string\",\"value\":\"long\"}]}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/values\"},\"native\":{\"kind\":\"array\",\"items\":[{\"kind\":\"string\",\"value\":\"null\"},{\"kind\":\"string\",\"value\":\"long\"}]}}}],\"shape\":\"map\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"040261000262020400\",\"decoded\":{\"value\":{\"a\":null,\"b\":2}},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"nested-maps\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/values\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}}}}],\"shape\":\"map\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":3,\"hex\":\"040261000262020263040000\",\"decoded\":{\"value\":{\"a\":{},\"b\":{\"c\":2}}},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"nullable-array-present\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type/0\"},\"native\":{\"kind\":\"string\",\"value\":\"null\"},\"type\":\"null\",\"shape\":\"null\"},{\"location\":{\"path\":\"/fields/0/type/1\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/1/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"array\",\"allowsNull\":true,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"020604020400\",\"decoded\":{\"value\":[2,1,2]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"nullable-array-null\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type/0\"},\"native\":{\"kind\":\"string\",\"value\":\"null\"},\"type\":\"null\",\"shape\":\"null\"},{\"location\":{\"path\":\"/fields/0/type/1\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/1/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"array\",\"allowsNull\":true,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"00\",\"decoded\":{\"value\":null},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"array-null-last\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type/0\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/0/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}},{\"location\":{\"path\":\"/fields/0/type/1\"},\"native\":{\"kind\":\"string\",\"value\":\"null\"},\"type\":\"null\",\"shape\":\"null\"}],\"shape\":\"array\",\"allowsNull\":true,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"000604020400\",\"decoded\":{\"value\":[2,1,2]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"array-map-union-array\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type/0\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/0/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}},{\"location\":{\"path\":\"/fields/0/type/1\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/1/values\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"unspecified\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":3,\"hex\":\"000604020400\",\"decoded\":{\"value\":[2,1,2]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"array-map-union-map\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type/0\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/0/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}},{\"location\":{\"path\":\"/fields/0/type/1\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"map\"},\"values\":{\"kind\":\"string\",\"value\":\"long\"}}},\"type\":\"map\",\"shape\":\"map\",\"item\":{\"location\":{\"path\":\"/fields/0/type/1/values\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"unspecified\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":3,\"hex\":\"020202610400\",\"decoded\":{\"value\":{\"a\":2}},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"recursive-record-items\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"record\"},\"name\":{\"kind\":\"string\",\"value\":\"Item\"},\"fields\":{\"kind\":\"array\",\"items\":[{\"kind\":\"object\",\"members\":{\"name\":{\"kind\":\"string\",\"value\":\"id\"},\"type\":{\"kind\":\"string\",\"value\":\"long\"}}},{\"kind\":\"object\",\"members\":{\"name\":{\"kind\":\"string\",\"value\":\"children\"},\"type\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"Item\"}}}}}]}}}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"record\"},\"name\":{\"kind\":\"string\",\"value\":\"Item\"},\"fields\":{\"kind\":\"array\",\"items\":[{\"kind\":\"object\",\"members\":{\"name\":{\"kind\":\"string\",\"value\":\"id\"},\"type\":{\"kind\":\"string\",\"value\":\"long\"}}},{\"kind\":\"object\",\"members\":{\"name\":{\"kind\":\"string\",\"value\":\"children\"},\"type\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"Item\"}}}}}]}}}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"02020204000000\",\"decoded\":{\"value\":[{\"id\":1,\"children\":[{\"id\":2,\"children\":[]}]}]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"enum-items\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"enum\"},\"name\":{\"kind\":\"string\",\"value\":\"Choice\"},\"symbols\":{\"kind\":\"array\",\"items\":[{\"kind\":\"string\",\"value\":\"A\"},{\"kind\":\"string\",\"value\":\"B\"}]}}}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"enum\"},\"name\":{\"kind\":\"string\",\"value\":\"Choice\"},\"symbols\":{\"kind\":\"array\",\"items\":[{\"kind\":\"string\",\"value\":\"A\"},{\"kind\":\"string\",\"value\":\"B\"}]}}}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"0602000200\",\"decoded\":{\"value\":[\"B\",\"A\",\"B\"]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"unknown-logical-array\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"long\"},\"logicalType\":{\"kind\":\"string\",\"value\":\"future-sequence\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"string\",\"value\":\"long\"}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"0604020400\",\"decoded\":{\"value\":[2,1,2]},\"keys\":[\"value\"],\"exactInputRecovery\":true,\"nativeValueAgreement\":true},{\"id\":\"float-items\",\"shape\":{\"branches\":[{\"location\":{\"path\":\"/fields/0/type\"},\"native\":{\"kind\":\"object\",\"members\":{\"type\":{\"kind\":\"string\",\"value\":\"array\"},\"items\":{\"kind\":\"string\",\"value\":\"float\"}}},\"type\":\"array\",\"shape\":\"array\",\"item\":{\"location\":{\"path\":\"/fields/0/type/items\"},\"native\":{\"kind\":\"string\",\"value\":\"float\"}}}],\"shape\":\"array\",\"allowsNull\":false,\"field\":{\"path\":\"/fields/0\"}},\"typeLocationsChecked\":2,\"hex\":\"020000803f00\",\"decoded\":{\"value\":[1]},\"keys\":[\"value\"],\"exactInputRecovery\":false,\"nativeValueAgreement\":true}],\"streams\":[{\"id\":\"positive-block\",\"sourceHex\":\"0402610202610400\",\"rewrittenHex\":\"0202610400\",\"decoded\":{\"a\":2},\"exactByteRecovery\":false},{\"id\":\"negative-block\",\"sourceHex\":\"030c02610202610400\",\"rewrittenHex\":\"0202610400\",\"decoded\":{\"a\":2},\"exactByteRecovery\":false}]},\"classification\":{\"cases\":80,\"classified\":58,\"blocked\":22,\"recoveries\":116,\"forgedRefusals\":58},\"projection\":{\"cases\":78,\"projected\":52,\"blocked\":26,\"recoveries\":104,\"nativeRecoveries\":104,\"forgedRefusals\":52}}\n",
+      "stderr": ""
+    }
+  ],
+  "generatedDebugIdChanged": true,
+  "comparisonExcludesOnlyGeneratedDebugId": true,
+  "bundleOnlyDescriptiveStringChanged": true,
+  "currentBundleSha256": "626d377ba25f0f57b7f2d5d0bd736fb2c9aeb8b08d587d11be5105d14eb9a006"
+}

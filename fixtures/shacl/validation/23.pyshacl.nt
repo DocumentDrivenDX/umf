@@ -1,0 +1,43 @@
+_:Nf73a98e71f6c43188db47b077f4d5753 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxLength-001.test#TestShape> .
+_:N245d93876ac5463bb5bd86c787602db1 <http://www.w3.org/ns/shacl#resultMessage> "String length not <= Literal(\"4\", datatype=xsd:integer)" .
+_:N75e53ac6ced744cc94ab9ab150a88ffd <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Nf73a98e71f6c43188db47b077f4d5753 <http://www.w3.org/ns/shacl#resultMessage> "String length not <= Literal(\"4\", datatype=xsd:integer)" .
+_:N245d93876ac5463bb5bd86c787602db1 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nae54789a4116416e9bdef008727ea052 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/maxLength-001.test#John> .
+_:Nae54789a4116416e9bdef008727ea052 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/maxLength-001.test#John> .
+_:Ncb47dd06a5f04b16b6d004196477a6b6 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Ncb47dd06a5f04b16b6d004196477a6b6 <http://www.w3.org/ns/shacl#value> _:n859966fdda6f433595d4cedac1ec1234b9 .
+_:N75e53ac6ced744cc94ab9ab150a88ffd <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N245d93876ac5463bb5bd86c787602db1 <http://www.w3.org/ns/shacl#focusNode> "2017-03-29"^^<http://www.w3.org/2001/XMLSchema#date> .
+_:Nae54789a4116416e9bdef008727ea052 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N56fd5aa0590b417c9463139e63918cce <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N245d93876ac5463bb5bd86c787602db1 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxLength-001.test#TestShape> .
+_:Nae54789a4116416e9bdef008727ea052 <http://www.w3.org/ns/shacl#resultMessage> "String length not <= Literal(\"4\", datatype=xsd:integer)" .
+_:N75e53ac6ced744cc94ab9ab150a88ffd <http://www.w3.org/ns/shacl#result> _:Nae54789a4116416e9bdef008727ea052 .
+_:Nf73a98e71f6c43188db47b077f4d5753 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N245d93876ac5463bb5bd86c787602db1 <http://www.w3.org/ns/shacl#value> "2017-03-29"^^<http://www.w3.org/2001/XMLSchema#date> .
+_:N75e53ac6ced744cc94ab9ab150a88ffd <http://www.w3.org/ns/shacl#result> _:N245d93876ac5463bb5bd86c787602db1 .
+_:Ncb47dd06a5f04b16b6d004196477a6b6 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxLengthConstraintComponent> .
+_:N56fd5aa0590b417c9463139e63918cce <http://www.w3.org/ns/shacl#focusNode> "12345"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:Nf73a98e71f6c43188db47b077f4d5753 <http://www.w3.org/ns/shacl#focusNode> "Hello" .
+_:Nf73a98e71f6c43188db47b077f4d5753 <http://www.w3.org/ns/shacl#value> "Hello" .
+_:N245d93876ac5463bb5bd86c787602db1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:n859966fdda6f433595d4cedac1ec1234b9 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://datashapes.org/sh/tests/core/node/maxLength-001.test#TestClass> .
+_:Ncb47dd06a5f04b16b6d004196477a6b6 <http://www.w3.org/ns/shacl#resultMessage> "String length not <= Literal(\"4\", datatype=xsd:integer)" .
+_:N56fd5aa0590b417c9463139e63918cce <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxLengthConstraintComponent> .
+_:Ncb47dd06a5f04b16b6d004196477a6b6 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nae54789a4116416e9bdef008727ea052 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxLengthConstraintComponent> .
+_:N75e53ac6ced744cc94ab9ab150a88ffd <http://www.w3.org/ns/shacl#result> _:N56fd5aa0590b417c9463139e63918cce .
+_:N56fd5aa0590b417c9463139e63918cce <http://www.w3.org/ns/shacl#value> "12345"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:Nf73a98e71f6c43188db47b077f4d5753 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxLengthConstraintComponent> .
+_:N56fd5aa0590b417c9463139e63918cce <http://www.w3.org/ns/shacl#resultMessage> "String length not <= Literal(\"4\", datatype=xsd:integer)" .
+_:N75e53ac6ced744cc94ab9ab150a88ffd <http://www.w3.org/ns/shacl#result> _:Nf73a98e71f6c43188db47b077f4d5753 .
+_:N56fd5aa0590b417c9463139e63918cce <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N75e53ac6ced744cc94ab9ab150a88ffd <http://www.w3.org/ns/shacl#result> _:Ncb47dd06a5f04b16b6d004196477a6b6 .
+_:N245d93876ac5463bb5bd86c787602db1 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxLengthConstraintComponent> .
+_:Nf73a98e71f6c43188db47b077f4d5753 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Ncb47dd06a5f04b16b6d004196477a6b6 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxLength-001.test#TestShape> .
+_:Nae54789a4116416e9bdef008727ea052 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nae54789a4116416e9bdef008727ea052 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxLength-001.test#TestShape> .
+_:Ncb47dd06a5f04b16b6d004196477a6b6 <http://www.w3.org/ns/shacl#focusNode> _:n859966fdda6f433595d4cedac1ec1234b9 .
+_:N56fd5aa0590b417c9463139e63918cce <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxLength-001.test#TestShape> .

@@ -1,0 +1,29 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b21324 .
+_:report <http://www.w3.org/ns/shacl#result> _:b21325 .
+_:report <http://www.w3.org/ns/shacl#result> _:b21326 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b21324 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b21324 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b21324 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LanguageInConstraintComponent> .
+_:b21324 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/languageIn-001.test#NewZealandLanguagesShape-prefLabel> .
+_:b21324 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/languageIn-001.test#Berg> .
+_:b21324 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/languageIn-001.test#prefLabel> .
+_:b21324 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/property/languageIn-001.test#BergLabel> .
+_:b21324 <http://www.w3.org/ns/shacl#resultMessage> "Language does not match any of " .
+_:b21325 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b21325 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b21325 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LanguageInConstraintComponent> .
+_:b21325 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/languageIn-001.test#NewZealandLanguagesShape-prefLabel> .
+_:b21325 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/languageIn-001.test#Berg> .
+_:b21325 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/languageIn-001.test#prefLabel> .
+_:b21325 <http://www.w3.org/ns/shacl#value> "Berg" .
+_:b21325 <http://www.w3.org/ns/shacl#resultMessage> "Language does not match any of " .
+_:b21326 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b21326 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b21326 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LanguageInConstraintComponent> .
+_:b21326 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/languageIn-001.test#NewZealandLanguagesShape-prefLabel> .
+_:b21326 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/languageIn-001.test#Berg> .
+_:b21326 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/languageIn-001.test#prefLabel> .
+_:b21326 <http://www.w3.org/ns/shacl#value> "Berg"@de .
+_:b21326 <http://www.w3.org/ns/shacl#resultMessage> "Language does not match any of " .

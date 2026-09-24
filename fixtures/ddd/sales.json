@@ -1,0 +1,550 @@
+{
+  "umf": "0.1.0",
+  "id": "ddd:sales-example",
+  "vocabularies": {
+    "umf.ddd": {
+      "version": "0.1.0"
+    }
+  },
+  "modules": [
+    {
+      "id": "sales",
+      "namespace": "sales",
+      "extensions": {
+        "umf.ddd": {
+          "kind": "bounded-context",
+          "terms": [
+            {
+              "term": "Order",
+              "definition": "Order in the sales bounded context.",
+              "concept": {
+                "module": "sales",
+                "element": "Order"
+              }
+            },
+            {
+              "term": "OrderLine",
+              "definition": "OrderLine in the sales bounded context.",
+              "concept": {
+                "module": "sales",
+                "element": "OrderLine"
+              }
+            },
+            {
+              "term": "ShippingAddress",
+              "definition": "ShippingAddress in the sales bounded context.",
+              "concept": {
+                "module": "sales",
+                "element": "ShippingAddress"
+              }
+            },
+            {
+              "term": "Money",
+              "definition": "Money in the sales bounded context.",
+              "concept": {
+                "module": "sales",
+                "element": "Money"
+              }
+            },
+            {
+              "term": "Customer",
+              "definition": "Customer in the sales bounded context.",
+              "concept": {
+                "module": "sales",
+                "element": "Customer"
+              }
+            },
+            {
+              "term": "OrderPlaced",
+              "definition": "OrderPlaced in the sales bounded context.",
+              "concept": {
+                "module": "sales",
+                "element": "OrderPlaced"
+              }
+            },
+            {
+              "term": "Ordering",
+              "definition": "Ordering in the sales bounded context.",
+              "concept": {
+                "module": "sales",
+                "element": "Ordering"
+              }
+            },
+            {
+              "term": "Orders",
+              "definition": "Orders in the sales bounded context.",
+              "concept": {
+                "module": "sales",
+                "element": "Orders"
+              }
+            }
+          ]
+        }
+      },
+      "elements": [
+        {
+          "id": "Order",
+          "name": "Order",
+          "extensions": {
+            "umf.ddd": {
+              "kind": "entity",
+              "fields": {
+                "order_id": {
+                  "type": {
+                    "kind": "scalar",
+                    "name": "string"
+                  },
+                  "cardinality": "one"
+                },
+                "total": {
+                  "type": {
+                    "kind": "concept",
+                    "target": {
+                      "module": "sales",
+                      "element": "Money"
+                    }
+                  },
+                  "cardinality": "one"
+                },
+                "lines": {
+                  "type": {
+                    "kind": "concept",
+                    "target": {
+                      "module": "sales",
+                      "element": "OrderLine"
+                    }
+                  },
+                  "cardinality": "many"
+                },
+                "shipping": {
+                  "type": {
+                    "kind": "concept",
+                    "target": {
+                      "module": "sales",
+                      "element": "ShippingAddress"
+                    }
+                  },
+                  "cardinality": "one"
+                },
+                "customer": {
+                  "type": {
+                    "kind": "concept",
+                    "target": {
+                      "module": "sales",
+                      "element": "Customer"
+                    }
+                  },
+                  "cardinality": "one"
+                }
+              },
+              "identity": {
+                "fields": [
+                  "order_id"
+                ],
+                "scope": "context"
+              },
+              "aggregate": {
+                "members": [
+                  {
+                    "module": "sales",
+                    "element": "OrderLine"
+                  },
+                  {
+                    "module": "sales",
+                    "element": "ShippingAddress"
+                  },
+                  {
+                    "module": "sales",
+                    "element": "Money"
+                  }
+                ]
+              },
+              "invariants": [
+                {
+                  "id": "total-nonnegative",
+                  "scope": "aggregate",
+                  "language": "domain-prose",
+                  "version": "1",
+                  "expression": "Order total must not be negative and must equal the sum of its lines in the same currency.",
+                  "references": [
+                    {
+                      "module": "sales",
+                      "element": "Order"
+                    },
+                    {
+                      "module": "sales",
+                      "element": "OrderLine"
+                    },
+                    {
+                      "module": "sales",
+                      "element": "Money"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "OrderLine",
+          "name": "OrderLine",
+          "extensions": {
+            "umf.ddd": {
+              "kind": "entity",
+              "fields": {
+                "line_id": {
+                  "type": {
+                    "kind": "scalar",
+                    "name": "string"
+                  },
+                  "cardinality": "one"
+                },
+                "sku": {
+                  "type": {
+                    "kind": "scalar",
+                    "name": "string"
+                  },
+                  "cardinality": "one"
+                },
+                "quantity": {
+                  "type": {
+                    "kind": "scalar",
+                    "name": "integer"
+                  },
+                  "cardinality": "one"
+                },
+                "price": {
+                  "type": {
+                    "kind": "concept",
+                    "target": {
+                      "module": "sales",
+                      "element": "Money"
+                    }
+                  },
+                  "cardinality": "one"
+                }
+              },
+              "identity": {
+                "fields": [
+                  "line_id"
+                ],
+                "scope": "aggregate"
+              }
+            }
+          }
+        },
+        {
+          "id": "ShippingAddress",
+          "name": "ShippingAddress",
+          "extensions": {
+            "umf.ddd": {
+              "kind": "value",
+              "fields": {
+                "street": {
+                  "type": {
+                    "kind": "scalar",
+                    "name": "string"
+                  },
+                  "cardinality": "one"
+                },
+                "city": {
+                  "type": {
+                    "kind": "scalar",
+                    "name": "string"
+                  },
+                  "cardinality": "one"
+                },
+                "postal_code": {
+                  "type": {
+                    "kind": "scalar",
+                    "name": "string"
+                  },
+                  "cardinality": "one"
+                }
+              },
+              "equality": {
+                "fields": [
+                  "street",
+                  "city",
+                  "postal_code"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "Money",
+          "name": "Money",
+          "extensions": {
+            "umf.ddd": {
+              "kind": "value",
+              "fields": {
+                "amount": {
+                  "type": {
+                    "kind": "scalar",
+                    "name": "decimal"
+                  },
+                  "cardinality": "one"
+                },
+                "currency": {
+                  "type": {
+                    "kind": "scalar",
+                    "name": "string"
+                  },
+                  "cardinality": "one"
+                }
+              },
+              "equality": {
+                "fields": [
+                  "amount",
+                  "currency"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "Customer",
+          "name": "Customer",
+          "extensions": {
+            "umf.ddd": {
+              "kind": "entity",
+              "fields": {
+                "customer_id": {
+                  "type": {
+                    "kind": "scalar",
+                    "name": "string"
+                  },
+                  "cardinality": "one"
+                },
+                "name": {
+                  "type": {
+                    "kind": "scalar",
+                    "name": "string"
+                  },
+                  "cardinality": "one"
+                }
+              },
+              "identity": {
+                "fields": [
+                  "customer_id"
+                ],
+                "scope": "context"
+              }
+            }
+          }
+        },
+        {
+          "id": "OrderPlaced",
+          "name": "OrderPlaced",
+          "extensions": {
+            "umf.ddd": {
+              "kind": "domain-event",
+              "fields": {
+                "order": {
+                  "type": {
+                    "kind": "concept",
+                    "target": {
+                      "module": "sales",
+                      "element": "Order"
+                    }
+                  },
+                  "cardinality": "one"
+                },
+                "occurred_at": {
+                  "type": {
+                    "kind": "scalar",
+                    "name": "date-time"
+                  },
+                  "cardinality": "one"
+                }
+              },
+              "emittedBy": {
+                "module": "sales",
+                "element": "Order"
+              },
+              "immutable": true
+            }
+          }
+        },
+        {
+          "id": "Ordering",
+          "name": "Ordering",
+          "extensions": {
+            "umf.ddd": {
+              "kind": "domain-service",
+              "operations": [
+                {
+                  "name": "place",
+                  "input": {
+                    "module": "sales",
+                    "element": "Order"
+                  },
+                  "output": {
+                    "module": "sales",
+                    "element": "Order"
+                  },
+                  "emits": [
+                    {
+                      "module": "sales",
+                      "element": "OrderPlaced"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "Orders",
+          "name": "Orders",
+          "extensions": {
+            "umf.ddd": {
+              "kind": "repository",
+              "aggregate": {
+                "module": "sales",
+                "element": "Order"
+              },
+              "operations": [
+                "find",
+                "store"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "support",
+      "namespace": "support",
+      "extensions": {
+        "umf.ddd": {
+          "kind": "bounded-context",
+          "terms": [
+            {
+              "term": "Customer",
+              "definition": "Customer in the support bounded context.",
+              "concept": {
+                "module": "support",
+                "element": "Customer"
+              }
+            }
+          ]
+        }
+      },
+      "elements": [
+        {
+          "id": "Customer",
+          "name": "Customer",
+          "extensions": {
+            "umf.ddd": {
+              "kind": "entity",
+              "fields": {
+                "customer_id": {
+                  "type": {
+                    "kind": "scalar",
+                    "name": "string"
+                  },
+                  "cardinality": "one"
+                },
+                "name": {
+                  "type": {
+                    "kind": "scalar",
+                    "name": "string"
+                  },
+                  "cardinality": "one"
+                }
+              },
+              "identity": {
+                "fields": [
+                  "customer_id"
+                ],
+                "scope": "context"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "billing",
+      "namespace": "billing",
+      "extensions": {
+        "umf.ddd": {
+          "kind": "bounded-context",
+          "terms": [
+            {
+              "term": "AccountHolder",
+              "definition": "AccountHolder in the billing bounded context.",
+              "concept": {
+                "module": "billing",
+                "element": "AccountHolder"
+              }
+            }
+          ]
+        }
+      },
+      "elements": [
+        {
+          "id": "AccountHolder",
+          "name": "AccountHolder",
+          "extensions": {
+            "umf.ddd": {
+              "kind": "entity",
+              "fields": {
+                "account_id": {
+                  "type": {
+                    "kind": "scalar",
+                    "name": "string"
+                  },
+                  "cardinality": "one"
+                },
+                "name": {
+                  "type": {
+                    "kind": "scalar",
+                    "name": "string"
+                  },
+                  "cardinality": "one"
+                }
+              },
+              "identity": {
+                "fields": [
+                  "account_id"
+                ],
+                "scope": "context"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "extensions": {
+    "umf.ddd": {
+      "kind": "context-map",
+      "mappings": [
+        {
+          "id": "customer-translation",
+          "source": {
+            "module": "sales",
+            "element": "Customer"
+          },
+          "target": {
+            "module": "support",
+            "element": "Customer"
+          },
+          "direction": "source-to-target",
+          "equivalence": "partial",
+          "description": "Translate sales customer identity into the support vocabulary.",
+          "limitations": [
+            "Support identity lifecycle and case ownership are not equivalent to sales customer identity."
+          ],
+          "antiCorruptionLayer": {
+            "ownerModule": "support",
+            "description": "Support owns translation of incoming sales identifiers; no shared canonical customer is implied."
+          }
+        }
+      ]
+    }
+  }
+}

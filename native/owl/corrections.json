@@ -1,0 +1,12 @@
+{
+  "source": "primer.ttl",
+  "derived": "primer-corrected.ttl",
+  "changes": [
+    {
+      "from": "owl:hasSelf     \"true\"^^xsd:boolean .",
+      "to": "owl:hasSelf     \"true\"^^xsd:boolean",
+      "reason": "Period inside blank-node property list is invalid Turtle; both N3 and RDFLib reject the published source"
+    }
+  ],
+  "sha256": "a4fbab8be1b1f48e1811ba2c5dfd16b3c4f6b35f64f916eb6979866e85c3cf89"
+}

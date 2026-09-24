@@ -1,0 +1,57 @@
+{
+  "rootType": "Message",
+  "value": {
+    "version": "V5",
+    "header": {
+      "type": "RecordBatch",
+      "value": {
+        "length": "3",
+        "nodes": [
+          {
+            "length": "3",
+            "null_count": "0"
+          },
+          {
+            "length": "2",
+            "null_count": "1"
+          },
+          {
+            "length": "1",
+            "null_count": "0"
+          }
+        ],
+        "buffers": [
+          {
+            "offset": "0",
+            "length": "3"
+          },
+          {
+            "offset": "8",
+            "length": "12"
+          },
+          {
+            "offset": "24",
+            "length": "1"
+          },
+          {
+            "offset": "32",
+            "length": "16"
+          },
+          {
+            "offset": "48",
+            "length": "0"
+          },
+          {
+            "offset": "48",
+            "length": "8"
+          },
+          {
+            "offset": "56",
+            "length": "1"
+          }
+        ]
+      }
+    },
+    "bodyLength": "64"
+  }
+}

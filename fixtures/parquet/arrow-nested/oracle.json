@@ -1,0 +1,57 @@
+{
+  "runtime": "PyArrow 21.0.0 + Apache Thrift 0.22.0",
+  "sourceSha256": "3aadcf26d05b02e5d183cf10c4b23ec2c6f54eecf7e1f9fe4438492cdd035c5b",
+  "results": [
+    {
+      "id": "nested-4",
+      "rows": 4,
+      "rowGroups": 2,
+      "wireChangesExact": true,
+      "schemaAndMetadataEqual": true,
+      "valuesEqualIgnoringRenamedKeys": true,
+      "inverseSchemaAndValuesEqual": true,
+      "pageChecksumsVerified": true
+    },
+    {
+      "id": "nested-5",
+      "rows": 4,
+      "rowGroups": 2,
+      "wireChangesExact": true,
+      "schemaAndMetadataEqual": true,
+      "valuesEqualIgnoringRenamedKeys": true,
+      "inverseSchemaAndValuesEqual": true,
+      "pageChecksumsVerified": true
+    },
+    {
+      "id": "nested-10",
+      "rows": 4,
+      "rowGroups": 2,
+      "wireChangesExact": true,
+      "schemaAndMetadataEqual": true,
+      "valuesEqualIgnoringRenamedKeys": true,
+      "inverseSchemaAndValuesEqual": true,
+      "pageChecksumsVerified": true
+    },
+    {
+      "id": "nested-11",
+      "rows": 4,
+      "rowGroups": 2,
+      "wireChangesExact": true,
+      "schemaAndMetadataEqual": true,
+      "valuesEqualIgnoringRenamedKeys": true,
+      "inverseSchemaAndValuesEqual": true,
+      "pageChecksumsVerified": true
+    },
+    {
+      "id": "nested-3",
+      "rows": 4,
+      "rowGroups": 2,
+      "wireChangesExact": true,
+      "schemaAndMetadataEqual": true,
+      "valuesEqualIgnoringRenamedKeys": true,
+      "inverseSchemaAndValuesEqual": true,
+      "pageChecksumsVerified": true
+    }
+  ],
+  "scope": "Explicit structural field edits; uninterpreted metadata references preserved, not rewritten. No general type-equivalence claim."
+}

@@ -1,0 +1,88 @@
+{
+  "id": "umf.typespec",
+  "version": "0.1.0",
+  "coreVersion": "0.1.0",
+  "description": "TypeSpec source bundles with pinned syntax and supplied-file compilation",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:typespec:0.1.0",
+    "type": "object",
+    "required": [
+      "profile",
+      "entrypoint",
+      "files"
+    ],
+    "properties": {
+      "profile": {
+        "const": "typespec-1.16.0-sources"
+      },
+      "entrypoint": {
+        "type": "string",
+        "minLength": 1
+      },
+      "files": {
+        "type": "object",
+        "minProperties": 1,
+        "propertyNames": {
+          "type": "string",
+          "minLength": 1
+        },
+        "additionalProperties": {
+          "type": "string"
+        }
+      },
+      "libraries": {
+        "type": "object",
+        "propertyNames": {
+          "type": "string",
+          "minLength": 1
+        },
+        "additionalProperties": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  },
+  "scopes": [
+    "element"
+  ],
+  "semantics": "CONTRACT-013. Exact source files and explicit entrypoint; compiler validity and downstream projection fidelity are separate.",
+  "capabilities": {
+    "validation": "semantic",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "TypeSpec",
+      "version": "1.16.0",
+      "subset": "Supplied .tsp sources with pinned compiler/standard library and eleven explicitly selected official library versions; library-owned configuration retained; separate pinned JSON Schema emission API; no arbitrary project JavaScript or lossless projection claim"
+    },
+    "evidence": [
+      "tests/typespec/native.test.ts",
+      "fixtures/typespec/compiler-oracle-results.json",
+      "spec/extensions/typespec/standard-manifest.json",
+      "tests/typespec/semantic.test.ts",
+      "fixtures/typespec/semantic-oracle-results.json",
+      "tests/typespec/corpus.test.ts",
+      "fixtures/typespec/upstream/manifest.json",
+      "fixtures/typespec/corpus-results.json",
+      "fixtures/typespec/corpus-oracle-results.json",
+      "tests/typespec/libraries.test.ts",
+      "spec/extensions/typespec/libraries-manifest.json",
+      "fixtures/typespec/library-corpus-results.json",
+      "fixtures/typespec/library-corpus-oracle-results.json",
+      "tests/typespec/all-libraries.test.ts",
+      "fixtures/typespec/all-library-corpus-results.json",
+      "fixtures/typespec/all-library-corpus-oracle-results.json",
+      "tests/typespec/emission.test.ts",
+      "fixtures/typespec/emission-oracle-results.json",
+      "fixtures/typespec/emission-json-oracle-results.json",
+      "fixtures/typespec/emission/numeric.tsp",
+      "fixtures/typespec/emission/numeric-oracle-results.json",
+      "tests/typespec/projection.test.ts",
+      "fixtures/typespec/emission/projection-oracle-results.json"
+    ]
+  }
+}

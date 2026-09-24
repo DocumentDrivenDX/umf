@@ -1,0 +1,399 @@
+{
+  "runtime": "PyArrow 21.0.0 native values/buffers",
+  "cases": [
+    {
+      "id": "boolean-plain",
+      "path": "fixtures/parquet/physical/authored/boolean-plain.parquet",
+      "expected": [
+        {
+          "type": "BOOLEAN",
+          "value": true
+        },
+        {
+          "type": "BOOLEAN",
+          "value": false
+        },
+        {
+          "type": "BOOLEAN",
+          "value": true
+        },
+        {
+          "type": "BOOLEAN",
+          "value": false
+        },
+        {
+          "type": "BOOLEAN",
+          "value": true
+        },
+        {
+          "type": "BOOLEAN",
+          "value": false
+        },
+        {
+          "type": "BOOLEAN",
+          "value": false
+        },
+        {
+          "type": "BOOLEAN",
+          "value": true
+        },
+        {
+          "type": "BOOLEAN",
+          "value": true
+        }
+      ],
+      "plainHex": "95ff",
+      "physicalType": "BOOLEAN",
+      "fixedLength": null,
+      "count": 9
+    },
+    {
+      "id": "int32-plain",
+      "path": "fixtures/parquet/physical/authored/int32-plain.parquet",
+      "expected": [
+        {
+          "type": "INT32",
+          "value": "-2147483648"
+        },
+        {
+          "type": "INT32",
+          "value": "-1"
+        },
+        {
+          "type": "INT32",
+          "value": "0"
+        },
+        {
+          "type": "INT32",
+          "value": "2147483647"
+        }
+      ],
+      "plainHex": "00000080ffffffff00000000ffffff7f",
+      "physicalType": "INT32",
+      "fixedLength": null,
+      "count": 4
+    },
+    {
+      "id": "int32-dictionary",
+      "path": "fixtures/parquet/physical/authored/int32-dictionary.parquet",
+      "expected": [
+        {
+          "type": "INT32",
+          "value": "-2147483648"
+        },
+        {
+          "type": "INT32",
+          "value": "-1"
+        },
+        {
+          "type": "INT32",
+          "value": "0"
+        },
+        {
+          "type": "INT32",
+          "value": "2147483647"
+        }
+      ],
+      "plainHex": "00000080ffffffff00000000ffffff7f",
+      "physicalType": "INT32",
+      "fixedLength": null,
+      "count": 4
+    },
+    {
+      "id": "int64-plain",
+      "path": "fixtures/parquet/physical/authored/int64-plain.parquet",
+      "expected": [
+        {
+          "type": "INT64",
+          "value": "-9223372036854775808"
+        },
+        {
+          "type": "INT64",
+          "value": "-1"
+        },
+        {
+          "type": "INT64",
+          "value": "0"
+        },
+        {
+          "type": "INT64",
+          "value": "9223372036854775807"
+        }
+      ],
+      "plainHex": "0000000000000080ffffffffffffffff0000000000000000ffffffffffffff7f",
+      "physicalType": "INT64",
+      "fixedLength": null,
+      "count": 4
+    },
+    {
+      "id": "int64-dictionary",
+      "path": "fixtures/parquet/physical/authored/int64-dictionary.parquet",
+      "expected": [
+        {
+          "type": "INT64",
+          "value": "-9223372036854775808"
+        },
+        {
+          "type": "INT64",
+          "value": "-1"
+        },
+        {
+          "type": "INT64",
+          "value": "0"
+        },
+        {
+          "type": "INT64",
+          "value": "9223372036854775807"
+        }
+      ],
+      "plainHex": "0000000000000080ffffffffffffffff0000000000000000ffffffffffffff7f",
+      "physicalType": "INT64",
+      "fixedLength": null,
+      "count": 4
+    },
+    {
+      "id": "int96-plain",
+      "path": "fixtures/parquet/physical/authored/int96-plain.parquet",
+      "expected": [
+        {
+          "type": "INT96",
+          "hex": "00000000000000008c3d2500"
+        },
+        {
+          "type": "INT96",
+          "hex": "e9030000000000008c3d2500"
+        }
+      ],
+      "plainHex": "00000000000000008c3d2500e9030000000000008c3d2500",
+      "physicalType": "INT96",
+      "fixedLength": null,
+      "count": 2
+    },
+    {
+      "id": "int96-dictionary",
+      "path": "fixtures/parquet/physical/authored/int96-dictionary.parquet",
+      "expected": [
+        {
+          "type": "INT96",
+          "hex": "00000000000000008c3d2500"
+        },
+        {
+          "type": "INT96",
+          "hex": "e9030000000000008c3d2500"
+        }
+      ],
+      "plainHex": "00000000000000008c3d2500e9030000000000008c3d2500",
+      "physicalType": "INT96",
+      "fixedLength": null,
+      "count": 2
+    },
+    {
+      "id": "float-plain",
+      "path": "fixtures/parquet/physical/authored/float-plain.parquet",
+      "expected": [
+        {
+          "type": "FLOAT",
+          "hex": "00000080"
+        },
+        {
+          "type": "FLOAT",
+          "hex": "4523c17f"
+        },
+        {
+          "type": "FLOAT",
+          "hex": "0000807f"
+        },
+        {
+          "type": "FLOAT",
+          "hex": "000080ff"
+        },
+        {
+          "type": "FLOAT",
+          "hex": "0000a03f"
+        }
+      ],
+      "plainHex": "000000804523c17f0000807f000080ff0000a03f",
+      "physicalType": "FLOAT",
+      "fixedLength": null,
+      "count": 5
+    },
+    {
+      "id": "float-dictionary",
+      "path": "fixtures/parquet/physical/authored/float-dictionary.parquet",
+      "expected": [
+        {
+          "type": "FLOAT",
+          "hex": "00000080"
+        },
+        {
+          "type": "FLOAT",
+          "hex": "4523c17f"
+        },
+        {
+          "type": "FLOAT",
+          "hex": "0000807f"
+        },
+        {
+          "type": "FLOAT",
+          "hex": "000080ff"
+        },
+        {
+          "type": "FLOAT",
+          "hex": "0000a03f"
+        }
+      ],
+      "plainHex": "000000804523c17f0000807f000080ff0000a03f",
+      "physicalType": "FLOAT",
+      "fixedLength": null,
+      "count": 5
+    },
+    {
+      "id": "double-plain",
+      "path": "fixtures/parquet/physical/authored/double-plain.parquet",
+      "expected": [
+        {
+          "type": "DOUBLE",
+          "hex": "0000000000000080"
+        },
+        {
+          "type": "DOUBLE",
+          "hex": "bc9a78563412f87f"
+        },
+        {
+          "type": "DOUBLE",
+          "hex": "000000000000f07f"
+        },
+        {
+          "type": "DOUBLE",
+          "hex": "000000000000f0ff"
+        },
+        {
+          "type": "DOUBLE",
+          "hex": "000000000000f43f"
+        }
+      ],
+      "plainHex": "0000000000000080bc9a78563412f87f000000000000f07f000000000000f0ff000000000000f43f",
+      "physicalType": "DOUBLE",
+      "fixedLength": null,
+      "count": 5
+    },
+    {
+      "id": "double-dictionary",
+      "path": "fixtures/parquet/physical/authored/double-dictionary.parquet",
+      "expected": [
+        {
+          "type": "DOUBLE",
+          "hex": "0000000000000080"
+        },
+        {
+          "type": "DOUBLE",
+          "hex": "bc9a78563412f87f"
+        },
+        {
+          "type": "DOUBLE",
+          "hex": "000000000000f07f"
+        },
+        {
+          "type": "DOUBLE",
+          "hex": "000000000000f0ff"
+        },
+        {
+          "type": "DOUBLE",
+          "hex": "000000000000f43f"
+        }
+      ],
+      "plainHex": "0000000000000080bc9a78563412f87f000000000000f07f000000000000f0ff000000000000f43f",
+      "physicalType": "DOUBLE",
+      "fixedLength": null,
+      "count": 5
+    },
+    {
+      "id": "byte_array-plain",
+      "path": "fixtures/parquet/physical/authored/byte_array-plain.parquet",
+      "expected": [
+        {
+          "type": "BYTE_ARRAY",
+          "hex": ""
+        },
+        {
+          "type": "BYTE_ARRAY",
+          "hex": "00ff"
+        },
+        {
+          "type": "BYTE_ARRAY",
+          "hex": "5f5f70726f746f5f5f"
+        },
+        {
+          "type": "BYTE_ARRAY",
+          "hex": "616263"
+        }
+      ],
+      "plainHex": "000000000200000000ff090000005f5f70726f746f5f5f03000000616263",
+      "physicalType": "BYTE_ARRAY",
+      "fixedLength": null,
+      "count": 4
+    },
+    {
+      "id": "byte_array-dictionary",
+      "path": "fixtures/parquet/physical/authored/byte_array-dictionary.parquet",
+      "expected": [
+        {
+          "type": "BYTE_ARRAY",
+          "hex": ""
+        },
+        {
+          "type": "BYTE_ARRAY",
+          "hex": "00ff"
+        },
+        {
+          "type": "BYTE_ARRAY",
+          "hex": "5f5f70726f746f5f5f"
+        },
+        {
+          "type": "BYTE_ARRAY",
+          "hex": "616263"
+        }
+      ],
+      "plainHex": "000000000200000000ff090000005f5f70726f746f5f5f03000000616263",
+      "physicalType": "BYTE_ARRAY",
+      "fixedLength": null,
+      "count": 4
+    },
+    {
+      "id": "fixed_len_byte_array-plain",
+      "path": "fixtures/parquet/physical/authored/fixed_len_byte_array-plain.parquet",
+      "expected": [
+        {
+          "type": "FIXED_LEN_BYTE_ARRAY",
+          "hex": "00ff8001"
+        },
+        {
+          "type": "FIXED_LEN_BYTE_ARRAY",
+          "hex": "61626364"
+        }
+      ],
+      "plainHex": "00ff800161626364",
+      "physicalType": "FIXED_LEN_BYTE_ARRAY",
+      "fixedLength": 4,
+      "count": 2
+    },
+    {
+      "id": "fixed_len_byte_array-dictionary",
+      "path": "fixtures/parquet/physical/authored/fixed_len_byte_array-dictionary.parquet",
+      "expected": [
+        {
+          "type": "FIXED_LEN_BYTE_ARRAY",
+          "hex": "00ff8001"
+        },
+        {
+          "type": "FIXED_LEN_BYTE_ARRAY",
+          "hex": "61626364"
+        }
+      ],
+      "plainHex": "00ff800161626364",
+      "physicalType": "FIXED_LEN_BYTE_ARRAY",
+      "fixedLength": 4,
+      "count": 2
+    }
+  ]
+}

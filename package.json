@@ -1,0 +1,70 @@
+{
+  "name": "@umf/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.3.14",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/umf.js"
+    }
+  },
+  "scripts": {
+    "typecheck": "bun node_modules/typescript/bin/tsc --noEmit && bun node_modules/typescript/bin/tsc -p tsconfig.tools.json",
+    "test": "bun test tests",
+    "build": "bun scripts/build.ts",
+    "test:browser": "bun scripts/browser.ts",
+    "test:conformance": "bun scripts/conformance.ts",
+    "test:schemas": "bun scripts/audit-extension-packages.ts && bun scripts/audit-json-schemas.ts",
+    "build:protobuf": "bun scripts/build-protobuf.ts",
+    "build:smithy-experiment": "bun scripts/build-smithy-js.ts",
+    "build:postgresql": "bun scripts/build-postgresql.ts",
+    "test:postgresql-catalog": "bun scripts/postgresql-catalog-oracle.ts",
+    "build:arrow": "bun scripts/build-arrow.ts"
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "2.15.0",
+    "@libpg-query/parser": "17.6.10",
+    "@typespec/compiler": "1.16.0",
+    "@typespec/emitter-framework": "0.21.0",
+    "@typespec/events": "0.86.0",
+    "@typespec/graphql": "0.3.0",
+    "@typespec/http": "1.16.0",
+    "@typespec/json-schema": "1.16.0",
+    "@typespec/mutator-framework": "0.17.1",
+    "@typespec/openapi": "1.16.0",
+    "@typespec/openapi3": "1.16.0",
+    "@typespec/protobuf": "0.86.0",
+    "@typespec/rest": "0.86.0",
+    "@typespec/sse": "0.86.0",
+    "@typespec/streams": "0.86.0",
+    "@typespec/versioning": "0.86.0",
+    "ajv": "8.20.0",
+    "ajv-draft-04": "1.0.0",
+    "apache-arrow": "21.2.0",
+    "avsc": "5.7.9",
+    "buffer": "6.0.3",
+    "flatbuffers": "25.9.23",
+    "graphql": "17.0.2",
+    "jsonld": "9.0.0",
+    "n3": "2.7.12",
+    "rdf-literal": "2.0.0",
+    "rdf-validate-shacl": "0.6.5",
+    "util": "0.12.5",
+    "yaml": "2.9.1"
+  },
+  "devDependencies": {
+    "@launchql/protobufjs": "7.2.6",
+    "@types/bun": "1.4.2",
+    "@types/n3": "1.26.4",
+    "hyparquet": "1.31.1",
+    "playwright": "1.63.0",
+    "rdfxml-streaming-parser": "3.3.0",
+    "typescript": "7.0.2",
+    "typescript-api": "npm:typescript@5.9.3"
+  },
+  "patchedDependencies": {
+    "jsonld@9.0.0": "patches/jsonld@9.0.0.patch"
+  }
+}

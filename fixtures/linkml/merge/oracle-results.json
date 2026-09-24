@@ -1,0 +1,1607 @@
+{
+  "modelVersion": "1.11.0",
+  "runtimeVersion": "1.11.0rc2",
+  "results": [
+    {
+      "id": "diamond",
+      "mode": "view",
+      "format": "json",
+      "comparison": "normalized-candidate",
+      "closure": [
+        "shared",
+        "left",
+        "right",
+        "root"
+      ],
+      "normalized": {
+        "name": "root",
+        "description": "Schema metadata root",
+        "id": "https://example.org/root",
+        "prefixes": {
+          "p": {
+            "prefix_prefix": "p",
+            "prefix_reference": "https://example.org/root/"
+          }
+        },
+        "default_prefix": "https://example.org/root/",
+        "default_range": "string",
+        "subsets": {
+          "shared_own": {
+            "name": "shared_own",
+            "description": "shared",
+            "from_schema": "https://example.org/shared"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "right",
+            "from_schema": "https://example.org/right"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "right_own": {
+            "name": "right_own",
+            "description": "right",
+            "from_schema": "https://example.org/right"
+          },
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          }
+        },
+        "types": {
+          "shared_own": {
+            "name": "shared_own",
+            "description": "shared",
+            "from_schema": "https://example.org/shared",
+            "base": "str"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "right",
+            "from_schema": "https://example.org/right",
+            "base": "str"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "base": "str"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "base": "str"
+          },
+          "right_own": {
+            "name": "right_own",
+            "description": "right",
+            "from_schema": "https://example.org/right",
+            "base": "str"
+          },
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "base": "str"
+          }
+        },
+        "enums": {
+          "shared_own": {
+            "name": "shared_own",
+            "description": "shared",
+            "from_schema": "https://example.org/shared"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "right",
+            "from_schema": "https://example.org/right"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "right_own": {
+            "name": "right_own",
+            "description": "right",
+            "from_schema": "https://example.org/right"
+          },
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          }
+        },
+        "slots": {
+          "shared_own": {
+            "name": "shared_own",
+            "description": "shared",
+            "from_schema": "https://example.org/shared"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "right",
+            "from_schema": "https://example.org/right"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "right_own": {
+            "name": "right_own",
+            "description": "right",
+            "from_schema": "https://example.org/right"
+          },
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          }
+        },
+        "classes": {
+          "shared_own": {
+            "name": "shared_own",
+            "description": "shared",
+            "from_schema": "https://example.org/shared",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/shared"
+              }
+            }
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "right",
+            "from_schema": "https://example.org/right",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/right"
+              }
+            }
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/root"
+              }
+            }
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/left"
+              }
+            }
+          },
+          "right_own": {
+            "name": "right_own",
+            "description": "right",
+            "from_schema": "https://example.org/right",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/right"
+              }
+            }
+          },
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/root"
+              }
+            }
+          }
+        },
+        "@type": "SchemaDefinition"
+      }
+    },
+    {
+      "id": "diamond",
+      "mode": "view",
+      "format": "yaml",
+      "comparison": "normalized-candidate",
+      "closure": [
+        "shared",
+        "left",
+        "right",
+        "root"
+      ],
+      "normalized": {
+        "name": "root",
+        "description": "Schema metadata root",
+        "id": "https://example.org/root",
+        "prefixes": {
+          "p": {
+            "prefix_prefix": "p",
+            "prefix_reference": "https://example.org/root/"
+          }
+        },
+        "default_prefix": "https://example.org/root/",
+        "default_range": "string",
+        "subsets": {
+          "shared_own": {
+            "name": "shared_own",
+            "description": "shared",
+            "from_schema": "https://example.org/shared"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "right",
+            "from_schema": "https://example.org/right"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "right_own": {
+            "name": "right_own",
+            "description": "right",
+            "from_schema": "https://example.org/right"
+          },
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          }
+        },
+        "types": {
+          "shared_own": {
+            "name": "shared_own",
+            "description": "shared",
+            "from_schema": "https://example.org/shared",
+            "base": "str"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "right",
+            "from_schema": "https://example.org/right",
+            "base": "str"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "base": "str"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "base": "str"
+          },
+          "right_own": {
+            "name": "right_own",
+            "description": "right",
+            "from_schema": "https://example.org/right",
+            "base": "str"
+          },
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "base": "str"
+          }
+        },
+        "enums": {
+          "shared_own": {
+            "name": "shared_own",
+            "description": "shared",
+            "from_schema": "https://example.org/shared"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "right",
+            "from_schema": "https://example.org/right"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "right_own": {
+            "name": "right_own",
+            "description": "right",
+            "from_schema": "https://example.org/right"
+          },
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          }
+        },
+        "slots": {
+          "shared_own": {
+            "name": "shared_own",
+            "description": "shared",
+            "from_schema": "https://example.org/shared"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "right",
+            "from_schema": "https://example.org/right"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "right_own": {
+            "name": "right_own",
+            "description": "right",
+            "from_schema": "https://example.org/right"
+          },
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          }
+        },
+        "classes": {
+          "shared_own": {
+            "name": "shared_own",
+            "description": "shared",
+            "from_schema": "https://example.org/shared",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/shared"
+              }
+            }
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "right",
+            "from_schema": "https://example.org/right",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/right"
+              }
+            }
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/root"
+              }
+            }
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/left"
+              }
+            }
+          },
+          "right_own": {
+            "name": "right_own",
+            "description": "right",
+            "from_schema": "https://example.org/right",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/right"
+              }
+            }
+          },
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/root"
+              }
+            }
+          }
+        },
+        "@type": "SchemaDefinition"
+      }
+    },
+    {
+      "id": "diamond",
+      "mode": "merge-imports",
+      "format": "json",
+      "comparison": "normalized-candidate",
+      "closure": [
+        "shared",
+        "left",
+        "right",
+        "root"
+      ],
+      "normalized": {
+        "name": "root",
+        "description": "Schema metadata root",
+        "id": "https://example.org/root",
+        "prefixes": {
+          "p": {
+            "prefix_prefix": "p",
+            "prefix_reference": "https://example.org/root/"
+          }
+        },
+        "default_prefix": "https://example.org/root/",
+        "default_range": "string",
+        "subsets": {
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "shared_own": {
+            "name": "shared_own",
+            "description": "shared",
+            "from_schema": "https://example.org/shared"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "shared",
+            "from_schema": "https://example.org/shared"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "right_own": {
+            "name": "right_own",
+            "description": "right",
+            "from_schema": "https://example.org/right"
+          }
+        },
+        "types": {
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "base": "str"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "base": "str"
+          },
+          "shared_own": {
+            "name": "shared_own",
+            "description": "shared",
+            "from_schema": "https://example.org/shared",
+            "base": "str"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "shared",
+            "from_schema": "https://example.org/shared",
+            "base": "str"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "base": "str"
+          },
+          "right_own": {
+            "name": "right_own",
+            "description": "right",
+            "from_schema": "https://example.org/right",
+            "base": "str"
+          }
+        },
+        "enums": {
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "shared_own": {
+            "name": "shared_own",
+            "description": "shared",
+            "from_schema": "https://example.org/shared"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "shared",
+            "from_schema": "https://example.org/shared"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "right_own": {
+            "name": "right_own",
+            "description": "right",
+            "from_schema": "https://example.org/right"
+          }
+        },
+        "slots": {
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "shared_own": {
+            "name": "shared_own",
+            "description": "shared",
+            "from_schema": "https://example.org/shared"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "shared",
+            "from_schema": "https://example.org/shared"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "right_own": {
+            "name": "right_own",
+            "description": "right",
+            "from_schema": "https://example.org/right"
+          }
+        },
+        "classes": {
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/root"
+              }
+            }
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/root"
+              }
+            }
+          },
+          "shared_own": {
+            "name": "shared_own",
+            "description": "shared",
+            "from_schema": "https://example.org/shared",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/shared"
+              }
+            }
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "shared",
+            "from_schema": "https://example.org/shared",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/shared"
+              }
+            }
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/left"
+              }
+            }
+          },
+          "right_own": {
+            "name": "right_own",
+            "description": "right",
+            "from_schema": "https://example.org/right",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/right"
+              }
+            }
+          }
+        },
+        "@type": "SchemaDefinition"
+      }
+    },
+    {
+      "id": "diamond",
+      "mode": "merge-imports",
+      "format": "yaml",
+      "comparison": "normalized-candidate",
+      "closure": [
+        "shared",
+        "left",
+        "right",
+        "root"
+      ],
+      "normalized": {
+        "name": "root",
+        "description": "Schema metadata root",
+        "id": "https://example.org/root",
+        "prefixes": {
+          "p": {
+            "prefix_prefix": "p",
+            "prefix_reference": "https://example.org/root/"
+          }
+        },
+        "default_prefix": "https://example.org/root/",
+        "default_range": "string",
+        "subsets": {
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "shared_own": {
+            "name": "shared_own",
+            "description": "shared",
+            "from_schema": "https://example.org/shared"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "shared",
+            "from_schema": "https://example.org/shared"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "right_own": {
+            "name": "right_own",
+            "description": "right",
+            "from_schema": "https://example.org/right"
+          }
+        },
+        "types": {
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "base": "str"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "base": "str"
+          },
+          "shared_own": {
+            "name": "shared_own",
+            "description": "shared",
+            "from_schema": "https://example.org/shared",
+            "base": "str"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "shared",
+            "from_schema": "https://example.org/shared",
+            "base": "str"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "base": "str"
+          },
+          "right_own": {
+            "name": "right_own",
+            "description": "right",
+            "from_schema": "https://example.org/right",
+            "base": "str"
+          }
+        },
+        "enums": {
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "shared_own": {
+            "name": "shared_own",
+            "description": "shared",
+            "from_schema": "https://example.org/shared"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "shared",
+            "from_schema": "https://example.org/shared"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "right_own": {
+            "name": "right_own",
+            "description": "right",
+            "from_schema": "https://example.org/right"
+          }
+        },
+        "slots": {
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "shared_own": {
+            "name": "shared_own",
+            "description": "shared",
+            "from_schema": "https://example.org/shared"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "shared",
+            "from_schema": "https://example.org/shared"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "right_own": {
+            "name": "right_own",
+            "description": "right",
+            "from_schema": "https://example.org/right"
+          }
+        },
+        "classes": {
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/root"
+              }
+            }
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/root"
+              }
+            }
+          },
+          "shared_own": {
+            "name": "shared_own",
+            "description": "shared",
+            "from_schema": "https://example.org/shared",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/shared"
+              }
+            }
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "shared",
+            "from_schema": "https://example.org/shared",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/shared"
+              }
+            }
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/left"
+              }
+            }
+          },
+          "right_own": {
+            "name": "right_own",
+            "description": "right",
+            "from_schema": "https://example.org/right",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/right"
+              }
+            }
+          }
+        },
+        "@type": "SchemaDefinition"
+      }
+    },
+    {
+      "id": "cycle-repeat",
+      "mode": "view",
+      "format": "json",
+      "comparison": "normalized-candidate",
+      "closure": [
+        "left",
+        "root"
+      ],
+      "normalized": {
+        "name": "root",
+        "description": "Schema metadata root",
+        "id": "https://example.org/root",
+        "prefixes": {
+          "p": {
+            "prefix_prefix": "p",
+            "prefix_reference": "https://example.org/root/"
+          }
+        },
+        "default_prefix": "https://example.org/root/",
+        "default_range": "string",
+        "subsets": {
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          }
+        },
+        "types": {
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "base": "str"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "base": "str"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "base": "str"
+          },
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "base": "str"
+          }
+        },
+        "enums": {
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          }
+        },
+        "slots": {
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          }
+        },
+        "classes": {
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/left"
+              }
+            }
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/left"
+              }
+            }
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/root"
+              }
+            }
+          },
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/root"
+              }
+            }
+          }
+        },
+        "@type": "SchemaDefinition"
+      }
+    },
+    {
+      "id": "cycle-repeat",
+      "mode": "view",
+      "format": "yaml",
+      "comparison": "normalized-candidate",
+      "closure": [
+        "left",
+        "root"
+      ],
+      "normalized": {
+        "name": "root",
+        "description": "Schema metadata root",
+        "id": "https://example.org/root",
+        "prefixes": {
+          "p": {
+            "prefix_prefix": "p",
+            "prefix_reference": "https://example.org/root/"
+          }
+        },
+        "default_prefix": "https://example.org/root/",
+        "default_range": "string",
+        "subsets": {
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          }
+        },
+        "types": {
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "base": "str"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "base": "str"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "base": "str"
+          },
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "base": "str"
+          }
+        },
+        "enums": {
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          }
+        },
+        "slots": {
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          }
+        },
+        "classes": {
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/left"
+              }
+            }
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/left"
+              }
+            }
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/root"
+              }
+            }
+          },
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/root"
+              }
+            }
+          }
+        },
+        "@type": "SchemaDefinition"
+      }
+    },
+    {
+      "id": "cycle-repeat",
+      "mode": "merge-imports",
+      "format": "json",
+      "comparison": "normalized-candidate",
+      "closure": [
+        "left",
+        "root"
+      ],
+      "normalized": {
+        "name": "root",
+        "description": "Schema metadata root",
+        "id": "https://example.org/root",
+        "prefixes": {
+          "p": {
+            "prefix_prefix": "p",
+            "prefix_reference": "https://example.org/root/"
+          }
+        },
+        "default_prefix": "https://example.org/root/",
+        "default_range": "string",
+        "subsets": {
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          }
+        },
+        "types": {
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "base": "str"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "base": "str"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "base": "str"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "base": "str"
+          }
+        },
+        "enums": {
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          }
+        },
+        "slots": {
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          }
+        },
+        "classes": {
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/root"
+              }
+            }
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/root"
+              }
+            }
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/left"
+              }
+            }
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/left"
+              }
+            }
+          }
+        },
+        "@type": "SchemaDefinition"
+      }
+    },
+    {
+      "id": "cycle-repeat",
+      "mode": "merge-imports",
+      "format": "yaml",
+      "comparison": "normalized-candidate",
+      "closure": [
+        "left",
+        "root"
+      ],
+      "normalized": {
+        "name": "root",
+        "description": "Schema metadata root",
+        "id": "https://example.org/root",
+        "prefixes": {
+          "p": {
+            "prefix_prefix": "p",
+            "prefix_reference": "https://example.org/root/"
+          }
+        },
+        "default_prefix": "https://example.org/root/",
+        "default_range": "string",
+        "subsets": {
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          }
+        },
+        "types": {
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "base": "str"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "base": "str"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "base": "str"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "base": "str"
+          }
+        },
+        "enums": {
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          }
+        },
+        "slots": {
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root"
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "left",
+            "from_schema": "https://example.org/left"
+          }
+        },
+        "classes": {
+          "root_own": {
+            "name": "root_own",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/root"
+              }
+            }
+          },
+          "RootWins": {
+            "name": "RootWins",
+            "description": "root",
+            "from_schema": "https://example.org/root",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/root"
+              }
+            }
+          },
+          "left_own": {
+            "name": "left_own",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/left"
+              }
+            }
+          },
+          "Collision": {
+            "name": "Collision",
+            "description": "left",
+            "from_schema": "https://example.org/left",
+            "attributes": {
+              "local": {
+                "name": "local",
+                "from_schema": "https://example.org/left"
+              }
+            }
+          }
+        },
+        "@type": "SchemaDefinition"
+      }
+    },
+    {
+      "id": "missing",
+      "mode": "view",
+      "format": "json",
+      "comparison": "unresolved",
+      "retrievalAttempts": [
+        "missing"
+      ]
+    },
+    {
+      "id": "missing",
+      "mode": "view",
+      "format": "yaml",
+      "comparison": "unresolved",
+      "retrievalAttempts": [
+        "missing"
+      ]
+    },
+    {
+      "id": "missing",
+      "mode": "merge-imports",
+      "format": "json",
+      "comparison": "unresolved",
+      "retrievalAttempts": [
+        "missing"
+      ]
+    },
+    {
+      "id": "missing",
+      "mode": "merge-imports",
+      "format": "yaml",
+      "comparison": "unresolved",
+      "retrievalAttempts": [
+        "missing"
+      ]
+    },
+    {
+      "id": "scoped",
+      "comparison": "not-comparable",
+      "reason": "Global native preload keys cannot express importer-specific common aliases"
+    }
+  ]
+}

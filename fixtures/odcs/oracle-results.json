@@ -1,0 +1,1140 @@
+{
+  "runtime": "jsonschema 4.25.1 without format checker; PyYAML 6.0.3 safe_load agrees on this finite corpus",
+  "versions": {
+    "v3.2.0": 28,
+    "v3.0.0": 1,
+    "v3.0.2": 12,
+    "v3.1.0": 1
+  },
+  "results": [
+    {
+      "id": "000",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "e9fd9e2d2e132053b645dc2c56427371e52614226496649339413d3530fae329",
+      "editedSha256": "dfb14bc6f1d74ed83063afa6ba0797d300792d2c43c92fd82c4029f0bf2b70b8"
+    },
+    {
+      "id": "000",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "e9fd9e2d2e132053b645dc2c56427371e52614226496649339413d3530fae329",
+      "editedSha256": "dfb14bc6f1d74ed83063afa6ba0797d300792d2c43c92fd82c4029f0bf2b70b8"
+    },
+    {
+      "id": "001",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "a2a1474bfba0e243353b3a3a357889a1c3c8200ec399beb339fcc7664218aeba",
+      "editedSha256": "4b62f9230f4222999550d270ffa3caee9da8e59292d3578f55a1466cd163831b"
+    },
+    {
+      "id": "001",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "a2a1474bfba0e243353b3a3a357889a1c3c8200ec399beb339fcc7664218aeba",
+      "editedSha256": "4b62f9230f4222999550d270ffa3caee9da8e59292d3578f55a1466cd163831b"
+    },
+    {
+      "id": "002",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "d4a469c940014873c0cbd202ca1209a3c6925446cc2dd1fe03d1660e98ef4146",
+      "editedSha256": "6099bc189472a3860cc549c42d0a3d8bbae5b148d0a80419f1f1191a0d41c5c3"
+    },
+    {
+      "id": "002",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "d4a469c940014873c0cbd202ca1209a3c6925446cc2dd1fe03d1660e98ef4146",
+      "editedSha256": "6099bc189472a3860cc549c42d0a3d8bbae5b148d0a80419f1f1191a0d41c5c3"
+    },
+    {
+      "id": "003",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "84c429485351d1d63b4b437302196db885faf7b78d35ea1c5047cc749e771f0f",
+      "editedSha256": "7a93f2af7cbecb12c866b2035fd253c27db2dbd6e026ec87510982b05a39180d"
+    },
+    {
+      "id": "003",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "84c429485351d1d63b4b437302196db885faf7b78d35ea1c5047cc749e771f0f",
+      "editedSha256": "7a93f2af7cbecb12c866b2035fd253c27db2dbd6e026ec87510982b05a39180d"
+    },
+    {
+      "id": "004",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "da2470fb87a9a4c09f01f60ec314d8e2b4ee55637336722b345d7d9aed835f4d",
+      "editedSha256": "2bf37413b0babbd6f5c6b02f882bd01018c0a6e234271ef488911d0733493bad"
+    },
+    {
+      "id": "004",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "da2470fb87a9a4c09f01f60ec314d8e2b4ee55637336722b345d7d9aed835f4d",
+      "editedSha256": "2bf37413b0babbd6f5c6b02f882bd01018c0a6e234271ef488911d0733493bad"
+    },
+    {
+      "id": "005",
+      "format": "json",
+      "nativeValid": false,
+      "candidateNativeValid": false,
+      "errors": [
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            1,
+            "logicalTypeOptions",
+            "exclusiveMinimum"
+          ],
+          "message": "'2020-01-01' is not of type 'boolean'"
+        },
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            2,
+            "logicalType"
+          ],
+          "message": "'timestamp' is not one of ['string', 'date', 'number', 'integer', 'object', 'array', 'boolean']"
+        },
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            3,
+            "logicalType"
+          ],
+          "message": "'timestamp' is not one of ['string', 'date', 'number', 'integer', 'object', 'array', 'boolean']"
+        },
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            4,
+            "logicalType"
+          ],
+          "message": "'time' is not one of ['string', 'date', 'number', 'integer', 'object', 'array', 'boolean']"
+        },
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            6,
+            "logicalTypeOptions",
+            "exclusiveMaximum"
+          ],
+          "message": "100 is not of type 'boolean'"
+        }
+      ],
+      "candidateErrors": [
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            1,
+            "logicalTypeOptions",
+            "exclusiveMinimum"
+          ],
+          "message": "'2020-01-01' is not of type 'boolean'"
+        },
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            2,
+            "logicalType"
+          ],
+          "message": "'timestamp' is not one of ['string', 'date', 'number', 'integer', 'object', 'array', 'boolean']"
+        },
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            3,
+            "logicalType"
+          ],
+          "message": "'timestamp' is not one of ['string', 'date', 'number', 'integer', 'object', 'array', 'boolean']"
+        },
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            4,
+            "logicalType"
+          ],
+          "message": "'time' is not one of ['string', 'date', 'number', 'integer', 'object', 'array', 'boolean']"
+        },
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            6,
+            "logicalTypeOptions",
+            "exclusiveMaximum"
+          ],
+          "message": "100 is not of type 'boolean'"
+        }
+      ],
+      "roundtripSha256": "9d6195e1ffc90e31cda7890d49bf18002a4c236481a2f92d980ccb9611add1e9",
+      "editedSha256": "63baf0e9d586277503825b867b3a70a770430e5f282ee160d2bdd832220577ed"
+    },
+    {
+      "id": "005",
+      "format": "yaml",
+      "nativeValid": false,
+      "candidateNativeValid": false,
+      "errors": [
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            1,
+            "logicalTypeOptions",
+            "exclusiveMinimum"
+          ],
+          "message": "'2020-01-01' is not of type 'boolean'"
+        },
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            2,
+            "logicalType"
+          ],
+          "message": "'timestamp' is not one of ['string', 'date', 'number', 'integer', 'object', 'array', 'boolean']"
+        },
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            3,
+            "logicalType"
+          ],
+          "message": "'timestamp' is not one of ['string', 'date', 'number', 'integer', 'object', 'array', 'boolean']"
+        },
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            4,
+            "logicalType"
+          ],
+          "message": "'time' is not one of ['string', 'date', 'number', 'integer', 'object', 'array', 'boolean']"
+        },
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            6,
+            "logicalTypeOptions",
+            "exclusiveMaximum"
+          ],
+          "message": "100 is not of type 'boolean'"
+        }
+      ],
+      "candidateErrors": [
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            1,
+            "logicalTypeOptions",
+            "exclusiveMinimum"
+          ],
+          "message": "'2020-01-01' is not of type 'boolean'"
+        },
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            2,
+            "logicalType"
+          ],
+          "message": "'timestamp' is not one of ['string', 'date', 'number', 'integer', 'object', 'array', 'boolean']"
+        },
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            3,
+            "logicalType"
+          ],
+          "message": "'timestamp' is not one of ['string', 'date', 'number', 'integer', 'object', 'array', 'boolean']"
+        },
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            4,
+            "logicalType"
+          ],
+          "message": "'time' is not one of ['string', 'date', 'number', 'integer', 'object', 'array', 'boolean']"
+        },
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            6,
+            "logicalTypeOptions",
+            "exclusiveMaximum"
+          ],
+          "message": "100 is not of type 'boolean'"
+        }
+      ],
+      "roundtripSha256": "9d6195e1ffc90e31cda7890d49bf18002a4c236481a2f92d980ccb9611add1e9",
+      "editedSha256": "63baf0e9d586277503825b867b3a70a770430e5f282ee160d2bdd832220577ed"
+    },
+    {
+      "id": "006",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "a8c994cf51897c7d3688a1a9fbdba0bba5ff293ae7ebb490a192ce1177e646e2",
+      "editedSha256": "ece86c992491db57ef3c030980051b048e5af46dd7179ce248a81fc6f2556651"
+    },
+    {
+      "id": "006",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "a8c994cf51897c7d3688a1a9fbdba0bba5ff293ae7ebb490a192ce1177e646e2",
+      "editedSha256": "ece86c992491db57ef3c030980051b048e5af46dd7179ce248a81fc6f2556651"
+    },
+    {
+      "id": "007",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "94a60e37fcb24a91f97c82df436b8996b409d3950b8ee367a374c810ddb892e6",
+      "editedSha256": "de978490653309fe402f84657ba574019209aec3f84108b93acfff48405b3a44"
+    },
+    {
+      "id": "007",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "94a60e37fcb24a91f97c82df436b8996b409d3950b8ee367a374c810ddb892e6",
+      "editedSha256": "de978490653309fe402f84657ba574019209aec3f84108b93acfff48405b3a44"
+    },
+    {
+      "id": "008",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "1d7d9a477724a2c4787c14d6a4355eb7c1ed837bc6a391dd7f95dbac9a99ad70",
+      "editedSha256": "6478c4f621c546f8aa68ae0bc12ebd53402b311224b5a7a93c8984eeadaacc55"
+    },
+    {
+      "id": "008",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "1d7d9a477724a2c4787c14d6a4355eb7c1ed837bc6a391dd7f95dbac9a99ad70",
+      "editedSha256": "6478c4f621c546f8aa68ae0bc12ebd53402b311224b5a7a93c8984eeadaacc55"
+    },
+    {
+      "id": "009",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "8679fbaf1d58c429a22baf7fc9bea74cac91137febd3491613686dff607d3e82",
+      "editedSha256": "4848de4e4005956e786c8c6e9894646052803a72fc8513e36b137a1521d3a698"
+    },
+    {
+      "id": "009",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "8679fbaf1d58c429a22baf7fc9bea74cac91137febd3491613686dff607d3e82",
+      "editedSha256": "4848de4e4005956e786c8c6e9894646052803a72fc8513e36b137a1521d3a698"
+    },
+    {
+      "id": "010",
+      "format": "json",
+      "nativeValid": false,
+      "candidateNativeValid": false,
+      "errors": [
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            0,
+            "quality",
+            0
+          ],
+          "message": "'rule' is a required property"
+        }
+      ],
+      "candidateErrors": [
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            0,
+            "quality",
+            0
+          ],
+          "message": "'rule' is a required property"
+        }
+      ],
+      "roundtripSha256": "d9d3eb6e288a3daa42a20d304101fbc3e12efde0b39055b4e82c8a515ffd94fa",
+      "editedSha256": "66523c1e3ffb58330941facb7a10b31f7a0f6082a024ccc879055bf9b931456e"
+    },
+    {
+      "id": "010",
+      "format": "yaml",
+      "nativeValid": false,
+      "candidateNativeValid": false,
+      "errors": [
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            0,
+            "quality",
+            0
+          ],
+          "message": "'rule' is a required property"
+        }
+      ],
+      "candidateErrors": [
+        {
+          "path": [
+            "schema",
+            0,
+            "properties",
+            0,
+            "quality",
+            0
+          ],
+          "message": "'rule' is a required property"
+        }
+      ],
+      "roundtripSha256": "d9d3eb6e288a3daa42a20d304101fbc3e12efde0b39055b4e82c8a515ffd94fa",
+      "editedSha256": "66523c1e3ffb58330941facb7a10b31f7a0f6082a024ccc879055bf9b931456e"
+    },
+    {
+      "id": "011",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "3f55e5d0db662fff97584c04d1a1898f6f40ae79756a4fd31094163abbfa4f0a",
+      "editedSha256": "7b919248509d29f6292a2f1238b1df7ba85a2e16d7d571d7efea52a68fa830bd"
+    },
+    {
+      "id": "011",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "3f55e5d0db662fff97584c04d1a1898f6f40ae79756a4fd31094163abbfa4f0a",
+      "editedSha256": "7b919248509d29f6292a2f1238b1df7ba85a2e16d7d571d7efea52a68fa830bd"
+    },
+    {
+      "id": "012",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "e7946e5e2f01e1eb960cc42be461c8a34dc0d7b53bd5be94f7b54779f738fe80",
+      "editedSha256": "ad2eecf7270483e4a996fe25ef8ef38ebf1d23ee62e9e1409fd34a17620ceffc"
+    },
+    {
+      "id": "012",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "e7946e5e2f01e1eb960cc42be461c8a34dc0d7b53bd5be94f7b54779f738fe80",
+      "editedSha256": "ad2eecf7270483e4a996fe25ef8ef38ebf1d23ee62e9e1409fd34a17620ceffc"
+    },
+    {
+      "id": "013",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "979b49b49aa36a5c89a5cf915f6f1e8d324e9080d35b83472e3a74b78c9ed617",
+      "editedSha256": "e23a647ff6c61492b3cbcf30a719bbad3da0c39c078c2bbe3e88c5143f16508b"
+    },
+    {
+      "id": "013",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "979b49b49aa36a5c89a5cf915f6f1e8d324e9080d35b83472e3a74b78c9ed617",
+      "editedSha256": "e23a647ff6c61492b3cbcf30a719bbad3da0c39c078c2bbe3e88c5143f16508b"
+    },
+    {
+      "id": "014",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "59c2b27dd18e3f287482ffa96101a3fd7f881ecfce6e055625784cb65a22ee76",
+      "editedSha256": "302d2f55d88accb4c6fb6a5ed07ef533aa8aa5dd0e041d7fa2a1817559910a9c"
+    },
+    {
+      "id": "014",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "59c2b27dd18e3f287482ffa96101a3fd7f881ecfce6e055625784cb65a22ee76",
+      "editedSha256": "302d2f55d88accb4c6fb6a5ed07ef533aa8aa5dd0e041d7fa2a1817559910a9c"
+    },
+    {
+      "id": "015",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "20b8f7ec202cdb4ed0cef46f21ae245683465201934eb89f89c4614dbd0b6758",
+      "editedSha256": "48d4a9179c1861553e94784fb870d72d8b6cc2b66486a7799c379673996b20fc"
+    },
+    {
+      "id": "015",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "20b8f7ec202cdb4ed0cef46f21ae245683465201934eb89f89c4614dbd0b6758",
+      "editedSha256": "48d4a9179c1861553e94784fb870d72d8b6cc2b66486a7799c379673996b20fc"
+    },
+    {
+      "id": "016",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "32edb2fe142b72af91e2a921c90dd8436350bd20930caf5f02dfd3f888af7460",
+      "editedSha256": "21a991fdd9039b6a84d69254c2edfb9cddb8542b9c580e1ffbd666843eee6fc4"
+    },
+    {
+      "id": "016",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "32edb2fe142b72af91e2a921c90dd8436350bd20930caf5f02dfd3f888af7460",
+      "editedSha256": "21a991fdd9039b6a84d69254c2edfb9cddb8542b9c580e1ffbd666843eee6fc4"
+    },
+    {
+      "id": "017",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "388cdc4b2a876a0f9ef7b577b59f5757fe2d95547044029b24be266ef936ff40",
+      "editedSha256": "360d9a8ef997ba0811fb327705977ad4a58332862b9635274f7b4c2fd0b72126"
+    },
+    {
+      "id": "017",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "388cdc4b2a876a0f9ef7b577b59f5757fe2d95547044029b24be266ef936ff40",
+      "editedSha256": "360d9a8ef997ba0811fb327705977ad4a58332862b9635274f7b4c2fd0b72126"
+    },
+    {
+      "id": "018",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "54ae8d772f1b30381fabc28f5e575bbe196b17bd215a3fb36a77d8152d2d04b9",
+      "editedSha256": "5cb42a276a5b40a521ba1d1aea88be4692b6ed7b1f36b3e553d705f16c285154"
+    },
+    {
+      "id": "018",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "54ae8d772f1b30381fabc28f5e575bbe196b17bd215a3fb36a77d8152d2d04b9",
+      "editedSha256": "5cb42a276a5b40a521ba1d1aea88be4692b6ed7b1f36b3e553d705f16c285154"
+    },
+    {
+      "id": "019",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "fb4f8da3d0a6a1f7cd9c679087dbdbd2fffe6107f0873b2054916521dd96e3d4",
+      "editedSha256": "ad282c3d21ebb767abe3fbad1c641906303f35d68d0ab1cc87376d5649fbdd07"
+    },
+    {
+      "id": "019",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "fb4f8da3d0a6a1f7cd9c679087dbdbd2fffe6107f0873b2054916521dd96e3d4",
+      "editedSha256": "ad282c3d21ebb767abe3fbad1c641906303f35d68d0ab1cc87376d5649fbdd07"
+    },
+    {
+      "id": "020",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "13b3523f074c3c427ea2a66556d73aa433785c496867412421aeda40a359c49e",
+      "editedSha256": "0df5110b1e26b073e1193d74acc72856cf87a9b40ec2a47829021c064437dee4"
+    },
+    {
+      "id": "020",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "13b3523f074c3c427ea2a66556d73aa433785c496867412421aeda40a359c49e",
+      "editedSha256": "0df5110b1e26b073e1193d74acc72856cf87a9b40ec2a47829021c064437dee4"
+    },
+    {
+      "id": "021",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "d285640d74f37564f629a4073789caa3d9bae7e629c03b6eac34bac4992309b9",
+      "editedSha256": "3501d734bb17f3c0d435d5b21772567f1ffa629d35e5953a485c04c71396df81"
+    },
+    {
+      "id": "021",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "d285640d74f37564f629a4073789caa3d9bae7e629c03b6eac34bac4992309b9",
+      "editedSha256": "3501d734bb17f3c0d435d5b21772567f1ffa629d35e5953a485c04c71396df81"
+    },
+    {
+      "id": "022",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "1d14d7f62dc930540bd78d03ee73f01645755e9608f4da3368075093c40a92bf",
+      "editedSha256": "875f11b504c9228e01a7cb7064ae11263e28c837b748796904c0303361917bf5"
+    },
+    {
+      "id": "022",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "1d14d7f62dc930540bd78d03ee73f01645755e9608f4da3368075093c40a92bf",
+      "editedSha256": "875f11b504c9228e01a7cb7064ae11263e28c837b748796904c0303361917bf5"
+    },
+    {
+      "id": "023",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "b049d40c187bf08437d9efd553e28b1ceaa83b21a0ec2a46ab98007d7ede866b",
+      "editedSha256": "4c80ff65ac0636fc4f6a54d83f4a2799c97b435109e31b85a56e1f86012e11c1"
+    },
+    {
+      "id": "023",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "b049d40c187bf08437d9efd553e28b1ceaa83b21a0ec2a46ab98007d7ede866b",
+      "editedSha256": "4c80ff65ac0636fc4f6a54d83f4a2799c97b435109e31b85a56e1f86012e11c1"
+    },
+    {
+      "id": "024",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "19c5197edd4ddcb87b681dc9fee36e286dcb314f7cf79ae8dd97b8ad195d5398",
+      "editedSha256": "6896484e5d7132cfe893ce009e3ebc7766ddd3db555eb2a9bf3cb1cfff72f6ca"
+    },
+    {
+      "id": "024",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "19c5197edd4ddcb87b681dc9fee36e286dcb314f7cf79ae8dd97b8ad195d5398",
+      "editedSha256": "6896484e5d7132cfe893ce009e3ebc7766ddd3db555eb2a9bf3cb1cfff72f6ca"
+    },
+    {
+      "id": "025",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "8ce438ccccc22ba47ed5f7fe3837e0ecdba33d3ac2024efcd3649f661f901426",
+      "editedSha256": "936be43c0d12ac5852b3bd68980ad3ae218b79e422cef76d4f56844e274c65b9"
+    },
+    {
+      "id": "025",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "8ce438ccccc22ba47ed5f7fe3837e0ecdba33d3ac2024efcd3649f661f901426",
+      "editedSha256": "936be43c0d12ac5852b3bd68980ad3ae218b79e422cef76d4f56844e274c65b9"
+    },
+    {
+      "id": "026",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "432ec0803ddf6f5d71619423d43c3e35c3900d8eefbb89fa2f89e3b9ae698cc1",
+      "editedSha256": "ea50b4d90045f4c9ffc72cefbc5327e319da6c8870f2d009e800f4f893b3013a"
+    },
+    {
+      "id": "026",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "432ec0803ddf6f5d71619423d43c3e35c3900d8eefbb89fa2f89e3b9ae698cc1",
+      "editedSha256": "ea50b4d90045f4c9ffc72cefbc5327e319da6c8870f2d009e800f4f893b3013a"
+    },
+    {
+      "id": "027",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "75f0da6034d0709c7513f35d3e0b2555037865a4df44b79ca079febe2fd03d5e",
+      "editedSha256": "c9a5d1a452566f83d5f82c9a844b3515e87f4cd0bb79e1eeddf84225c2e459ea"
+    },
+    {
+      "id": "027",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "75f0da6034d0709c7513f35d3e0b2555037865a4df44b79ca079febe2fd03d5e",
+      "editedSha256": "c9a5d1a452566f83d5f82c9a844b3515e87f4cd0bb79e1eeddf84225c2e459ea"
+    },
+    {
+      "id": "028",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "98905f731e02820f23e7b07996b6b324bd8d0533c7a1e5137ea2eb07d7a96fbe",
+      "editedSha256": "832ec7d8070eabd8e80c946a977551d38f4121f396ec3b771cbdcece9a5bae14"
+    },
+    {
+      "id": "028",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "98905f731e02820f23e7b07996b6b324bd8d0533c7a1e5137ea2eb07d7a96fbe",
+      "editedSha256": "832ec7d8070eabd8e80c946a977551d38f4121f396ec3b771cbdcece9a5bae14"
+    },
+    {
+      "id": "029",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "103735d48d0e530a5cdcb2519fe89da4fc918441605f04f9ba556bc5c3b5d4f7",
+      "editedSha256": "d1a4a8bd2694d6d08e6e1759cb5dc86a9d68ba1cead8e7e616bac0ad651afffd"
+    },
+    {
+      "id": "029",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "103735d48d0e530a5cdcb2519fe89da4fc918441605f04f9ba556bc5c3b5d4f7",
+      "editedSha256": "d1a4a8bd2694d6d08e6e1759cb5dc86a9d68ba1cead8e7e616bac0ad651afffd"
+    },
+    {
+      "id": "030",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "e1a70df328986664f06204995843b27a421094d849819da66b6dbfcd07d10506",
+      "editedSha256": "b1274b388e9e5117b1e3b0d96c43b69879cc0b94ce9e13e65d870e8bc2038fd5"
+    },
+    {
+      "id": "030",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "e1a70df328986664f06204995843b27a421094d849819da66b6dbfcd07d10506",
+      "editedSha256": "b1274b388e9e5117b1e3b0d96c43b69879cc0b94ce9e13e65d870e8bc2038fd5"
+    },
+    {
+      "id": "031",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "095eb4c53baef5256817cb371ba01d4c525189fdb1036a002f7b7f83fdd5a943",
+      "editedSha256": "6104a952f7d9f146a4811e5d9be4f7227f8b58031db04b98945354d3cc294f42"
+    },
+    {
+      "id": "031",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "095eb4c53baef5256817cb371ba01d4c525189fdb1036a002f7b7f83fdd5a943",
+      "editedSha256": "6104a952f7d9f146a4811e5d9be4f7227f8b58031db04b98945354d3cc294f42"
+    },
+    {
+      "id": "032",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "a2201f6de046deb4c6e7cd564a6d235def4f5438991dc238d1e9ab0e59b53ad4",
+      "editedSha256": "b2b060c45bb31849c13193f90a21ff841b374995ec8e3e6fb23ad96c6b1a2c28"
+    },
+    {
+      "id": "032",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "a2201f6de046deb4c6e7cd564a6d235def4f5438991dc238d1e9ab0e59b53ad4",
+      "editedSha256": "b2b060c45bb31849c13193f90a21ff841b374995ec8e3e6fb23ad96c6b1a2c28"
+    },
+    {
+      "id": "033",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "b1991d600a3d694635e5d8feec2ff072338ed9be2771a1b469a52f3fa6e56fde",
+      "editedSha256": "6e15533221404f63098bcaf8f82c91984908f64b3d91f603e9875a1299c52fe9"
+    },
+    {
+      "id": "033",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "b1991d600a3d694635e5d8feec2ff072338ed9be2771a1b469a52f3fa6e56fde",
+      "editedSha256": "6e15533221404f63098bcaf8f82c91984908f64b3d91f603e9875a1299c52fe9"
+    },
+    {
+      "id": "034",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "b5e5dd7ea7b551cbf6c1c9e5284a51d6de57186084d7fbe63924365ec7406062",
+      "editedSha256": "ca21a0af1ea499f3ccd5a88ff136ab1ce491b33a8a2524d036c4a541e730dbf6"
+    },
+    {
+      "id": "034",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "b5e5dd7ea7b551cbf6c1c9e5284a51d6de57186084d7fbe63924365ec7406062",
+      "editedSha256": "ca21a0af1ea499f3ccd5a88ff136ab1ce491b33a8a2524d036c4a541e730dbf6"
+    },
+    {
+      "id": "035",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "ba330713ccba7521e80d0723bd8d143298f4a718dcb09d61526a2e60c79d18d2",
+      "editedSha256": "9fff18c612facd2f3c19b85039bd56e317f5462229b75775faca50f60dd36799"
+    },
+    {
+      "id": "035",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "ba330713ccba7521e80d0723bd8d143298f4a718dcb09d61526a2e60c79d18d2",
+      "editedSha256": "9fff18c612facd2f3c19b85039bd56e317f5462229b75775faca50f60dd36799"
+    },
+    {
+      "id": "036",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "5719163363f51dde58098210caa536b089a79f97510066523a975e79a7007cb5",
+      "editedSha256": "61f984da00d3109ae17322746b1e57b2ac50a4387d30bae3339273dcb0f77435"
+    },
+    {
+      "id": "036",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "5719163363f51dde58098210caa536b089a79f97510066523a975e79a7007cb5",
+      "editedSha256": "61f984da00d3109ae17322746b1e57b2ac50a4387d30bae3339273dcb0f77435"
+    },
+    {
+      "id": "037",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "de2f91fb20d9584146b88678ffd98e0e4a01a795a03642a5d8bee629d36f7318",
+      "editedSha256": "667fad1c832bcf24668a1db376cc1253008e858d28cbc4fadffad110df901aa0"
+    },
+    {
+      "id": "037",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "de2f91fb20d9584146b88678ffd98e0e4a01a795a03642a5d8bee629d36f7318",
+      "editedSha256": "667fad1c832bcf24668a1db376cc1253008e858d28cbc4fadffad110df901aa0"
+    },
+    {
+      "id": "038",
+      "format": "json",
+      "nativeValid": false,
+      "candidateNativeValid": false,
+      "errors": [
+        {
+          "path": [
+            "team"
+          ],
+          "message": "{'name': 'Data Protection Office', 'description': 'The Data Protection Office is responsible for the protection of data.', 'tags': ['data-protection', 'dpo'], 'customProperties': [{'property': 'dpo-policy', 'value': 'DPO policy'}], 'authoritativeDefinitions': [{'url': 'https://my-company-data-policy.com', 'type': 'businessDefinition', 'description': 'Full definition of the data protection policy.'}], 'members': [{'username': 'ceastwood', 'role': 'dpo', 'dateIn': '2014-08-02', 'dateOut': '2014-10-01', 'replacedByUsername': 'jwayne'}, {'username': 'jwayne', 'role': 'dpo', 'dateIn': '2014-10-01', 'dateOut': '2019-03-14', 'replacedByUsername': 'cjane'}, {'username': 'cjane', 'role': 'dpo', 'dateIn': '2019-03-14', 'description': 'Minor interruption due to sabbatical, will be back by end of April 2021', 'dateOut': '2021-04-01', 'replacedByUsername': 'bkid'}, {'username': 'bkid', 'role': 'dpo', 'dateIn': '2021-04-01'}]} is not of type 'array'"
+        }
+      ],
+      "candidateErrors": [
+        {
+          "path": [
+            "team"
+          ],
+          "message": "{'name': 'Data Protection Office', 'description': 'The Data Protection Office is responsible for the protection of data.', 'tags': ['data-protection', 'dpo'], 'customProperties': [{'property': 'dpo-policy', 'value': 'DPO policy'}], 'authoritativeDefinitions': [{'url': 'https://my-company-data-policy.com', 'type': 'businessDefinition', 'description': 'Full definition of the data protection policy.'}], 'members': [{'username': 'ceastwood', 'role': 'dpo', 'dateIn': '2014-08-02', 'dateOut': '2014-10-01', 'replacedByUsername': 'jwayne'}, {'username': 'jwayne', 'role': 'dpo', 'dateIn': '2014-10-01', 'dateOut': '2019-03-14', 'replacedByUsername': 'cjane'}, {'username': 'cjane', 'role': 'dpo', 'dateIn': '2019-03-14', 'description': 'Minor interruption due to sabbatical, will be back by end of April 2021', 'dateOut': '2021-04-01', 'replacedByUsername': 'bkid'}, {'username': 'bkid', 'role': 'dpo', 'dateIn': '2021-04-01'}]} is not of type 'array'"
+        }
+      ],
+      "roundtripSha256": "ae5d7b29bce65e945df2ec95d7bf354d1f7ce6dd93a33d1d19c91b1c702604d5",
+      "editedSha256": "6b8ae54b3b9db97f97b1f57161bf5d1d3f8110e499347540db873a4c98f8af5a"
+    },
+    {
+      "id": "038",
+      "format": "yaml",
+      "nativeValid": false,
+      "candidateNativeValid": false,
+      "errors": [
+        {
+          "path": [
+            "team"
+          ],
+          "message": "{'name': 'Data Protection Office', 'description': 'The Data Protection Office is responsible for the protection of data.', 'tags': ['data-protection', 'dpo'], 'customProperties': [{'property': 'dpo-policy', 'value': 'DPO policy'}], 'authoritativeDefinitions': [{'url': 'https://my-company-data-policy.com', 'type': 'businessDefinition', 'description': 'Full definition of the data protection policy.'}], 'members': [{'username': 'ceastwood', 'role': 'dpo', 'dateIn': '2014-08-02', 'dateOut': '2014-10-01', 'replacedByUsername': 'jwayne'}, {'username': 'jwayne', 'role': 'dpo', 'dateIn': '2014-10-01', 'dateOut': '2019-03-14', 'replacedByUsername': 'cjane'}, {'username': 'cjane', 'role': 'dpo', 'dateIn': '2019-03-14', 'description': 'Minor interruption due to sabbatical, will be back by end of April 2021', 'dateOut': '2021-04-01', 'replacedByUsername': 'bkid'}, {'username': 'bkid', 'role': 'dpo', 'dateIn': '2021-04-01'}]} is not of type 'array'"
+        }
+      ],
+      "candidateErrors": [
+        {
+          "path": [
+            "team"
+          ],
+          "message": "{'name': 'Data Protection Office', 'description': 'The Data Protection Office is responsible for the protection of data.', 'tags': ['data-protection', 'dpo'], 'customProperties': [{'property': 'dpo-policy', 'value': 'DPO policy'}], 'authoritativeDefinitions': [{'url': 'https://my-company-data-policy.com', 'type': 'businessDefinition', 'description': 'Full definition of the data protection policy.'}], 'members': [{'username': 'ceastwood', 'role': 'dpo', 'dateIn': '2014-08-02', 'dateOut': '2014-10-01', 'replacedByUsername': 'jwayne'}, {'username': 'jwayne', 'role': 'dpo', 'dateIn': '2014-10-01', 'dateOut': '2019-03-14', 'replacedByUsername': 'cjane'}, {'username': 'cjane', 'role': 'dpo', 'dateIn': '2019-03-14', 'description': 'Minor interruption due to sabbatical, will be back by end of April 2021', 'dateOut': '2021-04-01', 'replacedByUsername': 'bkid'}, {'username': 'bkid', 'role': 'dpo', 'dateIn': '2021-04-01'}]} is not of type 'array'"
+        }
+      ],
+      "roundtripSha256": "ae5d7b29bce65e945df2ec95d7bf354d1f7ce6dd93a33d1d19c91b1c702604d5",
+      "editedSha256": "6b8ae54b3b9db97f97b1f57161bf5d1d3f8110e499347540db873a4c98f8af5a"
+    },
+    {
+      "id": "039",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "e97e40955bad37f17b7adfaceddeca2ae6501e00cccd6838e462006d42e3917b",
+      "editedSha256": "d43840f7c826a7971fa1d0e3c2cf620804cbe1e282dccc385cef1a05c3c3f697"
+    },
+    {
+      "id": "039",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "e97e40955bad37f17b7adfaceddeca2ae6501e00cccd6838e462006d42e3917b",
+      "editedSha256": "d43840f7c826a7971fa1d0e3c2cf620804cbe1e282dccc385cef1a05c3c3f697"
+    },
+    {
+      "id": "040",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "7d0bc958a885c8053a74e0b6bf9e61ac7ae35df6474cc5a7605a7945a7d40dbc",
+      "editedSha256": "db2278ceed1d6674103cd100c6bd844df144a29faa57ea267f55a0fde910a636"
+    },
+    {
+      "id": "040",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "7d0bc958a885c8053a74e0b6bf9e61ac7ae35df6474cc5a7605a7945a7d40dbc",
+      "editedSha256": "db2278ceed1d6674103cd100c6bd844df144a29faa57ea267f55a0fde910a636"
+    },
+    {
+      "id": "041",
+      "format": "json",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "6fffe96036110f43912f8cfdbdcbfd5eefa79134b9348118b7c6b070a920b48f",
+      "editedSha256": "af67cd6e0df1549deff9def1fce6c891cb3d0a170e85ade25cd1d78ec304c5d6"
+    },
+    {
+      "id": "041",
+      "format": "yaml",
+      "nativeValid": true,
+      "candidateNativeValid": true,
+      "errors": [],
+      "candidateErrors": [],
+      "roundtripSha256": "6fffe96036110f43912f8cfdbdcbfd5eefa79134b9348118b7c6b070a920b48f",
+      "editedSha256": "af67cd6e0df1549deff9def1fce6c891cb3d0a170e85ade25cd1d78ec304c5d6"
+    }
+  ],
+  "limits": "Document shape checks, not ODCS reference resolution, constraint/SLA enforcement or physical compatibility"
+}

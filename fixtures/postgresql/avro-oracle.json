@@ -1,0 +1,31 @@
+{
+  "avro": "1.12.0",
+  "fastavro": "1.12.2",
+  "fields": 20,
+  "cases": [
+    {
+      "format": "json",
+      "bytes": 177,
+      "normalizedValuesAgree": true,
+      "localTimestampReturnTypes": [
+        "int",
+        "datetime"
+      ]
+    },
+    {
+      "format": "yaml",
+      "bytes": 177,
+      "normalizedValuesAgree": true,
+      "localTimestampReturnTypes": [
+        "int",
+        "datetime"
+      ]
+    }
+  ],
+  "warnings": [
+    "Unknown local-timestamp-micros, using long."
+  ],
+  "nullableValuesAgree": true,
+  "targetAcceptsSmallint40000AndNulText": true,
+  "scope": "Target schema/binary/value behavior, not a PostgreSQL instance converter. Local timestamp normalized only for declared field to exact epoch microseconds."
+}

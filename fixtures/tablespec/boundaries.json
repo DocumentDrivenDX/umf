@@ -1,0 +1,115 @@
+{
+  "paths": [
+    "columns/a.yaml",
+    "columns/b.yaml\n",
+    "columns/c.yaml\r",
+    "columns/d.yaml ",
+    "columns/e.yaml ",
+    "columns/f.yaml ",
+    "columns/g\n.yaml"
+  ],
+  "files": {
+    "table.yaml": "version: \"1.0\"\ntable_name: t\n",
+    "columns/a.yaml": "column: {name: c0, data_type: INTEGER}\n",
+    "columns/b.yaml\n": "column: {name: c1, data_type: INTEGER}\n",
+    "columns/c.yaml\r": "column: {name: c2, data_type: INTEGER}\n",
+    "columns/d.yaml ": "column: {name: c3, data_type: INTEGER}\n",
+    "columns/e.yaml ": "column: {name: c4, data_type: INTEGER}\n",
+    "columns/f.yaml ": "column: {name: c5, data_type: INTEGER}\n",
+    "columns/g\n.yaml": "column: {name: c6, data_type: INTEGER}\n"
+  },
+  "document": {
+    "umf": "0.1.0",
+    "id": "suffixes",
+    "vocabularies": {
+      "umf.tablespec": {
+        "version": "0.1.0"
+      }
+    },
+    "extensions": {
+      "umf.tablespec": {
+        "profile": "tablespec-table-1",
+        "root": {
+          "kind": "object",
+          "members": {
+            "version": {
+              "kind": "string",
+              "value": "1.0"
+            },
+            "table_name": {
+              "kind": "string",
+              "value": "t"
+            },
+            "columns": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "object",
+                  "members": {
+                    "name": {
+                      "kind": "string",
+                      "value": "c0"
+                    },
+                    "data_type": {
+                      "kind": "string",
+                      "value": "INTEGER"
+                    }
+                  }
+                },
+                {
+                  "kind": "object",
+                  "members": {
+                    "name": {
+                      "kind": "string",
+                      "value": "c6"
+                    },
+                    "data_type": {
+                      "kind": "string",
+                      "value": "INTEGER"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "originalSource": "{\"version\":\"1.0\",\"table_name\":\"t\",\"columns\":[{\"name\":\"c0\",\"data_type\":\"INTEGER\"},{\"name\":\"c6\",\"data_type\":\"INTEGER\"}]}",
+        "originalFormat": "json",
+        "splitFiles": {
+          "table.yaml": "version: \"1.0\"\ntable_name: t\n",
+          "columns/a.yaml": "column: {name: c0, data_type: INTEGER}\n",
+          "columns/b.yaml\n": "column: {name: c1, data_type: INTEGER}\n",
+          "columns/c.yaml\r": "column: {name: c2, data_type: INTEGER}\n",
+          "columns/d.yaml ": "column: {name: c3, data_type: INTEGER}\n",
+          "columns/e.yaml ": "column: {name: c4, data_type: INTEGER}\n",
+          "columns/f.yaml ": "column: {name: c5, data_type: INTEGER}\n",
+          "columns/g\n.yaml": "column: {name: c6, data_type: INTEGER}\n"
+        }
+      }
+    },
+    "modules": [
+      {
+        "id": "table",
+        "namespace": "t",
+        "elements": [
+          {
+            "id": "column:0",
+            "name": "c0",
+            "scalarType": "integer",
+            "extensions": {}
+          },
+          {
+            "id": "column:1",
+            "name": "c6",
+            "scalarType": "integer",
+            "extensions": {}
+          }
+        ]
+      }
+    ]
+  },
+  "selected": [
+    "columns/a.yaml",
+    "columns/g\n.yaml"
+  ]
+}

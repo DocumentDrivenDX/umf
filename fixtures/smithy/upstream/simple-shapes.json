@@ -1,0 +1,125 @@
+{
+    "smithy": "1.0",
+    "shapes": {
+        "smithy.example#MyBigDecimal1": {
+            "type": "bigDecimal"
+        },
+        "smithy.example#MyBigDecimal2": {
+            "type": "bigDecimal",
+            "traits": {
+                "smithy.api#deprecated": {},
+                "smithy.api#since": "1.8"
+            }
+        },
+        "smithy.example#MyBigInteger1": {
+            "type": "bigInteger"
+        },
+        "smithy.example#MyBigInteger2": {
+            "type": "bigInteger",
+            "traits": {
+                "smithy.api#deprecated": {},
+                "smithy.api#since": "1.7"
+            }
+        },
+        "smithy.example#MyBlob1": {
+            "type": "blob"
+        },
+        "smithy.example#MyBlob2": {
+            "type": "blob",
+            "traits": {
+                "smithy.api#deprecated": {},
+                "smithy.api#since": "1.10"
+            }
+        },
+        "smithy.example#MyBoolean1": {
+            "type": "boolean"
+        },
+        "smithy.example#MyBoolean2": {
+            "type": "boolean",
+            "traits": {
+                "smithy.api#deprecated": {},
+                "smithy.api#since": "1.0"
+            }
+        },
+        "smithy.example#MyByte1": {
+            "type": "byte"
+        },
+        "smithy.example#MyByte2": {
+            "type": "byte",
+            "traits": {
+                "smithy.api#deprecated": {},
+                "smithy.api#since": "1.1"
+            }
+        },
+        "smithy.example#MyDouble1": {
+            "type": "double"
+        },
+        "smithy.example#MyDouble2": {
+            "type": "double",
+            "traits": {
+                "smithy.api#deprecated": {},
+                "smithy.api#since": "1.6"
+            }
+        },
+        "smithy.example#MyFloat1": {
+            "type": "float"
+        },
+        "smithy.example#MyFloat2": {
+            "type": "float",
+            "traits": {
+                "smithy.api#deprecated": {},
+                "smithy.api#since": "1.5"
+            }
+        },
+        "smithy.example#MyInteger1": {
+            "type": "integer"
+        },
+        "smithy.example#MyInteger2": {
+            "type": "integer",
+            "traits": {
+                "smithy.api#deprecated": {},
+                "smithy.api#since": "1.3"
+            }
+        },
+        "smithy.example#MyLong1": {
+            "type": "long"
+        },
+        "smithy.example#MyLong2": {
+            "type": "long",
+            "traits": {
+                "smithy.api#deprecated": {},
+                "smithy.api#since": "1.4"
+            }
+        },
+        "smithy.example#MyShort1": {
+            "type": "short"
+        },
+        "smithy.example#MyShort2": {
+            "type": "short",
+            "traits": {
+                "smithy.api#deprecated": {},
+                "smithy.api#since": "1.2"
+            }
+        },
+        "smithy.example#MyString1": {
+            "type": "string"
+        },
+        "smithy.example#MyString2": {
+            "type": "string",
+            "traits": {
+                "smithy.api#deprecated": {},
+                "smithy.api#since": "1.9"
+            }
+        },
+        "smithy.example#MyTimestamp1": {
+            "type": "timestamp"
+        },
+        "smithy.example#MyTimestamp2": {
+            "type": "timestamp",
+            "traits": {
+                "smithy.api#deprecated": {},
+                "smithy.api#since": "1.11"
+            }
+        }
+    }
+}

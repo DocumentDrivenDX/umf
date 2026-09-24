@@ -1,0 +1,15 @@
+_:N9d1526fc94454f7d99ccfdc591869ecd <http://www.w3.org/ns/shacl#result> _:N925ffa24046448b6bd6969c9b8c03080 .
+_:N925ffa24046448b6bd6969c9b8c03080 <http://www.w3.org/ns/shacl#value> <http://example.org/test#jpq> .
+_:N925ffa24046448b6bd6969c9b8c03080 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nce3b4c8985dd4253bb9926341083c869 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://example.org/test#q> .
+_:N925ffa24046448b6bd6969c9b8c03080 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have class ex:C" .
+_:N9d1526fc94454f7d99ccfdc591869ecd <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N925ffa24046448b6bd6969c9b8c03080 <http://www.w3.org/ns/shacl#sourceShape> <http://example.org/test#s1> .
+_:n5baf539cbffa40938a95171791a8d6aeb1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://example.org/test#p> .
+_:N925ffa24046448b6bd6969c9b8c03080 <http://www.w3.org/ns/shacl#focusNode> <http://example.org/test#j> .
+_:n5baf539cbffa40938a95171791a8d6aeb1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:Nce3b4c8985dd4253bb9926341083c869 .
+_:N9d1526fc94454f7d99ccfdc591869ecd <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N925ffa24046448b6bd6969c9b8c03080 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N925ffa24046448b6bd6969c9b8c03080 <http://www.w3.org/ns/shacl#resultPath> _:n5baf539cbffa40938a95171791a8d6aeb1 .
+_:Nce3b4c8985dd4253bb9926341083c869 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:N925ffa24046448b6bd6969c9b8c03080 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#ClassConstraintComponent> .

@@ -1,0 +1,30 @@
+{
+  "sourceSha256": "11a84dcfa848c4603fd1a13faf5033e8fc5d8499246e247ec28cf58cb0d747d8",
+  "source": "manifest.json",
+  "editPath": "/nodes/model.umf_fixture.order_totals/description",
+  "newDescription": "Reviewed synthetic customer totals.",
+  "sourceValidation": {
+    "valid": true,
+    "complete": false,
+    "diagnostics": [
+      {
+        "code": "DBT_MANIFEST_CONTEXT",
+        "path": "",
+        "severity": "warning",
+        "message": "Native schema shapes do not establish graph/SQL/Jinja validity, format constraints or exact-number constraints beyond JS precision"
+      }
+    ]
+  },
+  "candidateValidation": {
+    "valid": true,
+    "complete": false,
+    "diagnostics": [
+      {
+        "code": "DBT_MANIFEST_CONTEXT",
+        "path": "",
+        "severity": "warning",
+        "message": "Native schema shapes do not establish graph/SQL/Jinja validity, format constraints or exact-number constraints beyond JS precision"
+      }
+    ]
+  }
+}

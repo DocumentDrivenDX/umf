@@ -1,0 +1,126 @@
+{
+  "cases": [
+    {
+      "id": "decimal-over-precision",
+      "path": "fixtures/parquet/values/authored/decimal-over-precision.parquet",
+      "status": "blocked",
+      "expectedValue": null,
+      "native": {
+        "status": "readable",
+        "value": "100.0",
+        "type": "decimal128(3, 1)"
+      }
+    },
+    {
+      "id": "int8-over-range",
+      "path": "fixtures/parquet/values/authored/int8-over-range.parquet",
+      "status": "blocked",
+      "expectedValue": null,
+      "native": {
+        "status": "readable",
+        "value": "-128",
+        "type": "int8"
+      }
+    },
+    {
+      "id": "uint8-negative",
+      "path": "fixtures/parquet/values/authored/uint8-negative.parquet",
+      "status": "blocked",
+      "expectedValue": null,
+      "native": {
+        "status": "readable",
+        "value": "255",
+        "type": "uint8"
+      }
+    },
+    {
+      "id": "time-outside-day",
+      "path": "fixtures/parquet/values/authored/time-outside-day.parquet",
+      "status": "blocked",
+      "expectedValue": null,
+      "native": {
+        "status": "readable",
+        "value": "00:00:00",
+        "type": "time64[us]"
+      }
+    },
+    {
+      "id": "invalid-utf8",
+      "path": "fixtures/parquet/values/authored/invalid-utf8.parquet",
+      "status": "blocked",
+      "expectedValue": null,
+      "native": {
+        "status": "rejected",
+        "message": "'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"
+      }
+    },
+    {
+      "id": "invalid-json",
+      "path": "fixtures/parquet/values/authored/invalid-json.parquet",
+      "status": "blocked",
+      "expectedValue": null,
+      "native": {
+        "status": "readable",
+        "value": "{bad",
+        "type": "extension<arrow.json>"
+      }
+    },
+    {
+      "id": "exact-json",
+      "path": "fixtures/parquet/values/authored/exact-json.parquet",
+      "status": "projected",
+      "expectedValue": {
+        "kind": "json",
+        "value": "{\"n\":9007199254740993,\"n\":-0}"
+      },
+      "native": {
+        "status": "readable",
+        "value": "{\"n\":9007199254740993,\"n\":-0}",
+        "type": "extension<arrow.json>"
+      }
+    },
+    {
+      "id": "uuid",
+      "path": "fixtures/parquet/values/authored/uuid.parquet",
+      "status": "projected",
+      "expectedValue": {
+        "kind": "uuid",
+        "value": "00112233-4455-6677-8899-aabbccddeeff"
+      },
+      "native": {
+        "status": "readable",
+        "value": "00112233-4455-6677-8899-aabbccddeeff",
+        "type": "extension<arrow.uuid>"
+      }
+    },
+    {
+      "id": "half-negative-zero",
+      "path": "fixtures/parquet/values/authored/half-negative-zero.parquet",
+      "status": "projected",
+      "expectedValue": {
+        "kind": "float",
+        "bits": 16,
+        "value": "-0"
+      },
+      "native": {
+        "status": "readable",
+        "value": "-0.0",
+        "type": "halffloat"
+      }
+    },
+    {
+      "id": "bson-opaque",
+      "path": "fixtures/parquet/values/authored/bson-opaque.parquet",
+      "status": "projected",
+      "expectedValue": {
+        "kind": "opaque",
+        "annotation": "BSON"
+      },
+      "native": {
+        "status": "readable",
+        "value": "b'\\x05\\x00\\x00\\x00\\x00'",
+        "type": "binary"
+      }
+    }
+  ]
+}

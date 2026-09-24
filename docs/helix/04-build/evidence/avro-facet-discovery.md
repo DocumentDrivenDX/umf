@@ -209,3 +209,20 @@ globals or external requests occur. The current
 supersedes the internal-bundle checkpoint above. Eleven scoped Bun tests with
 263 assertions, typechecking, 274 schema/46 package audits and the public plus
 optional PostgreSQL builds pass.
+
+
+## Verification interruption checkpoint (2026-09-23)
+
+The 85-stage native/browser refresh and priority regression completed: 515 tests,
+52,275 assertions across 160 files, zero failures. A subsequent descriptive
+package-status correction triggered 47 additional checks. Forty completed
+successfully before the execution session stopped during the Parquet Cardinality
+browser stage. The process handle is missing and no verification process remains
+live; the remaining seven checks have not been recorded as passed.
+
+The corrected bundle differs from the earlier bundle only in the package
+description and Bun's generated debugId. The partial metadata-adjustment record
+retains completed command results with `completed: false`. The separate refreshed
+Field, Nullability and Cardinality acceptance gates have not run, and no final
+Avro facet acceptance record has been published. Avro remains in progress; this
+commit checkpoints work and does not claim binding acceptance or native equivalence.

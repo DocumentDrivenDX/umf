@@ -1,0 +1,111 @@
+{
+  "source": "{\"@id\":\"urn:s\",\"urn:p\":{\"@id\":\"urn:x/ \"}}",
+  "iri": "urn:x/ ",
+  "wellFormed": true,
+  "report": {
+    "source": {
+      "umf": "0.1.0",
+      "id": "unicode-iri-gap",
+      "vocabularies": {
+        "umf.jsonld": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "jsonld",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "document",
+              "extensions": {
+                "umf.jsonld": {
+                  "profile": "jsonld-source",
+                  "processingMode": "json-ld-1.1",
+                  "baseIRI": "https://example.org/",
+                  "root": {
+                    "kind": "object",
+                    "members": {
+                      "@id": {
+                        "kind": "string",
+                        "value": "urn:s"
+                      },
+                      "urn:p": {
+                        "kind": "object",
+                        "members": {
+                          "@id": {
+                            "kind": "string",
+                            "value": "urn:x/ "
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "originalSource": "{\"@id\":\"urn:s\",\"urn:p\":{\"@id\":\"urn:x/ \"}}",
+                  "contexts": []
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "id": "out",
+    "lossPolicy": "report",
+    "rdfDirection": null,
+    "status": "candidate",
+    "complete": false,
+    "resourcesUsed": [],
+    "diagnostics": [
+      {
+        "code": "JSONLD_EVENT",
+        "path": "",
+        "severity": "warning",
+        "message": "relative @id reference: Relative @id reference found."
+      },
+      {
+        "code": "JSONLD_RDF_EVENT",
+        "path": "",
+        "severity": "warning",
+        "message": "relative object reference: Relative object reference found."
+      },
+      {
+        "code": "JSONLD_TO_RDF",
+        "path": "",
+        "severity": "warning",
+        "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+      }
+    ],
+    "candidate": {
+      "umf": "0.1.0",
+      "id": "out",
+      "vocabularies": {
+        "umf.rdf": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "dataset",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "dataset",
+              "extensions": {
+                "umf.rdf": {
+                  "profile": "rdf11-nquads",
+                  "blankNodeScope": "out",
+                  "quads": [],
+                  "originalSource": ""
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "output": "",
+  "expected": "<urn:s> <urn:p> <urn:x/ > .\n",
+  "status": "known compatibility gap: native absolute-IRI whitespace predicate rejects U+00A0"
+}

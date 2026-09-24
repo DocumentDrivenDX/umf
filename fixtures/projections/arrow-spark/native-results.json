@@ -1,0 +1,1708 @@
+{
+  "pyarrow": "21.0.0",
+  "spark": "4.0.1",
+  "cases": 33,
+  "results": [
+    {
+      "id": "fixed-binary",
+      "sha256": "d2f0cda02c9c4d9407b3c53ff18ee066a7e8dd946689eb3b909c9ccd9ec0a272",
+      "description": "value: fixed_size_binary[8]\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "binary",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "binary",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "binary",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "binary",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "zero-binary",
+      "sha256": "a3219c6d7c19a90e1f86572c5488ddbdeef22ddf6e453ebcef247146e593b496",
+      "description": "value: fixed_size_binary[0]\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "binary",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "binary",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "binary",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "binary",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "large-list",
+      "sha256": "b251dc93cf0faa7e53468178935fcdbae9512e40ca7a86d16b72023a179fe2df",
+      "description": "value: large_list<item: int32 not null>\n  child 0, item: int32 not null\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": {
+                  "type": "array",
+                  "elementType": "integer",
+                  "containsNull": true
+                },
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": {
+                  "type": "array",
+                  "elementType": "integer",
+                  "containsNull": true
+                },
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": {
+                  "type": "array",
+                  "elementType": "integer",
+                  "containsNull": true
+                },
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": {
+                  "type": "array",
+                  "elementType": "integer",
+                  "containsNull": true
+                },
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "fixed-list",
+      "sha256": "0bf82b0c4956f80e19403556b033f5dd36ff5e9bee51cf97594de662c456956e",
+      "description": "value: fixed_size_list<item: int32 not null>[3]\n  child 0, item: int32 not null\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": {
+                  "type": "array",
+                  "elementType": "integer",
+                  "containsNull": true
+                },
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": {
+                  "type": "array",
+                  "elementType": "integer",
+                  "containsNull": true
+                },
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": {
+                  "type": "array",
+                  "elementType": "integer",
+                  "containsNull": true
+                },
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": {
+                  "type": "array",
+                  "elementType": "integer",
+                  "containsNull": true
+                },
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "zero-list",
+      "sha256": "75e1d3399bd7b35f98c40ce6a4eb25620fac11883a51107c90111e2c87b3345f",
+      "description": "value: fixed_size_list<item: int32>[0]\n  child 0, item: int32\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": {
+                  "type": "array",
+                  "elementType": "integer",
+                  "containsNull": true
+                },
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": {
+                  "type": "array",
+                  "elementType": "integer",
+                  "containsNull": true
+                },
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": {
+                  "type": "array",
+                  "elementType": "integer",
+                  "containsNull": true
+                },
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": {
+                  "type": "array",
+                  "elementType": "integer",
+                  "containsNull": true
+                },
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "dictionary",
+      "sha256": "e240241c34257885dc1200b065d47eb2b4fc9089359fb2f7477133b383bd465b",
+      "description": "value: dictionary<values=string, indices=int8, ordered=1>\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "string",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "string",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "string",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "string",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "dictionary-list",
+      "sha256": "5f35ce4e120d3d488409609d0818fe4ad72404e6a308208a324adfe0abde7646",
+      "description": "value: dictionary<values=list<item: int64>, indices=int16, ordered=0>\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": {
+                  "type": "array",
+                  "elementType": "long",
+                  "containsNull": true
+                },
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": {
+                  "type": "array",
+                  "elementType": "long",
+                  "containsNull": true
+                },
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": {
+                  "type": "array",
+                  "elementType": "long",
+                  "containsNull": true
+                },
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": {
+                  "type": "array",
+                  "elementType": "long",
+                  "containsNull": true
+                },
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "uint64",
+      "sha256": "3395d2affcfc16660f1c377c274d466d0da933fe2c8e2af7c75140dde030a952",
+      "description": "value: uint64\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "rejected",
+          "jvm": "not-run"
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "rejected",
+          "jvm": "not-run"
+        }
+      ]
+    },
+    {
+      "id": "float16",
+      "sha256": "33b542d9357892720856a77558c0122da84323dceb00d1730db1bc83248c2288",
+      "description": "value: halffloat\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "rejected",
+          "jvm": "not-run"
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "rejected",
+          "jvm": "not-run"
+        }
+      ]
+    },
+    {
+      "id": "date64",
+      "sha256": "73486985788f7d9b6e99e9fe26134b7810979fa79fd197fff43c531eaf6f48b3",
+      "description": "value: date64[ms]\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "rejected",
+          "jvm": "not-run"
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "rejected",
+          "jvm": "not-run"
+        }
+      ]
+    },
+    {
+      "id": "time32",
+      "sha256": "db26d7b0307f0893baff56d0155e37efbbc1fe32b51474fcfc068c49e4641707",
+      "description": "value: time32[s]\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "rejected",
+          "jvm": "not-run"
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "rejected",
+          "jvm": "not-run"
+        }
+      ]
+    },
+    {
+      "id": "time64",
+      "sha256": "5a1756b8b753689264b35e8bca963171a293d466d4addf6b7716353141d4d540",
+      "description": "value: time64[ns]\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "rejected",
+          "jvm": "not-run"
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "rejected",
+          "jvm": "not-run"
+        }
+      ]
+    },
+    {
+      "id": "decimal32",
+      "sha256": "b0daabfbdf863a604b79c1489941a26cf1f6928dda5b9520d8713af072672330",
+      "description": "value: decimal32(9, 2)\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "decimal(9,2)",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "decimal(9,2)",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "decimal(9,2)",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "decimal(9,2)",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "decimal64",
+      "sha256": "3c745be5566fe3c0d8790a24404517bb0b2f767c696a715751b36467a2150333",
+      "description": "value: decimal64(18, 4)\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "decimal(18,4)",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "decimal(18,4)",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "decimal(18,4)",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "decimal(18,4)",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "decimal256-small",
+      "sha256": "15e77471f5c378d0d8ad0064e53e4754284cdf3b70d5908afc89d1dce3f412b4",
+      "description": "value: decimal256(38, 8)\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "decimal(38,8)",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "decimal(38,8)",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "decimal(38,8)",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "decimal(38,8)",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "decimal256-large",
+      "sha256": "917488520f652f26fc16a7d533a311792aa8e1c6eb141e53a271f6a291d20de0",
+      "description": "value: decimal256(76, 10)\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "decimal(76,10)",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "rejected"
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "decimal(76,10)",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "rejected"
+        }
+      ]
+    },
+    {
+      "id": "decimal-negative",
+      "sha256": "1ec9cef5cc61cca054b419e0eba69e11656a490dc1634402c2cc65b2ca58ea8b",
+      "description": "value: decimal128(10, -2)\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "decimal(10,-2)",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "rejected"
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "decimal(10,-2)",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "rejected"
+        }
+      ]
+    },
+    {
+      "id": "list-view",
+      "sha256": "789e8d19935fd8c18d14354f16511949d9758318e68890d5fbbd9f6bde79ce0b",
+      "description": "value: list_view<item: int32>\n  child 0, item: int32\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "rejected",
+          "jvm": "not-run"
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "rejected",
+          "jvm": "not-run"
+        }
+      ]
+    },
+    {
+      "id": "run-end",
+      "sha256": "e976a1bdd4cc2dff168aa26bb88242be58f1d50b65076e365940f39f56390848",
+      "description": "value: run_end_encoded<run_ends: int16, values: string>\n  child 0, run_ends: int16 not null\n  child 1, values: string\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "rejected",
+          "jvm": "not-run"
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "rejected",
+          "jvm": "not-run"
+        }
+      ]
+    },
+    {
+      "id": "sorted-map",
+      "sha256": "77408ba7b03493a757d1a5a3922debd2fde4e7a8c555a375bc970534d696f781",
+      "description": "value: map<string, int32, keys_sorted>\n  child 0, entries: struct<key: string not null, value: int32> not null\n      child 0, key: string not null\n      child 1, value: int32\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": {
+                  "type": "map",
+                  "keyType": "string",
+                  "valueType": "integer",
+                  "valueContainsNull": true
+                },
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": {
+                  "type": "map",
+                  "keyType": "string",
+                  "valueType": "integer",
+                  "valueContainsNull": true
+                },
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": {
+                  "type": "map",
+                  "keyType": "string",
+                  "valueType": "integer",
+                  "valueContainsNull": true
+                },
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": {
+                  "type": "map",
+                  "keyType": "string",
+                  "valueType": "integer",
+                  "valueContainsNull": true
+                },
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "union",
+      "sha256": "f92b6a1b2f3ae3fd34bfe2bda6b296c6f1e0c745a579e414ec8a2a9256bab427",
+      "description": "value: dense_union<a: int32=0, b: string=1>\n  child 0, a: int32\n  child 1, b: string\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "rejected",
+          "jvm": "not-run"
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "rejected",
+          "jvm": "not-run"
+        }
+      ]
+    },
+    {
+      "id": "timestamp-s",
+      "sha256": "806c8ea683fa3ccb3bdca95f84b262c4363e9bec66d65d906ea001b6ac37dc9e",
+      "description": "value: timestamp[s]\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp_ntz",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp_ntz",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "zoned-s",
+      "sha256": "2c4b81c79e3340ef779ce037ecf191337fdbc6c28ed356c5fb289531bbaaa33a",
+      "description": "value: timestamp[s, tz=America/New_York]\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "duration-s",
+      "sha256": "a2a783593972b12ce6070e5724ba18bb0689d4eb3f7f64f0ff274133c1a18790",
+      "description": "value: duration[s]\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "interval day to second",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "interval day to second",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "interval day to second",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "interval day to second",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "timestamp-ms",
+      "sha256": "0d6ca250987e16258b361fae0ec5dd1e1dd149d031bb41f7dc2c178134e45ffa",
+      "description": "value: timestamp[ms]\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp_ntz",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp_ntz",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "zoned-ms",
+      "sha256": "d215335792c5166bb0fdbc8a4253cde2254ea37f9eec2fc77968371a2191f2be",
+      "description": "value: timestamp[ms, tz=America/New_York]\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "duration-ms",
+      "sha256": "eb38d0e30a8397d05610cad7e7bb88f32c2e7cb235ee552cc1da182395b85a97",
+      "description": "value: duration[ms]\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "interval day to second",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "interval day to second",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "interval day to second",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "interval day to second",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "timestamp-us",
+      "sha256": "cc1e4544d88260e024b1fbc2504de2c25d5428cb52d7e395e87a60e2c8bcbb42",
+      "description": "value: timestamp[us]\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp_ntz",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp_ntz",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "zoned-us",
+      "sha256": "fcf33217f4431eb4f8366b3a9a9b4e442b3a636387dfd32da6dc70d3383efdff",
+      "description": "value: timestamp[us, tz=America/New_York]\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "duration-us",
+      "sha256": "008fc20099151d92731ea23110a95bbb2d179464a29bc5307b2c5c13008ab551",
+      "description": "value: duration[us]\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "interval day to second",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "interval day to second",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "interval day to second",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "interval day to second",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "timestamp-ns",
+      "sha256": "098af08312366b1133d6dfb08ad4a132f456e44a411af32ec1a7ed9c1aabd102",
+      "description": "value: timestamp[ns]\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp_ntz",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp_ntz",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "zoned-ns",
+      "sha256": "86fe54b3f4c95fef3c8d09f0994735dd77848c6ea0e93d90dbee0e89345f8433",
+      "description": "value: timestamp[ns, tz=America/New_York]\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "timestamp",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "duration-ns",
+      "sha256": "b7685ac8fa079b0931bf93aa6ce5782d004a07d4635b77fae9c60f4bb2474a7b",
+      "description": "value: duration[ns]\n  -- field metadata --\n  comment: 'origin'\n-- schema metadata --\nowner: 'example'",
+      "recovery": [
+        {
+          "preferTimestampNtz": false,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "interval day to second",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "interval day to second",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        },
+        {
+          "preferTimestampNtz": true,
+          "python": "accepted",
+          "schema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "interval day to second",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          },
+          "jvm": "accepted",
+          "jvmSchema": {
+            "type": "struct",
+            "fields": [
+              {
+                "name": "value",
+                "type": "interval day to second",
+                "nullable": true,
+                "metadata": {}
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

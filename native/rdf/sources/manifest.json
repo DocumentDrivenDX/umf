@@ -1,0 +1,990 @@
+{
+  "repository": "w3c/rdf-tests",
+  "commit": "369a90d1a60c021b746df2e411da0ff36258a758",
+  "files": [
+    {
+      "path": "native/rdf/sources/LICENSE.md",
+      "upstreamPath": "LICENSE.md",
+      "sha256": "7fa36904d5d6d32848307af7b22d416b708aaa0b98f5c719b26adb5ed3594b2a"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/README",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/README",
+      "sha256": "189b18597a947444ae63df46b18634149522bef0f1e814e4a29edb1926c52475"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/comment_following_triple.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/comment_following_triple.nq",
+      "sha256": "7bc93aab927c978402f0be0051caa3be7762b462a30796c143d5883b831c9584"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/langtagged_string.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/langtagged_string.nq",
+      "sha256": "08b70369b4df811e716fea578a3bb2233dfce2bd398bd95a5ce2e66e2ea6e89b"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/lantag_with_subtag.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/lantag_with_subtag.nq",
+      "sha256": "0c5cfe8a128dacf800543a493f36864d2cbae9c78c7d73b71482d7cab5808d94"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/literal.nq",
+      "sha256": "b24ff4ccb0d509bf31fc58983edae333dc20a1fc28f5f024cd2ab4337cc31c9d"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_all_controls.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/literal_all_controls.nq",
+      "sha256": "eca09eda38ca2d5b54756628156d742ceefebb0d9c7b24dce7f74cd1279efa39"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_all_punctuation.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/literal_all_punctuation.nq",
+      "sha256": "b99e958e7d9ae362ce4407ac50d3e5c58fdde7f5f54a6e0ec602fbfea6bfab27"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_ascii_boundaries.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/literal_ascii_boundaries.nq",
+      "sha256": "e24700bbc82fe8614b94e9d972864fa99adc46314d222e5a6e8745559e3c1671"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_false.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/literal_false.nq",
+      "sha256": "e16f0777ad2d100ba2a7ee615b45168199b0f755893816d15f3ccd52fc10ce0c"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_true.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/literal_true.nq",
+      "sha256": "312b4b59bbdff1c3803c10330d28b4d42fd9f735a1f87556d3f0351898ac1a7e"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_2_dquotes.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/literal_with_2_dquotes.nq",
+      "sha256": "5292dd8326e9660d90995deb386d8228d794810e21b7d164d8b46eda7a8ac520"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_2_squotes.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/literal_with_2_squotes.nq",
+      "sha256": "3bbd0c143a9ac2aa90486ce6f07dcd14326b66bece4ff4bfd858fbc5e52458a2"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_BACKSPACE.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/literal_with_BACKSPACE.nq",
+      "sha256": "022ba512243fca353c1088bcc49709ee93b06aef895dba3633c0dbf03cf86035"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_CARRIAGE_RETURN.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/literal_with_CARRIAGE_RETURN.nq",
+      "sha256": "52e79321258db6a045bf66a1594bfa6c07ad1c95b2ad51fe828cd05b164a33d8"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_CHARACTER_TABULATION.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/literal_with_CHARACTER_TABULATION.nq",
+      "sha256": "2a48d7e65a17be107dd0d54c5f225e8b501cca8bb2f3ec0c3829452bb60773ec"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_FORM_FEED.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/literal_with_FORM_FEED.nq",
+      "sha256": "9b0d574b4747aefd41355c7a183b94043a66d80791bf51877a7ce618981f1512"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_LINE_FEED.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/literal_with_LINE_FEED.nq",
+      "sha256": "60bc9f1c3bcd008161dec78ab52e8f5513e00153bee401d517c1802949e51bac"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_REVERSE_SOLIDUS.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/literal_with_REVERSE_SOLIDUS.nq",
+      "sha256": "b8791ff5811f4e9a396ddc752ae4c1407dced0d891348108b961cbb7e1bb8ab7"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_REVERSE_SOLIDUS2.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/literal_with_REVERSE_SOLIDUS2.nq",
+      "sha256": "122791324b4196f85f723f145f88f7481f6f7e31fa994a42f5f8c46fbfe21814"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_UTF8_boundaries.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/literal_with_UTF8_boundaries.nq",
+      "sha256": "a781b65f4770c37623aa99d8b8b4feb54a4c7979ca66866db1cd96ac60b274bd"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_dquote.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/literal_with_dquote.nq",
+      "sha256": "7aa7f8df1d0e579c485ea39436726b42ac6f4c6c1abab838d6566bc556685fe4"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_numeric_escape4.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/literal_with_numeric_escape4.nq",
+      "sha256": "f2b21cb288c58ba125eea26ce2f82120cccb0e06035292cd81dbd546014d8d10"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_numeric_escape8.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/literal_with_numeric_escape8.nq",
+      "sha256": "c73cbd9986be92229ac70aa4daf2436c90f7a6e3088d723b4e75e27c465c4f7e"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_squote.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/literal_with_squote.nq",
+      "sha256": "3d5df32954cf3948facf821bf4bbff46fdfa6fea9ef43dd960c03fa34a5821ba"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/manifest.ttl",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/manifest.ttl",
+      "sha256": "4c658a4e111adff512e89ff2c39acf9195109592f54711ce06823dac544c62ca"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/minimal_whitespace.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/minimal_whitespace.nq",
+      "sha256": "db4002700fae698d961e5d857cbe2aa927e685739a6894b26dbe43cdb5bd926a"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bad-literal-01.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nq-syntax-bad-literal-01.nq",
+      "sha256": "d2eac89ee71259832699ae78945e2e8635decc5c0778dd2427c75e93aae180d2"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bad-literal-02.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nq-syntax-bad-literal-02.nq",
+      "sha256": "9acb2d095a7170f589418911dab0a7cc70f601238749a267d7602eba3efe4929"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bad-literal-03.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nq-syntax-bad-literal-03.nq",
+      "sha256": "43d18f7b72f278ef573e3027e4803b5474496e638cf6f52925b5baf6a61459b3"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bad-quint-01.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nq-syntax-bad-quint-01.nq",
+      "sha256": "4360655f6cd7be29a7d015b27d260a3c1438ee8a76294b955a3e68545dbc6a8b"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bad-uri-01.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nq-syntax-bad-uri-01.nq",
+      "sha256": "df0196428bc960845aafa5e071784104e165d35db9c35b0ac3bb70b23c4fd5a7"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-01.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nq-syntax-bnode-01.nq",
+      "sha256": "60751d93be5d90a2a4dd201751ed3ed89037104f896c6cbf42bfa624e2d27846"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-02.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nq-syntax-bnode-02.nq",
+      "sha256": "0c35ab823648ff246175ce4eab3b464815d8c1876973f50cc0e2a36080456718"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-03.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nq-syntax-bnode-03.nq",
+      "sha256": "54ebb2067504098ce93fa2dd2e92a2ae083a29c0baa1809d7c14afb08880aac4"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-04.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nq-syntax-bnode-04.nq",
+      "sha256": "a96d701745ad44fb4be3c81cea3b1905ac9019a2922f07dd439ee223117d3c96"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-05.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nq-syntax-bnode-05.nq",
+      "sha256": "4371d4f85f2bf98485934a1eaa42cb4a3cea1b80d81054f906d9a7d235caa183"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-06.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nq-syntax-bnode-06.nq",
+      "sha256": "cd53a7e9f6ebdb8a172a7a8d41ea40a4c33c3cc57a7c2b186113e0bd59bc0307"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-01.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nq-syntax-uri-01.nq",
+      "sha256": "9fd30d11565257f62f148dc803ce5c4dcdf3ec6214d381e516f277a93aad40f9"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-02.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nq-syntax-uri-02.nq",
+      "sha256": "4608dde752011a16c9147bcf32c653c7f708a97b30aff04e5ec558938ee8e599"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-03.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nq-syntax-uri-03.nq",
+      "sha256": "ea0d0569bbe58a28a938d6c5c8c9f4bb8fad350894724dcd5418fcc4264981a6"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-04.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nq-syntax-uri-04.nq",
+      "sha256": "5f49124b71476575b1e0cba984cfa9462698cc3342703ea0cad4979a84872438"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-05.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nq-syntax-uri-05.nq",
+      "sha256": "078fab9d9eb67bf5db6e65ade4d6337fef2d110c45bfad8428b796af8911dee0"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-06.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nq-syntax-uri-06.nq",
+      "sha256": "8754ecd8f879359c6c87d2931f80d6b4788b8380befc1280896f09ee0ed21d72"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-base-01.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-base-01.nq",
+      "sha256": "05ab5912501da0ec73748cef91bc6b873c629094eb79ecd6d434b160fa3e5778"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-bnode-01.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-bnode-01.nq",
+      "sha256": "e58ac55c436ece006c7a2f8610c07d8e00616ae7ad57df4e01bd1c5ad191fb76"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-bnode-02.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-bnode-02.nq",
+      "sha256": "333cfa58acddc80c50ef99a193bef7f0c7e51dce7c9e699cc7a1babd776067b8"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-esc-01.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-esc-01.nq",
+      "sha256": "366e1c21a682311583b1fdedd6246d0a04e0ca42c2279a809ce1b5cb679418f4"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-esc-02.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-esc-02.nq",
+      "sha256": "e5ccb2bf89387577270649a651478b94e109afeeab2a207c26840767860674ab"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-esc-03.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-esc-03.nq",
+      "sha256": "19e2f1cd8e5c31522531155df08be25b19d4a0ec93c0fd485d2a526b9999537b"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-lang-01.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-lang-01.nq",
+      "sha256": "365decd3634dc600d730923008879e32f20c96c9c1fa23bbb8ce330bcaaec3ad"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-num-01.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-num-01.nq",
+      "sha256": "3d38295941b106bf92722198a8d3391666fb0667c47e26fb28601842ae8cc70b"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-num-02.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-num-02.nq",
+      "sha256": "a991fa8c7df1da9f750f74a4b7011e7c162d760d85b93d1ede346df894969141"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-num-03.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-num-03.nq",
+      "sha256": "395958b773e2725f944db38f37f8a3d0614e9e5e5cce7a965c219b5deb23a207"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-prefix-01.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-prefix-01.nq",
+      "sha256": "3736ff179b45cceedc6bb4bb4d07c306cda7fb7fe1aff0505826a1efec9b41b4"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-01.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-01.nq",
+      "sha256": "dbc30d03d90483be77bfb6d095150b799d4e2a8c18466cdf9437d66202ab4d5b"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-02.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-02.nq",
+      "sha256": "a991fa8c7df1da9f750f74a4b7011e7c162d760d85b93d1ede346df894969141"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-03.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-03.nq",
+      "sha256": "5073e6bd39a63a698eeb37dd7b767647ad0daef2429dbc4ce92130e68fedca27"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-04.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-04.nq",
+      "sha256": "e5cb1eee541e057f9164d371cc34adfe76613c6a1f6ec1b52c87ebb9157d559f"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-05.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-05.nq",
+      "sha256": "3a5db3705a0ee9c3abc46dd7ef3149c05964656f28dcce4fab827107b6ea526e"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-06.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-06.nq",
+      "sha256": "88cc9e81f9382caa60dd5f28ea099fff5d8acfa4646e3a3ad43f8ec12ce14831"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-07.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-07.nq",
+      "sha256": "37b2e3f89e2d738e52201d2a051bc6ad08b812e67f1a54594c4c786dbc649f01"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-struct-01.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-struct-01.nq",
+      "sha256": "b47b22bd170f4fad2c6ab07b0861487a4e7bcaf0a14b2efe73a545a2212b3b5d"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-struct-02.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-struct-02.nq",
+      "sha256": "d85123883c1d37366dccba30ee77bb1b3904ddb452b0e9c84efcb708ff44d206"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-01.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-01.nq",
+      "sha256": "e6a67a09ed674ffa339ee2288c31cd8d8dcad4abb891a13dbf4955a5da88d101"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-02.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-02.nq",
+      "sha256": "57eaeb371324c26dbdefeaabdf4ac6f20fe1ad8f9ff95bb617f161204e55f8d1"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-03.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-03.nq",
+      "sha256": "936cf613638ceef845705c51f4f71fdfb908cec6382501e999b288eb8774d045"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-04.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-04.nq",
+      "sha256": "a3ef78da3088c0ca06b0be12db92dccbbd4ce2b2a6b3beba09a35e9b22865c3d"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-05.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-05.nq",
+      "sha256": "4cb3f73ca5ee66549e6b8db3efedc5c6ac802aab42c7b184d107f5fdfd849996"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-06.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-06.nq",
+      "sha256": "90f6d3bd2c30ea91ebde02ffd5628048aa3e7ab905f0fd1801d59ba614c30f9f"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-07.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-07.nq",
+      "sha256": "dbac3363841acb8fb4c3f890d551931406ab545d72947bfe2e9020488f10fe39"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-08.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-08.nq",
+      "sha256": "d70daf4978e45eb34412ec66f2eb19d0c257f9b5374c733376c74cf7bc503801"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-09.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-09.nq",
+      "sha256": "d6d9925fe31f71056a1547f1b343ee9db7345662dcb9b6fc7ec9664bb56887ed"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bnode-01.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bnode-01.nq",
+      "sha256": "6ae9c8aca23725fd44f4c1dad80c16038ef4a88e691bd52ac56eee10712003b5"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bnode-02.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bnode-02.nq",
+      "sha256": "b12f31f7c240cbce86c65c5789057f07a1ae298b5801d3b7159860edf1673091"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bnode-03.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-bnode-03.nq",
+      "sha256": "459e4e4093251dbf35541a1a75d5deefc8bc7b7cf589c7a237feaffa0ba3c625"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-datatypes-01.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-datatypes-01.nq",
+      "sha256": "7b71480482e83de66f00e7a48966a46c72b2e5a88e44721865d733e31442d92d"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-datatypes-02.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-datatypes-02.nq",
+      "sha256": "ef9ca2076776ac02d59e73530bd9de479b069dcce786c5bd5e91c97d3481aef6"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-file-01.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-file-01.nq",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-file-02.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-file-02.nq",
+      "sha256": "f279d5912907607fcbe2e9ad395ef3d5a3a64e6f40827fa2278362e6f2cf041a"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-file-03.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-file-03.nq",
+      "sha256": "9ce8a08abdf58cbc6330e7a2148eb6700c1423d559f2b336f662f299df4bb11a"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-str-esc-01.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-str-esc-01.nq",
+      "sha256": "b7e23350253cb8c14357fee2c9c133b7d9d9ba00daa3c7434379e9c269bc3e93"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-str-esc-02.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-str-esc-02.nq",
+      "sha256": "8422a3250f3c713858aeefda114c81fd3c5d81404cdededf15b30d613722639f"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-str-esc-03.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-str-esc-03.nq",
+      "sha256": "a23a4c7bd491e3197361ba56491a3c6fb28a033b9db423658c2fa4118d98c7e0"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-string-01.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-string-01.nq",
+      "sha256": "3f84b49cf8f2bc778ad5d001ac13c9eca391491337ce64d3ab3be2747943d77d"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-string-02.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-string-02.nq",
+      "sha256": "0c71fa424a1c09b74a933821d769f10ec7fa32296fab982f757af64f1edcffd9"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-string-03.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-string-03.nq",
+      "sha256": "307aa8bba34e8e609ce8d7e4046a0d40412de52b5c89e10f814b3d2e1591bf86"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-subm-01.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-subm-01.nq",
+      "sha256": "f321c10afb7517718d9d14d6ffa9e4a979b64adf0100fcc23c84e4b2d346f628"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-uri-01.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-uri-01.nq",
+      "sha256": "f033b5c657944fc3d258e3698a2ba6c7d149b4213449b2bdf6977ce584e81775"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-uri-02.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-uri-02.nq",
+      "sha256": "5912faf98ce2bc3573d6909c02157d66fc64312347f23aee258a3330947b4ca5"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-uri-03.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-uri-03.nq",
+      "sha256": "0eaacf685b826c90c42f90543ca05367d5a44feeb77254c033083b04c1538d96"
+    },
+    {
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-uri-04.nq",
+      "upstreamPath": "rdf/rdf11/rdf-n-quads/nt-syntax-uri-04.nq",
+      "sha256": "133d87d6aa258252570ffb1bc8cbff9d12ae9d8616f2aba90c584e198203f19b"
+    }
+  ],
+  "cases": [
+    {
+      "id": "nq-syntax-uri-01",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-01.nq"
+    },
+    {
+      "id": "nq-syntax-uri-02",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-02.nq"
+    },
+    {
+      "id": "nq-syntax-uri-03",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-03.nq"
+    },
+    {
+      "id": "nq-syntax-uri-04",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-04.nq"
+    },
+    {
+      "id": "nq-syntax-uri-05",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-05.nq"
+    },
+    {
+      "id": "nq-syntax-uri-06",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-06.nq"
+    },
+    {
+      "id": "nq-syntax-bnode-01",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-01.nq"
+    },
+    {
+      "id": "nq-syntax-bnode-02",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-02.nq"
+    },
+    {
+      "id": "nq-syntax-bnode-03",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-03.nq"
+    },
+    {
+      "id": "nq-syntax-bnode-04",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-04.nq"
+    },
+    {
+      "id": "nq-syntax-bnode-05",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-05.nq"
+    },
+    {
+      "id": "nq-syntax-bnode-06",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-06.nq"
+    },
+    {
+      "id": "nq-syntax-bad-literal-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bad-literal-01.nq"
+    },
+    {
+      "id": "nq-syntax-bad-literal-02",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bad-literal-02.nq"
+    },
+    {
+      "id": "nq-syntax-bad-literal-03",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bad-literal-03.nq"
+    },
+    {
+      "id": "nq-syntax-bad-uri-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bad-uri-01.nq"
+    },
+    {
+      "id": "nq-syntax-bad-quint-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bad-quint-01.nq"
+    },
+    {
+      "id": "nt-syntax-file-01",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-file-01.nq"
+    },
+    {
+      "id": "nt-syntax-file-02",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-file-02.nq"
+    },
+    {
+      "id": "nt-syntax-file-03",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-file-03.nq"
+    },
+    {
+      "id": "nt-syntax-uri-01",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-uri-01.nq"
+    },
+    {
+      "id": "nt-syntax-uri-02",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-uri-02.nq"
+    },
+    {
+      "id": "nt-syntax-uri-03",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-uri-03.nq"
+    },
+    {
+      "id": "nt-syntax-uri-04",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-uri-04.nq"
+    },
+    {
+      "id": "nt-syntax-string-01",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-string-01.nq"
+    },
+    {
+      "id": "nt-syntax-string-02",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-string-02.nq"
+    },
+    {
+      "id": "nt-syntax-string-03",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-string-03.nq"
+    },
+    {
+      "id": "nt-syntax-str-esc-01",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-str-esc-01.nq"
+    },
+    {
+      "id": "nt-syntax-str-esc-02",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-str-esc-02.nq"
+    },
+    {
+      "id": "nt-syntax-str-esc-03",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-str-esc-03.nq"
+    },
+    {
+      "id": "nt-syntax-bnode-01",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bnode-01.nq"
+    },
+    {
+      "id": "nt-syntax-bnode-02",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bnode-02.nq"
+    },
+    {
+      "id": "nt-syntax-bnode-03",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bnode-03.nq"
+    },
+    {
+      "id": "nt-syntax-datatypes-01",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-datatypes-01.nq"
+    },
+    {
+      "id": "nt-syntax-datatypes-02",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-datatypes-02.nq"
+    },
+    {
+      "id": "nt-syntax-bad-uri-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-01.nq"
+    },
+    {
+      "id": "nt-syntax-bad-uri-02",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-02.nq"
+    },
+    {
+      "id": "nt-syntax-bad-uri-03",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-03.nq"
+    },
+    {
+      "id": "nt-syntax-bad-uri-04",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-04.nq"
+    },
+    {
+      "id": "nt-syntax-bad-uri-05",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-05.nq"
+    },
+    {
+      "id": "nt-syntax-bad-uri-06",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-06.nq"
+    },
+    {
+      "id": "nt-syntax-bad-uri-07",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-07.nq"
+    },
+    {
+      "id": "nt-syntax-bad-uri-08",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-08.nq"
+    },
+    {
+      "id": "nt-syntax-bad-uri-09",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-09.nq"
+    },
+    {
+      "id": "nt-syntax-bad-prefix-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-prefix-01.nq"
+    },
+    {
+      "id": "nt-syntax-bad-base-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-base-01.nq"
+    },
+    {
+      "id": "nt-syntax-bad-bnode-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-bnode-01.nq"
+    },
+    {
+      "id": "nt-syntax-bad-bnode-02",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-bnode-02.nq"
+    },
+    {
+      "id": "nt-syntax-bad-struct-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-struct-01.nq"
+    },
+    {
+      "id": "nt-syntax-bad-struct-02",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-struct-02.nq"
+    },
+    {
+      "id": "nt-syntax-bad-lang-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-lang-01.nq"
+    },
+    {
+      "id": "nt-syntax-bad-esc-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-esc-01.nq"
+    },
+    {
+      "id": "nt-syntax-bad-esc-02",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-esc-02.nq"
+    },
+    {
+      "id": "nt-syntax-bad-esc-03",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-esc-03.nq"
+    },
+    {
+      "id": "nt-syntax-bad-string-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-01.nq"
+    },
+    {
+      "id": "nt-syntax-bad-string-02",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-02.nq"
+    },
+    {
+      "id": "nt-syntax-bad-string-03",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-03.nq"
+    },
+    {
+      "id": "nt-syntax-bad-string-04",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-04.nq"
+    },
+    {
+      "id": "nt-syntax-bad-string-05",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-05.nq"
+    },
+    {
+      "id": "nt-syntax-bad-string-06",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-06.nq"
+    },
+    {
+      "id": "nt-syntax-bad-string-07",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-07.nq"
+    },
+    {
+      "id": "nt-syntax-bad-num-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-num-01.nq"
+    },
+    {
+      "id": "nt-syntax-bad-num-02",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-num-02.nq"
+    },
+    {
+      "id": "nt-syntax-bad-num-03",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-num-03.nq"
+    },
+    {
+      "id": "nt-syntax-subm-01",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-subm-01.nq"
+    },
+    {
+      "id": "comment_following_triple",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/comment_following_triple.nq"
+    },
+    {
+      "id": "literal",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal.nq"
+    },
+    {
+      "id": "literal_all_controls",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_all_controls.nq"
+    },
+    {
+      "id": "literal_all_punctuation",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_all_punctuation.nq"
+    },
+    {
+      "id": "literal_ascii_boundaries",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_ascii_boundaries.nq"
+    },
+    {
+      "id": "literal_with_2_dquotes",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_2_dquotes.nq"
+    },
+    {
+      "id": "literal_with_2_squotes",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_2_squotes.nq"
+    },
+    {
+      "id": "literal_with_BACKSPACE",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_BACKSPACE.nq"
+    },
+    {
+      "id": "literal_with_CARRIAGE_RETURN",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_CARRIAGE_RETURN.nq"
+    },
+    {
+      "id": "literal_with_CHARACTER_TABULATION",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_CHARACTER_TABULATION.nq"
+    },
+    {
+      "id": "literal_with_dquote",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_dquote.nq"
+    },
+    {
+      "id": "literal_with_FORM_FEED",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_FORM_FEED.nq"
+    },
+    {
+      "id": "literal_with_LINE_FEED",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_LINE_FEED.nq"
+    },
+    {
+      "id": "literal_with_numeric_escape4",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_numeric_escape4.nq"
+    },
+    {
+      "id": "literal_with_numeric_escape8",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_numeric_escape8.nq"
+    },
+    {
+      "id": "literal_with_REVERSE_SOLIDUS",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_REVERSE_SOLIDUS.nq"
+    },
+    {
+      "id": "literal_with_REVERSE_SOLIDUS2",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_REVERSE_SOLIDUS2.nq"
+    },
+    {
+      "id": "literal_with_squote",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_squote.nq"
+    },
+    {
+      "id": "literal_with_UTF8_boundaries",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_UTF8_boundaries.nq"
+    },
+    {
+      "id": "langtagged_string",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/langtagged_string.nq"
+    },
+    {
+      "id": "lantag_with_subtag",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/lantag_with_subtag.nq"
+    },
+    {
+      "id": "minimal_whitespace",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/minimal_whitespace.nq"
+    }
+  ]
+}

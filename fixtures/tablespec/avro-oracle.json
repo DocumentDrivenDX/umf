@@ -1,0 +1,51 @@
+{
+  "avro": "1.12.0",
+  "fastavro": "1.12.2",
+  "cases": [
+    {
+      "id": "authored",
+      "format": "json",
+      "bytes": 78,
+      "normalizedValuesAgree": true,
+      "localTimestampReturnTypes": [
+        "int",
+        "datetime"
+      ]
+    },
+    {
+      "id": "authored",
+      "format": "yaml",
+      "bytes": 78,
+      "normalizedValuesAgree": true,
+      "localTimestampReturnTypes": [
+        "int",
+        "datetime"
+      ]
+    },
+    {
+      "id": "providers",
+      "format": "json",
+      "bytes": 21,
+      "normalizedValuesAgree": true,
+      "localTimestampReturnTypes": [
+        "NoneType",
+        "NoneType"
+      ]
+    },
+    {
+      "id": "providers",
+      "format": "yaml",
+      "bytes": 21,
+      "normalizedValuesAgree": true,
+      "localTimestampReturnTypes": [
+        "NoneType",
+        "NoneType"
+      ]
+    }
+  ],
+  "warnings": [
+    "Unknown local-timestamp-micros, using long."
+  ],
+  "targetAcceptsWrongEmbeddingDimension": true,
+  "scope": "Target binary/value evidence. Python implementations expose local timestamps differently; normalize only the declared local-time field to exact epoch microseconds. int64 selection exceeds the pinned Spark INTEGER width; no native data conversion claimed."
+}

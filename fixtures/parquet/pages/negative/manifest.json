@@ -1,0 +1,112 @@
+{
+  "cases": [
+    {
+      "id": "valid-v1",
+      "path": "fixtures/parquet/pages/negative/valid-v1.parquet",
+      "expected": "checked",
+      "native": "accepted"
+    },
+    {
+      "id": "valid-v2",
+      "path": "fixtures/parquet/pages/negative/valid-v2.parquet",
+      "expected": "checked",
+      "native": "accepted"
+    },
+    {
+      "id": "negative-uncompressed",
+      "path": "fixtures/parquet/pages/negative/negative-uncompressed.parquet",
+      "expected": "blocked",
+      "native": "rejected"
+    },
+    {
+      "id": "huge-uncompressed",
+      "path": "fixtures/parquet/pages/negative/huge-uncompressed.parquet",
+      "expected": "blocked",
+      "native": "accepted"
+    },
+    {
+      "id": "negative-compressed",
+      "path": "fixtures/parquet/pages/negative/negative-compressed.parquet",
+      "expected": "blocked",
+      "native": "rejected"
+    },
+    {
+      "id": "body-beyond-chunk",
+      "path": "fixtures/parquet/pages/negative/body-beyond-chunk.parquet",
+      "expected": "blocked",
+      "native": "rejected"
+    },
+    {
+      "id": "unknown-page-type",
+      "path": "fixtures/parquet/pages/negative/unknown-page-type.parquet",
+      "expected": "blocked",
+      "native": "accepted"
+    },
+    {
+      "id": "huge-value-count",
+      "path": "fixtures/parquet/pages/negative/huge-value-count.parquet",
+      "expected": "blocked",
+      "native": "rejected"
+    },
+    {
+      "id": "dictionary-without-dictionary",
+      "path": "fixtures/parquet/pages/negative/dictionary-without-dictionary.parquet",
+      "expected": "blocked",
+      "native": "rejected"
+    },
+    {
+      "id": "mismatched-value-total",
+      "path": "fixtures/parquet/pages/negative/mismatched-value-total.parquet",
+      "expected": "blocked",
+      "native": "accepted"
+    },
+    {
+      "id": "mismatched-uncompressed-total",
+      "path": "fixtures/parquet/pages/negative/mismatched-uncompressed-total.parquet",
+      "expected": "blocked",
+      "native": "accepted"
+    },
+    {
+      "id": "offset-outside",
+      "path": "fixtures/parquet/pages/negative/offset-outside.parquet",
+      "expected": "blocked",
+      "native": "rejected"
+    },
+    {
+      "id": "truncated-header",
+      "path": "fixtures/parquet/pages/negative/truncated-header.parquet",
+      "expected": "blocked",
+      "native": "rejected"
+    },
+    {
+      "id": "v2-null-count",
+      "path": "fixtures/parquet/pages/negative/v2-null-count.parquet",
+      "expected": "blocked",
+      "native": "accepted"
+    },
+    {
+      "id": "v2-level-length",
+      "path": "fixtures/parquet/pages/negative/v2-level-length.parquet",
+      "expected": "blocked",
+      "native": "rejected"
+    },
+    {
+      "id": "v2-row-count",
+      "path": "fixtures/parquet/pages/negative/v2-row-count.parquet",
+      "expected": "blocked",
+      "native": "accepted"
+    },
+    {
+      "id": "overlapping-chunks",
+      "path": "fixtures/parquet/pages/negative/overlapping-chunks.parquet",
+      "expected": "blocked",
+      "native": "accepted"
+    },
+    {
+      "id": "payload-corruption-not-inspected",
+      "path": "fixtures/parquet/pages/negative/payload-corruption-not-inspected.parquet",
+      "expected": "checked",
+      "native": "rejected"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+_:Nefa2a445bb1948ee88077b1f5d6e436e <http://www.w3.org/ns/shacl#result> _:N4487359ee4fe4372ac51e5759a578deb .
+_:N4487359ee4fe4372ac51e5759a578deb <http://www.w3.org/ns/shacl#resultMessage> "Value does not match pattern 'Joh'" .
+_:Nefa2a445bb1948ee88077b1f5d6e436e <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N4487359ee4fe4372ac51e5759a578deb <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/pattern-001.test#TestShape-property> .
+_:N28e92ec584c34282a238cadf66f5fbba <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N4487359ee4fe4372ac51e5759a578deb <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#PatternConstraintComponent> .
+_:N4487359ee4fe4372ac51e5759a578deb <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/pattern-001.test#InvalidInstance2> .
+_:N28e92ec584c34282a238cadf66f5fbba <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/pattern-001.test#property> .
+_:N4487359ee4fe4372ac51e5759a578deb <http://www.w3.org/ns/shacl#value> "john" .
+_:N28e92ec584c34282a238cadf66f5fbba <http://www.w3.org/ns/shacl#resultMessage> "Value does not match pattern 'Joh'" .
+_:N4487359ee4fe4372ac51e5759a578deb <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N28e92ec584c34282a238cadf66f5fbba <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N28e92ec584c34282a238cadf66f5fbba <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/pattern-001.test#InvalidInstance1> .
+_:Nefa2a445bb1948ee88077b1f5d6e436e <http://www.w3.org/ns/shacl#result> _:N28e92ec584c34282a238cadf66f5fbba .
+_:Nefa2a445bb1948ee88077b1f5d6e436e <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N4487359ee4fe4372ac51e5759a578deb <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/pattern-001.test#property> .
+_:N28e92ec584c34282a238cadf66f5fbba <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#PatternConstraintComponent> .
+_:N4487359ee4fe4372ac51e5759a578deb <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N28e92ec584c34282a238cadf66f5fbba <http://www.w3.org/ns/shacl#value> "Maria" .
+_:N28e92ec584c34282a238cadf66f5fbba <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/pattern-001.test#TestShape-property> .

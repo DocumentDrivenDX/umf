@@ -1,0 +1,57 @@
+{
+  "runtime": {
+    "dbt-core": "1.10.0",
+    "dbt-duckdb": "1.9.3",
+    "dbt-adapters": "1.16.3",
+    "dbt-common": "1.27.1",
+    "duckdb": "1.5.5",
+    "jsonschema": "4.25.1"
+  },
+  "command": [
+    "/home/erik/Projects/umf/.cache/dbt-venv/bin/dbt",
+    "build",
+    "--project-dir",
+    "/home/erik/Projects/umf/native/dbt/project",
+    "--profiles-dir",
+    "/home/erik/Projects/umf/native/dbt/project",
+    "--target-path",
+    "/home/erik/Projects/umf/.cache/dbt-target",
+    "--log-path",
+    "/home/erik/Projects/umf/.cache/dbt-logs"
+  ],
+  "files": [
+    {
+      "path": "native/dbt/project/dbt_project.yml",
+      "sha256": "6f8143601394a732126500476037da1895c071588d31f5cf79d438c0c7eebcf5"
+    },
+    {
+      "path": "native/dbt/project/models/order_totals.sql",
+      "sha256": "f3ceb620cdeeaa07a39e11c7ec627a462dde7eb3a40c36c6bcc967ed5f403daa"
+    },
+    {
+      "path": "native/dbt/project/models/schema.yml",
+      "sha256": "dd3b6677d57c2b1b1db8901c71ad7500305c5b3e59811a1635a50ace3ba279dd"
+    },
+    {
+      "path": "native/dbt/project/profiles.yml",
+      "sha256": "c3059c76db02a584240989d09d8ae1ff8b5595f088c679bd24b08be679763437"
+    },
+    {
+      "path": "native/dbt/project/seeds/orders.csv",
+      "sha256": "fcde59d7f51aad037c8c0cca42e61e99cbec9cae1706a06736b025369869c113"
+    },
+    {
+      "path": "fixtures/dbt/manifest.json",
+      "sha256": "11a84dcfa848c4603fd1a13faf5033e8fc5d8499246e247ec28cf58cb0d747d8"
+    },
+    {
+      "path": "fixtures/dbt/build-run-results.json",
+      "sha256": "db87029ef1107ae291fbb91ba79ff67f5deb5ec6995bda03bdf69db65cc9c10e"
+    },
+    {
+      "path": "native/dbt/oracle-requirements.txt",
+      "sha256": "4d47968c46440c839ba8abf847902ab5069ceda478c4674bf3312d81f54d6675"
+    }
+  ],
+  "scope": "Synthetic in-memory DuckDB build, anonymous usage disabled; timestamps/UUIDs are captured rather than normalized"
+}

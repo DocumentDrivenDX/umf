@@ -1,0 +1,879 @@
+{
+  "oracle": "Python minidom/Expat + RDFLib 7.6.0",
+  "scope": "Expanded element/attribute names, attribute values, coalesced character data, comments and PIs; excludes unused namespace bindings and QName-valued text interpretation",
+  "results": [
+    {
+      "id": "literal-inherited-prefix",
+      "profile": "finalized",
+      "agrees": false,
+      "error": "not well-formed (invalid token): line 1, column 27",
+      "expected": [
+        [
+          "element",
+          "https://example.org/",
+          "b",
+          [
+            [
+              "https://example.org/",
+              "attr",
+              "a&b"
+            ]
+          ],
+          [
+            [
+              "text",
+              "\u96ea"
+            ]
+          ]
+        ]
+      ],
+      "actual": null
+    },
+    {
+      "id": "literal-inherited-prefix",
+      "profile": "literal-repair",
+      "agrees": true,
+      "error": null,
+      "expected": [
+        [
+          "element",
+          "https://example.org/",
+          "b",
+          [
+            [
+              "https://example.org/",
+              "attr",
+              "a&b"
+            ]
+          ],
+          [
+            [
+              "text",
+              "\u96ea"
+            ]
+          ]
+        ]
+      ],
+      "actual": [
+        [
+          "element",
+          "https://example.org/",
+          "b",
+          [
+            [
+              "https://example.org/",
+              "attr",
+              "a&b"
+            ]
+          ],
+          [
+            [
+              "text",
+              "\u96ea"
+            ]
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "literal-escaped-text",
+      "profile": "finalized",
+      "agrees": false,
+      "error": "not well-formed (invalid token): line 1, column 12",
+      "expected": [
+        [
+          "text",
+          "a&b<c>d"
+        ]
+      ],
+      "actual": null
+    },
+    {
+      "id": "literal-escaped-text",
+      "profile": "literal-repair",
+      "agrees": true,
+      "error": null,
+      "expected": [
+        [
+          "text",
+          "a&b<c>d"
+        ]
+      ],
+      "actual": [
+        [
+          "text",
+          "a&b<c>d"
+        ]
+      ]
+    },
+    {
+      "id": "literal-attribute-quotes",
+      "profile": "finalized",
+      "agrees": false,
+      "error": "not well-formed (invalid token): line 1, column 16",
+      "expected": [
+        [
+          "element",
+          "",
+          "b",
+          [
+            [
+              "",
+              "a",
+              "\"&<\t\n\r"
+            ]
+          ],
+          []
+        ]
+      ],
+      "actual": null
+    },
+    {
+      "id": "literal-attribute-quotes",
+      "profile": "literal-repair",
+      "agrees": true,
+      "error": null,
+      "expected": [
+        [
+          "element",
+          "",
+          "b",
+          [
+            [
+              "",
+              "a",
+              "\"&<\t\n\r"
+            ]
+          ],
+          []
+        ]
+      ],
+      "actual": [
+        [
+          "element",
+          "",
+          "b",
+          [
+            [
+              "",
+              "a",
+              "\"&<\t\n\r"
+            ]
+          ],
+          []
+        ]
+      ]
+    },
+    {
+      "id": "literal-cdata",
+      "profile": "finalized",
+      "agrees": false,
+      "error": "not well-formed (invalid token): line 1, column 12",
+      "expected": [
+        [
+          "text",
+          "a<b&ctail"
+        ]
+      ],
+      "actual": null
+    },
+    {
+      "id": "literal-cdata",
+      "profile": "literal-repair",
+      "agrees": true,
+      "error": null,
+      "expected": [
+        [
+          "text",
+          "a<b&ctail"
+        ]
+      ],
+      "actual": [
+        [
+          "text",
+          "a<b&ctail"
+        ]
+      ]
+    },
+    {
+      "id": "literal-comments",
+      "profile": "finalized",
+      "agrees": false,
+      "error": null,
+      "expected": [
+        [
+          "text",
+          "before"
+        ],
+        [
+          "comment",
+          " retained "
+        ],
+        [
+          "text",
+          "after"
+        ]
+      ],
+      "actual": [
+        [
+          "text",
+          "beforeafter"
+        ]
+      ]
+    },
+    {
+      "id": "literal-comments",
+      "profile": "literal-repair",
+      "agrees": true,
+      "error": null,
+      "expected": [
+        [
+          "text",
+          "before"
+        ],
+        [
+          "comment",
+          " retained "
+        ],
+        [
+          "text",
+          "after"
+        ]
+      ],
+      "actual": [
+        [
+          "text",
+          "before"
+        ],
+        [
+          "comment",
+          " retained "
+        ],
+        [
+          "text",
+          "after"
+        ]
+      ]
+    },
+    {
+      "id": "literal-processing-instruction",
+      "profile": "finalized",
+      "agrees": false,
+      "error": null,
+      "expected": [
+        [
+          "pi",
+          "render",
+          "mode=\"x\""
+        ],
+        [
+          "element",
+          "",
+          "b",
+          [],
+          []
+        ]
+      ],
+      "actual": [
+        [
+          "element",
+          "",
+          "b",
+          [],
+          []
+        ]
+      ]
+    },
+    {
+      "id": "literal-processing-instruction",
+      "profile": "literal-repair",
+      "agrees": true,
+      "error": null,
+      "expected": [
+        [
+          "pi",
+          "render",
+          "mode=\"x\""
+        ],
+        [
+          "element",
+          "",
+          "b",
+          [],
+          []
+        ]
+      ],
+      "actual": [
+        [
+          "pi",
+          "render",
+          "mode=\"x\""
+        ],
+        [
+          "element",
+          "",
+          "b",
+          [],
+          []
+        ]
+      ]
+    },
+    {
+      "id": "literal-rebound-prefix",
+      "profile": "finalized",
+      "agrees": false,
+      "error": "unbound prefix: line 1, column 52",
+      "expected": [
+        [
+          "element",
+          "urn:inner:",
+          "a",
+          [],
+          [
+            [
+              "element",
+              "urn:inner:",
+              "b",
+              [],
+              []
+            ]
+          ]
+        ],
+        [
+          "element",
+          "urn:outer:",
+          "c",
+          [],
+          []
+        ]
+      ],
+      "actual": null
+    },
+    {
+      "id": "literal-rebound-prefix",
+      "profile": "literal-repair",
+      "agrees": true,
+      "error": null,
+      "expected": [
+        [
+          "element",
+          "urn:inner:",
+          "a",
+          [],
+          [
+            [
+              "element",
+              "urn:inner:",
+              "b",
+              [],
+              []
+            ]
+          ]
+        ],
+        [
+          "element",
+          "urn:outer:",
+          "c",
+          [],
+          []
+        ]
+      ],
+      "actual": [
+        [
+          "element",
+          "urn:inner:",
+          "a",
+          [],
+          [
+            [
+              "element",
+              "urn:inner:",
+              "b",
+              [],
+              []
+            ]
+          ]
+        ],
+        [
+          "element",
+          "urn:outer:",
+          "c",
+          [],
+          []
+        ]
+      ]
+    },
+    {
+      "id": "literal-default-namespace",
+      "profile": "finalized",
+      "agrees": true,
+      "error": null,
+      "expected": [
+        [
+          "element",
+          "urn:inner:",
+          "a",
+          [],
+          [
+            [
+              "element",
+              "urn:inner:",
+              "b",
+              [],
+              []
+            ],
+            [
+              "element",
+              "",
+              "c",
+              [],
+              [
+                [
+                  "element",
+                  "",
+                  "d",
+                  [],
+                  []
+                ]
+              ]
+            ],
+            [
+              "element",
+              "urn:inner:",
+              "e",
+              [],
+              []
+            ]
+          ]
+        ]
+      ],
+      "actual": [
+        [
+          "element",
+          "urn:inner:",
+          "a",
+          [],
+          [
+            [
+              "element",
+              "urn:inner:",
+              "b",
+              [],
+              []
+            ],
+            [
+              "element",
+              "",
+              "c",
+              [],
+              [
+                [
+                  "element",
+                  "",
+                  "d",
+                  [],
+                  []
+                ]
+              ]
+            ],
+            [
+              "element",
+              "urn:inner:",
+              "e",
+              [],
+              []
+            ]
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "literal-default-namespace",
+      "profile": "literal-repair",
+      "agrees": true,
+      "error": null,
+      "expected": [
+        [
+          "element",
+          "urn:inner:",
+          "a",
+          [],
+          [
+            [
+              "element",
+              "urn:inner:",
+              "b",
+              [],
+              []
+            ],
+            [
+              "element",
+              "",
+              "c",
+              [],
+              [
+                [
+                  "element",
+                  "",
+                  "d",
+                  [],
+                  []
+                ]
+              ]
+            ],
+            [
+              "element",
+              "urn:inner:",
+              "e",
+              [],
+              []
+            ]
+          ]
+        ]
+      ],
+      "actual": [
+        [
+          "element",
+          "urn:inner:",
+          "a",
+          [],
+          [
+            [
+              "element",
+              "urn:inner:",
+              "b",
+              [],
+              []
+            ],
+            [
+              "element",
+              "",
+              "c",
+              [],
+              [
+                [
+                  "element",
+                  "",
+                  "d",
+                  [],
+                  []
+                ]
+              ]
+            ],
+            [
+              "element",
+              "urn:inner:",
+              "e",
+              [],
+              []
+            ]
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "literal-attribute-prefix",
+      "profile": "finalized",
+      "agrees": false,
+      "error": "unbound prefix: line 1, column 9",
+      "expected": [
+        [
+          "element",
+          "",
+          "b",
+          [
+            [
+              "urn:outer:",
+              "attr",
+              "v"
+            ]
+          ],
+          []
+        ]
+      ],
+      "actual": null
+    },
+    {
+      "id": "literal-attribute-prefix",
+      "profile": "literal-repair",
+      "agrees": true,
+      "error": null,
+      "expected": [
+        [
+          "element",
+          "",
+          "b",
+          [
+            [
+              "urn:outer:",
+              "attr",
+              "v"
+            ]
+          ],
+          []
+        ]
+      ],
+      "actual": [
+        [
+          "element",
+          "",
+          "b",
+          [
+            [
+              "urn:outer:",
+              "attr",
+              "v"
+            ]
+          ],
+          []
+        ]
+      ]
+    },
+    {
+      "id": "literal-explicit-unused-namespace",
+      "profile": "finalized",
+      "agrees": true,
+      "error": null,
+      "expected": [
+        [
+          "element",
+          "",
+          "b",
+          [],
+          []
+        ]
+      ],
+      "actual": [
+        [
+          "element",
+          "",
+          "b",
+          [],
+          []
+        ]
+      ]
+    },
+    {
+      "id": "literal-explicit-unused-namespace",
+      "profile": "literal-repair",
+      "agrees": true,
+      "error": null,
+      "expected": [
+        [
+          "element",
+          "",
+          "b",
+          [],
+          []
+        ]
+      ],
+      "actual": [
+        [
+          "element",
+          "",
+          "b",
+          [],
+          []
+        ]
+      ]
+    },
+    {
+      "id": "literal-siblings",
+      "profile": "finalized",
+      "agrees": false,
+      "error": "unbound prefix: line 1, column 9",
+      "expected": [
+        [
+          "element",
+          "urn:outer:",
+          "a",
+          [],
+          []
+        ],
+        [
+          "element",
+          "urn:outer:",
+          "b",
+          [],
+          []
+        ]
+      ],
+      "actual": null
+    },
+    {
+      "id": "literal-siblings",
+      "profile": "literal-repair",
+      "agrees": true,
+      "error": null,
+      "expected": [
+        [
+          "element",
+          "urn:outer:",
+          "a",
+          [],
+          []
+        ],
+        [
+          "element",
+          "urn:outer:",
+          "b",
+          [],
+          []
+        ]
+      ],
+      "actual": [
+        [
+          "element",
+          "urn:outer:",
+          "a",
+          [],
+          []
+        ],
+        [
+          "element",
+          "urn:outer:",
+          "b",
+          [],
+          []
+        ]
+      ]
+    },
+    {
+      "id": "literal-nested-redeclaration",
+      "profile": "finalized",
+      "agrees": false,
+      "error": "unbound prefix: line 1, column 9",
+      "expected": [
+        [
+          "element",
+          "urn:outer:",
+          "a",
+          [],
+          [
+            [
+              "element",
+              "urn:inner:",
+              "b",
+              [],
+              []
+            ],
+            [
+              "element",
+              "urn:outer:",
+              "c",
+              [],
+              []
+            ]
+          ]
+        ]
+      ],
+      "actual": null
+    },
+    {
+      "id": "literal-nested-redeclaration",
+      "profile": "literal-repair",
+      "agrees": true,
+      "error": null,
+      "expected": [
+        [
+          "element",
+          "urn:outer:",
+          "a",
+          [],
+          [
+            [
+              "element",
+              "urn:inner:",
+              "b",
+              [],
+              []
+            ],
+            [
+              "element",
+              "urn:outer:",
+              "c",
+              [],
+              []
+            ]
+          ]
+        ]
+      ],
+      "actual": [
+        [
+          "element",
+          "urn:outer:",
+          "a",
+          [],
+          [
+            [
+              "element",
+              "urn:inner:",
+              "b",
+              [],
+              []
+            ],
+            [
+              "element",
+              "urn:outer:",
+              "c",
+              [],
+              []
+            ]
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "literal-carriage-return",
+      "profile": "finalized",
+      "agrees": false,
+      "error": null,
+      "expected": [
+        [
+          "text",
+          "a\rb"
+        ]
+      ],
+      "actual": [
+        [
+          "text",
+          "a\nb"
+        ]
+      ]
+    },
+    {
+      "id": "literal-carriage-return",
+      "profile": "literal-repair",
+      "agrees": true,
+      "error": null,
+      "expected": [
+        [
+          "text",
+          "a\rb"
+        ]
+      ],
+      "actual": [
+        [
+          "text",
+          "a\rb"
+        ]
+      ]
+    },
+    {
+      "id": "literal-empty-literal",
+      "profile": "finalized",
+      "agrees": true,
+      "error": null,
+      "expected": [],
+      "actual": []
+    },
+    {
+      "id": "literal-empty-literal",
+      "profile": "literal-repair",
+      "agrees": true,
+      "error": null,
+      "expected": [],
+      "actual": []
+    }
+  ]
+}

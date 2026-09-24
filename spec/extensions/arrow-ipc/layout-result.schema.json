@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:arrow-ipc-layout:0.1.0",
+  "description": "IPC boundary inspection. Accounted bytes are not a native semantic validity assertion. Core document references resolve against spec/core/schema.json.",
+  "type": "object",
+  "properties": {
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "format": {
+      "enum": [
+        "stream",
+        "file"
+      ]
+    },
+    "complete": {
+      "const": false
+    },
+    "bytesAccountedFor": {
+      "type": "boolean"
+    },
+    "frames": {
+      "type": "array",
+      "maxItems": 1024,
+      "items": {
+        "type": "object",
+        "properties": {
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "prefixLength": {
+            "enum": [
+              4,
+              8
+            ]
+          },
+          "metadataOffset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "metadataLength": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "bodyOffset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "bodyLength": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "kind": {
+            "enum": [
+              "NONE",
+              "Schema",
+              "DictionaryBatch",
+              "RecordBatch",
+              "Tensor",
+              "SparseTensor"
+            ]
+          },
+          "metadata": {
+            "$ref": "urn:umf:core:0.1.0"
+          }
+        },
+        "required": [
+          "offset",
+          "prefixLength",
+          "metadataOffset",
+          "metadataLength",
+          "bodyOffset",
+          "bodyLength",
+          "kind",
+          "metadata"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "footer": {
+      "type": "object",
+      "properties": {
+        "offset": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "length": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "metadata": {
+          "$ref": "urn:umf:core:0.1.0"
+        }
+      },
+      "required": [
+        "offset",
+        "length",
+        "metadata"
+      ],
+      "additionalProperties": false
+    },
+    "eosOffset": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+    },
+    "consumed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+    },
+    "trailingBytes": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1000000
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "path",
+          "severity",
+          "message"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "source",
+    "format",
+    "complete",
+    "bytesAccountedFor",
+    "frames",
+    "consumed",
+    "trailingBytes",
+    "diagnostics"
+  ],
+  "additionalProperties": false
+}

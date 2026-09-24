@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:typespec:compiler-report:0.1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "compiler",
+    "valid",
+    "complete",
+    "diagnostics",
+    "limitations",
+    "libraries"
+  ],
+  "properties": {
+    "compiler": {
+      "const": "@typespec/compiler@1.16.0"
+    },
+    "valid": {
+      "type": "boolean"
+    },
+    "complete": {
+      "const": false
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "severity",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string"
+          },
+          "start": {
+            "type": "integer"
+          },
+          "end": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "libraries": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  }
+}

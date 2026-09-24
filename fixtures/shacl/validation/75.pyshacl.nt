@@ -1,0 +1,11 @@
+_:Nc07f82c25fe347419f6b2076e0241660 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Nc5cb6654cb094c96abc0c986c2aaa01c <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/minLength-001.test#InvalidInstance1> .
+_:Nc5cb6654cb094c96abc0c986c2aaa01c <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/minLength-001.test#testProperty> .
+_:Nc5cb6654cb094c96abc0c986c2aaa01c <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/minLength-001.test#TestShape-testProperty> .
+_:Nc5cb6654cb094c96abc0c986c2aaa01c <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nc5cb6654cb094c96abc0c986c2aaa01c <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nc5cb6654cb094c96abc0c986c2aaa01c <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinLengthConstraintComponent> .
+_:Nc07f82c25fe347419f6b2076e0241660 <http://www.w3.org/ns/shacl#result> _:Nc5cb6654cb094c96abc0c986c2aaa01c .
+_:Nc5cb6654cb094c96abc0c986c2aaa01c <http://www.w3.org/ns/shacl#value> "A" .
+_:Nc07f82c25fe347419f6b2076e0241660 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Nc5cb6654cb094c96abc0c986c2aaa01c <http://www.w3.org/ns/shacl#resultMessage> "String length not >= Literal(\"2\", datatype=xsd:integer)" .

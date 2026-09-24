@@ -1,0 +1,46 @@
+{
+  "modelSha256": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b",
+  "cases": [
+    {
+      "sourceKind": "postgresql",
+      "columns": 20,
+      "recoveries": 2,
+      "stageIssues": {
+        "sourceToAvro": 24,
+        "avroToTableSpec": 39
+      },
+      "nativeTargetModelsAgree": true
+    },
+    {
+      "sourceKind": "sqlserver",
+      "columns": 30,
+      "recoveries": 2,
+      "stageIssues": {
+        "sourceToAvro": 32,
+        "avroToTableSpec": 50
+      },
+      "nativeTargetModelsAgree": true
+    },
+    {
+      "sourceKind": "parquet",
+      "columns": 13,
+      "recoveries": 2,
+      "stageIssues": {
+        "sourceToAvro": 23,
+        "avroToTableSpec": 32
+      },
+      "nativeTargetModelsAgree": true
+    },
+    {
+      "sourceKind": "sqlserver-indexes",
+      "columns": 4,
+      "recoveries": 2,
+      "stageIssues": {
+        "sourceToAvro": 9,
+        "avroToTableSpec": 5
+      },
+      "nativeTargetModelsAgree": true
+    }
+  ],
+  "scope": "Pinned TableSpec schema-model validation of composed outputs and issue-chain consistency; original native source/Avro evidence remains scoped to each stage contract. No composed row encoder or full semantic equivalence."
+}

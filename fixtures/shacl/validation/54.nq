@@ -1,0 +1,20 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b19466 .
+_:report <http://www.w3.org/ns/shacl#result> _:b19467 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b19466 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b19466 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b19466 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:b19466 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/datatype-001.test#TestShape-dateProperty> .
+_:b19466 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/datatype-001.test#InvalidResource1> .
+_:b19466 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/datatype-001.test#dateProperty> .
+_:b19466 <http://www.w3.org/ns/shacl#value> "2011-01-01"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+_:b19466 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have datatype <http://www.w3.org/2001/XMLSchema#date>" .
+_:b19467 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b19467 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b19467 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:b19467 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/datatype-001.test#TestShape-integerProperty> .
+_:b19467 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/datatype-001.test#InvalidResource1> .
+_:b19467 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/datatype-001.test#integerProperty> .
+_:b19467 <http://www.w3.org/ns/shacl#value> "11.1"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+_:b19467 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have datatype <http://www.w3.org/2001/XMLSchema#integer>" .

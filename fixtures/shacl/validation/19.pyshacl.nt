@@ -1,0 +1,10 @@
+_:Nd0a215db51544793b9cb06336c7fc3d8 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Ndf5be56939ae4cceb44c12403ad22671 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Ndf5be56939ae4cceb44c12403ad22671 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#InConstraintComponent> .
+_:Nd0a215db51544793b9cb06336c7fc3d8 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Ndf5be56939ae4cceb44c12403ad22671 <http://www.w3.org/ns/shacl#resultMessage> "Value ex:InvalidInstance not in list ['ex:Red', 'ex:Yellow', 'ex:Green']" .
+_:Ndf5be56939ae4cceb44c12403ad22671 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/in-001.test#TestShape> .
+_:Nd0a215db51544793b9cb06336c7fc3d8 <http://www.w3.org/ns/shacl#result> _:Ndf5be56939ae4cceb44c12403ad22671 .
+_:Ndf5be56939ae4cceb44c12403ad22671 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/in-001.test#InvalidInstance> .
+_:Ndf5be56939ae4cceb44c12403ad22671 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Ndf5be56939ae4cceb44c12403ad22671 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/in-001.test#InvalidInstance> .

@@ -1,0 +1,40 @@
+version: "1.0"
+table_name: Providers
+description: Healthcare provider directory
+columns:
+  - name: provider_id
+    data_type: VARCHAR
+    length: 20
+    description: Unique provider identifier
+    nullable:
+      MD: false
+      MP: false
+      ME: false
+  - name: provider_name
+    data_type: VARCHAR
+    length: 200
+    description: Provider full name
+    nullable:
+      MD: false
+      MP: false
+      ME: false
+  - name: provider_npi
+    data_type: VARCHAR
+    length: 10
+    description: National Provider Identifier
+    nullable:
+      MD: true
+      MP: true
+      ME: true
+  - name: state_code
+    data_type: VARCHAR
+    length: 2
+    description: Provider state code
+    nullable:
+      MD: true
+      MP: true
+      ME: true
+    sample_values:
+      - "CA"
+      - "NY"
+      - "TX"

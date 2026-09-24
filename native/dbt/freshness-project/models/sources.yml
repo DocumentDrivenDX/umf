@@ -1,0 +1,17 @@
+version: 2
+sources:
+  - name: synthetic
+    description: Local custom-query freshness outcomes; queries do not read a physical source table.
+    schema: main
+    freshness:
+      warn_after: {count: 1, period: hour}
+      error_after: {count: 3, period: hour}
+    tables:
+      - name: recent
+        loaded_at_query: select current_timestamp - interval '5 minutes'
+      - name: stale
+        loaded_at_query: select current_timestamp - interval '2 hours'
+      - name: expired
+        loaded_at_query: select current_timestamp - interval '4 hours'
+      - name: broken
+        loaded_at_query: select umf_missing_fixture_function()

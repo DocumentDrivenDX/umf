@@ -1,0 +1,21 @@
+{
+  "runtime": "PyArrow 21.0.0 / thriftpy2 0.5.3",
+  "results": [
+    {
+      "id": "upstream-18",
+      "rows": 10,
+      "columnsRepaired": 2,
+      "unchangedPrefixSha256": "5107c3656aa0324434533250b17124a09ac34edd711a67d9f64247d31fb05bd1",
+      "sourceSha256": "7911bc9369cf8851a18fab2c2b731502ca8d08ac7818c5dc0d053d27a3606010",
+      "outputSha256": "a6d4cd4e1073d3febe3812bf4cc3095d3658e2c05c80de2e5a9bf84cc014929a"
+    },
+    {
+      "id": "upstream-24",
+      "rows": 13,
+      "columnsRepaired": 1,
+      "unchangedPrefixSha256": "fdbd4df41f0ac12c476a00c3dffe6b7177ca3aee0d0b8e3362e982dcf41c158b",
+      "sourceSha256": "b7be7b2614c6b8fd13facd17f4e9f6c936f5a3abdc19da68e46d1b599987bd11",
+      "outputSha256": "e6723d5dffe19bc3386710847be54d36c3180296066f3f990df1552f8600b3b7"
+    }
+  ]
+}

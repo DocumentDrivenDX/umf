@@ -1,0 +1,100 @@
+{
+  "id": "umf.parquet",
+  "version": "0.1.0",
+  "coreVersion": "0.1.0",
+  "description": "Exact bounded Parquet file capture with footer-region location; native schema interpretation remains separate",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:parquet:0.1.0",
+    "type": "object",
+    "properties": {
+      "profile": {
+        "const": "parquet-file-source"
+      },
+      "encoding": {
+        "const": "hex"
+      },
+      "bytes": {
+        "type": "string",
+        "pattern": "^(?:[0-9a-f]{2})*$",
+        "maxLength": 2000000
+      }
+    },
+    "required": [
+      "profile",
+      "encoding",
+      "bytes"
+    ],
+    "additionalProperties": true
+  },
+  "semantics": "CONTRACT-019. Bytes are authoritative, including malformed files and unknown native metadata. Framing does not establish native schema, row, encryption or checksum validity.",
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "Apache Parquet file envelope",
+      "version": "PAR1/PARE framing; PyArrow 21.0.0 fixtures and pinned delta-rs checkpoints",
+      "subset": "Exact source capture up to 1000000 bytes and footer-region bounds. No complete Parquet schema, codec, encryption, row decoding or editing claim."
+    },
+    "evidence": [
+      "tests/parquet/capture.test.ts",
+      "tests/parquet/footer.test.ts",
+      "tests/parquet/metadata.test.ts",
+      "tests/parquet/schema.test.ts",
+      "tests/parquet/logical.test.ts",
+      "tests/parquet/containers.test.ts",
+      "tests/parquet/transform.test.ts",
+      "tests/parquet/rename.test.ts",
+      "tests/parquet/pages.test.ts",
+      "tests/parquet/bodies.test.ts",
+      "tests/parquet/levels.test.ts",
+      "tests/parquet/physical.test.ts",
+      "tests/parquet/rows.test.ts",
+      "tests/parquet/values.test.ts",
+      "fixtures/parquet/values/results.json",
+      "fixtures/parquet/values/oracle-results.json",
+      "fixtures/parquet/values/browser-results.json",
+      "fixtures/parquet/rows/results.json",
+      "fixtures/parquet/rows/oracle-results.json",
+      "fixtures/parquet/rows/browser-results.json",
+      "fixtures/parquet/physical/results.json",
+      "fixtures/parquet/physical/oracle-results.json",
+      "fixtures/parquet/physical/browser-results.json",
+      "fixtures/parquet/levels/results.json",
+      "fixtures/parquet/levels/oracle-results.json",
+      "fixtures/parquet/levels/browser-results.json",
+      "fixtures/parquet/bodies/results.json",
+      "fixtures/parquet/bodies/oracle-results.json",
+      "fixtures/parquet/bodies/browser-results.json",
+      "fixtures/parquet/pages/results.json",
+      "fixtures/parquet/pages/oracle-results.json",
+      "fixtures/parquet/pages/browser-results.json",
+      "fixtures/parquet/rename/results.json",
+      "fixtures/parquet/rename/oracle-results.json",
+      "fixtures/parquet/rename/browser-results.json",
+      "fixtures/parquet/transforms/results.json",
+      "fixtures/parquet/transforms/oracle-results.json",
+      "fixtures/parquet/transforms/browser-results.json",
+      "fixtures/parquet/containers/manifest.json",
+      "fixtures/parquet/containers/results.json",
+      "fixtures/parquet/containers/browser-results.json",
+      "fixtures/parquet/logical/results.json",
+      "fixtures/parquet/logical/browser-results.json",
+      "fixtures/parquet/schema/results.json",
+      "fixtures/parquet/schema/browser-results.json",
+      "fixtures/parquet/metadata/results.json",
+      "fixtures/parquet/metadata/browser-results.json",
+      "fixtures/parquet/footer/results.json",
+      "fixtures/parquet/footer/browser-results.json",
+      "fixtures/parquet/capture-results.json",
+      "fixtures/parquet/oracle-results.json",
+      "fixtures/parquet/browser-results.json"
+    ]
+  }
+}

@@ -1,0 +1,158 @@
+{
+    "smithy": "1.0",
+    "shapes": {
+        "com.foo#A": {
+            "type": "union",
+            "members": {
+                "a": {
+                    "target": "com.foo#B"
+                }
+            }
+        },
+        "com.foo#B": {
+            "type": "union",
+            "members": {
+                "str": {
+                    "target": "smithy.api#String"
+                }
+            }
+        },
+        "com.foo#C": {
+            "type": "union",
+            "members": {
+                "a": {
+                    "target": "com.foo#A"
+                }
+            }
+        },
+        "com.foo#D": {
+            "type": "union",
+            "members": {
+                "a": {
+                    "target": "com.foo#A"
+                }
+            }
+        },
+        "com.foo#E": {
+            "type": "union",
+            "members": {
+                "a": {
+                    "target": "com.foo#D"
+                }
+            }
+        },
+        "com.foo#F": {
+            "type": "union",
+            "members": {
+                "a": {
+                    "target": "com.foo#E"
+                }
+            },
+            "traits": {
+                "smithy.api#deprecated": {}
+            }
+        },
+        "com.foo#G": {
+            "type": "union",
+            "members": {
+                "abc": {
+                    "target": "com.foo#F"
+                }
+            },
+            "traits": {
+                "smithy.api#deprecated": {},
+                "smithy.api#documentation": "foo"
+            }
+        },
+        "com.foo#H": {
+            "type": "union",
+            "members": {
+                "foo": {
+                    "target": "com.foo#E"
+                }
+            }
+        },
+        "com.foo#I": {
+            "type": "union",
+            "members": {
+                "foo": {
+                    "target": "com.foo#E"
+                },
+                "baz": {
+                    "target": "com.foo#H"
+                }
+            }
+        },
+        "com.foo#J": {
+            "type": "union",
+            "members": {
+                "foo": {
+                    "target": "com.foo#E",
+                    "traits": {
+                        "smithy.api#deprecated": {}
+                    }
+                },
+                "baz": {
+                    "target": "com.foo#H"
+                }
+            }
+        },
+        "com.foo#K": {
+            "type": "union",
+            "members": {
+                "foo": {
+                    "target": "com.foo#E",
+                    "traits": {
+                        "smithy.api#deprecated": {},
+                        "smithy.api#since": "2.0"
+                    }
+                },
+                "baz": {
+                    "target": "com.foo#H",
+                    "traits": {
+                        "smithy.api#deprecated": {}
+                    }
+                }
+            }
+        },
+        "com.foo#L": {
+            "type": "union",
+            "members": {
+                "foo": {
+                    "target": "com.foo#E",
+                    "traits": {
+                        "smithy.api#deprecated": {},
+                        "smithy.api#since": "2.0"
+                    }
+                },
+                "baz": {
+                    "target": "com.foo#H",
+                    "traits": {
+                        "smithy.api#deprecated": {}
+                    }
+                }
+            }
+        },
+        "com.foo#M": {
+            "type": "union",
+            "members": {
+                "foo": {
+                    "target": "com.foo#E",
+                    "traits": {
+                        "smithy.api#deprecated": {},
+                        "smithy.api#since": "2.0"
+                    }
+                },
+                "baz": {
+                    "target": "com.foo#H",
+                    "traits": {
+                        "smithy.api#deprecated": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "abc"
+            }
+        }
+    }
+}

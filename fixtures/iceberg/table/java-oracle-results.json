@@ -1,0 +1,76 @@
+{
+  "runtime" : "Apache Iceberg Java 1.11.0",
+  "javaVersion" : "21.0.2",
+  "results" : [ {
+    "id" : "TableMetadataPartitionStatisticsFiles",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "TableMetadataStatisticsFiles",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "TableMetadataUnsupportedVersion",
+    "umf" : "roundtripped",
+    "nativeAccepted" : false,
+    "nativeError" : "IllegalArgumentException: Cannot read unsupported version 42"
+  }, {
+    "id" : "TableMetadataV1MissingSchemaType",
+    "umf" : "rejected",
+    "nativeAccepted" : false,
+    "nativeError" : "IllegalArgumentException: Cannot parse type from json: {\"fields\":[{\"id\":1,\"name\":\"x\",\"required\":true,\"type\":\"long\"},{\"id\":2,\"name\":\"y\",\"required\":true,\"type\":\"long\",\"doc\":\"comment\"},{\"id\":3,\"name\":\"z\",\"required\":true,\"type\":\"long\"}]}"
+  }, {
+    "id" : "TableMetadataV1Valid",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "TableMetadataV2CurrentSchemaNotFound",
+    "umf" : "rejected",
+    "nativeAccepted" : false,
+    "nativeError" : "IllegalArgumentException: Cannot find schema with current-schema-id=2 from schemas"
+  }, {
+    "id" : "TableMetadataV2MissingLastPartitionId",
+    "umf" : "rejected",
+    "nativeAccepted" : false,
+    "nativeError" : "IllegalArgumentException: last-partition-id must exist in format v2"
+  }, {
+    "id" : "TableMetadataV2MissingPartitionSpecs",
+    "umf" : "rejected",
+    "nativeAccepted" : false,
+    "nativeError" : "IllegalArgumentException: partition-specs must exist in format v2"
+  }, {
+    "id" : "TableMetadataV2MissingSchemas",
+    "umf" : "rejected",
+    "nativeAccepted" : false,
+    "nativeError" : "IllegalArgumentException: schemas must exist in format v2"
+  }, {
+    "id" : "TableMetadataV2MissingSortOrder",
+    "umf" : "rejected",
+    "nativeAccepted" : false,
+    "nativeError" : "IllegalArgumentException: sort-orders must exist in format v2"
+  }, {
+    "id" : "TableMetadataV2Valid",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "TableMetadataV2ValidMinimal",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "TableMetadataV3ValidMinimal",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  } ]
+}

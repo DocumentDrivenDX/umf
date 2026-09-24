@@ -1,0 +1,594 @@
+{
+  "oracle": "RDFLib 7.6.0",
+  "scope": "Ordered explicit list members and malformed local structure; blank resource identities abstracted, no OWL validity or inference",
+  "cases": [
+    {
+      "file": "list-axioms.ttl",
+      "variant": "original",
+      "format": "json",
+      "expected": [
+        [
+          "https://example.org/Color",
+          "disjointUnion",
+          [
+            "https://example.org/Red",
+            "https://example.org/Green",
+            "https://example.org/Blue"
+          ]
+        ],
+        [
+          "https://example.org/Person",
+          "key",
+          [
+            "https://example.org/country",
+            "https://example.org/identifier"
+          ]
+        ],
+        [
+          "https://example.org/Person",
+          "key",
+          [
+            "https://example.org/passport"
+          ]
+        ],
+        [
+          "https://example.org/ancestor",
+          "propertyChain",
+          [
+            "https://example.org/parent",
+            "https://example.org/ancestor"
+          ]
+        ],
+        [
+          "https://example.org/ancestor",
+          "propertyChain",
+          [
+            "https://example.org/parent",
+            "https://example.org/parent"
+          ]
+        ],
+        [
+          "https://example.org/inverseChain",
+          "propertyChain",
+          [
+            "_:resource",
+            "https://example.org/parent"
+          ]
+        ]
+      ],
+      "invalid": [
+        [
+          "_:resource",
+          "disjointUnion"
+        ],
+        [
+          "https://example.org/conflict",
+          "key"
+        ],
+        [
+          "https://example.org/cycle",
+          "key"
+        ],
+        [
+          "https://example.org/emptyKey",
+          "key"
+        ],
+        [
+          "https://example.org/literalHead",
+          "key"
+        ],
+        [
+          "https://example.org/literalMember",
+          "key"
+        ],
+        [
+          "https://example.org/missingRest",
+          "key"
+        ],
+        [
+          "https://example.org/shortChain",
+          "propertyChain"
+        ]
+      ],
+      "agrees": true,
+      "editObserved": true
+    },
+    {
+      "file": "list-axioms.ttl",
+      "variant": "original",
+      "format": "yaml",
+      "expected": [
+        [
+          "https://example.org/Color",
+          "disjointUnion",
+          [
+            "https://example.org/Red",
+            "https://example.org/Green",
+            "https://example.org/Blue"
+          ]
+        ],
+        [
+          "https://example.org/Person",
+          "key",
+          [
+            "https://example.org/country",
+            "https://example.org/identifier"
+          ]
+        ],
+        [
+          "https://example.org/Person",
+          "key",
+          [
+            "https://example.org/passport"
+          ]
+        ],
+        [
+          "https://example.org/ancestor",
+          "propertyChain",
+          [
+            "https://example.org/parent",
+            "https://example.org/ancestor"
+          ]
+        ],
+        [
+          "https://example.org/ancestor",
+          "propertyChain",
+          [
+            "https://example.org/parent",
+            "https://example.org/parent"
+          ]
+        ],
+        [
+          "https://example.org/inverseChain",
+          "propertyChain",
+          [
+            "_:resource",
+            "https://example.org/parent"
+          ]
+        ]
+      ],
+      "invalid": [
+        [
+          "_:resource",
+          "disjointUnion"
+        ],
+        [
+          "https://example.org/conflict",
+          "key"
+        ],
+        [
+          "https://example.org/cycle",
+          "key"
+        ],
+        [
+          "https://example.org/emptyKey",
+          "key"
+        ],
+        [
+          "https://example.org/literalHead",
+          "key"
+        ],
+        [
+          "https://example.org/literalMember",
+          "key"
+        ],
+        [
+          "https://example.org/missingRest",
+          "key"
+        ],
+        [
+          "https://example.org/shortChain",
+          "propertyChain"
+        ]
+      ],
+      "agrees": true,
+      "editObserved": true
+    },
+    {
+      "file": "list-axioms.ttl",
+      "variant": "edited",
+      "format": "json",
+      "expected": [
+        [
+          "https://example.org/Color",
+          "disjointUnion",
+          [
+            "https://example.org/Red",
+            "https://example.org/Green",
+            "https://example.org/Blue"
+          ]
+        ],
+        [
+          "https://example.org/Person",
+          "key",
+          [
+            "https://example.org/country",
+            "https://example.org/identifier"
+          ]
+        ],
+        [
+          "https://example.org/Person",
+          "key",
+          [
+            "https://example.org/passport"
+          ]
+        ],
+        [
+          "https://example.org/ancestor",
+          "propertyChain",
+          [
+            "https://example.org/parent",
+            "https://example.org/parent"
+          ]
+        ],
+        [
+          "https://example.org/inverseChain",
+          "propertyChain",
+          [
+            "_:resource",
+            "https://example.org/parent"
+          ]
+        ]
+      ],
+      "invalid": [
+        [
+          "_:resource",
+          "disjointUnion"
+        ],
+        [
+          "https://example.org/ancestor",
+          "propertyChain"
+        ],
+        [
+          "https://example.org/conflict",
+          "key"
+        ],
+        [
+          "https://example.org/cycle",
+          "key"
+        ],
+        [
+          "https://example.org/emptyKey",
+          "key"
+        ],
+        [
+          "https://example.org/literalHead",
+          "key"
+        ],
+        [
+          "https://example.org/literalMember",
+          "key"
+        ],
+        [
+          "https://example.org/missingRest",
+          "key"
+        ],
+        [
+          "https://example.org/shortChain",
+          "propertyChain"
+        ]
+      ],
+      "agrees": true,
+      "editObserved": true
+    },
+    {
+      "file": "list-axioms.ttl",
+      "variant": "edited",
+      "format": "yaml",
+      "expected": [
+        [
+          "https://example.org/Color",
+          "disjointUnion",
+          [
+            "https://example.org/Red",
+            "https://example.org/Green",
+            "https://example.org/Blue"
+          ]
+        ],
+        [
+          "https://example.org/Person",
+          "key",
+          [
+            "https://example.org/country",
+            "https://example.org/identifier"
+          ]
+        ],
+        [
+          "https://example.org/Person",
+          "key",
+          [
+            "https://example.org/passport"
+          ]
+        ],
+        [
+          "https://example.org/ancestor",
+          "propertyChain",
+          [
+            "https://example.org/parent",
+            "https://example.org/parent"
+          ]
+        ],
+        [
+          "https://example.org/inverseChain",
+          "propertyChain",
+          [
+            "_:resource",
+            "https://example.org/parent"
+          ]
+        ]
+      ],
+      "invalid": [
+        [
+          "_:resource",
+          "disjointUnion"
+        ],
+        [
+          "https://example.org/ancestor",
+          "propertyChain"
+        ],
+        [
+          "https://example.org/conflict",
+          "key"
+        ],
+        [
+          "https://example.org/cycle",
+          "key"
+        ],
+        [
+          "https://example.org/emptyKey",
+          "key"
+        ],
+        [
+          "https://example.org/literalHead",
+          "key"
+        ],
+        [
+          "https://example.org/literalMember",
+          "key"
+        ],
+        [
+          "https://example.org/missingRest",
+          "key"
+        ],
+        [
+          "https://example.org/shortChain",
+          "propertyChain"
+        ]
+      ],
+      "agrees": true,
+      "editObserved": true
+    },
+    {
+      "file": "authored.ttl",
+      "variant": "original",
+      "format": "json",
+      "expected": [
+        [
+          "https://example.org/Order",
+          "key",
+          [
+            "https://example.org/orderId"
+          ]
+        ],
+        [
+          "https://example.org/shipsTo",
+          "propertyChain",
+          [
+            "https://example.org/customer",
+            "https://example.org/address"
+          ]
+        ]
+      ],
+      "invalid": [],
+      "agrees": true,
+      "editObserved": true
+    },
+    {
+      "file": "authored.ttl",
+      "variant": "original",
+      "format": "yaml",
+      "expected": [
+        [
+          "https://example.org/Order",
+          "key",
+          [
+            "https://example.org/orderId"
+          ]
+        ],
+        [
+          "https://example.org/shipsTo",
+          "propertyChain",
+          [
+            "https://example.org/customer",
+            "https://example.org/address"
+          ]
+        ]
+      ],
+      "invalid": [],
+      "agrees": true,
+      "editObserved": true
+    },
+    {
+      "file": "authored.ttl",
+      "variant": "edited",
+      "format": "json",
+      "expected": [
+        [
+          "https://example.org/Order",
+          "key",
+          [
+            "https://example.org/EditedMember"
+          ]
+        ],
+        [
+          "https://example.org/shipsTo",
+          "propertyChain",
+          [
+            "https://example.org/customer",
+            "https://example.org/address"
+          ]
+        ]
+      ],
+      "invalid": [],
+      "agrees": true,
+      "editObserved": true
+    },
+    {
+      "file": "authored.ttl",
+      "variant": "edited",
+      "format": "yaml",
+      "expected": [
+        [
+          "https://example.org/Order",
+          "key",
+          [
+            "https://example.org/EditedMember"
+          ]
+        ],
+        [
+          "https://example.org/shipsTo",
+          "propertyChain",
+          [
+            "https://example.org/customer",
+            "https://example.org/address"
+          ]
+        ]
+      ],
+      "invalid": [],
+      "agrees": true,
+      "editObserved": true
+    },
+    {
+      "file": "primer-corrected.ttl",
+      "variant": "original",
+      "format": "json",
+      "expected": [
+        [
+          "http://example.com/owl/families/Person",
+          "key",
+          [
+            "http://example.com/owl/families/hasSSN"
+          ]
+        ],
+        [
+          "http://example.com/owl/families/hasGrandparent",
+          "propertyChain",
+          [
+            "http://example.com/owl/families/hasParent",
+            "http://example.com/owl/families/hasParent"
+          ]
+        ],
+        [
+          "http://example.com/owl/families/hasUncle",
+          "propertyChain",
+          [
+            "http://example.com/owl/families/hasFather",
+            "http://example.com/owl/families/hasBrother"
+          ]
+        ]
+      ],
+      "invalid": [],
+      "agrees": true,
+      "editObserved": true
+    },
+    {
+      "file": "primer-corrected.ttl",
+      "variant": "original",
+      "format": "yaml",
+      "expected": [
+        [
+          "http://example.com/owl/families/Person",
+          "key",
+          [
+            "http://example.com/owl/families/hasSSN"
+          ]
+        ],
+        [
+          "http://example.com/owl/families/hasGrandparent",
+          "propertyChain",
+          [
+            "http://example.com/owl/families/hasParent",
+            "http://example.com/owl/families/hasParent"
+          ]
+        ],
+        [
+          "http://example.com/owl/families/hasUncle",
+          "propertyChain",
+          [
+            "http://example.com/owl/families/hasFather",
+            "http://example.com/owl/families/hasBrother"
+          ]
+        ]
+      ],
+      "invalid": [],
+      "agrees": true,
+      "editObserved": true
+    },
+    {
+      "file": "primer-corrected.ttl",
+      "variant": "edited",
+      "format": "json",
+      "expected": [
+        [
+          "http://example.com/owl/families/Person",
+          "key",
+          [
+            "http://example.com/owl/families/hasSSN"
+          ]
+        ],
+        [
+          "http://example.com/owl/families/hasGrandparent",
+          "propertyChain",
+          [
+            "https://example.org/EditedMember",
+            "http://example.com/owl/families/hasParent"
+          ]
+        ],
+        [
+          "http://example.com/owl/families/hasUncle",
+          "propertyChain",
+          [
+            "http://example.com/owl/families/hasFather",
+            "http://example.com/owl/families/hasBrother"
+          ]
+        ]
+      ],
+      "invalid": [],
+      "agrees": true,
+      "editObserved": true
+    },
+    {
+      "file": "primer-corrected.ttl",
+      "variant": "edited",
+      "format": "yaml",
+      "expected": [
+        [
+          "http://example.com/owl/families/Person",
+          "key",
+          [
+            "http://example.com/owl/families/hasSSN"
+          ]
+        ],
+        [
+          "http://example.com/owl/families/hasGrandparent",
+          "propertyChain",
+          [
+            "https://example.org/EditedMember",
+            "http://example.com/owl/families/hasParent"
+          ]
+        ],
+        [
+          "http://example.com/owl/families/hasUncle",
+          "propertyChain",
+          [
+            "http://example.com/owl/families/hasFather",
+            "http://example.com/owl/families/hasBrother"
+          ]
+        ]
+      ],
+      "invalid": [],
+      "agrees": true,
+      "editObserved": true
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:parquet:offset-repair:0.1.0",
+  "type": "object",
+  "required": [
+    "source",
+    "status",
+    "complete",
+    "diagnostics"
+  ],
+  "properties": {
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "status": {
+      "enum": [
+        "transformed",
+        "blocked"
+      ]
+    },
+    "complete": {
+      "const": false
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "path",
+          "severity",
+          "message"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "output": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "unchangedPrefixBytes": {
+      "type": "integer",
+      "minimum": 4
+    },
+    "repairs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "rowGroup",
+          "column",
+          "oldDataOffset",
+          "dataOffset",
+          "dictionaryOffset"
+        ],
+        "properties": {
+          "rowGroup": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "column": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "oldDataOffset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "dataOffset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "dictionaryOffset": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "transformed"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "output": true,
+          "repairs": true,
+          "unchangedPrefixBytes": true
+        },
+        "required": [
+          "output",
+          "repairs",
+          "unchangedPrefixBytes"
+        ]
+      },
+      "else": {
+        "not": {
+          "anyOf": [
+            {
+              "properties": {
+                "output": true
+              },
+              "required": [
+                "output"
+              ]
+            },
+            {
+              "properties": {
+                "repairs": true
+              },
+              "required": [
+                "repairs"
+              ]
+            },
+            {
+              "properties": {
+                "unchangedPrefixBytes": true
+              },
+              "required": [
+                "unchangedPrefixBytes"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

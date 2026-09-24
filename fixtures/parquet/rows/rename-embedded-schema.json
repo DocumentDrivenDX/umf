@@ -1,0 +1,1476 @@
+[
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "order",
+        "value": {
+          "kind": "physical",
+          "value": {
+            "type": "INT64",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "name": "detail",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 3,
+              "name": "item.name",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "e6b3a8e696872030"
+                }
+              }
+            },
+            {
+              "index": 4,
+              "name": "price",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "000000003039"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 5,
+        "name": "tags",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 6,
+              "name": "list",
+              "value": {
+                "kind": "repeated",
+                "items": [
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 7,
+                        "name": "element",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "61"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 7,
+                        "name": "element",
+                        "value": null
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 7,
+                        "name": "element",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "62"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 8,
+        "name": "attributes",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 9,
+              "name": "key_value",
+              "value": {
+                "kind": "repeated",
+                "items": [
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 10,
+                        "name": "key",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "6669727374"
+                          }
+                        }
+                      },
+                      {
+                        "index": 11,
+                        "name": "value",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "INT32",
+                            "value": "0"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 10,
+                        "name": "key",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "7365636f6e64"
+                          }
+                        }
+                      },
+                      {
+                        "index": 11,
+                        "name": "value",
+                        "value": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 12,
+        "name": "events",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 13,
+              "name": "list",
+              "value": {
+                "kind": "repeated",
+                "items": [
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 14,
+                        "name": "element",
+                        "value": {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 15,
+                              "name": "at",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "INT64",
+                                  "value": "1767268800000000"
+                                }
+                              }
+                            },
+                            {
+                              "index": 16,
+                              "name": "value",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "INT32",
+                                  "value": "0"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 14,
+                        "name": "element",
+                        "value": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "order",
+        "value": {
+          "kind": "physical",
+          "value": {
+            "type": "INT64",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "name": "detail",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "tags",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 6,
+              "name": "list",
+              "value": {
+                "kind": "repeated",
+                "items": [
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 7,
+                        "name": "element",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "61"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 7,
+                        "name": "element",
+                        "value": null
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 7,
+                        "name": "element",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "62"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 8,
+        "name": "attributes",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 9,
+              "name": "key_value",
+              "value": {
+                "kind": "repeated",
+                "items": [
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 10,
+                        "name": "key",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "6669727374"
+                          }
+                        }
+                      },
+                      {
+                        "index": 11,
+                        "name": "value",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "INT32",
+                            "value": "1"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 10,
+                        "name": "key",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "7365636f6e64"
+                          }
+                        }
+                      },
+                      {
+                        "index": 11,
+                        "name": "value",
+                        "value": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 12,
+        "name": "events",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 13,
+              "name": "list",
+              "value": {
+                "kind": "repeated",
+                "items": []
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "order",
+        "value": {
+          "kind": "physical",
+          "value": {
+            "type": "INT64",
+            "value": "2"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "name": "detail",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 3,
+              "name": "item.name",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "e6b3a8e696872032"
+                }
+              }
+            },
+            {
+              "index": 4,
+              "name": "price",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "000000003039"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 5,
+        "name": "tags",
+        "value": null
+      },
+      {
+        "index": 8,
+        "name": "attributes",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 9,
+              "name": "key_value",
+              "value": {
+                "kind": "repeated",
+                "items": [
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 10,
+                        "name": "key",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "6669727374"
+                          }
+                        }
+                      },
+                      {
+                        "index": 11,
+                        "name": "value",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "INT32",
+                            "value": "2"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 10,
+                        "name": "key",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "7365636f6e64"
+                          }
+                        }
+                      },
+                      {
+                        "index": 11,
+                        "name": "value",
+                        "value": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 12,
+        "name": "events",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 13,
+              "name": "list",
+              "value": {
+                "kind": "repeated",
+                "items": [
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 14,
+                        "name": "element",
+                        "value": {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 15,
+                              "name": "at",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "INT64",
+                                  "value": "1767268802000000"
+                                }
+                              }
+                            },
+                            {
+                              "index": 16,
+                              "name": "value",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "INT32",
+                                  "value": "2"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 14,
+                        "name": "element",
+                        "value": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "order",
+        "value": {
+          "kind": "physical",
+          "value": {
+            "type": "INT64",
+            "value": "3"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "name": "detail",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 3,
+              "name": "item.name",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "e6b3a8e696872033"
+                }
+              }
+            },
+            {
+              "index": 4,
+              "name": "price",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "000000003039"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 5,
+        "name": "tags",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 6,
+              "name": "list",
+              "value": {
+                "kind": "repeated",
+                "items": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 8,
+        "name": "attributes",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 9,
+              "name": "key_value",
+              "value": {
+                "kind": "repeated",
+                "items": [
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 10,
+                        "name": "key",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "6669727374"
+                          }
+                        }
+                      },
+                      {
+                        "index": 11,
+                        "name": "value",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "INT32",
+                            "value": "3"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 10,
+                        "name": "key",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "7365636f6e64"
+                          }
+                        }
+                      },
+                      {
+                        "index": 11,
+                        "name": "value",
+                        "value": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 12,
+        "name": "events",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 13,
+              "name": "list",
+              "value": {
+                "kind": "repeated",
+                "items": []
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "order",
+        "value": {
+          "kind": "physical",
+          "value": {
+            "type": "INT64",
+            "value": "4"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "name": "detail",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 3,
+              "name": "item.name",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "e6b3a8e696872034"
+                }
+              }
+            },
+            {
+              "index": 4,
+              "name": "price",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "000000003039"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 5,
+        "name": "tags",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 6,
+              "name": "list",
+              "value": {
+                "kind": "repeated",
+                "items": [
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 7,
+                        "name": "element",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "61"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 7,
+                        "name": "element",
+                        "value": null
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 7,
+                        "name": "element",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "62"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 8,
+        "name": "attributes",
+        "value": null
+      },
+      {
+        "index": 12,
+        "name": "events",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 13,
+              "name": "list",
+              "value": {
+                "kind": "repeated",
+                "items": [
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 14,
+                        "name": "element",
+                        "value": {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 15,
+                              "name": "at",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "INT64",
+                                  "value": "1767268804000000"
+                                }
+                              }
+                            },
+                            {
+                              "index": 16,
+                              "name": "value",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "INT32",
+                                  "value": "4"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 14,
+                        "name": "element",
+                        "value": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "order",
+        "value": {
+          "kind": "physical",
+          "value": {
+            "type": "INT64",
+            "value": "5"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "name": "detail",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 3,
+              "name": "item.name",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "e6b3a8e696872035"
+                }
+              }
+            },
+            {
+              "index": 4,
+              "name": "price",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "000000003039"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 5,
+        "name": "tags",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 6,
+              "name": "list",
+              "value": {
+                "kind": "repeated",
+                "items": [
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 7,
+                        "name": "element",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "61"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 7,
+                        "name": "element",
+                        "value": null
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 7,
+                        "name": "element",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "62"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 8,
+        "name": "attributes",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 9,
+              "name": "key_value",
+              "value": {
+                "kind": "repeated",
+                "items": []
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 12,
+        "name": "events",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 13,
+              "name": "list",
+              "value": {
+                "kind": "repeated",
+                "items": []
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "order",
+        "value": {
+          "kind": "physical",
+          "value": {
+            "type": "INT64",
+            "value": "6"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "name": "detail",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 3,
+              "name": "item.name",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "e6b3a8e696872036"
+                }
+              }
+            },
+            {
+              "index": 4,
+              "name": "price",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "000000003039"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 5,
+        "name": "tags",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 6,
+              "name": "list",
+              "value": {
+                "kind": "repeated",
+                "items": [
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 7,
+                        "name": "element",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "61"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 7,
+                        "name": "element",
+                        "value": null
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 7,
+                        "name": "element",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "62"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 8,
+        "name": "attributes",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 9,
+              "name": "key_value",
+              "value": {
+                "kind": "repeated",
+                "items": [
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 10,
+                        "name": "key",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "6669727374"
+                          }
+                        }
+                      },
+                      {
+                        "index": 11,
+                        "name": "value",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "INT32",
+                            "value": "6"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 10,
+                        "name": "key",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "7365636f6e64"
+                          }
+                        }
+                      },
+                      {
+                        "index": 11,
+                        "name": "value",
+                        "value": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 12,
+        "name": "events",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 13,
+              "name": "list",
+              "value": {
+                "kind": "repeated",
+                "items": [
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 14,
+                        "name": "element",
+                        "value": {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 15,
+                              "name": "at",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "INT64",
+                                  "value": "1767268806000000"
+                                }
+                              }
+                            },
+                            {
+                              "index": 16,
+                              "name": "value",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "INT32",
+                                  "value": "6"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 14,
+                        "name": "element",
+                        "value": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "order",
+        "value": {
+          "kind": "physical",
+          "value": {
+            "type": "INT64",
+            "value": "7"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "name": "detail",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 3,
+              "name": "item.name",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "e6b3a8e696872037"
+                }
+              }
+            },
+            {
+              "index": 4,
+              "name": "price",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "000000003039"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 5,
+        "name": "tags",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 6,
+              "name": "list",
+              "value": {
+                "kind": "repeated",
+                "items": [
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 7,
+                        "name": "element",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "61"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 7,
+                        "name": "element",
+                        "value": null
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 7,
+                        "name": "element",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "62"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 8,
+        "name": "attributes",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 9,
+              "name": "key_value",
+              "value": {
+                "kind": "repeated",
+                "items": [
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 10,
+                        "name": "key",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "6669727374"
+                          }
+                        }
+                      },
+                      {
+                        "index": 11,
+                        "name": "value",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "INT32",
+                            "value": "7"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "record",
+                    "fields": [
+                      {
+                        "index": 10,
+                        "name": "key",
+                        "value": {
+                          "kind": "physical",
+                          "value": {
+                            "type": "BYTE_ARRAY",
+                            "hex": "7365636f6e64"
+                          }
+                        }
+                      },
+                      {
+                        "index": 11,
+                        "name": "value",
+                        "value": null
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 12,
+        "name": "events",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 13,
+              "name": "list",
+              "value": {
+                "kind": "repeated",
+                "items": []
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

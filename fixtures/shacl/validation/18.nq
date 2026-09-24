@@ -1,0 +1,9 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b11097 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b11097 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b11097 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b11097 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#HasValueConstraintComponent> .
+_:b11097 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/hasValue-001.test#TestShape> .
+_:b11097 <http://www.w3.org/ns/shacl#focusNode> "Invalid String" .
+_:b11097 <http://www.w3.org/ns/shacl#resultMessage> "Value must be Test" .

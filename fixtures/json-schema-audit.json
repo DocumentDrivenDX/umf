@@ -1,0 +1,1925 @@
+{
+  "scope": "Published JSON Schema metaschema/compilation and reference closure, not native semantics",
+  "schemas": 274,
+  "passed": 274,
+  "results": [
+    {
+      "path": "spec/core/avro-cardinality-classification.schema.json",
+      "id": "urn:umf:core:avro-cardinality-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/avro-facet-classification.schema.json",
+      "id": "urn:umf:core:avro-facet-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/avro-field-classification.schema.json",
+      "id": "urn:umf:core:avro-field-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/avro-nullability-classification.schema.json",
+      "id": "urn:umf:core:avro-nullability-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/avro-record-classification.schema.json",
+      "id": "urn:umf:core:avro-record-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/avro-record-type-classification.schema.json",
+      "id": "urn:umf:core:avro-record-type-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/cardinality-avro-projection.schema.json",
+      "id": "urn:umf:core:cardinality-avro-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/cardinality-document.schema.json",
+      "id": "urn:umf:core:0.4.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/cardinality-operation-v2.schema.json",
+      "id": "urn:umf:core:cardinality-operation:2.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/cardinality-operation.schema.json",
+      "id": "urn:umf:core:cardinality-operation:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/cardinality-parquet-projection.schema.json",
+      "id": "urn:umf:core:cardinality-parquet-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/cardinality-postgresql-projection.schema.json",
+      "id": "urn:umf:core:cardinality-postgresql-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/cardinality-selection.schema.json",
+      "id": "urn:umf:core:element-selection:0.4.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/cardinality-sqlserver-projection.schema.json",
+      "id": "urn:umf:core:cardinality-sqlserver-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/cardinality-tablespec-projection.schema.json",
+      "id": "urn:umf:core:cardinality-tablespec-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/cardinality-transition.schema.json",
+      "id": "urn:umf:core:cardinality-transition:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/element-selection.schema.json",
+      "id": "urn:umf:core:element-selection:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/extension-package.schema.json",
+      "id": "urn:umf:extension-package:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/facet-document.schema.json",
+      "id": "urn:umf:core:0.5.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/facet-operation.schema.json",
+      "id": "urn:umf:core:facet-operation:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/facet-selection.schema.json",
+      "id": "urn:umf:core:element-selection:0.5.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/facet-transition.schema.json",
+      "id": "urn:umf:core:facet-transition:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/facets-avro-projection.schema.json",
+      "id": "urn:umf:core:facets-avro-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/facets-postgresql-projection.schema.json",
+      "id": "urn:umf:core:facets-postgresql-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/facets-sqlserver-projection.schema.json",
+      "id": "urn:umf:core:facets-sqlserver-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/facets-tablespec-projection.schema.json",
+      "id": "urn:umf:core:facets-tablespec-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/field-avro-projection.schema.json",
+      "id": "urn:umf:core:field-avro-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/field-classification-inspection.schema.json",
+      "id": "urn:umf:core:field-classification-inspection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/field-document.schema.json",
+      "id": "urn:umf:core:0.2.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/field-parquet-projection.schema.json",
+      "id": "urn:umf:core:field-parquet-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/field-postgresql-projection.schema.json",
+      "id": "urn:umf:core:field-postgresql-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/field-projection-inspection.schema.json",
+      "id": "urn:umf:core:field-projection-inspection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/field-selection.schema.json",
+      "id": "urn:umf:core:element-selection:0.2.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/field-sqlserver-projection.schema.json",
+      "id": "urn:umf:core:field-sqlserver-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/field-tablespec-projection.schema.json",
+      "id": "urn:umf:core:field-tablespec-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/field-transition.schema.json",
+      "id": "urn:umf:core:field-transition:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/kind-operation-v2.schema.json",
+      "id": "urn:umf:core:kind-operation:2.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/kind-operation-v3.schema.json",
+      "id": "urn:umf:core:kind-operation:3.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/kind-operation-v4.schema.json",
+      "id": "urn:umf:core:kind-operation:4.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/kind-operation.schema.json",
+      "id": "urn:umf:core:kind-operation:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/native-json.schema.json",
+      "id": "urn:umf:native-json:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/nullability-avro-projection.schema.json",
+      "id": "urn:umf:core:nullability-avro-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/nullability-document.schema.json",
+      "id": "urn:umf:core:0.3.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/nullability-operation-v2.schema.json",
+      "id": "urn:umf:core:nullability-operation:2.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/nullability-operation-v3.schema.json",
+      "id": "urn:umf:core:nullability-operation:3.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/nullability-operation.schema.json",
+      "id": "urn:umf:core:nullability-operation:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/nullability-parquet-projection.schema.json",
+      "id": "urn:umf:core:nullability-parquet-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/nullability-postgresql-projection.schema.json",
+      "id": "urn:umf:core:nullability-postgresql-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/nullability-selection.schema.json",
+      "id": "urn:umf:core:element-selection:0.3.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/nullability-sqlserver-projection.schema.json",
+      "id": "urn:umf:core:nullability-sqlserver-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/nullability-tablespec-projection.schema.json",
+      "id": "urn:umf:core:nullability-tablespec-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/nullability-transition.schema.json",
+      "id": "urn:umf:core:nullability-transition:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/parquet-cardinality-classification.schema.json",
+      "id": "urn:umf:core:parquet-cardinality-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/parquet-field-classification.schema.json",
+      "id": "urn:umf:core:parquet-field-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/parquet-nullability-classification.schema.json",
+      "id": "urn:umf:core:parquet-nullability-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/parquet-record-classification.schema.json",
+      "id": "urn:umf:core:parquet-record-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/parquet-record-type-classification.schema.json",
+      "id": "urn:umf:core:parquet-record-type-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/postgresql-cardinality-classification.schema.json",
+      "id": "urn:umf:core:postgresql-cardinality-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/postgresql-composite-classification.schema.json",
+      "id": "urn:umf:core:postgresql-composite-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/postgresql-ddl-kinds.schema.json",
+      "id": "urn:umf:core:postgresql-ddl-kinds:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/postgresql-facet-classification.schema.json",
+      "id": "urn:umf:core:postgresql-facet-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/postgresql-field-classification.schema.json",
+      "id": "urn:umf:core:postgresql-field-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/postgresql-nullability-classification.schema.json",
+      "id": "urn:umf:core:postgresql-nullability-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/postgresql-record-classification.schema.json",
+      "id": "urn:umf:core:postgresql-record-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/record-avro-projection.schema.json",
+      "id": "urn:umf:core:record-avro-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/record-parquet-projection.schema.json",
+      "id": "urn:umf:core:record-parquet-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/record-postgresql-projection.schema.json",
+      "id": "urn:umf:core:record-postgresql-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/record-projection-inspection.schema.json",
+      "id": "urn:umf:core:record-projection-inspection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/record-sqlserver-projection.schema.json",
+      "id": "urn:umf:core:record-sqlserver-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/record-tablespec-projection.schema.json",
+      "id": "urn:umf:core:record-tablespec-projection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/record-type-operation-v2.schema.json",
+      "id": "urn:umf:core:record-type-operation:2.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/record-type-operation-v3.schema.json",
+      "id": "urn:umf:core:record-type-operation:3.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/record-type-operation-v4.schema.json",
+      "id": "urn:umf:core:record-type-operation:4.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/record-type-operation.schema.json",
+      "id": "urn:umf:core:record-type-operation:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/schema.json",
+      "id": "urn:umf:core:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/sqlserver-cardinality-classification.schema.json",
+      "id": "urn:umf:core:sqlserver-cardinality-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/sqlserver-facet-classification.schema.json",
+      "id": "urn:umf:core:sqlserver-facet-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/sqlserver-field-classification.schema.json",
+      "id": "urn:umf:core:sqlserver-field-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/sqlserver-nullability-classification.schema.json",
+      "id": "urn:umf:core:sqlserver-nullability-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/sqlserver-record-classification.schema.json",
+      "id": "urn:umf:core:sqlserver-record-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/structured-classification-inspection.schema.json",
+      "id": "urn:umf:core:structured-classification-inspection:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/tablespec-cardinality-classification.schema.json",
+      "id": "urn:umf:core:tablespec-cardinality-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/tablespec-facet-classification.schema.json",
+      "id": "urn:umf:core:tablespec-facet-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/tablespec-field-classification.schema.json",
+      "id": "urn:umf:core:tablespec-field-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/tablespec-nullability-classification.schema.json",
+      "id": "urn:umf:core:tablespec-nullability-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/tablespec-record-classification.schema.json",
+      "id": "urn:umf:core:tablespec-record-classification:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/examples/orders-consumers.schema.json",
+      "id": "urn:umf:example:orders-consumers:1",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/arrow-flatbuffer/schema.json",
+      "id": "urn:umf:arrow-flatbuffer:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/arrow-ipc/consistency-result.schema.json",
+      "id": "urn:umf:arrow-ipc-consistency:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/arrow-ipc/layout-result.schema.json",
+      "id": "urn:umf:arrow-ipc-layout:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/arrow-ipc/rename-result.schema.json",
+      "id": "urn:umf:arrow-ipc-rename:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/arrow-ipc/schema.json",
+      "id": "urn:umf:arrow-ipc:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/arrow/flatbuffer-model.schema.json",
+      "id": "urn:umf:arrow:flatbuffer-model:21.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/arrow/integration-schema.json",
+      "id": "urn:umf:arrow:integration-schema:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/arrow/schema.json",
+      "id": "urn:umf:arrow:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/avro-cardinality/schema.json",
+      "id": "urn:umf:avro:cardinality-binding:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/avro-facets/schema.json",
+      "id": "urn:umf:avro:facet-binding:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/avro-nullability/schema.json",
+      "id": "urn:umf:avro:nullability-binding:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/avro/field-metadata.schema.json",
+      "id": "urn:umf:avro:field-metadata:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/avro/native-schema.schema.json",
+      "id": "urn:umf:avro:native-schema:1.12.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/avro/node-edit-proposal.schema.json",
+      "id": "urn:umf:avro:node-edit-proposal:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/avro/schema.json",
+      "id": "urn:umf:avro:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/dbt-artifact/catalog-v1-schema.json",
+      "id": "https://schemas.getdbt.com/dbt/catalog/v1.json",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/dbt-artifact/run-results-v6-schema.json",
+      "id": "https://schemas.getdbt.com/dbt/run-results/v6.json",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/dbt-artifact/schema.json",
+      "id": "urn:umf:dbt:artifact:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/dbt-artifact/sources-v3-schema.json",
+      "id": "https://schemas.getdbt.com/dbt/sources/v3.json",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/dbt-manifest/graph-schema.json",
+      "id": "urn:umf:dbt:manifest-graph:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/dbt-manifest/native-schema.json",
+      "id": "https://schemas.getdbt.com/dbt/manifest/v12.json",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/dbt-manifest/schema.json",
+      "id": "urn:umf:dbt:manifest:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/dbt-manifest/selection-schema.json",
+      "id": "urn:umf:dbt:dependency-selection:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/dbt-semantic/native-schema.json",
+      "id": "urn:umf:dbt:semantic-manifest:dsi-0.8.5:serialized",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/dbt-semantic/schema.json",
+      "id": "urn:umf:dbt:semantic:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/ddd/schema.json",
+      "id": "urn:umf:ddd:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/delta-log/action-inspection.schema.json",
+      "id": "urn:umf:delta-log:action-inspection:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/delta-log/action-schema.json",
+      "id": "urn:umf:delta-log:actions:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/delta-log/inspection.schema.json",
+      "id": "urn:umf:delta-log-inspection:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/delta-log/multipart.schema.json",
+      "id": "urn:umf:delta-log:multipart:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/delta-log/parquet-actions.schema.json",
+      "id": "urn:umf:delta-log:parquet-actions:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/delta-log/parquet-checkpoint.schema.json",
+      "id": "urn:umf:delta-log:parquet-checkpoint:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/delta-log/reconciliation.schema.json",
+      "id": "urn:umf:delta-log:reconciliation:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/delta-log/schema.json",
+      "id": "urn:umf:delta-log:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/delta-log/sidecar-reconciliation.schema.json",
+      "id": "urn:umf:delta-log:sidecar-reconciliation:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/delta-table/context-schema.json",
+      "id": "urn:umf:delta:table-context:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/delta-table/rename-result.schema.json",
+      "id": "urn:umf:delta:mapped-rename:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/delta-table/schema.json",
+      "id": "urn:umf:delta-table:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/delta/datatype-schema.json",
+      "id": "urn:umf:delta:schema-json:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/delta/schema.json",
+      "id": "urn:umf:delta:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/generalized-rdf/dataset-schema.json",
+      "id": "urn:umf:generalized-rdf:dataset:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/generalized-rdf/schema.json",
+      "id": "urn:umf:generalized-rdf:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/graphql/schema.json",
+      "id": "urn:umf:graphql:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/iceberg-table/context-schema.json",
+      "id": "https://umf.dev/extensions/iceberg-table/0.1.0/context.schema.json",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/iceberg-table/datatype-schema.json",
+      "id": "urn:umf:iceberg:table-json:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/iceberg-table/promotion-report-schema.json",
+      "id": "urn:umf:iceberg:promotion-report:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/iceberg-table/rename-report-schema.json",
+      "id": "urn:umf:iceberg:rename-report:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/iceberg-table/schema.json",
+      "id": "urn:umf:iceberg:table:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/iceberg-table/transform-binding-schema.json",
+      "id": "urn:umf:iceberg:transform-binding:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/iceberg/datatype-schema.json",
+      "id": "urn:umf:iceberg:schema-json:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/iceberg/schema.json",
+      "id": "urn:umf:iceberg:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/iceberg/transform-type-schema.json",
+      "id": "urn:umf:iceberg:transform-type:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/json-schema/schema.json",
+      "id": "urn:umf:json-schema:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/jsonld/compaction-schema.json",
+      "id": "urn:umf:jsonld:compaction:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/jsonld/expansion-schema.json",
+      "id": "urn:umf:jsonld:expansion:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/jsonld/flatten-schema.json",
+      "id": "urn:umf:jsonld:flatten:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/jsonld/framing-schema.json",
+      "id": "urn:umf:jsonld:framing:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/jsonld/from-generalized-schema.json",
+      "id": "urn:umf:jsonld:from-generalized:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/jsonld/from-rdf-schema.json",
+      "id": "urn:umf:jsonld:from-rdf:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/jsonld/schema.json",
+      "id": "urn:umf:jsonld:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/jsonld/to-rdf-schema.json",
+      "id": "urn:umf:jsonld:to-rdf:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/linkml/class-slots-schema.json",
+      "id": "urn:umf:linkml:class-slots:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/linkml/import-context-schema.json",
+      "id": "urn:umf:linkml:import-context:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/linkml/import-report-schema.json",
+      "id": "urn:umf:linkml:import-report:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/linkml/merge-schema.json",
+      "id": "urn:umf:linkml:merge:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/linkml/native-schema.json",
+      "id": "https://w3id.org/linkml/meta",
+      "dialect": "https://json-schema.org/draft/2019-09/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/linkml/schema.json",
+      "id": "urn:umf:linkml:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/linkml/slot-values-schema.json",
+      "id": "urn:umf:linkml:slot-values:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/odcs/native-3.0.0.json",
+      "id": null,
+      "dialect": "https://json-schema.org/draft/2019-09/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/odcs/native-3.0.1.json",
+      "id": null,
+      "dialect": "https://json-schema.org/draft/2019-09/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/odcs/native-3.0.2.json",
+      "id": null,
+      "dialect": "https://json-schema.org/draft/2019-09/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/odcs/native-3.1.0.json",
+      "id": null,
+      "dialect": "https://json-schema.org/draft/2019-09/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/odcs/native-3.2.0.json",
+      "id": null,
+      "dialect": "https://json-schema.org/draft/2019-09/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/odcs/reference-schema.json",
+      "id": "urn:umf:odcs:reference-result:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/odcs/relationship-schema.json",
+      "id": "urn:umf:odcs:relationship-report:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/odcs/rename-schema.json",
+      "id": "urn:umf:odcs:rename-result:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/odcs/schema.json",
+      "id": "urn:umf:odcs:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/openapi/dynamic-reference.schema.json",
+      "id": "urn:umf:openapi-dynamic-reference:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/openapi/reference-result.schema.json",
+      "id": "urn:umf:openapi-reference-result:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/openapi/schema-extraction.schema.json",
+      "id": "urn:umf:openapi-schema-extraction:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/openapi/schema-index.schema.json",
+      "id": "urn:umf:openapi-schema-index:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/openapi/schema-reference.schema.json",
+      "id": "urn:umf:openapi-schema-reference:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/openapi/schema.json",
+      "id": "urn:umf:openapi:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/openapi/upstream/2.0-schema.json",
+      "id": "http://swagger.io/v2/schema.json#",
+      "dialect": "http://json-schema.org/draft-04/schema#",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/openapi/upstream/3.0-schema.json",
+      "id": "https://spec.openapis.org/oas/3.0/schema/2024-10-18",
+      "dialect": "http://json-schema.org/draft-04/schema#",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/openapi/upstream/3.1-dialect.json",
+      "id": "https://spec.openapis.org/oas/3.1/dialect/2024-11-10",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/openapi/upstream/3.1-meta.json",
+      "id": "https://spec.openapis.org/oas/3.1/meta/2024-11-10",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/openapi/upstream/3.1-schema.json",
+      "id": "https://spec.openapis.org/oas/3.1/schema/2026-08-03",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/openapi/upstream/3.2-dialect.json",
+      "id": "https://spec.openapis.org/oas/3.2/dialect/2026-02-26",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/openapi/upstream/3.2-meta.json",
+      "id": "https://spec.openapis.org/oas/3.2/meta/2026-02-26",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/openapi/upstream/3.2-schema.json",
+      "id": "https://spec.openapis.org/oas/3.2/schema/2026-08-30",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/owl/annotations-schema.json",
+      "id": "urn:umf:owl:annotations:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/owl/declarations-schema.json",
+      "id": "urn:umf:owl:declarations:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/owl/expression-schema.json",
+      "id": "urn:umf:owl:expression:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/owl/headers-schema.json",
+      "id": "urn:umf:owl:headers:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/owl/list-axioms-schema.json",
+      "id": "urn:umf:owl:list-axioms:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/owl/schema.json",
+      "id": "urn:umf:owl:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/owl/special-axioms-schema.json",
+      "id": "urn:umf:owl:special-axioms:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet-cardinality/schema.json",
+      "id": "urn:umf:parquet:cardinality-binding:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet-nullability/schema.json",
+      "id": "urn:umf:parquet:nullability-binding:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/arrow-rename.schema.json",
+      "id": "urn:umf:parquet:arrow-rename:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/arrow-schema.schema.json",
+      "id": "urn:umf:parquet:arrow-schema:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/container-inspection.schema.json",
+      "id": "urn:umf:parquet:container-inspection:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/experimental-values.schema.json",
+      "id": "urn:umf:parquet:experimental-values:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/field-metadata.schema.json",
+      "id": "urn:umf:parquet:field-metadata:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/footer-decode.schema.json",
+      "id": "urn:umf:parquet:footer-decode:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/framing.schema.json",
+      "id": "urn:umf:parquet:framing:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/hybrid-values.schema.json",
+      "id": "urn:umf:parquet:hybrid-values:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/levels.schema.json",
+      "id": "urn:umf:parquet:levels:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/logical-inspection.schema.json",
+      "id": "urn:umf:parquet:logical-inspection:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/metadata-inspection.schema.json",
+      "id": "urn:umf:parquet:metadata-inspection:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/metadata-transform.schema.json",
+      "id": "urn:umf:parquet:metadata-transform:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/metadata.schema.json",
+      "id": "urn:umf:parquet:metadata:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/offset-repair.schema.json",
+      "id": "urn:umf:parquet:offset-repair:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/page-bodies.schema.json",
+      "id": "urn:umf:parquet:page-bodies:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/pages.schema.json",
+      "id": "urn:umf:parquet:pages:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/physical.schema.json",
+      "id": "urn:umf:parquet:physical:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/rename.schema.json",
+      "id": "urn:umf:parquet:rename:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/rows.schema.json",
+      "id": "urn:umf:parquet:rows:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/schema-inspection.schema.json",
+      "id": "urn:umf:parquet:schema-inspection:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/schema.json",
+      "id": "urn:umf:parquet:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet/values.schema.json",
+      "id": "urn:umf:parquet:values:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/postgresql-cardinality/schema.json",
+      "id": "urn:umf:postgresql:cardinality-binding:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/postgresql-catalog/capture.schema.json",
+      "id": "urn:umf:postgresql-catalog:capture:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/postgresql-catalog/cardinality-v1.schema.json",
+      "id": "https://umf.dev/extensions/postgresql-catalog/cardinality-v1.schema.json",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/postgresql-catalog/column-metadata.schema.json",
+      "id": "urn:umf:postgresql:column-metadata:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/postgresql-catalog/facet-constraints-v1.schema.json",
+      "id": "https://umf.dev/extensions/postgresql-catalog/facet-constraints-v1.schema.json",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/postgresql-catalog/schema.json",
+      "id": "urn:umf:postgresql-catalog:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/postgresql-facets/schema.json",
+      "id": "urn:umf:postgresql:facet-binding:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/postgresql-nullability/schema.json",
+      "id": "urn:umf:postgresql:nullability-binding:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/postgresql/ddl-declarations.schema.json",
+      "id": "urn:umf:postgresql:ddl-declarations:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/postgresql/native-ast.schema.json",
+      "id": "urn:umf:postgresql:native-ast:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/postgresql/schema.json",
+      "id": "urn:umf:postgresql:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/protobuf/schema.json",
+      "id": "urn:umf:protobuf:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/rdf/merge-schema.json",
+      "id": "urn:umf:rdf:merge:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/rdf/rename-schema.json",
+      "id": "urn:umf:rdf:rename:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/rdf/schema.json",
+      "id": "urn:umf:rdf:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/shacl/engine-report-schema.json",
+      "id": "urn:umf:shacl:engine-report:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/shacl/metadata-schema.json",
+      "id": "urn:umf:shacl:metadata:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/shacl/path-schema.json",
+      "id": "urn:umf:shacl:path:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/shacl/schema.json",
+      "id": "urn:umf:shacl:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/shacl/target-nodes-schema.json",
+      "id": "urn:umf:shacl:target-nodes:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/smithy/assembly-result.schema.json",
+      "id": "urn:umf:smithy:assembly-result:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/smithy/native-assembly.schema.json",
+      "id": "urn:umf:smithy:native-assembly:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/smithy/native-selection.schema.json",
+      "id": "urn:umf:smithy:native-selection:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/smithy/native-structure.schema.json",
+      "id": "urn:umf:smithy:native-structure:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/smithy/schema.json",
+      "id": "urn:umf:smithy:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/smithy/selection-result.schema.json",
+      "id": "urn:umf:smithy:selection-result:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/spark/datatype-schema.json",
+      "id": "urn:umf:spark:datatype-json:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/spark/rename-result.schema.json",
+      "id": "urn:umf:spark:rename:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/spark/schema.json",
+      "id": "urn:umf:spark:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/sqlserver-cardinality/schema.json",
+      "id": "urn:umf:sqlserver:cardinality-binding:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/sqlserver-facets/schema.json",
+      "id": "urn:umf:sqlserver:facet-binding:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/sqlserver-nullability/native.schema.json",
+      "id": "urn:umf:sqlserver:nullability-evidence:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/sqlserver-nullability/schema.json",
+      "id": "urn:umf:sqlserver:nullability-binding:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/sqlserver/capture.schema.json",
+      "id": "urn:umf:sqlserver:capture:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/sqlserver/column-metadata.schema.json",
+      "id": "urn:umf:sqlserver:columns:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/sqlserver/constraint-metadata.schema.json",
+      "id": "urn:umf:sqlserver:constraints:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/sqlserver/index-metadata.schema.json",
+      "id": "urn:umf:sqlserver:indexes:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/sqlserver/schema.json",
+      "id": "urn:umf:sqlserver:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/tablespec-cardinality/schema.json",
+      "id": "urn:umf:tablespec:cardinality-binding:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/tablespec-facets/schema.json",
+      "id": "urn:umf:tablespec:facet-binding:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/tablespec-nullability/schema.json",
+      "id": "urn:umf:tablespec:nullability-binding:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/tablespec/native-model.schema.json",
+      "id": "urn:umf:tablespec:native-model:647e8e5",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/tablespec/schema.json",
+      "id": "urn:umf:tablespec:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/typespec/compiler-report.schema.json",
+      "id": "urn:umf:typespec:compiler-report:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/typespec/json-schema-emission.schema.json",
+      "id": "urn:umf:typespec:json-schema-emission:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/typespec/schema.json",
+      "id": "urn:umf:typespec:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/typespec/semantic-graph.schema.json",
+      "id": "urn:umf:typespec:semantic-graph:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/typespec/syntax-locations.schema.json",
+      "id": "urn:umf:typespec:syntax-locations:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/projections/arrow-spark.schema.json",
+      "id": "urn:umf:projection:arrow-spark:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/projections/avro-json-schema.schema.json",
+      "id": "urn:umf:projection:avro-json-schema:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/projections/avro-tablespec.schema.json",
+      "id": "urn:umf:projection:avro-tablespec:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/projections/ddd-json-schema.schema.json",
+      "id": "urn:umf:projection:ddd-json-schema:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/projections/graphql-input-json-schema.schema.json",
+      "id": "urn:umf:projection:graphql-input-json-schema:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/projections/json-schema-protobuf.schema.json",
+      "id": "urn:umf:projection:json-schema-protobuf:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/projections/openapi-json-schema.schema.json",
+      "id": "urn:umf:projection:openapi-json-schema:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/projections/parquet-avro.schema.json",
+      "id": "urn:umf:projection:parquet-avro:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/projections/postgresql-avro.schema.json",
+      "id": "urn:umf:projection:postgresql-avro:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/projections/postgresql-row-json-schema.schema.json",
+      "id": "urn:umf:projection:postgresql-row-json-schema:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/projections/smithy-json-schema.schema.json",
+      "id": "urn:umf:projection:smithy-json-schema:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/projections/spark-arrow.schema.json",
+      "id": "urn:umf:projection:spark-arrow:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/projections/sqlserver-avro.schema.json",
+      "id": "urn:umf:projection:sqlserver-avro:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/projections/sqlserver-ddl.schema.json",
+      "id": "urn:umf:projection:sqlserver-ddl:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/projections/tablespec-avro.schema.json",
+      "id": "urn:umf:projection:tablespec-avro:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/projections/tablespec-via-avro.schema.json",
+      "id": "urn:umf:projection:tablespec-via-avro:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/projections/typespec-json-schema.schema.json",
+      "id": "urn:umf:projection:typespec-json-schema:0.1.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    }
+  ]
+}

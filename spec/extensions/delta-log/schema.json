@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:delta-log:0.1.0",
+  "type": "object",
+  "required": [
+    "profile",
+    "text"
+  ],
+  "properties": {
+    "profile": {
+      "const": "delta-jsonl-source"
+    },
+    "text": {
+      "type": "string",
+      "maxLength": 1000000
+    }
+  },
+  "additionalProperties": true
+}

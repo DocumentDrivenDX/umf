@@ -1,0 +1,47 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b20630 .
+_:report <http://www.w3.org/ns/shacl#result> _:b20631 .
+_:report <http://www.w3.org/ns/shacl#result> _:b20632 .
+_:report <http://www.w3.org/ns/shacl#result> _:b20633 .
+_:report <http://www.w3.org/ns/shacl#result> _:b20634 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b20630 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b20630 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b20630 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#EqualsConstraintComponent> .
+_:b20630 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/equals-001.test#TestShape-property1> .
+_:b20630 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/equals-001.test#InvalidResource1> .
+_:b20630 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/equals-001.test#property1> .
+_:b20630 <http://www.w3.org/ns/shacl#value> "A" .
+_:b20630 <http://www.w3.org/ns/shacl#resultMessage> "Must have same values as <http://datashapes.org/sh/tests/core/property/equals-001.test#property2>" .
+_:b20631 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b20631 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b20631 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#EqualsConstraintComponent> .
+_:b20631 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/equals-001.test#TestShape-property1> .
+_:b20631 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/equals-001.test#InvalidResource1> .
+_:b20631 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/equals-001.test#property1> .
+_:b20631 <http://www.w3.org/ns/shacl#value> "B" .
+_:b20631 <http://www.w3.org/ns/shacl#resultMessage> "Must have same values as <http://datashapes.org/sh/tests/core/property/equals-001.test#property2>" .
+_:b20632 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b20632 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b20632 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#EqualsConstraintComponent> .
+_:b20632 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/equals-001.test#TestShape-property1> .
+_:b20632 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/equals-001.test#InvalidResource2> .
+_:b20632 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/equals-001.test#property1> .
+_:b20632 <http://www.w3.org/ns/shacl#value> "A" .
+_:b20632 <http://www.w3.org/ns/shacl#resultMessage> "Must have same values as <http://datashapes.org/sh/tests/core/property/equals-001.test#property2>" .
+_:b20633 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b20633 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b20633 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#EqualsConstraintComponent> .
+_:b20633 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/equals-001.test#TestShape-property1> .
+_:b20633 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/equals-001.test#InvalidResource3> .
+_:b20633 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/equals-001.test#property1> .
+_:b20633 <http://www.w3.org/ns/shacl#value> "A" .
+_:b20633 <http://www.w3.org/ns/shacl#resultMessage> "Must have same values as <http://datashapes.org/sh/tests/core/property/equals-001.test#property2>" .
+_:b20634 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b20634 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b20634 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#EqualsConstraintComponent> .
+_:b20634 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/equals-001.test#TestShape-property1> .
+_:b20634 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/equals-001.test#InvalidResource4> .
+_:b20634 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/equals-001.test#property1> .
+_:b20634 <http://www.w3.org/ns/shacl#value> "B" .
+_:b20634 <http://www.w3.org/ns/shacl#resultMessage> "Must have same values as <http://datashapes.org/sh/tests/core/property/equals-001.test#property2>" .

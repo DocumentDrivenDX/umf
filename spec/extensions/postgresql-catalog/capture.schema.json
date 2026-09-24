@@ -1,0 +1,1023 @@
+{
+  "type": "object",
+  "required": [
+    "profile",
+    "serverVersion",
+    "query",
+    "snapshot",
+    "reconstruction",
+    "state"
+  ],
+  "properties": {
+    "profile": {
+      "const": "postgresql-catalog-capture-v1"
+    },
+    "serverVersion": {
+      "type": "integer",
+      "minimum": 170000,
+      "maximum": 179999
+    },
+    "query": {
+      "type": "string"
+    },
+    "snapshot": {
+      "$ref": "#/$defs/snapshot"
+    },
+    "reconstruction": {
+      "type": "object",
+      "required": [
+        "format",
+        "toolVersion",
+        "sql"
+      ],
+      "properties": {
+        "format": {
+          "const": "pg-dump-plain-schema-only"
+        },
+        "toolVersion": {
+          "type": "string"
+        },
+        "sql": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "state": {
+      "enum": [
+        "captured",
+        "modified"
+      ]
+    }
+  },
+  "additionalProperties": true,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:postgresql-catalog:capture:0.1.0",
+  "$defs": {
+    "namespace": {
+      "type": "object",
+      "required": [
+        "name",
+        "owner",
+        "acl"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "acl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "column": {
+      "type": "object",
+      "required": [
+        "name",
+        "position",
+        "type",
+        "notNull",
+        "identity",
+        "generated",
+        "collation",
+        "default",
+        "comment",
+        "storage",
+        "compression",
+        "acl"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "position": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32767
+        },
+        "type": {
+          "type": "string"
+        },
+        "nativeType": {
+          "type": "object",
+          "required": ["schema", "name", "kind", "category", "dimensions", "modifier"],
+          "properties": {
+            "schema": {"type": "string"},
+            "name": {"type": "string"},
+            "kind": {"type": "string"},
+            "category": {"type": "string"},
+            "dimensions": {"type": "integer", "minimum": 0},
+            "modifier": {"type": "integer"}
+          }
+        },
+        "notNull": {
+          "type": "boolean"
+        },
+        "identity": {
+          "type": "string"
+        },
+        "generated": {
+          "type": "string"
+        },
+        "collation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "default": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "comment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "storage": {
+          "type": "string"
+        },
+        "compression": {
+          "type": "string"
+        },
+        "acl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "constraint": {
+      "type": "object",
+      "required": [
+        "name",
+        "kind",
+        "definition",
+        "deferrable",
+        "deferred",
+        "validated"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "definition": {
+          "type": "string"
+        },
+        "deferrable": {
+          "type": "boolean"
+        },
+        "deferred": {
+          "type": "boolean"
+        },
+        "validated": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "index": {
+      "type": "object",
+      "required": [
+        "definition",
+        "valid",
+        "ready",
+        "replicaIdentity"
+      ],
+      "properties": {
+        "definition": {
+          "type": "string"
+        },
+        "valid": {
+          "type": "boolean"
+        },
+        "ready": {
+          "type": "boolean"
+        },
+        "replicaIdentity": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "policy": {
+      "type": "object",
+      "required": [
+        "name",
+        "command",
+        "permissive",
+        "roles",
+        "using",
+        "check"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "command": {
+          "type": "string"
+        },
+        "permissive": {
+          "type": "boolean"
+        },
+        "roles": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "using": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "check": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "sequence": {
+      "type": "object",
+      "required": [
+        "type",
+        "start",
+        "increment",
+        "min",
+        "max",
+        "cache",
+        "cycle"
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "start": {
+          "type": "string",
+          "pattern": "^-?[0-9]+$"
+        },
+        "increment": {
+          "type": "string",
+          "pattern": "^-?[0-9]+$"
+        },
+        "min": {
+          "type": "string",
+          "pattern": "^-?[0-9]+$"
+        },
+        "max": {
+          "type": "string",
+          "pattern": "^-?[0-9]+$"
+        },
+        "cache": {
+          "type": "string",
+          "pattern": "^-?[0-9]+$"
+        },
+        "cycle": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "relation": {
+      "type": "object",
+      "required": [
+        "schema",
+        "name",
+        "kind",
+        "persistence",
+        "owner",
+        "acl",
+        "options",
+        "rowSecurity",
+        "forceRowSecurity",
+        "comment",
+        "partitionKey",
+        "partitionBound",
+        "parents",
+        "view",
+        "columns",
+        "constraints",
+        "indexes",
+        "policies",
+        "sequence"
+      ],
+      "properties": {
+        "schema": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "persistence": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "acl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "options": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "rowSecurity": {
+          "type": "boolean"
+        },
+        "forceRowSecurity": {
+          "type": "boolean"
+        },
+        "comment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "partitionKey": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "partitionBound": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "parents": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "view": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "columns": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/column"
+          }
+        },
+        "constraints": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/constraint"
+          }
+        },
+        "indexes": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/index"
+          }
+        },
+        "policies": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/policy"
+          }
+        },
+        "sequence": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/sequence"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "type": {
+      "type": "object",
+      "required": [
+        "schema",
+        "name",
+        "kind",
+        "owner",
+        "acl",
+        "base",
+        "notNull",
+        "default",
+        "comment",
+        "labels",
+        "constraints"
+      ],
+      "properties": {
+        "schema": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "acl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "base": {
+          "type": "string"
+        },
+        "notNull": {
+          "type": "boolean"
+        },
+        "default": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "comment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "labels": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "constraints": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "definition",
+              "validated"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "definition": {
+                "type": "string"
+              },
+              "validated": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "function": {
+      "type": "object",
+      "required": [
+        "schema",
+        "name",
+        "identity",
+        "definition",
+        "owner",
+        "acl",
+        "comment"
+      ],
+      "properties": {
+        "schema": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "identity": {
+          "type": "string"
+        },
+        "definition": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "acl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "comment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "snapshot": {
+      "type": "object",
+      "required": [
+        "profile",
+        "namespaces",
+        "relations",
+        "types",
+        "functions"
+      ],
+      "properties": {
+        "profile": {
+          "enum": [
+            "umf-postgresql-catalog-evidence-17-v1",
+            "umf-postgresql-catalog-evidence-17-v2",
+            "umf-postgresql-catalog-evidence-17-v3"
+          ]
+        },
+        "namespaces": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/namespace"
+          }
+        },
+        "relations": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/relation"
+          }
+        },
+        "types": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/type"
+          }
+        },
+        "functions": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/function"
+          }
+        },
+        "triggers": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/trigger"
+          }
+        },
+        "compositeTypes": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/compositeType"
+          }
+        },
+        "rangeTypes": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/rangeType"
+          }
+        },
+        "collations": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/$defs/collation"
+          }
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/dependency"
+          }
+        }
+      },
+      "additionalProperties": true,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "profile": {
+                "enum": [
+                  "umf-postgresql-catalog-evidence-17-v2",
+                  "umf-postgresql-catalog-evidence-17-v3"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "triggers",
+              "compositeTypes",
+              "rangeTypes",
+              "collations"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "profile": {
+                "const": "umf-postgresql-catalog-evidence-17-v3"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "dependencies"
+            ]
+          }
+        }
+      ]
+    },
+    "trigger": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string"
+        },
+        "relation": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "string"
+        },
+        "definition": {
+          "type": "string"
+        },
+        "function": {
+          "type": "string"
+        },
+        "deferrable": {
+          "type": "boolean"
+        },
+        "deferred": {
+          "type": "boolean"
+        },
+        "comment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "schema",
+        "relation",
+        "name",
+        "enabled",
+        "definition",
+        "function",
+        "deferrable",
+        "deferred",
+        "comment"
+      ],
+      "additionalProperties": true
+    },
+    "compositeType": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "acl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "comment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "attributes": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "position": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 32767
+              },
+              "type": {
+                "type": "string"
+              },
+              "collation": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "name",
+              "position",
+              "type",
+              "collation"
+            ],
+            "additionalProperties": true
+          }
+        }
+      },
+      "required": [
+        "schema",
+        "name",
+        "owner",
+        "acl",
+        "comment",
+        "attributes"
+      ],
+      "additionalProperties": true
+    },
+    "rangeType": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "acl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "comment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "subtype": {
+          "type": "string"
+        },
+        "multirange": {
+          "type": "string"
+        },
+        "collation": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "operatorClass": {
+          "type": "string"
+        },
+        "canonical": {
+          "type": "string"
+        },
+        "subtypeDifference": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema",
+        "name",
+        "owner",
+        "acl",
+        "comment",
+        "subtype",
+        "multirange",
+        "collation",
+        "operatorClass",
+        "canonical",
+        "subtypeDifference"
+      ],
+      "additionalProperties": true
+    },
+    "collation": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "provider": {
+          "type": "string"
+        },
+        "deterministic": {
+          "type": "boolean"
+        },
+        "encoding": {
+          "type": "integer",
+          "minimum": -1,
+          "maximum": 2147483647
+        },
+        "collate": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ctype": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "locale": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rules": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "comment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "schema",
+        "name",
+        "owner",
+        "provider",
+        "deterministic",
+        "encoding",
+        "collate",
+        "ctype",
+        "locale",
+        "rules",
+        "version",
+        "comment"
+      ],
+      "additionalProperties": true
+    },
+    "dependencyObject": {
+      "type": "object",
+      "required": [
+        "catalog",
+        "type",
+        "schema",
+        "name",
+        "identity"
+      ],
+      "properties": {
+        "catalog": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "schema": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "identity": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "dependency": {
+      "type": "object",
+      "required": [
+        "dependent",
+        "referenced",
+        "kind"
+      ],
+      "properties": {
+        "dependent": {
+          "$ref": "#/$defs/dependencyObject"
+        },
+        "referenced": {
+          "$ref": "#/$defs/dependencyObject"
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "description": "Observed catalog metadata for the versioned UMF PostgreSQL 17 evidence query, with original query and schema-only dump. Native expressions/ACLs/physical types remain strings. Unknown properties are retained. Not the entire PostgreSQL catalog or a guarantee of reconstruction."
+}

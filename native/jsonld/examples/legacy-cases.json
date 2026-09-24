@@ -1,0 +1,10 @@
+[
+ {"id":"iri-keyword-alias","source":{"@context":{"urn:type":{"@id":"@type","@type":"@id"}},"@id":"urn:s","urn:type":"urn:Class"},"expect10":[{"@id":"urn:s","@type":["urn:Class"]}],"blocked11":true},
+ {"id":"compact-redefinition","source":{"@context":{"ex":"https://example.org/","ex:p":"ex:q"},"ex:p":"value"},"expect10":[{"https://example.org/q":[{"@value":"value"}]}],"blocked11":true,"edit":{"pointer":"/ex:p","text":"\"edited\""},"edited10":[{"https://example.org/q":[{"@value":"edited"}]}]},
+ {"id":"blank-prefix","source":{"@context":{"b":"_:base","ref":{"@id":"urn:ref","@type":"@id"}},"ref":"b:suffix"},"expect10":[{"urn:ref":[{"@id":"_:basesuffix"}]}],"expect11":[{"urn:ref":[{"@id":"b:suffix"}]}]},
+ {"id":"object-prefix","source":{"@context":{"ex":{"@id":"https://example.org/"},"ref":{"@id":"urn:ref","@type":"@id"}},"ref":"ex:item"},"expect10":[{"urn:ref":[{"@id":"https://example.org/item"}]}],"expect11":[{"urn:ref":[{"@id":"ex:item"}]}]},
+ {"id":"prefix-without-delimiter","source":{"@context":{"ex":"https://example.org/base","ref":{"@id":"urn:ref","@type":"@id"}},"ref":"ex:item"},"expect10":[{"urn:ref":[{"@id":"https://example.org/baseitem"}]}],"expect11":[{"urn:ref":[{"@id":"ex:item"}]}]},
+ {"id":"null-prefix","source":{"@context":{"ex":null,"ref":{"@id":"urn:ref","@type":"@id"}},"ref":"ex:item"},"expect10":[{"urn:ref":[{"@id":"ex:item"}]}],"expect11":[{"urn:ref":[{"@id":"ex:item"}]}]},
+ {"id":"absolute-not-prefix","source":{"@context":{"https":"urn:ignored:","ref":{"@id":"urn:ref","@type":"@id"}},"ref":"https://example.org/item"},"expect10":[{"urn:ref":[{"@id":"https://example.org/item"}]}],"expect11":[{"urn:ref":[{"@id":"https://example.org/item"}]}]},
+ {"id":"opaque-blank-context","source":{"@context":{"j":{"@id":"urn:json","@type":"@json"}},"j":{"@context":{"b":"_:base"}}},"only11":true,"expect11":[{"urn:json":[{"@type":"@json","@value":{"@context":{"b":"_:base"}}}]}]}
+]

@@ -1,0 +1,1391 @@
+{
+  "status": "projected",
+  "source": {
+    "umf": "0.1.0",
+    "id": "source",
+    "vocabularies": {
+      "umf.json-schema": {
+        "version": "0.1.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "schema",
+        "namespace": "https://example.test/source",
+        "elements": [
+          {
+            "id": "schema",
+            "extensions": {
+              "umf.json-schema": {
+                "dialect": "https://json-schema.org/draft/2020-12/schema",
+                "baseUri": "https://example.test/source",
+                "root": {
+                  "kind": "object",
+                  "members": {
+                    "$schema": {
+                      "kind": "string",
+                      "value": "https://json-schema.org/draft/2020-12/schema"
+                    },
+                    "type": {
+                      "kind": "string",
+                      "value": "object"
+                    },
+                    "properties": {
+                      "kind": "object",
+                      "members": {
+                        "id": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            "minLength": {
+                              "kind": "number",
+                              "value": "1"
+                            }
+                          }
+                        },
+                        "count": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "integer"
+                            },
+                            "minimum": {
+                              "kind": "number",
+                              "value": "0"
+                            },
+                            "default": {
+                              "kind": "number",
+                              "value": "9"
+                            }
+                          }
+                        },
+                        "note": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "array",
+                              "items": [
+                                {
+                                  "kind": "string",
+                                  "value": "string"
+                                },
+                                {
+                                  "kind": "string",
+                                  "value": "null"
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        "tags": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "array"
+                            },
+                            "items": {
+                              "kind": "object",
+                              "members": {
+                                "type": {
+                                  "kind": "string",
+                                  "value": "string"
+                                }
+                              }
+                            },
+                            "uniqueItems": {
+                              "kind": "boolean",
+                              "value": true
+                            },
+                            "minItems": {
+                              "kind": "number",
+                              "value": "1"
+                            }
+                          }
+                        },
+                        "choice": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "string"
+                            },
+                            "oneOf": {
+                              "kind": "array",
+                              "items": [
+                                {
+                                  "kind": "object",
+                                  "members": {
+                                    "const": {
+                                      "kind": "string",
+                                      "value": "A"
+                                    }
+                                  }
+                                },
+                                {
+                                  "kind": "object",
+                                  "members": {
+                                    "const": {
+                                      "kind": "string",
+                                      "value": "B"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        },
+                        "ratio": {
+                          "kind": "object",
+                          "members": {
+                            "type": {
+                              "kind": "string",
+                              "value": "number"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "required": {
+                      "kind": "array",
+                      "items": [
+                        {
+                          "kind": "string",
+                          "value": "id"
+                        }
+                      ]
+                    },
+                    "additionalProperties": {
+                      "kind": "boolean",
+                      "value": false
+                    }
+                  }
+                },
+                "resources": {}
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "policy": {
+    "id": "projected",
+    "packageName": "umf.projection",
+    "messageName": "Record",
+    "integerType": "int64",
+    "lossPolicy": "allow-reported-loss",
+    "fields": {
+      "/properties/id": {
+        "number": 1
+      },
+      "/properties/count": {
+        "number": 2
+      },
+      "/properties/note": {
+        "number": 3
+      },
+      "/properties/tags": {
+        "number": 4
+      },
+      "/properties/choice": {
+        "number": 5
+      },
+      "/properties/ratio": {
+        "number": 6
+      }
+    }
+  },
+  "issues": [
+    {
+      "path": "",
+      "code": "INSTANCE_ENCODING",
+      "classification": "representation-change",
+      "detail": "This projects schemas only; native wire/ProtoJSON data requires a separate explicit instance conversion using the field mappings",
+      "retainedInSource": true
+    },
+    {
+      "path": "/$schema",
+      "code": "DIALECT_RETAINED",
+      "classification": "annotation-only",
+      "detail": "JSON Schema dialect declaration is retained only in source",
+      "retainedInSource": true
+    },
+    {
+      "path": "/required",
+      "code": "REQUIRED_NOT_ENFORCED",
+      "classification": "not-enforced",
+      "detail": "Proto3 optional presence does not enforce JSON Schema required members",
+      "retainedInSource": true
+    },
+    {
+      "path": "/additionalProperties",
+      "code": "OBJECT_OPENNESS",
+      "classification": "representation-change",
+      "detail": "Protobuf unknown wire fields are not JSON Schema additional-property rejection",
+      "retainedInSource": true
+    },
+    {
+      "path": "/properties/id/minLength",
+      "code": "CONSTRAINT_NOT_ENFORCED",
+      "classification": "not-enforced",
+      "detail": "Native target does not enforce this keyword; retained source schema remains authoritative",
+      "retainedInSource": true
+    },
+    {
+      "path": "/properties/id/type",
+      "code": "STRING_ENCODING",
+      "classification": "representation-change",
+      "detail": "Native strings use UTF-8; ill-formed Unicode surrogate sequences have no portable native string representation",
+      "retainedInSource": true
+    },
+    {
+      "path": "/properties/count/minimum",
+      "code": "CONSTRAINT_NOT_ENFORCED",
+      "classification": "not-enforced",
+      "detail": "Native target does not enforce this keyword; retained source schema remains authoritative",
+      "retainedInSource": true
+    },
+    {
+      "path": "/properties/count/default",
+      "code": "ANNOTATION_RETAINED",
+      "classification": "annotation-only",
+      "detail": "Native target does not carry this source annotation; JSON Schema default is not a Protobuf field default",
+      "retainedInSource": true
+    },
+    {
+      "path": "/properties/count/type",
+      "code": "INTEGER_DOMAIN",
+      "classification": "representation-change",
+      "detail": "Mathematical JSON integers are projected to explicitly selected int64; range and wire representation differ",
+      "retainedInSource": true
+    },
+    {
+      "path": "/properties/count/type",
+      "code": "PROTOJSON_INTEGER",
+      "classification": "representation-change",
+      "detail": "Protobuf JSON encodes 64-bit integers as strings; no instance converter is supplied",
+      "retainedInSource": true
+    },
+    {
+      "path": "/properties/note/type",
+      "code": "NULLABILITY_LOST",
+      "classification": "representation-change",
+      "detail": "Protobuf field absence does not represent a distinct JSON null value",
+      "retainedInSource": true
+    },
+    {
+      "path": "/properties/note/type",
+      "code": "STRING_ENCODING",
+      "classification": "representation-change",
+      "detail": "Native strings use UTF-8; ill-formed Unicode surrogate sequences have no portable native string representation",
+      "retainedInSource": true
+    },
+    {
+      "path": "/properties/tags/uniqueItems",
+      "code": "CONSTRAINT_NOT_ENFORCED",
+      "classification": "not-enforced",
+      "detail": "Native target does not enforce this keyword; retained source schema remains authoritative",
+      "retainedInSource": true
+    },
+    {
+      "path": "/properties/tags/minItems",
+      "code": "CONSTRAINT_NOT_ENFORCED",
+      "classification": "not-enforced",
+      "detail": "Native target does not enforce this keyword; retained source schema remains authoritative",
+      "retainedInSource": true
+    },
+    {
+      "path": "/properties/tags/items/type",
+      "code": "STRING_ENCODING",
+      "classification": "representation-change",
+      "detail": "Native strings use UTF-8; ill-formed Unicode surrogate sequences have no portable native string representation",
+      "retainedInSource": true
+    },
+    {
+      "path": "/properties/tags",
+      "code": "ARRAY_PRESENCE",
+      "classification": "representation-change",
+      "detail": "Repeated fields collapse absent and empty arrays; ordering is retained",
+      "retainedInSource": true
+    },
+    {
+      "path": "/properties/choice/oneOf",
+      "code": "CONSTRAINT_NOT_ENFORCED",
+      "classification": "not-enforced",
+      "detail": "Native target does not enforce this keyword; retained source schema remains authoritative",
+      "retainedInSource": true
+    },
+    {
+      "path": "/properties/choice/type",
+      "code": "STRING_ENCODING",
+      "classification": "representation-change",
+      "detail": "Native strings use UTF-8; ill-formed Unicode surrogate sequences have no portable native string representation",
+      "retainedInSource": true
+    },
+    {
+      "path": "/properties/ratio/type",
+      "code": "NUMBER_DOMAIN",
+      "classification": "representation-change",
+      "detail": "Binary64 may lose decimal precision and supports non-finite native values absent from JSON numbers",
+      "retainedInSource": true
+    }
+  ],
+  "mappings": [
+    {
+      "sourcePath": "/properties/id",
+      "targetMessage": "umf.projection.Record",
+      "targetField": "field_1",
+      "number": 1
+    },
+    {
+      "sourcePath": "/properties/count",
+      "targetMessage": "umf.projection.Record",
+      "targetField": "field_2",
+      "number": 2
+    },
+    {
+      "sourcePath": "/properties/note",
+      "targetMessage": "umf.projection.Record",
+      "targetField": "field_3",
+      "number": 3
+    },
+    {
+      "sourcePath": "/properties/tags",
+      "targetMessage": "umf.projection.Record",
+      "targetField": "field_4",
+      "number": 4
+    },
+    {
+      "sourcePath": "/properties/choice",
+      "targetMessage": "umf.projection.Record",
+      "targetField": "field_5",
+      "number": 5
+    },
+    {
+      "sourcePath": "/properties/ratio",
+      "targetMessage": "umf.projection.Record",
+      "targetField": "field_6",
+      "number": 6
+    }
+  ],
+  "nativeSource": "syntax = \"proto3\";\npackage umf.projection;\nmessage Record {\n  optional string field_1 = 1 [json_name = \"id\"];\n  optional int64 field_2 = 2 [json_name = \"count\"];\n  optional string field_3 = 3 [json_name = \"note\"];\n  repeated string field_4 = 4 [json_name = \"tags\"];\n  optional string field_5 = 5 [json_name = \"choice\"];\n  optional double field_6 = 6 [json_name = \"ratio\"];\n}\n",
+  "target": {
+    "umf": "0.1.0",
+    "id": "projected",
+    "vocabularies": {
+      "umf.protobuf": {
+        "version": "0.1.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "schema",
+        "namespace": "",
+        "elements": [
+          {
+            "id": "schema",
+            "extensions": {
+              "umf.protobuf": {
+                "descriptorProfile": "protobuf-es-2.15.0",
+                "descriptorSet": {
+                  "type": "google.protobuf.FileDescriptorSet",
+                  "fields": {
+                    "file": [
+                      {
+                        "type": "google.protobuf.FileDescriptorProto",
+                        "fields": {
+                          "name": "projection.proto",
+                          "package": "umf.projection",
+                          "message_type": [
+                            {
+                              "type": "google.protobuf.DescriptorProto",
+                              "fields": {
+                                "name": "Record",
+                                "field": [
+                                  {
+                                    "type": "google.protobuf.FieldDescriptorProto",
+                                    "fields": {
+                                      "name": "field_1",
+                                      "number": 1,
+                                      "label": 1,
+                                      "type": 9,
+                                      "oneof_index": 0,
+                                      "json_name": "id",
+                                      "proto3_optional": true
+                                    },
+                                    "unknown": []
+                                  },
+                                  {
+                                    "type": "google.protobuf.FieldDescriptorProto",
+                                    "fields": {
+                                      "name": "field_2",
+                                      "number": 2,
+                                      "label": 1,
+                                      "type": 3,
+                                      "oneof_index": 1,
+                                      "json_name": "count",
+                                      "proto3_optional": true
+                                    },
+                                    "unknown": []
+                                  },
+                                  {
+                                    "type": "google.protobuf.FieldDescriptorProto",
+                                    "fields": {
+                                      "name": "field_3",
+                                      "number": 3,
+                                      "label": 1,
+                                      "type": 9,
+                                      "oneof_index": 2,
+                                      "json_name": "note",
+                                      "proto3_optional": true
+                                    },
+                                    "unknown": []
+                                  },
+                                  {
+                                    "type": "google.protobuf.FieldDescriptorProto",
+                                    "fields": {
+                                      "name": "field_4",
+                                      "number": 4,
+                                      "label": 3,
+                                      "type": 9,
+                                      "json_name": "tags"
+                                    },
+                                    "unknown": []
+                                  },
+                                  {
+                                    "type": "google.protobuf.FieldDescriptorProto",
+                                    "fields": {
+                                      "name": "field_5",
+                                      "number": 5,
+                                      "label": 1,
+                                      "type": 9,
+                                      "oneof_index": 3,
+                                      "json_name": "choice",
+                                      "proto3_optional": true
+                                    },
+                                    "unknown": []
+                                  },
+                                  {
+                                    "type": "google.protobuf.FieldDescriptorProto",
+                                    "fields": {
+                                      "name": "field_6",
+                                      "number": 6,
+                                      "label": 1,
+                                      "type": 1,
+                                      "oneof_index": 4,
+                                      "json_name": "ratio",
+                                      "proto3_optional": true
+                                    },
+                                    "unknown": []
+                                  }
+                                ],
+                                "oneof_decl": [
+                                  {
+                                    "type": "google.protobuf.OneofDescriptorProto",
+                                    "fields": {
+                                      "name": "_field_1"
+                                    },
+                                    "unknown": []
+                                  },
+                                  {
+                                    "type": "google.protobuf.OneofDescriptorProto",
+                                    "fields": {
+                                      "name": "_field_2"
+                                    },
+                                    "unknown": []
+                                  },
+                                  {
+                                    "type": "google.protobuf.OneofDescriptorProto",
+                                    "fields": {
+                                      "name": "_field_3"
+                                    },
+                                    "unknown": []
+                                  },
+                                  {
+                                    "type": "google.protobuf.OneofDescriptorProto",
+                                    "fields": {
+                                      "name": "_field_5"
+                                    },
+                                    "unknown": []
+                                  },
+                                  {
+                                    "type": "google.protobuf.OneofDescriptorProto",
+                                    "fields": {
+                                      "name": "_field_6"
+                                    },
+                                    "unknown": []
+                                  }
+                                ]
+                              },
+                              "unknown": []
+                            }
+                          ],
+                          "source_code_info": {
+                            "type": "google.protobuf.SourceCodeInfo",
+                            "fields": {
+                              "location": [
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "span": [
+                                      0,
+                                      0,
+                                      9,
+                                      1
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      12
+                                    ],
+                                    "span": [
+                                      0,
+                                      0,
+                                      18
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      2
+                                    ],
+                                    "span": [
+                                      1,
+                                      0,
+                                      23
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0
+                                    ],
+                                    "span": [
+                                      2,
+                                      0,
+                                      9,
+                                      1
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      1
+                                    ],
+                                    "span": [
+                                      2,
+                                      8,
+                                      14
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      0
+                                    ],
+                                    "span": [
+                                      3,
+                                      2,
+                                      49
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      0,
+                                      4
+                                    ],
+                                    "span": [
+                                      3,
+                                      2,
+                                      10
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      0,
+                                      5
+                                    ],
+                                    "span": [
+                                      3,
+                                      11,
+                                      17
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      0,
+                                      1
+                                    ],
+                                    "span": [
+                                      3,
+                                      18,
+                                      25
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      0,
+                                      3
+                                    ],
+                                    "span": [
+                                      3,
+                                      28,
+                                      29
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      0,
+                                      8
+                                    ],
+                                    "span": [
+                                      3,
+                                      30,
+                                      48
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      0,
+                                      10
+                                    ],
+                                    "span": [
+                                      3,
+                                      31,
+                                      47
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      1
+                                    ],
+                                    "span": [
+                                      4,
+                                      2,
+                                      51
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      1,
+                                      4
+                                    ],
+                                    "span": [
+                                      4,
+                                      2,
+                                      10
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      1,
+                                      5
+                                    ],
+                                    "span": [
+                                      4,
+                                      11,
+                                      16
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      1,
+                                      1
+                                    ],
+                                    "span": [
+                                      4,
+                                      17,
+                                      24
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      1,
+                                      3
+                                    ],
+                                    "span": [
+                                      4,
+                                      27,
+                                      28
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      1,
+                                      8
+                                    ],
+                                    "span": [
+                                      4,
+                                      29,
+                                      50
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      1,
+                                      10
+                                    ],
+                                    "span": [
+                                      4,
+                                      30,
+                                      49
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      2
+                                    ],
+                                    "span": [
+                                      5,
+                                      2,
+                                      51
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      2,
+                                      4
+                                    ],
+                                    "span": [
+                                      5,
+                                      2,
+                                      10
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      2,
+                                      5
+                                    ],
+                                    "span": [
+                                      5,
+                                      11,
+                                      17
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      2,
+                                      1
+                                    ],
+                                    "span": [
+                                      5,
+                                      18,
+                                      25
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      2,
+                                      3
+                                    ],
+                                    "span": [
+                                      5,
+                                      28,
+                                      29
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      2,
+                                      8
+                                    ],
+                                    "span": [
+                                      5,
+                                      30,
+                                      50
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      2,
+                                      10
+                                    ],
+                                    "span": [
+                                      5,
+                                      31,
+                                      49
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      3
+                                    ],
+                                    "span": [
+                                      6,
+                                      2,
+                                      51
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      3,
+                                      4
+                                    ],
+                                    "span": [
+                                      6,
+                                      2,
+                                      10
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      3,
+                                      5
+                                    ],
+                                    "span": [
+                                      6,
+                                      11,
+                                      17
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      3,
+                                      1
+                                    ],
+                                    "span": [
+                                      6,
+                                      18,
+                                      25
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      3,
+                                      3
+                                    ],
+                                    "span": [
+                                      6,
+                                      28,
+                                      29
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      3,
+                                      8
+                                    ],
+                                    "span": [
+                                      6,
+                                      30,
+                                      50
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      3,
+                                      10
+                                    ],
+                                    "span": [
+                                      6,
+                                      31,
+                                      49
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      4
+                                    ],
+                                    "span": [
+                                      7,
+                                      2,
+                                      53
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      4,
+                                      4
+                                    ],
+                                    "span": [
+                                      7,
+                                      2,
+                                      10
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      4,
+                                      5
+                                    ],
+                                    "span": [
+                                      7,
+                                      11,
+                                      17
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      4,
+                                      1
+                                    ],
+                                    "span": [
+                                      7,
+                                      18,
+                                      25
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      4,
+                                      3
+                                    ],
+                                    "span": [
+                                      7,
+                                      28,
+                                      29
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      4,
+                                      8
+                                    ],
+                                    "span": [
+                                      7,
+                                      30,
+                                      52
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      4,
+                                      10
+                                    ],
+                                    "span": [
+                                      7,
+                                      31,
+                                      51
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      5
+                                    ],
+                                    "span": [
+                                      8,
+                                      2,
+                                      52
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      5,
+                                      4
+                                    ],
+                                    "span": [
+                                      8,
+                                      2,
+                                      10
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      5,
+                                      5
+                                    ],
+                                    "span": [
+                                      8,
+                                      11,
+                                      17
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      5,
+                                      1
+                                    ],
+                                    "span": [
+                                      8,
+                                      18,
+                                      25
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      5,
+                                      3
+                                    ],
+                                    "span": [
+                                      8,
+                                      28,
+                                      29
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      5,
+                                      8
+                                    ],
+                                    "span": [
+                                      8,
+                                      30,
+                                      51
+                                    ]
+                                  },
+                                  "unknown": []
+                                },
+                                {
+                                  "type": "google.protobuf.SourceCodeInfo.Location",
+                                  "fields": {
+                                    "path": [
+                                      4,
+                                      0,
+                                      2,
+                                      5,
+                                      10
+                                    ],
+                                    "span": [
+                                      8,
+                                      31,
+                                      50
+                                    ]
+                                  },
+                                  "unknown": []
+                                }
+                              ]
+                            },
+                            "unknown": []
+                          },
+                          "syntax": "proto3"
+                        },
+                        "unknown": []
+                      }
+                    ]
+                  },
+                  "unknown": []
+                },
+                "sourceArchive": {
+                  "role": "original",
+                  "compiler": "protocompile 0.14.1",
+                  "files": {
+                    "projection.proto": "syntax = \"proto3\";\npackage umf.projection;\nmessage Record {\n  optional string field_1 = 1 [json_name = \"id\"];\n  optional int64 field_2 = 2 [json_name = \"count\"];\n  optional string field_3 = 3 [json_name = \"note\"];\n  repeated string field_4 = 4 [json_name = \"tags\"];\n  optional string field_5 = 5 [json_name = \"choice\"];\n  optional double field_6 = 6 [json_name = \"ratio\"];\n}\n"
+                  },
+                  "roots": [
+                    "projection.proto"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "targetDiagnostics": [
+    {
+      "code": "PROTOBUF_COMPILER_REQUIRED",
+      "path": "/descriptorSet",
+      "message": "Browser descriptor checks do not certify native compiler validity; validate emitted artifacts with the pinned native compiler",
+      "severity": "warning"
+    }
+  ]
+}

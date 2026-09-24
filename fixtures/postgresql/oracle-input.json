@@ -1,0 +1,20 @@
+{
+  "backend": "@libpg-query/parser@17.6.10",
+  "parserVersion": 170004,
+  "cases": [
+    {
+      "name": "domain.sql",
+      "source": "-- Authored schema: exact numeric defaults, names, relationships and generated values.\nCREATE SCHEMA sales;\nCREATE TYPE sales.order_state AS ENUM ('new', 'paid', 'cancelled');\nCREATE DOMAIN sales.money_amount AS numeric(38,9) CHECK (VALUE >= 0);\nCREATE TABLE sales.orders (\n id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\n external_id uuid UNIQUE NOT NULL,\n state sales.order_state NOT NULL DEFAULT 'new',\n total sales.money_amount DEFAULT 9007199254740993.123456789,\n details jsonb,\n tags text[] DEFAULT ARRAY[]::text[],\n created_at timestamptz DEFAULT now(),\n subtotal numeric GENERATED ALWAYS AS (total / 1.2) STORED,\n CONSTRAINT positive_total CHECK (total >= 0)\n);\nCREATE TABLE sales.order_lines (\n order_id bigint REFERENCES sales.orders(id) ON DELETE CASCADE,\n line_no integer NOT NULL,\n quantity integer CHECK (quantity > 0),\n PRIMARY KEY (order_id, line_no)\n);\nCREATE INDEX paid_orders ON sales.orders (created_at DESC) WHERE state = 'paid';\nCOMMENT ON COLUMN sales.orders.total IS 'Exact amount — café';\n",
+      "sql": "CREATE SCHEMA sales; CREATE TYPE sales.order_state AS ENUM ('new', 'paid', 'cancelled'); CREATE DOMAIN sales.money_amount AS numeric(38, 9) CHECK (value >= 0); CREATE TABLE sales.orders (id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY, external_id uuid UNIQUE NOT NULL, state sales.order_state NOT NULL DEFAULT 'new', total sales.money_amount DEFAULT 9007199254740993.123456789, details jsonb, tags text[] DEFAULT (ARRAY[]::text[]), created_at timestamptz DEFAULT now(), subtotal numeric GENERATED ALWAYS AS (total / 1.2) STORED, CONSTRAINT positive_total CHECK (total >= 0)); CREATE TABLE sales.order_lines (order_id bigint REFERENCES sales.orders (id) ON DELETE CASCADE, line_no int NOT NULL, quantity int CHECK (quantity > 0), PRIMARY KEY (order_id, line_no)); CREATE INDEX paid_orders ON sales.orders USING btree (created_at DESC) WHERE state = 'paid'; COMMENT ON COLUMN sales.orders.total IS 'Exact amount — café'"
+    },
+    {
+      "name": "advanced.sql",
+      "source": "CREATE TABLE events (at timestamptz NOT NULL, payload jsonb) PARTITION BY RANGE (at);\nCREATE TABLE events_2026 PARTITION OF events FOR VALUES FROM ('2026-01-01') TO ('2027-01-01');\nALTER TABLE events ENABLE ROW LEVEL SECURITY;\nCREATE POLICY visible_events ON events FOR SELECT USING (payload->>'tenant' = current_user);\nCREATE VIEW recent_events AS SELECT at, payload FROM events WHERE at > now() - interval '1 day';\nCREATE FUNCTION echo_text(value text) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT value $$;\nGRANT SELECT ON events TO PUBLIC;\n",
+      "sql": "CREATE TABLE events (at timestamptz NOT NULL, payload jsonb) PARTITION BY RANGE(at); CREATE TABLE events_2026 PARTITION OF events FOR VALUES FROM ('2026-01-01') TO ('2027-01-01'); ALTER TABLE events ENABLE ROW LEVEL SECURITY; CREATE POLICY visible_events ON events FOR SELECT TO public USING ((payload ->> 'tenant') = current_user) ; CREATE VIEW recent_events AS SELECT at, payload FROM events WHERE at > (now() - '1 day'::interval); CREATE FUNCTION echo_text(value text) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT value $$; GRANT select ON events TO public"
+    }
+  ],
+  "edit": {
+    "source": "CREATE TABLE original (id integer);",
+    "sql": "CREATE TABLE changed (id int)"
+  }
+}

@@ -1,0 +1,16 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ex: <https://example.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:alice ex:knows ex:bob .
+_:negObj a owl:NegativePropertyAssertion ; owl:sourceIndividual ex:alice ; owl:assertionProperty ex:knows ; owl:targetIndividual ex:carol .
+_:negData a owl:NegativePropertyAssertion ; owl:sourceIndividual ex:alice ; owl:assertionProperty ex:age ; owl:targetValue "42"^^xsd:integer .
+_:different a owl:AllDifferent ; owl:members (ex:alice ex:bob ex:carol) .
+_:differentDistinct a owl:AllDifferent ; owl:distinctMembers (ex:alice ex:bob) .
+_:classes a owl:AllDisjointClasses ; owl:members (ex:Person ex:Robot ex:Place) .
+_:properties a owl:AllDisjointProperties ; owl:members (ex:knows ex:hates) .
+_:malformedList a owl:AllDifferent ; owl:members _:list .
+_:list rdf:first ex:alice ; rdf:rest _:list .
+_:malformedTarget a owl:NegativePropertyAssertion ; owl:sourceIndividual ex:alice ; owl:assertionProperty ex:knows ; owl:targetIndividual ex:bob ; owl:targetValue "bob" .
+_:malformedType a owl:AllDifferent, owl:AllDisjointClasses ; owl:members (ex:alice ex:bob) .

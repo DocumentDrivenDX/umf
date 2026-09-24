@@ -1,0 +1,20 @@
+_:N4971e81a75b14f3cab61eb09d2023224 <http://www.w3.org/ns/shacl#value> <http://example.org/shacl-test/k> .
+_:N4971e81a75b14f3cab61eb09d2023224 <http://www.w3.org/ns/shacl#sourceShape> <http://example.org/shacl-test/s4> .
+_:N4971e81a75b14f3cab61eb09d2023224 <http://www.w3.org/ns/shacl#focusNode> <http://example.org/shacl-test/j> .
+_:N08136f63bc124f2797a458bdbdb7107b <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N0796cc2e287b4c5495b61522556d4f90 <http://www.w3.org/ns/shacl#resultPath> <http://example.org/shacl-test/r> .
+_:N08136f63bc124f2797a458bdbdb7107b <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N0796cc2e287b4c5495b61522556d4f90 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N08136f63bc124f2797a458bdbdb7107b <http://www.w3.org/ns/shacl#result> _:N4971e81a75b14f3cab61eb09d2023224 .
+_:N0796cc2e287b4c5495b61522556d4f90 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N0796cc2e287b4c5495b61522556d4f90 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#ClassConstraintComponent> .
+_:N0796cc2e287b4c5495b61522556d4f90 <http://www.w3.org/ns/shacl#value> <http://example.org/shacl-test/k> .
+_:N0796cc2e287b4c5495b61522556d4f90 <http://www.w3.org/ns/shacl#sourceShape> <http://example.org/shacl-test/s4> .
+_:N4971e81a75b14f3cab61eb09d2023224 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N0796cc2e287b4c5495b61522556d4f90 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have class ex:C" .
+_:N08136f63bc124f2797a458bdbdb7107b <http://www.w3.org/ns/shacl#result> _:N0796cc2e287b4c5495b61522556d4f90 .
+_:N4971e81a75b14f3cab61eb09d2023224 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N4971e81a75b14f3cab61eb09d2023224 <http://www.w3.org/ns/shacl#resultPath> <http://example.org/shacl-test/r> .
+_:N4971e81a75b14f3cab61eb09d2023224 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have class ex:C" .
+_:N0796cc2e287b4c5495b61522556d4f90 <http://www.w3.org/ns/shacl#focusNode> <http://example.org/shacl-test/j> .
+_:N4971e81a75b14f3cab61eb09d2023224 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#ClassConstraintComponent> .

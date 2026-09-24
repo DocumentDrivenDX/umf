@@ -1,0 +1,1578 @@
+{
+  "scope": "Mandatory top-level fields; both raw path structure isomorphism and equivalent mapped SPARQL paths (ignoring path-node sharing)",
+  "exclusions": [
+    "Generated/user messages",
+    "Nested details",
+    "Identity of blank focus/value/sourceShape relative to source graphs (anonymous equality only)"
+  ],
+  "results": [
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/complex/personexample",
+      "expectedResults": 4,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 4
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 4
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/complex/shacl-shacl",
+      "expectedResults": 0,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 0
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 0
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/misc/deactivated-001",
+      "expectedResults": 0,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 0
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 0
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/misc/deactivated-002",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/misc/message-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/misc/severity-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/misc/severity-002",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/and-001",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/and-002",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/class-001",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/class-002",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/class-003",
+      "expectedResults": 5,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 5
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 5
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/closed-001",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/closed-002",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/datatype-001",
+      "expectedResults": 3,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 3
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 3
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/datatype-002",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/disjoint-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/equals-001",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/hasValue-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/in-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/languageIn-001",
+      "expectedResults": 3,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 3
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 3
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/maxExclusive-001",
+      "expectedResults": 6,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 6
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 6
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/maxInclusive-001",
+      "expectedResults": 4,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 4
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 4
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/maxLength-001",
+      "expectedResults": 5,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 5
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 5
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/minExclusive-001",
+      "expectedResults": 6,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 6
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 6
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/minInclusive-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/minInclusive-002",
+      "expectedResults": 3,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 3
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 3
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/minInclusive-003",
+      "expectedResults": 4,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 4
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 4
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/minLength-001",
+      "expectedResults": 4,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 4
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 4
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/node-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/nodeKind-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/not-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/not-002",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/or-001",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/pattern-001",
+      "expectedResults": 4,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 4
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 4
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/pattern-002",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/qualified-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/xone-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/node/xone-duplicate",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-alternative-001",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": false,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": false,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-complex-001",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": false,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": false,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-complex-002",
+      "expectedResults": 4,
+      "engine": {
+        "status": "compared",
+        "equal": false,
+        "pathSemanticEqual": true,
+        "results": 4
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": false,
+        "pathSemanticEqual": true,
+        "results": 4
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-inverse-001",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": false,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": false,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-oneOrMore-001",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": false,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": false,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-sequence-001",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": false,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": false,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-sequence-002",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": false,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": false,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-sequence-duplicate-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-strange-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": false,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-strange-002",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": false,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-unused-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-zeroOrMore-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/path/path-zeroOrOne-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/and-001",
+      "expectedResults": 3,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 3
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 3
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/class-001",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/datatype-001",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": false,
+        "pathSemanticEqual": false,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/datatype-002",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/datatype-003",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/datatype-ill-formed",
+      "expectedResults": 3,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 3
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 3
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/disjoint-001",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/equals-001",
+      "expectedResults": 5,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 5
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 5
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/hasValue-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/in-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/languageIn-001",
+      "expectedResults": 3,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 3
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 3
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/lessThan-001",
+      "expectedResults": 3,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 3
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 3
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/lessThan-002",
+      "expectedResults": 4,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 4
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 4
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/lessThanOrEquals-001",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/maxCount-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/maxCount-002",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/maxExclusive-001",
+      "expectedResults": 3,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 3
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 3
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/maxInclusive-001",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/maxLength-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/minCount-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/minCount-002",
+      "expectedResults": 0,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 0
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 0
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/minExclusive-001",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/minExclusive-002",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/minLength-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/node-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/node-002",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/nodeKind-001",
+      "expectedResults": 27,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 27
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 27
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/not-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/or-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/or-datatypes-001",
+      "expectedResults": 3,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 3
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": false,
+        "pathSemanticEqual": false,
+        "results": 3
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/pattern-001",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/pattern-002",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/property-001",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/qualifiedMinCountDisjoint-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/qualifiedValueShape-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/qualifiedValueShapesDisjoint-001",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/uniqueLang-001",
+      "expectedResults": 3,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 3
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 3
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/property/uniqueLang-002",
+      "expectedResults": 0,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 0
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": false,
+        "pathSemanticEqual": false,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/multipleTargets-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetClass-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetClassImplicit-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetNode-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetObjectsOf-001",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-001",
+      "expectedResults": 1,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 1
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/targets/targetSubjectsOf-002",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    },
+    {
+      "id": "https://raw.githubusercontent.com/w3c/data-shapes/fe6275b93fa4de7fc070d82ca8e14d633b2d25da/data-shapes-test-suite/tests/core/validation-reports/shared",
+      "expectedResults": 2,
+      "engine": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      },
+      "pyshacl": {
+        "status": "compared",
+        "equal": true,
+        "pathSemanticEqual": true,
+        "results": 2
+      }
+    }
+  ]
+}

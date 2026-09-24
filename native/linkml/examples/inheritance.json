@@ -1,0 +1,14 @@
+{
+ "id":"https://example.org/inheritance", "name":"inheritance",
+ "classes":{
+  "Root":{"slots":["root","duplicate"],"attributes":{"inline":null}},
+  "MixinBase":{"slots":["mixin_base"]},
+  "Mixin":{"is_a":"MixinBase","mixin":true,"slots":["duplicate","mixin"]},
+  "Parent":{"is_a":"Root","slots":["parent"]},
+  "Child":{"is_a":"Parent","mixins":["Mixin"],"slots":["child","duplicate","child"],"attributes":{"inline":{"range":"string"}},"slot_usage":{"not_a_member":{"required":true}}},
+  "CycleA":{"is_a":"CycleB","slots":["a"]},
+  "CycleB":{"mixins":["CycleA"],"slots":["b"]},
+  "Missing":{"is_a":"External","slots":["local"]}
+ },
+ "slots":{"root":{},"duplicate":{},"mixin_base":{},"mixin":{},"parent":{},"child":{},"a":{},"b":{}}
+}

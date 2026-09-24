@@ -1,0 +1,2 @@
+export {};
+const schema=await Bun.file('spec/projections/spark-arrow.schema.json').json();schema.$id='urn:umf:projection:arrow-spark:0.1.0';schema.properties.policy={type:'object',required:['id','preferTimestampNtz','variant','lossPolicy'],properties:{id:{type:'string',minLength:1},preferTimestampNtz:{type:'boolean'},variant:{enum:['spark-tagged-struct','preserve-struct']},lossPolicy:{enum:['strict','allow-reported-loss']}},additionalProperties:false};await Bun.write('spec/projections/arrow-spark.schema.json',JSON.stringify(schema,null,2)+'\n');

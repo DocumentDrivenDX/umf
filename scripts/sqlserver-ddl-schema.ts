@@ -1,0 +1,7 @@
+export {};
+const s={type:'string'},object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:false});
+const policy=object({aliases:{enum:['reject','base-type']},physicalLayout:{const:'default-rowstore'},nativeExpressions:{const:'verbatim'},sourceState:{enum:['captured-only','allow-candidate']},lossPolicy:{enum:['strict','allow-reported-loss']}});
+const issue=object({path:s,code:s,classification:{enum:['representation-change','not-enforced','unsupported','annotation-only']},detail:s,retainedInSource:{const:true}}),statement=object({sourcePath:s,kind:{enum:['schema','table','key','check','foreign-key','index','disable','description']},sql:s});
+const props={status:{enum:['blocked','projected']},source:{$ref:'urn:umf:core:0.1.0'},policy,issues:{type:'array',items:issue},statements:{type:'array',items:statement},nativeSource:s};
+const schema={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:projection:sqlserver-ddl:0.1.0',...object(props,['status','source','policy','issues','statements']),allOf:[{if:{properties:{status:{const:'projected'}}},then:{properties:{nativeSource:s},required:['nativeSource']},else:{properties:{statements:{type:'array',maxItems:0}},not:{properties:{nativeSource:s},required:['nativeSource']}}}]};
+await Bun.write('spec/projections/sqlserver-ddl.schema.json',JSON.stringify(schema,null,2)+'\n');

@@ -1,0 +1,3995 @@
+{
+  "version": "1",
+  "schema": [
+    {
+      "name": "spark_schema",
+      "num_children": "5"
+    },
+    {
+      "repetition_type": "1",
+      "name": "txn",
+      "num_children": "3"
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "appId",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "version"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "lastUpdated"
+    },
+    {
+      "repetition_type": "1",
+      "name": "add",
+      "num_children": "7"
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "path",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "repetition_type": "1",
+      "name": "partitionValues",
+      "num_children": "1",
+      "converted_type": "1",
+      "logicalType": {
+        "MAP": {}
+      }
+    },
+    {
+      "repetition_type": "2",
+      "name": "key_value",
+      "num_children": "2"
+    },
+    {
+      "type": "6",
+      "repetition_type": "0",
+      "name": "key",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "value",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "size"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "modificationTime"
+    },
+    {
+      "type": "0",
+      "repetition_type": "1",
+      "name": "dataChange"
+    },
+    {
+      "repetition_type": "1",
+      "name": "tags",
+      "num_children": "1",
+      "converted_type": "1",
+      "logicalType": {
+        "MAP": {}
+      }
+    },
+    {
+      "repetition_type": "2",
+      "name": "key_value",
+      "num_children": "2"
+    },
+    {
+      "type": "6",
+      "repetition_type": "0",
+      "name": "key",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "value",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "repetition_type": "1",
+      "name": "stats_parsed",
+      "num_children": "4"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "numRecords"
+    },
+    {
+      "repetition_type": "1",
+      "name": "minValues",
+      "num_children": "9"
+    },
+    {
+      "type": "1",
+      "repetition_type": "1",
+      "name": "integer"
+    },
+    {
+      "type": "5",
+      "repetition_type": "1",
+      "name": "double"
+    },
+    {
+      "type": "1",
+      "repetition_type": "1",
+      "name": "decimal",
+      "converted_type": "5",
+      "scale": "5",
+      "precision": "8",
+      "logicalType": {
+        "DECIMAL": {
+          "scale": "5",
+          "precision": "8"
+        }
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "string",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "1",
+      "repetition_type": "1",
+      "name": "date",
+      "converted_type": "6",
+      "logicalType": {
+        "DATE": {}
+      }
+    },
+    {
+      "type": "3",
+      "repetition_type": "1",
+      "name": "timestamp"
+    },
+    {
+      "repetition_type": "1",
+      "name": "struct",
+      "num_children": "1"
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "struct_element",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "repetition_type": "1",
+      "name": "nested_struct",
+      "num_children": "1"
+    },
+    {
+      "repetition_type": "1",
+      "name": "struct_element",
+      "num_children": "1"
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "nested_struct_element",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "1",
+      "repetition_type": "1",
+      "name": "new_column"
+    },
+    {
+      "repetition_type": "1",
+      "name": "maxValues",
+      "num_children": "9"
+    },
+    {
+      "type": "1",
+      "repetition_type": "1",
+      "name": "integer"
+    },
+    {
+      "type": "5",
+      "repetition_type": "1",
+      "name": "double"
+    },
+    {
+      "type": "1",
+      "repetition_type": "1",
+      "name": "decimal",
+      "converted_type": "5",
+      "scale": "5",
+      "precision": "8",
+      "logicalType": {
+        "DECIMAL": {
+          "scale": "5",
+          "precision": "8"
+        }
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "string",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "1",
+      "repetition_type": "1",
+      "name": "date",
+      "converted_type": "6",
+      "logicalType": {
+        "DATE": {}
+      }
+    },
+    {
+      "type": "3",
+      "repetition_type": "1",
+      "name": "timestamp"
+    },
+    {
+      "repetition_type": "1",
+      "name": "struct",
+      "num_children": "1"
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "struct_element",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "repetition_type": "1",
+      "name": "nested_struct",
+      "num_children": "1"
+    },
+    {
+      "repetition_type": "1",
+      "name": "struct_element",
+      "num_children": "1"
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "nested_struct_element",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "1",
+      "repetition_type": "1",
+      "name": "new_column"
+    },
+    {
+      "repetition_type": "1",
+      "name": "nullCount",
+      "num_children": "15"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "integer"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "null"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "boolean"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "double"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "decimal"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "string"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "binary"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "date"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "timestamp"
+    },
+    {
+      "repetition_type": "1",
+      "name": "struct",
+      "num_children": "1"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "struct_element"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "map"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "array"
+    },
+    {
+      "repetition_type": "1",
+      "name": "nested_struct",
+      "num_children": "1"
+    },
+    {
+      "repetition_type": "1",
+      "name": "struct_element",
+      "num_children": "1"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "nested_struct_element"
+    },
+    {
+      "repetition_type": "1",
+      "name": "struct_of_array_of_map",
+      "num_children": "1"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "struct_element"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "new_column"
+    },
+    {
+      "repetition_type": "1",
+      "name": "remove",
+      "num_children": "7"
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "path",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "deletionTimestamp"
+    },
+    {
+      "type": "0",
+      "repetition_type": "1",
+      "name": "dataChange"
+    },
+    {
+      "type": "0",
+      "repetition_type": "1",
+      "name": "extendedFileMetadata"
+    },
+    {
+      "repetition_type": "1",
+      "name": "partitionValues",
+      "num_children": "1",
+      "converted_type": "1",
+      "logicalType": {
+        "MAP": {}
+      }
+    },
+    {
+      "repetition_type": "2",
+      "name": "key_value",
+      "num_children": "2"
+    },
+    {
+      "type": "6",
+      "repetition_type": "0",
+      "name": "key",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "value",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "size"
+    },
+    {
+      "repetition_type": "1",
+      "name": "tags",
+      "num_children": "1",
+      "converted_type": "1",
+      "logicalType": {
+        "MAP": {}
+      }
+    },
+    {
+      "repetition_type": "2",
+      "name": "key_value",
+      "num_children": "2"
+    },
+    {
+      "type": "6",
+      "repetition_type": "0",
+      "name": "key",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "value",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "repetition_type": "1",
+      "name": "metaData",
+      "num_children": "8"
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "id",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "name",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "description",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "repetition_type": "1",
+      "name": "format",
+      "num_children": "2"
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "provider",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "repetition_type": "1",
+      "name": "options",
+      "num_children": "1",
+      "converted_type": "1",
+      "logicalType": {
+        "MAP": {}
+      }
+    },
+    {
+      "repetition_type": "2",
+      "name": "key_value",
+      "num_children": "2"
+    },
+    {
+      "type": "6",
+      "repetition_type": "0",
+      "name": "key",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "value",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "schemaString",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "repetition_type": "1",
+      "name": "partitionColumns",
+      "num_children": "1",
+      "converted_type": "3",
+      "logicalType": {
+        "LIST": {}
+      }
+    },
+    {
+      "repetition_type": "2",
+      "name": "list",
+      "num_children": "1"
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "element",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "repetition_type": "1",
+      "name": "configuration",
+      "num_children": "1",
+      "converted_type": "1",
+      "logicalType": {
+        "MAP": {}
+      }
+    },
+    {
+      "repetition_type": "2",
+      "name": "key_value",
+      "num_children": "2"
+    },
+    {
+      "type": "6",
+      "repetition_type": "0",
+      "name": "key",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "value",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "createdTime"
+    },
+    {
+      "repetition_type": "1",
+      "name": "protocol",
+      "num_children": "2"
+    },
+    {
+      "type": "1",
+      "repetition_type": "1",
+      "name": "minReaderVersion"
+    },
+    {
+      "type": "1",
+      "repetition_type": "1",
+      "name": "minWriterVersion"
+    }
+  ],
+  "num_rows": "12",
+  "row_groups": [
+    {
+      "columns": [
+        {
+          "file_offset": "4",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "txn",
+              "appId"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "28",
+            "total_compressed_size": "30",
+            "data_page_offset": "4",
+            "statistics": {
+              "null_count": "12"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "6932",
+          "offset_index_length": "10",
+          "column_index_offset": "4913",
+          "column_index_length": "15"
+        },
+        {
+          "file_offset": "34",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "txn",
+              "version"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "28",
+            "total_compressed_size": "30",
+            "data_page_offset": "34",
+            "statistics": {
+              "null_count": "12"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "6942",
+          "offset_index_length": "10",
+          "column_index_offset": "4928",
+          "column_index_length": "15"
+        },
+        {
+          "file_offset": "64",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "txn",
+              "lastUpdated"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "28",
+            "total_compressed_size": "30",
+            "data_page_offset": "64",
+            "statistics": {
+              "null_count": "12"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "6952",
+          "offset_index_length": "11",
+          "column_index_offset": "4943",
+          "column_index_length": "15"
+        },
+        {
+          "file_offset": "94",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "path"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "744",
+            "total_compressed_size": "494",
+            "data_page_offset": "94",
+            "statistics": {
+              "null_count": "2",
+              "max_value": {
+                "hex": "706172742d30303030302d66373366663833352d303537312d346436372d616334332d3466626639343862666239622d633030302e736e617070792e70617271756574"
+              },
+              "min_value": {
+                "hex": "706172742d30303030302d31633264316133322d303264632d343834662d383766662d3433323865613536303435642d633030302e736e617070792e70617271756574"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "6963",
+          "offset_index_length": "12",
+          "column_index_offset": "4958",
+          "column_index_length": "143"
+        },
+        {
+          "file_offset": "588",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "partitionValues",
+              "key_value",
+              "key"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "38",
+            "total_compressed_size": "40",
+            "data_page_offset": "588",
+            "statistics": {
+              "null_count": "12"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "6975",
+          "offset_index_length": "11",
+          "column_index_offset": "5101",
+          "column_index_length": "15"
+        },
+        {
+          "file_offset": "628",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "partitionValues",
+              "key_value",
+              "value"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "40",
+            "total_compressed_size": "42",
+            "data_page_offset": "628",
+            "statistics": {
+              "null_count": "12"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "6986",
+          "offset_index_length": "11",
+          "column_index_offset": "5116",
+          "column_index_length": "15"
+        },
+        {
+          "file_offset": "712",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "size"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "80",
+            "total_compressed_size": "82",
+            "data_page_offset": "712",
+            "dictionary_page_offset": "670",
+            "statistics": {
+              "max": {
+                "hex": "6316000000000000"
+              },
+              "min": {
+                "hex": "7015000000000000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "6316000000000000"
+              },
+              "min_value": {
+                "hex": "7015000000000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "6997",
+          "offset_index_length": "11",
+          "column_index_offset": "5131",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "752",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "modificationTime"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "114",
+            "total_compressed_size": "96",
+            "data_page_offset": "752",
+            "statistics": {
+              "max": {
+                "hex": "1827390c84010000"
+              },
+              "min": {
+                "hex": "0800390c84010000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "1827390c84010000"
+              },
+              "min_value": {
+                "hex": "0800390c84010000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7008",
+          "offset_index_length": "12",
+          "column_index_offset": "5162",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "848",
+          "meta_data": {
+            "type": "0",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "dataChange"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "34",
+            "total_compressed_size": "36",
+            "data_page_offset": "848",
+            "statistics": {
+              "max": {
+                "hex": "00"
+              },
+              "min": {
+                "hex": "00"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "00"
+              },
+              "min_value": {
+                "hex": "00"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7020",
+          "offset_index_length": "11",
+          "column_index_offset": "5193",
+          "column_index_length": "17"
+        },
+        {
+          "file_offset": "947",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "2",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "tags",
+              "key_value",
+              "key"
+            ],
+            "codec": "1",
+            "num_values": "22",
+            "total_uncompressed_size": "106",
+            "total_compressed_size": "110",
+            "data_page_offset": "947",
+            "dictionary_page_offset": "884",
+            "statistics": {
+              "null_count": "2",
+              "max_value": {
+                "hex": "4f5054494d495a455f5441524745545f53495a45"
+              },
+              "min_value": {
+                "hex": "494e53455254494f4e5f54494d45"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7031",
+          "offset_index_length": "11",
+          "column_index_offset": "5210",
+          "column_index_length": "49"
+        },
+        {
+          "file_offset": "1106",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "2",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "tags",
+              "key_value",
+              "value"
+            ],
+            "codec": "1",
+            "num_values": "22",
+            "total_uncompressed_size": "289",
+            "total_compressed_size": "169",
+            "data_page_offset": "1106",
+            "dictionary_page_offset": "994",
+            "statistics": {
+              "null_count": "2",
+              "max_value": {
+                "hex": "323638343335343536"
+              },
+              "min_value": {
+                "hex": "31363636363532333733303030303030"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7042",
+          "offset_index_length": "11",
+          "column_index_offset": "5259",
+          "column_index_length": "40"
+        },
+        {
+          "file_offset": "1192",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "numRecords"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "61",
+            "total_compressed_size": "65",
+            "data_page_offset": "1192",
+            "dictionary_page_offset": "1163",
+            "statistics": {
+              "max": {
+                "hex": "0100000000000000"
+              },
+              "min": {
+                "hex": "0100000000000000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "0100000000000000"
+              },
+              "min_value": {
+                "hex": "0100000000000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7053",
+          "offset_index_length": "11",
+          "column_index_offset": "5299",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "1228",
+          "meta_data": {
+            "type": "1",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "minValues",
+              "integer"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "74",
+            "total_compressed_size": "71",
+            "data_page_offset": "1228",
+            "statistics": {
+              "max": {
+                "hex": "09000000"
+              },
+              "min": {
+                "hex": "00000000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "09000000"
+              },
+              "min_value": {
+                "hex": "00000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7064",
+          "offset_index_length": "12",
+          "column_index_offset": "5330",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "1328",
+          "meta_data": {
+            "type": "5",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "minValues",
+              "double"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "63",
+            "total_compressed_size": "67",
+            "data_page_offset": "1328",
+            "dictionary_page_offset": "1299",
+            "statistics": {
+              "max": {
+                "hex": "5839b4c876bef33f"
+              },
+              "min": {
+                "hex": "5839b4c876bef33f"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "5839b4c876bef33f"
+              },
+              "min_value": {
+                "hex": "5839b4c876bef33f"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7076",
+          "offset_index_length": "11",
+          "column_index_offset": "5353",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "1391",
+          "meta_data": {
+            "type": "1",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "minValues",
+              "decimal"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "59",
+            "total_compressed_size": "63",
+            "data_page_offset": "1391",
+            "dictionary_page_offset": "1366",
+            "statistics": {
+              "max": {
+                "hex": "0856f7ff"
+              },
+              "min": {
+                "hex": "0856f7ff"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "0856f7ff"
+              },
+              "min_value": {
+                "hex": "0856f7ff"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7087",
+          "offset_index_length": "11",
+          "column_index_offset": "5384",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "1460",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "minValues",
+              "string"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "65",
+            "total_compressed_size": "69",
+            "data_page_offset": "1460",
+            "dictionary_page_offset": "1429",
+            "statistics": {
+              "max": {
+                "hex": "737472696e67"
+              },
+              "min": {
+                "hex": "737472696e67"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "737472696e67"
+              },
+              "min_value": {
+                "hex": "737472696e67"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7098",
+          "offset_index_length": "11",
+          "column_index_offset": "5407",
+          "column_index_length": "27"
+        },
+        {
+          "file_offset": "1523",
+          "meta_data": {
+            "type": "1",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "minValues",
+              "date"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "59",
+            "total_compressed_size": "63",
+            "data_page_offset": "1523",
+            "dictionary_page_offset": "1498",
+            "statistics": {
+              "max": {
+                "hex": "594b0000"
+              },
+              "min": {
+                "hex": "594b0000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "594b0000"
+              },
+              "min_value": {
+                "hex": "594b0000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7109",
+          "offset_index_length": "11",
+          "column_index_offset": "5434",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "1664",
+          "meta_data": {
+            "type": "3",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "minValues",
+              "timestamp"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "185",
+            "total_compressed_size": "149",
+            "data_page_offset": "1664",
+            "dictionary_page_offset": "1561",
+            "statistics": {
+              "null_count": "2"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7120",
+          "offset_index_length": "11"
+        },
+        {
+          "file_offset": "1747",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "minValues",
+              "struct",
+              "struct_element"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "71",
+            "total_compressed_size": "75",
+            "data_page_offset": "1747",
+            "dictionary_page_offset": "1710",
+            "statistics": {
+              "max": {
+                "hex": "7374727563745f76616c7565"
+              },
+              "min": {
+                "hex": "7374727563745f76616c7565"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "7374727563745f76616c7565"
+              },
+              "min_value": {
+                "hex": "7374727563745f76616c7565"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7131",
+          "offset_index_length": "11",
+          "column_index_offset": "5457",
+          "column_index_length": "39"
+        },
+        {
+          "file_offset": "1829",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "minValues",
+              "nested_struct",
+              "struct_element",
+              "nested_struct_element"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "77",
+            "total_compressed_size": "81",
+            "data_page_offset": "1829",
+            "dictionary_page_offset": "1785",
+            "statistics": {
+              "max": {
+                "hex": "6e65737465645f7374727563745f76616c7565"
+              },
+              "min": {
+                "hex": "6e65737465645f7374727563745f76616c7565"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "6e65737465645f7374727563745f76616c7565"
+              },
+              "min_value": {
+                "hex": "6e65737465645f7374727563745f76616c7565"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7142",
+          "offset_index_length": "11",
+          "column_index_offset": "5496",
+          "column_index_length": "53"
+        },
+        {
+          "file_offset": "1866",
+          "meta_data": {
+            "type": "1",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "minValues",
+              "new_column"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "38",
+            "total_compressed_size": "40",
+            "data_page_offset": "1866",
+            "statistics": {
+              "max": {
+                "hex": "00000000"
+              },
+              "min": {
+                "hex": "00000000"
+              },
+              "null_count": "11",
+              "max_value": {
+                "hex": "00000000"
+              },
+              "min_value": {
+                "hex": "00000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7153",
+          "offset_index_length": "11",
+          "column_index_offset": "5549",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "1906",
+          "meta_data": {
+            "type": "1",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "maxValues",
+              "integer"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "74",
+            "total_compressed_size": "71",
+            "data_page_offset": "1906",
+            "statistics": {
+              "max": {
+                "hex": "09000000"
+              },
+              "min": {
+                "hex": "00000000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "09000000"
+              },
+              "min_value": {
+                "hex": "00000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7164",
+          "offset_index_length": "12",
+          "column_index_offset": "5572",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "2006",
+          "meta_data": {
+            "type": "5",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "maxValues",
+              "double"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "63",
+            "total_compressed_size": "67",
+            "data_page_offset": "2006",
+            "dictionary_page_offset": "1977",
+            "statistics": {
+              "max": {
+                "hex": "5839b4c876bef33f"
+              },
+              "min": {
+                "hex": "5839b4c876bef33f"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "5839b4c876bef33f"
+              },
+              "min_value": {
+                "hex": "5839b4c876bef33f"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7176",
+          "offset_index_length": "11",
+          "column_index_offset": "5595",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "2069",
+          "meta_data": {
+            "type": "1",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "maxValues",
+              "decimal"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "59",
+            "total_compressed_size": "63",
+            "data_page_offset": "2069",
+            "dictionary_page_offset": "2044",
+            "statistics": {
+              "max": {
+                "hex": "0856f7ff"
+              },
+              "min": {
+                "hex": "0856f7ff"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "0856f7ff"
+              },
+              "min_value": {
+                "hex": "0856f7ff"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7187",
+          "offset_index_length": "11",
+          "column_index_offset": "5626",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "2138",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "maxValues",
+              "string"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "65",
+            "total_compressed_size": "69",
+            "data_page_offset": "2138",
+            "dictionary_page_offset": "2107",
+            "statistics": {
+              "max": {
+                "hex": "737472696e67"
+              },
+              "min": {
+                "hex": "737472696e67"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "737472696e67"
+              },
+              "min_value": {
+                "hex": "737472696e67"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7198",
+          "offset_index_length": "11",
+          "column_index_offset": "5649",
+          "column_index_length": "27"
+        },
+        {
+          "file_offset": "2201",
+          "meta_data": {
+            "type": "1",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "maxValues",
+              "date"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "59",
+            "total_compressed_size": "63",
+            "data_page_offset": "2201",
+            "dictionary_page_offset": "2176",
+            "statistics": {
+              "max": {
+                "hex": "594b0000"
+              },
+              "min": {
+                "hex": "594b0000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "594b0000"
+              },
+              "min_value": {
+                "hex": "594b0000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7209",
+          "offset_index_length": "11",
+          "column_index_offset": "5676",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "2342",
+          "meta_data": {
+            "type": "3",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "maxValues",
+              "timestamp"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "185",
+            "total_compressed_size": "149",
+            "data_page_offset": "2342",
+            "dictionary_page_offset": "2239",
+            "statistics": {
+              "null_count": "2"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7220",
+          "offset_index_length": "11"
+        },
+        {
+          "file_offset": "2425",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "maxValues",
+              "struct",
+              "struct_element"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "71",
+            "total_compressed_size": "75",
+            "data_page_offset": "2425",
+            "dictionary_page_offset": "2388",
+            "statistics": {
+              "max": {
+                "hex": "7374727563745f76616c7565"
+              },
+              "min": {
+                "hex": "7374727563745f76616c7565"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "7374727563745f76616c7565"
+              },
+              "min_value": {
+                "hex": "7374727563745f76616c7565"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7231",
+          "offset_index_length": "11",
+          "column_index_offset": "5699",
+          "column_index_length": "39"
+        },
+        {
+          "file_offset": "2507",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "maxValues",
+              "nested_struct",
+              "struct_element",
+              "nested_struct_element"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "77",
+            "total_compressed_size": "81",
+            "data_page_offset": "2507",
+            "dictionary_page_offset": "2463",
+            "statistics": {
+              "max": {
+                "hex": "6e65737465645f7374727563745f76616c7565"
+              },
+              "min": {
+                "hex": "6e65737465645f7374727563745f76616c7565"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "6e65737465645f7374727563745f76616c7565"
+              },
+              "min_value": {
+                "hex": "6e65737465645f7374727563745f76616c7565"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7242",
+          "offset_index_length": "11",
+          "column_index_offset": "5738",
+          "column_index_length": "53"
+        },
+        {
+          "file_offset": "2544",
+          "meta_data": {
+            "type": "1",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "maxValues",
+              "new_column"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "38",
+            "total_compressed_size": "40",
+            "data_page_offset": "2544",
+            "statistics": {
+              "max": {
+                "hex": "00000000"
+              },
+              "min": {
+                "hex": "00000000"
+              },
+              "null_count": "11",
+              "max_value": {
+                "hex": "00000000"
+              },
+              "min_value": {
+                "hex": "00000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7253",
+          "offset_index_length": "11",
+          "column_index_offset": "5791",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "2613",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "nullCount",
+              "integer"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "63",
+            "total_compressed_size": "67",
+            "data_page_offset": "2613",
+            "dictionary_page_offset": "2584",
+            "statistics": {
+              "max": {
+                "hex": "0000000000000000"
+              },
+              "min": {
+                "hex": "0000000000000000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "0000000000000000"
+              },
+              "min_value": {
+                "hex": "0000000000000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7264",
+          "offset_index_length": "11",
+          "column_index_offset": "5814",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "2680",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "nullCount",
+              "null"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "63",
+            "total_compressed_size": "67",
+            "data_page_offset": "2680",
+            "dictionary_page_offset": "2651",
+            "statistics": {
+              "max": {
+                "hex": "0100000000000000"
+              },
+              "min": {
+                "hex": "0100000000000000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "0100000000000000"
+              },
+              "min_value": {
+                "hex": "0100000000000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7275",
+          "offset_index_length": "11",
+          "column_index_offset": "5845",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "2747",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "nullCount",
+              "boolean"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "63",
+            "total_compressed_size": "67",
+            "data_page_offset": "2747",
+            "dictionary_page_offset": "2718",
+            "statistics": {
+              "max": {
+                "hex": "0000000000000000"
+              },
+              "min": {
+                "hex": "0000000000000000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "0000000000000000"
+              },
+              "min_value": {
+                "hex": "0000000000000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7286",
+          "offset_index_length": "11",
+          "column_index_offset": "5876",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "2814",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "nullCount",
+              "double"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "63",
+            "total_compressed_size": "67",
+            "data_page_offset": "2814",
+            "dictionary_page_offset": "2785",
+            "statistics": {
+              "max": {
+                "hex": "0000000000000000"
+              },
+              "min": {
+                "hex": "0000000000000000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "0000000000000000"
+              },
+              "min_value": {
+                "hex": "0000000000000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7297",
+          "offset_index_length": "11",
+          "column_index_offset": "5907",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "2881",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "nullCount",
+              "decimal"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "63",
+            "total_compressed_size": "67",
+            "data_page_offset": "2881",
+            "dictionary_page_offset": "2852",
+            "statistics": {
+              "max": {
+                "hex": "0000000000000000"
+              },
+              "min": {
+                "hex": "0000000000000000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "0000000000000000"
+              },
+              "min_value": {
+                "hex": "0000000000000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7308",
+          "offset_index_length": "11",
+          "column_index_offset": "5938",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "2948",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "nullCount",
+              "string"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "63",
+            "total_compressed_size": "67",
+            "data_page_offset": "2948",
+            "dictionary_page_offset": "2919",
+            "statistics": {
+              "max": {
+                "hex": "0000000000000000"
+              },
+              "min": {
+                "hex": "0000000000000000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "0000000000000000"
+              },
+              "min_value": {
+                "hex": "0000000000000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7319",
+          "offset_index_length": "11",
+          "column_index_offset": "5969",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "3015",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "nullCount",
+              "binary"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "63",
+            "total_compressed_size": "67",
+            "data_page_offset": "3015",
+            "dictionary_page_offset": "2986",
+            "statistics": {
+              "max": {
+                "hex": "0000000000000000"
+              },
+              "min": {
+                "hex": "0000000000000000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "0000000000000000"
+              },
+              "min_value": {
+                "hex": "0000000000000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7330",
+          "offset_index_length": "11",
+          "column_index_offset": "6000",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "3082",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "nullCount",
+              "date"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "63",
+            "total_compressed_size": "67",
+            "data_page_offset": "3082",
+            "dictionary_page_offset": "3053",
+            "statistics": {
+              "max": {
+                "hex": "0000000000000000"
+              },
+              "min": {
+                "hex": "0000000000000000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "0000000000000000"
+              },
+              "min_value": {
+                "hex": "0000000000000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7341",
+          "offset_index_length": "11",
+          "column_index_offset": "6031",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "3149",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "nullCount",
+              "timestamp"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "63",
+            "total_compressed_size": "67",
+            "data_page_offset": "3149",
+            "dictionary_page_offset": "3120",
+            "statistics": {
+              "max": {
+                "hex": "0000000000000000"
+              },
+              "min": {
+                "hex": "0000000000000000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "0000000000000000"
+              },
+              "min_value": {
+                "hex": "0000000000000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7352",
+          "offset_index_length": "11",
+          "column_index_offset": "6062",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "3216",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "nullCount",
+              "struct",
+              "struct_element"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "63",
+            "total_compressed_size": "67",
+            "data_page_offset": "3216",
+            "dictionary_page_offset": "3187",
+            "statistics": {
+              "max": {
+                "hex": "0000000000000000"
+              },
+              "min": {
+                "hex": "0000000000000000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "0000000000000000"
+              },
+              "min_value": {
+                "hex": "0000000000000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7363",
+          "offset_index_length": "11",
+          "column_index_offset": "6093",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "3283",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "nullCount",
+              "map"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "63",
+            "total_compressed_size": "67",
+            "data_page_offset": "3283",
+            "dictionary_page_offset": "3254",
+            "statistics": {
+              "max": {
+                "hex": "0000000000000000"
+              },
+              "min": {
+                "hex": "0000000000000000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "0000000000000000"
+              },
+              "min_value": {
+                "hex": "0000000000000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7374",
+          "offset_index_length": "11",
+          "column_index_offset": "6124",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "3350",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "nullCount",
+              "array"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "63",
+            "total_compressed_size": "67",
+            "data_page_offset": "3350",
+            "dictionary_page_offset": "3321",
+            "statistics": {
+              "max": {
+                "hex": "0000000000000000"
+              },
+              "min": {
+                "hex": "0000000000000000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "0000000000000000"
+              },
+              "min_value": {
+                "hex": "0000000000000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7385",
+          "offset_index_length": "11",
+          "column_index_offset": "6155",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "3417",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "nullCount",
+              "nested_struct",
+              "struct_element",
+              "nested_struct_element"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "62",
+            "total_compressed_size": "66",
+            "data_page_offset": "3417",
+            "dictionary_page_offset": "3388",
+            "statistics": {
+              "max": {
+                "hex": "0000000000000000"
+              },
+              "min": {
+                "hex": "0000000000000000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "0000000000000000"
+              },
+              "min_value": {
+                "hex": "0000000000000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7396",
+          "offset_index_length": "11",
+          "column_index_offset": "6186",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "3483",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "2",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "nullCount",
+              "struct_of_array_of_map",
+              "struct_element"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "63",
+            "total_compressed_size": "67",
+            "data_page_offset": "3483",
+            "dictionary_page_offset": "3454",
+            "statistics": {
+              "max": {
+                "hex": "0000000000000000"
+              },
+              "min": {
+                "hex": "0000000000000000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "0000000000000000"
+              },
+              "min_value": {
+                "hex": "0000000000000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7407",
+          "offset_index_length": "11",
+          "column_index_offset": "6217",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "3521",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats_parsed",
+              "nullCount",
+              "new_column"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "42",
+            "total_compressed_size": "44",
+            "data_page_offset": "3521",
+            "statistics": {
+              "max": {
+                "hex": "0000000000000000"
+              },
+              "min": {
+                "hex": "0000000000000000"
+              },
+              "null_count": "11",
+              "max_value": {
+                "hex": "0000000000000000"
+              },
+              "min_value": {
+                "hex": "0000000000000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7418",
+          "offset_index_length": "11",
+          "column_index_offset": "6248",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "3565",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "path"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "28",
+            "total_compressed_size": "30",
+            "data_page_offset": "3565",
+            "statistics": {
+              "null_count": "12"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7429",
+          "offset_index_length": "11",
+          "column_index_offset": "6279",
+          "column_index_length": "15"
+        },
+        {
+          "file_offset": "3595",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "deletionTimestamp"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "28",
+            "total_compressed_size": "30",
+            "data_page_offset": "3595",
+            "statistics": {
+              "null_count": "12"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7440",
+          "offset_index_length": "11",
+          "column_index_offset": "6294",
+          "column_index_length": "15"
+        },
+        {
+          "file_offset": "3625",
+          "meta_data": {
+            "type": "0",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "dataChange"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "28",
+            "total_compressed_size": "30",
+            "data_page_offset": "3625",
+            "statistics": {
+              "null_count": "12"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7451",
+          "offset_index_length": "11",
+          "column_index_offset": "6309",
+          "column_index_length": "15"
+        },
+        {
+          "file_offset": "3655",
+          "meta_data": {
+            "type": "0",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "extendedFileMetadata"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "28",
+            "total_compressed_size": "30",
+            "data_page_offset": "3655",
+            "statistics": {
+              "null_count": "12"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7462",
+          "offset_index_length": "11",
+          "column_index_offset": "6324",
+          "column_index_length": "15"
+        },
+        {
+          "file_offset": "3685",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "partitionValues",
+              "key_value",
+              "key"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "35",
+            "total_compressed_size": "37",
+            "data_page_offset": "3685",
+            "statistics": {
+              "null_count": "12"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7473",
+          "offset_index_length": "11",
+          "column_index_offset": "6339",
+          "column_index_length": "15"
+        },
+        {
+          "file_offset": "3722",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "partitionValues",
+              "key_value",
+              "value"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "35",
+            "total_compressed_size": "37",
+            "data_page_offset": "3722",
+            "statistics": {
+              "null_count": "12"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7484",
+          "offset_index_length": "11",
+          "column_index_offset": "6354",
+          "column_index_length": "15"
+        },
+        {
+          "file_offset": "3759",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "size"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "28",
+            "total_compressed_size": "30",
+            "data_page_offset": "3759",
+            "statistics": {
+              "null_count": "12"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7495",
+          "offset_index_length": "11",
+          "column_index_offset": "6369",
+          "column_index_length": "15"
+        },
+        {
+          "file_offset": "3789",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "tags",
+              "key_value",
+              "key"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "35",
+            "total_compressed_size": "37",
+            "data_page_offset": "3789",
+            "statistics": {
+              "null_count": "12"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7506",
+          "offset_index_length": "11",
+          "column_index_offset": "6384",
+          "column_index_length": "15"
+        },
+        {
+          "file_offset": "3826",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "tags",
+              "key_value",
+              "value"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "35",
+            "total_compressed_size": "37",
+            "data_page_offset": "3826",
+            "statistics": {
+              "null_count": "12"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7517",
+          "offset_index_length": "11",
+          "column_index_offset": "6399",
+          "column_index_length": "15"
+        },
+        {
+          "file_offset": "3863",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "metaData",
+              "id"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "72",
+            "total_compressed_size": "74",
+            "data_page_offset": "3863",
+            "statistics": {
+              "max": {
+                "hex": "38643364326238612d663039312d346437642d386133372d343332613962656166313762"
+              },
+              "min": {
+                "hex": "38643364326238612d663039312d346437642d386133372d343332613962656166313762"
+              },
+              "null_count": "11",
+              "max_value": {
+                "hex": "38643364326238612d663039312d346437642d386133372d343332613962656166313762"
+              },
+              "min_value": {
+                "hex": "38643364326238612d663039312d346437642d386133372d343332613962656166313762"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7528",
+          "offset_index_length": "12",
+          "column_index_offset": "6414",
+          "column_index_length": "87"
+        },
+        {
+          "file_offset": "3937",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "metaData",
+              "name"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "32",
+            "total_compressed_size": "34",
+            "data_page_offset": "3937",
+            "statistics": {
+              "null_count": "12"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7540",
+          "offset_index_length": "11",
+          "column_index_offset": "6501",
+          "column_index_length": "15"
+        },
+        {
+          "file_offset": "3971",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "metaData",
+              "description"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "32",
+            "total_compressed_size": "34",
+            "data_page_offset": "3971",
+            "statistics": {
+              "null_count": "12"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7551",
+          "offset_index_length": "11",
+          "column_index_offset": "6516",
+          "column_index_length": "15"
+        },
+        {
+          "file_offset": "4005",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "metaData",
+              "format",
+              "provider"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "43",
+            "total_compressed_size": "45",
+            "data_page_offset": "4005",
+            "statistics": {
+              "max": {
+                "hex": "70617271756574"
+              },
+              "min": {
+                "hex": "70617271756574"
+              },
+              "null_count": "11",
+              "max_value": {
+                "hex": "70617271756574"
+              },
+              "min_value": {
+                "hex": "70617271756574"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7562",
+          "offset_index_length": "11",
+          "column_index_offset": "6531",
+          "column_index_length": "29"
+        },
+        {
+          "file_offset": "4050",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "metaData",
+              "format",
+              "options",
+              "key_value",
+              "key"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "40",
+            "total_compressed_size": "42",
+            "data_page_offset": "4050",
+            "statistics": {
+              "null_count": "12"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7573",
+          "offset_index_length": "11",
+          "column_index_offset": "6560",
+          "column_index_length": "15"
+        },
+        {
+          "file_offset": "4092",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "metaData",
+              "format",
+              "options",
+              "key_value",
+              "value"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "40",
+            "total_compressed_size": "42",
+            "data_page_offset": "4092",
+            "statistics": {
+              "null_count": "12"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7584",
+          "offset_index_length": "11",
+          "column_index_offset": "6575",
+          "column_index_length": "15"
+        },
+        {
+          "file_offset": "4134",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "metaData",
+              "schemaString"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "1682",
+            "total_compressed_size": "468",
+            "data_page_offset": "4134",
+            "statistics": {
+              "max": {
+                "hex": "7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a22696e7465676572222c2274797065223a22696e7465676572222c226e756c6c61626c65223a66616c73652c226d65746164617461223a7b7d7d2c7b226e616d65223a226e756c6c222c2274797065223a22626f6f6c65616e222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22626f6f6c65616e222c2274797065223a22626f6f6c65616e222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22646f75626c65222c2274797065223a22646f75626c65222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22646563696d616c222c2274797065223a22646563696d616c28382c3529222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22737472696e67222c2274797065223a22737472696e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2262696e617279222c2274797065223a2262696e617279222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2264617465222c2274797065223a2264617465222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2274696d657374616d70222c2274797065223a2274696d657374616d70222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22737472756374222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a227374727563745f656c656d656e74222c2274797065223a22737472696e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226d6170222c2274797065223a7b2274797065223a226d6170222c226b657954797065223a22737472696e67222c2276616c756554797065223a22737472696e67222c2276616c7565436f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226172726179222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a22737472696e67222c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226e65737465645f737472756374222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a227374727563745f656c656d656e74222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a226e65737465645f7374727563745f656c656d656e74222c2274797065223a22737472696e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a227374727563745f6f665f61727261795f6f665f6d6170222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a227374727563745f656c656d656e74222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a7b2274797065223a226d6170222c226b657954797065223a22737472696e67222c2276616c756554797065223a22737472696e67222c2276616c7565436f6e7461696e734e756c6c223a747275657d2c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226e65775f636f6c756d6e222c2274797065223a22696e7465676572222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d"
+              },
+              "min": {
+                "hex": "7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a22696e7465676572222c2274797065223a22696e7465676572222c226e756c6c61626c65223a66616c73652c226d65746164617461223a7b7d7d2c7b226e616d65223a226e756c6c222c2274797065223a22626f6f6c65616e222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22626f6f6c65616e222c2274797065223a22626f6f6c65616e222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22646f75626c65222c2274797065223a22646f75626c65222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22646563696d616c222c2274797065223a22646563696d616c28382c3529222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22737472696e67222c2274797065223a22737472696e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2262696e617279222c2274797065223a2262696e617279222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2264617465222c2274797065223a2264617465222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2274696d657374616d70222c2274797065223a2274696d657374616d70222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22737472756374222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a227374727563745f656c656d656e74222c2274797065223a22737472696e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226d6170222c2274797065223a7b2274797065223a226d6170222c226b657954797065223a22737472696e67222c2276616c756554797065223a22737472696e67222c2276616c7565436f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226172726179222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a22737472696e67222c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226e65737465645f737472756374222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a227374727563745f656c656d656e74222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a226e65737465645f7374727563745f656c656d656e74222c2274797065223a22737472696e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a227374727563745f6f665f61727261795f6f665f6d6170222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a227374727563745f656c656d656e74222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a7b2274797065223a226d6170222c226b657954797065223a22737472696e67222c2276616c756554797065223a22737472696e67222c2276616c7565436f6e7461696e734e756c6c223a747275657d2c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226e65775f636f6c756d6e222c2274797065223a22696e7465676572222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d"
+              },
+              "null_count": "11",
+              "max_value": {
+                "hex": "7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a22696e7465676572222c2274797065223a22696e7465676572222c226e756c6c61626c65223a66616c73652c226d65746164617461223a7b7d7d2c7b226e616d65223a226e756c6c222c2274797065223a22626f6f6c65616e222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22626f6f6c65616e222c2274797065223a22626f6f6c65616e222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22646f75626c65222c2274797065223a22646f75626c65222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22646563696d616c222c2274797065223a22646563696d616c28382c3529222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22737472696e67222c2274797065223a22737472696e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2262696e617279222c2274797065223a2262696e617279222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2264617465222c2274797065223a2264617465222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2274696d657374616d70222c2274797065223a2274696d657374616d70222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22737472756374222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a227374727563745f656c656d656e74222c2274797065223a22737472696e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226d6170222c2274797065223a7b2274797065223a226d6170222c226b657954797065223a22737472696e67222c2276616c756554797065223a22737472696e67222c2276616c7565436f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226172726179222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a22737472696e67222c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226e65737465645f737472756374222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a227374727563745f656c656d656e74222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a226e65737465645f7374727563745f656c656d656e74222c2274797065223a22737472696e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a227374727563745f6f665f61727261795f6f665f6d6170222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a227374727563745f656c656d656e74222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a7b2274797065223a226d6170222c226b657954797065223a22737472696e67222c2276616c756554797065223a22737472696e67222c2276616c7565436f6e7461696e734e756c6c223a747275657d2c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226e65775f636f6c756d6e222c2274797065223a22696e7465676572222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d"
+              },
+              "min_value": {
+                "hex": "7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a22696e7465676572222c2274797065223a22696e7465676572222c226e756c6c61626c65223a66616c73652c226d65746164617461223a7b7d7d2c7b226e616d65223a226e756c6c222c2274797065223a22626f6f6c65616e222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22626f6f6c65616e222c2274797065223a22626f6f6c65616e222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22646f75626c65222c2274797065223a22646f75626c65222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22646563696d616c222c2274797065223a22646563696d616c28382c3529222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22737472696e67222c2274797065223a22737472696e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2262696e617279222c2274797065223a2262696e617279222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2264617465222c2274797065223a2264617465222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2274696d657374616d70222c2274797065223a2274696d657374616d70222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a22737472756374222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a227374727563745f656c656d656e74222c2274797065223a22737472696e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226d6170222c2274797065223a7b2274797065223a226d6170222c226b657954797065223a22737472696e67222c2276616c756554797065223a22737472696e67222c2276616c7565436f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226172726179222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a22737472696e67222c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226e65737465645f737472756374222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a227374727563745f656c656d656e74222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a226e65737465645f7374727563745f656c656d656e74222c2274797065223a22737472696e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a227374727563745f6f665f61727261795f6f665f6d6170222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a227374727563745f656c656d656e74222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a7b2274797065223a226d6170222c226b657954797065223a22737472696e67222c2276616c756554797065223a22737472696e67222c2276616c7565436f6e7461696e734e756c6c223a747275657d2c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226e65775f636f6c756d6e222c2274797065223a22696e7465676572222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7595",
+          "offset_index_length": "12",
+          "column_index_offset": "6590",
+          "column_index_length": "143"
+        },
+        {
+          "file_offset": "4602",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "metaData",
+              "partitionColumns",
+              "list",
+              "element"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "40",
+            "total_compressed_size": "42",
+            "data_page_offset": "4602",
+            "statistics": {
+              "null_count": "12"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7607",
+          "offset_index_length": "11",
+          "column_index_offset": "6733",
+          "column_index_length": "15"
+        },
+        {
+          "file_offset": "4644",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "metaData",
+              "configuration",
+              "key_value",
+              "key"
+            ],
+            "codec": "1",
+            "num_values": "13",
+            "total_uncompressed_size": "117",
+            "total_compressed_size": "93",
+            "data_page_offset": "4644",
+            "statistics": {
+              "null_count": "11",
+              "max_value": {
+                "hex": "64656c74612e636865636b706f696e742e777269746553746174734173537472756374"
+              },
+              "min_value": {
+                "hex": "64656c74612e636865636b706f696e742e7772697465537461747341734a736f6e"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7618",
+          "offset_index_length": "12",
+          "column_index_offset": "6748",
+          "column_index_length": "83"
+        },
+        {
+          "file_offset": "4737",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "metaData",
+              "configuration",
+              "key_value",
+              "value"
+            ],
+            "codec": "1",
+            "num_values": "13",
+            "total_uncompressed_size": "58",
+            "total_compressed_size": "58",
+            "data_page_offset": "4737",
+            "statistics": {
+              "null_count": "11",
+              "max_value": {
+                "hex": "74727565"
+              },
+              "min_value": {
+                "hex": "66616c7365"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7630",
+          "offset_index_length": "11",
+          "column_index_offset": "6831",
+          "column_index_length": "24"
+        },
+        {
+          "file_offset": "4795",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "metaData",
+              "createdTime"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "40",
+            "total_compressed_size": "42",
+            "data_page_offset": "4795",
+            "statistics": {
+              "max": {
+                "hex": "4bf2380c84010000"
+              },
+              "min": {
+                "hex": "4bf2380c84010000"
+              },
+              "null_count": "11",
+              "max_value": {
+                "hex": "4bf2380c84010000"
+              },
+              "min_value": {
+                "hex": "4bf2380c84010000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7641",
+          "offset_index_length": "11",
+          "column_index_offset": "6855",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "4837",
+          "meta_data": {
+            "type": "1",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "protocol",
+              "minReaderVersion"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "36",
+            "total_compressed_size": "38",
+            "data_page_offset": "4837",
+            "statistics": {
+              "max": {
+                "hex": "01000000"
+              },
+              "min": {
+                "hex": "01000000"
+              },
+              "null_count": "11",
+              "max_value": {
+                "hex": "01000000"
+              },
+              "min_value": {
+                "hex": "01000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7652",
+          "offset_index_length": "11",
+          "column_index_offset": "6886",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "4875",
+          "meta_data": {
+            "type": "1",
+            "encodings": [
+              "4",
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "protocol",
+              "minWriterVersion"
+            ],
+            "codec": "1",
+            "num_values": "12",
+            "total_uncompressed_size": "36",
+            "total_compressed_size": "38",
+            "data_page_offset": "4875",
+            "statistics": {
+              "max": {
+                "hex": "02000000"
+              },
+              "min": {
+                "hex": "02000000"
+              },
+              "null_count": "11",
+              "max_value": {
+                "hex": "02000000"
+              },
+              "min_value": {
+                "hex": "02000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ]
+          },
+          "offset_index_offset": "7663",
+          "offset_index_length": "11",
+          "column_index_offset": "6909",
+          "column_index_length": "23"
+        }
+      ],
+      "total_byte_size": "6443",
+      "num_rows": "12",
+      "file_offset": "4",
+      "total_compressed_size": "4909",
+      "ordinal": "0"
+    }
+  ],
+  "key_value_metadata": [
+    {
+      "key": "org.apache.spark.timeZone",
+      "value": "GMT"
+    },
+    {
+      "key": "org.apache.spark.legacyINT96",
+      "value": ""
+    },
+    {
+      "key": "org.apache.spark.version",
+      "value": "3.2.1"
+    },
+    {
+      "key": "org.apache.spark.sql.parquet.row.metadata",
+      "value": "{\"type\":\"struct\",\"fields\":[{\"name\":\"txn\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"appId\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"version\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"lastUpdated\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"add\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"path\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"partitionValues\",\"type\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"string\",\"valueContainsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"size\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"modificationTime\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"dataChange\",\"type\":\"boolean\",\"nullable\":true,\"metadata\":{}},{\"name\":\"tags\",\"type\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"string\",\"valueContainsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"stats_parsed\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"numRecords\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"minValues\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"integer\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"double\",\"type\":\"double\",\"nullable\":true,\"metadata\":{}},{\"name\":\"decimal\",\"type\":\"decimal(8,5)\",\"nullable\":true,\"metadata\":{}},{\"name\":\"string\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"date\",\"type\":\"date\",\"nullable\":true,\"metadata\":{}},{\"name\":\"timestamp\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}},{\"name\":\"struct\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"struct_element\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"nested_struct\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"struct_element\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"nested_struct_element\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"new_column\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"maxValues\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"integer\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"double\",\"type\":\"double\",\"nullable\":true,\"metadata\":{}},{\"name\":\"decimal\",\"type\":\"decimal(8,5)\",\"nullable\":true,\"metadata\":{}},{\"name\":\"string\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"date\",\"type\":\"date\",\"nullable\":true,\"metadata\":{}},{\"name\":\"timestamp\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}},{\"name\":\"struct\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"struct_element\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"nested_struct\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"struct_element\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"nested_struct_element\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"new_column\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"nullCount\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"integer\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"null\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"boolean\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"double\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"decimal\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"string\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"binary\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"date\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"timestamp\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"struct\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"struct_element\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"map\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"array\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"nested_struct\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"struct_element\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"nested_struct_element\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"struct_of_array_of_map\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"struct_element\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"new_column\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"remove\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"path\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"deletionTimestamp\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"dataChange\",\"type\":\"boolean\",\"nullable\":true,\"metadata\":{}},{\"name\":\"extendedFileMetadata\",\"type\":\"boolean\",\"nullable\":true,\"metadata\":{}},{\"name\":\"partitionValues\",\"type\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"string\",\"valueContainsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"size\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"tags\",\"type\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"string\",\"valueContainsNull\":true},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"metaData\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"description\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"format\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"provider\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"options\",\"type\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"string\",\"valueContainsNull\":true},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"schemaString\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"partitionColumns\",\"type\":{\"type\":\"array\",\"elementType\":\"string\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"configuration\",\"type\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"string\",\"valueContainsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"createdTime\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"protocol\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"minReaderVersion\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"minWriterVersion\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}}]}"
+    },
+    {
+      "key": "org.apache.spark.legacyDateTime",
+      "value": ""
+    }
+  ],
+  "created_by": "parquet-mr version 1.12.0-databricks-0004 (build 3f1503a988efb3fab95bbf90481dfe0b9575ae6c)",
+  "column_orders": [
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    }
+  ]
+}

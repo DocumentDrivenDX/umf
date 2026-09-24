@@ -1,0 +1,257 @@
+[
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "name": "__proto__",
+        "value": {
+          "kind": "string",
+          "value": "own property"
+        }
+      },
+      {
+        "name": "nested.decimals",
+        "value": {
+          "kind": "list",
+          "items": [
+            {
+              "kind": "decimal",
+              "value": "-9999999999999999.1234"
+            },
+            null,
+            {
+              "kind": "decimal",
+              "value": "0.0001"
+            }
+          ]
+        }
+      },
+      {
+        "name": "ordered",
+        "value": {
+          "kind": "map",
+          "entries": [
+            {
+              "key": {
+                "kind": "string",
+                "value": "same"
+              },
+              "value": {
+                "kind": "decimal",
+                "value": "1.0000"
+              }
+            },
+            {
+              "key": {
+                "kind": "string",
+                "value": "same"
+              },
+              "value": {
+                "kind": "decimal",
+                "value": "2.0000"
+              }
+            },
+            {
+              "key": {
+                "kind": "string",
+                "value": "__proto__"
+              },
+              "value": null
+            },
+            {
+              "key": {
+                "kind": "string",
+                "value": "constructor"
+              },
+              "value": {
+                "kind": "decimal",
+                "value": "-0.0001"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "integer.keys",
+        "value": {
+          "kind": "map",
+          "entries": [
+            {
+              "key": {
+                "kind": "int",
+                "bits": 32,
+                "value": "7"
+              },
+              "value": {
+                "kind": "list",
+                "items": [
+                  {
+                    "kind": "decimal",
+                    "value": "1.0001"
+                  },
+                  null
+                ]
+              }
+            },
+            {
+              "key": {
+                "kind": "int",
+                "bits": 32,
+                "value": "7"
+              },
+              "value": {
+                "kind": "list",
+                "items": []
+              }
+            },
+            {
+              "key": {
+                "kind": "int",
+                "bits": 32,
+                "value": "-1"
+              },
+              "value": null
+            }
+          ]
+        }
+      },
+      {
+        "name": "clock",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "local",
+              "value": {
+                "kind": "timestamp",
+                "unit": "MICROS",
+                "isAdjustedToUTC": false,
+                "value": "1767229323456789"
+              }
+            },
+            {
+              "name": "utc",
+              "value": {
+                "kind": "timestamp",
+                "unit": "MICROS",
+                "isAdjustedToUTC": true,
+                "value": "1767229323456789"
+              }
+            },
+            {
+              "name": "time",
+              "value": {
+                "kind": "time",
+                "unit": "MICROS",
+                "isAdjustedToUTC": true,
+                "value": "3723456789"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "large",
+        "value": {
+          "kind": "uint",
+          "bits": 64,
+          "value": "18446744073709551615"
+        }
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "name": "__proto__",
+        "value": {
+          "kind": "string",
+          "value": "constructor"
+        }
+      },
+      {
+        "name": "nested.decimals",
+        "value": {
+          "kind": "list",
+          "items": []
+        }
+      },
+      {
+        "name": "ordered",
+        "value": {
+          "kind": "map",
+          "entries": []
+        }
+      },
+      {
+        "name": "integer.keys",
+        "value": {
+          "kind": "map",
+          "entries": []
+        }
+      },
+      {
+        "name": "clock",
+        "value": null
+      },
+      {
+        "name": "large",
+        "value": {
+          "kind": "uint",
+          "bits": 64,
+          "value": "9223372036854775808"
+        }
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "name": "__proto__",
+        "value": null
+      },
+      {
+        "name": "nested.decimals",
+        "value": null
+      },
+      {
+        "name": "ordered",
+        "value": null
+      },
+      {
+        "name": "integer.keys",
+        "value": null
+      },
+      {
+        "name": "clock",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "name": "local",
+              "value": null
+            },
+            {
+              "name": "utc",
+              "value": null
+            },
+            {
+              "name": "time",
+              "value": null
+            }
+          ]
+        }
+      },
+      {
+        "name": "large",
+        "value": {
+          "kind": "uint",
+          "bits": 64,
+          "value": "0"
+        }
+      }
+    ]
+  }
+]

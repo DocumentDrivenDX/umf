@@ -1,0 +1,18 @@
+{
+  "compiler": "@typespec/compiler@1.16.0",
+  "runtime": "1.3.14",
+  "cases": [
+    {
+      "name": "roundtrip",
+      "expectedValid": true,
+      "exitCode": 0
+    },
+    {
+      "name": "edited",
+      "expectedValid": false,
+      "exitCode": 1,
+      "expectedDiagnostic": "unassignable"
+    }
+  ],
+  "scope": "Native CLI with filesystem host checks round-tripped source and semantic edit; same compiler implementation as browser host, not independent compiler evidence"
+}

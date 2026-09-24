@@ -1,0 +1,26 @@
+import {getDeltaTableSchema,getDeltaTableNode,exportDeltaTable,proposeDeltaTableNodeEdit,inspectDeltaTable} from './table';
+import {getDeltaNode,proposeDeltaNodeEdit,exportDeltaSchema} from './index';
+import {renderTree,nativePointer,type NativeJson} from '../../model/native-json';
+import {copyJson} from '../../model/json';
+import {UmfError,pointer,type Document,type Diagnostic} from '../../model/types';
+/** Candidate context edit only; applying it requires a transaction and external-state checks. */
+export function renameDeltaMappedField(source:Document,options:{fieldPointer:string;name:string;uninterpretedReferences:'preserve-and-report'}){
+ if(!options||typeof options.name!=='string'||!options.name||options.uninterpretedReferences!=='preserve-and-report'||Object.keys(options).some(k=>!['fieldPointer','name','uninterpretedReferences'].includes(k)))throw new UmfError('DELTA_RENAME_POLICY','Expected nonempty name, field pointer and explicit reference policy');
+ exportDeltaTable(source);const context=getDeltaTableNode(source,'');if(context.kind!=='object')throw new UmfError('DELTA_RENAME_CONTEXT','Expected table context');
+ const mode=getDeltaTableNode(source,'/metaData/configuration/delta.columnMapping.mode');if(mode.kind!=='string'||!['name','id'].includes(mode.value))throw new UmfError('DELTA_RENAME_MAPPING','Rename requires active name/id column mapping');
+ const blockers=inspectDeltaTable(source).diagnostics.filter(d=>(d.code.startsWith('DELTA_MAPPING_')&&d.code!=='DELTA_MAPPING_HISTORY_UNVERIFIED')||['DELTA_FORMAT_UNVERIFIED','DELTA_DUPLICATE_NAME','DELTA_EMBEDDED_SCHEMA','DELTA_UNKNOWN_TYPE','DELTA_FEATURE_VERSION','DELTA_READER_FEATURE_WRITER','DELTA_FUTURE_PROTOCOL','DELTA_PARTITION_UNRESOLVED','DELTA_PARTITION_DUPLICATE'].includes(d.code));if(blockers.length)throw new UmfError('DELTA_RENAME_CONTEXT',JSON.stringify(blockers));
+ const protocol=getDeltaTableNode(source,'/protocol');if(protocol.kind==='object')for(const key of ['readerFeatures','writerFeatures']){const a=protocol.members[key];if(a?.kind==='array'&&a.items.some(n=>n.kind!=='string'||!['columnMapping','appendOnly'].includes(n.value)))throw new UmfError('DELTA_RENAME_FEATURE','Feature requires an explicit rename contract');}
+ const config=getDeltaTableNode(source,'/metaData/configuration');if(config.kind==='object'&&Object.keys(config.members).some(k=>k.startsWith('delta.constraints.')||k==='delta.clusteringColumns'))throw new UmfError('DELTA_RENAME_DEPENDENCY','Constraint or clustering references require explicit rewriting');
+ const schema=getDeltaTableSchema(source),root=getDeltaNode(schema,''),target=nativePointer(options.fieldPointer).map(k=>'/'+pointer(k)).join('');let selected:NativeJson|undefined;
+ function visit(n:NativeJson,path:string){if(n.kind!=='object'||n.members.type?.kind!=='string')return;
+  if(n.members.type.value==='struct'&&n.members.fields?.kind==='array')n.members.fields.items.forEach((f,i)=>{if(f.kind!=='object')return;const at=path+'/fields/'+i,m=f.members.metadata;if(m?.kind==='object'&&Object.keys(m.members).some(k=>['delta.invariants','delta.generationExpression','CURRENT_DEFAULT','EXISTS_DEFAULT'].includes(k)))throw new UmfError('DELTA_RENAME_DEPENDENCY','Column expression/default dependencies require explicit rewriting');if(at===target)selected=f;if(f.members.type)visit(f.members.type,at+'/type');});
+  if(n.members.type.value==='array'&&n.members.elementType)visit(n.members.elementType,path+'/elementType');if(n.members.type.value==='map'){if(n.members.keyType)visit(n.members.keyType,path+'/keyType');if(n.members.valueType)visit(n.members.valueType,path+'/valueType');}
+ }
+ visit(root,'');if(!selected||selected.kind!=='object'||selected.members.name?.kind!=='string')throw new UmfError('DELTA_RENAME_PATH','Pointer must select an actual mapped StructField');const oldName=selected.members.name.value;
+ const renamedSchema=proposeDeltaNodeEdit(schema,target+'/name',JSON.stringify(options.name)).document;let candidate=proposeDeltaTableNodeEdit(source,'/metaData/schemaString',JSON.stringify(exportDeltaSchema(renamedSchema))).document;
+ const partitionUpdates:{index:number;from:string;to:string}[]=[];
+ if(/^\/fields\/\d+$/.test(target)){const partitions=getDeltaTableNode(candidate,'/metaData/partitionColumns');if(partitions.kind==='array'){partitions.items.forEach((n,i)=>{if(n.kind==='string'&&n.value===oldName){partitionUpdates.push({index:i,from:oldName,to:options.name});n.value=options.name;}});if(partitionUpdates.length)candidate=proposeDeltaTableNodeEdit(candidate,'/metaData/partitionColumns',renderTree(partitions)).document;}}
+ const validation=inspectDeltaTable(candidate);if(validation.diagnostics.some(d=>['DELTA_DUPLICATE_NAME','DELTA_PARTITION_UNRESOLVED','DELTA_PARTITION_DUPLICATE'].includes(d.code)))throw new UmfError('DELTA_RENAME_COLLISION','Candidate name collides or invalidates partition references');
+ const diagnostics:Diagnostic[]=[{code:'DELTA_RENAME_EXTERNAL_STATE',path:target,severity:'warning',message:'Physical names/IDs retained; historical uniqueness, data-file mappings, transaction concurrency and uninterpreted external references remain unverified'}];
+ return {source:copyJson(source) as unknown as Document,document:candidate,complete:false as const,partitionUpdates,validation,diagnostics};
+}

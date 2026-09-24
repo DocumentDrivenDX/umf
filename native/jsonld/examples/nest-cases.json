@@ -1,0 +1,9 @@
+[
+ {"id":"siblings-protected","source":{"@context":{"p":{"@id":"urn:outer","@protected":true},"nest":{"@id":"@nest","@context":{"p":"urn:inner"}},"other":{"@id":"@nest","@context":{"p":"urn:other"}}},"p":"outside","nest":{"p":"inside"},"other":{"p":"sibling"}},"expected":[{"urn:outer":[{"@value":"outside"}],"urn:inner":[{"@value":"inside"}],"urn:other":[{"@value":"sibling"}]}],"edit":{"pointer":"/nest/p","text":"\"edited\""},"editedExpected":[{"urn:outer":[{"@value":"outside"}],"urn:inner":[{"@value":"edited"}],"urn:other":[{"@value":"sibling"}]}]},
+ {"id":"recursive","source":{"@context":{"@vocab":"urn:outer:","nest":{"@id":"@nest","@context":{"@vocab":"urn:inner:","deep":{"@id":"@nest","@context":{"@vocab":"urn:deep:"}}}}},"p":"outer","nest":{"p":"inner","deep":{"p":"deep"}}},"expected":[{"urn:outer:p":[{"@value":"outer"}],"urn:inner:p":[{"@value":"inner"}],"urn:deep:p":[{"@value":"deep"}]}]},
+ {"id":"array","source":{"@context":{"nest":{"@id":"@nest","@context":{"p":"urn:p"}}},"nest":[{"p":"a"},{"p":"b"}]},"expected":[{"urn:p":[{"@value":"a"},{"@value":"b"}]}]},
+ {"id":"remote-coercion","source":{"@context":{"nest":{"@id":"@nest","@context":"https://example.org/scoped"}},"nest":{"p":"resource"}},"contexts":[{"url":"https://example.org/scoped","text":"{\"@context\":{\"p\":{\"@id\":\"urn:ref\",\"@type\":\"@id\"}}}"}],"expected":[{"urn:ref":[{"@id":"https://example.org/resource"}]}]},
+ {"id":"value-alias-invalid","source":{"@context":{"nest":{"@id":"@nest","@context":{"v":"@value"}}},"nest":{"v":"invalid"}},"blocked":true},
+ {"id":"scalar-invalid","source":{"@context":{"nest":{"@id":"@nest","@context":{"p":"urn:p"}}},"nest":"invalid"},"blocked":true},
+ {"id":"opaque-json","source":{"@context":{"j":{"@id":"urn:json","@type":"@json"}},"j":{"@id":"@nest","@context":{"p":"urn:p"}}},"expected":[{"urn:json":[{"@type":"@json","@value":{"@id":"@nest","@context":{"p":"urn:p"}}}]}]}
+]

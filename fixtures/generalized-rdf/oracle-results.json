@@ -1,0 +1,28 @@
+{
+  "native": "PyLD 2.0.4 generalized dataset API; RDFLib 7.6.0 role reification/isomorphism",
+  "expectedParser": "Only blank predicate tokens are temporarily replaced with collision-checked IRIs for the standard N-Quads parser, then restored before comparison; no standard generalized-N-Quads support is claimed",
+  "results": [
+    {
+      "id": "t0118",
+      "nativePath": "fixtures/generalized-rdf/t0118.native.json",
+      "expectedPath": "fixtures/generalized-rdf/t0118.expected.json",
+      "nativeQuadCount": 10,
+      "expectedQuadCount": 9,
+      "expectedEqual": true,
+      "nativeEqual": false,
+      "reverseEqual": true,
+      "formatsEqual": true
+    },
+    {
+      "id": "te075",
+      "nativePath": "fixtures/generalized-rdf/te075.native.json",
+      "expectedPath": "fixtures/generalized-rdf/te075.expected.json",
+      "nativeQuadCount": 2,
+      "expectedQuadCount": 2,
+      "expectedEqual": true,
+      "nativeEqual": true,
+      "reverseEqual": true,
+      "formatsEqual": true
+    }
+  ]
+}

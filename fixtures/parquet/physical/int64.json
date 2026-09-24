@@ -1,0 +1,82 @@
+[
+  {
+    "rowGroup": 0,
+    "column": 0,
+    "offset": 4,
+    "kind": "dictionary",
+    "values": [
+      {
+        "type": "INT64",
+        "value": "999999999999999999"
+      },
+      {
+        "type": "INT64",
+        "value": "-999999999999999999"
+      },
+      {
+        "type": "INT64",
+        "value": "0"
+      }
+    ]
+  },
+  {
+    "rowGroup": 0,
+    "column": 0,
+    "offset": 44,
+    "kind": "data",
+    "values": [
+      {
+        "type": "INT64",
+        "value": "999999999999999999"
+      },
+      {
+        "type": "INT64",
+        "value": "-999999999999999999"
+      },
+      {
+        "type": "INT64",
+        "value": "0"
+      }
+    ],
+    "levels": {
+      "rowGroup": 0,
+      "column": 0,
+      "offset": 44,
+      "repetition": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "definition": [
+        2,
+        2,
+        2,
+        1,
+        0
+      ],
+      "repetitionPadding": [],
+      "definitionPadding": [
+        0,
+        0,
+        0
+      ],
+      "valuesOffset": 7,
+      "nonNullValues": 3,
+      "rowStarts": 5
+    },
+    "dictionaryIndexes": [
+      0,
+      1,
+      2
+    ],
+    "dictionaryPadding": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+]

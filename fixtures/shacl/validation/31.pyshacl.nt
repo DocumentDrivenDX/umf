@@ -1,0 +1,10 @@
+_:N12d3954e3c7640abb7f223cfbbb10adf <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N12d3954e3c7640abb7f223cfbbb10adf <http://www.w3.org/ns/shacl#result> _:N83cf41fe718b4cb5b763d435fb1a2cef .
+_:N83cf41fe718b4cb5b763d435fb1a2cef <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NotConstraintComponent> .
+_:N83cf41fe718b4cb5b763d435fb1a2cef <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/not-001#TestShape> .
+_:N83cf41fe718b4cb5b763d435fb1a2cef <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/not-001#InvalidResource1> .
+_:N12d3954e3c7640abb7f223cfbbb10adf <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N83cf41fe718b4cb5b763d435fb1a2cef <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N83cf41fe718b4cb5b763d435fb1a2cef <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/not-001#InvalidResource1> .
+_:N83cf41fe718b4cb5b763d435fb1a2cef <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N83cf41fe718b4cb5b763d435fb1a2cef <http://www.w3.org/ns/shacl#resultMessage> "Node ex:InvalidResource1 must not conform to shape [ rdf:type sh:NodeShape ; sh:property [ sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:property ] ]" .

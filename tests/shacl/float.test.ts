@@ -1,0 +1,15 @@
+import {test,expect} from 'bun:test';
+import {parseShaclFloat} from '../../src/adapters/shacl/float';
+import {importShaclTurtle,importRdfTurtle,proposeShaclEngineValidation,readDocument,writeDocument,getRdfQuads,exportShaclTurtle,exportRdfTurtle} from '../../src';
+test('US-028 mixed numeric promotions agree with direct native C conversions',async()=>{
+ const oracle=await Bun.file('fixtures/shacl/float-oracle.json').json(),matrix=await Bun.file('fixtures/shacl/float-results.json').json();expect(oracle.results).toHaveLength(24);expect(oracle.results.every((r:any)=>r.equal)).toBe(true);expect(matrix.cases).toHaveLength(160);
+ for(const c of matrix.cases){const raw=await Bun.file(c.shapesPath).text(),dataRaw=await Bun.file(c.dataPath).text(),shapes=importShaclTurtle(raw,{id:'s',baseIRI:'https://example.org/'}),data=importRdfTurtle(dataRaw,{id:'d',baseIRI:'https://example.org/'});const format=c.id.endsWith('Exclusive')?'yaml':'json',r=await proposeShaclEngineValidation(readDocument(writeDocument(shapes,format),format),readDocument(writeDocument(data,format),format),{id:'r',blankNodePolicy:'disjoint-inputs'});expect(r.status).toBe('evaluated');expect(r.engineConforms).toBe(c.expected);expect(r.numericProfile).toBe('umf-numeric-2');expect(exportShaclTurtle(r.shapes)).toBe(raw);expect(exportRdfTurtle(r.data)).toBe(dataRaw);expect(getRdfQuads(r.report!).filter(q=>q.predicate.value.endsWith('#result')).length).toBe(c.expected?0:1);}
+},60000);
+test('US-028 float lexical validation, signed zero, ties and bounded conversion',()=>{
+ for(const width of [32,64] as const){for(const text of ['','1.2.3','++1','+NaN','nan','Infinity','0x10','1\u2028','1 e2'])expect(parseShaclFloat(text,width)).toBeNull();expect(Object.is(parseShaclFloat('-0',width)!.value,-0)).toBe(true);expect(parseShaclFloat(' +INF ',width)!.value).toBe(Infinity);expect(Number.isNaN(parseShaclFloat('NaN',width)!.value)).toBe(true);}
+ const text='1.0000000596046447753906250000000000000001';expect(Math.fround(Number(text))).toBe(1);expect(parseShaclFloat(text,32)!.value).toBe(1.0000001192092896);expect(parseShaclFloat('1.000000059604644775390625',32)!.value).toBe(1);
+ expect(()=>parseShaclFloat('1.'+'1'.repeat(10001),32)).toThrow('10,000');expect(parseShaclFloat('1e'+'9'.repeat(100),32)!.value).toBe(Infinity);expect(parseShaclFloat('1e-'+'9'.repeat(100),32)!.value).toBe(0);
+});
+test('US-028 conversion limit blocks without a partial report or source loss',async()=>{
+ const lexical='1.'+'1'.repeat(10001),raw='<urn:s> <http://www.w3.org/ns/shacl#targetNode> "'+lexical+'"^^<http://www.w3.org/2001/XMLSchema#float> ; <http://www.w3.org/ns/shacl#minInclusive> "0"^^<http://www.w3.org/2001/XMLSchema#float> .',shapes=importShaclTurtle(raw,{id:'s',baseIRI:'urn:base:'}),data=importRdfTurtle('',{id:'d',baseIRI:'urn:base:'}),r=await proposeShaclEngineValidation(shapes,data,{id:'r',blankNodePolicy:'disjoint-inputs'});expect(r.status).toBe('blocked');expect(r.engineConforms).toBeUndefined();expect(r.report).toBeUndefined();expect(exportShaclTurtle(r.shapes)).toBe(raw);expect(r.diagnostics.at(-1)!.message).toContain('10,000');
+});

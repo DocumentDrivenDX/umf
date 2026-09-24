@@ -1,0 +1,97 @@
+{
+  "success": [
+    {
+      "id": "exact-default-and-generated-value",
+      "sql": "BEGIN; INSERT INTO sales.orders(external_id) VALUES ('00000000-0000-0000-0000-000000000001'); SELECT json_build_object('total',total::text,'subtotal',subtotal::text,'state',state::text,'tags',tags)::text FROM sales.orders; ROLLBACK;",
+      "expected": {
+        "total": "9007199254740993.123456789",
+        "subtotal": "7505999378950827.602880658",
+        "state": "new",
+        "tags": []
+      }
+    },
+    {
+      "id": "sql-function-unicode",
+      "sql": "SELECT json_build_object('value',echo_text('café — 注文'))::text;",
+      "expected": {
+        "value": "café — 注文"
+      }
+    },
+    {
+      "id": "row-level-security-and-public-select",
+      "sql": "BEGIN; INSERT INTO events VALUES ('2026-02-01', '{\"tenant\":\"umf_catalog_reader\"}'), ('2026-02-02', '{\"tenant\":\"someone_else\"}'); SET LOCAL ROLE umf_catalog_reader; SELECT json_build_object('visible',count(*))::text FROM events; RESET ROLE; ROLLBACK;",
+      "expected": {
+        "visible": 1
+      }
+    },
+    {
+      "id": "composite-range-multirange-trigger",
+      "sql": "BEGIN; INSERT INTO sales.inventory(code,address,prices,history) VALUES ('abc',ROW('Main','12345')::sales.address,'[1,5)'::sales.price_span,'{[1,2),[3,4)}'::sales.price_spans); SELECT json_build_object('normalized',normalized,'street',(address).street,'contains',prices @> 2::numeric,'past',history @> 3.5::numeric)::text FROM sales.inventory; ROLLBACK;",
+      "expected": {
+        "normalized": "ABC",
+        "street": "Main",
+        "contains": true,
+        "past": true
+      }
+    },
+    {
+      "id": "exact-sequence",
+      "sql": "SELECT json_build_object('ticket',nextval('sales.ticket_numbers')::text)::text;",
+      "expected": {
+        "ticket": "9007199254740993"
+      }
+    },
+    {
+      "id": "materialized-view-refresh",
+      "sql": "BEGIN; INSERT INTO sales.inventory(code) VALUES ('a'),('b'); REFRESH MATERIALIZED VIEW sales.inventory_totals; SELECT json_build_object('total',total)::text FROM sales.inventory_totals; ROLLBACK;",
+      "expected": {
+        "total": 2
+      }
+    },
+    {
+      "id": "dependent-type-cascade",
+      "sql": "BEGIN; DROP TYPE sales.address CASCADE; SELECT json_build_object('addressColumnRemoved',NOT EXISTS(SELECT 1 FROM pg_attribute WHERE attrelid='sales.inventory'::regclass AND attname='address' AND NOT attisdropped),'tableRetained',to_regclass('sales.inventory') IS NOT NULL)::text; ROLLBACK;",
+      "expected": {
+        "addressColumnRemoved": true,
+        "tableRetained": true
+      }
+    }
+  ],
+  "reject": [
+    {
+      "id": "negative-domain",
+      "sql": "INSERT INTO sales.orders(external_id,total) VALUES ('00000000-0000-0000-0000-000000000002',-1);",
+      "sqlstate": "23514"
+    },
+    {
+      "id": "missing-foreign-key",
+      "sql": "INSERT INTO sales.order_lines(order_id,line_no,quantity) VALUES (99999,1,1);",
+      "sqlstate": "23503"
+    },
+    {
+      "id": "invalid-quantity",
+      "sql": "INSERT INTO sales.order_lines(order_id,line_no,quantity) VALUES (99999,1,0);",
+      "sqlstate": "23514"
+    },
+    {
+      "id": "duplicate-unique-value",
+      "sql": "INSERT INTO sales.orders(external_id) VALUES ('00000000-0000-0000-0000-000000000003'),('00000000-0000-0000-0000-000000000003');",
+      "sqlstate": "23505"
+    },
+    {
+      "id": "reader-cannot-insert",
+      "sql": "SET ROLE umf_catalog_reader; INSERT INTO events VALUES ('2026-02-01','{}');",
+      "sqlstate": "42501"
+    },
+    {
+      "id": "reversed-range-bounds",
+      "sql": "SELECT '[5,1)'::sales.price_span;",
+      "sqlstate": "22000"
+    },
+    {
+      "id": "dependent-type-restrict",
+      "sql": "DROP TYPE sales.address RESTRICT;",
+      "sqlstate": "2BP01"
+    }
+  ]
+}

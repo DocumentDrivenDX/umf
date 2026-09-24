@@ -1,0 +1,10 @@
+{
+  "processor": "jsonld 9.0.0 + UMF scoped-nest patch",
+  "patch": "patches/jsonld@9.0.0.patch",
+  "patchSha256": "361bf20318971a7e8381c775238a1a1bae05bbac3b9d50f670673707d8725bf2",
+  "installedExpandSha256": "51c2e4351715e3a75d3546a2a1aeda2d34cc6a3b1668e9725586e0cc7c007523",
+  "freshInstallExpandSha256": "51c2e4351715e3a75d3546a2a1aeda2d34cc6a3b1668e9725586e0cc7c007523",
+  "freshInstallMatched": true,
+  "supersededBy": "fixtures/jsonld/patch-results.json",
+  "scope": "Historical scoped-nest-only patch; not current patch verification"
+}

@@ -1,0 +1,20 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b24095 .
+_:report <http://www.w3.org/ns/shacl#result> _:b24096 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b24095 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b24095 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b24095 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinExclusiveConstraintComponent> .
+_:b24095 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/minExclusive-002.test#TestShape-testProperty> .
+_:b24095 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/minExclusive-002.test#InvalidInstance1> .
+_:b24095 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/minExclusive-002.test#testProperty> .
+_:b24095 <http://www.w3.org/ns/shacl#value> "A string" .
+_:b24095 <http://www.w3.org/ns/shacl#resultMessage> "Value is not greater than 40" .
+_:b24096 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b24096 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b24096 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinExclusiveConstraintComponent> .
+_:b24096 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/minExclusive-002.test#TestShape-testProperty> .
+_:b24096 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/minExclusive-002.test#InvalidInstance2> .
+_:b24096 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/minExclusive-002.test#testProperty> .
+_:b24096 <http://www.w3.org/ns/shacl#value> <http://www.w3.org/2000/01/rdf-schema#Resource> .
+_:b24096 <http://www.w3.org/ns/shacl#resultMessage> "Value is not greater than 40" .

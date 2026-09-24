@@ -1,0 +1,10 @@
+_:N2c3a5b6f8e504d2a8cd0ff807f2badb0 <http://www.w3.org/ns/shacl#resultMessage> "Value is not >= Literal(\"8\", datatype=xsd:integer)" .
+_:N45d3f66393ff4e19be7eda6c01770327 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N45d3f66393ff4e19be7eda6c01770327 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N2c3a5b6f8e504d2a8cd0ff807f2badb0 <http://www.w3.org/ns/shacl#focusNode> "7"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:N2c3a5b6f8e504d2a8cd0ff807f2badb0 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N2c3a5b6f8e504d2a8cd0ff807f2badb0 <http://www.w3.org/ns/shacl#value> "7"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:N45d3f66393ff4e19be7eda6c01770327 <http://www.w3.org/ns/shacl#result> _:N2c3a5b6f8e504d2a8cd0ff807f2badb0 .
+_:N2c3a5b6f8e504d2a8cd0ff807f2badb0 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinInclusiveConstraintComponent> .
+_:N2c3a5b6f8e504d2a8cd0ff807f2badb0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N2c3a5b6f8e504d2a8cd0ff807f2badb0 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/minInclusive-001.test#TestShape> .

@@ -1,0 +1,821 @@
+{
+  "results": [
+    {
+      "id": "exact-values",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":[9007199254740993,333333333.33333329,-0,1e400,1e-400]}",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"@context\":{\"p\":\"urn:p\"},\"@id\":\"urn:s\"}"
+      },
+      "expected": "{\"@context\":{\"p\":\"urn:p\"},\"@id\":\"urn:s\",\"p\":[9007199254740993,333333333.33333329,-0,1e400,1e-400]}",
+      "edit": {
+        "pointer": "/urn:p/0",
+        "text": "9007199254740995"
+      },
+      "editedExpected": "{\"@context\":{\"p\":\"urn:p\"},\"@id\":\"urn:s\",\"p\":[9007199254740995,333333333.33333329,-0,1e400,1e-400]}",
+      "inputs": {
+        "id": "exact-values",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/authored/exact-values.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/authored/exact-values.yaml.jsonld"
+        }
+      ],
+      "edits": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/authored/exact-values.edited.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/authored/exact-values.edited.yaml.jsonld"
+        }
+      ]
+    },
+    {
+      "id": "exact-match",
+      "source": "[{\"@id\":\"urn:s\",\"urn:p\":9007199254740993},{\"@id\":\"urn:t\",\"urn:p\":9007199254740992}]",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"@context\":{\"p\":\"urn:p\"},\"p\":{\"@value\":9007199254740993.0}}"
+      },
+      "expected": "{\"@context\":{\"p\":\"urn:p\"},\"@id\":\"urn:s\",\"p\":9007199254740993}",
+      "inputs": {
+        "id": "exact-match",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/authored/exact-match.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/authored/exact-match.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "precise-default",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":\"v\"}",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"@context\":{\"q\":\"urn:q\"},\"@id\":\"urn:s\",\"q\":{\"@default\":1e400}}"
+      },
+      "expected": "{\"@context\":{\"q\":\"urn:q\"},\"@id\":\"urn:s\",\"urn:p\":\"v\",\"q\":1e400}",
+      "inputs": {
+        "id": "precise-default",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/authored/precise-default.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/authored/precise-default.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "explicit-selection",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":\"yes\",\"urn:q\":\"retained in source\"}",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"@id\":\"urn:s\",\"urn:p\":{}}",
+        "explicit": true
+      },
+      "expected": "{\"@id\":\"urn:s\",\"urn:p\":\"yes\"}",
+      "inputs": {
+        "id": "explicit-selection",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/authored/explicit-selection.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/authored/explicit-selection.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "default-graph",
+      "source": "[{\"@id\":\"urn:s\",\"urn:p\":\"default\"},{\"@id\":\"urn:g\",\"@graph\":[{\"@id\":\"urn:s\",\"urn:p\":\"named\"}]}]",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"@id\":\"urn:s\"}",
+        "frameDefault": true
+      },
+      "expected": "{\"@id\":\"urn:s\",\"urn:p\":\"default\"}",
+      "inputs": {
+        "id": "default-graph",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/authored/default-graph.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/authored/default-graph.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "merged-graph",
+      "source": "[{\"@id\":\"urn:s\",\"urn:p\":\"default\"},{\"@id\":\"urn:g\",\"@graph\":[{\"@id\":\"urn:s\",\"urn:p\":\"named\"}]}]",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"@id\":\"urn:s\"}"
+      },
+      "expected": "{\"@id\":\"urn:s\",\"urn:p\":[\"default\",\"named\"]}",
+      "inputs": {
+        "id": "merged-graph",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/authored/merged-graph.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/authored/merged-graph.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "cycle",
+      "source": "[{\"@id\":\"urn:a\",\"urn:p\":{\"@id\":\"urn:b\"},\"urn:name\":\"A\"},{\"@id\":\"urn:b\",\"urn:p\":{\"@id\":\"urn:a\"},\"urn:name\":\"B\"}]",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"@context\":{\"p\":\"urn:p\",\"name\":\"urn:name\"},\"@id\":\"urn:a\",\"p\":{}}",
+        "embed": "@always"
+      },
+      "expected": "{\"@context\":{\"p\":\"urn:p\",\"name\":\"urn:name\"},\"@id\":\"urn:a\",\"name\":\"A\",\"p\":{\"@id\":\"urn:b\",\"name\":\"B\",\"p\":{\"@id\":\"urn:a\"}}}",
+      "inputs": {
+        "id": "cycle",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/authored/cycle.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/authored/cycle.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "require-all",
+      "source": "[{\"@id\":\"urn:a\",\"urn:p\":\"x\",\"urn:q\":\"y\"},{\"@id\":\"urn:b\",\"urn:p\":\"x\"}]",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"urn:p\":{},\"urn:q\":{}}",
+        "requireAll": true
+      },
+      "expected": "{\"@id\":\"urn:a\",\"urn:p\":\"x\",\"urn:q\":\"y\"}",
+      "inputs": {
+        "id": "require-all",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/authored/require-all.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/authored/require-all.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "remote-frame-context",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":\"v\"}",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"@context\":\"https://example.org/context\",\"@id\":\"urn:s\"}"
+      },
+      "inputs": {
+        "id": "remote-frame-context",
+        "baseIRI": "https://example.org/source",
+        "contexts": [
+          {
+            "url": "https://example.org/context",
+            "text": "{\"@context\":{\"p\":\"urn:p\"}}"
+          }
+        ]
+      },
+      "expected": "{\"@context\":\"https://example.org/context\",\"@id\":\"urn:s\",\"p\":\"v\"}",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "resourcesUsed": [
+        "https://example.org/context"
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/authored/remote-frame-context.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/authored/remote-frame-context.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "missing-frame-context",
+      "source": "{\"urn:p\":\"v\"}",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"@context\":\"https://example.org/missing\"}"
+      },
+      "blocked": true,
+      "inputs": {
+        "id": "missing-frame-context",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_CONTEXT_MISSING",
+          "path": "",
+          "severity": "error",
+          "message": "No supplied context for https://example.org/missing"
+        },
+        {
+          "code": "JSONLD_FRAMING_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.InvalidUrl: Dereferencing a URL did not result in a valid JSON-LD object. Possible causes are an inaccessible URL perhaps due to a same-origin policy (ensure the server uses CORS if you are using client-side JavaScript), too many redirects, a non-JSON response, or more than one HTTP Link Header was provided for a remote context. URL: \"https://example.org/missing\"."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "loss-reject",
+      "source": "{\"urn:p\":\"v\",\"unmapped\":\"retained\"}",
+      "options": {
+        "lossPolicy": "reject",
+        "frame": "{}"
+      },
+      "blocked": true,
+      "inputs": {
+        "id": "loss-reject",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "invalid property: Dropping property that did not expand into an absolute IRI or keyword."
+        },
+        {
+          "code": "JSONLD_FRAMING_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: invalid property"
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "opaque-list",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":{\"@type\":\"@json\",\"@value\":{\"a\":[9007199254740993,1e400],\"@language\":\"EN\"}},\"urn:q\":{\"@list\":[1e400,9007199254740993,1e400]}}",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"@context\":{\"p\":{\"@id\":\"urn:p\",\"@type\":\"@json\"},\"q\":{\"@id\":\"urn:q\",\"@container\":\"@list\"}},\"@id\":\"urn:s\"}"
+      },
+      "expected": "{\"@context\":{\"p\":{\"@id\":\"urn:p\",\"@type\":\"@json\"},\"q\":{\"@id\":\"urn:q\",\"@container\":\"@list\"}},\"@id\":\"urn:s\",\"p\":{\"a\":[9007199254740993,1e400],\"@language\":\"EN\"},\"q\":[1e400,9007199254740993,1e400]}",
+      "inputs": {
+        "id": "opaque-list",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/authored/opaque-list.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/authored/opaque-list.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "invalid-last-empty",
+      "source": "[]",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"@embed\": \"@last\"}"
+      },
+      "blocked": true,
+      "expectedNative": "accepted",
+      "inputs": {
+        "id": "invalid-last-empty",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid value of @embed for processing mode."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "invalid-link-empty",
+      "source": "[]",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"@embed\": \"@link\"}"
+      },
+      "blocked": true,
+      "expectedNative": "accepted",
+      "inputs": {
+        "id": "invalid-link-empty",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid value of @embed for processing mode."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "invalid-nested-empty",
+      "source": "[]",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"urn:p\": {\"@embed\": \"invalid\"}}"
+      },
+      "blocked": true,
+      "expectedNative": "accepted",
+      "inputs": {
+        "id": "invalid-nested-empty",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid JSON-LD syntax; invalid value of @embed."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "invalid-aliased-empty",
+      "source": "[]",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"@context\": {\"e\": \"@embed\", \"p\": \"urn:p\"}, \"p\": {\"e\": \"invalid\"}}"
+      },
+      "blocked": true,
+      "expectedNative": "accepted",
+      "inputs": {
+        "id": "invalid-aliased-empty",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid JSON-LD syntax; invalid value of @embed."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "invalid-explicit-empty",
+      "source": "[]",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"@explicit\": \"yes\"}"
+      },
+      "blocked": true,
+      "expectedNative": "accepted",
+      "inputs": {
+        "id": "invalid-explicit-empty",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid frame flag value."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "invalid-require-empty",
+      "source": "[]",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"@requireAll\": 1}"
+      },
+      "blocked": true,
+      "expectedNative": "accepted",
+      "inputs": {
+        "id": "invalid-require-empty",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid frame flag value."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "invalid-omit-empty",
+      "source": "[]",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"@omitDefault\": null}"
+      },
+      "blocked": true,
+      "expectedNative": "accepted",
+      "inputs": {
+        "id": "invalid-omit-empty",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid frame flag value."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "invalid-embed-array",
+      "source": "[]",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"@embed\": [\"@once\", \"@never\"]}"
+      },
+      "blocked": true,
+      "expectedNative": "accepted",
+      "inputs": {
+        "id": "invalid-embed-array",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid frame flag value."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "invalid-flag-array",
+      "source": "[]",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"@explicit\": [true, false]}"
+      },
+      "blocked": true,
+      "expectedNative": "accepted",
+      "inputs": {
+        "id": "invalid-flag-array",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid frame flag value."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "legacy-empty-control",
+      "source": "[]",
+      "inputs": {
+        "id": "legacy-empty-control",
+        "baseIRI": "https://example.org/source",
+        "processingMode": "json-ld-1.0"
+      },
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"@embed\":\"@last\"}"
+      },
+      "expected": "{\"@graph\":[]}",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/authored/legacy-empty-control.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/authored/legacy-empty-control.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "opaque-default-control",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":\"v\"}",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"@context\": {\"q\": \"urn:q\"}, \"@id\": \"urn:s\", \"q\": {\"@default\": {\"@type\": \"@json\", \"@value\": {\"@embed\": \"@link\", \"@explicit\": \"literal\"}}}}"
+      },
+      "expected": "{\"@context\": {\"q\": \"urn:q\"}, \"@id\": \"urn:s\", \"urn:p\": \"v\", \"q\": {\"@type\": \"@json\", \"@value\": {\"@embed\": \"@link\", \"@explicit\": \"literal\"}}}",
+      "inputs": {
+        "id": "opaque-default-control",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/authored/opaque-default-control.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/authored/opaque-default-control.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "opaque-pattern-control",
+      "source": "{\"@id\":\"urn:s\",\"urn:p\":{\"@type\":\"@json\",\"@value\":{\"@embed\":\"@link\",\"@explicit\":\"literal\"}}}",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"@context\": {\"p\": \"urn:p\"}, \"p\": {\"@type\": \"@json\", \"@value\": {\"@embed\": \"@link\", \"@explicit\": \"literal\"}}}"
+      },
+      "expected": "{\"@context\": {\"p\": \"urn:p\"}, \"@id\": \"urn:s\", \"p\": {\"@type\": \"@json\", \"@value\": {\"@embed\": \"@link\", \"@explicit\": \"literal\"}}}",
+      "inputs": {
+        "id": "opaque-pattern-control",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING",
+          "path": "",
+          "severity": "warning",
+          "message": "Framed candidate is a selected view with full source/context archives retained. Framing may merge named graphs, omit properties, introduce defaults and change embedding. This is not a lossless replacement or RDF equivalence proof."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/framing/authored/opaque-pattern-control.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/framing/authored/opaque-pattern-control.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "invalid-nested-id",
+      "source": "[]",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"urn:p\":{\"@id\":\"_:invalid\"}}"
+      },
+      "blocked": true,
+      "expectedNative": "accepted",
+      "inputs": {
+        "id": "invalid-nested-id",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid JSON-LD syntax; invalid @id in frame."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [],
+      "edits": []
+    },
+    {
+      "id": "invalid-nested-type",
+      "source": "[]",
+      "options": {
+        "lossPolicy": "report",
+        "frame": "{\"urn:p\":{\"@type\":\"_:invalid\"}}"
+      },
+      "blocked": true,
+      "expectedNative": "accepted",
+      "inputs": {
+        "id": "invalid-nested-type",
+        "baseIRI": "https://example.org/source"
+      },
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_FRAMING_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid JSON-LD syntax; invalid @type in frame."
+        }
+      ],
+      "resourcesUsed": [],
+      "exports": [],
+      "edits": []
+    }
+  ]
+}

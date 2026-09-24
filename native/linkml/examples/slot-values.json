@@ -1,0 +1,168 @@
+{
+  "id": "https://example.org/slot-values",
+  "name": "slot_values",
+  "default_range": "string",
+  "classes": {
+    "Parent": {
+      "slots": [
+        "id",
+        "child",
+        "age",
+        "defaulted",
+        "listed",
+        "keyed"
+      ],
+      "slot_usage": {
+        "age": {
+          "minimum_value": 18,
+          "maximum_value": 100,
+          "description": "parent usage"
+        },
+        "child": {
+          "required": false
+        }
+      }
+    },
+    "Mixin": {
+      "mixin": true,
+      "slot_usage": {
+        "age": {
+          "minimum_value": 21,
+          "maximum_value": 90
+        }
+      }
+    },
+    "Child": {
+      "is_a": "Parent",
+      "mixins": [
+        "Mixin"
+      ],
+      "slots": [
+        "local"
+      ],
+      "slot_usage": {
+        "age": {
+          "minimum_value": 20,
+          "maximum_value": 80,
+          "description": "child usage"
+        },
+        "child": {
+          "required": false
+        },
+        "id": {
+          "required": false
+        }
+      },
+      "attributes": {
+        "local": {
+          "range": "integer",
+          "required": false
+        },
+        "defaulted": {
+          "description": "attribute wins"
+        }
+      }
+    },
+    "Plain": {
+      "slots": [
+        "child",
+        "age",
+        "defaulted",
+        "listed",
+        "keyed"
+      ]
+    },
+    "AttributeChild": {
+      "is_a": "Child",
+      "attributes": {
+        "child": {
+          "range": "decimal",
+          "multivalued": false
+        }
+      }
+    },
+    "AllFields": {
+      "slots": [
+        "all_child",
+        "large"
+      ],
+      "slot_usage": {
+        "large": {
+          "minimum_value": 9007199254740995,
+          "maximum_value": 18446744073709551614
+        }
+      }
+    }
+  },
+  "slots": {
+    "base": {
+      "range": "integer",
+      "required": true,
+      "multivalued": true,
+      "minimum_value": -10,
+      "description": "not inherited"
+    },
+    "child": {
+      "is_a": "base",
+      "required": false,
+      "multivalued": false,
+      "minimum_value": 0,
+      "description": "own description"
+    },
+    "age": {
+      "range": "integer",
+      "minimum_value": 0,
+      "maximum_value": 150
+    },
+    "id": {
+      "identifier": true
+    },
+    "defaulted": {},
+    "listed": {
+      "inlined_as_list": true,
+      "inlined": false
+    },
+    "keyed": {
+      "key": true,
+      "required": false
+    },
+    "all_base": {
+      "domain": "Parent",
+      "inherited": true,
+      "readonly": "true",
+      "ifabsent": "string(default)",
+      "list_elements_unique": true,
+      "list_elements_ordered": true,
+      "shared": true,
+      "key": true,
+      "identifier": true,
+      "designates_type": true,
+      "role": "semantic-role",
+      "range": "string",
+      "required": true,
+      "recommended": true,
+      "multivalued": true,
+      "inlined": true,
+      "inlined_as_list": true,
+      "minimum_value": -1,
+      "maximum_value": 99,
+      "pattern": "^[a-z]+$",
+      "value_presence": "PRESENT",
+      "equals_string": "example",
+      "equals_number": 3,
+      "equals_expression": "{other}",
+      "exact_cardinality": 1,
+      "minimum_cardinality": 1,
+      "maximum_cardinality": 2,
+      "description": "parent description",
+      "relational_role": "SUBJECT"
+    },
+    "all_child": {
+      "is_a": "all_base"
+    },
+    "large": {
+      "minimum_value": 9007199254740993,
+      "maximum_value": 18446744073709551615
+    }
+  }
+}

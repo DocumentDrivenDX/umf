@@ -1,0 +1,35 @@
+_:N2d979b6222004608aefca0da10bcebc7 <http://www.w3.org/ns/shacl#result> _:N16bd376d98d54dd6824351c165f300f5 .
+_:N2d979b6222004608aefca0da10bcebc7 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N67bb26d710bb48419a1db98433ceaa84 <http://www.w3.org/ns/shacl#resultMessage> "String length not >= Literal(\"4\", datatype=xsd:integer)" .
+_:N67bb26d710bb48419a1db98433ceaa84 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinLengthConstraintComponent> .
+_:N2d979b6222004608aefca0da10bcebc7 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Na3f9141702854ee8adff2c1bb5702e52 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N6ef8382487a94297b664841cf8042cb6 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N6ef8382487a94297b664841cf8042cb6 <http://www.w3.org/ns/shacl#focusNode> _:n82622df57e204e2ab9d52a0a1227316fb8 .
+_:Na3f9141702854ee8adff2c1bb5702e52 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinLengthConstraintComponent> .
+_:N16bd376d98d54dd6824351c165f300f5 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Na3f9141702854ee8adff2c1bb5702e52 <http://www.w3.org/ns/shacl#resultMessage> "String length not >= Literal(\"4\", datatype=xsd:integer)" .
+_:N6ef8382487a94297b664841cf8042cb6 <http://www.w3.org/ns/shacl#resultMessage> "String length not >= Literal(\"4\", datatype=xsd:integer)" .
+_:n82622df57e204e2ab9d52a0a1227316fb8 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://datashapes.org/sh/tests/core/node/minLength-001.test#TestClass> .
+_:N67bb26d710bb48419a1db98433ceaa84 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N67bb26d710bb48419a1db98433ceaa84 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/minLength-001.test#TestShape> .
+_:N6ef8382487a94297b664841cf8042cb6 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinLengthConstraintComponent> .
+_:N16bd376d98d54dd6824351c165f300f5 <http://www.w3.org/ns/shacl#resultMessage> "String length not >= Literal(\"4\", datatype=xsd:integer)" .
+_:N16bd376d98d54dd6824351c165f300f5 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinLengthConstraintComponent> .
+_:Na3f9141702854ee8adff2c1bb5702e52 <http://www.w3.org/ns/shacl#focusNode> <a:b> .
+_:N6ef8382487a94297b664841cf8042cb6 <http://www.w3.org/ns/shacl#value> _:n82622df57e204e2ab9d52a0a1227316fb8 .
+_:Na3f9141702854ee8adff2c1bb5702e52 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/minLength-001.test#TestShape> .
+_:N16bd376d98d54dd6824351c165f300f5 <http://www.w3.org/ns/shacl#focusNode> "123"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:N16bd376d98d54dd6824351c165f300f5 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/minLength-001.test#TestShape> .
+_:N67bb26d710bb48419a1db98433ceaa84 <http://www.w3.org/ns/shacl#focusNode> "Hel" .
+_:N16bd376d98d54dd6824351c165f300f5 <http://www.w3.org/ns/shacl#value> "123"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:N67bb26d710bb48419a1db98433ceaa84 <http://www.w3.org/ns/shacl#value> "Hel" .
+_:N2d979b6222004608aefca0da10bcebc7 <http://www.w3.org/ns/shacl#result> _:N6ef8382487a94297b664841cf8042cb6 .
+_:Na3f9141702854ee8adff2c1bb5702e52 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N6ef8382487a94297b664841cf8042cb6 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Na3f9141702854ee8adff2c1bb5702e52 <http://www.w3.org/ns/shacl#value> <a:b> .
+_:N2d979b6222004608aefca0da10bcebc7 <http://www.w3.org/ns/shacl#result> _:Na3f9141702854ee8adff2c1bb5702e52 .
+_:N6ef8382487a94297b664841cf8042cb6 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/minLength-001.test#TestShape> .
+_:N16bd376d98d54dd6824351c165f300f5 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N2d979b6222004608aefca0da10bcebc7 <http://www.w3.org/ns/shacl#result> _:N67bb26d710bb48419a1db98433ceaa84 .
+_:N67bb26d710bb48419a1db98433ceaa84 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .

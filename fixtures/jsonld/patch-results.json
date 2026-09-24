@@ -1,0 +1,53 @@
+{
+  "processor": "jsonld 9.0.0 + UMF processing patch",
+  "patch": "patches/jsonld@9.0.0.patch",
+  "patchSha256": "6d3cc28d59b068945d20984d3e59a59b3175ff46bb5cbd67929f60d27df4194c",
+  "files": [
+    {
+      "path": "lib/context.js",
+      "installedSha256": "e286d4eb19e15988ed6992a0b8c33f9d4e3fe1aff9f8394ec95e615f05ec7a3a",
+      "freshInstallSha256": "e286d4eb19e15988ed6992a0b8c33f9d4e3fe1aff9f8394ec95e615f05ec7a3a"
+    },
+    {
+      "path": "lib/expand.js",
+      "installedSha256": "8ebb176c83ce58cfb3b14117c6d1c7a6d308b0b0dc2348c18c367422a60c153e",
+      "freshInstallSha256": "8ebb176c83ce58cfb3b14117c6d1c7a6d308b0b0dc2348c18c367422a60c153e"
+    },
+    {
+      "path": "lib/util.js",
+      "installedSha256": "6d1460cd515aedfc3cbc9d17391e587d284a1b47a51cbe26a01277c4b523d554",
+      "freshInstallSha256": "6d1460cd515aedfc3cbc9d17391e587d284a1b47a51cbe26a01277c4b523d554"
+    },
+    {
+      "path": "lib/compact.js",
+      "installedSha256": "6b4790621ea91c67d21a9ef744700dd68df7565918daaceb6e0b4e761b3c4111",
+      "freshInstallSha256": "6b4790621ea91c67d21a9ef744700dd68df7565918daaceb6e0b4e761b3c4111"
+    },
+    {
+      "path": "lib/jsonld.js",
+      "installedSha256": "7949d17ab2baf2d83183ab603cf2181f4713e484e68a0792c44ab4af33e52f67",
+      "freshInstallSha256": "7949d17ab2baf2d83183ab603cf2181f4713e484e68a0792c44ab4af33e52f67"
+    },
+    {
+      "path": "lib/frame.js",
+      "installedSha256": "b7a42d8c2d47c232dde94786a9dc3d8b0de172cdfd220b36a0bb2d0c4032a854",
+      "freshInstallSha256": "b7a42d8c2d47c232dde94786a9dc3d8b0de172cdfd220b36a0bb2d0c4032a854"
+    },
+    {
+      "path": "lib/fromRdf.js",
+      "installedSha256": "3024602ef48ea6585bce88609c2fd85e275035d995d2216a2735a638ab4ea3ab",
+      "freshInstallSha256": "3024602ef48ea6585bce88609c2fd85e275035d995d2216a2735a638ab4ea3ab"
+    },
+    {
+      "path": "lib/toRdf.js",
+      "installedSha256": "daf1e1adada4eb79589249705285d040c3b7b60b7f1fbffcdcf5ee447267c71b",
+      "freshInstallSha256": "daf1e1adada4eb79589249705285d040c3b7b60b7f1fbffcdcf5ee447267c71b"
+    },
+    {
+      "path": "lib/url.js",
+      "installedSha256": "32905bba4c6bed7db47c773daad1cec492de4892ea3f35716fb7a8b246c34b83",
+      "freshInstallSha256": "32905bba4c6bed7db47c773daad1cec492de4892ea3f35716fb7a8b246c34b83"
+    }
+  ],
+  "freshInstallMatched": true
+}

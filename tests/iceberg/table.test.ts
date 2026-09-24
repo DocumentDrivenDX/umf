@@ -1,0 +1,16 @@
+import {test,expect} from 'bun:test';
+import {importIcebergTable,exportIcebergTable,inspectIcebergTable,getIcebergTableNode,proposeIcebergTableNodeEdit,writeDocument,readDocument,ICEBERG_TABLE_EXTENSION} from '../../src';
+const base='fixtures/iceberg/table/',report=await Bun.file(base+'results.json').json(),minimal=await Bun.file('fixtures/iceberg/upstream/core/src/test/resources/TableMetadataV2ValidMinimal.json').text();
+test('US-021-AC1: known table fields and embedded schemas survive JSON/YAML without native defaults',async()=>{
+ for(const c of report.results){const raw=await Bun.file(c.path).text();if(c.status==='rejected'){expect(()=>importIcebergTable(raw,{id:c.id})).toThrow();continue;}const d=importIcebergTable(raw,{id:c.id});for(const f of ['json','yaml'] as const)expect(exportIcebergTable(readDocument(writeDocument(d,f),f))).toBe(await Bun.file(base+c.id+'.'+f+'.json').text());const edited=proposeIcebergTableNodeEdit(d,'/location',JSON.stringify('s3://umf-fixture/relocated/'+c.id));expect(exportIcebergTable(edited.document)).toBe(await Bun.file(base+c.id+'.edited.json').text());expect(getIcebergTableNode(d,'/location')).not.toEqual(getIcebergTableNode(edited.document,'/location'));}
+});
+test('US-021-AC2: exact int64 values, unknown versions/content and representation guards retain meaning',()=>{
+ const d=importIcebergTable(minimal,{id:'limits'}),changed=proposeIcebergTableNodeEdit(d,'/last-sequence-number','9223372036854775807').document;expect(exportIcebergTable(changed)).toContain('9223372036854775807');expect(()=>proposeIcebergTableNodeEdit(d,'/last-sequence-number','9223372036854775808')).toThrow();expect(()=>proposeIcebergTableNodeEdit(d,'/last-sequence-number','1e1')).toThrow();
+ const future=importIcebergTable('{"format-version":9,"future":{"value":9007199254740993},"location":null}',{id:'future'});expect(exportIcebergTable(future)).toContain('9007199254740993');expect(inspectIcebergTable(future).diagnostics.some(d=>d.code==='ICEBERG_TABLE_VERSION')).toBe(true);const p=future.modules[0]!.elements[0]!.extensions[ICEBERG_TABLE_EXTENSION] as any;p.future=true;expect(()=>exportIcebergTable(future)).toThrow();expect(readDocument(writeDocument(future,'yaml'),'yaml')).toEqual(future);
+});
+test('US-021-AC3: candidate failures are atomic and copy access cannot mutate original metadata',()=>{
+ const d=importIcebergTable(minimal,{id:'atomic'}),before=exportIcebergTable(d),node=getIcebergTableNode(d,'/location');if(node.kind==='string')node.value='changed';expect(exportIcebergTable(d)).toBe(before);expect(()=>proposeIcebergTableNodeEdit(d,'/schemas','{}')).toThrow();expect(()=>proposeIcebergTableNodeEdit(d,'/location','false')).toThrow();expect(exportIcebergTable(d)).toBe(before);
+});
+test('US-021-AC1: native parse and re-emission limits remain distinct',async()=>{
+ const py=(await Bun.file(base+'oracle-results.json').json()).results,java=(await Bun.file(base+'java-oracle-results.json').json()).results,v3=py.find((c:any)=>c.id==='TableMetadataV3ValidMinimal');expect(v3.nativeAccepted).toBe(true);expect(v3.nativeExported).toBe(false);expect(java.find((c:any)=>c.id===v3.id).nativeAccepted).toBe(true);expect(java.filter((c:any)=>c.formatsAgree===2)).toHaveLength(6);
+});

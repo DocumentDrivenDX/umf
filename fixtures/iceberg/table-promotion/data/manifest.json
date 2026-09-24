@@ -1,0 +1,231 @@
+{
+  "writer": "PyArrow 21.0.0",
+  "scope": "Authored required primitive widening data with field IDs; untouched y/z values; no table manifests or commits",
+  "cases": [
+    {
+      "id": "int-identity",
+      "path": "fixtures/iceberg/table-promotion/data/int-identity.parquet",
+      "sha256": "6da49c263824142dfc9939f4db60f02185b1541a8a3f041aadfbb1147ce04bf0",
+      "sourceType": "int",
+      "expectedPromoted": [
+        "-2147483648",
+        "-257",
+        "-1",
+        "0",
+        "1",
+        "255",
+        "2147483647"
+      ],
+      "encoding": "decimal-text",
+      "expectedY": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "expectedZ": [
+        0,
+        -1,
+        -2,
+        -3,
+        -4,
+        -5,
+        -6
+      ],
+      "rows": 7,
+      "rowGroups": 3
+    },
+    {
+      "id": "int-bucket",
+      "path": "fixtures/iceberg/table-promotion/data/int-bucket.parquet",
+      "sha256": "6da49c263824142dfc9939f4db60f02185b1541a8a3f041aadfbb1147ce04bf0",
+      "sourceType": "int",
+      "expectedPromoted": [
+        "-2147483648",
+        "-257",
+        "-1",
+        "0",
+        "1",
+        "255",
+        "2147483647"
+      ],
+      "encoding": "decimal-text",
+      "expectedY": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "expectedZ": [
+        0,
+        -1,
+        -2,
+        -3,
+        -4,
+        -5,
+        -6
+      ],
+      "rows": 7,
+      "rowGroups": 3
+    },
+    {
+      "id": "int-truncate",
+      "path": "fixtures/iceberg/table-promotion/data/int-truncate.parquet",
+      "sha256": "6da49c263824142dfc9939f4db60f02185b1541a8a3f041aadfbb1147ce04bf0",
+      "sourceType": "int",
+      "expectedPromoted": [
+        "-2147483648",
+        "-257",
+        "-1",
+        "0",
+        "1",
+        "255",
+        "2147483647"
+      ],
+      "encoding": "decimal-text",
+      "expectedY": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "expectedZ": [
+        0,
+        -1,
+        -2,
+        -3,
+        -4,
+        -5,
+        -6
+      ],
+      "rows": 7,
+      "rowGroups": 3
+    },
+    {
+      "id": "float-identity",
+      "path": "fixtures/iceberg/table-promotion/data/float-identity.parquet",
+      "sha256": "edbda4a647b2044abbda86e6b11bf05a388233288fa8f1001072910d36a122bf",
+      "sourceType": "float",
+      "expectedPromoted": [
+        "c7efffffe0000000",
+        "bff8000000000000",
+        "8000000000000000",
+        "0000000000000000",
+        "3fb99999a0000000",
+        "3ff8000000000000",
+        "47efffffe0000000",
+        "fff0000000000000",
+        "7ff0000000000000",
+        "7ff8000000000000"
+      ],
+      "encoding": "double-ieee754-hex",
+      "expectedY": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "expectedZ": [
+        0,
+        -1,
+        -2,
+        -3,
+        -4,
+        -5,
+        -6,
+        -7,
+        -8,
+        -9
+      ],
+      "rows": 10,
+      "rowGroups": 4
+    },
+    {
+      "id": "decimal-bucket",
+      "path": "fixtures/iceberg/table-promotion/data/decimal-bucket.parquet",
+      "sha256": "3b56c1efbd8aba4f69ecfa5c30dbe2473b91f2493297d25ab2fb16c8036ecf72",
+      "sourceType": "decimal(9, 2)",
+      "expectedPromoted": [
+        "-9999999.99",
+        "-1.01",
+        "-0.01",
+        "0.00",
+        "0.01",
+        "1.01",
+        "9999999.99"
+      ],
+      "encoding": "decimal-text",
+      "expectedY": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "expectedZ": [
+        0,
+        -1,
+        -2,
+        -3,
+        -4,
+        -5,
+        -6
+      ],
+      "rows": 7,
+      "rowGroups": 3
+    },
+    {
+      "id": "decimal-truncate",
+      "path": "fixtures/iceberg/table-promotion/data/decimal-truncate.parquet",
+      "sha256": "3b56c1efbd8aba4f69ecfa5c30dbe2473b91f2493297d25ab2fb16c8036ecf72",
+      "sourceType": "decimal(9, 2)",
+      "expectedPromoted": [
+        "-9999999.99",
+        "-1.01",
+        "-0.01",
+        "0.00",
+        "0.01",
+        "1.01",
+        "9999999.99"
+      ],
+      "encoding": "decimal-text",
+      "expectedY": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "expectedZ": [
+        0,
+        -1,
+        -2,
+        -3,
+        -4,
+        -5,
+        -6
+      ],
+      "rows": 7,
+      "rowGroups": 3
+    }
+  ]
+}

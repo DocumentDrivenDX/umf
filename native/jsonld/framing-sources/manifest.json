@@ -1,0 +1,2462 @@
+{
+  "repository": "https://github.com/w3c/json-ld-framing",
+  "commit": "3bf782ba9a40dd1b143435abe386d38df64f2b47",
+  "baseIRI": "https://w3c.github.io/json-ld-framing/tests/",
+  "cases": [
+    {
+      "@id": "#t0001",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Library framing example",
+      "purpose": "Basic example used in playgrond and spec examples.",
+      "option": {
+        "processingMode": "json-ld-1.0"
+      },
+      "input": "frame/0001-in.jsonld",
+      "frame": "frame/0001-frame.jsonld",
+      "expect": "frame/0001-out.jsonld"
+    },
+    {
+      "@id": "#t0002",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "reframe w/extra CURIE value.",
+      "purpose": "Append extra values to output.",
+      "option": {
+        "processingMode": "json-ld-1.0"
+      },
+      "input": "frame/0002-in.jsonld",
+      "frame": "frame/0002-frame.jsonld",
+      "expect": "frame/0002-out.jsonld"
+    },
+    {
+      "@id": "#t0003",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "reframe (null)",
+      "purpose": "Do not match without a matching @type",
+      "option": {
+        "processingMode": "json-ld-1.0"
+      },
+      "input": "frame/0003-in.jsonld",
+      "frame": "frame/0003-frame.jsonld",
+      "expect": "frame/0003-out.jsonld"
+    },
+    {
+      "@id": "#t0004",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "reframe (type)",
+      "purpose": "Multiple matches on @type.",
+      "option": {
+        "processingMode": "json-ld-1.0"
+      },
+      "input": "frame/0004-in.jsonld",
+      "frame": "frame/0004-frame.jsonld",
+      "expect": "frame/0004-out.jsonld"
+    },
+    {
+      "@id": "#t0005",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "reframe (explicit)",
+      "purpose": "If property is not in frame, and explicit is true, do not add any values for property to output.",
+      "option": {
+        "processingMode": "json-ld-1.0"
+      },
+      "input": "frame/0005-in.jsonld",
+      "frame": "frame/0005-frame.jsonld",
+      "expect": "frame/0005-out.jsonld"
+    },
+    {
+      "@id": "#t0006",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "reframe (non-explicit)",
+      "purpose": "Unless the explicit is false, processors append extra values to output.",
+      "option": {
+        "processingMode": "json-ld-1.0"
+      },
+      "input": "frame/0006-in.jsonld",
+      "frame": "frame/0006-frame.jsonld",
+      "expect": "frame/0006-out.jsonld"
+    },
+    {
+      "@id": "#t0007",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "input has multiple types",
+      "purpose": "If property is a keyword, processors add property and objects to output.",
+      "option": {
+        "processingMode": "json-ld-1.0"
+      },
+      "input": "frame/0007-in.jsonld",
+      "frame": "frame/0007-frame.jsonld",
+      "expect": "frame/0007-out.jsonld"
+    },
+    {
+      "@id": "#t0008",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "array framing cases",
+      "purpose": "Various cases showing array output for @container: @set, and non-embedding of node values if @embed: false.",
+      "option": {
+        "processingMode": "json-ld-1.0"
+      },
+      "input": "frame/0008-in.jsonld",
+      "frame": "frame/0008-frame.jsonld",
+      "expect": "frame/0008-out.jsonld"
+    },
+    {
+      "@id": "#t0009",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "default value",
+      "purpose": "Processors MUST skip property and property frame if property frame contains @omitDefault with a value of true. Processors MUST add property to output with a new dictionary having a property @preserve and a value that is a copy of the value of @default in frame if it exists, or the string @null otherwise.",
+      "option": {
+        "processingMode": "json-ld-1.0"
+      },
+      "input": "frame/0009-in.jsonld",
+      "frame": "frame/0009-frame.jsonld",
+      "expect": "frame/0009-out.jsonld"
+    },
+    {
+      "@id": "#t0010",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "property CURIE conflict",
+      "purpose": "(Not really framing) A term looking like a CURIE becomes a CURIE when framing/compacting if defined as such in frame/context in json-ld-1.0.",
+      "input": "frame/0010-in.jsonld",
+      "frame": "frame/0010-frame.jsonld",
+      "expect": "frame/0010-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.0"
+      }
+    },
+    {
+      "@id": "#t0011",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "@embed true/false",
+      "purpose": "@embed within a frame controls the object embed flag when processing that frame (true and false values) in json-ld-1.0 mode.",
+      "input": "frame/0011-in.jsonld",
+      "frame": "frame/0011-frame.jsonld",
+      "expect": "frame/0011-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#t0012",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Array frame",
+      "purpose": "Multiple values for @type in frame match different nodes having one or the other type. With @embed false, nodes are serialized as multiple array values of @graph.",
+      "input": "frame/0012-in.jsonld",
+      "frame": "frame/0012-frame.jsonld",
+      "expect": "frame/0012-out.jsonld"
+    },
+    {
+      "@id": "#t0013",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Replace existing embed",
+      "purpose": "An empty frame matches all objects, even if embedded, causing them to be serialized under @graph.",
+      "input": "frame/0013-in.jsonld",
+      "frame": "frame/0013-frame.jsonld",
+      "expect": "frame/0013-out.jsonld"
+    },
+    {
+      "@id": "#t0014",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Replace existing embed on 2nd pass",
+      "purpose": "An embedded node which matches the top-level frame (on @type) is framed under @graph and continues to be embedded. Other nodes continue to be embedded.",
+      "input": "frame/0014-in.jsonld",
+      "frame": "frame/0014-frame.jsonld",
+      "expect": "frame/0014-out.jsonld"
+    },
+    {
+      "@id": "#t0015",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Replace deeply-nested embed",
+      "purpose": "Torture test.",
+      "input": "frame/0015-in.jsonld",
+      "frame": "frame/0015-frame.jsonld",
+      "expect": "frame/0015-out.jsonld"
+    },
+    {
+      "@id": "#t0016",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Use @type in ducktype filter",
+      "purpose": "Match if node has a @type property and frame has a @type property containing only an empty dictionary.",
+      "option": {
+        "processingMode": "json-ld-1.0"
+      },
+      "input": "frame/0016-in.jsonld",
+      "frame": "frame/0016-frame.jsonld",
+      "expect": "frame/0016-out.jsonld"
+    },
+    {
+      "@id": "#t0017",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Non-flat input",
+      "purpose": "Framing flattens expanded input, allowing for deeply embedded input to be re-framed.",
+      "option": {
+        "processingMode": "json-ld-1.0"
+      },
+      "input": "frame/0017-in.jsonld",
+      "frame": "frame/0017-frame.jsonld",
+      "expect": "frame/0017-out.jsonld"
+    },
+    {
+      "@id": "#t0018",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "no frame @context but @graph output",
+      "purpose": "Set framing context to the value of @context from frame, if it exists, or to a new empty context, otherwise.",
+      "option": {
+        "processingMode": "json-ld-1.0"
+      },
+      "input": "frame/0018-in.jsonld",
+      "frame": "frame/0018-frame.jsonld",
+      "expect": "frame/0018-out.jsonld"
+    },
+    {
+      "@id": "#t0019",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Resources can be re-embedded again in each top-level frame match",
+      "purpose": "@type matching matches nodes at top-level, and embedding causes them be embedded where referenced.",
+      "input": "frame/0019-in.jsonld",
+      "frame": "frame/0019-frame.jsonld",
+      "expect": "frame/0019-out.jsonld"
+    },
+    {
+      "@id": "#t0020",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Blank nodes in an array",
+      "purpose": "Empty frame matches all nodes at top-level, and repeats where embedded in json-ld-1.0 mode.",
+      "input": "frame/0020-in.jsonld",
+      "frame": "frame/0020-frame.jsonld",
+      "expect": "frame/0020-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1",
+        "processingMode": "json-ld-1.0"
+      }
+    },
+    {
+      "@id": "#t0021",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Blank nodes in @type",
+      "purpose": "Empty frame matches all nodes at top-level, and repeats where embedded (with list content) in json-ld-1.0 mode.",
+      "input": "frame/0021-in.jsonld",
+      "frame": "frame/0021-frame.jsonld",
+      "expect": "frame/0021-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1",
+        "processingMode": "json-ld-1.0"
+      }
+    },
+    {
+      "@id": "#t0022",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Match on @id",
+      "purpose": "Match if node and frame both have the same @id property.",
+      "option": {
+        "processingMode": "json-ld-1.0"
+      },
+      "input": "frame/0022-in.jsonld",
+      "frame": "frame/0022-frame.jsonld",
+      "expect": "frame/0022-out.jsonld"
+    },
+    {
+      "@id": "#t0023",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "No match on []",
+      "purpose": "No match if node has a property where frame has an empty array for that same property.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0023-in.jsonld",
+      "frame": "frame/0023-frame.jsonld",
+      "expect": "frame/0023-out.jsonld"
+    },
+    {
+      "@id": "#t0024",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "match on any common properties if @requireAll: false",
+      "purpose": "Match if @requireAll is false and both node and frame contain common non-keyword properties of any value.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0024-in.jsonld",
+      "frame": "frame/0024-frame.jsonld",
+      "expect": "frame/0024-out.jsonld"
+    },
+    {
+      "@id": "#t0025",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "@requireAll with missing values and @default",
+      "purpose": "Match if @requireAll is true and frame contains a non-keyword key not present in node, where the value is a JSON object containing only the key @default with any value.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0025-in.jsonld",
+      "frame": "frame/0025-frame.jsonld",
+      "expect": "frame/0025-out.jsonld"
+    },
+    {
+      "@id": "#t0026",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "explicitly excludes unframed properties (@explicit: true)",
+      "purpose": "If property is not in frame, and explicit is true, processors must not add any values for property to output.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0026-in.jsonld",
+      "frame": "frame/0026-frame.jsonld",
+      "expect": "frame/0026-out.jsonld"
+    },
+    {
+      "@id": "#t0027",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "non-existent framed properties create null property",
+      "purpose": "Recursively, replace all key-value pairs in compacted results where the key is @preserve with the value from the key-pair. If the value from the key-pair is @null, replace the value with null.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0027-in.jsonld",
+      "frame": "frame/0027-frame.jsonld",
+      "expect": "frame/0027-out.jsonld"
+    },
+    {
+      "@id": "#t0028",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "embed matched frames with @reverse",
+      "purpose": "If frame has the property @reverse, then for each reverse property and sub frame that are the values of @reverse in frame.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0028-in.jsonld",
+      "frame": "frame/0028-frame.jsonld",
+      "expect": "frame/0028-out.jsonld"
+    },
+    {
+      "@id": "#t0029",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "embed matched frames with reversed property",
+      "purpose": "If frame has the property @reverse, then for each reverse property and sub frame that are the values of @reverse in frame.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0029-in.jsonld",
+      "frame": "frame/0029-frame.jsonld",
+      "expect": "frame/0029-out.jsonld"
+    },
+    {
+      "@id": "#t0030",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "@embed @always/@never",
+      "purpose": "@embed within a frame controls the object embed flag when processing that frame (@always and @never values).",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0030-in.jsonld",
+      "frame": "frame/0030-frame.jsonld",
+      "expect": "frame/0030-out.jsonld"
+    },
+    {
+      "@id": "#t0031",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "match none @type match",
+      "purpose": "Do not match objects with @type, if frame uses @type: [].",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0031-in.jsonld",
+      "frame": "frame/0031-frame.jsonld",
+      "expect": "frame/0031-out.jsonld"
+    },
+    {
+      "@id": "#t0032",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "single @id match",
+      "purpose": "Match on a specific node with frame uses @id.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0032-in.jsonld",
+      "frame": "frame/0032-frame.jsonld",
+      "expect": "frame/0032-out.jsonld"
+    },
+    {
+      "@id": "#t0033",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "multiple @id match",
+      "purpose": "Match on a specific node with frame uses @id with an array of IRIs.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0033-in.jsonld",
+      "frame": "frame/0033-frame.jsonld",
+      "expect": "frame/0033-out.jsonld"
+    },
+    {
+      "@id": "#t0034",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "wildcard and match none",
+      "purpose": "Match/reject properties using both wildcard and match none.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0034-in.jsonld",
+      "frame": "frame/0034-frame.jsonld",
+      "expect": "frame/0034-out.jsonld"
+    },
+    {
+      "@id": "#t0035",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "matches a deep node pattern",
+      "purpose": "Node patterns that don't match all levels, don't match top level.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0035-in.jsonld",
+      "frame": "frame/0035-frame.jsonld",
+      "expect": "frame/0035-out.jsonld"
+    },
+    {
+      "@id": "#t0036",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "matches exact value pattern",
+      "purpose": "Value objects matching value patterns are output, others are filtered.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0036-in.jsonld",
+      "frame": "frame/0036-frame.jsonld",
+      "expect": "frame/0036-out.jsonld"
+    },
+    {
+      "@id": "#t0037",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "matches wildcard @value in value pattern",
+      "purpose": "Value objects matching value patterns are output, others are filtered.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0037-in.jsonld",
+      "frame": "frame/0037-frame.jsonld",
+      "expect": "frame/0037-out.jsonld"
+    },
+    {
+      "@id": "#t0038",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "matches wildcard @type in value pattern",
+      "purpose": "Value objects matching value patterns are output, others are filtered.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0038-in.jsonld",
+      "frame": "frame/0038-frame.jsonld",
+      "expect": "frame/0038-out.jsonld"
+    },
+    {
+      "@id": "#t0039",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "matches wildcard @language in value pattern",
+      "purpose": "Value objects matching value patterns are output, others are filtered.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0039-in.jsonld",
+      "frame": "frame/0039-frame.jsonld",
+      "expect": "frame/0039-out.jsonld"
+    },
+    {
+      "@id": "#t0040",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "matches match none @type in value pattern",
+      "purpose": "Value objects matching value patterns are output, others are filtered.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0040-in.jsonld",
+      "frame": "frame/0040-frame.jsonld",
+      "expect": "frame/0040-out.jsonld"
+    },
+    {
+      "@id": "#t0041",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "matches match none @language in value pattern",
+      "purpose": "Value objects matching value patterns are output, others are filtered.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0041-in.jsonld",
+      "frame": "frame/0041-frame.jsonld",
+      "expect": "frame/0041-out.jsonld"
+    },
+    {
+      "@id": "#t0042",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "matches some @value in value pattern",
+      "purpose": "Value objects matching value patterns are output, others are filtered.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0042-in.jsonld",
+      "frame": "frame/0042-frame.jsonld",
+      "expect": "frame/0042-out.jsonld"
+    },
+    {
+      "@id": "#t0043",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "matches some @type in value pattern",
+      "purpose": "Value objects matching value patterns are output, others are filtered.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0043-in.jsonld",
+      "frame": "frame/0043-frame.jsonld",
+      "expect": "frame/0043-out.jsonld"
+    },
+    {
+      "@id": "#t0044",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "matches some @language in value pattern",
+      "purpose": "Value objects matching value patterns are output, others are filtered.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0044-in.jsonld",
+      "frame": "frame/0044-frame.jsonld",
+      "expect": "frame/0044-out.jsonld"
+    },
+    {
+      "@id": "#t0045",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "excludes non-matched values in value pattern",
+      "purpose": "Value objects matching value patterns are output, others are filtered.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0045-in.jsonld",
+      "frame": "frame/0045-frame.jsonld",
+      "expect": "frame/0045-out.jsonld"
+    },
+    {
+      "@id": "#t0046",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Merge graphs if no outer @graph is used",
+      "purpose": "Unless @graph exists at the top level, framing uses merged node objects in json-ld-1.0 mode.",
+      "input": "frame/0046-in.jsonld",
+      "frame": "frame/0046-frame.jsonld",
+      "expect": "frame/0046-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1",
+        "processingMode": "json-ld-1.0"
+      }
+    },
+    {
+      "@id": "#t0047",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Frame default graph if outer @graph is used",
+      "purpose": "If @graph exists at the top level, framing uses the default graph.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0047-in.jsonld",
+      "frame": "frame/0047-frame.jsonld",
+      "expect": "frame/0047-out.jsonld"
+    },
+    {
+      "@id": "#t0048",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Merge one graph and preserve another",
+      "purpose": "@graph used within a property value frames embedded values from a named graph.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0048-in.jsonld",
+      "frame": "frame/0048-frame.jsonld",
+      "expect": "frame/0048-out.jsonld"
+    },
+    {
+      "@id": "#t0049",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Merge one graph and deep preserve another",
+      "purpose": "@graph used within a property value frames embedded values from a named graph in json-ld-1.0 mode.",
+      "input": "frame/0049-in.jsonld",
+      "frame": "frame/0049-frame.jsonld",
+      "expect": "frame/0049-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1",
+        "processingMode": "json-ld-1.0"
+      }
+    },
+    {
+      "@id": "#t0050",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Library example with named graphs",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0050-in.jsonld",
+      "frame": "frame/0050-frame.jsonld",
+      "expect": "frame/0050-out.jsonld"
+    },
+    {
+      "@id": "#t0051",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Compacting values of @preserve",
+      "purpose": "When compacting the value of a property using @preserve, use the term definition for term to properly compact the value of @preserve.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0051-in.jsonld",
+      "frame": "frame/0051-frame.jsonld",
+      "expect": "frame/0051-out.jsonld"
+    },
+    {
+      "@id": "#t0052",
+      "@type": [
+        "jld:NegativeEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "@id must not include a blank node identifier",
+      "purpose": "Node matching does not consider blank nodes.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0052-in.jsonld",
+      "frame": "frame/0052-frame.jsonld",
+      "expectErrorCode": "invalid frame"
+    },
+    {
+      "@id": "#t0053",
+      "@type": [
+        "jld:NegativeEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "@type must not include a blank node identifier",
+      "purpose": "Node matching does not consider blank nodes.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0053-in.jsonld",
+      "frame": "frame/0053-frame.jsonld",
+      "expectErrorCode": "invalid frame"
+    },
+    {
+      "@id": "#t0054",
+      "@type": [
+        "jld:NegativeEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Out of range @embed value",
+      "purpose": "Any other value for @embed is invalid and indicates that an invalid @embed value error has been detected and processing is aborted.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0054-in.jsonld",
+      "frame": "frame/0054-frame.jsonld",
+      "expectErrorCode": "invalid @embed value"
+    },
+    {
+      "@id": "#t0055",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Framing list with mixed values",
+      "purpose": "Framing list values which are mixed.",
+      "input": "frame/0055-in.jsonld",
+      "frame": "frame/0055-frame.jsonld",
+      "expect": "frame/0055-out.jsonld"
+    },
+    {
+      "@id": "#t0056",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Frame matching on matching value in list",
+      "purpose": "Lists match on any matching value.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0056-in.jsonld",
+      "frame": "frame/0056-frame.jsonld",
+      "expect": "frame/0056-out.jsonld"
+    },
+    {
+      "@id": "#t0057",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Frame matching on any matching value in list",
+      "purpose": "Lists match on any matching value.",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      },
+      "input": "frame/0057-in.jsonld",
+      "frame": "frame/0057-frame.jsonld",
+      "expect": "frame/0057-out.jsonld"
+    },
+    {
+      "@id": "#t0058",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Frame matching with no matching value in list",
+      "purpose": "Lists match on any matching value.",
+      "option": {
+        "specVersion": "json-ld-1.1",
+        "omitGraph": false
+      },
+      "input": "frame/0058-in.jsonld",
+      "frame": "frame/0058-frame.jsonld",
+      "expect": "frame/0058-out.jsonld"
+    },
+    {
+      "@id": "#t0059",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "@embed: @last replaces previous embed values with node reference",
+      "purpose": "Verify that within a matched node, by default only the last reference will be embedded in json-ld-1.0 mode.",
+      "input": "frame/0059-in.jsonld",
+      "frame": "frame/0059-frame.jsonld",
+      "expect": "frame/0059-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1",
+        "processingMode": "json-ld-1.0"
+      }
+    },
+    {
+      "@id": "#t0060",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "@embed: @once only embeds first value with node reference",
+      "purpose": "Verify that within a matched node and @embed: @first, by only the first reference will be embedded.",
+      "input": "frame/0060-in.jsonld",
+      "frame": "frame/0060-frame.jsonld",
+      "expect": "frame/0060-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1",
+        "ordered": true
+      }
+    },
+    {
+      "@id": "#t0061",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Matching embedded nodes with @default",
+      "purpose": "Verify that embedded nodes match with @default and a wildcard @id.",
+      "input": "frame/0061-in.jsonld",
+      "frame": "frame/0061-frame.jsonld",
+      "expect": "frame/0061-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#t0062",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "An array with a single value remains an array if container is @set.",
+      "purpose": "Cleaning up @preserve/@null does not violate container: @set.",
+      "input": "frame/0062-in.jsonld",
+      "frame": "frame/0062-frame.jsonld",
+      "expect": "frame/0062-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#t0063",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Using @null in @default.",
+      "purpose": "@null may be used as an @default value and is preserved in output.",
+      "input": "frame/0063-in.jsonld",
+      "frame": "frame/0063-frame.jsonld",
+      "expect": "frame/0063-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#t0064",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Using @default in @type.",
+      "purpose": "@type may have a default value.",
+      "input": "frame/0064-in.jsonld",
+      "frame": "frame/0064-frame.jsonld",
+      "expect": "frame/0064-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#t0065",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Match on value",
+      "purpose": "Value matching.",
+      "input": "frame/0065-in.jsonld",
+      "frame": "frame/0065-frame.jsonld",
+      "expect": "frame/0065-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#t0066",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Match on value reference",
+      "purpose": "Value reference matching.",
+      "input": "frame/0066-in.jsonld",
+      "frame": "frame/0066-frame.jsonld",
+      "expect": "frame/0066-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#t0067",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Match on list value",
+      "purpose": "List value matching.",
+      "input": "frame/0067-in.jsonld",
+      "frame": "frame/0067-frame.jsonld",
+      "expect": "frame/0067-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#t0068",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Merge @type from different graphs",
+      "purpose": "When merging nodes, ensure that @type values from each node are retained.",
+      "input": "frame/0068-in.jsonld",
+      "frame": "frame/0068-frame.jsonld",
+      "expect": "frame/0068-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#t0069",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Tests @json in framing",
+      "purpose": "Test collection to better define what is expected when framing over a `@json` field..",
+      "input": "frame/0069-in.jsonld",
+      "frame": "frame/0069-frame.jsonld",
+      "expect": "frame/0069-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#t0070",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Empty frame with empty context with protected terms.",
+      "purpose": "Empty frame matches all nodes using empty context and protected terms.",
+      "input": "frame/0070-in.jsonld",
+      "frame": "frame/0070-frame.jsonld",
+      "expect": "frame/0070-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#teo01",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "@embed true/false",
+      "purpose": "@embed within a frame controls the object embed flag when processing that frame (true and false values).",
+      "input": "frame/eo01-in.jsonld",
+      "frame": "frame/eo01-frame.jsonld",
+      "expect": "frame/eo01-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#tg001",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Library framing example with @graph and omitGraph is true.",
+      "purpose": "Basic example used in playground and spec examples.",
+      "input": "frame/g001-in.jsonld",
+      "frame": "frame/g001-frame.jsonld",
+      "expect": "frame/g001-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1",
+        "omitGraph": true
+      }
+    },
+    {
+      "@id": "#tg002",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Simple embed",
+      "purpose": "Test embedded graphs",
+      "input": "frame/g002-in.jsonld",
+      "frame": "frame/g002-frame.jsonld",
+      "expect": "frame/g002-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#tg003",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Embed with direct circular reference",
+      "purpose": "Test embedded graphs",
+      "input": "frame/g003-in.jsonld",
+      "frame": "frame/g003-frame.jsonld",
+      "expect": "frame/g003-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#tg004",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Embed with indirect circular reference",
+      "purpose": "Test embedded graphs",
+      "input": "frame/g004-in.jsonld",
+      "frame": "frame/g004-frame.jsonld",
+      "expect": "frame/g004-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#tg005",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Embed with indirect circular reference via set",
+      "purpose": "Test embedded graphs",
+      "input": "frame/g005-in.jsonld",
+      "frame": "frame/g005-frame.jsonld",
+      "expect": "frame/g005-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#tg006",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Embed with nested indirect circular reference via set",
+      "purpose": "Test embedded graphs",
+      "input": "frame/g006-in.jsonld",
+      "frame": "frame/g006-frame.jsonld",
+      "expect": "frame/g006-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#tg007",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Multi-level simple embeds",
+      "purpose": "Test embedded graphs",
+      "input": "frame/g007-in.jsonld",
+      "frame": "frame/g007-frame.jsonld",
+      "expect": "frame/g007-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#tg008",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "A tangle of nastiness",
+      "purpose": "Test embedded graphs",
+      "input": "frame/g008-in.jsonld",
+      "frame": "frame/g008-frame.jsonld",
+      "expect": "frame/g008-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#tg009",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Recursive property embed w/o circular reference",
+      "purpose": "Test embedded graphs",
+      "input": "frame/g009-in.jsonld",
+      "frame": "frame/g009-frame.jsonld",
+      "expect": "frame/g009-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#tg010",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Framing blank node unnamed graphs",
+      "purpose": "Test embedded graphs",
+      "input": "frame/g010-in.jsonld",
+      "frame": "frame/g010-frame.jsonld",
+      "expect": "frame/g010-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#tin01",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Basic Included array",
+      "purpose": "Tests included blocks.",
+      "input": "frame/in01-in.jsonld",
+      "frame": "frame/in01-frame.jsonld",
+      "expect": "frame/in01-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#tin02",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Basic Included object",
+      "purpose": "Tests included blocks.",
+      "input": "frame/in02-in.jsonld",
+      "frame": "frame/in02-frame.jsonld",
+      "expect": "frame/in02-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#tin03",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "json.api example",
+      "purpose": "Tests included blocks.",
+      "input": "frame/in03-in.jsonld",
+      "frame": "frame/in03-frame.jsonld",
+      "expect": "frame/in03-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#tp020",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Blank nodes in an array (prune bnodes)",
+      "purpose": "Empty frame matches all nodes at top-level, and repeats where embedded.",
+      "input": "frame/0020-in.jsonld",
+      "frame": "frame/0020-frame.jsonld",
+      "expect": "frame/p020-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#tp021",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Blank nodes in @type (prune bnodes)",
+      "purpose": "Empty frame matches all nodes at top-level, and repeats where embedded (with list content).",
+      "input": "frame/0021-in.jsonld",
+      "frame": "frame/0021-frame.jsonld",
+      "expect": "frame/p021-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#tp046",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Merge graphs if no outer @graph is used (prune bnodes)",
+      "purpose": "Unless @graph exists at the top level, framing uses merged node objects.",
+      "input": "frame/0046-in.jsonld",
+      "frame": "frame/0046-frame.jsonld",
+      "expect": "frame/p046-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#tp049",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Merge one graph and deep preserve another (prune bnodes)",
+      "purpose": "@graph used within a property value frames embedded values from a named graph.",
+      "input": "frame/0049-in.jsonld",
+      "frame": "frame/0049-frame.jsonld",
+      "expect": "frame/p049-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#tp050",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "Prune blank nodes with alias of @id",
+      "purpose": "If @id is aliased in a frame, an unreferenced blank node is still pruned.",
+      "input": "frame/p050-in.jsonld",
+      "frame": "frame/p050-frame.jsonld",
+      "expect": "frame/p050-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#tra01",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "@requireAll only matches if @type and other properties are present",
+      "purpose": "If @requireAll is true, then all listed properties, including @type, must be present to match.",
+      "input": "frame/ra01-in.jsonld",
+      "frame": "frame/ra01-frame.jsonld",
+      "expect": "frame/ra01-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#tra02",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "@requireAll only matches if @id and @type match",
+      "purpose": "If @requireAll is true, then all listed properties, including @id and @type, must be present to match.",
+      "input": "frame/ra02-in.jsonld",
+      "frame": "frame/ra02-frame.jsonld",
+      "expect": "frame/ra02-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    },
+    {
+      "@id": "#tra03",
+      "@type": [
+        "jld:PositiveEvaluationTest",
+        "jld:FrameTest"
+      ],
+      "name": "@requireAll with type and properties",
+      "purpose": "If @requireAll is true, then all listed properties, including @type, must be present to match.",
+      "input": "frame/ra03-in.jsonld",
+      "frame": "frame/ra03-frame.jsonld",
+      "expect": "frame/ra03-out.jsonld",
+      "option": {
+        "specVersion": "json-ld-1.1"
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "native/jsonld/framing-sources/frame/0001-frame.jsonld",
+      "sha256": "9f7b2c9c2b99b985396ecf1cf714c22b612b5763f29f81cc2bbc226316dfc54f"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0001-in.jsonld",
+      "sha256": "4ba909f48d845714a622f751f9b9e10e3df20f98c6332585bb567d9aa5fd9f21"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0001-out.jsonld",
+      "sha256": "de9696399292d9ee6ce3e786945661f3da465133c5a157ec580ee5605f5c091c"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0002-frame.jsonld",
+      "sha256": "9f7b2c9c2b99b985396ecf1cf714c22b612b5763f29f81cc2bbc226316dfc54f"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0002-in.jsonld",
+      "sha256": "423db4e2133f083f536475b7b7207f22f6f1e8f6df6b6f1db50abfad5db14707"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0002-out.jsonld",
+      "sha256": "86a91ccab14f4e0d35edf71f0d303439363549c635e388b6dc2c476efd379480"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0003-frame.jsonld",
+      "sha256": "0d445db918316201249493115e28108f4e5531f9d2d34915f50ac3685ceaca0b"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0003-in.jsonld",
+      "sha256": "3b4773395fa6815b850849d61a192568b7c6fba18a952e4f636b1b2eba4ad59c"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0003-out.jsonld",
+      "sha256": "cc15b4184fdae89bd0cbf7eeeeaa4520c50c1bdd66fb655e9182702b8944a63c"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0004-frame.jsonld",
+      "sha256": "f8f4e6a7d1b8ba2363e901e9322ccf80dacde02bd83c28debf43a46d96110048"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0004-in.jsonld",
+      "sha256": "4ba909f48d845714a622f751f9b9e10e3df20f98c6332585bb567d9aa5fd9f21"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0004-out.jsonld",
+      "sha256": "3b863bdaaadec3b7cae1bc6020548ff9ba826f8bb4419f393ec8ebd23da36963"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0005-frame.jsonld",
+      "sha256": "380b599f995f6981c142e4806015fe162f4c33f81f454d152efaf631997f5178"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0005-in.jsonld",
+      "sha256": "3b4773395fa6815b850849d61a192568b7c6fba18a952e4f636b1b2eba4ad59c"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0005-out.jsonld",
+      "sha256": "e346b701ffc67e61ec8c3d584d463038e1f2381dbd90ab20aadf514975da2121"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0006-frame.jsonld",
+      "sha256": "9f7b2c9c2b99b985396ecf1cf714c22b612b5763f29f81cc2bbc226316dfc54f"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0006-in.jsonld",
+      "sha256": "c4f5b283558de98cb6fd1942fbc896c694694a48618d598a1a1fdeacc643f195"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0006-out.jsonld",
+      "sha256": "de9696399292d9ee6ce3e786945661f3da465133c5a157ec580ee5605f5c091c"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0007-frame.jsonld",
+      "sha256": "9f7b2c9c2b99b985396ecf1cf714c22b612b5763f29f81cc2bbc226316dfc54f"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0007-in.jsonld",
+      "sha256": "2b9d8e709fd324761ae195c74aaabb1fe60120451f96927903338df0a08ea50d"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0007-out.jsonld",
+      "sha256": "b29756c48999d02f790220e8d61daf0c684e19f9a84b6bf6e3f56bee7bc395e9"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0008-frame.jsonld",
+      "sha256": "d25289314d3f73dcbdd3d42e9399a7ff6f00288557c607f5ebe736055cc824c8"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0008-in.jsonld",
+      "sha256": "9bafc85f035e005e7291bd9e0ac232ace8e74f9de2d9399866f0d2c5f846c960"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0008-out.jsonld",
+      "sha256": "644dd3053297bbde29844968275cf8ab74f758fd9a72efee28ac52878b3a401f"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0009-frame.jsonld",
+      "sha256": "f726202d3c32e1f21c2ad4154d96b10c707a107566025eceaea7a18303e44c88"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0009-in.jsonld",
+      "sha256": "07842e42c8d93af6f72d616ca21a60e6229264aa3fd1ff72f9e9dbe07d1f3a65"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0009-out.jsonld",
+      "sha256": "6e513468047c730553187de65a0d0bc446097bac04d1fbe224ce7fd8f56f0740"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0010-frame.jsonld",
+      "sha256": "c736d5d500a97eca992d34462265359def8a386560685082e59e26e45505ab23"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0010-in.jsonld",
+      "sha256": "d276e93a4aad6b7759fc45311d1d9afcaec6d08bffad1b8c8a0602f6c722e4f3"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0010-out.jsonld",
+      "sha256": "7ddf4cd2e901169aed6873914862ad9e3aedc7479911d3bcf8121a50b6c60ea0"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0011-frame.jsonld",
+      "sha256": "1dcec822d96879c0cb537253dcb3f5c79aa66885b09daeb89b269e3c4915819a"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0011-in.jsonld",
+      "sha256": "1fb705fed02815684044ddec655f7e4f557f91db814f2309f21113f622aa17b1"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0011-out.jsonld",
+      "sha256": "c42ce79b0b09fc66d53b2c7929999d5836be968a190aeab065da1ef6990342db"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0012-frame.jsonld",
+      "sha256": "ba1aa96f88844f0489976c3b80e8aa76dc346120a40b9e0f326e251c50193608"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0012-in.jsonld",
+      "sha256": "f56bab79e43a7496bf8747d9fdb59b79aa10b2d2061aa684e07c5dbec7ae7e95"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0012-out.jsonld",
+      "sha256": "e77df2faa2160da9cc937e1471fb26dffb107c6e2297a248a2d422a654e731c3"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0013-frame.jsonld",
+      "sha256": "effa74caa623a69ca3cad3e7ef3e2104b03b0f15f0727aa2bdd2870679ccf282"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0013-in.jsonld",
+      "sha256": "0945c04c85fdcaebe33980c322a8ed2e67440ea8898e82e0643118e42f498f09"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0013-out.jsonld",
+      "sha256": "2766c9aa7a5eff9db3c609e754b106c246ffb5b6f789d6efaac58aa4211d5789"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0014-frame.jsonld",
+      "sha256": "670e75866c4582e3f9bcfe6664271d718b0226e09d2c224779824f810579c496"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0014-in.jsonld",
+      "sha256": "ca317085f1ebda743e806c7e5e3a9753f35b8337b5afd4506f8ffebeb3dea941"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0014-out.jsonld",
+      "sha256": "748919893149e28bf06b06e7e453762a2353cb0082ed2829a3472c5735e3c6cf"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0015-frame.jsonld",
+      "sha256": "1c658b620beb5a8d323fa202dfa16310045fd74f1af41e667e7e13e1621c7b06"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0015-in.jsonld",
+      "sha256": "d4b30cd72e0118da27dd55ecc635e3a632e2cc528dd06102bf83739c4e1c2121"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0015-out.jsonld",
+      "sha256": "d2512bdbfa9bcf7cfb1822f1032f5b72ef5d11bc00abd392ef32f2824621b6ef"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0016-frame.jsonld",
+      "sha256": "594eafbff0d533d5556c693da46e5a1c4f0ad54aab3c5cd9322bf6558802511b"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0016-in.jsonld",
+      "sha256": "81b1770e927598578694b6c5e0bcfc7b80cedb72afc40e13014fbf44dfb78ee9"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0016-out.jsonld",
+      "sha256": "3536786889917f1d6822d8c7791bda453ce0c1b152a6182d0112757394fd3976"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0017-frame.jsonld",
+      "sha256": "9f7b2c9c2b99b985396ecf1cf714c22b612b5763f29f81cc2bbc226316dfc54f"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0017-in.jsonld",
+      "sha256": "afbcbb628d59169054773de9ae3b402ee0d1728421023da72b9a9fa090403208"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0017-out.jsonld",
+      "sha256": "de9696399292d9ee6ce3e786945661f3da465133c5a157ec580ee5605f5c091c"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0018-frame.jsonld",
+      "sha256": "0906f9e0d62942a1bc760705ad49ec0663ac9bb3a627dad53014eb95942a8b20"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0018-in.jsonld",
+      "sha256": "a28be4948a77e00e185e4ce6899fdce51e4436765bf2acbca2d2b926c7cd1452"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0018-out.jsonld",
+      "sha256": "442142ad58d944a16b03330befd8e45b2c9f100f878926ccb16f69c7c258e765"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0019-frame.jsonld",
+      "sha256": "39ee303e2bf29f19cc5d3724e0a222ebf9d0be747554076ebc3cc27049ecd232"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0019-in.jsonld",
+      "sha256": "fc1fb48060d1961eab4eb916611b5f11410301521205d9c00d36cc09a28226c9"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0019-out.jsonld",
+      "sha256": "ac93db09c634571a74f5033aea1d90292703e0bd40f7f71bfde368dfae63ee03"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0020-frame.jsonld",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0020-in.jsonld",
+      "sha256": "14c2f7194b072e3a631e4048da274e6ddf58cb62f706d7ac28c7e17843f57541"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0020-out.jsonld",
+      "sha256": "717b80a6b46afdd9aca2722280ca8ba6715ef5272b28026628621c11d850441c"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0021-frame.jsonld",
+      "sha256": "aca9b2df29db82e56eb7d2c3a98a3e02ea699715236da47e04f970e5676501d9"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0021-in.jsonld",
+      "sha256": "91cd2a32696cbb4c996ba4555d8fd6eab4036c45e66e163e4621db6770b5c68c"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0021-out.jsonld",
+      "sha256": "c5ec2b736593fe4e869549d212e82fcf14aac5b09c8d5f75d6bf618bba488670"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0022-frame.jsonld",
+      "sha256": "c158e03fb03c4807e13a83ef203e2cae83653b6a50bc6725610a1f5f89157968"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0022-in.jsonld",
+      "sha256": "de49e8525f60580ab0d300ec4b4259305ce07e13c90a3aa589d9e3d5bf91e866"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0022-out.jsonld",
+      "sha256": "748065551fdeaa8180f322d388b674e2061dfc2f7676a199ee7896ae50fb945b"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0023-frame.jsonld",
+      "sha256": "45ea07e9cb0a6e6aea367baa90f07cf360f1be5a485bff7448732cfcc7e48509"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0023-in.jsonld",
+      "sha256": "cc0cec422fa23b64c6cbcdaf8c5908c48e5548349a30fb1a6e89d924352203fa"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0023-out.jsonld",
+      "sha256": "3dd4242c0b2c9abead246bd7762eb05bdf09c189d8766e9bae12e3baac20bdbf"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0024-frame.jsonld",
+      "sha256": "43ffa9c09141adc2fe249c839b9cf09a896cdf1b6160d82a0f95ac73ab922b60"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0024-in.jsonld",
+      "sha256": "afe36e21fe8efb20ad36fe68d946935b48fbfdaed05c7ad1765944195202567c"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0024-out.jsonld",
+      "sha256": "314454fe28315f035c59cf61eb89d2569d629d42867ed9825ec7e966fcb923bf"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0025-frame.jsonld",
+      "sha256": "9fe12d93c0e8b02717eaad63f9328ec35c1012451026bbf90bcac7f15cb2d9b7"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0025-in.jsonld",
+      "sha256": "e2b7b6029733a1a65f44e1878f8c58f2f73f0345b400f7e33b46deaf95aae0f1"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0025-out.jsonld",
+      "sha256": "d211d73a2b7cbe5f3bea8956c9dedd80fe8bc7485e6c208c62f7ac3a362cbf71"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0026-frame.jsonld",
+      "sha256": "0b0213d7b6cbb054f55caaa9c9ff8c88d3a316b23dc51656ef0cab933eeb9605"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0026-in.jsonld",
+      "sha256": "5858bb21b2ab2a7fe20cd2b9f4072eabdeeb2bab7317269ea73bbbf08d7a05b4"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0026-out.jsonld",
+      "sha256": "0aaac9b014c102f27be82148f18ab6ebf25212cfdab847d9d3bd795dbfa4dd4c"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0027-frame.jsonld",
+      "sha256": "edf97aceb647566bf187cf23f697234f58bdcbb89f32be54b2442d77d7417985"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0027-in.jsonld",
+      "sha256": "5858bb21b2ab2a7fe20cd2b9f4072eabdeeb2bab7317269ea73bbbf08d7a05b4"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0027-out.jsonld",
+      "sha256": "22feffa5864c0dca1f8d668676dd8d44460280995b7cc7799b663181cffb1b10"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0028-frame.jsonld",
+      "sha256": "63503ca8cb809e6765aa158a8b7b8997882bb122d51f3a079e5860702350fbce"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0028-in.jsonld",
+      "sha256": "35dfe709c3658174bf0b2bf4d6b36d94ea9e0404d4824cb9b1ef344821ab8d30"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0028-out.jsonld",
+      "sha256": "0589c251bb2bdb821d4de23f009b3dea04e4d982479e1ee3db56cc75325e0384"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0029-frame.jsonld",
+      "sha256": "936bb23d48cd1e5a70e6b07c0e3295ca07faedefdcbfa9fd593280e94c8d1069"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0029-in.jsonld",
+      "sha256": "35dfe709c3658174bf0b2bf4d6b36d94ea9e0404d4824cb9b1ef344821ab8d30"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0029-out.jsonld",
+      "sha256": "a1372efb5f9d35ada99f79cbbf7c99e0ee416ee079c8406612209f691aedbd8b"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0030-frame.jsonld",
+      "sha256": "d81081333b99c03979249125a3ad2f861cea94174ff7c64c2a85d279361c996f"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0030-in.jsonld",
+      "sha256": "1fb705fed02815684044ddec655f7e4f557f91db814f2309f21113f622aa17b1"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0030-out.jsonld",
+      "sha256": "c42ce79b0b09fc66d53b2c7929999d5836be968a190aeab065da1ef6990342db"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0031-frame.jsonld",
+      "sha256": "7a13d668aff178f48cbfe6b1500e7421fa6fb51e08b7cf7ade17455e4a2d7e10"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0031-in.jsonld",
+      "sha256": "2447f613a64b38b51a3d69c9429a084ee4111df5dd9138c5de00cfeb25c860d2"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0031-out.jsonld",
+      "sha256": "022ac9682edadb55641f3efee8a962cd3121e73224926219b27ba4ffacaadea4"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0032-frame.jsonld",
+      "sha256": "292496f395881d5a6763f75a28ffb2e25a74d025446d2629b6e6c85514978f82"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0032-in.jsonld",
+      "sha256": "857bd4d12055fc525a225560ab237458f0e921c7d3c0d485a8a8053ae3119a75"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0032-out.jsonld",
+      "sha256": "0aaac9b014c102f27be82148f18ab6ebf25212cfdab847d9d3bd795dbfa4dd4c"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0033-frame.jsonld",
+      "sha256": "a284cb6014398251c3e7e232adf5b8afbc46df88853555f67aa45c4fd0334ad7"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0033-in.jsonld",
+      "sha256": "ef5a16c48c878659e0898763583140ff71eabe9eb84ecbb218ce05c73925aa45"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0033-out.jsonld",
+      "sha256": "2acefbfe51fcc16c7d3b7953c5b3a24e859c5cf3bb2f93a3d00e520fe1452cd4"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0034-frame.jsonld",
+      "sha256": "45ea07e9cb0a6e6aea367baa90f07cf360f1be5a485bff7448732cfcc7e48509"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0034-in.jsonld",
+      "sha256": "59cde35364a1011b9dd1ddbb1ae3aec3e2a5248d003f597a2129c0446f433965"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0034-out.jsonld",
+      "sha256": "0289eeedf39e176ff242b53fd45d82f4a9b801738b0d52ebd0ef687d97d0dd72"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0035-frame.jsonld",
+      "sha256": "3240d33009fb969eb79ad9c064db766183cdf63960c2542519b8abf8543a9011"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0035-in.jsonld",
+      "sha256": "af5cc8b4806603bb9a16ba9256b9aebc1dba5b71bcf3fa89d23db7b93b28295b"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0035-out.jsonld",
+      "sha256": "69566c285c289cbb364aa1a436ae6908996fd9e61712a3cae22500c13ad6e277"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0036-frame.jsonld",
+      "sha256": "174e39af64054942e1c6c03ed4cfdc8654f73db06958ac56375deff802e49311"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0036-in.jsonld",
+      "sha256": "174e39af64054942e1c6c03ed4cfdc8654f73db06958ac56375deff802e49311"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0036-out.jsonld",
+      "sha256": "174e39af64054942e1c6c03ed4cfdc8654f73db06958ac56375deff802e49311"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0037-frame.jsonld",
+      "sha256": "6d2e2cda7e00a7d2fed910311ec5a9a02710120652fc9296b36c60b592a418d0"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0037-in.jsonld",
+      "sha256": "174e39af64054942e1c6c03ed4cfdc8654f73db06958ac56375deff802e49311"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0037-out.jsonld",
+      "sha256": "174e39af64054942e1c6c03ed4cfdc8654f73db06958ac56375deff802e49311"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0038-frame.jsonld",
+      "sha256": "b205d5398eabc3f869948431e762be0b95fadcd1d814311e07263bddbe38f190"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0038-in.jsonld",
+      "sha256": "c169b460e5c5f84a8df64dd5510fe9aee56ea9c83bb04e30bfc62acde797b2af"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0038-out.jsonld",
+      "sha256": "c169b460e5c5f84a8df64dd5510fe9aee56ea9c83bb04e30bfc62acde797b2af"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0039-frame.jsonld",
+      "sha256": "3f9792958a55cdd7b1c41444becd42768a957a8c0b057fef16756af260e3d326"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0039-in.jsonld",
+      "sha256": "cd4ec3fba64eb0cb33c36b46497f0d7029876f152430bd54a833f6d3922de0c3"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0039-out.jsonld",
+      "sha256": "cd4ec3fba64eb0cb33c36b46497f0d7029876f152430bd54a833f6d3922de0c3"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0040-frame.jsonld",
+      "sha256": "f16fdbe3d23f4ef8c3459abec11f3323067192311e2b8b1f4fe52ef26598c3e0"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0040-in.jsonld",
+      "sha256": "174e39af64054942e1c6c03ed4cfdc8654f73db06958ac56375deff802e49311"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0040-out.jsonld",
+      "sha256": "174e39af64054942e1c6c03ed4cfdc8654f73db06958ac56375deff802e49311"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0041-frame.jsonld",
+      "sha256": "093629a3e4e854d96b75ec7794b801712c57c5d962e73726fc2a7a73009c1201"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0041-in.jsonld",
+      "sha256": "174e39af64054942e1c6c03ed4cfdc8654f73db06958ac56375deff802e49311"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0041-out.jsonld",
+      "sha256": "174e39af64054942e1c6c03ed4cfdc8654f73db06958ac56375deff802e49311"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0042-frame.jsonld",
+      "sha256": "29cf9a50e1bdfd0127ec16e578920ff13195c31ef9476bd8ae00fbbd484adc33"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0042-in.jsonld",
+      "sha256": "174e39af64054942e1c6c03ed4cfdc8654f73db06958ac56375deff802e49311"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0042-out.jsonld",
+      "sha256": "174e39af64054942e1c6c03ed4cfdc8654f73db06958ac56375deff802e49311"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0043-frame.jsonld",
+      "sha256": "28218fad9a61f457d4c859526e83a752aebd253857d29f50aee85f316b8770bd"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0043-in.jsonld",
+      "sha256": "c169b460e5c5f84a8df64dd5510fe9aee56ea9c83bb04e30bfc62acde797b2af"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0043-out.jsonld",
+      "sha256": "c169b460e5c5f84a8df64dd5510fe9aee56ea9c83bb04e30bfc62acde797b2af"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0044-frame.jsonld",
+      "sha256": "37483dd179d9ae5540dfb30c2ea71edc62f39b82a563b4b15243a9b65bab4c18"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0044-in.jsonld",
+      "sha256": "cd4ec3fba64eb0cb33c36b46497f0d7029876f152430bd54a833f6d3922de0c3"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0044-out.jsonld",
+      "sha256": "cd4ec3fba64eb0cb33c36b46497f0d7029876f152430bd54a833f6d3922de0c3"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0045-frame.jsonld",
+      "sha256": "bbd6e0f14cc39685e86a84d3ebbacc7224d2f0a705d4e6071b39e8d868b4e2f2"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0045-in.jsonld",
+      "sha256": "a113c243c0583b54c1228fc00b84a6ff21ac521865676e076aaf55f088351929"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0045-out.jsonld",
+      "sha256": "174e39af64054942e1c6c03ed4cfdc8654f73db06958ac56375deff802e49311"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0046-frame.jsonld",
+      "sha256": "92e247f87d88173b849e63571a27793f056b63b6709b52cac9e453f9c697d0e1"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0046-in.jsonld",
+      "sha256": "3aa8f9ac14b5e9bb3788a87f62faa7d9ea33e2aa609a6d3a1e410c8e195cf58a"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0046-out.jsonld",
+      "sha256": "5a0fa6b14a81d2f6b902fdc3fd0990d15e10470dd50398f77ab1657b0592e8fb"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0047-frame.jsonld",
+      "sha256": "55fbbdf00b336ebea88b7760ac9b653cb31e709d4c51ab271794aa6db6251cbb"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0047-in.jsonld",
+      "sha256": "8f1094306c222dc4fcde1a7475d29e24ba32b72b9ebdc7a760df9a28b0eae5e5"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0047-out.jsonld",
+      "sha256": "8f1094306c222dc4fcde1a7475d29e24ba32b72b9ebdc7a760df9a28b0eae5e5"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0048-frame.jsonld",
+      "sha256": "0e2c1dd5f37005eb376bb1f39895aa4673e8c82f6c5a5362b893661ade7d299e"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0048-in.jsonld",
+      "sha256": "2db1db10449ff429817f8c62582dd7b76f3a31ad5515ceeddec9eb5063abd83e"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0048-out.jsonld",
+      "sha256": "f5470b92816e26d3b743060ea47d4b7c25953f025e44e3d7e55c340094e7d503"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0049-frame.jsonld",
+      "sha256": "b254919ffb5dea4c194c415577773b2e106ba227f45aa8f97dd50719c0027351"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0049-in.jsonld",
+      "sha256": "780fc5429cf293a8e3c7f6a48a47fee3ba03225bb459b67f38e5bf2068dde6ed"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0049-out.jsonld",
+      "sha256": "c0c85231e838320fa338e3912e649d3b218d27769814ecdb89189a84460ae9b1"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0050-frame.jsonld",
+      "sha256": "c76b66990c6aa30efa586433855d983e36e92e221fab2410630dbfe5d18ccfdf"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0050-in.jsonld",
+      "sha256": "0e55d3b6efb0fc68501ad01fcd8c0bbf97c340abf28f6c652fe4872584b3a3e7"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0050-out.jsonld",
+      "sha256": "0e55d3b6efb0fc68501ad01fcd8c0bbf97c340abf28f6c652fe4872584b3a3e7"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0051-frame.jsonld",
+      "sha256": "27b75fdc650de1c42b2ce6640c37e9bd18e8a2f9a53f145dee2d97c5d075fac7"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0051-in.jsonld",
+      "sha256": "55474596ef5141f394012f91e6dcfd80fd57ce668eeb20023f8ea85caa9225c1"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0051-out.jsonld",
+      "sha256": "3f370ce7126762db54ca25719f871d67fd7d0fbcc288d9ed95abf36aa938cc70"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0052-frame.jsonld",
+      "sha256": "3b3ca46f5516fa4ec2b02f9b5bd1b6bcc655d4df18688dcfb9691c74b5e6c4d8"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0052-in.jsonld",
+      "sha256": "a04a561de844fb6d05e83387d1e125f60a9ce13ac0f6fa4a9a4ef8d9afabbcd0"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0053-frame.jsonld",
+      "sha256": "bf8c60cc92420b182c9d11ea4f1ff87b2fa98a7f6b0acaeec817469623e137f5"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0053-in.jsonld",
+      "sha256": "ef5a16c48c878659e0898763583140ff71eabe9eb84ecbb218ce05c73925aa45"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0054-frame.jsonld",
+      "sha256": "f06235f3cfd0dcabafa06a0f2895c21dd365db19c3146469082f76da0454a165"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0054-in.jsonld",
+      "sha256": "1fb705fed02815684044ddec655f7e4f557f91db814f2309f21113f622aa17b1"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0055-frame.jsonld",
+      "sha256": "7eea8ee4a4772e1c9dcef075fad1a074974698833746a658ce9410039c7b7cbd"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0055-in.jsonld",
+      "sha256": "b3bb9382b5118328120f84f41799655faf21044fbcd390182393b87526b9b23c"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0055-out.jsonld",
+      "sha256": "b3bb9382b5118328120f84f41799655faf21044fbcd390182393b87526b9b23c"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0056-frame.jsonld",
+      "sha256": "7abe4e6c576b8be39a5060818a83e7e4af6d2483d6292c81316d25ecaeec2158"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0056-in.jsonld",
+      "sha256": "91cb2365325168222c8e7f991287b7a2fbe17a3d905bb050b6b9499c9328eea1"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0056-out.jsonld",
+      "sha256": "c2d2b632a58a83efe4907b29b3cc999e14b90e536f1dcb5d36e5a547537ff0d5"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0057-frame.jsonld",
+      "sha256": "7abe4e6c576b8be39a5060818a83e7e4af6d2483d6292c81316d25ecaeec2158"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0057-in.jsonld",
+      "sha256": "f59bcdae9f61f66f8b48636fc68b4bef00650d42ee13db36db88764d39bc7154"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0057-out.jsonld",
+      "sha256": "55a1a35b4e9f693d55eecf840380148e65f8a6c90538c0b67552922432146e20"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0058-frame.jsonld",
+      "sha256": "7abe4e6c576b8be39a5060818a83e7e4af6d2483d6292c81316d25ecaeec2158"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0058-in.jsonld",
+      "sha256": "923a6a11be39cf139d60c0a1251a0c3a8962d3fd56f4df02df149d3b3a1a4374"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0058-out.jsonld",
+      "sha256": "84626b164e35deb21f6d4bc59399c6207bcaaafb2b975123b53a6c03a06c0320"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0059-frame.jsonld",
+      "sha256": "8e98d30243377650153aba1f1a05dde80b5a06bd2f760907c870c07f706acbc1"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0059-in.jsonld",
+      "sha256": "c4178ec20d11c0d561adc28f29d2a585c27da6077c244af30a12a1dd01631fdd"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0059-out.jsonld",
+      "sha256": "a2ed5b679083d3d6ed121ded95176ca7bf68f097bce9b75dd76009e688185ca9"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0060-frame.jsonld",
+      "sha256": "1669cb53db6469dc61e515fb7f2eb267cd226304a38d60e2ff06a3cf580adffa"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0060-in.jsonld",
+      "sha256": "c4178ec20d11c0d561adc28f29d2a585c27da6077c244af30a12a1dd01631fdd"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0060-out.jsonld",
+      "sha256": "7dcf33ef06d46fd6bd15d71c933be7d070b2d7e13555d1fed849cbd9443ea2eb"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0061-frame.jsonld",
+      "sha256": "f8d1e948cf262e4cb3cb0bf717157184f0faaebc3a053cdd6549d6003db6dcc1"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0061-in.jsonld",
+      "sha256": "9057717bc1b45da0a8c8b7f1ecbfd1f94baf453530096429d8e1c9eeb6e8725c"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0061-out.jsonld",
+      "sha256": "cf1e00da44eda7b6d029c0ed65f56379064e55b9c457dff5b5a02e6d51d09871"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0062-frame.jsonld",
+      "sha256": "462bafd4ac4c6fc27ce886f879f2ae33ec2da28379a18360095eb9a606819200"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0062-in.jsonld",
+      "sha256": "2a16b3d8d201b000940e9ce1cae7b0442933e3c6c698fe61f793b9dab1a26155"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0062-out.jsonld",
+      "sha256": "47c28edd8bcd6c5145fd932be7249d5cb8c58582e7c054615021b31aa3ea72c6"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0063-frame.jsonld",
+      "sha256": "d8ff54247755d2c130a0fb052dc0b9927eaf5519bc275af554ca0effe42ca20d"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0063-in.jsonld",
+      "sha256": "da506f7cf944525df73ba33cbcc0fbbbcda27d662642a23b66e66e8a3bd4b955"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0063-out.jsonld",
+      "sha256": "65597e3c78ba79f40d37c1cf0e9dcf7cb38509b3802118dbece1009031333bbf"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0064-frame.jsonld",
+      "sha256": "dfa79e774c2b16e9d4e4d1790db4bb9c1260f6ea4fe35681ecd8502d5f52f99a"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0064-in.jsonld",
+      "sha256": "72fb8c7123e4cc0779f364344c9d380ba7d0136410e959b14ceb3c09ccea52c4"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0064-out.jsonld",
+      "sha256": "256c1cc8fa8ee6a7d870268b5967a7afcf1ec65eb3d860af5f823c8c3767f808"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0065-frame.jsonld",
+      "sha256": "4d1b2d497204b151589f828de427e2c1aa7bf2052741556d1705d2b5e38c8a4c"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0065-in.jsonld",
+      "sha256": "1c4ff33e16cf35c2d15556eda67b14d7476bdf4b1efda1e96df80925bdb2d3b8"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0065-out.jsonld",
+      "sha256": "6100e1e60b1fcdc956ca43a7488199335f2321f114ceeb42b504a7597f27a0b2"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0066-frame.jsonld",
+      "sha256": "d72cbda6afd86f9aa2a8f4ae61b50a3450f4f30860d1fe7686ed5cba3d2b2f50"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0066-in.jsonld",
+      "sha256": "98782d70ecb363c911d318d5dc7d514e98208a7b3474125de421b28c58d81f0f"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0066-out.jsonld",
+      "sha256": "3e6364a14e8a46f5537616d337ac8ecdacdeca5c987f6f3d4f024e9ab73eb1e3"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0067-frame.jsonld",
+      "sha256": "873176a5a7e2b0948086e778bb03091a383178947d16b7cca48fa9f5c08f53a4"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0067-in.jsonld",
+      "sha256": "9f381603de2361709d0594f6afb800fb23087ce4d726cb0fe08a3cfaa4a2a143"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0067-out.jsonld",
+      "sha256": "5662b6f56119d514e019152a95463e9d068ac478aa4974fc3283bcd7d21b1ad7"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0068-frame.jsonld",
+      "sha256": "5c69761d2acf2dbf8e1c63cea4ff98d4a49831ff8d99417991e9153c02ccdc8c"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0068-in.jsonld",
+      "sha256": "834b9eba8883fd0b024db66634600db98912c6e6612e56aa0212172346a80eb0"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0068-out.jsonld",
+      "sha256": "843abf02ad2d11eacbf592d1dd2492cb704fbf2d01054d929fd194b1c67f2737"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0069-frame.jsonld",
+      "sha256": "40853b1ef0090794247fd15f71d2176667f2a47f7febcba3838bb592ae4bae88"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0069-in.jsonld",
+      "sha256": "4f4b5ebd5f110f6de69085e4864ecdba2f3710c6e96d55e685d2e689dd1b3021"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0069-out.jsonld",
+      "sha256": "4f4b5ebd5f110f6de69085e4864ecdba2f3710c6e96d55e685d2e689dd1b3021"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0070-frame.jsonld",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0070-in.jsonld",
+      "sha256": "df91d29e3746a41057072732ff1f68d8f99cc99acc7ef4de81b56a74d44b8be2"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/0070-out.jsonld",
+      "sha256": "486fb5f28e0803834611defe478548ad2b09298a1a283c6d3d301b2510695863"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/eo01-frame.jsonld",
+      "sha256": "e0a14d1c462525a362be6c370536c9b7f581453f14ad9c52f711c7b3e2f0d2e1"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/eo01-in.jsonld",
+      "sha256": "1fb705fed02815684044ddec655f7e4f557f91db814f2309f21113f622aa17b1"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/eo01-out.jsonld",
+      "sha256": "b484cc4b3be10c73e08ed8b4e55e28bd99269b93075d6ec3508d9ad8aa8f9281"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/eo02-frame.jsonld",
+      "sha256": "394ea986307a2fa69c6a36932a2c3e68b3619bdee6a9d6ea537e39723523ae2a"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/eo02-in.jsonld",
+      "sha256": "c4178ec20d11c0d561adc28f29d2a585c27da6077c244af30a12a1dd01631fdd"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/eo02-out.jsonld",
+      "sha256": "7dcf33ef06d46fd6bd15d71c933be7d070b2d7e13555d1fed849cbd9443ea2eb"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g001-frame.jsonld",
+      "sha256": "9f7b2c9c2b99b985396ecf1cf714c22b612b5763f29f81cc2bbc226316dfc54f"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g001-in.jsonld",
+      "sha256": "4ba909f48d845714a622f751f9b9e10e3df20f98c6332585bb567d9aa5fd9f21"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g001-out.jsonld",
+      "sha256": "c679691db0944256fc91e5c1c048ef645fb89f769c08f6b9136ad3c6e0f04447"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g002-frame.jsonld",
+      "sha256": "9b133c01443ab491ca90e32a1f830ede85ae47d0b3df5a9b8b9abef12b1b126d"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g002-in.jsonld",
+      "sha256": "2073c0f962beee0d276dcb7b92461d9f3b736610c8c96092eb14e3a7043983bc"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g002-out.jsonld",
+      "sha256": "64e7424ee3475143046adf292bae5c7b2b358f959a28be25dea8a64e58d10bf7"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g003-frame.jsonld",
+      "sha256": "27740b88ce9cdb2197d5551b160f78a3061374e62f186a022199dca8883fdae3"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g003-in.jsonld",
+      "sha256": "561f8695cd727d8cd4dd9ab77345b077e6cd369e4606542ee12507e77d0e3956"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g003-out.jsonld",
+      "sha256": "a5fd8ef1676d34924640a035545b56d71f4baf903fc9d6192e59f28a08079497"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g004-frame.jsonld",
+      "sha256": "fc922c276b88409bc6a2fb98ec021d4456a8f564c7e6ddda5ecad8d7ee390484"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g004-in.jsonld",
+      "sha256": "684529ae519ce328ff237845a3e0cd795839670be3fd45378a4a181d03a4870b"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g004-out.jsonld",
+      "sha256": "9e7d2992ce4eb3ac59f5cce7d8ad6e4d8e4ce9ea9033d80e9880ad001291cfc6"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g005-frame.jsonld",
+      "sha256": "78d33701990f70410f775d9af411a6e594d0e09ef8a152328bca53b41fa60bfe"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g005-in.jsonld",
+      "sha256": "069dd050c0710fa14660f9555999040266d777abcd6ccd1b0d9daf45c0cb3738"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g005-out.jsonld",
+      "sha256": "9a9550361b9879f7dddd60e96da4ef999779ea5c52b461ade023c93fcb2bc365"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g006-frame.jsonld",
+      "sha256": "7e263d6be0ffd3404a16a46c5315655254a40dce0eb19935a127116372a381cc"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g006-in.jsonld",
+      "sha256": "e3bf1786eeb08648afe59d9e83446bff69ac40e56efc15319f80733684fc32c7"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g006-out.jsonld",
+      "sha256": "f3253f0d0f7fdd1be985dd8a199d0644512b5531bbe46f649a46d5d8853ecd3f"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g007-frame.jsonld",
+      "sha256": "9a5f24c69a2912c87f286df5bf7adc74e5eb6c344cef0cc88ce8db796ade6dfe"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g007-in.jsonld",
+      "sha256": "c7d0a2f2cd9d430aa02a79a492c8dda284fd744c108ac79a5cfc3551b8d94fcf"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g007-out.jsonld",
+      "sha256": "913c965e744cfb8f3e6877cb271a4e979cbc4dfacf56d39b3ee8a3151d74b85c"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g008-frame.jsonld",
+      "sha256": "8a3bfa56ebb0e797be86e458d0013d9096f5e5a6c4dcf78656cf21636af25426"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g008-in.jsonld",
+      "sha256": "8bc411a3dc4487cfe140104a967eaec47d0c91224ed2f07821337fca0edbc615"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g008-out.jsonld",
+      "sha256": "075023b2671d50d2c8b603ed776230c5f1e187b1bec5fafd8fc852ee7cd36555"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g009-frame.jsonld",
+      "sha256": "4341eca5ea6a9d0a996aca265d7bad279a3d288be0f6ec19e1bb27f9eee7b04a"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g009-in.jsonld",
+      "sha256": "afed2c88e2cc5bf50632120753905968a05fea2be86cb9aa1b573a7c8f8778aa"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g009-out.jsonld",
+      "sha256": "90594452e7cbb83d72d948eb589c117727f9f37e186948cc8912be21e30e2c5a"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g010-frame.jsonld",
+      "sha256": "5dbc217cab5b684095c7598a9bfd181677570f6045d6fd11fc37801f7b195b92"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g010-in.jsonld",
+      "sha256": "a0167f59d3a666961cb1ed3bbdbc7abd4df4b64e69689fd69cf972593bed423a"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/g010-out.jsonld",
+      "sha256": "801db0961bc913eb74abc2c306a964116dbefd9325959284d6465fe7b827dc33"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/in01-frame.jsonld",
+      "sha256": "9365b4df8b794c03d40d9d14a9c092edcbc39a27381014df59e6c1223c68dfc6"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/in01-in.jsonld",
+      "sha256": "aeb3d95e2ea7d294e55cc2931f387183ee5bbd21867d2af656cd7d0e99dcb3cd"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/in01-out.jsonld",
+      "sha256": "fc49d280e3db8daa0e2cb8d2b9713fb10b9955bf6a0b3514a0aa7e063dad6ff1"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/in02-frame.jsonld",
+      "sha256": "9e6a7e3e19d32c53228a7e56b0b726174f26f08d29e0fd92b31d2dceae197d31"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/in02-in.jsonld",
+      "sha256": "aeb3d95e2ea7d294e55cc2931f387183ee5bbd21867d2af656cd7d0e99dcb3cd"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/in02-out.jsonld",
+      "sha256": "8d677b99864fdca63d73950e7be64b7ebf424819a1879381081683dc5660de0e"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/in03-frame.jsonld",
+      "sha256": "8544b6a4b99a1f1f7a91a69f8d2b0eaf2e99bb1e59cbf3bf009f9304de0846f3"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/in03-in.jsonld",
+      "sha256": "648cdee07aa078598eaa7c493e9cc4d05f2967f6c7e93b0261f05d24efb32cc1"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/in03-out.jsonld",
+      "sha256": "a0b77cf1bcbc87c3fdd91e447f2e565a646b9c5d4812a02940df76ad6fe3f4f7"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/p010-out.jsonld",
+      "sha256": "17b782fae4d4a4efd911c25294d6b98743116012bc697dd392e08554ed02d01b"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/p020-out.jsonld",
+      "sha256": "2d3adffb4d59a8641faa53a998278e71ba62fc131da10301824ff40ab1c92af8"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/p021-out.jsonld",
+      "sha256": "c5ec2b736593fe4e869549d212e82fcf14aac5b09c8d5f75d6bf618bba488670"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/p046-out.jsonld",
+      "sha256": "b3094f7cd5df68732899d102ab559488494757a684e31d8e7d96d73c6814cbc2"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/p049-out.jsonld",
+      "sha256": "5816ef1ac2752800f8fb2caa5f9b84edbb82d6c8bdc0a87891cc7c69eaf7a96c"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/p050-frame.jsonld",
+      "sha256": "08e9b5d98adc6f39ab5dd5cbb10680778208f200b90da0f6e6ab9d7eb7b01448"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/p050-in.jsonld",
+      "sha256": "abf603505870b8ade972f10005b8d3084c00ce038a67bf47c431b68038c48eb4"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/p050-out.jsonld",
+      "sha256": "03c8782329b0a57fbe60afd7b1851cf81be08273bed0543f584460c216586f5f"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/ra01-frame.jsonld",
+      "sha256": "3430a28327494f7d0556afbe7c97f7fa8f1e6763335ef5af7e8bf93f985a24cd"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/ra01-in.jsonld",
+      "sha256": "676c4591f1afd2576d69ee927f7b234d781c43bdb315640989f16fac52c1a3c8"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/ra01-out.jsonld",
+      "sha256": "ddd28000a0e9618b074224388afa6cdbc2004587a4c183135bbcf378b404156f"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/ra02-frame.jsonld",
+      "sha256": "499e9408594bf446c55e6fc4dd29451b8b56cd79b2b02236ab98beb74bac989c"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/ra02-in.jsonld",
+      "sha256": "92ccab6152451cec830cde23241339381de6da43744bece1c966f37b1e078b97"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/ra02-out.jsonld",
+      "sha256": "ddd28000a0e9618b074224388afa6cdbc2004587a4c183135bbcf378b404156f"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/ra03-frame.jsonld",
+      "sha256": "e505cd8991680d544a0da4af55924a3d12886c49d8fa5aacd22e05dae56af0b5"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/ra03-in.jsonld",
+      "sha256": "d7966ea99b95d2b5302b03dc28176514ca06eb7f51415dec2fc8285c434f3b9f"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame/ra03-out.jsonld",
+      "sha256": "a1ac6e7f2894f88b00112d760ecb0a357ac15f9b2e889c712a60be54744dc0ed"
+    },
+    {
+      "path": "native/jsonld/framing-sources/frame-manifest.jsonld",
+      "sha256": "efb87665b4ee463f9c3ba14604fed8b04db2645d4b07f55bd59babb5e407606a"
+    },
+    {
+      "path": "native/jsonld/framing-sources/manifest.jsonld",
+      "sha256": "9ce808bd0640fcbc27bbe72db387797927d21f1ea7a8cd435089c571094a62d8"
+    }
+  ]
+}

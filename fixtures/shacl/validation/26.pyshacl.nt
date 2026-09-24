@@ -1,0 +1,26 @@
+_:N41e1dbc05ea04ea88c3684eeaaa4fd20 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/minInclusive-001.test#TestShape> .
+_:Nefc5b25411c1421b9763e07dbe2456ec <http://www.w3.org/ns/shacl#resultMessage> "Value is not >= Literal(\"2002-10-10T12:00:00-05:00\" = 2002-10-10 12:00:00-05:00, datatype=xsd:dateTime)" .
+_:Ndd548288b5b045bc87dcc024485d831a <http://www.w3.org/ns/shacl#value> "2002-10-10T12:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+_:N41e1dbc05ea04ea88c3684eeaaa4fd20 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nefc5b25411c1421b9763e07dbe2456ec <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinInclusiveConstraintComponent> .
+_:Ndd548288b5b045bc87dcc024485d831a <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N41e1dbc05ea04ea88c3684eeaaa4fd20 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/minInclusive-001.test#TestShape> .
+_:N1b574fdd9f3340f8a7e0b9e55e3257f3 <http://www.w3.org/ns/shacl#result> _:Nefc5b25411c1421b9763e07dbe2456ec .
+_:N1b574fdd9f3340f8a7e0b9e55e3257f3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Nefc5b25411c1421b9763e07dbe2456ec <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nefc5b25411c1421b9763e07dbe2456ec <http://www.w3.org/ns/shacl#focusNode> "2002-10-09T12:00:00-05:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+_:N1b574fdd9f3340f8a7e0b9e55e3257f3 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N1b574fdd9f3340f8a7e0b9e55e3257f3 <http://www.w3.org/ns/shacl#result> _:N41e1dbc05ea04ea88c3684eeaaa4fd20 .
+_:Ndd548288b5b045bc87dcc024485d831a <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/minInclusive-001.test#TestShape> .
+_:Nefc5b25411c1421b9763e07dbe2456ec <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Ndd548288b5b045bc87dcc024485d831a <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinInclusiveConstraintComponent> .
+_:Ndd548288b5b045bc87dcc024485d831a <http://www.w3.org/ns/shacl#resultMessage> "Value is not >= Literal(\"2002-10-10T12:00:00-05:00\" = 2002-10-10 12:00:00-05:00, datatype=xsd:dateTime)" .
+_:Nefc5b25411c1421b9763e07dbe2456ec <http://www.w3.org/ns/shacl#value> "2002-10-09T12:00:00-05:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+_:N41e1dbc05ea04ea88c3684eeaaa4fd20 <http://www.w3.org/ns/shacl#resultMessage> "Value is not >= Literal(\"2002-10-10T12:00:00-05:00\" = 2002-10-10 12:00:00-05:00, datatype=xsd:dateTime)" .
+_:N41e1dbc05ea04ea88c3684eeaaa4fd20 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinInclusiveConstraintComponent> .
+_:Nefc5b25411c1421b9763e07dbe2456ec <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/minInclusive-001.test#TestShape> .
+_:N1b574fdd9f3340f8a7e0b9e55e3257f3 <http://www.w3.org/ns/shacl#result> _:Ndd548288b5b045bc87dcc024485d831a .
+_:N41e1dbc05ea04ea88c3684eeaaa4fd20 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/minInclusive-001.test#TestShape> .
+_:N41e1dbc05ea04ea88c3684eeaaa4fd20 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Ndd548288b5b045bc87dcc024485d831a <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Ndd548288b5b045bc87dcc024485d831a <http://www.w3.org/ns/shacl#focusNode> "2002-10-10T12:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .

@@ -1,0 +1,1657 @@
+{
+  "repository": "https://github.com/apache/arrow-testing",
+  "commit": "9ff285c88565f0f6abc855918c6a342e70e4909c",
+  "selection": "Complete data/arrow-ipc-stream/integration subtree plus LICENSE.txt; fuzz corpus is separate and not included",
+  "files": [
+    {
+      "path": "LICENSE.txt",
+      "upstreamPath": "LICENSE.txt",
+      "size": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "0.14.1/generated_datetime.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_datetime.arrow_file",
+      "size": 5438,
+      "sha256": "522553bffcbd1e2a84cc5ae19cb35ce2f072df6930f03bf248f95a8c4137e282"
+    },
+    {
+      "path": "0.14.1/generated_datetime.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_datetime.json.gz",
+      "size": 3170,
+      "sha256": "e0baf840bae5e0b38fd42be362383e5383b569c5a300389014767ebdac5ba90a"
+    },
+    {
+      "path": "0.14.1/generated_datetime.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_datetime.stream",
+      "size": 4540,
+      "sha256": "ea6c54d1e410ca9eb762d2cd16a379f0d4c6b348c7345a29fa7423e20131f887"
+    },
+    {
+      "path": "0.14.1/generated_decimal.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_decimal.arrow_file",
+      "size": 630,
+      "sha256": "4e4abde27e79c1aaaef2d8199f971fb004ec78bcdb295d07d6532645324ff8e7"
+    },
+    {
+      "path": "0.14.1/generated_decimal.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_decimal.json.gz",
+      "size": 289,
+      "sha256": "5c5dbc2a061ae688aa4318ba7a70c800c61ed43df3add755876dc5851e1a2b05"
+    },
+    {
+      "path": "0.14.1/generated_decimal.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_decimal.stream",
+      "size": 420,
+      "sha256": "450cac0c8b5730cb9d5f325b70e2bec20c0bd88b7ecf01d1ba31a673965d0c69"
+    },
+    {
+      "path": "0.14.1/generated_dictionary.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_dictionary.arrow_file",
+      "size": 2542,
+      "sha256": "9934d90f7d0c59672342f5a2bc075a3ea855b7ae913a20f03bb59fc1adea8a81"
+    },
+    {
+      "path": "0.14.1/generated_dictionary.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_dictionary.json.gz",
+      "size": 1112,
+      "sha256": "cf7114b2689c92e1ad3bd6588dc56c4907ec130d4407b18f88851a9516248921"
+    },
+    {
+      "path": "0.14.1/generated_dictionary.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_dictionary.stream",
+      "size": 2060,
+      "sha256": "f65278d79c28e02145336c535a174f5cf89770dd79b623fc71ca3472bb7f8588"
+    },
+    {
+      "path": "0.14.1/generated_interval.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_interval.arrow_file",
+      "size": 2374,
+      "sha256": "10fc7980915909c7b39c13efa99d80a7218d90db5e6e3212ca6d618c7dd99cb2"
+    },
+    {
+      "path": "0.14.1/generated_interval.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_interval.json.gz",
+      "size": 1702,
+      "sha256": "f1fef31264c799dd60a39d4eb2726cce251c990d7d1c0afbd265adb8f90b5d71"
+    },
+    {
+      "path": "0.14.1/generated_interval.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_interval.stream",
+      "size": 1956,
+      "sha256": "cfe177909672922f6a9cb95115b618741349c23047b9cf44e2ea48c3b0f3e5ea"
+    },
+    {
+      "path": "0.14.1/generated_map.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_map.arrow_file",
+      "size": 1558,
+      "sha256": "a0d86733a2fa68986bf1a977195ec598c071f98df96aa295a96cc5c1e7e99a91"
+    },
+    {
+      "path": "0.14.1/generated_map.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_map.json.gz",
+      "size": 771,
+      "sha256": "3c751c5375f293cd708448a515ef910189d86bee0ec4576e8a3d1173e467b685"
+    },
+    {
+      "path": "0.14.1/generated_map.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_map.stream",
+      "size": 1188,
+      "sha256": "93fd337cb75ebca3d965e3d5a85de31e83537d8ea47c6f7ace2b0013d5133b53"
+    },
+    {
+      "path": "0.14.1/generated_nested.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_nested.arrow_file",
+      "size": 2574,
+      "sha256": "db0e25e3ccf20e8f54a4b791156f1b4ba0c9280c2f3cc8806ec28deebb450902"
+    },
+    {
+      "path": "0.14.1/generated_nested.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_nested.json.gz",
+      "size": 1539,
+      "sha256": "66a3a3352f91cf843c5f7c374bf8e260f0c46ca6592ee48e0ad0accd0cc7c32f"
+    },
+    {
+      "path": "0.14.1/generated_nested.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_nested.stream",
+      "size": 2116,
+      "sha256": "8904bf41945f6d3096466c41dc25f96c6585007c910042a8da48427f3f69d184"
+    },
+    {
+      "path": "0.14.1/generated_primitive.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_primitive.arrow_file",
+      "size": 22358,
+      "sha256": "cdc6c6a28c020c50cb7011c75b0117aedb3c3bacec927e935546fef18b694212"
+    },
+    {
+      "path": "0.14.1/generated_primitive.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_primitive.json.gz",
+      "size": 19596,
+      "sha256": "6bda6cb08563c4386c4d4bee6317880b3549dcd9f323c9375ee60f73f89703e9"
+    },
+    {
+      "path": "0.14.1/generated_primitive.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_primitive.stream",
+      "size": 20356,
+      "sha256": "46bb708af188b43ed047ab5f8129e3faa649dd91279b967ab2a1cdcc46a25ed9"
+    },
+    {
+      "path": "0.14.1/generated_primitive_no_batches.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_primitive_no_batches.arrow_file",
+      "size": 4390,
+      "sha256": "c3212575b1dd5f404f2f4cc8b752ccdec1883c0c70576f2d0ff62c1c8497c9fd"
+    },
+    {
+      "path": "0.14.1/generated_primitive_no_batches.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_primitive_no_batches.json.gz",
+      "size": 511,
+      "sha256": "ae1f7b8cfdfea8780e9f295691a9ea5bfd5960d221dbdbecc9758dcfb1121619"
+    },
+    {
+      "path": "0.14.1/generated_primitive_no_batches.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_primitive_no_batches.stream",
+      "size": 2180,
+      "sha256": "fabc8dc91a6d6563ba772ed941e0fa80009077aff47faa9433177b16704f6f14"
+    },
+    {
+      "path": "0.14.1/generated_primitive_zerolength.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_primitive_zerolength.arrow_file",
+      "size": 9190,
+      "sha256": "89ce628240818d5ccc01cb91a37ed4438806d89e5a5a809d8d280dfe4dbaa494"
+    },
+    {
+      "path": "0.14.1/generated_primitive_zerolength.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_primitive_zerolength.json.gz",
+      "size": 809,
+      "sha256": "3361c0a9a10e00dfa3246991455f67627ff90cc97b95f87e90f07ef8119279e0"
+    },
+    {
+      "path": "0.14.1/generated_primitive_zerolength.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.14.1/generated_primitive_zerolength.stream",
+      "size": 6908,
+      "sha256": "81e9d92f6cb59cc79ec650198544b6aacb46d1c83fff30e8d5c5332ab1b8bfe3"
+    },
+    {
+      "path": "0.17.1/generated_union.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.17.1/generated_union.arrow_file",
+      "size": 3690,
+      "sha256": "0832bc41ccca2c2d69f62730d35f9bad8e13769e6945d24c37d2728fe2e3cf3b"
+    },
+    {
+      "path": "0.17.1/generated_union.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.17.1/generated_union.json.gz",
+      "size": 1198,
+      "sha256": "3e5ad10c9654b3fd10f1f44c67d2c937cadcbef3cb0224ea1464da39b8627670"
+    },
+    {
+      "path": "0.17.1/generated_union.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/0.17.1/generated_union.stream",
+      "size": 2824,
+      "sha256": "c1e78a34b5a1edceaa780d94d1561759760c130a2f95aa0fe7234d502b32faa6"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_custom_metadata.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_custom_metadata.arrow_file",
+      "size": 2682,
+      "sha256": "ade13a92887207428d8298be502449cc3484355b973bf0a7317871526db6fcd5"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_custom_metadata.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_custom_metadata.json.gz",
+      "size": 598,
+      "sha256": "d1334d62d663e6a534bc1d651f2597aaebe876f12f6933a809a03a657138def7"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_custom_metadata.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_custom_metadata.stream",
+      "size": 1520,
+      "sha256": "338bb057509651060010578afe282b7d25fc1340a1e14bde394d130035bd6fe8"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_datetime.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_datetime.arrow_file",
+      "size": 5498,
+      "sha256": "97872abeb0de5b31cf78e278a842243391d307036868e162117d132bf7eb3864"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_datetime.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_datetime.json.gz",
+      "size": 2738,
+      "sha256": "5cde183d35f660ff73ae5428668e121fc38a1161ddde1b6c5275cba188a9902d"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_datetime.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_datetime.stream",
+      "size": 4576,
+      "sha256": "3a66413a4331bd7d1fff325f88f08da28953426d821bdb47c33e434a7f9f3f4d"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_decimal.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_decimal.arrow_file",
+      "size": 256642,
+      "sha256": "46cc45c0d102dd3995845ee920ba2b482d4dfa99cab22938cb34583a301e46b1"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_decimal.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_decimal.json.gz",
+      "size": 159351,
+      "sha256": "387a80979c1b48791b973bae68c859ce22b40caeadfbcb875287b2e7b9b97cb1"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_decimal.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_decimal.stream",
+      "size": 253920,
+      "sha256": "7ec0b03e25fef59b41732bf400630c12cfb4d16ea8d24911a57809b80b9a086b"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_decimal256.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_decimal256.arrow_file",
+      "size": 363106,
+      "sha256": "80b9c2ee4a8fd40eea759e161a92c31b3f995620495ee7c71a0addb542c3e72c"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_decimal256.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_decimal256.json.gz",
+      "size": 245790,
+      "sha256": "ffd9945ababc12d69d317ae3187609b6e421af94fe726dabaa065ef5ca9a1fed"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_decimal256.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_decimal256.stream",
+      "size": 360464,
+      "sha256": "43c63a53196288a4da780becdd43c56e0f1437e3da093aa36b63bd4763686fa7"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_dictionary.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_dictionary.arrow_file",
+      "size": 2642,
+      "sha256": "c013290e2a46a9597841916667d1fd4efce8eebbc6262944a402a65b592087c1"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_dictionary.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_dictionary.json.gz",
+      "size": 1166,
+      "sha256": "b557a2cd97f42be7d674c75354bcc9f14f6a61dd7e3f6b831ad1ee87961e967a"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_dictionary.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_dictionary.stream",
+      "size": 2136,
+      "sha256": "6f60f625ce9bc1eaf7618276892e8f410ce2ecd09b74130ce3c3531d3018a54e"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_dictionary_unsigned.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_dictionary_unsigned.arrow_file",
+      "size": 2178,
+      "sha256": "4e9951d9df3617f8d305f48cc2e15dd9dc1262012a643cefc7271a0429af0671"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_dictionary_unsigned.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_dictionary_unsigned.json.gz",
+      "size": 693,
+      "sha256": "cdb0c204de44edff644f3f0145f647141a4612c402ce49340aeca39c86b8c4ed"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_dictionary_unsigned.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_dictionary_unsigned.stream",
+      "size": 1704,
+      "sha256": "412c7f1d5017dafd199d0ac96c4844d91ccd703474255f7ea9b2ade7db919bd8"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_duplicate_fieldnames.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_duplicate_fieldnames.arrow_file",
+      "size": 1130,
+      "sha256": "a588373cae7b027ebc95efaebbb8bc04af232381a8e7d49b02def9283f89e5ca"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_duplicate_fieldnames.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_duplicate_fieldnames.json.gz",
+      "size": 415,
+      "sha256": "4e9f5d651bd7251fd2ff4e8c73674ecbbc3c895a1fe408ae05dfc060527dd6a7"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_duplicate_fieldnames.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_duplicate_fieldnames.stream",
+      "size": 736,
+      "sha256": "48e4215266d19d13bd5aab0d462987e5a7b9f3caffe4235e3b1f806f41722627"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_extension.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_extension.arrow_file",
+      "size": 2050,
+      "sha256": "4b60f30c8c27705073af9fec310521bb4d4b58fda014b268fd4ec220ac22db3f"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_extension.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_extension.json.gz",
+      "size": 918,
+      "sha256": "20ca4ffaca790124bf2c68a12b042e42e143681cb117dcb3d478872cc3f9e28c"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_extension.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_extension.stream",
+      "size": 1400,
+      "sha256": "2ee4f31de34746fc5e0ddc0fb5d0c55d2638dce962578b7bdb6b790f494628f0"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_interval.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_interval.arrow_file",
+      "size": 2418,
+      "sha256": "f41e0e8eba8181e058cd6f491c817143691db2babbd9425afdaad2d673d97a33"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_interval.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_interval.json.gz",
+      "size": 1506,
+      "sha256": "58b1e11c43afa8a8cb9e94d532abdfe454bd6aa24fba97b4ccbe65bdd0129414"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_interval.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_interval.stream",
+      "size": 1984,
+      "sha256": "48838b7d794c382c4887d06ecc1a3acd826f4a4e2a1e907fffa86bac4b0e35e6"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_map.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_map.arrow_file",
+      "size": 1642,
+      "sha256": "50319efd68eecd8f96aeb13e136de1b57552680f84829ca3e115e893ef036d40"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_map.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_map.json.gz",
+      "size": 835,
+      "sha256": "6c30461abad2dd0ada370b3562b70e3b628e56062adaa1df2deffb678c47ffd6"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_map.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_map.stream",
+      "size": 1256,
+      "sha256": "128384008a676a5482cac44c4e70d22657826b42d187b44ad656770d43103ad9"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_map_non_canonical.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_map_non_canonical.arrow_file",
+      "size": 1242,
+      "sha256": "7619ca0af8204f54927eabc1c28a871a078ab535ec180b62711fb0ddb682ee42"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_map_non_canonical.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_map_non_canonical.json.gz",
+      "size": 718,
+      "sha256": "b8749c18ed9dd012811b4418c5d64c6dde9f2ecca7ceb2a6fb400bc3b7bab2c3"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_map_non_canonical.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_map_non_canonical.stream",
+      "size": 840,
+      "sha256": "ada9d67842bf1dfc1e51746196ba5c8d57f414dff894343b691bf084f8572a6f"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_nested.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_nested.arrow_file",
+      "size": 2714,
+      "sha256": "5a8da9a3c05e4e16d7720a72504b56314f1cbcea73bef2edb771fedddbff9d45"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_nested.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_nested.json.gz",
+      "size": 1622,
+      "sha256": "00ba26eb761e5f259f53ee0e16d7f934a0d9d8852f95339f93806076314f5966"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_nested.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_nested.stream",
+      "size": 2168,
+      "sha256": "4aac201f65b6eee25d88d5d46374410bcce81471c30fa44fc92e8fc4ee0465a1"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_nested_dictionary.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_nested_dictionary.arrow_file",
+      "size": 3362,
+      "sha256": "8d8372729a412d2bd5568e5f92aacf07267ed1b754b9b48c7b51ef106bc49b01"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_nested_dictionary.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_nested_dictionary.json.gz",
+      "size": 1149,
+      "sha256": "601c1e9fc9931f2221f836961f99ac52bfbb9ab9bbde5d8305c3ef71ea3d68f1"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_nested_dictionary.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_nested_dictionary.stream",
+      "size": 2632,
+      "sha256": "43d06f218453dc08e9d708577063f6d7e574a52007efbb51bbbc38026a47051e"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_nested_large_offsets.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_nested_large_offsets.arrow_file",
+      "size": 2602,
+      "sha256": "3e14079f71c4df4ddd3cfde0b1a447bd4aaf663b215bb2a6a96fd918194828ad"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_nested_large_offsets.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_nested_large_offsets.json.gz",
+      "size": 1105,
+      "sha256": "78e1605370f4b6bce31ad3942797a16790e2302efe914a1b1be04b97ec2e432f"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_nested_large_offsets.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_nested_large_offsets.stream",
+      "size": 2032,
+      "sha256": "fe7d3d21a632c4d4c3f1ca3f2c8ef7e021bd07572263a5fbbe084502604dae00"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_null.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_null.arrow_file",
+      "size": 1322,
+      "sha256": "02e84cd80fd9166deeb84286f4984c627a0e671cfa1fe2c011d339e155cac0dc"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_null.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_null.json.gz",
+      "size": 502,
+      "sha256": "523d99e2f083d5286e4c06cba955b06bb210af5e08f1538046fb01070dab29ca"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_null.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_null.stream",
+      "size": 920,
+      "sha256": "5e5ac9ec7fe4738d31402fd1259c45b5e5998c56c9901a0f9ca8223d07b6753a"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_null_trivial.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_null_trivial.arrow_file",
+      "size": 530,
+      "sha256": "9a8d83cc767f50c0fa55222b92f10fd23220952eefe691607cc71a6464f042ca"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_null_trivial.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_null_trivial.json.gz",
+      "size": 192,
+      "sha256": "1666cdd57ea40a52795ce00e3af92d74cc35770867fcaaa5432b8d3ab893fd86"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_null_trivial.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_null_trivial.stream",
+      "size": 320,
+      "sha256": "689b7e6fe581033c70786b1c504acf9130f7bbf51cb67df9fe240303931f5d09"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_primitive.arrow_file",
+      "size": 22306,
+      "sha256": "80a8b0877d098632f98eb7d186662dbc6613c27851f40f1899ad9a8d4db8ba49"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_primitive.json.gz",
+      "size": 19362,
+      "sha256": "22c08f479b51f8ef82f1759345dcbf2eef36a4d6a075f455cb808787537d0df8"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_primitive.stream",
+      "size": 20288,
+      "sha256": "ee51ae4cdf29a3c86ad8e3dc230dc6565877dbeb08ea94dd92ebf937467c0ae6"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive_large_offsets.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_primitive_large_offsets.arrow_file",
+      "size": 3586,
+      "sha256": "d26e4ba8290f335be59f9e258a01dd9ca145d924dcd442fec3ef396eb45ce0a6"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive_large_offsets.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_primitive_large_offsets.json.gz",
+      "size": 1702,
+      "sha256": "dc99f16bfd69e547428ac82a2f7f112359c8f58d3d545f861b1351d477a1fb6a"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive_large_offsets.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_primitive_large_offsets.stream",
+      "size": 3160,
+      "sha256": "536ce59bd23faefa9bffe09d38b46fe8ec039bd60b10af3fae62e852b73d6fa0"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive_no_batches.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_primitive_no_batches.arrow_file",
+      "size": 3922,
+      "sha256": "5c8096b033c3417cae750ffe088354737032b960e69b3c8eecfdc1c6dd3983f7"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive_no_batches.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_primitive_no_batches.json.gz",
+      "size": 511,
+      "sha256": "4ba1606ce4e9314b0b5431627dadb2aeba82288696fa8ac1d75e152919fd3675"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive_no_batches.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_primitive_no_batches.stream",
+      "size": 1952,
+      "sha256": "efe6896ad160a538f6ea9fe6a39bbfb096de1b3457d49ba2af4d503fb66525a1"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive_zerolength.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_primitive_zerolength.arrow_file",
+      "size": 8866,
+      "sha256": "75f6db50eea161d55a5b52df259ca4a757703315091afc4177761e5ab0a66619"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive_zerolength.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_primitive_zerolength.json.gz",
+      "size": 809,
+      "sha256": "d9a318d90206e30e748af3f01250ee8cda748d571ce1d9c49a1705435cdf3e17"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_primitive_zerolength.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_primitive_zerolength.stream",
+      "size": 6824,
+      "sha256": "5447c6f65a2ee36ee686e2678556dfec3c9ccf245c4bd685b1bd3f57d4a4f749"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_recursive_nested.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_recursive_nested.arrow_file",
+      "size": 2626,
+      "sha256": "6f5b4b177abd7021df32695657d0b2fa08fb9b7ed79799a9743f374e0546b10f"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_recursive_nested.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_recursive_nested.json.gz",
+      "size": 1328,
+      "sha256": "5c7dfdd10e58b8a4401415b906fe4294b534d95aa77d12e8287f607888a53eb8"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_recursive_nested.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_recursive_nested.stream",
+      "size": 2104,
+      "sha256": "256c4fc9f12361d35f3a6dd593321e6ce861f111398280a846190f7e8d281ca6"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_union.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_union.arrow_file",
+      "size": 3570,
+      "sha256": "0be2228e4aabcfc6bc7a38a7d58c0be42a0940f5b49d8c5804bb57b49d0f4ad2"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_union.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_union.json.gz",
+      "size": 1190,
+      "sha256": "eb0d4cbc27f7f2632f401eb1939221f4f03ab7ef244e1bc8835d91180783c285"
+    },
+    {
+      "path": "1.0.0-bigendian/generated_union.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-bigendian/generated_union.stream",
+      "size": 2704,
+      "sha256": "06b611bf2129148fcf4b11ce5d259b38f3c0540dd42f0fc07d62b514648b3f0b"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_custom_metadata.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_custom_metadata.arrow_file",
+      "size": 2674,
+      "sha256": "87570e9ce4116c9751993ab8a53ae3a1c568b897b3ad11acd6edf09365703385"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_custom_metadata.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_custom_metadata.json.gz",
+      "size": 598,
+      "sha256": "eb45b9270424e93a20c0cd593c63bb85734d538e3441f361ad5be90772aa7b85"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_custom_metadata.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_custom_metadata.stream",
+      "size": 1512,
+      "sha256": "deedd1c789ad01e604c2c6e416a823b4d4f36f4d496a19144d9b9ad8e68a01a1"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_datetime.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_datetime.arrow_file",
+      "size": 5490,
+      "sha256": "8dd3ed8bed9527db23f567ee35c825f5f116b1875e6f36450d7acfd006a2c058"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_datetime.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_datetime.json.gz",
+      "size": 2738,
+      "sha256": "17de56ca202bf583111a2a23b33c05fe78ac39814d7bd08613c25ba74990adb2"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_datetime.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_datetime.stream",
+      "size": 4568,
+      "sha256": "2d14cdf4e9550954a879440fcc3f5825380fb234ef467f537e34f8c7bde9444f"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_decimal.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_decimal.arrow_file",
+      "size": 256634,
+      "sha256": "f379d35152ec12e4764da9bb11d7cb38902ae0e9f89aabb7f2d69baf00b4b75e"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_decimal.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_decimal.json.gz",
+      "size": 159351,
+      "sha256": "47fcd6846f8a670ed0f73b7fae19ede1bec45ca3708599ef5e81fe7dc73e5470"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_decimal.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_decimal.stream",
+      "size": 253920,
+      "sha256": "c3fa8de07b34951943c055c07a49fa7d2047809427eb243fd7d3411c0c88a7d8"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_decimal256.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_decimal256.arrow_file",
+      "size": 363098,
+      "sha256": "92f189c966c419e6868d6fbb025561fe2100acb9ae7efbc8e9dbce15a7c58ee3"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_decimal256.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_decimal256.json.gz",
+      "size": 245790,
+      "sha256": "ffd9945ababc12d69d317ae3187609b6e421af94fe726dabaa065ef5ca9a1fed"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_decimal256.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_decimal256.stream",
+      "size": 360464,
+      "sha256": "a81e0c7a8684472c590b113c0821f1cff363a8aeeca6a521578ed3eafa9abb2d"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_dictionary.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_dictionary.arrow_file",
+      "size": 2634,
+      "sha256": "61c6f3290375320de717539f465f6bb75c8f919ae95c637eb21b7ea89f586e75"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_dictionary.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_dictionary.json.gz",
+      "size": 1166,
+      "sha256": "9c2fb7b0b55205f5c74f2f58871348b47f3567d209a42b35df4ea710f02aa6e1"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_dictionary.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_dictionary.stream",
+      "size": 2128,
+      "sha256": "6587dc4759808f2dd9ccd2c6cc171b36c1f08f37bda3d39fec298b27df5a49ac"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_dictionary_unsigned.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_dictionary_unsigned.arrow_file",
+      "size": 2170,
+      "sha256": "6b0fe0ed016b57d40d6d6dd17ae238b0b4bd09edfe88e760efaa4d31475c61dd"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_dictionary_unsigned.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_dictionary_unsigned.json.gz",
+      "size": 693,
+      "sha256": "462c4149aab396ce4e5fcd45833fe73d24da14f21b64fd7253e530f55bc97a7b"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_dictionary_unsigned.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_dictionary_unsigned.stream",
+      "size": 1696,
+      "sha256": "e836bf26ed56abccfe7bf93294b8d575e8de6a9d2faa68a93065d492334d6a1c"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_duplicate_fieldnames.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_duplicate_fieldnames.arrow_file",
+      "size": 1122,
+      "sha256": "7d553ee87311ddd672541cb96c9947348503c3c328b6f0be239fcf1c7f677fee"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_duplicate_fieldnames.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_duplicate_fieldnames.json.gz",
+      "size": 415,
+      "sha256": "ad8e1fd2c76e3c24c7aad5389b83e1a0a7ae60b53275c9d45eb291eede78b508"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_duplicate_fieldnames.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_duplicate_fieldnames.stream",
+      "size": 736,
+      "sha256": "22f0db21fcfcde1b89eef78614e219279b8925bb0c39b6d4ad60f6b4bc7236c7"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_extension.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_extension.arrow_file",
+      "size": 2042,
+      "sha256": "3256f5e06357e59b9e11ee28f4792e2af054f4109018ea5dd54a7287ba091013"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_extension.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_extension.json.gz",
+      "size": 918,
+      "sha256": "4d9df5ef484e9e59b7bdf6ff0e2e54111d9fd39ca4a0be23da11e374efff3468"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_extension.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_extension.stream",
+      "size": 1392,
+      "sha256": "db4463cdd3f2c3a155945796a407fea8659773767abdb27fd0b72b35d84e4823"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_interval.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_interval.arrow_file",
+      "size": 2410,
+      "sha256": "625e8294eee32c68e4e0c40a630c2bb4500dcfb08faee4007989eb10a7cf17ac"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_interval.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_interval.json.gz",
+      "size": 1506,
+      "sha256": "2e66c78b734bb3e984a70a064ef5ed48fb6ead0756092f906c65a0a722ff2f75"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_interval.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_interval.stream",
+      "size": 1976,
+      "sha256": "804ec8caff7cd90ab62146d2ff20bc9f805680e6e334dbc5d4493047a5f1afcb"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_map.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_map.arrow_file",
+      "size": 1634,
+      "sha256": "a9389bf0e4065f9300922a2318b1f3410618f433f3d29becdbd2004b3cbe8076"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_map.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_map.json.gz",
+      "size": 835,
+      "sha256": "04801786eed52da365a9ade9dc23d45eb265b17c9aa88132c9db708ba0346733"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_map.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_map.stream",
+      "size": 1256,
+      "sha256": "8021fcbe5202761b52f4ed44a59a5438937e778121b8f95e063f92f624e7731e"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_map_non_canonical.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_map_non_canonical.arrow_file",
+      "size": 1234,
+      "sha256": "90a2cbddb755f95cd27feb22f3df6448708556332a30b6d41b592de6a55b5ac5"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_map_non_canonical.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_map_non_canonical.json.gz",
+      "size": 718,
+      "sha256": "e29a1d2836f7e2933d76b3884f63ac25fece1b24f9512ae8c2cc5b8c7e0e68f8"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_map_non_canonical.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_map_non_canonical.stream",
+      "size": 840,
+      "sha256": "ff84bf3b74ba6e14fb8ab97e6109d38c9d0dfd50815d6a19690350818ddd1f7e"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_nested.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_nested.arrow_file",
+      "size": 2706,
+      "sha256": "06d494c58537a9909a7a1ea53a48a8e018d713d937a5d70a660bd1419839f829"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_nested.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_nested.json.gz",
+      "size": 1622,
+      "sha256": "2677031f842fd277f94fa0d729209caba6cc76826eacd81dc8f1269186ba5e56"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_nested.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_nested.stream",
+      "size": 2160,
+      "sha256": "ed1a43b182a026f64f99b32c0611645f51289fc5e8c15906023de00eef296bb2"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_nested_dictionary.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_nested_dictionary.arrow_file",
+      "size": 3354,
+      "sha256": "5ef793b8ea3171ce10529602ae31ba4defad9b42c1fc56ff5480c096adb68902"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_nested_dictionary.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_nested_dictionary.json.gz",
+      "size": 1149,
+      "sha256": "169ccdef433049b82c9a48102f1b2ada381c8c590795c02d36f193774afcfed0"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_nested_dictionary.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_nested_dictionary.stream",
+      "size": 2632,
+      "sha256": "81cbb7aee73e2d860a2e12039f5359f68b1030e43d444eeb5461b0bbf5c7316d"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_nested_large_offsets.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_nested_large_offsets.arrow_file",
+      "size": 2594,
+      "sha256": "aa57cfa66a6145df0ff112c57b5b51f11016652db5de80fc2b8aba03c05bdd97"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_nested_large_offsets.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_nested_large_offsets.json.gz",
+      "size": 1105,
+      "sha256": "aeb103c50a7305d45b1183be9024b3585607cfdf27ca0a94d5c1dd7cc9c8cd67"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_nested_large_offsets.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_nested_large_offsets.stream",
+      "size": 2024,
+      "sha256": "b3a3cd3b85105eed2f6a3085680d0f82f99cc395adbf5d94a998800867c8aefd"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_null.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_null.arrow_file",
+      "size": 1314,
+      "sha256": "077dc9441321f898e5d1f523f90a42638965b3fc4222bbbddbed3b1739f7fd24"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_null.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_null.json.gz",
+      "size": 502,
+      "sha256": "9e10b4493b7c2f2e0b872f56dd35cbc6a1d9d90cda44d1d6315e6020ffcce9d5"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_null.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_null.stream",
+      "size": 920,
+      "sha256": "62ca3f87732caa6a8a45ff7a5247aa92990652393ea2524d1954935afada5688"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_null_trivial.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_null_trivial.arrow_file",
+      "size": 522,
+      "sha256": "2d252027b436e048afe7db01e53acc0eb4dca59c5190198350f85f13cb9d846b"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_null_trivial.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_null_trivial.json.gz",
+      "size": 192,
+      "sha256": "bed82be7bc3e97840a5eb8bb4aba16c66f52e3b59dc4988bdb421073aa45939c"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_null_trivial.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_null_trivial.stream",
+      "size": 312,
+      "sha256": "a7c0f6e0d96f2a7db4a43a38cf3311f4eec5e27408bfb0df29a261b1efb24fbe"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_primitive.arrow_file",
+      "size": 22298,
+      "sha256": "7aab19247177ea959506d7b192e8e21235f082267c72f394bb788c615ce03f54"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_primitive.json.gz",
+      "size": 19362,
+      "sha256": "ff3aebe4380cb9f22da7e5a7356d0c0ba4ba4567a5ee94a55876701cd70d58af"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_primitive.stream",
+      "size": 20280,
+      "sha256": "ea7546616d90c9de86d9c8045d53a6ec647070121f695971d0da830a2ebac19e"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive_large_offsets.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_primitive_large_offsets.arrow_file",
+      "size": 3578,
+      "sha256": "905277cec2e035ca75e4c5d570cc3eecf168cb7c724445087f6cf4780985d345"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive_large_offsets.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_primitive_large_offsets.json.gz",
+      "size": 1702,
+      "sha256": "b5f3c7dafa28c6b471dd71a6ddee4e005d8a0ea122b3c5490abcadcbc70a612a"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive_large_offsets.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_primitive_large_offsets.stream",
+      "size": 3160,
+      "sha256": "9d20d250b6f2a0c99e516a9b39020db5278969d92f979c7cda12638850a0e863"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive_no_batches.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_primitive_no_batches.arrow_file",
+      "size": 3914,
+      "sha256": "e17640911b3a06a39b574d4c1996da64847908e91f1fc63102dee5df68904308"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive_no_batches.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_primitive_no_batches.json.gz",
+      "size": 511,
+      "sha256": "b018f187b49118b529e934bb9d7954dbdc127492311edb45be495507aab691c6"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive_no_batches.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_primitive_no_batches.stream",
+      "size": 1944,
+      "sha256": "5680ffc940381ee834559e61bd6596c8b89277e07af9023b0a11844179cedc64"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive_zerolength.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_primitive_zerolength.arrow_file",
+      "size": 8858,
+      "sha256": "4e2439965267c70126750846454245ffe13f309657ce0016814a53b09a838037"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive_zerolength.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_primitive_zerolength.json.gz",
+      "size": 809,
+      "sha256": "93e61e5c9519b2323343b8621fdaf3a13791945bdda4b3fe4c9fb439a54ba0fe"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_primitive_zerolength.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_primitive_zerolength.stream",
+      "size": 6816,
+      "sha256": "a3e9ffb6deff5ff436b4c70bd7e466b662d1a0fca3b6c544ea767bd89023c19a"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_recursive_nested.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_recursive_nested.arrow_file",
+      "size": 2618,
+      "sha256": "953b48afd5eb7020379029a77208ab069ba3879a66f1cd6905ef526b527b8764"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_recursive_nested.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_recursive_nested.json.gz",
+      "size": 1328,
+      "sha256": "0aa291604d9bb885fd7c728726f0da4180b060071986432b6761947f7a58c3cc"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_recursive_nested.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_recursive_nested.stream",
+      "size": 2104,
+      "sha256": "f082270e2b941f045fbff060217f1dcc719023da2b53e18e379d9c7fb28ee242"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_union.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_union.arrow_file",
+      "size": 3562,
+      "sha256": "3227aedf0edb02a633e9ebf448b471f6fa6797149ea57e0574eec2f642bd0755"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_union.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_union.json.gz",
+      "size": 1190,
+      "sha256": "f571f8c592436eadb2bf55c805cbe89a1eac1a54ac6d0e8807c92848288394bc"
+    },
+    {
+      "path": "1.0.0-littleendian/generated_union.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/1.0.0-littleendian/generated_union.stream",
+      "size": 2696,
+      "sha256": "7c66a40e1e6c2d9ac072439a8259190e66e36533cfe4d08d98f7c940119d9331"
+    },
+    {
+      "path": "2.0.0-compression/generated_lz4.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/2.0.0-compression/generated_lz4.arrow_file",
+      "size": 1586,
+      "sha256": "86adec32e2c8d86a15b4ba2a584e1898c49efb77b75969be19c37733d0d977b9"
+    },
+    {
+      "path": "2.0.0-compression/generated_lz4.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/2.0.0-compression/generated_lz4.json.gz",
+      "size": 692,
+      "sha256": "2d5503415c7338f32bfb0a892cfdeca87a7690a23a3d30b3af253938afa1dfba"
+    },
+    {
+      "path": "2.0.0-compression/generated_lz4.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/2.0.0-compression/generated_lz4.stream",
+      "size": 1328,
+      "sha256": "4a165ba3172ab1021ff4ef2d4017d896f622bfc227da15643eafa476f05ddd42"
+    },
+    {
+      "path": "2.0.0-compression/generated_uncompressible_lz4.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/2.0.0-compression/generated_uncompressible_lz4.arrow_file",
+      "size": 874,
+      "sha256": "b6fd2c61334b782df543eb62acb0709ab19fca1a250c3a6525a459b52f9a4816"
+    },
+    {
+      "path": "2.0.0-compression/generated_uncompressible_lz4.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/2.0.0-compression/generated_uncompressible_lz4.json.gz",
+      "size": 376,
+      "sha256": "2797b25cab63c529d544426958c9b595c9d76bd2a37e1e3210eef9a35df97d9a"
+    },
+    {
+      "path": "2.0.0-compression/generated_uncompressible_lz4.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/2.0.0-compression/generated_uncompressible_lz4.stream",
+      "size": 592,
+      "sha256": "655b179ebe55c1654d1f862922f3131a9f9c92c57aeda5edadb35edee6be5a5f"
+    },
+    {
+      "path": "2.0.0-compression/generated_uncompressible_zstd.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/2.0.0-compression/generated_uncompressible_zstd.arrow_file",
+      "size": 858,
+      "sha256": "6b38611a47112be59d8ed7da644130e2f02055d0d60f57b6c0fbe3e2a8628338"
+    },
+    {
+      "path": "2.0.0-compression/generated_uncompressible_zstd.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/2.0.0-compression/generated_uncompressible_zstd.json.gz",
+      "size": 376,
+      "sha256": "2797b25cab63c529d544426958c9b595c9d76bd2a37e1e3210eef9a35df97d9a"
+    },
+    {
+      "path": "2.0.0-compression/generated_uncompressible_zstd.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/2.0.0-compression/generated_uncompressible_zstd.stream",
+      "size": 576,
+      "sha256": "a88891b8934f9123e854d0f0369e49385175460c16a6bfb8b7fcb333d318d372"
+    },
+    {
+      "path": "2.0.0-compression/generated_zstd.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/2.0.0-compression/generated_zstd.arrow_file",
+      "size": 1402,
+      "sha256": "10d8d93e647b1f5e9b4aca8069c90f7d52cefdd995df8939f169902ab2b359bc"
+    },
+    {
+      "path": "2.0.0-compression/generated_zstd.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/2.0.0-compression/generated_zstd.json.gz",
+      "size": 693,
+      "sha256": "32d4f6dceec646b98e504933b14376c42f43bbe352795a12c75823bdcc6cba26"
+    },
+    {
+      "path": "2.0.0-compression/generated_zstd.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/2.0.0-compression/generated_zstd.stream",
+      "size": 1144,
+      "sha256": "f047f1b2725ee8299b7bd10e48cb5dcf8add1db4b3a7a4c36b85ee1d51eac691"
+    },
+    {
+      "path": "4.0.0-shareddict/generated_shared_dict.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/4.0.0-shareddict/generated_shared_dict.arrow_file",
+      "size": 1050,
+      "sha256": "14090ed1a3373814f4261165015a745f946f89161c66b6b90345a125246d0394"
+    },
+    {
+      "path": "4.0.0-shareddict/generated_shared_dict.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/4.0.0-shareddict/generated_shared_dict.json.gz",
+      "size": 439,
+      "sha256": "5dd3f5e1d713d5a2062b1b77c7dad912e44dbe44a1c71d4f8fe9df0c1fa9b039"
+    },
+    {
+      "path": "4.0.0-shareddict/generated_shared_dict.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/4.0.0-shareddict/generated_shared_dict.stream",
+      "size": 712,
+      "sha256": "cf72c209c85a9370681e10a1204fbb2aa073e1bd2ed0d82a2ae6709f7e11f415"
+    },
+    {
+      "path": "README.md",
+      "upstreamPath": "data/arrow-ipc-stream/integration/README.md",
+      "size": 433,
+      "sha256": "9cd65e5a2c9909f71139f9865aa7e1ff6a22f071e7b91e964aa1400485b9e924"
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_binary.arrow_file",
+      "size": 14082,
+      "sha256": "a92809ecfb69cb595e7a712a02decf26056cc0a0e948ac0a15c5fbdffae2c973"
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_binary.json.gz",
+      "size": 14379,
+      "sha256": "5bad886950b7b5b79240f156b702c3ce201af498334f8c49601ace9a7a956e34"
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_binary.stream",
+      "size": 13392,
+      "sha256": "d284f820575fdc28adaba6808a2499446ed50672122f6a47742065b0541f24d4"
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary_no_batches.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_binary_no_batches.arrow_file",
+      "size": 1262,
+      "sha256": "00657675aecf4a02c00e7c75a0f22f9f1d530aa4bb5e40875b6bf6c9f6cd0238"
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary_no_batches.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_binary_no_batches.json.gz",
+      "size": 264,
+      "sha256": "79227d31e6d7389b008654a6a9644ab96e81070c342502c8a2111f0aa403ab09"
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary_no_batches.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_binary_no_batches.stream",
+      "size": 624,
+      "sha256": "a65b7aa235f3e8f917001b0a4d1343ddf7d3dc5248730a455c993c1c833f0521"
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary_view.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_binary_view.arrow_file",
+      "size": 9794,
+      "sha256": "a1735a305fe65149e7eb3a34d8a2597eda7359784b0ec3510669b604cac1582f"
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary_view.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_binary_view.json.gz",
+      "size": 3517,
+      "sha256": "4acc68bcf9a06c3c172157c2e9faf87b6fcd0109975b208518e19f5a618b9399"
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary_view.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_binary_view.stream",
+      "size": 9528,
+      "sha256": "1a6b5fd94f58e74b28984c680794ada05f41636716acf2975627b046d0275ea6"
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary_zerolength.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_binary_zerolength.arrow_file",
+      "size": 3042,
+      "sha256": "e99e63171133df9f28bea9c49186f1687ba86e2ca3de163b59968c29ccbd0dc6"
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary_zerolength.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_binary_zerolength.json.gz",
+      "size": 408,
+      "sha256": "6f2a455a530f061086ffbe3ded338389be605db3c2ac028f789b7c6317cef82e"
+    },
+    {
+      "path": "cpp-21.0.0/generated_binary_zerolength.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_binary_zerolength.stream",
+      "size": 2328,
+      "sha256": "599b886565f305e3fb167a0f8562056dbcac05bc54b13486ae73b7469074a905"
+    },
+    {
+      "path": "cpp-21.0.0/generated_custom_metadata.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_custom_metadata.arrow_file",
+      "size": 2674,
+      "sha256": "67b14c6017f8cc24d8f2602fdd064a905c29ad2bc369d239071604f99077d9d3"
+    },
+    {
+      "path": "cpp-21.0.0/generated_custom_metadata.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_custom_metadata.json.gz",
+      "size": 594,
+      "sha256": "427e820d409e6ea6f6a1520a91b4f9908eded001ea8b7bb039ce0c2065ff9af9"
+    },
+    {
+      "path": "cpp-21.0.0/generated_custom_metadata.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_custom_metadata.stream",
+      "size": 1504,
+      "sha256": "fc5c4271f29f301f91f4853c20aaa8310146caff4e9081fbb7b7baafc1bb9785"
+    },
+    {
+      "path": "cpp-21.0.0/generated_datetime.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_datetime.arrow_file",
+      "size": 5482,
+      "sha256": "8323b4b5276eeab6820a97a87881049248caafbad05653ad6d2f3113ee8dbb72"
+    },
+    {
+      "path": "cpp-21.0.0/generated_datetime.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_datetime.json.gz",
+      "size": 2714,
+      "sha256": "478b42e82f5b9a658df17206a51653486be85651a8c29bbdc7e2852a5e666f63"
+    },
+    {
+      "path": "cpp-21.0.0/generated_datetime.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_datetime.stream",
+      "size": 4568,
+      "sha256": "3fedbfacfd9b33c03ed839db3e3a0e66de5d43d9ed9e04847909dae2017e4ccb"
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_decimal.arrow_file",
+      "size": 17730,
+      "sha256": "2ac36cb0830def01d8e8ed6f0de3e8fe41775130bda63001343c1a84913bfdb5"
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_decimal.json.gz",
+      "size": 9166,
+      "sha256": "de718144ca8035c755c7351aa7f5f1d459ad7e79e0c1161854930098775b29da"
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_decimal.stream",
+      "size": 15832,
+      "sha256": "02937f205efd95733380b145e7d53497106d7a698bddfd5d5eb48dcd725ce8bb"
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal256.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_decimal256.arrow_file",
+      "size": 25546,
+      "sha256": "864f2bfffbac8adf378d0d77d912877b69763360c875d8c5ab99ee2c857af65c"
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal256.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_decimal256.json.gz",
+      "size": 17982,
+      "sha256": "94b927b0fe026a96e75415d73b848bd2abc1c837f7e45ed7d6c28b24c059a3a3"
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal256.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_decimal256.stream",
+      "size": 23656,
+      "sha256": "642810498d954b53aaed6879fe66e075b1f3c1e5ae583026c48c12e6613346bf"
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal32.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_decimal32.arrow_file",
+      "size": 2490,
+      "sha256": "957f546795dfda2d90c000235de17dbad3242026825d5d99012b0d0c31e64871"
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal32.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_decimal32.json.gz",
+      "size": 1048,
+      "sha256": "56ab664d919eeb2e12a1287794efb660c84aeead8dd53554d1106169dd114baa"
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal32.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_decimal32.stream",
+      "size": 1952,
+      "sha256": "6c4646def1e025ab50960c5084c2199345dbdf2d932da0a085bcfa187d95ea08"
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal64.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_decimal64.arrow_file",
+      "size": 6098,
+      "sha256": "811e2c6eb815c6527e7b944937302127cc9102e5b3e3bac407fca497882b4417"
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal64.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_decimal64.json.gz",
+      "size": 2748,
+      "sha256": "cfbcedcd30cfbc710ab3d55475f33ea4804bd2d75e10145a4bc7eff423e57bb8"
+    },
+    {
+      "path": "cpp-21.0.0/generated_decimal64.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_decimal64.stream",
+      "size": 5096,
+      "sha256": "29646d8305617c15ab2413bd9b111c6f29e6660bd067ffd6f65141760d38942d"
+    },
+    {
+      "path": "cpp-21.0.0/generated_dictionary.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_dictionary.arrow_file",
+      "size": 2650,
+      "sha256": "327ef7199411c01646f775f0d36598564b8d45c685a5c86f1218420c9d3899b4"
+    },
+    {
+      "path": "cpp-21.0.0/generated_dictionary.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_dictionary.json.gz",
+      "size": 1154,
+      "sha256": "e28bd673540a448b259b56ff8a20ece2e7a2d66dde3abe92bd659d7584c7d7a8"
+    },
+    {
+      "path": "cpp-21.0.0/generated_dictionary.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_dictionary.stream",
+      "size": 2144,
+      "sha256": "31cb669370bd672e25bc9b18d5a369d47def59ccc6d528cb5a10f10a56326e69"
+    },
+    {
+      "path": "cpp-21.0.0/generated_dictionary_unsigned.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_dictionary_unsigned.arrow_file",
+      "size": 2170,
+      "sha256": "b911f43d60fce1f317265c54cd9fcf68c653ec11c10e096d937567e6c5c289bc"
+    },
+    {
+      "path": "cpp-21.0.0/generated_dictionary_unsigned.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_dictionary_unsigned.json.gz",
+      "size": 706,
+      "sha256": "ea3e25c17d1071d8f216828d4ffec0a98b6aafeaa5af8fc7f75ed26077747562"
+    },
+    {
+      "path": "cpp-21.0.0/generated_dictionary_unsigned.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_dictionary_unsigned.stream",
+      "size": 1712,
+      "sha256": "8faf8997bda937eda40f9477b2c67d32b763bd581366fa612b4d07bc2e55a18a"
+    },
+    {
+      "path": "cpp-21.0.0/generated_duplicate_fieldnames.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_duplicate_fieldnames.arrow_file",
+      "size": 1114,
+      "sha256": "ab860c90aeac52224a85d67ab67a1074fcaa67be12c66635dd62413b4314dbad"
+    },
+    {
+      "path": "cpp-21.0.0/generated_duplicate_fieldnames.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_duplicate_fieldnames.json.gz",
+      "size": 400,
+      "sha256": "b013af78d3e1a7fe8d75f5ad1d29150533616914cb730d647710258100e480b1"
+    },
+    {
+      "path": "cpp-21.0.0/generated_duplicate_fieldnames.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_duplicate_fieldnames.stream",
+      "size": 728,
+      "sha256": "51c7ccc423a1aa500ab1aef34fcb29ceca61e39f51bfb3e2c4b55149362fa60d"
+    },
+    {
+      "path": "cpp-21.0.0/generated_duration.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_duration.arrow_file",
+      "size": 1810,
+      "sha256": "00ed413644c67bb2132eea5479a8d9182b2c2c68c5c282ef131fbccc151cb7e8"
+    },
+    {
+      "path": "cpp-21.0.0/generated_duration.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_duration.json.gz",
+      "size": 1066,
+      "sha256": "9315bc49526f2204b1c6175e69edeb168ec0ae60f4ab82a63dac8aafd9a114b6"
+    },
+    {
+      "path": "cpp-21.0.0/generated_duration.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_duration.stream",
+      "size": 1464,
+      "sha256": "b508db149ac890ca9c12c1e27c920bc0496fe5dabb7b4a9e3c1e197bde1d8ac8"
+    },
+    {
+      "path": "cpp-21.0.0/generated_extension.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_extension.arrow_file",
+      "size": 2026,
+      "sha256": "4b0faba6cba24da1720ecd8bf61054980e32d8397081cc6471cacf13da91307f"
+    },
+    {
+      "path": "cpp-21.0.0/generated_extension.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_extension.json.gz",
+      "size": 910,
+      "sha256": "7d8c3abbe40808b7f954460b7d8c392111ce8462d672c78e952e5c5a988dab1f"
+    },
+    {
+      "path": "cpp-21.0.0/generated_extension.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_extension.stream",
+      "size": 1384,
+      "sha256": "c575a1046ee6ca49071dc57274c52b7868e3acd2d42508377fb869a1e64f4fba"
+    },
+    {
+      "path": "cpp-21.0.0/generated_interval.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_interval.arrow_file",
+      "size": 1074,
+      "sha256": "3ab2de3d11d3ee630f6be70c2cfcdcf3d34b014038cce90f1363debe82c66b1d"
+    },
+    {
+      "path": "cpp-21.0.0/generated_interval.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_interval.json.gz",
+      "size": 647,
+      "sha256": "914310a344d6c307dface6e8b34867c536bcd1e049b275b5a1e7e61871f6431a"
+    },
+    {
+      "path": "cpp-21.0.0/generated_interval.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_interval.stream",
+      "size": 816,
+      "sha256": "d2e7e48e3ffc4ca70f71ed1a5c15675fea9a9fed0586a1d26db13fc9a9b60a10"
+    },
+    {
+      "path": "cpp-21.0.0/generated_interval_mdn.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_interval_mdn.arrow_file",
+      "size": 930,
+      "sha256": "5a4c618b871cee00a391ef3e32809d25228e04f365bdbfe35ddd562531983f60"
+    },
+    {
+      "path": "cpp-21.0.0/generated_interval_mdn.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_interval_mdn.json.gz",
+      "size": 812,
+      "sha256": "57bf7bcb07127b541fcb393750ca00946964e9937c705b667e2eaa307f34cc2d"
+    },
+    {
+      "path": "cpp-21.0.0/generated_interval_mdn.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_interval_mdn.stream",
+      "size": 720,
+      "sha256": "99c451fb67b3af80d1d74fbc2e173deadf908bcb3e7a9083ce564c69dc6afaaf"
+    },
+    {
+      "path": "cpp-21.0.0/generated_large_binary.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_large_binary.arrow_file",
+      "size": 3538,
+      "sha256": "7dce601c8e56bf005d2e4cda893c975fb26d9b8f5b8a77e5ee3bd58faa7855ec"
+    },
+    {
+      "path": "cpp-21.0.0/generated_large_binary.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_large_binary.json.gz",
+      "size": 1610,
+      "sha256": "e0e7a15aa42723905d69125e53f03ea109a4cedcf756890bdd99fc13dfdb425c"
+    },
+    {
+      "path": "cpp-21.0.0/generated_large_binary.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_large_binary.stream",
+      "size": 3120,
+      "sha256": "8d3d3a5a122bc8ced36a18e47487039a9eb3bce3de67d0a0aa3b989af7fcdd06"
+    },
+    {
+      "path": "cpp-21.0.0/generated_list_view.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_list_view.arrow_file",
+      "size": 16674,
+      "sha256": "e28c256477c4182a71e5402e898c186f6ecd99207a0567e728f5d9566df0c624"
+    },
+    {
+      "path": "cpp-21.0.0/generated_list_view.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_list_view.json.gz",
+      "size": 13988,
+      "sha256": "de34518650baa6d624eee18036b1d5bb797c922c5dd5658c17fd917c356ca71b"
+    },
+    {
+      "path": "cpp-21.0.0/generated_list_view.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_list_view.stream",
+      "size": 16304,
+      "sha256": "6354e729cc0862f57882753059ab643f00c5bb4dc5b332541bfc236f37501db3"
+    },
+    {
+      "path": "cpp-21.0.0/generated_map.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_map.arrow_file",
+      "size": 1738,
+      "sha256": "473de310c56a01ca0b3e280d9664afd7fb570eb8f0ce4949143b5f74ad006833"
+    },
+    {
+      "path": "cpp-21.0.0/generated_map.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_map.json.gz",
+      "size": 927,
+      "sha256": "7d4238774808ed6831304082ce7d47889f372521323ab9dff396782b34f33b49"
+    },
+    {
+      "path": "cpp-21.0.0/generated_map.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_map.stream",
+      "size": 1360,
+      "sha256": "718475ee9caef9f3ca07288eea5d2b60339df799f70df168a11e0ba8fee1b6c6"
+    },
+    {
+      "path": "cpp-21.0.0/generated_map_non_canonical.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_map_non_canonical.arrow_file",
+      "size": 1226,
+      "sha256": "06dd3b25be792ab69d73d4d2c82ca6c26fd930c896d694438070379b551b6fc0"
+    },
+    {
+      "path": "cpp-21.0.0/generated_map_non_canonical.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_map_non_canonical.json.gz",
+      "size": 706,
+      "sha256": "bbe97a41fc1e18cf2b04df99555aef41724ec25ed94ff6a22cd3a39dfc6e3e89"
+    },
+    {
+      "path": "cpp-21.0.0/generated_map_non_canonical.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_map_non_canonical.stream",
+      "size": 840,
+      "sha256": "a29071a58a9d35514abcb2117dd02e237c29b4bec25c23e592475637799a684c"
+    },
+    {
+      "path": "cpp-21.0.0/generated_nested.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_nested.arrow_file",
+      "size": 2650,
+      "sha256": "dfe410425461bd5c19f8f114af32993169ab898b70d6fec3b7827d1996a9f880"
+    },
+    {
+      "path": "cpp-21.0.0/generated_nested.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_nested.json.gz",
+      "size": 1468,
+      "sha256": "90a9f8f72758b3d4157cdf67664d80cfcba8bb6b1e643d025e47aaf2a2b02487"
+    },
+    {
+      "path": "cpp-21.0.0/generated_nested.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_nested.stream",
+      "size": 2112,
+      "sha256": "58b35ca0d4c82dcdb4f504635ba0c0e85986400eae277db7562c70b3d9289613"
+    },
+    {
+      "path": "cpp-21.0.0/generated_nested_dictionary.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_nested_dictionary.arrow_file",
+      "size": 3266,
+      "sha256": "4f66296643e18f6d3ad7ebaf8978a72cab2f8cddd05319341906f5e6bdcce3ee"
+    },
+    {
+      "path": "cpp-21.0.0/generated_nested_dictionary.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_nested_dictionary.json.gz",
+      "size": 995,
+      "sha256": "758d323a87bd2f1c00cb812a46fced58a41a482db3da94f26f14dd2c84990cba"
+    },
+    {
+      "path": "cpp-21.0.0/generated_nested_dictionary.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_nested_dictionary.stream",
+      "size": 2544,
+      "sha256": "0c209922947656827175e07fc3e2c82012d9c6685d7a85ea5e4853b0b80415d1"
+    },
+    {
+      "path": "cpp-21.0.0/generated_nested_large_offsets.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_nested_large_offsets.arrow_file",
+      "size": 2610,
+      "sha256": "b94296f5f797531c97cf71af93d4eee85baf07473d6f30ae2fcceb5c34dd229f"
+    },
+    {
+      "path": "cpp-21.0.0/generated_nested_large_offsets.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_nested_large_offsets.json.gz",
+      "size": 1089,
+      "sha256": "0e825b4a16c8d9edf976b349dd1a4732592f3a68b9387ea8157e8758b667df3f"
+    },
+    {
+      "path": "cpp-21.0.0/generated_nested_large_offsets.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_nested_large_offsets.stream",
+      "size": 2048,
+      "sha256": "31048de0f008a8da9491a1a1e8b13b3728726614a299a92019d24d02a27a44f1"
+    },
+    {
+      "path": "cpp-21.0.0/generated_null.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_null.arrow_file",
+      "size": 1314,
+      "sha256": "79a5f87aa60de2e7cd12c1d5a81ed7ea23d21752ca13f2ad55a7e2499f3146c7"
+    },
+    {
+      "path": "cpp-21.0.0/generated_null.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_null.json.gz",
+      "size": 506,
+      "sha256": "ae31515f9a2229965f9ab2d0b3bf97dec31f1d5975fbdfb2e2dddd642c093929"
+    },
+    {
+      "path": "cpp-21.0.0/generated_null.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_null.stream",
+      "size": 920,
+      "sha256": "769d5367bbbfd02646a2260215829da4172bc5acc74c20657308c495b0278b16"
+    },
+    {
+      "path": "cpp-21.0.0/generated_null_trivial.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_null_trivial.arrow_file",
+      "size": 514,
+      "sha256": "dbb74f635954a94a38d3c1e4d35906dfe12fe2f1d44dbceabea219ccf21a6429"
+    },
+    {
+      "path": "cpp-21.0.0/generated_null_trivial.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_null_trivial.json.gz",
+      "size": 192,
+      "sha256": "8c0d2b8df654db48031dec3558e2ac73e38b8172aec32c86cf6b34d894476648"
+    },
+    {
+      "path": "cpp-21.0.0/generated_null_trivial.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_null_trivial.stream",
+      "size": 312,
+      "sha256": "3ce3962f9e77733cbc9c5ef9bf5c86537d5becefd1e35b038e476ec6b90b8d08"
+    },
+    {
+      "path": "cpp-21.0.0/generated_primitive.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_primitive.arrow_file",
+      "size": 8658,
+      "sha256": "ca039c4a866e9c52aeaa609ab0e35fabc1539bc0cea92a96844e39d36dff9178"
+    },
+    {
+      "path": "cpp-21.0.0/generated_primitive.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_primitive.json.gz",
+      "size": 4664,
+      "sha256": "e3dd9d4588325f4a6740ec23fa3a22d7e3d895dc3b74c9d9277c7a8ef7f7343a"
+    },
+    {
+      "path": "cpp-21.0.0/generated_primitive.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_primitive.stream",
+      "size": 7152,
+      "sha256": "124a70f6607c24dbdb50080ba953bb0f3156e3f8f4d0ea48f58b36f86c6b6e5d"
+    },
+    {
+      "path": "cpp-21.0.0/generated_primitive_no_batches.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_primitive_no_batches.arrow_file",
+      "size": 2898,
+      "sha256": "21c2a63d1f6f6cb74afef3e94d01d6b435df25fb3784d24275b0b6a2e385b944"
+    },
+    {
+      "path": "cpp-21.0.0/generated_primitive_no_batches.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_primitive_no_batches.json.gz",
+      "size": 413,
+      "sha256": "958bb615ceca54982d15caa9fc7a84459fc3387b3df6aca55b32e777718bf2b6"
+    },
+    {
+      "path": "cpp-21.0.0/generated_primitive_no_batches.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_primitive_no_batches.stream",
+      "size": 1440,
+      "sha256": "99b05fcebf610fb32e53330ed15235b8444c9a2055dfceae05a1a87bb2bc1a3c"
+    },
+    {
+      "path": "cpp-21.0.0/generated_primitive_zerolength.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_primitive_zerolength.arrow_file",
+      "size": 6354,
+      "sha256": "9b176d39a629811032a60f23d463ae9898479da54db1fa4e46a632bc3aaaf977"
+    },
+    {
+      "path": "cpp-21.0.0/generated_primitive_zerolength.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_primitive_zerolength.json.gz",
+      "size": 610,
+      "sha256": "30113a3de15dfe92a8bb3ba8035c1a98b91187ba3429687e132dacf272de1879"
+    },
+    {
+      "path": "cpp-21.0.0/generated_primitive_zerolength.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_primitive_zerolength.stream",
+      "size": 4824,
+      "sha256": "94f9f883772f9aabd58a434c8e7e6d6dafddf66df546d7272a5a84c22efd3211"
+    },
+    {
+      "path": "cpp-21.0.0/generated_recursive_nested.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_recursive_nested.arrow_file",
+      "size": 2618,
+      "sha256": "6403ad2817917d537bf5c19e139645e310b658acec234ae9c69cbe37038f0316"
+    },
+    {
+      "path": "cpp-21.0.0/generated_recursive_nested.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_recursive_nested.json.gz",
+      "size": 1232,
+      "sha256": "9411674929a2dae4c0a5920474be241506de00bc3587c127ad5ed5d230acbb88"
+    },
+    {
+      "path": "cpp-21.0.0/generated_recursive_nested.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_recursive_nested.stream",
+      "size": 2104,
+      "sha256": "f11bba16a5f9344c3fb25b0faa85e61aa63930d864b5267d2393edddbc986065"
+    },
+    {
+      "path": "cpp-21.0.0/generated_run_end_encoded.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_run_end_encoded.arrow_file",
+      "size": 3898,
+      "sha256": "3b601f9af530776055d2c4d1c7da0181da88d6e10dfe5cac7b79cc8951e39890"
+    },
+    {
+      "path": "cpp-21.0.0/generated_run_end_encoded.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_run_end_encoded.json.gz",
+      "size": 962,
+      "sha256": "261e8e199d041d5c8a916a074bad8bc253b18ab77458c2010a8ea49f9f7fdb3e"
+    },
+    {
+      "path": "cpp-21.0.0/generated_run_end_encoded.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_run_end_encoded.stream",
+      "size": 3024,
+      "sha256": "e69db264ea6b695199d0563f06965816ef1e179714809c323f08eb70d575f84a"
+    },
+    {
+      "path": "cpp-21.0.0/generated_union.arrow_file",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_union.arrow_file",
+      "size": 3530,
+      "sha256": "f669188e4f4a05405aeaa01d2f25bfd46beb0b0cfa2dadc40dcf2914019da4a7"
+    },
+    {
+      "path": "cpp-21.0.0/generated_union.json.gz",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_union.json.gz",
+      "size": 1085,
+      "sha256": "1c9bc9471ed3989c1edfc3d1ff2fbbd2de926ecd629fb8610387f6a533663676"
+    },
+    {
+      "path": "cpp-21.0.0/generated_union.stream",
+      "upstreamPath": "data/arrow-ipc-stream/integration/cpp-21.0.0/generated_union.stream",
+      "size": 2664,
+      "sha256": "8302ee12ffdd228f21dfca65de653411c051d64ca5e92ca8126782cab73a51f5"
+    }
+  ]
+}

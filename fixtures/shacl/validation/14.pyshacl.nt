@@ -1,0 +1,27 @@
+_:N945a6862c9414bb3bca0983f3c07c4b5 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N945a6862c9414bb3bca0983f3c07c4b5 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nba4f38f25fc042c487ffb9cfb04c5112 <http://www.w3.org/ns/shacl#result> _:N7f17af0173a947c2a0accd792adb2fd2 .
+_:N7f17af0173a947c2a0accd792adb2fd2 <http://www.w3.org/ns/shacl#value> _:ne5924404099248ce900dab087db46ac2b7 .
+_:Na121165d014e42f8862204649db8ce5e <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N7f17af0173a947c2a0accd792adb2fd2 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:Nba4f38f25fc042c487ffb9cfb04c5112 <http://www.w3.org/ns/shacl#result> _:N945a6862c9414bb3bca0983f3c07c4b5 .
+_:Nba4f38f25fc042c487ffb9cfb04c5112 <http://www.w3.org/ns/shacl#result> _:Na121165d014e42f8862204649db8ce5e .
+_:N945a6862c9414bb3bca0983f3c07c4b5 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/datatype-001.test#TestShape> .
+_:N945a6862c9414bb3bca0983f3c07c4b5 <http://www.w3.org/ns/shacl#resultMessage> "Value is not Literal with datatype xsd:integer" .
+_:Na121165d014e42f8862204649db8ce5e <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/datatype-001.test#TestShape> .
+_:Na121165d014e42f8862204649db8ce5e <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N945a6862c9414bb3bca0983f3c07c4b5 <http://www.w3.org/ns/shacl#focusNode> <http://www.w3.org/2001/XMLSchema#integer> .
+_:ne5924404099248ce900dab087db46ac2b7 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://datashapes.org/sh/tests/core/node/datatype-001.test#TestClass> .
+_:Nba4f38f25fc042c487ffb9cfb04c5112 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N945a6862c9414bb3bca0983f3c07c4b5 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:Na121165d014e42f8862204649db8ce5e <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:N7f17af0173a947c2a0accd792adb2fd2 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Na121165d014e42f8862204649db8ce5e <http://www.w3.org/ns/shacl#resultMessage> "Value is not Literal with datatype xsd:integer" .
+_:Na121165d014e42f8862204649db8ce5e <http://www.w3.org/ns/shacl#focusNode> "aldi"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:N7f17af0173a947c2a0accd792adb2fd2 <http://www.w3.org/ns/shacl#focusNode> _:ne5924404099248ce900dab087db46ac2b7 .
+_:N7f17af0173a947c2a0accd792adb2fd2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Na121165d014e42f8862204649db8ce5e <http://www.w3.org/ns/shacl#value> "aldi"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:N945a6862c9414bb3bca0983f3c07c4b5 <http://www.w3.org/ns/shacl#value> <http://www.w3.org/2001/XMLSchema#integer> .
+_:Nba4f38f25fc042c487ffb9cfb04c5112 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N7f17af0173a947c2a0accd792adb2fd2 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/datatype-001.test#TestShape> .
+_:N7f17af0173a947c2a0accd792adb2fd2 <http://www.w3.org/ns/shacl#resultMessage> "Value is not Literal with datatype xsd:integer" .

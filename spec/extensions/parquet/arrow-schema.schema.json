@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:parquet:arrow-schema:0.1.0",
+  "title": "Embedded Arrow schema observation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source",
+    "status",
+    "complete",
+    "diagnostics"
+  ],
+  "properties": {
+    "source": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "status": {
+      "enum": [
+        "absent",
+        "decoded",
+        "blocked"
+      ]
+    },
+    "complete": {
+      "const": false
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "path",
+          "severity",
+          "message"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "metadataIndex": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "ipcHex": {
+      "type": "string",
+      "pattern": "^(?:[0-9a-f]{2})*(?![\\s\\S])"
+    },
+    "message": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "schema": {
+      "$ref": "urn:umf:core:0.1.0"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "decoded"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "metadataIndex": {},
+          "ipcHex": {},
+          "message": {},
+          "schema": {}
+        },
+        "required": [
+          "metadataIndex",
+          "ipcHex",
+          "message",
+          "schema"
+        ]
+      },
+      "else": {
+        "properties": {
+          "message": false,
+          "schema": false
+        }
+      }
+    }
+  ]
+}

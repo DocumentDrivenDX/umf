@@ -1,0 +1,18 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b10405 .
+_:report <http://www.w3.org/ns/shacl#result> _:b10406 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b10405 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b10405 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b10405 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:b10405 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/datatype-002.test#TestShape> .
+_:b10405 <http://www.w3.org/ns/shacl#focusNode> "<span>Hello</span>"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#HTML> .
+_:b10405 <http://www.w3.org/ns/shacl#value> "<span>Hello</span>"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#HTML> .
+_:b10405 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have datatype <http://www.w3.org/1999/02/22-rdf-syntax-ns#langString>" .
+_:b10406 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b10406 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b10406 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:b10406 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/datatype-002.test#TestShape> .
+_:b10406 <http://www.w3.org/ns/shacl#focusNode> "Hello" .
+_:b10406 <http://www.w3.org/ns/shacl#value> "Hello" .
+_:b10406 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have datatype <http://www.w3.org/1999/02/22-rdf-syntax-ns#langString>" .

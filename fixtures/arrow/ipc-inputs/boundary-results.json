@@ -1,0 +1,35 @@
+[
+  {
+    "id": "empty",
+    "status": "rejected",
+    "message": "No native schema observed"
+  },
+  {
+    "id": "truncated-schema",
+    "status": "rejected",
+    "message": "Expected to read 248 metadata bytes, but only read 12."
+  },
+  {
+    "id": "truncated-second-body",
+    "status": "rejected",
+    "message": "Expected to read 32 bytes for message body, but only read 20."
+  },
+  {
+    "id": "missing-eos",
+    "status": "accepted",
+    "rows": 6,
+    "batches": 2
+  },
+  {
+    "id": "trailing-garbage",
+    "status": "accepted",
+    "rows": 6,
+    "batches": 2
+  },
+  {
+    "id": "concatenated-streams",
+    "status": "accepted",
+    "rows": 6,
+    "batches": 2
+  }
+]

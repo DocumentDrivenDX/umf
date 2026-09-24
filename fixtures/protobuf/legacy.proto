@@ -1,0 +1,19 @@
+syntax = "proto2";
+package umf.fixture.legacy;
+import "google/protobuf/descriptor.proto";
+extend google.protobuf.FieldOptions { optional string business_term = 51001; }
+message Legacy {
+  required string id = 1 [(business_term) = "stable identifier"];
+  optional int64 balance = 2 [default = 9223372036854775807];
+  optional bytes marker = 3 [default = "\000\377"];
+  repeated sint32 history = 4 [packed = true];
+  optional group Details = 5 { optional bool active = 6 [default = true]; }
+  enum State { option allow_alias = true; OPEN = 0; STARTED = 0; CLOSED = 1; }
+  optional State state = 7 [default = OPEN];
+  oneof choice { string email = 8; bytes token = 9; }
+  extensions 100 to 199;
+  reserved 10 to 20;
+  reserved "obsolete";
+}
+extend Legacy { optional string extension_note = 100; }
+service LegacyService { rpc Watch(Legacy) returns (stream Legacy); }

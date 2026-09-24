@@ -1,0 +1,1773 @@
+{
+  "runtimeSha256": "602a90b691aaeeaaab841b472d68592236a520f2c59ce9ae1e69addc7e654898",
+  "browser": "148.0.7778.0",
+  "smithy": "1.73.0",
+  "teaVM": "0.15.0",
+  "cases": [
+    {
+      "file": "fixtures/smithy/domain.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/__shared.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/apply/apply-block-empty.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/apply/apply-statements.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/apply/block-apply-statement.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/defaults/members-can-be-default-and-required.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/defaults/valid-defaults.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/doc-comments/doc-comments-ignored-after-shape.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/doc-comments/doc-comments.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/elided-members.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/empty.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/enums/enum-docs.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/enums/enums.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/enums/short-form-enum.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/expects-br.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/forward-reference-resolver.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/inline-io/custom-suffix.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/inline-io/inline-io.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/list-and-sets.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/main-test.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/maps-2.0.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/maps.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/metadata.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/enum-mixins.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/idl-mixins-redefine-member.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/loads-mixins-with-whitespace.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/loads-mixins.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/mixin-names.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/mixins-on-operation.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/mixins-with-members-and-traits.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/mixins-with-members.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/mixins-with-mixin-local-traits.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/no-empty-apply-types.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/operations.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/resources.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/services.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/multiple-traits-same-name.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/operations/errors-before-input.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/operations/operation-no-newline-after-properties.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/operations/operation-with-all.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/operations/operation-with-errors.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/operations/operation-with-inline-input.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/operations/operation-with-input-and-output.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/operations/operation-with-input.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/operations/operation-with-no-properties.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/operations/operation-with-output.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/operations/output-before-input.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/optional-commas.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/service-version-not-required.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/service-with-errors.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/service-with-nonconflicting-unit.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/service-with-rename.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/simple-shapes.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/structures.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/text-blocks.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/trait-definitions.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/traits.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/traits/reference-shape-from-trait.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/unions.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/unknown-control-statement.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/use/use-shapes.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/use/use-traits.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/version-full.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/version-simple.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/apply/apply-block-empty.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/apply/apply-statements.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/apply/block-apply-statement.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/defaults/members-can-be-default-and-required.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/defaults/valid-defaults.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/doc-comments/doc-comments-ignored-after-shape.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/doc-comments/doc-comments.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/elided-members.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/empty.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/enums/enum-docs.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/enums/enums.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/enums/short-form-enum.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/expects-br.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/forward-reference-resolver.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/inline-io/custom-suffix.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/inline-io/inline-io.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/list-and-sets.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/main-test.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/maps-2.0.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/maps.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/metadata.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/enum-mixins.flattened.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/enum-mixins.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/idl-mixins-redefine-member.flattened.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/idl-mixins-redefine-member.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/loads-mixins-with-whitespace.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/loads-mixins.flattened.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/loads-mixins.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixin-names.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-on-operation.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-member-override-1.flattened.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-member-override-1.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-member-override-2.flattened.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-member-override-2.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-member-override-3.flattened.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-member-override-3.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-member-override-4.flattened.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-member-override-4.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-members-and-traits.flattened.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-members-and-traits.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-members.flattened.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-members.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-mixin-local-traits.flattened.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-mixin-local-traits.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/no-empty-apply-types.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/operations.flattened.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/operations.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/resources.flattened.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/resources.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/services.flattened.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/services.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/multiple-traits-same-name.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/operations/errors-before-input.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/operations/operation-no-newline-after-properties.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/operations/operation-with-all.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/operations/operation-with-errors.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/operations/operation-with-inline-input.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/operations/operation-with-input-and-output.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/operations/operation-with-input.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/operations/operation-with-no-properties.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/operations/operation-with-output.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/operations/output-before-input.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/optional-commas.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/service-version-not-required.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/service-with-errors.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/service-with-nonconflicting-unit.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/service-with-rename.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/simple-shapes.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/structures.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/text-blocks.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/trait-definitions.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/trait-locations.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/traits.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/traits/reference-shape-from-trait.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/unions.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/unknown-control-statement.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/use/use-shapes.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/use/use-traits.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/version-full.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/version-simple.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/apply/apply-block-missing-closing.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/apply/apply-missing-newline.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/apply/apply-missing-space.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/apply/apply-missing-trait-value.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/control/control-colon-newline.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/control/control-missing-value.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/control/control-newline.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/control/control-statement-before-others.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/control/control-version-defined-twice.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/control/control-with-invalid-key.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/control/control-with-invalid-key2.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/control/control-with-no-colon.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/control/no-newline-after-control.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/defaults/default-in-v1.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/defaults/default-incomplete-node.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/defaults/default-missing-structure-close.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/defaults/default-missing-value.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/defaults/default-with-newline-before-value.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/defaults/missing-newline-after-assignment.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/elision/elide-nonexistent-id.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/elision/elided-property-type-conflicts.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/elision/elided-type-conflicts.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/elision/eliding-with-resources-in-v1.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/elision/eliding-without-resources-v1.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/elision/for-after-with.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/elision/for-referencing-non-resource.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/elision/list-member-elision-in-v1.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/elision/structure-member-elision-in-v1.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/enums/enum-with-bad-values.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/enums/enum-with-duplicates.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/enums/enum-with-newline-before-value.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/enums/enum-without-member.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/enums/idl-enums-in-v1.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/enums/int-enum-without-member.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/enums/intEnum-with-bad-value.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/enums/intEnum-with-duplicates.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/enums/intEnum-with-float.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/enums/intEnum-with-long.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/enums/missing-newline-after-assignment.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/inline-io/inline-error.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/inline-io/inline-io-in-explicit-1-0.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/inline-io/inline-io-in-implicit-1-0.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/inline-io/inline-name-override.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/inline-io/inline-single-error.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/inline-io/inline-structure-member.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/inline-io/walrus-operator-in-node.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/lists/list-empty-members.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/lists/no-sets-in-v2.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/lists/set-empty-members.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/maps/map-empty-members.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/maps/map-unclosed-parameters1.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/maps/map-unclosed-parameters2.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/maps/map-unclosed-parameters3.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/maps/map-unclosed-parameters4.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/metadata/invalid-object-shape-id-key.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/metadata/invalid-object-text-block-key.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/metadata/invalid-unquoted-shape-id.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/metadata/metadata-multiple-lines.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/metadata/metadata-must-come-before-namespace.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/metadata/metadata-with-invalid-key.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/metadata/no-newline-after-metadata.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/metadata/not-newline-after-metadata.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/metadata/space-after-metadata-quoted.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/metadata/space-after-metadata-unquoted.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/metadata/space-after-node-array-keyword.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/dangling-with.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/invalid-statement-after-structure-name.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/member-mixin-conflict-1.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/member-mixin-conflict-2.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/missing-rest-of-with-word.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/mix-types.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/mixins-trait-in-explicit-1-0.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/mixins-trait-in-implicit-1-0.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/mixins-usage-in-explicit-1-0.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/mixins-usage-in-implicit-1-0.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/operation-mixin-with-io.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/resource-mixin-with-properties.smithy",
+      "agrees": true,
+      "error": "Error: Resource shapes with the mixin trait may not define any properties. Resource mixin shape `smithy.example#MixinResource` defines one or more properties.",
+      "expectedException": "java.lang.IllegalStateException"
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-but-no-ids.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-bigDecimal.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-bigInteger.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-blob.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-boolean.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-byte.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-document.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-double.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-float.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-integer.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-list.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-long.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-map.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-resource.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-service.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-short.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-string.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-structure.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-timestamp.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/mixins/with-on-next-line-union.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/namespace/namespace-before-shapes.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/namespace/namespace-before-traits.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/namespace/namespace-defined-twice.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/namespace/namespace-multiple-lines.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/namespace/namespace-no-newline.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/namespace/namespace-syntax-error.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/namespace/unclosed-string1.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/namespace/unclosed-string2-invalid-single-quote.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/namespace/unclosed-string3.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/numbers/decimal-with-no-digit-after.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/numbers/exponent-with-no-digit.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/numbers/exponent-with-sign-then-no-digit.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/numbers/leading-decimal.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/numbers/negative-with-no-digit.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/operations/input-defined-twice.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/operations/invalid-operation-properties.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/operations/missing-ws-after-input.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/parse-errors/absolute-shape-name.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/parse-errors/expected-shape-id-after-type.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/parse-errors/expected-shape-name-but-eof.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/parse-errors/invalid-newline-after-shape-type.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/parse-errors/missing-space-after-string.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/parse-errors/missing-space-after-structure.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/parse-errors/shape-name-syntax.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/parse-errors/shape-name-syntax2.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/parse-errors/shape-name-syntax3.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/parse-errors/statement-unknown.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/parse-errors/syntax-error-token.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/invalid-escape-apostrophe.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/invalid-escape-space.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/invalid-unicode-escape.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/invalid-unicode-escape2.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/invalid-unicode-escape3.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/invalid-unicode-escape4.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/invalid-unicode-escape5.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/text-block-empty.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/text-block-invalid-unicode.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/text-block-missing-newline.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/unclosed-string.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/unclosed-string2.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/unclosed-string3.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/strings/unclosed-text-block.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-invalid-object-key1.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-invalid-object-key2.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-invalid-object-key3.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-unclosed-list1.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-unclosed-list2.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-unclosed-list3.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-unclosed-list4.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-unclosed-object1.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-unclosed-object2.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-unclosed-object3.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-unclosed-object4.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-unclosed-object5.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/annotation-unclosed-object6.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/invalid-trait-shape-id-key.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/invalid-trait-textblock-key.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/trait-name-syntax.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/trait-on-eof.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/trait-trailing.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/traits-on-apply.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/traits-on-metadata.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/traits/traits-on-namespace.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/conflicting-shape-def.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/conflicting-trait-def.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/conflicting-use.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-after-shape.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-after-traitdef.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-empty-namespace.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-invalid-namespace.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-missing-after-namespace.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-missing-namespace.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-missing-newline.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-missing-space.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-multiple-lines-comment.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-multiple-lines.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-must-come-after-namespace.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-statement-invalid-id.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/use/use-with-member.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/version/idl-int-enums-in-v1.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/version/invalid-version-type.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/version/properties-v2-only.json",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/version/properties-v2-only.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/version/unsupported-version.smithy",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/invalid-upstream/version/version-set-more-than-once.smithy",
+      "agrees": true
+    }
+  ],
+  "selectorCases": [
+    {
+      "file": "fixtures/smithy/selector-upstream/attribute-existence.smithy",
+      "selector": "[trait|enum]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/attribute-existence.smithy",
+      "selector": "[trait|enum|(values)|tags|(values)]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/functions.smithy",
+      "selector": "list:test(> member > string)",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/functions.smithy",
+      "selector": ":is(string, number)",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/functions.smithy",
+      "selector": "member > :is(string, number)",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/functions.smithy",
+      "selector": ":is(list > member > string, map > member > number)",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/functions.smithy",
+      "selector": ":not(string) :not(number) :not(structure) :not(service) :not(operation) :not(resource)",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/functions.smithy",
+      "selector": "list :not(> member > string)",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/functions.smithy",
+      "selector": ":topdown([trait|smithy.example#dataPlane])",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/functions.smithy",
+      "selector": ":topdown([trait|smithy.example#dataPlane], [trait|smithy.example#controlPlane])",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/id-attribute.smithy",
+      "selector": "[id = smithy.example#Exception]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/id-attribute.smithy",
+      "selector": "[id|namespace = 'smithy.example']",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/id-attribute.smithy",
+      "selector": "[id|(length) <= 24]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/id-attribute.smithy",
+      "selector": "[id|(length) > 24]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/in-function.smithy",
+      "selector": "service\n$output(~> operation -[output]-> ~> number)\n~> operation -[input]-> ~> number\n:not(:in(${output}))",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/in-function.smithy",
+      "selector": "$usedNumbers(operation ~> number)\noperation ~> *\n:in(${usedNumbers})",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/in-function.smithy",
+      "selector": ":in(number :test(< member [id|namespace = smithy.example]))",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "service ~> operation",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "service[trait|title] ~> operation:not([trait|http])",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "string :test(< member < list)",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": ":not([trait|trait]) :not(< *)",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "[trait|streaming] :test(<) :not(< member < structure <-[input, output]- operation)",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "[trait|trait] :not(<-[trait]-)",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource >",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource <",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource <-[resource]-",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource -[property]->",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource -[identifier]->",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource -[operation]->",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource -[collectionOperation]->",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource -[create]->",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource -[read]->",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource -[update]->",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource -[delete]->",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource -[list]->",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "resource -[put]->",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "[id|name = CreateBar] ~>",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "[id|member = barId] >",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/neighbors.smithy",
+      "selector": "[id|member = barId] ~>",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/node-attributes.smithy",
+      "selector": "[trait|externalDocumentation|(keys) = Homepage]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/node-attributes.smithy",
+      "selector": "[trait|enum|(values)|tags|(values) = internal]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/node-attributes.smithy",
+      "selector": "[trait|documentation|(length) < 3]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/node-attributes.smithy",
+      "selector": "[trait|externalDocumentation|'API Reference']",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/node-attributes.smithy",
+      "selector": "[trait|documentation|invalid|child = Hi]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/numeric-comparators.smithy",
+      "selector": "[trait|length|min > 1]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/numeric-comparators.smithy",
+      "selector": "[trait|length|min >= 1]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/numeric-comparators.smithy",
+      "selector": "[trait|length|min < 2]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/numeric-comparators.smithy",
+      "selector": "[trait|length|max <= 5]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/projection-attributes.smithy",
+      "selector": "service\n[trait|smithy.example#allowedTags]\n$service(*)\n~>\n[trait|tags]\n:not([@: @{trait|tags|(values)} = @{var|service|trait|smithy.example#allowedTags|(values)}])\n",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/projection-attributes.smithy",
+      "selector": "service\n[trait|smithy.example#allowedTags]\n$service(*)\n~>\n[trait|enum]\n:not([@: @{trait|enum|(values)|tags|(values)}\n         {<} @{var|service|trait|smithy.example#allowedTags|(values)}])\n",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": "[id=smithy.example#C] :recursive(<-[resource]-)",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": ":test(:recursive(<-[resource]-) [id=smithy.example#A])",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": "[id=smithy.example#Indirect2] :recursive(-[mixin]->)",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": ":test(:recursive(-[mixin]->) [id=smithy.example#MyMixin])",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": ":test(:recursive(-[mixin]->) :test([id=smithy.example#MyMixin]))",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": ":recursive(-[mixin]->) [trait|mixin]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": "[trait|mixin] :test(<-[mixin]-)",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": "[id=smithy.example#Direct] :recursive(>)",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": "[id=smithy.example#Direct] ~>",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": "[id=smithy.example#Direct] :recursive(<)",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": ":recursive(:recursive(:recursive(:recursive(:recursive(~>))))) [id|namespace=smithy.example]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/recursive-function.smithy",
+      "selector": "~> :recursive(:recursive(:recursive(:recursive(:recursive(~>))))) [id|namespace=smithy.example]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/root-function.smithy",
+      "selector": "number\n:in(:root(service ~> operation -[input]-> * ~> number))\n:not(:in(:root(service ~> operation -[output]-> * ~> number)))",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/root-function.smithy",
+      "selector": "service\n$outputs(~> operation -[output]-> ~> number)\n~> operation -[input]-> ~> number\n:not(:in(${outputs}))",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/scope-attribute.smithy",
+      "selector": "[@trait|range: @{min} = @{max}]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/scope-attribute.smithy",
+      "selector": "[@trait|enum|(values): @{deprecated} = true && @{tags|(values)} = \"deprecated\"]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/scope-attribute.smithy",
+      "selector": "[@trait|idRef: @{failWhenMissing} = true && @{errorMessage} ?= false]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/scope-attribute.smithy",
+      "selector": "[@trait|httpApiKeyAuth: @{name} = header && @{in} != 'x-api-token', 'authorization']",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/scope-attribute.smithy",
+      "selector": "[@trait|deprecated: @{message} = DePrEcAtEd]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/scope-attribute.smithy",
+      "selector": "[@trait|deprecated: @{message} = DePrEcAtEd i]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/service-attribute.smithy",
+      "selector": "[service]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/service-attribute.smithy",
+      "selector": "[service = smithy.example#ServiceA]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/service-attribute.smithy",
+      "selector": "[service|version ^= '2018-']",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/string-comparators.smithy",
+      "selector": "[id|name = 'Name']",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/string-comparators.smithy",
+      "selector": "[id|namespace != 'smithy.api']",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/string-comparators.smithy",
+      "selector": "[id|name ^= '_']",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/string-comparators.smithy",
+      "selector": "[trait|documentation $= 'ge']",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/string-comparators.smithy",
+      "selector": "[id|name *= 'Boo']",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/string-comparators.smithy",
+      "selector": "[trait|documentation ?= true]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/trait-attributes.smithy",
+      "selector": "[trait|(keys)|namespace = 'smithy.example']",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/trait-attributes.smithy",
+      "selector": "[trait|(values)|description]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/trait-attributes.smithy",
+      "selector": "[trait|(length) > 1]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/trait-attributes.smithy",
+      "selector": "[trait|smithy.api#deprecated]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/trait-attributes.smithy",
+      "selector": "[trait|deprecated]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/trait-attributes.smithy",
+      "selector": "[trait|error = client]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/trait-attributes.smithy",
+      "selector": "[trait|error != client]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/trait-attributes.smithy",
+      "selector": "[trait|documentation *= TODO, FIXME]",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/variables.smithy",
+      "selector": "service $authTraits(-[trait]-> [trait|authDefinition])",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/variables.smithy",
+      "selector": "service\n$authTraits(-[trait]-> [trait|authDefinition])\n~>\noperation [trait|auth]\n",
+      "agrees": true
+    },
+    {
+      "file": "fixtures/smithy/selector-upstream/variables.smithy",
+      "selector": "service\n$authTraits(-[trait]-> [trait|authDefinition])\n~>\noperation\n[trait|auth]\n:not([@: @{trait|auth|(values)} {<} @{var|authTraits|id}])\n",
+      "agrees": true
+    }
+  ],
+  "rejections": [
+    true,
+    true,
+    true
+  ],
+  "exact": true,
+  "hostGlobalsAbsent": true
+}

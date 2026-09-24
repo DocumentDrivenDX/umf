@@ -1,0 +1,5 @@
+{"protocol":{"minReaderVersion":1,"minWriterVersion":2}}
+{"metaData":{"id":"12345678-1234-1234-1234-123456789abc","format":{"provider":"parquet","options":{}},"schemaString":"{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}","partitionColumns":[],"configuration":{}}}
+{"add":{"path":"b.parquet","partitionValues":{},"size":482,"modificationTime":0,"dataChange":true,"stats":"{\"numRecords\": 1, \"minValues\": {\"id\": 2}, \"maxValues\": {\"id\": 2}, \"nullCount\": {\"id\": 0}}"}}
+{"remove":{"path":"a.parquet","dataChange":true,"deletionTimestamp":1}}
+{"txn":{"appId":"job","version":2}}

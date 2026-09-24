@@ -1,0 +1,6 @@
+@prefix : <urn:example:> .
+:empty {}
+_:shared {}
+{ _:shared :related :resource . }
+:populated { _:shared :label "Original label" . }
+:empty {} # Repeated declaration is the same named graph.

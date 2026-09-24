@@ -1,0 +1,102 @@
+{
+  "runtime": "deltalake 1.6.4",
+  "pyarrow": "21.0.0",
+  "results": [
+    {
+      "mode": "name",
+      "pyarrowDatasetRows": [
+        {
+          "id": null,
+          "region": "east",
+          "details": null
+        },
+        {
+          "id": null,
+          "region": "east",
+          "details": null
+        }
+      ],
+      "status": "read-and-renamed",
+      "before": [
+        {
+          "id": 1,
+          "region": "east",
+          "details": {
+            "amount": 10
+          }
+        },
+        {
+          "id": 2,
+          "region": "east",
+          "details": {
+            "amount": 20
+          }
+        }
+      ],
+      "after": [
+        {
+          "order_id": 1,
+          "area": "east",
+          "details": {
+            "total": 10
+          }
+        },
+        {
+          "order_id": 2,
+          "area": "east",
+          "details": {
+            "total": 20
+          }
+        }
+      ]
+    },
+    {
+      "mode": "id",
+      "pyarrowDatasetRows": [
+        {
+          "id": null,
+          "region": "east",
+          "details": null
+        },
+        {
+          "id": null,
+          "region": "east",
+          "details": null
+        }
+      ],
+      "status": "read-and-renamed",
+      "before": [
+        {
+          "id": 1,
+          "region": "east",
+          "details": {
+            "amount": 10
+          }
+        },
+        {
+          "id": 2,
+          "region": "east",
+          "details": {
+            "amount": 20
+          }
+        }
+      ],
+      "after": [
+        {
+          "order_id": 1,
+          "area": "east",
+          "details": {
+            "total": 10
+          }
+        },
+        {
+          "order_id": 2,
+          "area": "east",
+          "details": {
+            "total": 20
+          }
+        }
+      ]
+    }
+  ]
+}

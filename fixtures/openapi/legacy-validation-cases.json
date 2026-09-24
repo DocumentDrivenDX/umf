@@ -1,0 +1,112 @@
+[
+  {
+    "version": "2.0",
+    "name": "missing-title",
+    "native": {
+      "swagger": "2.0",
+      "info": {
+        "version": "1"
+      },
+      "paths": {}
+    },
+    "accepted": false
+  },
+  {
+    "version": "2.0",
+    "name": "missing-paths",
+    "native": {
+      "swagger": "2.0",
+      "info": {
+        "title": "Legacy",
+        "version": "1"
+      }
+    },
+    "accepted": false
+  },
+  {
+    "version": "2.0",
+    "name": "invalid-scheme",
+    "native": {
+      "swagger": "2.0",
+      "info": {
+        "title": "Legacy",
+        "version": "1"
+      },
+      "paths": {},
+      "schemes": [
+        "wrong"
+      ]
+    },
+    "accepted": false
+  },
+  {
+    "version": "2.0",
+    "name": "valid",
+    "native": {
+      "swagger": "2.0",
+      "info": {
+        "title": "Legacy",
+        "version": "1"
+      },
+      "paths": {}
+    },
+    "accepted": true
+  },
+  {
+    "version": "3.0.3",
+    "name": "missing-title",
+    "native": {
+      "openapi": "3.0.3",
+      "info": {
+        "version": "1"
+      },
+      "paths": {}
+    },
+    "accepted": false
+  },
+  {
+    "version": "3.0.3",
+    "name": "missing-paths",
+    "native": {
+      "openapi": "3.0.3",
+      "info": {
+        "title": "Legacy",
+        "version": "1"
+      }
+    },
+    "accepted": false
+  },
+  {
+    "version": "3.0.3",
+    "name": "invalid-scheme",
+    "native": {
+      "openapi": "3.0.3",
+      "info": {
+        "title": "Legacy",
+        "version": "1"
+      },
+      "paths": {},
+      "components": {
+        "securitySchemes": {
+          "bad": {
+            "type": "http"
+          }
+        }
+      }
+    },
+    "accepted": false
+  },
+  {
+    "version": "3.0.3",
+    "name": "valid",
+    "native": {
+      "openapi": "3.0.3",
+      "info": {
+        "title": "Legacy",
+        "version": "1"
+      },
+      "paths": {}
+    },
+    "accepted": true
+  }
+]

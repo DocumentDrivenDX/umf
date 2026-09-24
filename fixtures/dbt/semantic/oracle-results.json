@@ -1,0 +1,473 @@
+{
+  "runtime": "dbt-semantic-interfaces 0.8.5; Pydantic native parser and SemanticManifestValidator; jsonschema 4.25.1 without format checker",
+  "results": [
+    {
+      "id": "model",
+      "format": "json",
+      "nativeParserEqual": true,
+      "nativeSemanticErrors": 0,
+      "onlyRequestedValueChanged": true,
+      "roundtripSha256": "ef6484e71a56329a003219cc96623f90545b7e61701ce8b57ccb91415b0f99f6",
+      "editedSha256": "5c0f8a63836b0df69cea5b8cb312f743c26f9ebf67447fa0bcf7f0f869006358"
+    },
+    {
+      "id": "model",
+      "format": "yaml",
+      "nativeParserEqual": true,
+      "nativeSemanticErrors": 0,
+      "onlyRequestedValueChanged": true,
+      "roundtripSha256": "ef6484e71a56329a003219cc96623f90545b7e61701ce8b57ccb91415b0f99f6",
+      "editedSha256": "5c0f8a63836b0df69cea5b8cb312f743c26f9ebf67447fa0bcf7f0f869006358"
+    },
+    {
+      "id": "metric",
+      "format": "json",
+      "nativeParserEqual": true,
+      "nativeSemanticErrors": 0,
+      "onlyRequestedValueChanged": true,
+      "roundtripSha256": "ef6484e71a56329a003219cc96623f90545b7e61701ce8b57ccb91415b0f99f6",
+      "editedSha256": "d7f8862a3e6b8197c310613c7563576e17214a8f8c763d80f4cf8ec6a46edc17"
+    },
+    {
+      "id": "metric",
+      "format": "yaml",
+      "nativeParserEqual": true,
+      "nativeSemanticErrors": 0,
+      "onlyRequestedValueChanged": true,
+      "roundtripSha256": "ef6484e71a56329a003219cc96623f90545b7e61701ce8b57ccb91415b0f99f6",
+      "editedSha256": "d7f8862a3e6b8197c310613c7563576e17214a8f8c763d80f4cf8ec6a46edc17"
+    },
+    {
+      "id": "saved-query",
+      "format": "json",
+      "nativeParserEqual": true,
+      "nativeSemanticErrors": 0,
+      "onlyRequestedValueChanged": true,
+      "roundtripSha256": "ef6484e71a56329a003219cc96623f90545b7e61701ce8b57ccb91415b0f99f6",
+      "editedSha256": "4882fbb5137c949ebb32b330de92c55dce6aa21be948f2bab9a59e7755e030ba"
+    },
+    {
+      "id": "saved-query",
+      "format": "yaml",
+      "nativeParserEqual": true,
+      "nativeSemanticErrors": 0,
+      "onlyRequestedValueChanged": true,
+      "roundtripSha256": "ef6484e71a56329a003219cc96623f90545b7e61701ce8b57ccb91415b0f99f6",
+      "editedSha256": "4882fbb5137c949ebb32b330de92c55dce6aa21be948f2bab9a59e7755e030ba"
+    }
+  ],
+  "rawSchemaErrors": [
+    {
+      "path": [
+        "semantic_models",
+        0,
+        "primary_entity"
+      ],
+      "message": "None is not of type 'string'"
+    },
+    {
+      "path": [
+        "semantic_models",
+        0,
+        "entities",
+        0,
+        "description"
+      ],
+      "message": "None is not of type 'string'"
+    },
+    {
+      "path": [
+        "semantic_models",
+        0,
+        "entities",
+        0,
+        "role"
+      ],
+      "message": "None is not of type 'string'"
+    },
+    {
+      "path": [
+        "semantic_models",
+        0,
+        "entities",
+        0,
+        "metadata"
+      ],
+      "message": "None is not of type 'object'"
+    },
+    {
+      "path": [
+        "semantic_models",
+        0,
+        "entities",
+        0,
+        "label"
+      ],
+      "message": "None is not of type 'string'"
+    },
+    {
+      "path": [
+        "semantic_models",
+        0,
+        "entities",
+        1,
+        "description"
+      ],
+      "message": "None is not of type 'string'"
+    },
+    {
+      "path": [
+        "semantic_models",
+        0,
+        "entities",
+        1,
+        "role"
+      ],
+      "message": "None is not of type 'string'"
+    },
+    {
+      "path": [
+        "semantic_models",
+        0,
+        "entities",
+        1,
+        "metadata"
+      ],
+      "message": "None is not of type 'object'"
+    },
+    {
+      "path": [
+        "semantic_models",
+        0,
+        "entities",
+        1,
+        "label"
+      ],
+      "message": "None is not of type 'string'"
+    },
+    {
+      "path": [
+        "semantic_models",
+        0,
+        "measures",
+        0,
+        "description"
+      ],
+      "message": "None is not of type 'string'"
+    },
+    {
+      "path": [
+        "semantic_models",
+        0,
+        "measures",
+        0,
+        "agg_params"
+      ],
+      "message": "None is not of type 'object'"
+    },
+    {
+      "path": [
+        "semantic_models",
+        0,
+        "measures",
+        0,
+        "metadata"
+      ],
+      "message": "None is not of type 'object'"
+    },
+    {
+      "path": [
+        "semantic_models",
+        0,
+        "measures",
+        0,
+        "non_additive_dimension"
+      ],
+      "message": "None is not of type 'object'"
+    },
+    {
+      "path": [
+        "semantic_models",
+        0,
+        "measures",
+        0,
+        "agg_time_dimension"
+      ],
+      "message": "None is not of type 'string'"
+    },
+    {
+      "path": [
+        "semantic_models",
+        0,
+        "measures",
+        0,
+        "label"
+      ],
+      "message": "None is not of type 'string'"
+    },
+    {
+      "path": [
+        "semantic_models",
+        0,
+        "dimensions",
+        0,
+        "description"
+      ],
+      "message": "None is not of type 'string'"
+    },
+    {
+      "path": [
+        "semantic_models",
+        0,
+        "dimensions",
+        0,
+        "type_params",
+        "validity_params"
+      ],
+      "message": "None is not of type 'object'"
+    },
+    {
+      "path": [
+        "semantic_models",
+        0,
+        "dimensions",
+        0,
+        "expr"
+      ],
+      "message": "None is not of type 'string'"
+    },
+    {
+      "path": [
+        "semantic_models",
+        0,
+        "dimensions",
+        0,
+        "metadata"
+      ],
+      "message": "None is not of type 'object'"
+    },
+    {
+      "path": [
+        "semantic_models",
+        0,
+        "dimensions",
+        0,
+        "label"
+      ],
+      "message": "None is not of type 'string'"
+    },
+    {
+      "path": [
+        "semantic_models",
+        0,
+        "label"
+      ],
+      "message": "None is not of type 'string'"
+    },
+    {
+      "path": [
+        "semantic_models",
+        0,
+        "metadata"
+      ],
+      "message": "None is not of type 'object'"
+    },
+    {
+      "path": [
+        "metrics",
+        0,
+        "type_params",
+        "measure",
+        "filter"
+      ],
+      "message": "None is not of type 'object'"
+    },
+    {
+      "path": [
+        "metrics",
+        0,
+        "type_params",
+        "measure",
+        "alias"
+      ],
+      "message": "None is not of type 'string'"
+    },
+    {
+      "path": [
+        "metrics",
+        0,
+        "type_params",
+        "measure",
+        "fill_nulls_with"
+      ],
+      "message": "None is not of type 'integer'"
+    },
+    {
+      "path": [
+        "metrics",
+        0,
+        "type_params",
+        "numerator"
+      ],
+      "message": "None is not of type 'object'"
+    },
+    {
+      "path": [
+        "metrics",
+        0,
+        "type_params",
+        "denominator"
+      ],
+      "message": "None is not of type 'object'"
+    },
+    {
+      "path": [
+        "metrics",
+        0,
+        "type_params",
+        "expr"
+      ],
+      "message": "None is not of type 'string'"
+    },
+    {
+      "path": [
+        "metrics",
+        0,
+        "type_params",
+        "window"
+      ],
+      "message": "None is not of type 'object'"
+    },
+    {
+      "path": [
+        "metrics",
+        0,
+        "type_params",
+        "grain_to_date"
+      ],
+      "message": "None is not one of ['nanosecond', 'microsecond', 'millisecond', 'second', 'minute', 'hour', 'day', 'week', 'month', 'quarter', 'year']"
+    },
+    {
+      "path": [
+        "metrics",
+        0,
+        "type_params",
+        "conversion_type_params"
+      ],
+      "message": "None is not of type 'object'"
+    },
+    {
+      "path": [
+        "metrics",
+        0,
+        "type_params",
+        "cumulative_type_params"
+      ],
+      "message": "None is not of type 'object'"
+    },
+    {
+      "path": [
+        "metrics",
+        0,
+        "type_params",
+        "input_measures",
+        0,
+        "filter"
+      ],
+      "message": "None is not of type 'object'"
+    },
+    {
+      "path": [
+        "metrics",
+        0,
+        "type_params",
+        "input_measures",
+        0,
+        "alias"
+      ],
+      "message": "None is not of type 'string'"
+    },
+    {
+      "path": [
+        "metrics",
+        0,
+        "type_params",
+        "input_measures",
+        0,
+        "fill_nulls_with"
+      ],
+      "message": "None is not of type 'integer'"
+    },
+    {
+      "path": [
+        "metrics",
+        0,
+        "filter"
+      ],
+      "message": "None is not of type 'object'"
+    },
+    {
+      "path": [
+        "metrics",
+        0,
+        "metadata"
+      ],
+      "message": "None is not of type 'object'"
+    },
+    {
+      "path": [
+        "metrics",
+        0,
+        "time_granularity"
+      ],
+      "message": "None is not of type 'string'"
+    },
+    {
+      "path": [
+        "project_configuration",
+        "metadata"
+      ],
+      "message": "None is not of type 'object'"
+    },
+    {
+      "path": [
+        "saved_queries",
+        0,
+        "query_params",
+        "limit"
+      ],
+      "message": "None is not of type 'integer'"
+    },
+    {
+      "path": [
+        "saved_queries",
+        0,
+        "query_params",
+        "where"
+      ],
+      "message": "None is not of type 'object'"
+    },
+    {
+      "path": [
+        "saved_queries",
+        0,
+        "metadata"
+      ],
+      "message": "None is not of type 'object'"
+    },
+    {
+      "path": [
+        "saved_queries",
+        0,
+        "label"
+      ],
+      "message": "None is not of type 'string'"
+    }
+  ],
+  "derivedSchemaValid": true,
+  "nativeUnknownFieldsDiscarded": [
+    "/future_extension",
+    "/semantic_models/0/future_attribute"
+  ],
+  "limits": "Public browser inspection only checks derived serialized shapes, not native semantic rules; no MetricFlow execution"
+}

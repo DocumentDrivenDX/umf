@@ -1,0 +1,3043 @@
+{
+  "results": [
+    {
+      "id": "nq-syntax-uri-01",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-01.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://example/o"
+          },
+          "graph": {
+            "kind": "iri",
+            "value": "http://example/g"
+          }
+        }
+      ],
+      "editIndex": -1,
+      "exports": []
+    },
+    {
+      "id": "nq-syntax-uri-02",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-02.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://example/o"
+          },
+          "graph": {
+            "kind": "iri",
+            "value": "http://example/g"
+          }
+        }
+      ],
+      "editIndex": -1,
+      "exports": []
+    },
+    {
+      "id": "nq-syntax-uri-03",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-03.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "o"
+          },
+          "graph": {
+            "kind": "iri",
+            "value": "http://example/g"
+          }
+        }
+      ],
+      "editIndex": -1,
+      "exports": []
+    },
+    {
+      "id": "nq-syntax-uri-04",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-04.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "o",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "iri",
+            "value": "http://example/g"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/nq-syntax-uri-04.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/nq-syntax-uri-04.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "nq-syntax-uri-05",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-05.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "o",
+            "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+            "language": "en"
+          },
+          "graph": {
+            "kind": "iri",
+            "value": "http://example/g"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/nq-syntax-uri-05.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/nq-syntax-uri-05.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "nq-syntax-uri-06",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-uri-06.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "o",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "iri",
+            "value": "http://example/g"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/nq-syntax-uri-06.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/nq-syntax-uri-06.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "nq-syntax-bnode-01",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-01.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://example/o"
+          },
+          "graph": {
+            "kind": "blank",
+            "value": "g"
+          }
+        }
+      ],
+      "editIndex": -1,
+      "exports": []
+    },
+    {
+      "id": "nq-syntax-bnode-02",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-02.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://example/o"
+          },
+          "graph": {
+            "kind": "blank",
+            "value": "g"
+          }
+        }
+      ],
+      "editIndex": -1,
+      "exports": []
+    },
+    {
+      "id": "nq-syntax-bnode-03",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-03.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "o"
+          },
+          "graph": {
+            "kind": "blank",
+            "value": "g"
+          }
+        }
+      ],
+      "editIndex": -1,
+      "exports": []
+    },
+    {
+      "id": "nq-syntax-bnode-04",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-04.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "o",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "blank",
+            "value": "g"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/nq-syntax-bnode-04.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/nq-syntax-bnode-04.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "nq-syntax-bnode-05",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-05.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "o",
+            "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+            "language": "en"
+          },
+          "graph": {
+            "kind": "blank",
+            "value": "g"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/nq-syntax-bnode-05.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/nq-syntax-bnode-05.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "nq-syntax-bnode-06",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bnode-06.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "o",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "blank",
+            "value": "g"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/nq-syntax-bnode-06.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/nq-syntax-bnode-06.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "nq-syntax-bad-literal-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bad-literal-01.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nq-syntax-bad-literal-02",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bad-literal-02.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nq-syntax-bad-literal-03",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bad-literal-03.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nq-syntax-bad-uri-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bad-uri-01.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nq-syntax-bad-quint-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nq-syntax-bad-quint-01.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-file-01",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-file-01.nq",
+      "status": "accepted",
+      "quads": 0,
+      "terms": [],
+      "editIndex": -1,
+      "exports": []
+    },
+    {
+      "id": "nt-syntax-file-02",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-file-02.nq",
+      "status": "accepted",
+      "quads": 0,
+      "terms": [],
+      "editIndex": -1,
+      "exports": []
+    },
+    {
+      "id": "nt-syntax-file-03",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-file-03.nq",
+      "status": "accepted",
+      "quads": 0,
+      "terms": [],
+      "editIndex": -1,
+      "exports": []
+    },
+    {
+      "id": "nt-syntax-uri-01",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-uri-01.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://example/o"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": -1,
+      "exports": []
+    },
+    {
+      "id": "nt-syntax-uri-02",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-uri-02.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/S"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://example/o"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": -1,
+      "exports": []
+    },
+    {
+      "id": "nt-syntax-uri-03",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-uri-03.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/S"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://example/o"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": -1,
+      "exports": []
+    },
+    {
+      "id": "nt-syntax-uri-04",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-uri-04.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "scheme:!$%25&'()*+,-./0123456789:/@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~?#"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": -1,
+      "exports": []
+    },
+    {
+      "id": "nt-syntax-string-01",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-string-01.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "string",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/nt-syntax-string-01.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/nt-syntax-string-01.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-string-02",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-string-02.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "string",
+            "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+            "language": "en"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/nt-syntax-string-02.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/nt-syntax-string-02.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-string-03",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-string-03.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "string",
+            "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+            "language": "en-uk"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/nt-syntax-string-03.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/nt-syntax-string-03.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-str-esc-01",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-str-esc-01.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "a\n",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/nt-syntax-str-esc-01.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/nt-syntax-str-esc-01.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-str-esc-02",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-str-esc-02.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "a b",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/nt-syntax-str-esc-02.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/nt-syntax-str-esc-02.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-str-esc-03",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-str-esc-03.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "a b",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/nt-syntax-str-esc-03.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/nt-syntax-str-esc-03.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-bnode-01",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bnode-01.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "a"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://example/o"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": -1,
+      "exports": []
+    },
+    {
+      "id": "nt-syntax-bnode-02",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bnode-02.nq",
+      "status": "accepted",
+      "quads": 2,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "a"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "a"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://example/o"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": -1,
+      "exports": []
+    },
+    {
+      "id": "nt-syntax-bnode-03",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bnode-03.nq",
+      "status": "accepted",
+      "quads": 2,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "1a"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "1a"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://example/o"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": -1,
+      "exports": []
+    },
+    {
+      "id": "nt-syntax-datatypes-01",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-datatypes-01.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "123",
+            "datatype": "http://www.w3.org/2001/XMLSchema#byte"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/nt-syntax-datatypes-01.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/nt-syntax-datatypes-01.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-datatypes-02",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-datatypes-02.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "123",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/nt-syntax-datatypes-02.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/nt-syntax-datatypes-02.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "nt-syntax-bad-uri-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-01.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-uri-02",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-02.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-uri-03",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-03.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-uri-04",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-04.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-uri-05",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-05.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-uri-06",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-06.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-uri-07",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-07.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-uri-08",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-08.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-uri-09",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-uri-09.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-prefix-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-prefix-01.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-base-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-base-01.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-bnode-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-bnode-01.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-bnode-02",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-bnode-02.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-struct-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-struct-01.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-struct-02",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-struct-02.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-lang-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-lang-01.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-esc-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-esc-01.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-esc-02",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-esc-02.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-esc-03",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-esc-03.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-string-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-01.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-string-02",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-02.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-string-03",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-03.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-string-04",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-04.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-string-05",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-05.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-string-06",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-06.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-string-07",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-string-07.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-num-01",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-num-01.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-num-02",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-num-02.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-bad-num-03",
+      "positive": false,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsNegativeSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-bad-num-03.nq",
+      "status": "rejected"
+    },
+    {
+      "id": "nt-syntax-subm-01",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/nt-syntax-subm-01.nq",
+      "status": "accepted",
+      "quads": 30,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource1"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://example.org/resource2"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "anon"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://example.org/resource2"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource2"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "anon"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource3"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://example.org/resource2"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource4"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://example.org/resource2"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource5"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://example.org/resource2"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource6"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://example.org/resource2"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource7"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "simple literal",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource8"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "backslash:\\",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource9"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "dquote:\"",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource10"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "newline:\n",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource11"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "return\r",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource12"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "tab:\t",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource13"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://example.org/resource2"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource14"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "x",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource15"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "anon"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource16"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "é",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource17"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "€",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource21"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "",
+            "datatype": "http://www.w3.org/2000/01/rdf-schema#XMLLiteral"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource22"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "literal",
+            "value": " ",
+            "datatype": "http://www.w3.org/2000/01/rdf-schema#XMLLiteral"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource23"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "x",
+            "datatype": "http://www.w3.org/2000/01/rdf-schema#XMLLiteral"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource23"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "\"",
+            "datatype": "http://www.w3.org/2000/01/rdf-schema#XMLLiteral"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource24"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "<a></a>",
+            "datatype": "http://www.w3.org/2000/01/rdf-schema#XMLLiteral"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource25"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "a <b></b>",
+            "datatype": "http://www.w3.org/2000/01/rdf-schema#XMLLiteral"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource26"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "a <b></b> c",
+            "datatype": "http://www.w3.org/2000/01/rdf-schema#XMLLiteral"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource26"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "a\n<b></b>\nc",
+            "datatype": "http://www.w3.org/2000/01/rdf-schema#XMLLiteral"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource27"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "chat",
+            "datatype": "http://www.w3.org/2000/01/rdf-schema#XMLLiteral"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource30"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "chat",
+            "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+            "language": "fr"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource31"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "chat",
+            "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+            "language": "en"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/resource32"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/property"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "abc",
+            "datatype": "http://example.org/datatype1"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 7,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/nt-syntax-subm-01.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/nt-syntax-subm-01.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "comment_following_triple",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/comment_following_triple.nq",
+      "status": "accepted",
+      "quads": 5,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://example/o"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "o"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "o",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "o",
+            "datatype": "http://example/dt"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "o",
+            "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+            "language": "en"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 2,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/comment_following_triple.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/comment_following_triple.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "literal",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://a.example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://a.example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "x",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/literal.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/literal.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "literal_all_controls",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_all_controls.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://a.example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://a.example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "\u0000\u0001\u0002\u0003\u0004\u0005\u0006\u0007\b\t\u000b\f\u000e\u000f\u0010\u0011\u0012\u0013\u0014\u0015\u0016\u0017\u0018\u0019\u001a\u001b\u001c\u001d\u001e\u001f",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/literal_all_controls.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/literal_all_controls.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "literal_all_punctuation",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_all_punctuation.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://a.example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://a.example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": " !\"#$%&():;<=>?@[]^_`{|}~",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/literal_all_punctuation.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/literal_all_punctuation.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "literal_ascii_boundaries",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_ascii_boundaries.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://a.example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://a.example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "\u0000\t\u000b\f\u000e&([]",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/literal_ascii_boundaries.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/literal_ascii_boundaries.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "literal_with_2_dquotes",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_2_dquotes.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://a.example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://a.example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "x\"\"y",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/literal_with_2_dquotes.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/literal_with_2_dquotes.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "literal_with_2_squotes",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_2_squotes.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://a.example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://a.example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "x''y",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/literal_with_2_squotes.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/literal_with_2_squotes.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "literal_with_BACKSPACE",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_BACKSPACE.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://a.example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://a.example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "\b",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/literal_with_BACKSPACE.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/literal_with_BACKSPACE.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "literal_with_CARRIAGE_RETURN",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_CARRIAGE_RETURN.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://a.example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://a.example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "\r",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/literal_with_CARRIAGE_RETURN.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/literal_with_CARRIAGE_RETURN.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "literal_with_CHARACTER_TABULATION",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_CHARACTER_TABULATION.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://a.example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://a.example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "\t",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/literal_with_CHARACTER_TABULATION.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/literal_with_CHARACTER_TABULATION.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "literal_with_dquote",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_dquote.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://a.example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://a.example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "x\"y",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/literal_with_dquote.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/literal_with_dquote.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "literal_with_FORM_FEED",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_FORM_FEED.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://a.example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://a.example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "\f",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/literal_with_FORM_FEED.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/literal_with_FORM_FEED.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "literal_with_LINE_FEED",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_LINE_FEED.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://a.example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://a.example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "\n",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/literal_with_LINE_FEED.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/literal_with_LINE_FEED.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "literal_with_numeric_escape4",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_numeric_escape4.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://a.example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://a.example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "o",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/literal_with_numeric_escape4.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/literal_with_numeric_escape4.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "literal_with_numeric_escape8",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_numeric_escape8.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://a.example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://a.example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "o",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/literal_with_numeric_escape8.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/literal_with_numeric_escape8.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "literal_with_REVERSE_SOLIDUS",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_REVERSE_SOLIDUS.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://a.example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://a.example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "\\",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/literal_with_REVERSE_SOLIDUS.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/literal_with_REVERSE_SOLIDUS.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "literal_with_REVERSE_SOLIDUS2",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_REVERSE_SOLIDUS2.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/ns#s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/ns#p1"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "test-\\",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/literal_with_REVERSE_SOLIDUS2.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/literal_with_REVERSE_SOLIDUS2.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "literal_with_squote",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_squote.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://a.example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://a.example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "x'y",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/literal_with_squote.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/literal_with_squote.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "literal_with_UTF8_boundaries",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/literal_with_UTF8_boundaries.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://a.example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://a.example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "߿ࠀ࿿က쿿퀀퟿�𐀀𿿽񀀀󿿽􀀀􏿽",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/literal_with_UTF8_boundaries.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/literal_with_UTF8_boundaries.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "langtagged_string",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/langtagged_string.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://a.example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://a.example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "chat",
+            "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+            "language": "en"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/langtagged_string.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/langtagged_string.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "lantag_with_subtag",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/lantag_with_subtag.nq",
+      "status": "accepted",
+      "quads": 1,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example.org/ex#a"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example.org/ex#b"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "Cheers",
+            "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+            "language": "en-uk"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 0,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/lantag_with_subtag.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/lantag_with_subtag.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "minimal_whitespace",
+      "positive": true,
+      "type": "http://www.w3.org/ns/rdftest#TestNQuadsPositiveSyntax",
+      "path": "native/rdf/sources/rdf/rdf11/rdf-n-quads/minimal_whitespace.nq",
+      "status": "accepted",
+      "quads": 6,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://example/o"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "Alice",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "http://example/s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "o"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://example/o"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "Alice",
+            "datatype": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "s"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://example/p"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "bnode1"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 1,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/minimal_whitespace.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/minimal_whitespace.yaml.edited.nq"
+        }
+      ]
+    },
+    {
+      "id": "authored-schema",
+      "positive": true,
+      "path": "native/rdf/examples/schema.nq",
+      "type": "authored",
+      "status": "accepted",
+      "quads": 11,
+      "terms": [
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:example:Order"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://www.w3.org/2002/07/owl#Class"
+          },
+          "graph": {
+            "kind": "iri",
+            "value": "urn:graph:schema"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:example:Order"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/2000/01/rdf-schema#label"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "Order",
+            "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+            "language": "en-gb"
+          },
+          "graph": {
+            "kind": "iri",
+            "value": "urn:graph:schema"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:example:Order"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/2000/01/rdf-schema#label"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "Order",
+            "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+            "language": "en-gb"
+          },
+          "graph": {
+            "kind": "iri",
+            "value": "urn:graph:schema"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "shape"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "http://www.w3.org/ns/shacl#NodeShape"
+          },
+          "graph": {
+            "kind": "blank",
+            "value": "schemaGraph"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "shape"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/ns/shacl#targetClass"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "urn:example:Order"
+          },
+          "graph": {
+            "kind": "blank",
+            "value": "schemaGraph"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "shape"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/ns/shacl#property"
+          },
+          "object": {
+            "kind": "blank",
+            "value": "property"
+          },
+          "graph": {
+            "kind": "blank",
+            "value": "schemaGraph"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "property"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/ns/shacl#path"
+          },
+          "object": {
+            "kind": "iri",
+            "value": "urn:example:amount"
+          },
+          "graph": {
+            "kind": "blank",
+            "value": "schemaGraph"
+          }
+        },
+        {
+          "subject": {
+            "kind": "blank",
+            "value": "property"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "http://www.w3.org/ns/shacl#minCount"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "1",
+            "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+          },
+          "graph": {
+            "kind": "blank",
+            "value": "schemaGraph"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:example:sample"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:example:amount"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "001.2300",
+            "datatype": "http://www.w3.org/2001/XMLSchema#decimal"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:example:sample"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:example:identifier"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "18446744073709551615",
+            "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        },
+        {
+          "subject": {
+            "kind": "iri",
+            "value": "urn:example:sample"
+          },
+          "predicate": {
+            "kind": "iri",
+            "value": "urn:example:future"
+          },
+          "object": {
+            "kind": "literal",
+            "value": "opaque lexical form",
+            "datatype": "urn:datatype:future"
+          },
+          "graph": {
+            "kind": "default"
+          }
+        }
+      ],
+      "editIndex": 1,
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/rdf/nquads/authored-schema.json.edited.nq"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/rdf/nquads/authored-schema.yaml.edited.nq"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,705 @@
+{
+  "oracle": "pyarrow 21.0.0",
+  "cases": [
+    {
+      "file": "int64.stream.arrow",
+      "format": "stream",
+      "frames": [
+        {
+          "offset": 0,
+          "prefixLength": 8,
+          "metadataOffset": 8,
+          "metadataLength": 248,
+          "bodyOffset": 256,
+          "bodyLength": 0,
+          "kind": "Schema"
+        },
+        {
+          "offset": 256,
+          "prefixLength": 8,
+          "metadataOffset": 264,
+          "metadataLength": 136,
+          "bodyOffset": 400,
+          "bodyLength": 32,
+          "kind": "RecordBatch"
+        },
+        {
+          "offset": 432,
+          "prefixLength": 8,
+          "metadataOffset": 440,
+          "metadataLength": 136,
+          "bodyOffset": 576,
+          "bodyLength": 32,
+          "kind": "RecordBatch"
+        }
+      ],
+      "eosOffset": 608
+    },
+    {
+      "file": "int64.file.arrow",
+      "format": "file",
+      "frames": [
+        {
+          "offset": 8,
+          "prefixLength": 8,
+          "metadataOffset": 16,
+          "metadataLength": 248,
+          "bodyOffset": 264,
+          "bodyLength": 0,
+          "kind": "Schema"
+        },
+        {
+          "offset": 264,
+          "prefixLength": 8,
+          "metadataOffset": 272,
+          "metadataLength": 136,
+          "bodyOffset": 408,
+          "bodyLength": 32,
+          "kind": "RecordBatch"
+        },
+        {
+          "offset": 440,
+          "prefixLength": 8,
+          "metadataOffset": 448,
+          "metadataLength": 136,
+          "bodyOffset": 584,
+          "bodyLength": 32,
+          "kind": "RecordBatch"
+        }
+      ],
+      "eosOffset": 616,
+      "footer": {
+        "offset": 624,
+        "length": 312
+      }
+    },
+    {
+      "file": "dictionary.stream.arrow",
+      "format": "stream",
+      "frames": [
+        {
+          "offset": 0,
+          "prefixLength": 8,
+          "metadataOffset": 8,
+          "metadataLength": 280,
+          "bodyOffset": 288,
+          "bodyLength": 0,
+          "kind": "Schema"
+        },
+        {
+          "offset": 288,
+          "prefixLength": 8,
+          "metadataOffset": 296,
+          "metadataLength": 168,
+          "bodyOffset": 464,
+          "bodyLength": 32,
+          "kind": "DictionaryBatch"
+        },
+        {
+          "offset": 496,
+          "prefixLength": 8,
+          "metadataOffset": 504,
+          "metadataLength": 136,
+          "bodyOffset": 640,
+          "bodyLength": 16,
+          "kind": "RecordBatch"
+        },
+        {
+          "offset": 656,
+          "prefixLength": 8,
+          "metadataOffset": 664,
+          "metadataLength": 136,
+          "bodyOffset": 800,
+          "bodyLength": 16,
+          "kind": "RecordBatch"
+        }
+      ],
+      "eosOffset": 816
+    },
+    {
+      "file": "dictionary.file.arrow",
+      "format": "file",
+      "frames": [
+        {
+          "offset": 8,
+          "prefixLength": 8,
+          "metadataOffset": 16,
+          "metadataLength": 280,
+          "bodyOffset": 296,
+          "bodyLength": 0,
+          "kind": "Schema"
+        },
+        {
+          "offset": 296,
+          "prefixLength": 8,
+          "metadataOffset": 304,
+          "metadataLength": 168,
+          "bodyOffset": 472,
+          "bodyLength": 32,
+          "kind": "DictionaryBatch"
+        },
+        {
+          "offset": 504,
+          "prefixLength": 8,
+          "metadataOffset": 512,
+          "metadataLength": 136,
+          "bodyOffset": 648,
+          "bodyLength": 16,
+          "kind": "RecordBatch"
+        },
+        {
+          "offset": 664,
+          "prefixLength": 8,
+          "metadataOffset": 672,
+          "metadataLength": 136,
+          "bodyOffset": 808,
+          "bodyLength": 16,
+          "kind": "RecordBatch"
+        }
+      ],
+      "eosOffset": 824,
+      "footer": {
+        "offset": 832,
+        "length": 368
+      }
+    },
+    {
+      "file": "list.stream.arrow",
+      "format": "stream",
+      "frames": [
+        {
+          "offset": 0,
+          "prefixLength": 8,
+          "metadataOffset": 8,
+          "metadataLength": 296,
+          "bodyOffset": 304,
+          "bodyLength": 0,
+          "kind": "Schema"
+        },
+        {
+          "offset": 304,
+          "prefixLength": 8,
+          "metadataOffset": 312,
+          "metadataLength": 200,
+          "bodyOffset": 512,
+          "bodyLength": 56,
+          "kind": "RecordBatch"
+        },
+        {
+          "offset": 568,
+          "prefixLength": 8,
+          "metadataOffset": 576,
+          "metadataLength": 200,
+          "bodyOffset": 776,
+          "bodyLength": 56,
+          "kind": "RecordBatch"
+        }
+      ],
+      "eosOffset": 832
+    },
+    {
+      "file": "list.file.arrow",
+      "format": "file",
+      "frames": [
+        {
+          "offset": 8,
+          "prefixLength": 8,
+          "metadataOffset": 16,
+          "metadataLength": 296,
+          "bodyOffset": 312,
+          "bodyLength": 0,
+          "kind": "Schema"
+        },
+        {
+          "offset": 312,
+          "prefixLength": 8,
+          "metadataOffset": 320,
+          "metadataLength": 200,
+          "bodyOffset": 520,
+          "bodyLength": 56,
+          "kind": "RecordBatch"
+        },
+        {
+          "offset": 576,
+          "prefixLength": 8,
+          "metadataOffset": 584,
+          "metadataLength": 200,
+          "bodyOffset": 784,
+          "bodyLength": 56,
+          "kind": "RecordBatch"
+        }
+      ],
+      "eosOffset": 840,
+      "footer": {
+        "offset": 848,
+        "length": 360
+      }
+    },
+    {
+      "file": "struct.stream.arrow",
+      "format": "stream",
+      "frames": [
+        {
+          "offset": 0,
+          "prefixLength": 8,
+          "metadataOffset": 8,
+          "metadataLength": 352,
+          "bodyOffset": 360,
+          "bodyLength": 0,
+          "kind": "Schema"
+        },
+        {
+          "offset": 360,
+          "prefixLength": 8,
+          "metadataOffset": 368,
+          "metadataLength": 232,
+          "bodyOffset": 600,
+          "bodyLength": 56,
+          "kind": "RecordBatch"
+        },
+        {
+          "offset": 656,
+          "prefixLength": 8,
+          "metadataOffset": 664,
+          "metadataLength": 232,
+          "bodyOffset": 896,
+          "bodyLength": 56,
+          "kind": "RecordBatch"
+        }
+      ],
+      "eosOffset": 952
+    },
+    {
+      "file": "struct.file.arrow",
+      "format": "file",
+      "frames": [
+        {
+          "offset": 8,
+          "prefixLength": 8,
+          "metadataOffset": 16,
+          "metadataLength": 352,
+          "bodyOffset": 368,
+          "bodyLength": 0,
+          "kind": "Schema"
+        },
+        {
+          "offset": 368,
+          "prefixLength": 8,
+          "metadataOffset": 376,
+          "metadataLength": 232,
+          "bodyOffset": 608,
+          "bodyLength": 56,
+          "kind": "RecordBatch"
+        },
+        {
+          "offset": 664,
+          "prefixLength": 8,
+          "metadataOffset": 672,
+          "metadataLength": 232,
+          "bodyOffset": 904,
+          "bodyLength": 56,
+          "kind": "RecordBatch"
+        }
+      ],
+      "eosOffset": 960,
+      "footer": {
+        "offset": 968,
+        "length": 416
+      }
+    },
+    {
+      "file": "map.stream.arrow",
+      "format": "stream",
+      "frames": [
+        {
+          "offset": 0,
+          "prefixLength": 8,
+          "metadataOffset": 8,
+          "metadataLength": 416,
+          "bodyOffset": 424,
+          "bodyLength": 0,
+          "kind": "Schema"
+        },
+        {
+          "offset": 424,
+          "prefixLength": 8,
+          "metadataOffset": 432,
+          "metadataLength": 280,
+          "bodyOffset": 712,
+          "bodyLength": 64,
+          "kind": "RecordBatch"
+        },
+        {
+          "offset": 776,
+          "prefixLength": 8,
+          "metadataOffset": 784,
+          "metadataLength": 280,
+          "bodyOffset": 1064,
+          "bodyLength": 64,
+          "kind": "RecordBatch"
+        }
+      ],
+      "eosOffset": 1128
+    },
+    {
+      "file": "map.file.arrow",
+      "format": "file",
+      "frames": [
+        {
+          "offset": 8,
+          "prefixLength": 8,
+          "metadataOffset": 16,
+          "metadataLength": 416,
+          "bodyOffset": 432,
+          "bodyLength": 0,
+          "kind": "Schema"
+        },
+        {
+          "offset": 432,
+          "prefixLength": 8,
+          "metadataOffset": 440,
+          "metadataLength": 280,
+          "bodyOffset": 720,
+          "bodyLength": 64,
+          "kind": "RecordBatch"
+        },
+        {
+          "offset": 784,
+          "prefixLength": 8,
+          "metadataOffset": 792,
+          "metadataLength": 280,
+          "bodyOffset": 1072,
+          "bodyLength": 64,
+          "kind": "RecordBatch"
+        }
+      ],
+      "eosOffset": 1136,
+      "footer": {
+        "offset": 1144,
+        "length": 480
+      }
+    },
+    {
+      "file": "union.stream.arrow",
+      "format": "stream",
+      "frames": [
+        {
+          "offset": 0,
+          "prefixLength": 8,
+          "metadataOffset": 8,
+          "metadataLength": 384,
+          "bodyOffset": 392,
+          "bodyLength": 0,
+          "kind": "Schema"
+        },
+        {
+          "offset": 392,
+          "prefixLength": 8,
+          "metadataOffset": 400,
+          "metadataLength": 248,
+          "bodyOffset": 648,
+          "bodyLength": 64,
+          "kind": "RecordBatch"
+        },
+        {
+          "offset": 712,
+          "prefixLength": 8,
+          "metadataOffset": 720,
+          "metadataLength": 248,
+          "bodyOffset": 968,
+          "bodyLength": 64,
+          "kind": "RecordBatch"
+        }
+      ],
+      "eosOffset": 1032
+    },
+    {
+      "file": "union.file.arrow",
+      "format": "file",
+      "frames": [
+        {
+          "offset": 8,
+          "prefixLength": 8,
+          "metadataOffset": 16,
+          "metadataLength": 384,
+          "bodyOffset": 400,
+          "bodyLength": 0,
+          "kind": "Schema"
+        },
+        {
+          "offset": 400,
+          "prefixLength": 8,
+          "metadataOffset": 408,
+          "metadataLength": 248,
+          "bodyOffset": 656,
+          "bodyLength": 64,
+          "kind": "RecordBatch"
+        },
+        {
+          "offset": 720,
+          "prefixLength": 8,
+          "metadataOffset": 728,
+          "metadataLength": 248,
+          "bodyOffset": 976,
+          "bodyLength": 64,
+          "kind": "RecordBatch"
+        }
+      ],
+      "eosOffset": 1040,
+      "footer": {
+        "offset": 1048,
+        "length": 448
+      }
+    },
+    {
+      "file": "listview.stream.arrow",
+      "format": "stream",
+      "frames": [
+        {
+          "offset": 0,
+          "prefixLength": 8,
+          "metadataOffset": 8,
+          "metadataLength": 312,
+          "bodyOffset": 320,
+          "bodyLength": 0,
+          "kind": "Schema"
+        },
+        {
+          "offset": 320,
+          "prefixLength": 8,
+          "metadataOffset": 328,
+          "metadataLength": 200,
+          "bodyOffset": 528,
+          "bodyLength": 56,
+          "kind": "RecordBatch"
+        },
+        {
+          "offset": 584,
+          "prefixLength": 8,
+          "metadataOffset": 592,
+          "metadataLength": 200,
+          "bodyOffset": 792,
+          "bodyLength": 56,
+          "kind": "RecordBatch"
+        }
+      ],
+      "eosOffset": 848
+    },
+    {
+      "file": "listview.file.arrow",
+      "format": "file",
+      "frames": [
+        {
+          "offset": 8,
+          "prefixLength": 8,
+          "metadataOffset": 16,
+          "metadataLength": 312,
+          "bodyOffset": 328,
+          "bodyLength": 0,
+          "kind": "Schema"
+        },
+        {
+          "offset": 328,
+          "prefixLength": 8,
+          "metadataOffset": 336,
+          "metadataLength": 200,
+          "bodyOffset": 536,
+          "bodyLength": 56,
+          "kind": "RecordBatch"
+        },
+        {
+          "offset": 592,
+          "prefixLength": 8,
+          "metadataOffset": 600,
+          "metadataLength": 200,
+          "bodyOffset": 800,
+          "bodyLength": 56,
+          "kind": "RecordBatch"
+        }
+      ],
+      "eosOffset": 856,
+      "footer": {
+        "offset": 864,
+        "length": 376
+      }
+    },
+    {
+      "file": "largelistview.stream.arrow",
+      "format": "stream",
+      "frames": [
+        {
+          "offset": 0,
+          "prefixLength": 8,
+          "metadataOffset": 8,
+          "metadataLength": 312,
+          "bodyOffset": 320,
+          "bodyLength": 0,
+          "kind": "Schema"
+        },
+        {
+          "offset": 320,
+          "prefixLength": 8,
+          "metadataOffset": 328,
+          "metadataLength": 200,
+          "bodyOffset": 528,
+          "bodyLength": 72,
+          "kind": "RecordBatch"
+        },
+        {
+          "offset": 600,
+          "prefixLength": 8,
+          "metadataOffset": 608,
+          "metadataLength": 200,
+          "bodyOffset": 808,
+          "bodyLength": 72,
+          "kind": "RecordBatch"
+        }
+      ],
+      "eosOffset": 880
+    },
+    {
+      "file": "largelistview.file.arrow",
+      "format": "file",
+      "frames": [
+        {
+          "offset": 8,
+          "prefixLength": 8,
+          "metadataOffset": 16,
+          "metadataLength": 312,
+          "bodyOffset": 328,
+          "bodyLength": 0,
+          "kind": "Schema"
+        },
+        {
+          "offset": 328,
+          "prefixLength": 8,
+          "metadataOffset": 336,
+          "metadataLength": 200,
+          "bodyOffset": 536,
+          "bodyLength": 72,
+          "kind": "RecordBatch"
+        },
+        {
+          "offset": 608,
+          "prefixLength": 8,
+          "metadataOffset": 616,
+          "metadataLength": 200,
+          "bodyOffset": 816,
+          "bodyLength": 72,
+          "kind": "RecordBatch"
+        }
+      ],
+      "eosOffset": 888,
+      "footer": {
+        "offset": 896,
+        "length": 376
+      }
+    },
+    {
+      "file": "runendencoded.stream.arrow",
+      "format": "stream",
+      "frames": [
+        {
+          "offset": 0,
+          "prefixLength": 8,
+          "metadataOffset": 8,
+          "metadataLength": 376,
+          "bodyOffset": 384,
+          "bodyLength": 0,
+          "kind": "Schema"
+        },
+        {
+          "offset": 384,
+          "prefixLength": 8,
+          "metadataOffset": 392,
+          "metadataLength": 216,
+          "bodyOffset": 608,
+          "bodyLength": 40,
+          "kind": "RecordBatch"
+        },
+        {
+          "offset": 648,
+          "prefixLength": 8,
+          "metadataOffset": 656,
+          "metadataLength": 216,
+          "bodyOffset": 872,
+          "bodyLength": 40,
+          "kind": "RecordBatch"
+        }
+      ],
+      "eosOffset": 912
+    },
+    {
+      "file": "runendencoded.file.arrow",
+      "format": "file",
+      "frames": [
+        {
+          "offset": 8,
+          "prefixLength": 8,
+          "metadataOffset": 16,
+          "metadataLength": 376,
+          "bodyOffset": 392,
+          "bodyLength": 0,
+          "kind": "Schema"
+        },
+        {
+          "offset": 392,
+          "prefixLength": 8,
+          "metadataOffset": 400,
+          "metadataLength": 216,
+          "bodyOffset": 616,
+          "bodyLength": 40,
+          "kind": "RecordBatch"
+        },
+        {
+          "offset": 656,
+          "prefixLength": 8,
+          "metadataOffset": 664,
+          "metadataLength": 216,
+          "bodyOffset": 880,
+          "bodyLength": 40,
+          "kind": "RecordBatch"
+        }
+      ],
+      "eosOffset": 920,
+      "footer": {
+        "offset": 928,
+        "length": 440
+      }
+    },
+    {
+      "file": "int64.legacy.arrow",
+      "format": "stream",
+      "frames": [
+        {
+          "offset": 0,
+          "prefixLength": 4,
+          "metadataOffset": 4,
+          "metadataLength": 252,
+          "bodyOffset": 256,
+          "bodyLength": 0,
+          "kind": "Schema"
+        },
+        {
+          "offset": 256,
+          "prefixLength": 4,
+          "metadataOffset": 260,
+          "metadataLength": 140,
+          "bodyOffset": 400,
+          "bodyLength": 32,
+          "kind": "RecordBatch"
+        },
+        {
+          "offset": 432,
+          "prefixLength": 4,
+          "metadataOffset": 436,
+          "metadataLength": 140,
+          "bodyOffset": 576,
+          "bodyLength": 32,
+          "kind": "RecordBatch"
+        }
+      ],
+      "eosOffset": 608
+    }
+  ]
+}

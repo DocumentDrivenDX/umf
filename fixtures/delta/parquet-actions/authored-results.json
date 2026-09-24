@@ -1,0 +1,148 @@
+{
+  "results": [
+    {
+      "id": "exact-and-unknown",
+      "path": "fixtures/delta/parquet-actions/authored/exact-and-unknown.parquet",
+      "status": "projected",
+      "omittedNullFields": [],
+      "scalarConversions": []
+    },
+    {
+      "id": "null-pointer",
+      "path": "fixtures/delta/parquet-actions/authored/null-pointer.parquet",
+      "status": "projected",
+      "omittedNullFields": [
+        {
+          "row": 1,
+          "path": "/sidecar/tags"
+        }
+      ],
+      "scalarConversions": []
+    },
+    {
+      "id": "duplicate-map",
+      "path": "fixtures/delta/parquet-actions/authored/duplicate-map.parquet",
+      "status": "blocked"
+    },
+    {
+      "id": "float-needs-policy",
+      "path": "fixtures/delta/parquet-actions/authored/float-needs-policy.parquet",
+      "status": "blocked"
+    },
+    {
+      "id": "required-null",
+      "path": "fixtures/delta/parquet-actions/authored/required-null.parquet",
+      "status": "blocked"
+    },
+    {
+      "id": "multiple-actions",
+      "path": "fixtures/delta/parquet-actions/authored/multiple-actions.parquet",
+      "status": "blocked"
+    },
+    {
+      "id": "unknown-action",
+      "path": "fixtures/delta/parquet-actions/authored/unknown-action.parquet",
+      "status": "projected",
+      "omittedNullFields": [],
+      "scalarConversions": []
+    },
+    {
+      "id": "typed-statistics",
+      "path": "fixtures/delta/parquet-actions/authored/typed-statistics.parquet",
+      "status": "projected",
+      "omittedNullFields": [],
+      "scalarConversions": [
+        {
+          "row": 1,
+          "path": "/add/stats_parsed/date",
+          "input": {
+            "kind": "date",
+            "value": "-1",
+            "physical": {
+              "type": "INT32",
+              "value": "-1"
+            }
+          },
+          "output": {
+            "kind": "string",
+            "value": "1969-12-31"
+          }
+        },
+        {
+          "row": 1,
+          "path": "/add/stats_parsed/utc",
+          "input": {
+            "kind": "timestamp",
+            "unit": "NANOS",
+            "isAdjustedToUTC": true,
+            "value": "-1",
+            "physical": {
+              "type": "INT64",
+              "value": "-1"
+            }
+          },
+          "output": {
+            "kind": "string",
+            "value": "1969-12-31T23:59:59.999999999Z"
+          }
+        },
+        {
+          "row": 1,
+          "path": "/add/stats_parsed/local",
+          "input": {
+            "kind": "timestamp",
+            "unit": "MICROS",
+            "isAdjustedToUTC": false,
+            "value": "-1",
+            "physical": {
+              "type": "INT64",
+              "value": "-1"
+            }
+          },
+          "output": {
+            "kind": "string",
+            "value": "1969-12-31T23:59:59.999999"
+          }
+        },
+        {
+          "row": 1,
+          "path": "/add/stats_parsed/decimal",
+          "input": {
+            "kind": "decimal",
+            "value": "123456789012345678901.123456789",
+            "physical": {
+              "type": "FIXED_LEN_BYTE_ARRAY",
+              "hex": "018ee90ff6c373e0ee479f9f15"
+            }
+          },
+          "output": {
+            "kind": "number",
+            "value": "123456789012345678901.123456789"
+          }
+        },
+        {
+          "row": 1,
+          "path": "/add/stats_parsed/float",
+          "input": {
+            "kind": "float",
+            "bits": 64,
+            "value": "-0",
+            "physical": {
+              "type": "DOUBLE",
+              "hex": "0000000000000080"
+            }
+          },
+          "output": {
+            "kind": "number",
+            "value": "-0"
+          }
+        }
+      ]
+    },
+    {
+      "id": "nonfinite-statistics",
+      "path": "fixtures/delta/parquet-actions/authored/nonfinite-statistics.parquet",
+      "status": "blocked"
+    }
+  ]
+}

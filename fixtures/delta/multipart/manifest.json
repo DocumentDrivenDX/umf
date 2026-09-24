@@ -1,0 +1,20 @@
+{
+  "version": "10",
+  "partCount": 2,
+  "parts": [
+    {
+      "part": 1,
+      "path": "fixtures/delta/multipart/00000000000000000010.checkpoint.0000000001.0000000002.parquet",
+      "name": "00000000000000000010.checkpoint.0000000001.0000000002.parquet",
+      "rows": 5,
+      "sha256": "b9a61001bde994c6d9b1df92cd9f2dac0f93a41285f9eb95aca8afd7aeb11551"
+    },
+    {
+      "part": 2,
+      "path": "fixtures/delta/multipart/00000000000000000010.checkpoint.0000000002.0000000002.parquet",
+      "name": "00000000000000000010.checkpoint.0000000002.0000000002.parquet",
+      "rows": 1,
+      "sha256": "321416ce3473d594a8770511ac6dfc0b399e9b0d2070ea0ba541f75d17c9d7e1"
+    }
+  ]
+}

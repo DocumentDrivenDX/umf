@@ -1,0 +1,10 @@
+_:Nedce204c95014d8c9f8ec5735270ba71 <http://www.w3.org/ns/shacl#value> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N870bf0c580804446a08f84d7e960e128 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Nedce204c95014d8c9f8ec5735270ba71 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/nodeKind-001.test#IRITestShape> .
+_:Nedce204c95014d8c9f8ec5735270ba71 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nedce204c95014d8c9f8ec5735270ba71 <http://www.w3.org/ns/shacl#resultMessage> "Value is not of Node Kind sh:IRI" .
+_:N870bf0c580804446a08f84d7e960e128 <http://www.w3.org/ns/shacl#result> _:Nedce204c95014d8c9f8ec5735270ba71 .
+_:Nedce204c95014d8c9f8ec5735270ba71 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:Nedce204c95014d8c9f8ec5735270ba71 <http://www.w3.org/ns/shacl#focusNode> "true"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N870bf0c580804446a08f84d7e960e128 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Nedce204c95014d8c9f8ec5735270ba71 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .

@@ -1,0 +1,6 @@
+<http://a.example/s> <http://a.example/p> "\b" .
+<http://example/graph> { <http://a.example/s> <http://a.example/p> "\b" . }
+_:m_1_0 <urn:example:related> <urn:example:resource> .
+<urn:example:populated> { _:m_1_0 <urn:example:label> "Original label" . }
+<urn:example:empty> {}
+_:m_1_0 {}

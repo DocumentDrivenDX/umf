@@ -1,0 +1,39 @@
+{
+  "cases": [
+    {
+      "id": "v1",
+      "spec": "v1",
+      "path": "fixtures/delta/parquet-checkpoint/v1.parquet",
+      "version": "10",
+      "sha256": "7765e2267ec10a97bfad69c287297cef57c226e7cc29d03e1af29194e4c3b2c3",
+      "sidecars": []
+    },
+    {
+      "id": "v2-embedded",
+      "spec": "v2",
+      "path": "fixtures/delta/parquet-checkpoint/v2-embedded.parquet",
+      "version": "10",
+      "sha256": "b8c3cd7a68e217bfba60fa3015cb0042c379a71d7215aba8e005d30e79a69523",
+      "sidecars": []
+    },
+    {
+      "id": "v2-sidecars",
+      "spec": "v2",
+      "path": "fixtures/delta/parquet-checkpoint/v2-sidecars.parquet",
+      "version": "10",
+      "sha256": "b92dcc01a110b24db2fc56b1099f3708e5ac7465a1671943eaca35abc05a43fb",
+      "sidecars": [
+        {
+          "path": "part-0.parquet",
+          "file": "fixtures/delta/sidecars/part-0.parquet",
+          "sha256": "bb4ead073f8cee89bb6502d5fb1100731c771403e6ae24d9b799495de6acf4ad"
+        },
+        {
+          "path": "part-1.parquet",
+          "file": "fixtures/delta/sidecars/part-1.parquet",
+          "sha256": "11bc96db1743408ab8e68ce5f9b5cba1af348640a9b52452fa8f814ffa95dd9d"
+        }
+      ]
+    }
+  ]
+}

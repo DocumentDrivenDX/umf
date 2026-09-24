@@ -1,0 +1,23 @@
+{
+  "avro": "1.12.0",
+  "fastavro": "1.12.2",
+  "fields": 30,
+  "cases": [
+    {
+      "format": "json",
+      "bytes": 349,
+      "valuesAgree": true,
+      "bytesAgree": true
+    },
+    {
+      "format": "yaml",
+      "bytes": 349,
+      "valuesAgree": true,
+      "bytesAgree": true
+    }
+  ],
+  "nullableValuesAgree": true,
+  "fixedLengthRejected": true,
+  "targetAcceptsTinyint300": true,
+  "scope": "Target schema/binary/value behavior, not a SQL Server instance converter; source native catalog evidence is separate."
+}

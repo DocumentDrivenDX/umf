@@ -1,0 +1,10 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b7619 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b7619 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b7619 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b7619 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:b7619 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/misc/deactivated-002.test#TestShape> .
+_:b7619 <http://www.w3.org/ns/shacl#focusNode> "32"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:b7619 <http://www.w3.org/ns/shacl#value> "32"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:b7619 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have datatype <http://www.w3.org/2001/XMLSchema#boolean>" .

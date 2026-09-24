@@ -1,0 +1,1067 @@
+{
+  "result": {
+    "status": "projected",
+    "source": {
+      "umf": "0.1.0",
+      "id": "order",
+      "vocabularies": {
+        "umf.avro": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "schema",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "schema",
+              "extensions": {
+                "umf.avro": {
+                  "version": "1.12.0",
+                  "root": {
+                    "kind": "object",
+                    "members": {
+                      "type": {
+                        "kind": "string",
+                        "value": "record"
+                      },
+                      "name": {
+                        "kind": "string",
+                        "value": "Order"
+                      },
+                      "namespace": {
+                        "kind": "string",
+                        "value": "sales"
+                      },
+                      "aliases": {
+                        "kind": "array",
+                        "items": [
+                          {
+                            "kind": "string",
+                            "value": "Purchase"
+                          }
+                        ]
+                      },
+                      "doc": {
+                        "kind": "string",
+                        "value": "Original UMF fixture: recursive order with native Avro defaults and metadata."
+                      },
+                      "owner": {
+                        "kind": "object",
+                        "members": {
+                          "team": {
+                            "kind": "string",
+                            "value": "sales"
+                          },
+                          "future": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "boolean",
+                                "value": true
+                              },
+                              {
+                                "kind": "null"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "fields": {
+                        "kind": "array",
+                        "items": [
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "id"
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "long"
+                              },
+                              "order": {
+                                "kind": "string",
+                                "value": "ascending"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "status"
+                              },
+                              "type": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "enum"
+                                  },
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "Status"
+                                  },
+                                  "symbols": {
+                                    "kind": "array",
+                                    "items": [
+                                      {
+                                        "kind": "string",
+                                        "value": "NEW"
+                                      },
+                                      {
+                                        "kind": "string",
+                                        "value": "DONE"
+                                      }
+                                    ]
+                                  },
+                                  "default": {
+                                    "kind": "string",
+                                    "value": "NEW"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "token"
+                              },
+                              "type": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "fixed"
+                                  },
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "Token"
+                                  },
+                                  "size": {
+                                    "kind": "number",
+                                    "value": "4"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "tags"
+                              },
+                              "type": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "array"
+                                  },
+                                  "items": {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                }
+                              },
+                              "default": {
+                                "kind": "array",
+                                "items": []
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "labels"
+                              },
+                              "type": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "map"
+                                  },
+                                  "values": {
+                                    "kind": "string",
+                                    "value": "string"
+                                  }
+                                }
+                              },
+                              "default": {
+                                "kind": "object",
+                                "members": {}
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "parent"
+                              },
+                              "type": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "null"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "Order"
+                                  }
+                                ]
+                              },
+                              "default": {
+                                "kind": "null"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "amount"
+                              },
+                              "type": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "bytes"
+                                  },
+                                  "logicalType": {
+                                    "kind": "string",
+                                    "value": "decimal"
+                                  },
+                                  "precision": {
+                                    "kind": "number",
+                                    "value": "9"
+                                  },
+                                  "scale": {
+                                    "kind": "number",
+                                    "value": "2"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "created"
+                              },
+                              "type": {
+                                "kind": "object",
+                                "members": {
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "long"
+                                  },
+                                  "logicalType": {
+                                    "kind": "string",
+                                    "value": "timestamp-millis"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "payload"
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "bytes"
+                              },
+                              "default": {
+                                "kind": "string",
+                                "value": "ÿ"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "active"
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "boolean"
+                              },
+                              "default": {
+                                "kind": "boolean",
+                                "value": true
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "score"
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "float"
+                              },
+                              "default": {
+                                "kind": "number",
+                                "value": "1.5"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "ratio"
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "double"
+                              },
+                              "default": {
+                                "kind": "number",
+                                "value": "2.25"
+                              }
+                            }
+                          },
+                          {
+                            "kind": "object",
+                            "members": {
+                              "name": {
+                                "kind": "string",
+                                "value": "count"
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "int"
+                              },
+                              "default": {
+                                "kind": "number",
+                                "value": "0"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "avro.fields",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "[null,\"/fields/0\"]",
+              "name": "id",
+              "scalarType": "integer",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/1\"]",
+              "name": "status",
+              "scalarType": "string",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/2\"]",
+              "name": "token",
+              "scalarType": "binary",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/3\"]",
+              "name": "tags",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/4\"]",
+              "name": "labels",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/5\"]",
+              "name": "parent",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/6\"]",
+              "name": "amount",
+              "scalarType": "decimal",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/7\"]",
+              "name": "created",
+              "scalarType": "timestamp",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/8\"]",
+              "name": "payload",
+              "scalarType": "binary",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/9\"]",
+              "name": "active",
+              "scalarType": "boolean",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/10\"]",
+              "name": "score",
+              "scalarType": "float",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/11\"]",
+              "name": "ratio",
+              "scalarType": "float",
+              "extensions": {}
+            },
+            {
+              "id": "[null,\"/fields/12\"]",
+              "name": "count",
+              "scalarType": "integer",
+              "extensions": {}
+            }
+          ]
+        }
+      ]
+    },
+    "policy": {
+      "id": "avro-document",
+      "schemaId": "https://example.test/avro-order",
+      "long": "decimal-string",
+      "bytes": "hex-string",
+      "union": "untagged",
+      "lossPolicy": "allow-reported-loss"
+    },
+    "issues": [
+      {
+        "path": "/root/owner",
+        "code": "AVRO_METADATA",
+        "classification": "unsupported",
+        "detail": "Uninterpreted native metadata retained",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/6/type/logicalType",
+        "code": "AVRO_LOGICAL_TYPE",
+        "classification": "unsupported",
+        "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/7/type/logicalType",
+        "code": "AVRO_LOGICAL_TYPE",
+        "classification": "unsupported",
+        "detail": "Logical type retained; this browser profile validates its underlying carrier only",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root",
+        "code": "NATIVE_TYPE_IDENTITY",
+        "classification": "not-enforced",
+        "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/0/type",
+        "code": "LONG_ENCODING",
+        "classification": "representation-change",
+        "detail": "Long values use decimal strings; signed 64-bit bounds remain unenforced by this pattern",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/0",
+        "code": "FIELD_RESOLUTION",
+        "classification": "not-enforced",
+        "detail": "Native field aliases and sort order remain in source",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/1/type",
+        "code": "NATIVE_TYPE_IDENTITY",
+        "classification": "not-enforced",
+        "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/1/type/default",
+        "code": "ENUM_RESOLUTION",
+        "classification": "not-enforced",
+        "detail": "Reader fallback for unknown enum symbols is not executed by JSON validation",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/2/type",
+        "code": "NATIVE_TYPE_IDENTITY",
+        "classification": "not-enforced",
+        "detail": "Native named-type identity, aliases, resolution and binary representation are not enforced by JSON shape validation",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/2/type",
+        "code": "FIXED_ENCODING",
+        "classification": "representation-change",
+        "detail": "Fixed bytes require lowercase hexadecimal strings with exact byte length",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/3/default",
+        "code": "READER_DEFAULT",
+        "classification": "not-enforced",
+        "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/4/default",
+        "code": "READER_DEFAULT",
+        "classification": "not-enforced",
+        "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/5/type",
+        "code": "UNION_TAGS",
+        "classification": "representation-change",
+        "detail": "Untagged anyOf loses Avro branch identity and order; overlapping branches cannot be recovered from JSON values alone",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/5/default",
+        "code": "READER_DEFAULT",
+        "classification": "not-enforced",
+        "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/6/type/logicalType",
+        "code": "LOGICAL_TYPE_UNENFORCED",
+        "classification": "not-enforced",
+        "detail": "Only the underlying carrier is projected; logical type interpretation, units, precision and scale remain source-owned",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/6/type/type",
+        "code": "BYTES_ENCODING",
+        "classification": "representation-change",
+        "detail": "Native bytes require lowercase hexadecimal string encoding",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/7/type/logicalType",
+        "code": "LOGICAL_TYPE_UNENFORCED",
+        "classification": "not-enforced",
+        "detail": "Only the underlying carrier is projected; logical type interpretation, units, precision and scale remain source-owned",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/7/type/type",
+        "code": "LONG_ENCODING",
+        "classification": "representation-change",
+        "detail": "Long values use decimal strings; signed 64-bit bounds remain unenforced by this pattern",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/8/type",
+        "code": "BYTES_ENCODING",
+        "classification": "representation-change",
+        "detail": "Native bytes require lowercase hexadecimal string encoding",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/8/default",
+        "code": "READER_DEFAULT",
+        "classification": "not-enforced",
+        "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/9/default",
+        "code": "READER_DEFAULT",
+        "classification": "not-enforced",
+        "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/10/type",
+        "code": "FLOAT_PRECISION",
+        "classification": "not-enforced",
+        "detail": "JSON numbers do not enforce binary32 rounding or represent non-finite Avro values",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/10/default",
+        "code": "READER_DEFAULT",
+        "classification": "not-enforced",
+        "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/11/type",
+        "code": "NONFINITE_ENCODING",
+        "classification": "representation-change",
+        "detail": "JSON numbers cannot represent non-finite Avro values",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/11/default",
+        "code": "READER_DEFAULT",
+        "classification": "not-enforced",
+        "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root/fields/12/default",
+        "code": "READER_DEFAULT",
+        "classification": "not-enforced",
+        "detail": "Avro reader-resolution default remains in source; writer field stays required and no JSON default insertion is implied",
+        "retainedInSource": true
+      },
+      {
+        "path": "/root",
+        "code": "RECORD_ENCODING",
+        "classification": "representation-change",
+        "detail": "All declared writer fields are required in a closed JSON object; binary field ordering and runtime extra-field behavior are not reproduced",
+        "retainedInSource": true
+      },
+      {
+        "path": "",
+        "code": "SCHEMA_ONLY",
+        "classification": "representation-change",
+        "detail": "This projection defines a JSON instance binding; it does not convert Avro binary/JSON instances or implement reader/writer schema resolution",
+        "retainedInSource": true
+      }
+    ],
+    "mappings": [
+      {
+        "name": "sales.Order",
+        "sourcePath": "/root",
+        "targetPointer": "/$defs/type_0"
+      },
+      {
+        "name": "sales.Status",
+        "sourcePath": "/root/fields/1/type",
+        "targetPointer": "/$defs/type_1"
+      },
+      {
+        "name": "sales.Token",
+        "sourcePath": "/root/fields/2/type",
+        "targetPointer": "/$defs/type_2"
+      }
+    ],
+    "nativeSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"https://example.test/avro-order\",\n  \"$ref\": \"#/$defs/type_0\",\n  \"$defs\": {\n    \"type_0\": {\n      \"title\": \"sales.Order\",\n      \"description\": \"Original UMF fixture: recursive order with native Avro defaults and metadata.\",\n      \"type\": \"object\",\n      \"properties\": {\n        \"id\": {\n          \"type\": \"string\",\n          \"pattern\": \"^-?(0|[1-9][0-9]*)(?![\\\\s\\\\S])\"\n        },\n        \"status\": {\n          \"$ref\": \"#/$defs/type_1\"\n        },\n        \"token\": {\n          \"$ref\": \"#/$defs/type_2\"\n        },\n        \"tags\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"string\"\n          }\n        },\n        \"labels\": {\n          \"type\": \"object\",\n          \"additionalProperties\": {\n            \"type\": \"string\"\n          }\n        },\n        \"parent\": {\n          \"anyOf\": [\n            {\n              \"type\": \"null\"\n            },\n            {\n              \"$ref\": \"#/$defs/type_0\"\n            }\n          ]\n        },\n        \"amount\": {\n          \"type\": \"string\",\n          \"pattern\": \"^([0-9a-f]{2})*(?![\\\\s\\\\S])\"\n        },\n        \"created\": {\n          \"type\": \"string\",\n          \"pattern\": \"^-?(0|[1-9][0-9]*)(?![\\\\s\\\\S])\"\n        },\n        \"payload\": {\n          \"type\": \"string\",\n          \"pattern\": \"^([0-9a-f]{2})*(?![\\\\s\\\\S])\"\n        },\n        \"active\": {\n          \"type\": \"boolean\"\n        },\n        \"score\": {\n          \"type\": \"number\"\n        },\n        \"ratio\": {\n          \"type\": \"number\"\n        },\n        \"count\": {\n          \"type\": \"integer\",\n          \"minimum\": -2147483648,\n          \"maximum\": 2147483647\n        }\n      },\n      \"required\": [\n        \"id\",\n        \"status\",\n        \"token\",\n        \"tags\",\n        \"labels\",\n        \"parent\",\n        \"amount\",\n        \"created\",\n        \"payload\",\n        \"active\",\n        \"score\",\n        \"ratio\",\n        \"count\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"type_1\": {\n      \"title\": \"sales.Status\",\n      \"type\": \"string\",\n      \"enum\": [\n        \"NEW\",\n        \"DONE\"\n      ]\n    },\n    \"type_2\": {\n      \"title\": \"sales.Token\",\n      \"type\": \"string\",\n      \"pattern\": \"^([0-9a-f]{2})*(?![\\\\s\\\\S])\",\n      \"minLength\": 8,\n      \"maxLength\": 8\n    }\n  }\n}\n",
+    "target": {
+      "umf": "0.1.0",
+      "id": "avro-document",
+      "vocabularies": {
+        "umf.json-schema": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "schema",
+          "namespace": "https://example.test/avro-order",
+          "elements": [
+            {
+              "id": "schema",
+              "extensions": {
+                "umf.json-schema": {
+                  "dialect": "https://json-schema.org/draft/2020-12/schema",
+                  "baseUri": "https://example.test/avro-order",
+                  "root": {
+                    "kind": "object",
+                    "members": {
+                      "$schema": {
+                        "kind": "string",
+                        "value": "https://json-schema.org/draft/2020-12/schema"
+                      },
+                      "$id": {
+                        "kind": "string",
+                        "value": "https://example.test/avro-order"
+                      },
+                      "$ref": {
+                        "kind": "string",
+                        "value": "#/$defs/type_0"
+                      },
+                      "$defs": {
+                        "kind": "object",
+                        "members": {
+                          "type_0": {
+                            "kind": "object",
+                            "members": {
+                              "title": {
+                                "kind": "string",
+                                "value": "sales.Order"
+                              },
+                              "description": {
+                                "kind": "string",
+                                "value": "Original UMF fixture: recursive order with native Avro defaults and metadata."
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "object"
+                              },
+                              "properties": {
+                                "kind": "object",
+                                "members": {
+                                  "id": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "string"
+                                      },
+                                      "pattern": {
+                                        "kind": "string",
+                                        "value": "^-?(0|[1-9][0-9]*)(?![\\s\\S])"
+                                      }
+                                    }
+                                  },
+                                  "status": {
+                                    "kind": "object",
+                                    "members": {
+                                      "$ref": {
+                                        "kind": "string",
+                                        "value": "#/$defs/type_1"
+                                      }
+                                    }
+                                  },
+                                  "token": {
+                                    "kind": "object",
+                                    "members": {
+                                      "$ref": {
+                                        "kind": "string",
+                                        "value": "#/$defs/type_2"
+                                      }
+                                    }
+                                  },
+                                  "tags": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "array"
+                                      },
+                                      "items": {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "string"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "labels": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "object"
+                                      },
+                                      "additionalProperties": {
+                                        "kind": "object",
+                                        "members": {
+                                          "type": {
+                                            "kind": "string",
+                                            "value": "string"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  "parent": {
+                                    "kind": "object",
+                                    "members": {
+                                      "anyOf": {
+                                        "kind": "array",
+                                        "items": [
+                                          {
+                                            "kind": "object",
+                                            "members": {
+                                              "type": {
+                                                "kind": "string",
+                                                "value": "null"
+                                              }
+                                            }
+                                          },
+                                          {
+                                            "kind": "object",
+                                            "members": {
+                                              "$ref": {
+                                                "kind": "string",
+                                                "value": "#/$defs/type_0"
+                                              }
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  "amount": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "string"
+                                      },
+                                      "pattern": {
+                                        "kind": "string",
+                                        "value": "^([0-9a-f]{2})*(?![\\s\\S])"
+                                      }
+                                    }
+                                  },
+                                  "created": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "string"
+                                      },
+                                      "pattern": {
+                                        "kind": "string",
+                                        "value": "^-?(0|[1-9][0-9]*)(?![\\s\\S])"
+                                      }
+                                    }
+                                  },
+                                  "payload": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "string"
+                                      },
+                                      "pattern": {
+                                        "kind": "string",
+                                        "value": "^([0-9a-f]{2})*(?![\\s\\S])"
+                                      }
+                                    }
+                                  },
+                                  "active": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "boolean"
+                                      }
+                                    }
+                                  },
+                                  "score": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "number"
+                                      }
+                                    }
+                                  },
+                                  "ratio": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "number"
+                                      }
+                                    }
+                                  },
+                                  "count": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "integer"
+                                      },
+                                      "minimum": {
+                                        "kind": "number",
+                                        "value": "-2147483648"
+                                      },
+                                      "maximum": {
+                                        "kind": "number",
+                                        "value": "2147483647"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "required": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "id"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "status"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "token"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "tags"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "labels"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "parent"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "amount"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "created"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "payload"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "active"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "score"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "ratio"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "count"
+                                  }
+                                ]
+                              },
+                              "additionalProperties": {
+                                "kind": "boolean",
+                                "value": false
+                              }
+                            }
+                          },
+                          "type_1": {
+                            "kind": "object",
+                            "members": {
+                              "title": {
+                                "kind": "string",
+                                "value": "sales.Status"
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "string"
+                              },
+                              "enum": {
+                                "kind": "array",
+                                "items": [
+                                  {
+                                    "kind": "string",
+                                    "value": "NEW"
+                                  },
+                                  {
+                                    "kind": "string",
+                                    "value": "DONE"
+                                  }
+                                ]
+                              }
+                            }
+                          },
+                          "type_2": {
+                            "kind": "object",
+                            "members": {
+                              "title": {
+                                "kind": "string",
+                                "value": "sales.Token"
+                              },
+                              "type": {
+                                "kind": "string",
+                                "value": "string"
+                              },
+                              "pattern": {
+                                "kind": "string",
+                                "value": "^([0-9a-f]{2})*(?![\\s\\S])"
+                              },
+                              "minLength": {
+                                "kind": "number",
+                                "value": "8"
+                              },
+                              "maxLength": {
+                                "kind": "number",
+                                "value": "8"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "resources": {}
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "datum": {
+    "id": "9223372036854775807",
+    "status": "NEW",
+    "token": "00000000",
+    "tags": [
+      "雪"
+    ],
+    "labels": {
+      "label": "x"
+    },
+    "parent": null,
+    "amount": "01",
+    "created": "1",
+    "payload": "00ff",
+    "active": true,
+    "score": 1.5,
+    "ratio": 2.25,
+    "count": 1
+  }
+}

@@ -1,0 +1,281 @@
+{
+  "cases": 18,
+  "results": [
+    {
+      "id": "0",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_DECIMAL_PRECISION",
+          "path": "",
+          "message": "Spark JVM decimal precision exceeds the supported maximum of 38",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_DECIMAL_SCALE",
+          "path": "",
+          "message": "Spark JVM rejects decimal scale greater than precision",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_DECIMAL_NEGATIVE_SCALE",
+          "path": "",
+          "message": "Negative decimal scale depends on spark.sql.legacy.allowNegativeScaleOfDecimal; default JVM configuration rejects it",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_PARAMETER_INT32",
+          "path": "",
+          "message": "Spark JVM parses decimal parameters as int32; this value exceeds that range",
+          "severity": "warning"
+        },
+        {
+          "code": "SPARK_DECIMAL_PRECISION",
+          "path": "",
+          "message": "Spark JVM decimal precision exceeds the supported maximum of 38",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_PARAMETER_INT32",
+          "path": "",
+          "message": "Spark JVM parses decimal parameters as int32; this value exceeds that range",
+          "severity": "warning"
+        },
+        {
+          "code": "SPARK_DECIMAL_NEGATIVE_SCALE",
+          "path": "",
+          "message": "Negative decimal scale depends on spark.sql.legacy.allowNegativeScaleOfDecimal; default JVM configuration rejects it",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_PARAMETER_INT32",
+          "path": "",
+          "message": "Spark JVM parses character length as int32; this value exceeds that range",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_PARAMETER_INT32",
+          "path": "",
+          "message": "Spark JVM parses character length as int32; this value exceeds that range",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_INTERVAL_RANGE",
+          "path": "",
+          "message": "Spark JVM JSON interval spelling must use an increasing range within year/month or day/time units",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        }
+      ]
+    },
+    {
+      "id": "15",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_INTERVAL_RANGE",
+          "path": "",
+          "message": "Spark JVM JSON interval spelling must use an increasing range within year/month or day/time units",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "16",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_INTERVAL_RANGE",
+          "path": "",
+          "message": "Spark JVM JSON interval spelling must use an increasing range within year/month or day/time units",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "17",
+      "diagnostics": [
+        {
+          "code": "SPARK_NATIVE_UNVERIFIED",
+          "path": "",
+          "severity": "warning",
+          "message": "Schema preservation is not Spark engine validity: runtime/configuration, metadata, collation and coercion checks remain separate"
+        },
+        {
+          "code": "SPARK_INTERVAL_RANGE",
+          "path": "",
+          "message": "Spark JVM JSON interval spelling must use an increasing range within year/month or day/time units",
+          "severity": "warning"
+        }
+      ]
+    }
+  ]
+}

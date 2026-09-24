@@ -1,0 +1,14 @@
+{
+  "cases": [
+    {
+      "id": "expansion-limit",
+      "path": "fixtures/parquet/physical/authored/expansion-limit.parquet",
+      "expectedMessage": "64 MiB"
+    },
+    {
+      "id": "bad-dictionary-index",
+      "path": "fixtures/parquet/physical/authored/bad-dictionary-index.parquet",
+      "expectedMessage": "allowed range"
+    }
+  ]
+}

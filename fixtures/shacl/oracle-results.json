@@ -1,0 +1,607 @@
+{
+  "oracle": "RDFLib",
+  "version": "7.6.0",
+  "normalization": false,
+  "results": [
+    {
+      "name": "predicate",
+      "focus": "a",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/c"
+        }
+      ]
+    },
+    {
+      "name": "predicate",
+      "focus": "b",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ]
+    },
+    {
+      "name": "predicate",
+      "focus": "d",
+      "equal": true,
+      "native": []
+    },
+    {
+      "name": "predicate",
+      "focus": "missing",
+      "equal": true,
+      "native": []
+    },
+    {
+      "name": "inverse",
+      "focus": "a",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        }
+      ]
+    },
+    {
+      "name": "inverse",
+      "focus": "b",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ]
+    },
+    {
+      "name": "inverse",
+      "focus": "d",
+      "equal": true,
+      "native": []
+    },
+    {
+      "name": "inverse",
+      "focus": "missing",
+      "equal": true,
+      "native": []
+    },
+    {
+      "name": "sequence",
+      "focus": "a",
+      "equal": true,
+      "native": [
+        {
+          "kind": "literal",
+          "value": "hello",
+          "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+          "language": "en"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/d"
+        },
+        {
+          "kind": "literal",
+          "value": "9007199254740993",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ]
+    },
+    {
+      "name": "sequence",
+      "focus": "b",
+      "equal": true,
+      "native": []
+    },
+    {
+      "name": "sequence",
+      "focus": "d",
+      "equal": true,
+      "native": []
+    },
+    {
+      "name": "sequence",
+      "focus": "missing",
+      "equal": true,
+      "native": []
+    },
+    {
+      "name": "alternative",
+      "focus": "a",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/c"
+        }
+      ]
+    },
+    {
+      "name": "alternative",
+      "focus": "b",
+      "equal": true,
+      "native": [
+        {
+          "kind": "literal",
+          "value": "hello",
+          "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+          "language": "en"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        },
+        {
+          "kind": "literal",
+          "value": "9007199254740993",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ]
+    },
+    {
+      "name": "alternative",
+      "focus": "d",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ]
+    },
+    {
+      "name": "alternative",
+      "focus": "missing",
+      "equal": true,
+      "native": []
+    },
+    {
+      "name": "star",
+      "focus": "a",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/c"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ]
+    },
+    {
+      "name": "star",
+      "focus": "b",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/c"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ]
+    },
+    {
+      "name": "star",
+      "focus": "d",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/d"
+        }
+      ]
+    },
+    {
+      "name": "star",
+      "focus": "missing",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/missing"
+        }
+      ]
+    },
+    {
+      "name": "plus",
+      "focus": "a",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/c"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ]
+    },
+    {
+      "name": "plus",
+      "focus": "b",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/c"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ]
+    },
+    {
+      "name": "plus",
+      "focus": "d",
+      "equal": true,
+      "native": []
+    },
+    {
+      "name": "plus",
+      "focus": "missing",
+      "equal": true,
+      "native": []
+    },
+    {
+      "name": "optional",
+      "focus": "a",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/c"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ]
+    },
+    {
+      "name": "optional",
+      "focus": "b",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ]
+    },
+    {
+      "name": "optional",
+      "focus": "d",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/d"
+        }
+      ]
+    },
+    {
+      "name": "optional",
+      "focus": "missing",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/missing"
+        }
+      ]
+    },
+    {
+      "name": "inverseSequence",
+      "focus": "a",
+      "equal": true,
+      "native": []
+    },
+    {
+      "name": "inverseSequence",
+      "focus": "b",
+      "equal": true,
+      "native": []
+    },
+    {
+      "name": "inverseSequence",
+      "focus": "d",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/c"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ]
+    },
+    {
+      "name": "inverseSequence",
+      "focus": "missing",
+      "equal": true,
+      "native": []
+    },
+    {
+      "name": "nested",
+      "focus": "a",
+      "equal": true,
+      "native": [
+        {
+          "kind": "literal",
+          "value": "hello",
+          "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+          "language": "en"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/d"
+        },
+        {
+          "kind": "literal",
+          "value": "9007199254740993",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ]
+    },
+    {
+      "name": "nested",
+      "focus": "b",
+      "equal": true,
+      "native": [
+        {
+          "kind": "literal",
+          "value": "hello",
+          "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+          "language": "en"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/d"
+        },
+        {
+          "kind": "literal",
+          "value": "9007199254740993",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ]
+    },
+    {
+      "name": "nested",
+      "focus": "d",
+      "equal": true,
+      "native": []
+    },
+    {
+      "name": "nested",
+      "focus": "missing",
+      "equal": true,
+      "native": []
+    },
+    {
+      "name": "doubleInverse",
+      "focus": "a",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/c"
+        }
+      ]
+    },
+    {
+      "name": "doubleInverse",
+      "focus": "b",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ]
+    },
+    {
+      "name": "doubleInverse",
+      "focus": "d",
+      "equal": true,
+      "native": []
+    },
+    {
+      "name": "doubleInverse",
+      "focus": "missing",
+      "equal": true,
+      "native": []
+    },
+    {
+      "name": "inverseStar",
+      "focus": "a",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ]
+    },
+    {
+      "name": "inverseStar",
+      "focus": "b",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ]
+    },
+    {
+      "name": "inverseStar",
+      "focus": "d",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/d"
+        }
+      ]
+    },
+    {
+      "name": "inverseStar",
+      "focus": "missing",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/missing"
+        }
+      ]
+    },
+    {
+      "name": "nullablePlus",
+      "focus": "a",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ]
+    },
+    {
+      "name": "nullablePlus",
+      "focus": "b",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        }
+      ]
+    },
+    {
+      "name": "nullablePlus",
+      "focus": "d",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/d"
+        }
+      ]
+    },
+    {
+      "name": "nullablePlus",
+      "focus": "missing",
+      "equal": true,
+      "native": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/missing"
+        }
+      ]
+    },
+    {
+      "name": "sequenceWithAnnotation",
+      "focus": "a",
+      "equal": true,
+      "native": [
+        {
+          "kind": "literal",
+          "value": "hello",
+          "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+          "language": "en"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/d"
+        },
+        {
+          "kind": "literal",
+          "value": "9007199254740993",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ]
+    },
+    {
+      "name": "sequenceWithAnnotation",
+      "focus": "b",
+      "equal": true,
+      "native": []
+    },
+    {
+      "name": "sequenceWithAnnotation",
+      "focus": "d",
+      "equal": true,
+      "native": []
+    },
+    {
+      "name": "sequenceWithAnnotation",
+      "focus": "missing",
+      "equal": true,
+      "native": []
+    }
+  ],
+  "roundTrips": {
+    "json": true,
+    "yaml": true
+  },
+  "edit": true
+}

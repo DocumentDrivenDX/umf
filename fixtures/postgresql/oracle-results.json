@@ -1,0 +1,23 @@
+{
+  "oracle": "pglast v7.18",
+  "postgresqlVersion": [
+    17,
+    7
+  ],
+  "wasmParserVersion": 170004,
+  "cases": [
+    {
+      "name": "domain.sql",
+      "statements": 7,
+      "nativeAstEqualExcludingOffsets": true
+    },
+    {
+      "name": "advanced.sql",
+      "statements": 7,
+      "nativeAstEqualExcludingOffsets": true
+    }
+  ],
+  "editChangesOnlySelectedName": true,
+  "invalidSqlRejected": true,
+  "scope": "Independent native C wrapper parsing original/re-exported SQL. Native PostgreSQL 17.7 versus WASM 17.4 are explicitly distinct. No catalog resolution, DDL execution or cross-system semantic equivalence claim."
+}

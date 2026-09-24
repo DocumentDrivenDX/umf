@@ -1,0 +1,6 @@
+export {};
+const node=(await Bun.file('spec/core/native-json.schema.json').json()).$defs.node;
+const schema={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:dbt:manifest:0.1.0',type:'object',properties:{profile:{const:'dbt-manifest-json'},root:{$ref:'#/$defs/node'}},required:['profile','root'],additionalProperties:true,$defs:{node}};
+const manifest={id:'umf.dbt.manifest',version:'0.1.0',coreVersion:'0.1.0',description:'Exact dbt manifest JSON with pinned v12 shape inspection',schema,semantics:'CONTRACT-022; native warnings never justify source loss; shape checks do not prove compilation or graph validity',scopes:['element'],capabilities:{validation:'semantic',directions:['import','export'],native:{system:'dbt manifest',version:'v12 grammar; dbt Core 1.10.0 fixture',subset:'Exact artifact preservation, copied edits and schema-shape diagnostics; no graph or execution validity'},evidence:['tests/dbt/manifest.test.ts','fixtures/dbt/oracle-results.json','fixtures/dbt/browser-results.json']}};
+for(const [name,value] of Object.entries({'schema.json':schema,'package.json':manifest}))await Bun.write('spec/extensions/dbt-manifest/'+name,JSON.stringify(value,null,2)+'\n');
+await Bun.write('spec/extensions/dbt-manifest/native-schema.json',Bun.file('native/dbt/sources/manifest-v12.json'));

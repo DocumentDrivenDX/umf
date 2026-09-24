@@ -1,0 +1,2143 @@
+{
+  "inputSha256": "58e2116b446daf4b0c15d4b75363308cd8d59409d1771110de12bdb81a3d63ab",
+  "avro": "1.12.0",
+  "fastavro": "1.12.2",
+  "observations": [
+    {
+      "schema": "null",
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": "boolean",
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": "int",
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": "long",
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": "float",
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": "double",
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": "bytes",
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": "string",
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": "external.Name",
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": false,
+        "exception": "UnknownType",
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "string",
+        "future": {
+          "keep": true
+        }
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "record",
+        "name": "a.Node",
+        "aliases": [
+          "formerly invalid name"
+        ],
+        "fields": [
+          {
+            "name": "id",
+            "type": "long",
+            "default": 0,
+            "order": "ascending"
+          },
+          {
+            "name": "next",
+            "type": [
+              "null",
+              "a.Node"
+            ],
+            "default": null
+          }
+        ]
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "error",
+        "name": "Failure",
+        "fields": [
+          {
+            "name": "message",
+            "type": "string"
+          }
+        ]
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "enum",
+        "name": "Color",
+        "namespace": "",
+        "symbols": [
+          "RED",
+          "BLUE"
+        ],
+        "default": "RED"
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "fixed",
+        "name": "Digest",
+        "size": 16
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "map",
+          "values": [
+            "null",
+            "double"
+          ]
+        }
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 8,
+        "scale": 2
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "long",
+        "logicalType": "future",
+        "qualifier": {
+          "unknown": true
+        }
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": [
+          "Unknown future, using long."
+        ]
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 0,
+        "scale": 4
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": [
+          "Invalid decimal precision 0. Must be a positive integer."
+        ]
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "record",
+        "name": "R",
+        "fields": [
+          {
+            "name": "x",
+            "type": "int",
+            "default": "wrong"
+          }
+        ]
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "warnings": []
+      }
+    },
+    {
+      "schema": [
+        "null",
+        {
+          "type": "fixed",
+          "name": "A",
+          "size": 1
+        },
+        {
+          "type": "fixed",
+          "name": "B",
+          "size": 1
+        }
+      ],
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": [],
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "fixed",
+        "name": "Zero",
+        "size": 0
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": [
+        "array",
+        {
+          "type": "array",
+          "items": "int"
+        }
+      ],
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": false,
+        "exception": "UnknownType",
+        "warnings": []
+      }
+    },
+    {
+      "schema": [
+        "map",
+        {
+          "type": "map",
+          "values": "int"
+        }
+      ],
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": false,
+        "exception": "UnknownType",
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "record",
+        "name": "FooBarSpecificRecord",
+        "namespace": "org.apache.avro",
+        "fields": [
+          {
+            "name": "id",
+            "type": "int"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "nicknames",
+            "type": {
+              "type": "array",
+              "items": "string"
+            }
+          },
+          {
+            "name": "relatedids",
+            "type": {
+              "type": "array",
+              "items": "int"
+            }
+          },
+          {
+            "name": "typeEnum",
+            "type": [
+              "null",
+              {
+                "type": "enum",
+                "name": "TypeEnum",
+                "namespace": "org.apache.avro",
+                "symbols": [
+                  "a",
+                  "b",
+                  "c"
+                ]
+              }
+            ],
+            "default": null
+          }
+        ]
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "record",
+        "name": "RecordWithRequiredFields",
+        "namespace": "org.apache.avro",
+        "fields": [
+          {
+            "name": "strField",
+            "type": "string"
+          },
+          {
+            "name": "unionField",
+            "type": [
+              "null",
+              {
+                "type": "record",
+                "name": "UnionRecord",
+                "fields": [
+                  {
+                    "name": "strField",
+                    "type": "string"
+                  },
+                  {
+                    "name": "arrayField",
+                    "type": {
+                      "type": "array",
+                      "items": {
+                        "type": "record",
+                        "name": "ArrayRecord",
+                        "fields": [
+                          {
+                            "name": "strField",
+                            "type": "string"
+                          },
+                          {
+                            "name": "mapField",
+                            "type": {
+                              "type": "map",
+                              "values": {
+                                "type": "record",
+                                "name": "MapRecord",
+                                "fields": [
+                                  {
+                                    "name": "enumField",
+                                    "type": {
+                                      "type": "enum",
+                                      "name": "MapRecordEnum",
+                                      "symbols": [
+                                        "A",
+                                        "B"
+                                      ],
+                                      "default": "A"
+                                    }
+                                  },
+                                  {
+                                    "name": "strField",
+                                    "type": "string"
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "record",
+        "name": "Interop",
+        "namespace": "org.apache.avro",
+        "fields": [
+          {
+            "name": "intField",
+            "type": "int"
+          },
+          {
+            "name": "longField",
+            "type": "long"
+          },
+          {
+            "name": "stringField",
+            "type": "string"
+          },
+          {
+            "name": "boolField",
+            "type": "boolean"
+          },
+          {
+            "name": "floatField",
+            "type": "float"
+          },
+          {
+            "name": "doubleField",
+            "type": "double"
+          },
+          {
+            "name": "bytesField",
+            "type": "bytes"
+          },
+          {
+            "name": "nullField",
+            "type": "null"
+          },
+          {
+            "name": "arrayField",
+            "type": {
+              "type": "array",
+              "items": "double"
+            }
+          },
+          {
+            "name": "mapField",
+            "type": {
+              "type": "map",
+              "values": {
+                "type": "record",
+                "name": "Foo",
+                "fields": [
+                  {
+                    "name": "label",
+                    "type": "string"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "name": "unionField",
+            "type": [
+              "boolean",
+              "double",
+              {
+                "type": "array",
+                "items": "bytes"
+              }
+            ]
+          },
+          {
+            "name": "enumField",
+            "type": {
+              "type": "enum",
+              "name": "Kind",
+              "symbols": [
+                "A",
+                "B",
+                "C"
+              ]
+            }
+          },
+          {
+            "name": "fixedField",
+            "type": {
+              "type": "fixed",
+              "name": "MD5",
+              "size": 16
+            }
+          },
+          {
+            "name": "recordField",
+            "type": {
+              "type": "record",
+              "name": "Node",
+              "fields": [
+                {
+                  "name": "label",
+                  "type": "string"
+                },
+                {
+                  "name": "children",
+                  "type": {
+                    "type": "array",
+                    "items": "Node"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "name": "org.apache.avro.test.Reserved",
+        "type": "enum",
+        "symbols": [
+          "default",
+          "class",
+          "int"
+        ]
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "record",
+        "name": "test.Weather",
+        "doc": "A weather reading.",
+        "fields": [
+          {
+            "name": "station",
+            "type": "string",
+            "order": "ignore"
+          },
+          {
+            "name": "time",
+            "type": "long"
+          },
+          {
+            "name": "temp",
+            "type": "int"
+          }
+        ]
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "record",
+        "name": "recordAll",
+        "fields": [
+          {
+            "name": "requiredBoolean",
+            "type": "boolean"
+          },
+          {
+            "name": "requiredBooleanWithDefault",
+            "type": "boolean",
+            "default": true
+          },
+          {
+            "name": "optionalBoolean",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "default": null
+          },
+          {
+            "name": "optionalBooleanWithDefault",
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "default": true
+          },
+          {
+            "name": "requiredInt",
+            "type": "int"
+          },
+          {
+            "name": "optionalInt",
+            "type": [
+              "null",
+              "int"
+            ],
+            "default": null
+          },
+          {
+            "name": "optionalIntWithDefault",
+            "type": [
+              "int",
+              "null"
+            ],
+            "default": 1
+          },
+          {
+            "name": "requiredLong",
+            "type": "long"
+          },
+          {
+            "name": "optionalLong",
+            "type": [
+              "null",
+              "long"
+            ],
+            "default": null
+          },
+          {
+            "name": "optionalLongWithDefault",
+            "type": [
+              "long",
+              "null"
+            ],
+            "default": 1
+          },
+          {
+            "name": "requiredFloat",
+            "type": "float"
+          },
+          {
+            "name": "optionalFloat",
+            "type": [
+              "null",
+              "float"
+            ],
+            "default": null
+          },
+          {
+            "name": "optionalFloatWithDefault",
+            "type": [
+              "float",
+              "null"
+            ],
+            "default": 1
+          },
+          {
+            "name": "requiredDouble",
+            "type": "double"
+          },
+          {
+            "name": "optionalDouble",
+            "type": [
+              "null",
+              "double"
+            ],
+            "default": null
+          },
+          {
+            "name": "optionalDoubleWithDefault",
+            "type": [
+              "double",
+              "null"
+            ],
+            "default": 1
+          },
+          {
+            "name": "requiredBytes",
+            "type": "bytes"
+          },
+          {
+            "name": "optionalBytes",
+            "type": [
+              "null",
+              "bytes"
+            ],
+            "default": null
+          },
+          {
+            "name": "optionalBytesWithDefault",
+            "type": [
+              "bytes",
+              "null"
+            ],
+            "default": "A"
+          },
+          {
+            "name": "requiredString",
+            "type": "string"
+          },
+          {
+            "name": "optionalString",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "optionalStringWithDefault",
+            "type": [
+              "string",
+              "null"
+            ],
+            "default": "a"
+          },
+          {
+            "name": "requiredRecord",
+            "type": {
+              "type": "record",
+              "name": "nestedRequiredRecord",
+              "fields": [
+                {
+                  "name": "nestedRequiredBoolean",
+                  "type": "boolean"
+                }
+              ]
+            }
+          },
+          {
+            "name": "optionalRecord",
+            "type": [
+              "null",
+              {
+                "type": "record",
+                "name": "nestedOptionalRecord",
+                "fields": [
+                  {
+                    "name": "nestedRequiredBoolean",
+                    "type": "boolean"
+                  }
+                ]
+              }
+            ],
+            "default": null
+          },
+          {
+            "name": "optionalRecordWithDefault",
+            "type": [
+              {
+                "type": "record",
+                "name": "nestedOptionalRecordWithDefault",
+                "fields": [
+                  {
+                    "name": "nestedRequiredBoolean",
+                    "type": "boolean"
+                  }
+                ]
+              },
+              "null"
+            ],
+            "default": {
+              "nestedRequiredBoolean": true
+            }
+          },
+          {
+            "name": "requiredEnum",
+            "type": {
+              "type": "enum",
+              "name": "requiredEnum",
+              "symbols": [
+                "a",
+                "b"
+              ]
+            }
+          },
+          {
+            "name": "optionalEnum",
+            "type": [
+              "null",
+              {
+                "type": "enum",
+                "name": "optionalEnum",
+                "symbols": [
+                  "a",
+                  "b"
+                ]
+              }
+            ],
+            "default": null
+          },
+          {
+            "name": "optionalEnumWithDefault",
+            "type": [
+              {
+                "type": "enum",
+                "name": "optionalEnumWithDefault",
+                "symbols": [
+                  "a",
+                  "b"
+                ]
+              },
+              "null"
+            ],
+            "default": "b"
+          },
+          {
+            "name": "requiredArray",
+            "type": {
+              "type": "array",
+              "items": "string"
+            }
+          },
+          {
+            "name": "optionalArray",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": "string"
+              }
+            ],
+            "default": null
+          },
+          {
+            "name": "optionalArrayWithDefault",
+            "type": [
+              {
+                "type": "array",
+                "items": "string"
+              },
+              "null"
+            ],
+            "default": [
+              "a"
+            ]
+          },
+          {
+            "name": "requiredMap",
+            "type": {
+              "type": "map",
+              "values": "string"
+            }
+          },
+          {
+            "name": "optionalMap",
+            "type": [
+              "null",
+              {
+                "type": "map",
+                "values": "string"
+              }
+            ],
+            "default": null
+          },
+          {
+            "name": "optionalMapWithDefault",
+            "type": [
+              {
+                "type": "map",
+                "values": "string"
+              },
+              "null"
+            ],
+            "default": {
+              "a": "b"
+            }
+          },
+          {
+            "name": "requiredFixed",
+            "type": {
+              "type": "fixed",
+              "name": "requiredFixed",
+              "size": 1
+            }
+          },
+          {
+            "name": "optionalFixed",
+            "type": [
+              "null",
+              {
+                "type": "fixed",
+                "name": "optionalFixed",
+                "size": 1
+              }
+            ],
+            "default": null
+          },
+          {
+            "name": "optionalFixedWithDefault",
+            "type": [
+              {
+                "type": "fixed",
+                "name": "optionalFixedWithDefault",
+                "size": 1
+              },
+              "null"
+            ],
+            "default": "A"
+          },
+          {
+            "name": "unionType",
+            "type": [
+              "long",
+              "null"
+            ]
+          },
+          {
+            "name": "unionBooleanWithDefault",
+            "type": [
+              "boolean",
+              "int"
+            ],
+            "default": true
+          },
+          {
+            "name": "unionIntWithDefault",
+            "type": [
+              "int",
+              "null"
+            ],
+            "default": 1
+          },
+          {
+            "name": "unionLongWithDefault",
+            "type": [
+              "long",
+              "int"
+            ],
+            "default": 1
+          },
+          {
+            "name": "unionFloatWithDefault",
+            "type": [
+              "float",
+              "int"
+            ],
+            "default": 1
+          },
+          {
+            "name": "unionDoubleWithDefault",
+            "type": [
+              "double",
+              "int"
+            ],
+            "default": 1
+          },
+          {
+            "name": "unionBytesWithDefault",
+            "type": [
+              "bytes",
+              "int"
+            ],
+            "default": "A"
+          },
+          {
+            "name": "unionStringWithDefault",
+            "type": [
+              "string",
+              "int"
+            ],
+            "default": "a"
+          },
+          {
+            "name": "unionRecordWithDefault",
+            "type": [
+              {
+                "type": "record",
+                "name": "nestedUnionRecordWithDefault",
+                "fields": [
+                  {
+                    "name": "nestedRequiredBoolean",
+                    "type": "boolean"
+                  }
+                ]
+              },
+              "int"
+            ],
+            "default": {
+              "nestedRequiredBoolean": true
+            }
+          },
+          {
+            "name": "unionEnumWithDefault",
+            "type": [
+              {
+                "type": "enum",
+                "name": "nestedUnionEnumWithDefault",
+                "symbols": [
+                  "a",
+                  "b"
+                ]
+              },
+              "int"
+            ],
+            "default": "b"
+          },
+          {
+            "name": "unionArrayWithDefault",
+            "type": [
+              {
+                "type": "array",
+                "items": "string"
+              },
+              "int"
+            ],
+            "default": [
+              "a"
+            ]
+          },
+          {
+            "name": "unionMapWithDefault",
+            "type": [
+              {
+                "type": "map",
+                "values": "string"
+              },
+              "int"
+            ],
+            "default": {
+              "a": "b"
+            }
+          },
+          {
+            "name": "unionFixedWithDefault",
+            "type": [
+              {
+                "type": "fixed",
+                "name": "nestedUnionFixedWithDefault",
+                "size": 1
+              },
+              "int"
+            ],
+            "default": "A"
+          }
+        ]
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "record",
+        "name": "TestRecordWithLogicalTypes",
+        "doc": "Schema for TestRecordWithLogicalTypes and TestRecordWithoutLogicalTypes, see TestSpecificLogicalTypes",
+        "namespace": "org.apache.avro.specific",
+        "fields": [
+          {
+            "name": "b",
+            "type": "boolean"
+          },
+          {
+            "name": "i32",
+            "type": "int"
+          },
+          {
+            "name": "i64",
+            "type": "long"
+          },
+          {
+            "name": "f32",
+            "type": "float"
+          },
+          {
+            "name": "f64",
+            "type": "double"
+          },
+          {
+            "name": "s",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "d",
+            "type": {
+              "type": "int",
+              "logicalType": "date"
+            }
+          },
+          {
+            "name": "t",
+            "type": {
+              "type": "int",
+              "logicalType": "time-millis"
+            }
+          },
+          {
+            "name": "ts",
+            "type": {
+              "type": "long",
+              "logicalType": "timestamp-millis"
+            }
+          },
+          {
+            "name": "bd",
+            "type": {
+              "type": "bytes",
+              "logicalType": "big-decimal"
+            }
+          }
+        ]
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": [
+          "Unknown big-decimal, using bytes."
+        ]
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "record",
+        "name": "TestRecordWithMapsAndArrays",
+        "namespace": "org.apache.avro.specific",
+        "fields": [
+          {
+            "name": "arr",
+            "type": {
+              "type": "array",
+              "items": "string",
+              "default": []
+            }
+          },
+          {
+            "name": "map",
+            "type": {
+              "type": "map",
+              "values": "long",
+              "default": {}
+            }
+          },
+          {
+            "name": "nested_arr",
+            "type": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": "string",
+                "default": []
+              },
+              "default": []
+            }
+          },
+          {
+            "name": "nested_map",
+            "type": {
+              "type": "map",
+              "values": {
+                "type": "map",
+                "values": "long",
+                "default": {}
+              },
+              "default": {}
+            }
+          }
+        ]
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": [
+        "null",
+        {
+          "namespace": "org.apache.avro.specific",
+          "type": "record",
+          "name": "TestUnionRecord",
+          "fields": [
+            {
+              "name": "amount",
+              "type": [
+                "null",
+                {
+                  "type": "bytes",
+                  "logicalType": "decimal",
+                  "precision": 31,
+                  "scale": 8
+                }
+              ],
+              "default": null
+            }
+          ]
+        }
+      ],
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "namespace": "model",
+        "type": "record",
+        "doc": "",
+        "name": "ApplicationEvent",
+        "fields": [
+          {
+            "name": "applicationId",
+            "type": "string",
+            "doc": "Application ID"
+          },
+          {
+            "name": "status",
+            "type": "string",
+            "doc": "Application Status"
+          },
+          {
+            "name": "documents",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": "model.DocumentInfo"
+              }
+            ],
+            "doc": "",
+            "default": null
+          }
+        ]
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": false,
+        "exception": "UnknownType",
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "namespace": "model",
+        "type": "record",
+        "doc": "",
+        "name": "DocumentInfo",
+        "fields": [
+          {
+            "name": "documentId",
+            "type": "string",
+            "doc": "Document ID"
+          },
+          {
+            "name": "filePath",
+            "type": "string",
+            "doc": "Document Path"
+          }
+        ]
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "namespace": "model",
+        "type": "record",
+        "doc": "",
+        "name": "MyResponse",
+        "fields": [
+          {
+            "name": "isSuccessful",
+            "type": "boolean",
+            "doc": "Indicator for successful or unsuccessful call"
+          }
+        ]
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "fields": [
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "name": "created_at",
+            "type": [
+              "null",
+              {
+                "logicalType": "timestamp-millis",
+                "type": "long"
+              }
+            ]
+          }
+        ],
+        "name": "Bar",
+        "namespace": "foo",
+        "type": "record"
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "record",
+        "name": "FullRecordV1",
+        "doc": "Test schema changes: this is the 'old' schema the SpecificRecord expects to see",
+        "namespace": "org.apache.avro.specific.test",
+        "fields": [
+          {
+            "name": "b",
+            "type": "boolean"
+          },
+          {
+            "name": "i32",
+            "type": "int"
+          },
+          {
+            "name": "i64",
+            "type": "long"
+          },
+          {
+            "name": "f32",
+            "type": "float"
+          },
+          {
+            "name": "f64",
+            "type": "double"
+          },
+          {
+            "name": "s",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "h",
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        ]
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "record",
+        "name": "FullRecordV2",
+        "doc": "Test schema changes: this is the 'new' schema actually used to write data",
+        "namespace": "org.apache.avro.specific.test",
+        "fields": [
+          {
+            "name": "b",
+            "type": "boolean"
+          },
+          {
+            "name": "i64",
+            "type": "int"
+          },
+          {
+            "name": "i32",
+            "type": "int"
+          },
+          {
+            "name": "f64",
+            "type": "long"
+          },
+          {
+            "name": "f32",
+            "type": [
+              "float",
+              "null"
+            ]
+          },
+          {
+            "name": "newfield",
+            "type": "string"
+          },
+          {
+            "name": "h",
+            "type": "bytes"
+          },
+          {
+            "name": "myMap",
+            "type": {
+              "type": "map",
+              "values": "string"
+            }
+          }
+        ]
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "namespace": "schema.common",
+        "type": "record",
+        "name": "Action",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "guid",
+            "type": {
+              "type": "string",
+              "logicalType": "uuid"
+            }
+          },
+          {
+            "name": "time",
+            "type": {
+              "type": "long",
+              "logicalType": "timestamp-millis"
+            }
+          },
+          {
+            "name": "requestId",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          }
+        ]
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "namespace": "schema.common",
+        "type": "record",
+        "name": "Action",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "type": "string"
+          },
+          {
+            "name": "time",
+            "type": {
+              "type": "long",
+              "logicalType": "timestamp-millis"
+            }
+          },
+          {
+            "name": "requestId",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          }
+        ]
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "record",
+        "name": "RecordWithErrorField",
+        "doc": "With custom coders in Avro 1.9, previously successful records with error fields now fail to compile.",
+        "namespace": "org.apache.avro.specific.test",
+        "fields": [
+          {
+            "name": "s",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "e",
+            "type": [
+              "null",
+              {
+                "type": "error",
+                "name": "TestError",
+                "fields": [
+                  {
+                    "name": "message",
+                    "type": "string"
+                  }
+                ]
+              }
+            ],
+            "default": null
+          }
+        ]
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "record",
+        "name": "SimpleRecord",
+        "fields": [
+          {
+            "name": "value",
+            "type": "int"
+          },
+          {
+            "name": "nullableValue",
+            "type": [
+              "null",
+              "int"
+            ],
+            "doc": "doc"
+          }
+        ]
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "record",
+        "name": "UnionAndFixedFields",
+        "doc": "Schema for UnionAndFixedFields designed to trigger fixed compiler warnings in generated code",
+        "namespace": "org.apache.avro.specific",
+        "fields": [
+          {
+            "name": "u",
+            "type": [
+              "boolean",
+              "int",
+              "long",
+              "float",
+              "string"
+            ]
+          },
+          {
+            "name": "l",
+            "type": [
+              "string",
+              {
+                "type": "long",
+                "logicalType": "timestamp-millis"
+              }
+            ]
+          },
+          {
+            "name": "f",
+            "type": {
+              "type": "fixed",
+              "size": 16,
+              "name": "md5"
+            }
+          }
+        ]
+      },
+      "syntaxExpected": true,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": null,
+      "syntaxExpected": false,
+      "apache": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": false,
+        "exception": "TypeError",
+        "warnings": []
+      }
+    },
+    {
+      "schema": true,
+      "syntaxExpected": false,
+      "apache": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": false,
+        "exception": "TypeError",
+        "warnings": []
+      }
+    },
+    {
+      "schema": 42,
+      "syntaxExpected": false,
+      "apache": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": false,
+        "exception": "TypeError",
+        "warnings": []
+      }
+    },
+    {
+      "schema": {},
+      "syntaxExpected": false,
+      "apache": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": false,
+        "exception": "KeyError",
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "array"
+      },
+      "syntaxExpected": false,
+      "apache": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": false,
+        "exception": "KeyError",
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "map"
+      },
+      "syntaxExpected": false,
+      "apache": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": false,
+        "exception": "KeyError",
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "record",
+        "name": "R"
+      },
+      "syntaxExpected": false,
+      "apache": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "fixed",
+        "name": "F",
+        "size": -1
+      },
+      "syntaxExpected": false,
+      "apache": {
+        "accepted": false,
+        "exception": "AvroException",
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "fixed",
+        "name": "F",
+        "size": 1.5
+      },
+      "syntaxExpected": false,
+      "apache": {
+        "accepted": false,
+        "exception": "AvroException",
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "enum",
+        "name": "E",
+        "symbols": [
+          "A",
+          "A"
+        ]
+      },
+      "syntaxExpected": false,
+      "apache": {
+        "accepted": false,
+        "exception": "AvroException",
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "enum",
+        "name": "E",
+        "symbols": [
+          "bad-name"
+        ]
+      },
+      "syntaxExpected": false,
+      "apache": {
+        "accepted": false,
+        "exception": "InvalidName",
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "record",
+        "name": "bad-name",
+        "fields": []
+      },
+      "syntaxExpected": false,
+      "apache": {
+        "accepted": false,
+        "exception": "InvalidName",
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "record",
+        "name": "R",
+        "namespace": "a..b",
+        "fields": []
+      },
+      "syntaxExpected": false,
+      "apache": {
+        "accepted": false,
+        "exception": "InvalidName",
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "record",
+        "name": "R",
+        "fields": [
+          {
+            "name": "a",
+            "type": "int",
+            "order": "random"
+          }
+        ]
+      },
+      "syntaxExpected": false,
+      "apache": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": [
+        [
+          "int"
+        ]
+      ],
+      "syntaxExpected": false,
+      "apache": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": [
+        "int",
+        {
+          "type": "int"
+        }
+      ],
+      "syntaxExpected": false,
+      "apache": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": [
+        {
+          "type": "array",
+          "items": "int"
+        },
+        {
+          "type": "array",
+          "items": "string"
+        }
+      ],
+      "syntaxExpected": false,
+      "apache": {
+        "accepted": false,
+        "exception": "SchemaParseException",
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    },
+    {
+      "schema": {
+        "type": "record",
+        "name": "R",
+        "fields": [
+          {
+            "name": "a\n",
+            "type": "int"
+          }
+        ]
+      },
+      "syntaxExpected": false,
+      "apache": {
+        "accepted": true,
+        "warnings": []
+      },
+      "fastavro": {
+        "accepted": true,
+        "warnings": []
+      }
+    }
+  ],
+  "recoveryComparisons": 176,
+  "scope": "Structural syntax and native semantic acceptance differ intentionally; parser outcomes/warnings remain unchanged through native recovery."
+}

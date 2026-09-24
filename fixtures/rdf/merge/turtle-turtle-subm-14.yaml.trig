@@ -1,0 +1,6 @@
+_:m_0_0 <http://example.org/ron> _:m_0_1 .
+<http://example.org/ron> <http://example.org/ron> <http://example.org/ron> .
+_:m_1_0 <urn:example:related> <urn:example:resource> .
+<urn:example:populated> { _:m_1_0 <urn:example:label> "Original label" . }
+<urn:example:empty> {}
+_:m_1_0 {}

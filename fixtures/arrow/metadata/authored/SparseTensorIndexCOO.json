@@ -1,0 +1,35 @@
+{
+  "type_type": "Int",
+  "type": {
+    "bitWidth": 64,
+    "is_signed": true
+  },
+  "shape": [
+    {
+      "size": 2
+    },
+    {
+      "size": 2
+    }
+  ],
+  "non_zero_length": 2,
+  "sparseIndex_type": "SparseTensorIndexCOO",
+  "sparseIndex": {
+    "indicesType": {
+      "bitWidth": 32,
+      "is_signed": true
+    },
+    "indicesStrides": [
+      4
+    ],
+    "indicesBuffer": {
+      "offset": 0,
+      "length": 8
+    },
+    "isCanonical": true
+  },
+  "data": {
+    "offset": 0,
+    "length": 16
+  }
+}

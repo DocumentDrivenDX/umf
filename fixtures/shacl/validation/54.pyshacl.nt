@@ -1,0 +1,20 @@
+_:Ncb957a1624c341ccb78b6e21c96ede8a <http://www.w3.org/ns/shacl#resultMessage> "Value is not Literal with datatype xsd:integer" .
+_:Ncb957a1624c341ccb78b6e21c96ede8a <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/datatype-001.test#InvalidResource1> .
+_:Nec33a5f6021c4eeb834564745d856606 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/datatype-001.test#TestShape-dateProperty> .
+_:Nec33a5f6021c4eeb834564745d856606 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nec33a5f6021c4eeb834564745d856606 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/datatype-001.test#dateProperty> .
+_:Nec33a5f6021c4eeb834564745d856606 <http://www.w3.org/ns/shacl#resultMessage> "Value is not Literal with datatype xsd:date" .
+_:Ncb957a1624c341ccb78b6e21c96ede8a <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:Ncb957a1624c341ccb78b6e21c96ede8a <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/datatype-001.test#integerProperty> .
+_:Ncb957a1624c341ccb78b6e21c96ede8a <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N8e1a388a09ad4ba8b7c94e45a7690803 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Ncb957a1624c341ccb78b6e21c96ede8a <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nec33a5f6021c4eeb834564745d856606 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:N8e1a388a09ad4ba8b7c94e45a7690803 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N8e1a388a09ad4ba8b7c94e45a7690803 <http://www.w3.org/ns/shacl#result> _:Ncb957a1624c341ccb78b6e21c96ede8a .
+_:Nec33a5f6021c4eeb834564745d856606 <http://www.w3.org/ns/shacl#value> "2011-01-01T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+_:Ncb957a1624c341ccb78b6e21c96ede8a <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/datatype-001.test#TestShape-integerProperty> .
+_:Ncb957a1624c341ccb78b6e21c96ede8a <http://www.w3.org/ns/shacl#value> "11.1"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+_:N8e1a388a09ad4ba8b7c94e45a7690803 <http://www.w3.org/ns/shacl#result> _:Nec33a5f6021c4eeb834564745d856606 .
+_:Nec33a5f6021c4eeb834564745d856606 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/datatype-001.test#InvalidResource1> .
+_:Nec33a5f6021c4eeb834564745d856606 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .

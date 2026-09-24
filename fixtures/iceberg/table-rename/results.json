@@ -1,0 +1,313 @@
+{
+  "scope": "Authored schema-version rename candidates over pinned upstream and nested fixtures; no commit",
+  "results": [
+    {
+      "id": "v2",
+      "path": "fixtures/iceberg/upstream/core/src/test/resources/TableMetadataV2Valid.json",
+      "fieldId": 1,
+      "newName": "renamed_column",
+      "nextSchemaId": 2,
+      "report": {
+        "complete": false,
+        "previousSchemaId": 1,
+        "nextSchemaId": 2,
+        "fieldId": 1,
+        "oldName": "x",
+        "newName": "renamed_column",
+        "appendedSchemaPath": "/schemas/2",
+        "bindings": {
+          "status": "checked",
+          "complete": false,
+          "bindings": [
+            {
+              "fieldPath": "/partition-specs/0/fields/0",
+              "sourcePath": "/schemas/2/fields/0",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "identity",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "long"
+              }
+            },
+            {
+              "fieldPath": "/sort-orders/0/fields/0",
+              "sourcePath": "/schemas/2/fields/1",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "identity",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "long"
+              }
+            },
+            {
+              "fieldPath": "/sort-orders/0/fields/1",
+              "sourcePath": "/schemas/2/fields/2",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "bucket[4]",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "int"
+              }
+            }
+          ],
+          "diagnostics": [
+            {
+              "code": "ICEBERG_TABLE_CONTEXT_INCOMPLETE",
+              "path": "",
+              "severity": "warning",
+              "message": "Only retained IDs and current selections checked. Expired parents, historical schemas, transforms, files and commits are not validated; absent main is not inserted."
+            },
+            {
+              "code": "ICEBERG_TABLE_TRANSFORM_INCOMPLETE",
+              "path": "",
+              "severity": "warning",
+              "message": "Current field/type binding only; version feature availability, history, value execution and safe evolution remain unchecked"
+            }
+          ]
+        },
+        "limitations": [
+          "Candidate metadata only: no commit, timestamp advancement, optimistic concurrency check or file rewrite",
+          "Unknown/native name-dependent metadata is retained without rewriting; review dependencies before applying",
+          "Historical schemas and field IDs remain unchanged; full evolution and version-feature validity are not established"
+        ]
+      }
+    },
+    {
+      "id": "minimal",
+      "path": "fixtures/iceberg/upstream/core/src/test/resources/TableMetadataV2ValidMinimal.json",
+      "fieldId": 1,
+      "newName": "renamed_column",
+      "nextSchemaId": 1,
+      "report": {
+        "complete": false,
+        "previousSchemaId": 0,
+        "nextSchemaId": 1,
+        "fieldId": 1,
+        "oldName": "x",
+        "newName": "renamed_column",
+        "appendedSchemaPath": "/schemas/1",
+        "bindings": {
+          "status": "checked",
+          "complete": false,
+          "bindings": [
+            {
+              "fieldPath": "/partition-specs/0/fields/0",
+              "sourcePath": "/schemas/1/fields/0",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "identity",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "long"
+              }
+            },
+            {
+              "fieldPath": "/sort-orders/0/fields/0",
+              "sourcePath": "/schemas/1/fields/1",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "identity",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "long"
+              }
+            },
+            {
+              "fieldPath": "/sort-orders/0/fields/1",
+              "sourcePath": "/schemas/1/fields/2",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "bucket[4]",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "int"
+              }
+            }
+          ],
+          "diagnostics": [
+            {
+              "code": "ICEBERG_TABLE_CONTEXT_INCOMPLETE",
+              "path": "",
+              "severity": "warning",
+              "message": "Only retained IDs and current selections checked. Expired parents, historical schemas, transforms, files and commits are not validated; absent main is not inserted."
+            },
+            {
+              "code": "ICEBERG_TABLE_TRANSFORM_INCOMPLETE",
+              "path": "",
+              "severity": "warning",
+              "message": "Current field/type binding only; version feature availability, history, value execution and safe evolution remain unchecked"
+            }
+          ]
+        },
+        "limitations": [
+          "Candidate metadata only: no commit, timestamp advancement, optimistic concurrency check or file rewrite",
+          "Unknown/native name-dependent metadata is retained without rewriting; review dependencies before applying",
+          "Historical schemas and field IDs remain unchanged; full evolution and version-feature validity are not established"
+        ]
+      }
+    },
+    {
+      "id": "v3",
+      "path": "fixtures/iceberg/upstream/core/src/test/resources/TableMetadataV3ValidMinimal.json",
+      "fieldId": 1,
+      "newName": "renamed_column",
+      "nextSchemaId": 1,
+      "report": {
+        "complete": false,
+        "previousSchemaId": 0,
+        "nextSchemaId": 1,
+        "fieldId": 1,
+        "oldName": "x",
+        "newName": "renamed_column",
+        "appendedSchemaPath": "/schemas/1",
+        "bindings": {
+          "status": "checked",
+          "complete": false,
+          "bindings": [
+            {
+              "fieldPath": "/partition-specs/0/fields/0",
+              "sourcePath": "/schemas/1/fields/0",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "identity",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "long"
+              }
+            },
+            {
+              "fieldPath": "/sort-orders/0/fields/0",
+              "sourcePath": "/schemas/1/fields/1",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "identity",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "long"
+              }
+            },
+            {
+              "fieldPath": "/sort-orders/0/fields/1",
+              "sourcePath": "/schemas/1/fields/2",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "bucket[4]",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "int"
+              }
+            }
+          ],
+          "diagnostics": [
+            {
+              "code": "ICEBERG_TABLE_CONTEXT_INCOMPLETE",
+              "path": "",
+              "severity": "warning",
+              "message": "Only retained IDs and current selections checked. Expired parents, historical schemas, transforms, files and commits are not validated; absent main is not inserted."
+            },
+            {
+              "code": "ICEBERG_TABLE_TRANSFORM_INCOMPLETE",
+              "path": "",
+              "severity": "warning",
+              "message": "Current field/type binding only; version feature availability, history, value execution and safe evolution remain unchecked"
+            }
+          ]
+        },
+        "limitations": [
+          "Candidate metadata only: no commit, timestamp advancement, optimistic concurrency check or file rewrite",
+          "Unknown/native name-dependent metadata is retained without rewriting; review dependencies before applying",
+          "Historical schemas and field IDs remain unchanged; full evolution and version-feature validity are not established"
+        ]
+      }
+    },
+    {
+      "id": "nested",
+      "path": "fixtures/iceberg/table-binding/nested.source.json",
+      "fieldId": 1,
+      "newName": "renamed_column",
+      "nextSchemaId": 1,
+      "report": {
+        "complete": false,
+        "previousSchemaId": 0,
+        "nextSchemaId": 1,
+        "fieldId": 1,
+        "oldName": "a.b",
+        "newName": "renamed_column",
+        "appendedSchemaPath": "/schemas/1",
+        "bindings": {
+          "status": "checked",
+          "complete": false,
+          "bindings": [
+            {
+              "fieldPath": "/partition-specs/0/fields/0",
+              "sourcePath": "/schemas/1/fields/0/type/fields/0",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "identity",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "long"
+              }
+            },
+            {
+              "fieldPath": "/sort-orders/0/fields/0",
+              "sourcePath": "/schemas/1/fields/1",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "identity",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "long"
+              }
+            },
+            {
+              "fieldPath": "/sort-orders/0/fields/1",
+              "sourcePath": "/schemas/1/fields/2",
+              "assessment": {
+                "sourceType": "long",
+                "transform": "bucket[4]",
+                "status": "compatible",
+                "complete": false,
+                "reason": "Single primitive source type rule only; values, table version and field context remain unchecked",
+                "resultType": "int"
+              }
+            }
+          ],
+          "diagnostics": [
+            {
+              "code": "ICEBERG_TABLE_CONTEXT_INCOMPLETE",
+              "path": "",
+              "severity": "warning",
+              "message": "Only retained IDs and current selections checked. Expired parents, historical schemas, transforms, files and commits are not validated; absent main is not inserted."
+            },
+            {
+              "code": "ICEBERG_TABLE_TRANSFORM_INCOMPLETE",
+              "path": "",
+              "severity": "warning",
+              "message": "Current field/type binding only; version feature availability, history, value execution and safe evolution remain unchecked"
+            }
+          ]
+        },
+        "limitations": [
+          "Candidate metadata only: no commit, timestamp advancement, optimistic concurrency check or file rewrite",
+          "Unknown/native name-dependent metadata is retained without rewriting; review dependencies before applying",
+          "Historical schemas and field IDs remain unchanged; full evolution and version-feature validity are not established"
+        ]
+      }
+    }
+  ]
+}

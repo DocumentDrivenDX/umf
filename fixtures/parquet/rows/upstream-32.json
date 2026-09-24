@@ -1,0 +1,516 @@
+[
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 29,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 53,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 72,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 81,
+        "name": "domainMetadata",
+        "value": null
+      },
+      {
+        "index": 85,
+        "name": "checkpointMetadata",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 86,
+              "name": "version",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "1"
+                }
+              }
+            },
+            {
+              "index": 87,
+              "name": "tags",
+              "value": null
+            }
+          ]
+        }
+      },
+      {
+        "index": 91,
+        "name": "sidecar",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 29,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 53,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 72,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 81,
+        "name": "domainMetadata",
+        "value": null
+      },
+      {
+        "index": 85,
+        "name": "checkpointMetadata",
+        "value": null
+      },
+      {
+        "index": 91,
+        "name": "sidecar",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 92,
+              "name": "path",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "30303030303030303030303030303030303030312e636865636b706f696e742e303030303030303030312e303030303030303030312e63316261636634352d663361392d343834362d626434342d3837636461636434363230662e70617271756574"
+                }
+              }
+            },
+            {
+              "index": 93,
+              "name": "sizeInBytes",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "9352"
+                }
+              }
+            },
+            {
+              "index": 94,
+              "name": "modificationTime",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "1739313202057"
+                }
+              }
+            },
+            {
+              "index": 95,
+              "name": "tags",
+              "value": null
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 29,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 53,
+        "name": "metaData",
+        "value": null
+      },
+      {
+        "index": 72,
+        "name": "protocol",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 73,
+              "name": "minReaderVersion",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT32",
+                  "value": "3"
+                }
+              }
+            },
+            {
+              "index": 74,
+              "name": "minWriterVersion",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT32",
+                  "value": "7"
+                }
+              }
+            },
+            {
+              "index": 75,
+              "name": "readerFeatures",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 76,
+                    "name": "list",
+                    "value": {
+                      "kind": "repeated",
+                      "items": [
+                        {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 77,
+                              "name": "element",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "7632436865636b706f696e74"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 78,
+              "name": "writerFeatures",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 79,
+                    "name": "list",
+                    "value": {
+                      "kind": "repeated",
+                      "items": [
+                        {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 80,
+                              "name": "element",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "7632436865636b706f696e74"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 80,
+                              "name": "element",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "617070656e644f6e6c79"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 80,
+                              "name": "element",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "696e76617269616e7473"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 81,
+        "name": "domainMetadata",
+        "value": null
+      },
+      {
+        "index": 85,
+        "name": "checkpointMetadata",
+        "value": null
+      },
+      {
+        "index": 91,
+        "name": "sidecar",
+        "value": null
+      }
+    ]
+  },
+  {
+    "kind": "record",
+    "fields": [
+      {
+        "index": 1,
+        "name": "txn",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "add",
+        "value": null
+      },
+      {
+        "index": 29,
+        "name": "remove",
+        "value": null
+      },
+      {
+        "index": 53,
+        "name": "metaData",
+        "value": {
+          "kind": "record",
+          "fields": [
+            {
+              "index": 54,
+              "name": "id",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "32396566323034352d353963352d346366372d396435642d326261343765393731643332"
+                }
+              }
+            },
+            {
+              "index": 55,
+              "name": "name",
+              "value": null
+            },
+            {
+              "index": 56,
+              "name": "description",
+              "value": null
+            },
+            {
+              "index": 57,
+              "name": "format",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 58,
+                    "name": "provider",
+                    "value": {
+                      "kind": "physical",
+                      "value": {
+                        "type": "BYTE_ARRAY",
+                        "hex": "70617271756574"
+                      }
+                    }
+                  },
+                  {
+                    "index": 59,
+                    "name": "options",
+                    "value": {
+                      "kind": "record",
+                      "fields": [
+                        {
+                          "index": 60,
+                          "name": "key_value",
+                          "value": {
+                            "kind": "repeated",
+                            "items": []
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 63,
+              "name": "schemaString",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a226964222c2274797065223a226c6f6e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d"
+                }
+              }
+            },
+            {
+              "index": 64,
+              "name": "partitionColumns",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 65,
+                    "name": "list",
+                    "value": {
+                      "kind": "repeated",
+                      "items": []
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 67,
+              "name": "configuration",
+              "value": {
+                "kind": "record",
+                "fields": [
+                  {
+                    "index": 68,
+                    "name": "key_value",
+                    "value": {
+                      "kind": "repeated",
+                      "items": [
+                        {
+                          "kind": "record",
+                          "fields": [
+                            {
+                              "index": 69,
+                              "name": "key",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "64656c74612e636865636b706f696e74506f6c696379"
+                                }
+                              }
+                            },
+                            {
+                              "index": 70,
+                              "name": "value",
+                              "value": {
+                                "kind": "physical",
+                                "value": {
+                                  "type": "BYTE_ARRAY",
+                                  "hex": "7632"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "index": 71,
+              "name": "createdTime",
+              "value": {
+                "kind": "physical",
+                "value": {
+                  "type": "INT64",
+                  "value": "1739313200623"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 72,
+        "name": "protocol",
+        "value": null
+      },
+      {
+        "index": 81,
+        "name": "domainMetadata",
+        "value": null
+      },
+      {
+        "index": 85,
+        "name": "checkpointMetadata",
+        "value": null
+      },
+      {
+        "index": 91,
+        "name": "sidecar",
+        "value": null
+      }
+    ]
+  }
+]

@@ -1,0 +1,84 @@
+{
+  "scope": "Pinned Avro native discovery, branch selection, authored targets and composed retained recovery; compatibility and prior concept gates remain separate",
+  "versions": {
+    "apache": "1.12.0",
+    "fastavro": "1.12.2"
+  },
+  "bindingAccepted": false,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "runs": [
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-avro-discovery.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-avro-selection-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-avro-projection-oracle.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-avro-composition.ts"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "sha256": {
+    "/home/erik/Projects/umf/scripts/core-ideals/facets-avro-discovery-native.py": "20e4c51560e00dee6f4a0beba207e2a80f974237a9598625aca9bfd12bb56f40",
+    "/home/erik/Projects/umf/scripts/core-ideals/facets-avro-projection-native.py": "c174dd8c76cfbcbea35f8c04238727e4ef32cd9c29e5a3fe55b8a81ea9147ba3",
+    "/home/erik/Projects/umf/scripts/core-ideals/facets-avro-selection-native.py": "38d5bbab7d5f85bc1254a5840b5bd5a4456ca8d20b1343206df29e718cceafe6",
+    "bun.lock": "98a99f7d306f7269db103bdbfafe5f9ad9ed34b02024276ad0cce45df27f5cc3",
+    "fixtures/avro/facet-discovery-cases.json": "3f7e8e99882c8971478dadec195eb2229ec43f27713f4ba0eb3191b239508733",
+    "fixtures/avro/facet-selection-cases.json": "20fbe247cc355059d7703ce3eaff9118005717fa6d3f806b3f9dc5d27ee15118",
+    "fixtures/validation/facets-avro-composition.json": "4c722fdd9b6d9cd990f16fc13d9f27f77233fb2ebdd12ee90a57f90e87df0ad9",
+    "fixtures/validation/facets-avro-discovery-native.json": "5ae691e1c1562de96c676168a08a0990462c96dc69c675d0f62fda9eddd2b270",
+    "fixtures/validation/facets-avro-discovery.json": "ca8b488ed1df1e6556869de3ec509937f977d04f666930fadf56fae770b4c990",
+    "fixtures/validation/facets-avro-projection-native.json": "0e422d2264aafc2a472a4bae4292eccb0b39f80a3389a04d3b65d0cff76b2a9d",
+    "fixtures/validation/facets-avro-projection-targets.json": "15e235a0e1256cadf90531a896987e6c9d9f6a7efe6f58b1b6f72afb42233062",
+    "fixtures/validation/facets-avro-selection-native.json": "1d8e58c8f2d40bd947e3d8682b1e958a8c64f310293f34c53131c3da9375fe34",
+    "fixtures/validation/facets-avro-selection-oracle.json": "43a17ccb0cd48389d08a8617f75f9098e6925bcdb76477187b3e30d4accf6222",
+    "package.json": "692f5d5c8537d04ac4bf7b079199e28a83edeacfc8291c8dcb6bb1395f7759de",
+    "scripts/core-ideals/facets-avro-cases.ts": "3d461a5175c61bbd5b41842457f07e5b8a8a7cc358f28061e12bcb0e7fe5a0ee",
+    "scripts/core-ideals/facets-avro-composition.ts": "54403fa75904c0bbd3b9f01a7a2fd56fabdce3879539eda3bc8e44ff0b5afce3",
+    "scripts/core-ideals/facets-avro-discovery.ts": "590cb1eb470037dea01a1fd1d47667b39158e16abfa30639ca6819f5fbc2e471",
+    "scripts/core-ideals/facets-avro-oracle.ts": "bbb473c184217a0cde0cbf37d98f97cc5186958cdd741888b33539c2e91a982f",
+    "scripts/core-ideals/facets-avro-projection-cases.ts": "2050e1ad1f5bef37f4552fd5f3cc2d0bc3ae317b766f6aadea748938e59ee85a",
+    "scripts/core-ideals/facets-avro-projection-oracle.ts": "ccaa7c584d4d418e9139ce39354a440a6293f0a3a197ffcc4df8721db9d28ad5",
+    "scripts/core-ideals/facets-avro-selection-oracle.ts": "e7e96b09581195bc66ebc6286e3e25be4ba2193d31f21ff1eb17422f4a8ff04c",
+    "spec/core/facets-avro-projection.schema.json": "3032f6daf14e6f80f352126f55a03278353a4bf38511038126f3e5615e3ca3f4",
+    "spec/core/native-json.schema.json": "071e2dc97ffae0b8743b691ae4786c0b74eaa1ee54d881e1d8116dcb3f6a2839",
+    "spec/core/schema.json": "59fa4e6964d9b3f1f264d103784484402b756a7e0d1b896b2a5bedd559814b19",
+    "spec/extensions/avro/package.json": "6c539c9cd8e5665b3165caca77954c1cd2e04167b731af895cbdae4b23964b06",
+    "src/adapters/avro/facet-type.ts": "26db0fcce82230f65a14e0284c2cc6c84c03747c06858dcb5ed68cd04ab67a5b",
+    "src/adapters/avro/index.ts": "a6ad933cb2703386c705afaafd62ffa317bc529b50ce5b2799a617b2802dac0f",
+    "src/adapters/avro/metadata.ts": "c26a046f45bbcb00f424b70924594296bb6272c0d93e9dffab42de13440f4775",
+    "src/adapters/json-schema/tree.ts": "e1b4756e9d37d681f0cc0a4e722dff7ebfb23e8b6b444a0f0f4463cfa766fc28",
+    "src/core-ideals/avro-cardinality-type.ts": "346dd1558df87271444d6bef963fc59486ffe514e55f9a42a1cdd7b7c192cb04",
+    "src/core-ideals/avro-facet-selection.ts": "ff69eea33dc47df6b48c5cf7a81d39a9aa61d4bc7e9419ae712c0f33f8afe17c",
+    "src/core-ideals/facets-avro-projection.ts": "3d46081a77d4c0f22ba284fca09ce0a90c7eab955b4d49a7ccc352ca83c975a8",
+    "src/core-ideals/facets-avro.ts": "4cd01a8803e94cdcc4c5480e1f8180e95c139f932c3d0b63d74b28867a8a5ac7",
+    "src/index.ts": "7a22775a7a7620da88e4b8bd1ab589683aa60e051e0dd03803ca1b046f617e7a",
+    "src/model/document.ts": "a0422042659defdea425dff8bb0618eaa4bbf125f68da16aa5ad21af0b6c282f",
+    "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
+    "src/model/native-json.ts": "1459a3e030419c3ae09b300972e27aed8b8ee1f7e41972b3cc00627dff7d7882",
+    "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
+    "src/model/types.ts": "2a3b01a878bd247a6fb8618487164241dda88eb4de03204dbf02b55a833ba64a",
+    "src/registry/registry.ts": "5903ba9f257957b90ada07fbff43b58d54eabe8c8f7400ddd9ce83b4237d50e6",
+    "src/validation/document.ts": "d8b7867b1ef321b9324f8d61f2f3f2f901e40d14eef01f54384d658d6701aed4",
+    "src/validation/schema.ts": "89a3a613cf5ba6ed2ced1dc242fc9d947ac8c373b7bef7dfcba72336570ffc08"
+  }
+}

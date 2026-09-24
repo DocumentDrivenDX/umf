@@ -1,0 +1,330 @@
+{
+  "avro": "1.12.0",
+  "fastavro": "1.12.2",
+  "sourceSha256": "5049ea3da3629d5b9f12249b0268d1a0b0fecb78c94f095e92f39f8428d0d13e",
+  "cases": [
+    {
+      "id": "scale",
+      "engine": "apache",
+      "original": {
+        "values": {
+          "amount": "12.34",
+          "created": "1970-01-01 00:00:01.234567+00:00",
+          "count": "7"
+        },
+        "types": {
+          "amount": "Decimal",
+          "created": "datetime",
+          "count": "int"
+        },
+        "hex": "0404d28eda96010e",
+        "warnings": []
+      },
+      "candidate": {
+        "values": {
+          "amount": "1.234",
+          "created": "1970-01-01 00:00:01.234567+00:00",
+          "count": "7"
+        },
+        "types": {
+          "amount": "Decimal",
+          "created": "datetime",
+          "count": "int"
+        },
+        "hex": "0404d28eda96010e",
+        "warnings": []
+      },
+      "candidateRecoveriesAgree": 2
+    },
+    {
+      "id": "scale",
+      "engine": "fastavro",
+      "original": {
+        "values": {
+          "amount": "12.34",
+          "created": "1970-01-01 00:00:01.234567+00:00",
+          "count": "7"
+        },
+        "types": {
+          "amount": "Decimal",
+          "created": "datetime",
+          "count": "int"
+        },
+        "hex": "0404d28eda96010e",
+        "warnings": []
+      },
+      "candidate": {
+        "values": {
+          "amount": "1.234",
+          "created": "1970-01-01 00:00:01.234567+00:00",
+          "count": "7"
+        },
+        "types": {
+          "amount": "Decimal",
+          "created": "datetime",
+          "count": "int"
+        },
+        "hex": "0404d28eda96010e",
+        "warnings": []
+      },
+      "candidateRecoveriesAgree": 2
+    },
+    {
+      "id": "local",
+      "engine": "apache",
+      "original": {
+        "values": {
+          "amount": "12.34",
+          "created": "1970-01-01 00:00:01.234567+00:00",
+          "count": "7"
+        },
+        "types": {
+          "amount": "Decimal",
+          "created": "datetime",
+          "count": "int"
+        },
+        "hex": "0404d28eda96010e",
+        "warnings": []
+      },
+      "candidate": {
+        "values": {
+          "amount": "12.34",
+          "created": "1234567",
+          "count": "7"
+        },
+        "types": {
+          "amount": "Decimal",
+          "created": "int",
+          "count": "int"
+        },
+        "hex": "0404d28eda96010e",
+        "warnings": [
+          "Unknown local-timestamp-micros, using long."
+        ]
+      },
+      "candidateRecoveriesAgree": 2
+    },
+    {
+      "id": "local",
+      "engine": "fastavro",
+      "original": {
+        "values": {
+          "amount": "12.34",
+          "created": "1970-01-01 00:00:01.234567+00:00",
+          "count": "7"
+        },
+        "types": {
+          "amount": "Decimal",
+          "created": "datetime",
+          "count": "int"
+        },
+        "hex": "0404d28eda96010e",
+        "warnings": []
+      },
+      "candidate": {
+        "values": {
+          "amount": "12.34",
+          "created": "1970-01-01 00:00:01.234567",
+          "count": "7"
+        },
+        "types": {
+          "amount": "Decimal",
+          "created": "datetime",
+          "count": "int"
+        },
+        "hex": "0404d28eda96010e",
+        "warnings": []
+      },
+      "candidateRecoveriesAgree": 2
+    },
+    {
+      "id": "unknown",
+      "engine": "apache",
+      "original": {
+        "values": {
+          "amount": "12.34",
+          "created": "1970-01-01 00:00:01.234567+00:00",
+          "count": "7"
+        },
+        "types": {
+          "amount": "Decimal",
+          "created": "datetime",
+          "count": "int"
+        },
+        "hex": "0404d28eda96010e",
+        "warnings": []
+      },
+      "candidate": {
+        "values": {
+          "amount": "12.34",
+          "created": "1234567",
+          "count": "7"
+        },
+        "types": {
+          "amount": "Decimal",
+          "created": "int",
+          "count": "int"
+        },
+        "hex": "0404d28eda96010e",
+        "warnings": [
+          "Unknown timestamp-micros\n, using long."
+        ]
+      },
+      "candidateRecoveriesAgree": 2
+    },
+    {
+      "id": "unknown",
+      "engine": "fastavro",
+      "original": {
+        "values": {
+          "amount": "12.34",
+          "created": "1970-01-01 00:00:01.234567+00:00",
+          "count": "7"
+        },
+        "types": {
+          "amount": "Decimal",
+          "created": "datetime",
+          "count": "int"
+        },
+        "hex": "0404d28eda96010e",
+        "warnings": []
+      },
+      "candidate": {
+        "values": {
+          "amount": "12.34",
+          "created": "1234567",
+          "count": "7"
+        },
+        "types": {
+          "amount": "Decimal",
+          "created": "int",
+          "count": "int"
+        },
+        "hex": "0404d28eda96010e",
+        "warnings": []
+      },
+      "candidateRecoveriesAgree": 2
+    },
+    {
+      "id": "exact-default",
+      "engine": "apache",
+      "original": {
+        "values": {
+          "amount": "12.34",
+          "created": "1970-01-01 00:00:01.234567+00:00",
+          "count": "7"
+        },
+        "types": {
+          "amount": "Decimal",
+          "created": "datetime",
+          "count": "int"
+        },
+        "hex": "0404d28eda96010e",
+        "resolvedDefault": "0",
+        "warnings": []
+      },
+      "candidate": {
+        "values": {
+          "amount": "12.34",
+          "created": "1970-01-01 00:00:01.234567+00:00",
+          "count": "7"
+        },
+        "types": {
+          "amount": "Decimal",
+          "created": "datetime",
+          "count": "int"
+        },
+        "hex": "0404d28eda96010e",
+        "resolvedDefault": "9223372036854775807",
+        "warnings": []
+      },
+      "candidateRecoveriesAgree": 2
+    },
+    {
+      "id": "exact-default",
+      "engine": "fastavro",
+      "original": {
+        "values": {
+          "amount": "12.34",
+          "created": "1970-01-01 00:00:01.234567+00:00",
+          "count": "7"
+        },
+        "types": {
+          "amount": "Decimal",
+          "created": "datetime",
+          "count": "int"
+        },
+        "hex": "0404d28eda96010e",
+        "resolvedDefault": "0",
+        "warnings": []
+      },
+      "candidate": {
+        "values": {
+          "amount": "12.34",
+          "created": "1970-01-01 00:00:01.234567+00:00",
+          "count": "7"
+        },
+        "types": {
+          "amount": "Decimal",
+          "created": "datetime",
+          "count": "int"
+        },
+        "hex": "0404d28eda96010e",
+        "resolvedDefault": "9223372036854775807",
+        "warnings": []
+      },
+      "candidateRecoveriesAgree": 2
+    },
+    {
+      "id": "dependency",
+      "engine": "apache",
+      "original": {
+        "values": {
+          "amount": "12.34"
+        },
+        "types": {
+          "amount": "Decimal"
+        },
+        "hex": "000004d2",
+        "warnings": []
+      },
+      "candidate": {
+        "values": {
+          "amount": "1.234"
+        },
+        "types": {
+          "amount": "Decimal"
+        },
+        "hex": "000004d2",
+        "warnings": []
+      },
+      "candidateRecoveriesAgree": 2
+    },
+    {
+      "id": "dependency",
+      "engine": "fastavro",
+      "original": {
+        "values": {
+          "amount": "12.34"
+        },
+        "types": {
+          "amount": "Decimal"
+        },
+        "hex": "000004d2",
+        "warnings": []
+      },
+      "candidate": {
+        "values": {
+          "amount": "1.234"
+        },
+        "types": {
+          "amount": "Decimal"
+        },
+        "hex": "000004d2",
+        "warnings": []
+      },
+      "candidateRecoveriesAgree": 2
+    }
+  ],
+  "scope": "Five explicit schema edits, two native codecs, one binary carrier per schema and exact reader-default resolution. Byte equality across decimal edits is not value equivalence; logical interpretation changes are measured. No automatic schema evolution or row migration."
+}

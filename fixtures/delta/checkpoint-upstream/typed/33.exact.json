@@ -1,0 +1,82 @@
+[
+  {
+    "add": {
+      "baseRowId": null,
+      "clusteringProvider": null,
+      "dataChange": false,
+      "defaultRowCommitVersion": null,
+      "deletionVector": null,
+      "modificationTime": {
+        "$int64": "1739313201428"
+      },
+      "partitionValues": {},
+      "path": "test%25file%25prefix-part-00000-53aeeb41-0234-43be-b601-bd4126b9201b-c000.snappy.parquet",
+      "size": {
+        "$int64": "503"
+      },
+      "stats": "{\"numRecords\":5,\"minValues\":{\"id\":10},\"maxValues\":{\"id\":14},\"nullCount\":{\"id\":0}}",
+      "tags": null
+    },
+    "remove": null
+  },
+  {
+    "add": {
+      "baseRowId": null,
+      "clusteringProvider": null,
+      "dataChange": false,
+      "defaultRowCommitVersion": null,
+      "deletionVector": null,
+      "modificationTime": {
+        "$int64": "1739313200795"
+      },
+      "partitionValues": {},
+      "path": "test%25file%25prefix-part-00000-cf47647c-debe-430e-aa67-233736401d9f-c000.snappy.parquet",
+      "size": {
+        "$int64": "500"
+      },
+      "stats": "{\"numRecords\":5,\"minValues\":{\"id\":0},\"maxValues\":{\"id\":4},\"nullCount\":{\"id\":0}}",
+      "tags": null
+    },
+    "remove": null
+  },
+  {
+    "add": {
+      "baseRowId": null,
+      "clusteringProvider": null,
+      "dataChange": false,
+      "defaultRowCommitVersion": null,
+      "deletionVector": null,
+      "modificationTime": {
+        "$int64": "1739313200791"
+      },
+      "partitionValues": {},
+      "path": "test%25file%25prefix-part-00001-08284dea-2ba7-4d49-94a8-5523e7f26463-c000.snappy.parquet",
+      "size": {
+        "$int64": "503"
+      },
+      "stats": "{\"numRecords\":5,\"minValues\":{\"id\":5},\"maxValues\":{\"id\":9},\"nullCount\":{\"id\":0}}",
+      "tags": null
+    },
+    "remove": null
+  },
+  {
+    "add": {
+      "baseRowId": null,
+      "clusteringProvider": null,
+      "dataChange": false,
+      "defaultRowCommitVersion": null,
+      "deletionVector": null,
+      "modificationTime": {
+        "$int64": "1739313201424"
+      },
+      "partitionValues": {},
+      "path": "test%25file%25prefix-part-00001-3294486a-9d53-4757-b3ca-3af1a9556cb3-c000.snappy.parquet",
+      "size": {
+        "$int64": "503"
+      },
+      "stats": "{\"numRecords\":5,\"minValues\":{\"id\":15},\"maxValues\":{\"id\":19},\"nullCount\":{\"id\":0}}",
+      "tags": null
+    },
+    "remove": null
+  }
+]

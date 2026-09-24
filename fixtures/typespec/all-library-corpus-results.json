@@ -1,0 +1,298 @@
+{
+  "compiler": "@typespec/compiler@1.16.0",
+  "libraries": {
+    "@typespec/http": "1.16.0",
+    "@typespec/rest": "0.86.0",
+    "@typespec/openapi": "1.16.0",
+    "@typespec/streams": "0.86.0",
+    "@typespec/graphql": "0.3.0",
+    "@typespec/json-schema": "1.16.0",
+    "@typespec/protobuf": "0.86.0",
+    "@typespec/versioning": "0.86.0",
+    "@typespec/openapi3": "1.16.0",
+    "@typespec/sse": "0.86.0",
+    "@typespec/events": "0.86.0"
+  },
+  "programs": [
+    {
+      "entry": "authentication/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "interface-auth.tsp",
+        "main.tsp",
+        "operation-auth.tsp",
+        "service-auth.tsp"
+      ]
+    },
+    {
+      "entry": "binary/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "binary.tsp",
+        "main.tsp"
+      ]
+    },
+    {
+      "entry": "documentation/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "docs.tsp",
+        "main.tsp"
+      ]
+    },
+    {
+      "entry": "emitters/graphql/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "main.tsp"
+      ]
+    },
+    {
+      "entry": "emitters/json-schema/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "main.tsp"
+      ]
+    },
+    {
+      "entry": "emitters/protobuf-kiosk/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "main.tsp"
+      ]
+    },
+    {
+      "entry": "encoded-names/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "encoded-names.tsp",
+        "main.tsp"
+      ]
+    },
+    {
+      "entry": "encoding/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "encoding.tsp",
+        "main.tsp"
+      ]
+    },
+    {
+      "entry": "getting-started/http-service/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "main.tsp"
+      ]
+    },
+    {
+      "entry": "getting-started/rest-framework/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "main.tsp"
+      ]
+    },
+    {
+      "entry": "grpc-kiosk-example/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "kiosk.tsp",
+        "main.tsp",
+        "types.tsp"
+      ]
+    },
+    {
+      "entry": "grpc-library-example/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "library.tsp",
+        "main.tsp"
+      ]
+    },
+    {
+      "entry": "init/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "main.tsp"
+      ]
+    },
+    {
+      "entry": "language/api-versioning/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "main.tsp"
+      ]
+    },
+    {
+      "entry": "language/discriminated-unions/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "main.tsp"
+      ]
+    },
+    {
+      "entry": "local-typespec/main.tsp",
+      "status": "syntax-rejected"
+    },
+    {
+      "entry": "multipart/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "main.tsp"
+      ]
+    },
+    {
+      "entry": "openapi-extensions/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "main.tsp",
+        "openapi-extensions.tsp"
+      ]
+    },
+    {
+      "entry": "param-decorators/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "main.tsp",
+        "param-decorators.tsp"
+      ]
+    },
+    {
+      "entry": "petstore/petstore.tsp",
+      "status": "compiler-errors",
+      "diagnostics": [
+        {
+          "code": "import-not-found",
+          "severity": "error",
+          "message": "Couldn't resolve import \"./decorators.js\"",
+          "file": "/project/petstore.tsp",
+          "start": 53,
+          "end": 78
+        },
+        {
+          "code": "invalid-ref",
+          "severity": "error",
+          "message": "Unknown decorator @fancyDoc",
+          "file": "/project/petstore.tsp",
+          "start": 1055,
+          "end": 1063
+        }
+      ],
+      "sourceFiles": [
+        "petstore.tsp"
+      ]
+    },
+    {
+      "entry": "polymorphism/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "main.tsp",
+        "polymorphism.tsp"
+      ]
+    },
+    {
+      "entry": "rest-metadata-emitter/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "main.tsp"
+      ]
+    },
+    {
+      "entry": "rest/petstore/petstore.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "petstore.tsp"
+      ]
+    },
+    {
+      "entry": "signatures/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "main.tsp",
+        "signatures.tsp"
+      ]
+    },
+    {
+      "entry": "status-code-ranges/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "main.tsp",
+        "status-code-ranges.tsp"
+      ]
+    },
+    {
+      "entry": "string-template/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "main.tsp"
+      ]
+    },
+    {
+      "entry": "tags/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "main.tsp",
+        "tagged-operations.tsp"
+      ]
+    },
+    {
+      "entry": "todoApp/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "main.tsp"
+      ]
+    },
+    {
+      "entry": "use-versioned-lib/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "library.tsp",
+        "main.tsp"
+      ]
+    },
+    {
+      "entry": "versioning/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "library.tsp",
+        "main.tsp"
+      ]
+    },
+    {
+      "entry": "visibility/main.tsp",
+      "status": "compiled",
+      "diagnostics": [],
+      "sourceFiles": [
+        "main.tsp",
+        "visibility.tsp"
+      ]
+    }
+  ]
+}

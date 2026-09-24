@@ -1,0 +1,7064 @@
+[
+  {
+    "txn": null,
+    "add": null,
+    "remove": null,
+    "metaData": null,
+    "protocol": {
+      "minReaderVersion": 3,
+      "minWriterVersion": 7,
+      "readerFeatures": [
+        "deletionVectors"
+      ],
+      "writerFeatures": [
+        "deletionVectors",
+        "domainMetadata",
+        "rowTracking",
+        "invariants",
+        "appendOnly",
+        "clustering"
+      ]
+    },
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": null,
+    "remove": null,
+    "metaData": {
+      "id": "bbed8ed0-7bc1-4f87-a180-e3c797a44d42",
+      "name": null,
+      "description": null,
+      "format": {
+        "provider": "parquet",
+        "options": {}
+      },
+      "schemaString": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"department\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}",
+      "partitionColumns": [],
+      "configuration": {
+        "delta.enableDeletionVectors": "true",
+        "delta.enableRowTracking": "true",
+        "delta.rowTracking.materializedRowIdColumnName": "_row-id-col-f5a0d1eb-7d6f-4790-a660-704245a8f9df",
+        "delta.rowTracking.materializedRowCommitVersionColumnName": "_row-commit-version-col-91cdf203-fbb9-4bf4-93d9-2c881b029958"
+      },
+      "createdTime": {
+        "$int64": "1743360824998"
+      }
+    },
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": null,
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": {
+      "domain": "delta.clustering",
+      "configuration": "{\"clusteringColumns\":[[\"department\"]],\"domainName\":\"delta.clustering\"}",
+      "removed": false
+    }
+  },
+  {
+    "txn": null,
+    "add": null,
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": {
+      "domain": "com.databricks.liquid",
+      "configuration": "{\"version\":2,\"metadataId\":\"e5dfdfe4-6e67-45da-8e97-d76677db02b3\",\"revisionId\":\"55f94152-d2d2-402d-bee4-33db205cb117\",\"txnReadVersion\":-1,\"areNodeMetricsReliable\":true,\"domainName\":\"com.databricks.liquid\"}",
+      "removed": false
+    }
+  },
+  {
+    "txn": null,
+    "add": null,
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": {
+      "domain": "delta.rowTracking",
+      "configuration": "{\"rowIdHighWaterMark\":435,\"domainName\":\"delta.rowTracking\"}",
+      "removed": false
+    }
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-01813162-d9a8-4a52-b64d-38a381a1041a-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361160000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361160000000",
+        "MIN_INSERTION_TIME": "1743361160000000",
+        "MAX_INSERTION_TIME": "1743361160000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "136"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "34"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-02a9e1ce-b0f8-406a-84ef-7c8830490273-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361138000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361138000000",
+        "MIN_INSERTION_TIME": "1743361138000000",
+        "MAX_INSERTION_TIME": "1743361138000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "120"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "30"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-08247a26-13e1-4d46-b313-71aabc6c23ab-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743360930000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743360930000000",
+        "MIN_INSERTION_TIME": "1743360930000000",
+        "MAX_INSERTION_TIME": "1743360930000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "16"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "4"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-097c5fb5-f131-4f6b-82e6-851e827e2004-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361209000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361209000000",
+        "MIN_INSERTION_TIME": "1743361209000000",
+        "MAX_INSERTION_TIME": "1743361209000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "168"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "42"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-0d0c97ed-6050-4b65-9174-1562c0062f13-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361553000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361553000000",
+        "MIN_INSERTION_TIME": "1743361553000000",
+        "MAX_INSERTION_TIME": "1743361553000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "400"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "100"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-0e0354df-ad56-49ae-b597-4c9f4e1e6698-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361079000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361079000000",
+        "MIN_INSERTION_TIME": "1743361079000000",
+        "MAX_INSERTION_TIME": "1743361079000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "76"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "19"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-0e0d0aba-4e23-4092-ab86-6b355bad465a-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361574000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361574000000",
+        "MIN_INSERTION_TIME": "1743361574000000",
+        "MAX_INSERTION_TIME": "1743361574000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "412"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "103"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-112ee243-dc76-448d-9dc2-3119ce3c1342-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361609000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361609000000",
+        "MIN_INSERTION_TIME": "1743361609000000",
+        "MAX_INSERTION_TIME": "1743361609000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "432"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "108"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-1354f17d-3e3a-4734-9874-77fc19c87e89-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361559000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361559000000",
+        "MIN_INSERTION_TIME": "1743361559000000",
+        "MAX_INSERTION_TIME": "1743361559000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "404"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "101"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-13bf7d02-cf29-4466-a342-703a6b3bc487-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361128000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361128000000",
+        "MIN_INSERTION_TIME": "1743361128000000",
+        "MAX_INSERTION_TIME": "1743361128000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "112"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "28"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-1460e393-4d3e-4aff-9d7e-56773e5784dd-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361442000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361442000000",
+        "MIN_INSERTION_TIME": "1743361442000000",
+        "MAX_INSERTION_TIME": "1743361442000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "324"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "81"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-164ad13f-0e13-43a8-9f7b-e37babefdde2-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743360962000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743360962000000",
+        "MIN_INSERTION_TIME": "1743360962000000",
+        "MAX_INSERTION_TIME": "1743360962000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "36"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "9"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-1818c987-abfe-447f-8a82-8732835b9083-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361182000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361182000000",
+        "MIN_INSERTION_TIME": "1743361182000000",
+        "MAX_INSERTION_TIME": "1743361182000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "148"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "37"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-19a3879a-31cd-423a-8260-7baa6b32289e-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361216000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361216000000",
+        "MIN_INSERTION_TIME": "1743361216000000",
+        "MAX_INSERTION_TIME": "1743361216000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "172"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "43"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-1b5f6fc1-f6b3-4284-be89-fe6f3d9381c2-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361492000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361492000000",
+        "MIN_INSERTION_TIME": "1743361492000000",
+        "MAX_INSERTION_TIME": "1743361492000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "356"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "89"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-1c29dfe3-885a-423a-a366-c30d4fc94de9-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361072000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361072000000",
+        "MIN_INSERTION_TIME": "1743361072000000",
+        "MAX_INSERTION_TIME": "1743361072000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "72"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "18"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-1f318dc0-814a-4384-8264-726876b2953f-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361457000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361457000000",
+        "MIN_INSERTION_TIME": "1743361457000000",
+        "MAX_INSERTION_TIME": "1743361457000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "332"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "83"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-1f835a7a-cbc5-4df7-86ed-b41c67b386d9-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361227000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361227000000",
+        "MIN_INSERTION_TIME": "1743361227000000",
+        "MAX_INSERTION_TIME": "1743361227000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "180"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "45"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-21307f9e-3cbf-43fd-8229-b3c3370970ab-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361238000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361238000000",
+        "MIN_INSERTION_TIME": "1743361238000000",
+        "MAX_INSERTION_TIME": "1743361238000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "188"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "47"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-21592fb7-8d42-4a78-9a10-283966032e59-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743360956000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743360956000000",
+        "MIN_INSERTION_TIME": "1743360956000000",
+        "MAX_INSERTION_TIME": "1743360956000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "32"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "8"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-23386813-0797-4f91-b537-dec1e135e1d8-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361340000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361340000000",
+        "MIN_INSERTION_TIME": "1743361340000000",
+        "MAX_INSERTION_TIME": "1743361340000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "256"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "64"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-234dbb04-baa5-403d-ac42-bd53da0df32c-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743360864000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743360864000000",
+        "MIN_INSERTION_TIME": "1743360864000000",
+        "MAX_INSERTION_TIME": "1743360864000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "4"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "1"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-23bfccaa-06c3-452e-8b50-dc80445ae1a2-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361547000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361547000000",
+        "MIN_INSERTION_TIME": "1743361547000000",
+        "MAX_INSERTION_TIME": "1743361547000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "396"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "99"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-284811df-366a-4fca-857d-792ae4d59f2e-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361508000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361508000000",
+        "MIN_INSERTION_TIME": "1743361508000000",
+        "MAX_INSERTION_TIME": "1743361508000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "368"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "92"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-2928659e-20ab-4348-8c9f-9b42ecbce9d4-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743360942000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743360942000000",
+        "MIN_INSERTION_TIME": "1743360942000000",
+        "MAX_INSERTION_TIME": "1743360942000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "24"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "6"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-29477d7e-0e32-410c-83e8-184f7ff3f842-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361095000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361095000000",
+        "MIN_INSERTION_TIME": "1743361095000000",
+        "MAX_INSERTION_TIME": "1743361095000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "88"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "22"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-29ab5314-d1b9-432b-94e1-bcee157ee110-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361100000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361100000000",
+        "MIN_INSERTION_TIME": "1743361100000000",
+        "MAX_INSERTION_TIME": "1743361100000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "92"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "23"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-2abafe98-abaa-4b9f-b0b4-86b0be039124-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743360936000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743360936000000",
+        "MIN_INSERTION_TIME": "1743360936000000",
+        "MAX_INSERTION_TIME": "1743360936000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "20"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "5"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-309509c6-d5df-4be7-b414-6ab47eca834a-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361335000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361335000000",
+        "MIN_INSERTION_TIME": "1743361335000000",
+        "MAX_INSERTION_TIME": "1743361335000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "252"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "63"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-3358d6cc-d626-4c91-a948-d734ec02feac-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361542000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361542000000",
+        "MIN_INSERTION_TIME": "1743361542000000",
+        "MAX_INSERTION_TIME": "1743361542000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "392"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "98"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-33f54a4f-0e6f-48a6-9b45-4048405536ee-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361144000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361144000000",
+        "MIN_INSERTION_TIME": "1743361144000000",
+        "MAX_INSERTION_TIME": "1743361144000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "124"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "31"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-350a16c3-393d-4c04-b32a-18dc55cce6c6-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361504000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361504000000",
+        "MIN_INSERTION_TIME": "1743361504000000",
+        "MAX_INSERTION_TIME": "1743361504000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "364"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "91"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-36c2fc48-45a4-481a-be12-4bd8b9f30596-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361155000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361155000000",
+        "MIN_INSERTION_TIME": "1743361155000000",
+        "MAX_INSERTION_TIME": "1743361155000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "132"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "33"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-36ca8136-e935-450b-bd31-c34b9fc5396c-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361418000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361418000000",
+        "MIN_INSERTION_TIME": "1743361418000000",
+        "MAX_INSERTION_TIME": "1743361418000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "308"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "77"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-3882ff9e-2e22-4b88-be7e-ad8c47b05056-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361347000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361347000000",
+        "MIN_INSERTION_TIME": "1743361347000000",
+        "MAX_INSERTION_TIME": "1743361347000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "260"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "65"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-3a23dcda-2877-488f-81a8-d1e984f65a76-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361170000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361170000000",
+        "MIN_INSERTION_TIME": "1743361170000000",
+        "MAX_INSERTION_TIME": "1743361170000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "144"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "36"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-3dec02e0-9a20-4db8-8187-869be4e0c18b-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361524000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361524000000",
+        "MIN_INSERTION_TIME": "1743361524000000",
+        "MAX_INSERTION_TIME": "1743361524000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "380"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "95"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-3f33052a-0466-4735-830b-eb309d942d95-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361255000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361255000000",
+        "MIN_INSERTION_TIME": "1743361255000000",
+        "MAX_INSERTION_TIME": "1743361255000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "200"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "50"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-4145b74c-ee58-4aa7-bffb-44237c57fa8e-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361586000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361586000000",
+        "MIN_INSERTION_TIME": "1743361586000000",
+        "MAX_INSERTION_TIME": "1743361586000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "420"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "105"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-427bafdf-73d4-4d4f-98dd-b75f327932c2-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361598000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361598000000",
+        "MIN_INSERTION_TIME": "1743361598000000",
+        "MAX_INSERTION_TIME": "1743361598000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "428"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "107"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-42959c9b-2e6a-43b3-be39-0775de11bd7e-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361232000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361232000000",
+        "MIN_INSERTION_TIME": "1743361232000000",
+        "MAX_INSERTION_TIME": "1743361232000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "184"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "46"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-4a198c33-85ed-48a0-b493-df2b55111234-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361283000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361283000000",
+        "MIN_INSERTION_TIME": "1743361283000000",
+        "MAX_INSERTION_TIME": "1743361283000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "216"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "54"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-4b8d01d4-d437-4ecf-81a3-9ed6d87c5645-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743360950000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743360950000000",
+        "MIN_INSERTION_TIME": "1743360950000000",
+        "MAX_INSERTION_TIME": "1743360950000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "28"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "7"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-525422f2-86cd-46ad-8d51-df668eab5556-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361221000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361221000000",
+        "MIN_INSERTION_TIME": "1743361221000000",
+        "MAX_INSERTION_TIME": "1743361221000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "176"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "44"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-552038ac-fbc0-49f6-a1e4-29d52e66d0b6-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361296000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361296000000",
+        "MIN_INSERTION_TIME": "1743361296000000",
+        "MAX_INSERTION_TIME": "1743361296000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "224"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "56"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-589f7592-85e2-4dab-9bc3-1ebe9d271a01-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743360872000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743360872000000",
+        "MIN_INSERTION_TIME": "1743360872000000",
+        "MAX_INSERTION_TIME": "1743360872000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "8"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "2"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-5f033308-315e-44ec-bf56-94b7712518f4-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361090000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361090000000",
+        "MIN_INSERTION_TIME": "1743361090000000",
+        "MAX_INSERTION_TIME": "1743361090000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "84"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "21"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-62ef0932-cbec-43fc-af4d-47acf2ac31ce-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361370000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361370000000",
+        "MIN_INSERTION_TIME": "1743361370000000",
+        "MAX_INSERTION_TIME": "1743361370000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "276"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "69"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-63300d3c-071a-4992-9dd0-44e0fdd09ce3-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361537000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361537000000",
+        "MIN_INSERTION_TIME": "1743361537000000",
+        "MAX_INSERTION_TIME": "1743361537000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "388"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "97"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-6945105b-42a0-4f35-989a-b72b8afb6c5e-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361518000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361518000000",
+        "MIN_INSERTION_TIME": "1743361518000000",
+        "MAX_INSERTION_TIME": "1743361518000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "376"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "94"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-6dc46736-510b-4979-a702-fd768b054ea2-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361062000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361062000000",
+        "MIN_INSERTION_TIME": "1743361062000000",
+        "MAX_INSERTION_TIME": "1743361062000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "64"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "16"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-719758d9-fb1d-4cbd-a769-07a21221fd10-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361243000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361243000000",
+        "MIN_INSERTION_TIME": "1743361243000000",
+        "MAX_INSERTION_TIME": "1743361243000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "192"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "48"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-71ff0553-93df-4f71-ad0d-1c0b8fe0d542-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361513000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361513000000",
+        "MIN_INSERTION_TIME": "1743361513000000",
+        "MAX_INSERTION_TIME": "1743361513000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "372"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "93"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-73cb83ba-1195-4799-87dd-c8b8cb6c61c4-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361198000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361198000000",
+        "MIN_INSERTION_TIME": "1743361198000000",
+        "MAX_INSERTION_TIME": "1743361198000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "160"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "40"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-75794cd5-7ea1-4de2-a884-a19625b95651-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361056000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361056000000",
+        "MIN_INSERTION_TIME": "1743361056000000",
+        "MAX_INSERTION_TIME": "1743361056000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "60"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "15"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-7cc87d75-3ff3-4298-844b-f3e582c98a35-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361396000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361396000000",
+        "MIN_INSERTION_TIME": "1743361396000000",
+        "MAX_INSERTION_TIME": "1743361396000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "292"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "73"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-7cfe9da5-0026-40c1-8130-4162072b7d1f-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361165000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361165000000",
+        "MIN_INSERTION_TIME": "1743361165000000",
+        "MAX_INSERTION_TIME": "1743361165000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "140"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "35"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-7df02513-b449-4d41-a47c-9a3f9efedee8-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361301000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361301000000",
+        "MIN_INSERTION_TIME": "1743361301000000",
+        "MAX_INSERTION_TIME": "1743361301000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "228"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "57"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-80e28196-bde1-4e6a-a9b3-e7d6fc2b9710-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361365000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361365000000",
+        "MIN_INSERTION_TIME": "1743361365000000",
+        "MAX_INSERTION_TIME": "1743361365000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "272"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "68"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-81d3b027-dd50-4b15-835c-7e098623a46b-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361497000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361497000000",
+        "MIN_INSERTION_TIME": "1743361497000000",
+        "MAX_INSERTION_TIME": "1743361497000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "360"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "90"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-82768dcf-5ea2-4e47-9693-6e6c1a7b4ae9-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361150000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361150000000",
+        "MIN_INSERTION_TIME": "1743361150000000",
+        "MAX_INSERTION_TIME": "1743361150000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "128"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "32"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-8c88361c-b48a-42fe-8e6d-39bb7c62111f-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361386000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361386000000",
+        "MIN_INSERTION_TIME": "1743361386000000",
+        "MAX_INSERTION_TIME": "1743361386000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "288"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "72"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-8caa43d3-5770-4196-b33a-290a19bb7190-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361529000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361529000000",
+        "MIN_INSERTION_TIME": "1743361529000000",
+        "MAX_INSERTION_TIME": "1743361529000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "384"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "96"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-8e61c372-81f9-4a6b-8aaa-e42f2f20aed1-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361564000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361564000000",
+        "MIN_INSERTION_TIME": "1743361564000000",
+        "MAX_INSERTION_TIME": "1743361564000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "408"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "102"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-91930dc5-f5e4-4d9e-855c-bf50caaac556-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361270000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361270000000",
+        "MIN_INSERTION_TIME": "1743361270000000",
+        "MAX_INSERTION_TIME": "1743361270000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "208"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "52"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-98986829-f69c-403f-a66d-19d61559ac46-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361250000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361250000000",
+        "MIN_INSERTION_TIME": "1743361250000000",
+        "MAX_INSERTION_TIME": "1743361250000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "196"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "49"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-9c33eeed-b151-4a51-8da7-631d99e505f8-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361187000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361187000000",
+        "MIN_INSERTION_TIME": "1743361187000000",
+        "MAX_INSERTION_TIME": "1743361187000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "152"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "38"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-9dad93f7-3781-4c0c-a913-ac941dbc40dd-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361401000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361401000000",
+        "MIN_INSERTION_TIME": "1743361401000000",
+        "MAX_INSERTION_TIME": "1743361401000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "296"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "74"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-9fadf732-5f65-4f03-800a-d2227dda0c28-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361473000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361473000000",
+        "MIN_INSERTION_TIME": "1743361473000000",
+        "MAX_INSERTION_TIME": "1743361473000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "344"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "86"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-a531ba1d-c63d-4269-b82a-b4d54bc05ec6-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361318000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361318000000",
+        "MIN_INSERTION_TIME": "1743361318000000",
+        "MAX_INSERTION_TIME": "1743361318000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "240"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "60"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-a533b97f-2b2f-4d18-af73-ed65719c4d6b-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743360967000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743360967000000",
+        "MIN_INSERTION_TIME": "1743360967000000",
+        "MAX_INSERTION_TIME": "1743360967000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "40"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "10"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-a7bd0311-dae2-467f-a3b6-27f0ce6bf6f4-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361486000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361486000000",
+        "MIN_INSERTION_TIME": "1743361486000000",
+        "MAX_INSERTION_TIME": "1743361486000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "352"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "88"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-ad823ed4-827d-45d4-8f6c-a64cb5bebb9a-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361133000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361133000000",
+        "MIN_INSERTION_TIME": "1743361133000000",
+        "MAX_INSERTION_TIME": "1743361133000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "116"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "29"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-ae7a3b44-17ea-443b-85cb-c24d792a68b7-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361375000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361375000000",
+        "MIN_INSERTION_TIME": "1743361375000000",
+        "MAX_INSERTION_TIME": "1743361375000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "280"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "70"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-af434136-0a0b-43dd-b7bb-d853a09ecb54-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361112000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361112000000",
+        "MIN_INSERTION_TIME": "1743361112000000",
+        "MAX_INSERTION_TIME": "1743361112000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "100"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "25"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-afd93dcd-b73e-4faa-961a-6f2274ec25ea-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361406000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361406000000",
+        "MIN_INSERTION_TIME": "1743361406000000",
+        "MAX_INSERTION_TIME": "1743361406000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "300"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "75"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-b0281cb8-df27-4cd3-8988-b7bd3e6e56d6-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743360831000"
+      },
+      "dataChange": false,
+      "tags": {
+        "MAX_INSERTION_TIME": "1743360831000000",
+        "INSERTION_TIME": "1743360831000000",
+        "LIQUID_METADATA_ID": "e5dfdfe4-6e67-45da-8e97-d76677db02b3",
+        "MIN_INSERTION_TIME": "1743360831000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "0"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "0"
+      },
+      "clusteringProvider": "liquid_ai",
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-b5630949-8411-46f3-a5f7-abfe1c4da946-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361380000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361380000000",
+        "MIN_INSERTION_TIME": "1743361380000000",
+        "MAX_INSERTION_TIME": "1743361380000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "284"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "71"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-ba3b4a73-6551-418a-87ff-86138034962c-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361424000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361424000000",
+        "MIN_INSERTION_TIME": "1743361424000000",
+        "MAX_INSERTION_TIME": "1743361424000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "312"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "78"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-baadcaa6-0eb0-430c-a1c0-3a4fd64e79e9-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361330000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361330000000",
+        "MIN_INSERTION_TIME": "1743361330000000",
+        "MAX_INSERTION_TIME": "1743361330000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "248"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "62"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-c09dbf09-5cbf-4d38-81c5-6c85e30afd75-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361275000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361275000000",
+        "MIN_INSERTION_TIME": "1743361275000000",
+        "MAX_INSERTION_TIME": "1743361275000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "212"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "53"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-c0bd2da0-5dc7-40c3-a3b3-ef3d241ee6dc-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361122000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361122000000",
+        "MIN_INSERTION_TIME": "1743361122000000",
+        "MAX_INSERTION_TIME": "1743361122000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "108"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "27"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-c14cb25b-9707-4fea-b5c8-92c4353ea41b-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361431000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361431000000",
+        "MIN_INSERTION_TIME": "1743361431000000",
+        "MAX_INSERTION_TIME": "1743361431000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "316"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "79"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-c198901d-c801-428d-8091-1ae4f35c00be-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743360979000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743360979000000",
+        "MIN_INSERTION_TIME": "1743360979000000",
+        "MAX_INSERTION_TIME": "1743360979000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "48"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "12"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-c3242884-0475-4f4e-801b-8e60f5fe540c-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361324000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361324000000",
+        "MIN_INSERTION_TIME": "1743361324000000",
+        "MAX_INSERTION_TIME": "1743361324000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "244"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "61"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-c5fb6eb7-621f-4242-b039-0ca34a583f42-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361353000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361353000000",
+        "MIN_INSERTION_TIME": "1743361353000000",
+        "MAX_INSERTION_TIME": "1743361353000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "264"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "66"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-c6edb372-9b64-4424-86c5-f5aebddc3c73-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743360974000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743360974000000",
+        "MIN_INSERTION_TIME": "1743360974000000",
+        "MAX_INSERTION_TIME": "1743360974000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "44"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "11"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-c9fd332a-86f6-44d3-85c8-9d744f54d603-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361313000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361313000000",
+        "MIN_INSERTION_TIME": "1743361313000000",
+        "MAX_INSERTION_TIME": "1743361313000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "236"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "59"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-cd170127-f988-4992-8666-a69211106706-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361290000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361290000000",
+        "MIN_INSERTION_TIME": "1743361290000000",
+        "MAX_INSERTION_TIME": "1743361290000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "220"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "55"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-cd87976f-cd7e-4571-a153-905097cad7ab-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361117000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361117000000",
+        "MIN_INSERTION_TIME": "1743361117000000",
+        "MAX_INSERTION_TIME": "1743361117000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "104"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "26"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-cde38085-6c16-419d-9a28-7b97aaaaba98-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361260000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361260000000",
+        "MIN_INSERTION_TIME": "1743361260000000",
+        "MAX_INSERTION_TIME": "1743361260000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "204"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "51"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-ce62c625-0fbd-46cb-ac67-a90a587c2d87-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361360000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361360000000",
+        "MIN_INSERTION_TIME": "1743361360000000",
+        "MAX_INSERTION_TIME": "1743361360000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "268"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "67"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-d17c29d9-6f73-421e-a5f9-59454bd453c9-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361307000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361307000000",
+        "MIN_INSERTION_TIME": "1743361307000000",
+        "MAX_INSERTION_TIME": "1743361307000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "232"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "58"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-d18d28a7-48ba-4050-b726-3f9f8f9575c6-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361050000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361050000000",
+        "MIN_INSERTION_TIME": "1743361050000000",
+        "MAX_INSERTION_TIME": "1743361050000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "56"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "14"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-d6d9de9a-f07a-45a6-86d5-1f700986e5e2-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361451000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361451000000",
+        "MIN_INSERTION_TIME": "1743361451000000",
+        "MAX_INSERTION_TIME": "1743361451000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "328"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "82"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-e025ed5d-6ca2-42e7-90d0-5e663ca9eb55-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361412000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361412000000",
+        "MIN_INSERTION_TIME": "1743361412000000",
+        "MAX_INSERTION_TIME": "1743361412000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "304"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "76"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-e11c8598-733e-4e1f-bce1-bc57c5359759-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361581000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361581000000",
+        "MIN_INSERTION_TIME": "1743361581000000",
+        "MAX_INSERTION_TIME": "1743361581000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "416"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "104"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-e1bdb2d4-cea7-44a3-a3da-821620337f96-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361204000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361204000000",
+        "MIN_INSERTION_TIME": "1743361204000000",
+        "MAX_INSERTION_TIME": "1743361204000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "164"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "41"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-e2a53514-c172-46ec-b7d4-31cbe6395fc4-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361436000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361436000000",
+        "MIN_INSERTION_TIME": "1743361436000000",
+        "MAX_INSERTION_TIME": "1743361436000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "320"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "80"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-e378c317-393c-4ee1-8957-52fe04197164-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743360986000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743360986000000",
+        "MIN_INSERTION_TIME": "1743360986000000",
+        "MAX_INSERTION_TIME": "1743360986000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "52"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "13"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-ea3cca9c-66b4-49eb-842e-846a0f362e99-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361592000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361592000000",
+        "MIN_INSERTION_TIME": "1743361592000000",
+        "MAX_INSERTION_TIME": "1743361592000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "424"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "106"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-eac4b8bd-f8ef-477a-b204-58b465ed4f6b-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361067000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361067000000",
+        "MIN_INSERTION_TIME": "1743361067000000",
+        "MAX_INSERTION_TIME": "1743361067000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "68"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "17"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-eca46db4-7dec-4b40-a579-fb38214d1f31-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743360882000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743360882000000",
+        "MIN_INSERTION_TIME": "1743360882000000",
+        "MAX_INSERTION_TIME": "1743360882000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "12"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "3"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-ee81b366-d11c-41ee-896b-4de8d03c6156-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361192000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361192000000",
+        "MIN_INSERTION_TIME": "1743361192000000",
+        "MAX_INSERTION_TIME": "1743361192000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "156"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "39"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-ee90d1cf-aebb-40d6-be62-ff3bdf44c41f-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361479000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361479000000",
+        "MIN_INSERTION_TIME": "1743361479000000",
+        "MAX_INSERTION_TIME": "1743361479000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "348"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "87"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-f46f4638-0b99-40e2-a6fe-d82e20beae14-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361084000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361084000000",
+        "MIN_INSERTION_TIME": "1743361084000000",
+        "MAX_INSERTION_TIME": "1743361084000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "80"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "20"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-f7a19ad0-6160-4a51-89ef-a564fcea8ae7-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361105000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361105000000",
+        "MIN_INSERTION_TIME": "1743361105000000",
+        "MAX_INSERTION_TIME": "1743361105000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "96"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "24"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-fc633d72-cafd-4815-b2eb-00470551fa56-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361462000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361462000000",
+        "MIN_INSERTION_TIME": "1743361462000000",
+        "MAX_INSERTION_TIME": "1743361462000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "336"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "84"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "part-00000-fe6b5e04-00cf-4667-a212-3dbcbd5c28f4-c000.snappy.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1251"
+      },
+      "modificationTime": {
+        "$int64": "1743361468000"
+      },
+      "dataChange": false,
+      "tags": {
+        "INSERTION_TIME": "1743361468000000",
+        "MIN_INSERTION_TIME": "1743361468000000",
+        "MAX_INSERTION_TIME": "1743361468000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      },
+      "deletionVector": null,
+      "baseRowId": {
+        "$int64": "340"
+      },
+      "defaultRowCommitVersion": {
+        "$int64": "85"
+      },
+      "clusteringProvider": null,
+      "stats": "{\"numRecords\":4,\"minValues\":{\"id\":1,\"name\":\"Alice\",\"department\":\"Engineering\"},\"maxValues\":{\"id\":4,\"name\":\"David\",\"department\":\"Marketing\"},\"nullCount\":{\"id\":0,\"name\":0,\"department\":0},\"tightBounds\":true}",
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "4"
+        },
+        "minValues": {
+          "id": {
+            "$int64": "1"
+          },
+          "name": "Alice",
+          "department": "Engineering"
+        },
+        "maxValues": {
+          "id": {
+            "$int64": "4"
+          },
+          "name": "David",
+          "department": "Marketing"
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "name": {
+            "$int64": "0"
+          },
+          "department": {
+            "$int64": "0"
+          }
+        },
+        "tightBounds": true
+      }
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  }
+]

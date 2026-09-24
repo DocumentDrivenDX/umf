@@ -1,0 +1,103 @@
+{
+  "runtime": "jsonschema 4.25.1 Draft201909Validator without format checks",
+  "schemaSha256": "edb41f33ec46e84780e99872ab2bd67f074959d2bf3e9c9fc54e61f8982b0d93",
+  "results": [
+    {
+      "id": "upstream",
+      "nativeShapeValid": true,
+      "sha256": "979b49b49aa36a5c89a5cf915f6f1e8d324e9080d35b83472e3a74b78c9ed617",
+      "errors": []
+    },
+    {
+      "id": "paired",
+      "nativeShapeValid": true,
+      "sha256": "09bcad1b45111177ec0ccd3b6ea43d01d3b4e71d917724a02fe75f3c6babcd74",
+      "errors": []
+    },
+    {
+      "id": "arity",
+      "nativeShapeValid": true,
+      "sha256": "b814ef0cbcc1ef79ac1d6d78fe143660acbeabaa295c856f9a42352e5513661c",
+      "errors": []
+    },
+    {
+      "id": "property-from",
+      "nativeShapeValid": false,
+      "sha256": "5839e51b5eb3ab719497d7e0251b5333a8dd8be2bd1d944d305f038a5f267cfa",
+      "errors": [
+        {
+          "path": [
+            "schema",
+            2,
+            "properties",
+            1,
+            "relationships",
+            0
+          ],
+          "message": "{'id': 'fk_order_customer', 'to': 'customers.id', 'type': 'foreignKey', 'customProperties': [{'property': 'cardinality', 'value': 'many-to-one'}], 'from': 'orders.customer_id'} should not be valid under {'required': ['from']}"
+        }
+      ]
+    },
+    {
+      "id": "mixed-shapes",
+      "nativeShapeValid": false,
+      "sha256": "04084d0d322836bb0947712779ad660423590f3b503324c50305f06394d365ec",
+      "errors": [
+        {
+          "path": [
+            "schema",
+            2,
+            "relationships",
+            0
+          ],
+          "message": "{'id': 'fk_orders_address_composite', 'type': 'foreignKey', 'from': 'orders.customer_id', 'to': ['addresses.customer_id', 'addresses.address_street'], 'customProperties': [{'property': 'description', 'value': 'Composite FK linking an order to a specific address row.'}]} is not valid under any of the given schemas"
+        }
+      ]
+    },
+    {
+      "id": "duplicate-id",
+      "nativeShapeValid": true,
+      "sha256": "2f4a5e3e6782f8c51ad5bbff9fffc541cbc8f5b2610c9096fe1bf09a4f639ede",
+      "errors": []
+    },
+    {
+      "id": "property-array",
+      "nativeShapeValid": true,
+      "sha256": "fe13ea87a90e0ea88260f60282719d8a964b6ae45b3711d9bbc78ddd3d3e5658",
+      "errors": []
+    },
+    {
+      "id": "unknown-type",
+      "nativeShapeValid": false,
+      "sha256": "4c2d72ef431f5066f76fc2c35725d1598f2c863afa59c8795d4000c6e4b2e109",
+      "errors": [
+        {
+          "path": [
+            "schema",
+            2,
+            "relationships",
+            0,
+            "type"
+          ],
+          "message": "'association' is not one of ['foreignKey']"
+        },
+        {
+          "path": [
+            "schema",
+            2,
+            "relationships",
+            0
+          ],
+          "message": "Unevaluated properties are not allowed ('customProperties', 'id', 'type' were unexpected)"
+        }
+      ]
+    },
+    {
+      "id": "external",
+      "nativeShapeValid": true,
+      "sha256": "082cbdcc37af3313ab357d6ef40b96f7fb1cb57d347de54c475b171804c17f34",
+      "errors": []
+    }
+  ],
+  "limits": "Official JSON Schema does not resolve targets, check duplicate relationship IDs or equal composite lengths; property-array lookup remains explicitly unsupported, not declared invalid by its grammar"
+}

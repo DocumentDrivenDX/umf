@@ -1,0 +1,10 @@
+<http://example/s> <http://example/p> <http://example/o> .
+<http://example/s> <http://example/p> "Alice" .
+<http://example/s> <http://example/p> _:m_0_0 .
+_:m_0_1 <http://example/p> <http://example/o> .
+_:m_0_1 <http://example/p> "Alice" .
+_:m_0_1 <http://example/p> _:m_0_2 .
+_:m_1_0 <urn:example:related> <urn:example:resource> .
+<urn:example:populated> { _:m_1_0 <urn:example:label> "Original label" . }
+<urn:example:empty> {}
+_:m_1_0 {}

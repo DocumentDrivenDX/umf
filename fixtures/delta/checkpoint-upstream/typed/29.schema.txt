@@ -1,0 +1,75 @@
+metaData: struct<id: string, name: string, description: string, schemaString: string, createdTime: int64, part (... 166 chars omitted)
+  child 0, id: string
+  child 1, name: string
+  child 2, description: string
+  child 3, schemaString: string
+  child 4, createdTime: int64
+  child 5, partitionColumns: list<element: string>
+      child 0, element: string
+  child 6, configuration: map<string, string ('configuration')>
+      child 0, configuration: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+  child 7, format: struct<provider: string, options: map<string, string ('options')>>
+      child 0, provider: string
+      child 1, options: map<string, string ('options')>
+          child 0, options: struct<key: string not null, value: string> not null
+              child 0, key: string not null
+              child 1, value: string
+protocol: struct<minReaderVersion: int32, minWriterVersion: int32>
+  child 0, minReaderVersion: int32
+  child 1, minWriterVersion: int32
+txn: struct<appId: string, version: int64>
+  child 0, appId: string
+  child 1, version: int64
+add: struct<path: string, size: int64, modificationTime: int64, dataChange: bool, stats: string, partitio (... 505 chars omitted)
+  child 0, path: string
+  child 1, size: int64
+  child 2, modificationTime: int64
+  child 3, dataChange: bool
+  child 4, stats: string
+  child 5, partitionValues: map<string, string ('partitionValues')>
+      child 0, partitionValues: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+  child 6, tags: map<string, string ('tags')>
+      child 0, tags: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+  child 7, deletionVector: struct<storageType: string not null, pathOrInlineDv: string not null, offset: int32, sizeInBytes: in (... 42 chars omitted)
+      child 0, storageType: string not null
+      child 1, pathOrInlineDv: string not null
+      child 2, offset: int32
+      child 3, sizeInBytes: int32 not null
+      child 4, cardinality: int64 not null
+  child 8, stats_parsed: struct<numRecords: int64, minValues: struct<id: string, price: int64, sold: int32, deleted: bool>, m (... 144 chars omitted)
+      child 0, numRecords: int64
+      child 1, minValues: struct<id: string, price: int64, sold: int32, deleted: bool>
+          child 0, id: string
+          child 1, price: int64
+          child 2, sold: int32
+          child 3, deleted: bool
+      child 2, maxValues: struct<id: string, price: int64, sold: int32, deleted: bool>
+          child 0, id: string
+          child 1, price: int64
+          child 2, sold: int32
+          child 3, deleted: bool
+      child 3, nullCount: struct<id: int64, price: int64, sold: int64, deleted: int64>
+          child 0, id: int64
+          child 1, price: int64
+          child 2, sold: int64
+          child 3, deleted: int64
+remove: struct<path: string, deletionTimestamp: int64, dataChange: bool, extendedFileMetadata: bool, size: i (... 99 chars omitted)
+  child 0, path: string
+  child 1, deletionTimestamp: int64
+  child 2, dataChange: bool
+  child 3, extendedFileMetadata: bool
+  child 4, size: int64
+  child 5, partitionValues: map<string, string ('partitionValues')>
+      child 0, partitionValues: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+  child 6, tags: map<string, string ('tags')>
+      child 0, tags: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string

@@ -1,0 +1,29 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b20167 .
+_:report <http://www.w3.org/ns/shacl#result> _:b20168 .
+_:report <http://www.w3.org/ns/shacl#result> _:b20169 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b20167 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b20167 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b20167 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:b20167 <http://www.w3.org/ns/shacl#sourceShape> <http://example.org/shacl-test/s> .
+_:b20167 <http://www.w3.org/ns/shacl#focusNode> <http://example.org/shacl-test/i> .
+_:b20167 <http://www.w3.org/ns/shacl#resultPath> <http://example.org/shacl-test/p> .
+_:b20167 <http://www.w3.org/ns/shacl#value> "300"^^<http://www.w3.org/2001/XMLSchema#byte> .
+_:b20167 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have datatype <http://www.w3.org/2001/XMLSchema#byte>" .
+_:b20168 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b20168 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b20168 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:b20168 <http://www.w3.org/ns/shacl#sourceShape> <http://example.org/shacl-test/s> .
+_:b20168 <http://www.w3.org/ns/shacl#focusNode> <http://example.org/shacl-test/i> .
+_:b20168 <http://www.w3.org/ns/shacl#resultPath> <http://example.org/shacl-test/p> .
+_:b20168 <http://www.w3.org/ns/shacl#value> "55"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:b20168 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have datatype <http://www.w3.org/2001/XMLSchema#byte>" .
+_:b20169 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b20169 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b20169 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:b20169 <http://www.w3.org/ns/shacl#sourceShape> <http://example.org/shacl-test/s> .
+_:b20169 <http://www.w3.org/ns/shacl#focusNode> <http://example.org/shacl-test/i> .
+_:b20169 <http://www.w3.org/ns/shacl#resultPath> <http://example.org/shacl-test/p> .
+_:b20169 <http://www.w3.org/ns/shacl#value> "c"^^<http://www.w3.org/2001/XMLSchema#byte> .
+_:b20169 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have datatype <http://www.w3.org/2001/XMLSchema#byte>" .

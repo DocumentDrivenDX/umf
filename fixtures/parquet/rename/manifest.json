@@ -1,0 +1,29 @@
+{
+  "runtime": "PyArrow 21.0.0",
+  "cases": [
+    {
+      "id": "none",
+      "path": "fixtures/parquet/rename/none.parquet",
+      "rows": 8,
+      "rowGroups": 3
+    },
+    {
+      "id": "snappy",
+      "path": "fixtures/parquet/rename/snappy.parquet",
+      "rows": 8,
+      "rowGroups": 3
+    },
+    {
+      "id": "gzip",
+      "path": "fixtures/parquet/rename/gzip.parquet",
+      "rows": 8,
+      "rowGroups": 3
+    },
+    {
+      "id": "embedded-schema",
+      "path": "fixtures/parquet/rename/embedded-schema.parquet",
+      "rows": 8,
+      "expected": "blocked"
+    }
+  ]
+}

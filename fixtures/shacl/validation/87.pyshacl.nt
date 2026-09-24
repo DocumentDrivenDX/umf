@@ -1,0 +1,18 @@
+_:N2dbd8e9713aa42d38af0c02f438aa0f2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N4d02612e068b495b977f9072a4166829 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/qualifiedValueShapesDisjoint-001.test#InvalidHand1> .
+_:N2dbd8e9713aa42d38af0c02f438aa0f2 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#QualifiedMinCountConstraintComponent> .
+_:N2dbd8e9713aa42d38af0c02f438aa0f2 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/qualifiedValueShapesDisjoint-001.test#InvalidHand1> .
+_:N2dbd8e9713aa42d38af0c02f438aa0f2 <http://www.w3.org/ns/shacl#resultMessage> "Focus node does not conform to shape MinCount 4 MaxCount 4: [ sh:class ex:Finger ]" .
+_:N497bba7c8af74e7a9b9b12a04cdf4bc5 <http://www.w3.org/ns/shacl#result> _:N2dbd8e9713aa42d38af0c02f438aa0f2 .
+_:N497bba7c8af74e7a9b9b12a04cdf4bc5 <http://www.w3.org/ns/shacl#result> _:N4d02612e068b495b977f9072a4166829 .
+_:N4d02612e068b495b977f9072a4166829 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/qualifiedValueShapesDisjoint-001.test#HandShape-digit1> .
+_:N2dbd8e9713aa42d38af0c02f438aa0f2 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N4d02612e068b495b977f9072a4166829 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N2dbd8e9713aa42d38af0c02f438aa0f2 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/qualifiedValueShapesDisjoint-001.test#digit> .
+_:N4d02612e068b495b977f9072a4166829 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#QualifiedMinCountConstraintComponent> .
+_:N497bba7c8af74e7a9b9b12a04cdf4bc5 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N4d02612e068b495b977f9072a4166829 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N2dbd8e9713aa42d38af0c02f438aa0f2 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/qualifiedValueShapesDisjoint-001.test#HandShape-digit4> .
+_:N497bba7c8af74e7a9b9b12a04cdf4bc5 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N4d02612e068b495b977f9072a4166829 <http://www.w3.org/ns/shacl#resultMessage> "Focus node does not conform to shape MinCount 1 MaxCount 1: [ sh:class ex:Thumb ]" .
+_:N4d02612e068b495b977f9072a4166829 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/qualifiedValueShapesDisjoint-001.test#digit> .

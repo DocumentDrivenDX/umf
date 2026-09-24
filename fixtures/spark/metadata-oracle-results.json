@@ -1,0 +1,68 @@
+{
+  "version": "4.0.1",
+  "nativeComparisons": 12,
+  "accepted": 8,
+  "rejected": 4,
+  "results": [
+    {
+      "id": "0",
+      "status": "accepted",
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"x\":9223372036854775807}}]}"
+    },
+    {
+      "id": "1",
+      "status": "accepted",
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"x\":-9223372036854775808}}]}"
+    },
+    {
+      "id": "2",
+      "status": "accepted",
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"x\":-9223372036854775808}}]}"
+    },
+    {
+      "id": "3",
+      "status": "accepted",
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"x\":9223372036854775807}}]}"
+    },
+    {
+      "id": "4",
+      "status": "accepted",
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"x\":9.007199254740994E15}}]}"
+    },
+    {
+      "id": "5",
+      "status": "accepted",
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"x\":\"Infinity\"}}]}"
+    },
+    {
+      "id": "6",
+      "status": "rejected",
+      "errorType": "Py4JJavaError"
+    },
+    {
+      "id": "7",
+      "status": "rejected",
+      "errorType": "Py4JJavaError"
+    },
+    {
+      "id": "8",
+      "status": "rejected",
+      "errorType": "Py4JJavaError"
+    },
+    {
+      "id": "9",
+      "status": "accepted",
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"x\":[]}}]}"
+    },
+    {
+      "id": "10",
+      "status": "accepted",
+      "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"x\":null}}]}"
+    },
+    {
+      "id": "11",
+      "status": "rejected",
+      "errorType": "Py4JJavaError"
+    }
+  ]
+}

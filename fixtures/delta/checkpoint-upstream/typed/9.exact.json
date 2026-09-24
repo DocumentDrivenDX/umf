@@ -1,0 +1,45 @@
+[
+  {
+    "add": null,
+    "domainMetadata": null,
+    "metaData": {
+      "configuration": {
+        "delta.feature.catalogowned": "supported"
+      },
+      "createdTime": {
+        "$int64": "1742252106422"
+      },
+      "description": null,
+      "format": {
+        "options": {},
+        "provider": "parquet"
+      },
+      "id": "ebffcf7b-bf25-427f-a91a-d4a0d27ebbef",
+      "name": null,
+      "partitionColumns": [],
+      "schemaString": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}"
+    },
+    "protocol": null,
+    "remove": null,
+    "txn": null
+  },
+  {
+    "add": null,
+    "domainMetadata": null,
+    "metaData": null,
+    "protocol": {
+      "minReaderVersion": 3,
+      "minWriterVersion": 7,
+      "readerFeatures": [
+        "catalogOwned"
+      ],
+      "writerFeatures": [
+        "catalogOwned",
+        "invariants",
+        "appendOnly"
+      ]
+    },
+    "remove": null,
+    "txn": null
+  }
+]

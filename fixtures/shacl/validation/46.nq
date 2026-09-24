@@ -1,0 +1,15 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b17614 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b17614 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b17614 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b17614 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:b17614 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/path/path-sequence-duplicate-001.test#SP> .
+_:b17614 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/path/path-sequence-duplicate-001.test#A> .
+_:b17614 <http://www.w3.org/ns/shacl#resultPath> _:s_g_2 .
+_:b17614 <http://www.w3.org/ns/shacl#value> "value" .
+_:b17614 <http://www.w3.org/ns/shacl#resultMessage> "Value does not have node kind <http://www.w3.org/ns/shacl#IRI>" .
+_:s_g_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://datashapes.org/sh/tests/core/path/path-sequence-duplicate-001.test#p1> .
+_:s_g_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:s_g_3 .
+_:s_g_3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://datashapes.org/sh/tests/core/path/path-sequence-duplicate-001.test#p2> .
+_:s_g_3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .

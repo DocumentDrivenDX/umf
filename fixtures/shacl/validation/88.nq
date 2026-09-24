@@ -1,0 +1,26 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b27511 .
+_:report <http://www.w3.org/ns/shacl#result> _:b27512 .
+_:report <http://www.w3.org/ns/shacl#result> _:b27513 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b27511 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b27511 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b27511 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#UniqueLangConstraintComponent> .
+_:b27511 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/uniqueLang-001.test#TestShape-testProperty> .
+_:b27511 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/uniqueLang-001.test#InvalidInstance1> .
+_:b27511 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/uniqueLang-001.test#testProperty> .
+_:b27511 <http://www.w3.org/ns/shacl#resultMessage> "Language \"en\" has been used by 2 values" .
+_:b27512 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b27512 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b27512 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#UniqueLangConstraintComponent> .
+_:b27512 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/uniqueLang-001.test#TestShape-testProperty> .
+_:b27512 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/uniqueLang-001.test#InvalidInstance2> .
+_:b27512 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/uniqueLang-001.test#testProperty> .
+_:b27512 <http://www.w3.org/ns/shacl#resultMessage> "Language \"en\" has been used by 3 values" .
+_:b27513 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b27513 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b27513 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#UniqueLangConstraintComponent> .
+_:b27513 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/uniqueLang-001.test#TestShape-testProperty> .
+_:b27513 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/uniqueLang-001.test#InvalidInstance2> .
+_:b27513 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/uniqueLang-001.test#testProperty> .
+_:b27513 <http://www.w3.org/ns/shacl#resultMessage> "Language \"de\" has been used by 2 values" .

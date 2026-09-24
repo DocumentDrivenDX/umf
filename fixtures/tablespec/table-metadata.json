@@ -1,0 +1,335 @@
+{
+  "cases": [
+    {
+      "source": {
+        "umf": "0.1.0",
+        "id": "monolithic",
+        "vocabularies": {
+          "umf.tablespec": {
+            "version": "0.1.0"
+          }
+        },
+        "extensions": {
+          "umf.tablespec": {
+            "profile": "tablespec-table-1",
+            "root": {
+              "kind": "object",
+              "members": {
+                "version": {
+                  "kind": "string",
+                  "value": "1.0"
+                },
+                "table_name": {
+                  "kind": "string",
+                  "value": "orders"
+                },
+                "primary_key": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "id"
+                    }
+                  ]
+                },
+                "context_column": {
+                  "kind": "string",
+                  "value": "tenant"
+                },
+                "future": {
+                  "kind": "object",
+                  "members": {
+                    "exact": {
+                      "kind": "number",
+                      "value": "9007199254740993"
+                    },
+                    "negativeZero": {
+                      "kind": "number",
+                      "value": "-0"
+                    },
+                    "decimal": {
+                      "kind": "number",
+                      "value": "1.2300"
+                    }
+                  }
+                },
+                "columns": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "id"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "INTEGER"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "originalSource": "{\"version\":\"1.0\",\"table_name\":\"orders\",\"primary_key\":[\"id\"],\"context_column\":\"tenant\",\"future\":{\"exact\":9007199254740993,\"negativeZero\":-0,\"decimal\":1.2300},\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"}]}",
+            "originalFormat": "json"
+          }
+        },
+        "modules": [
+          {
+            "id": "table",
+            "namespace": "orders",
+            "elements": [
+              {
+                "id": "column:0",
+                "name": "id",
+                "scalarType": "integer",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "kind": "object",
+        "members": {
+          "version": {
+            "kind": "string",
+            "value": "1.0"
+          },
+          "table_name": {
+            "kind": "string",
+            "value": "orders"
+          },
+          "primary_key": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "string",
+                "value": "id"
+              }
+            ]
+          },
+          "context_column": {
+            "kind": "string",
+            "value": "tenant"
+          },
+          "future": {
+            "kind": "object",
+            "members": {
+              "exact": {
+                "kind": "number",
+                "value": "9007199254740993"
+              },
+              "negativeZero": {
+                "kind": "number",
+                "value": "-0"
+              },
+              "decimal": {
+                "kind": "number",
+                "value": "1.2300"
+              }
+            }
+          },
+          "columns": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "object",
+                "members": {
+                  "name": {
+                    "kind": "string",
+                    "value": "id"
+                  },
+                  "data_type": {
+                    "kind": "string",
+                    "value": "INTEGER"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "umf": "0.1.0",
+        "id": "split",
+        "vocabularies": {
+          "umf.tablespec": {
+            "version": "0.1.0"
+          }
+        },
+        "extensions": {
+          "umf.tablespec": {
+            "profile": "tablespec-table-1",
+            "root": {
+              "kind": "object",
+              "members": {
+                "version": {
+                  "kind": "string",
+                  "value": "1.0"
+                },
+                "table_name": {
+                  "kind": "string",
+                  "value": "orders"
+                },
+                "primary_key": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "string",
+                      "value": "id"
+                    }
+                  ]
+                },
+                "context_column": {
+                  "kind": "string",
+                  "value": "tenant"
+                },
+                "future": {
+                  "kind": "object",
+                  "members": {
+                    "exact": {
+                      "kind": "number",
+                      "value": "9007199254740993"
+                    },
+                    "negativeZero": {
+                      "kind": "number",
+                      "value": "-0"
+                    },
+                    "decimal": {
+                      "kind": "number",
+                      "value": "1.2300"
+                    }
+                  }
+                },
+                "columns": {
+                  "kind": "array",
+                  "items": [
+                    {
+                      "kind": "object",
+                      "members": {
+                        "name": {
+                          "kind": "string",
+                          "value": "actual"
+                        },
+                        "data_type": {
+                          "kind": "string",
+                          "value": "TEXT"
+                        },
+                        "derivation": {
+                          "kind": "object",
+                          "members": {
+                            "expression": {
+                              "kind": "string",
+                              "value": "opaque"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "originalSource": "{\"version\":\"1.0\",\"table_name\":\"orders\",\"primary_key\":[\"id\"],\"context_column\":\"tenant\",\"future\":{\"exact\":9007199254740993,\"negativeZero\":-0,\"decimal\":1.2300},\"columns\":[{\"name\":\"actual\",\"data_type\":\"TEXT\",\"derivation\":{\"expression\":\"opaque\"}}]}",
+            "originalFormat": "json",
+            "splitFiles": {
+              "table.yaml": "{\"version\":\"1.0\",\"table_name\":\"orders\",\"primary_key\":[\"id\"],\"context_column\":\"tenant\",\"future\":{\"exact\":9007199254740993,\"negativeZero\":-0,\"decimal\":1.2300},\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"}]}",
+              "columns/id.yaml": "column: {name: actual, data_type: TEXT}\nderivation: {expression: opaque}\n",
+              "notes.txt": "retain sidecar"
+            }
+          }
+        },
+        "modules": [
+          {
+            "id": "table",
+            "namespace": "orders",
+            "elements": [
+              {
+                "id": "column:0",
+                "name": "actual",
+                "scalarType": "string",
+                "extensions": {}
+              }
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "kind": "object",
+        "members": {
+          "version": {
+            "kind": "string",
+            "value": "1.0"
+          },
+          "table_name": {
+            "kind": "string",
+            "value": "orders"
+          },
+          "primary_key": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "string",
+                "value": "id"
+              }
+            ]
+          },
+          "context_column": {
+            "kind": "string",
+            "value": "tenant"
+          },
+          "future": {
+            "kind": "object",
+            "members": {
+              "exact": {
+                "kind": "number",
+                "value": "9007199254740993"
+              },
+              "negativeZero": {
+                "kind": "number",
+                "value": "-0"
+              },
+              "decimal": {
+                "kind": "number",
+                "value": "1.2300"
+              }
+            }
+          },
+          "columns": {
+            "kind": "array",
+            "items": [
+              {
+                "kind": "object",
+                "members": {
+                  "name": {
+                    "kind": "string",
+                    "value": "actual"
+                  },
+                  "data_type": {
+                    "kind": "string",
+                    "value": "TEXT"
+                  },
+                  "derivation": {
+                    "kind": "object",
+                    "members": {
+                      "expression": {
+                        "kind": "string",
+                        "value": "opaque"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

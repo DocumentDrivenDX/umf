@@ -1,0 +1,13 @@
+enum Mode { FAST SLOW }
+input Selector @oneOf { id: ID name: String }
+input Filter {
+  required: String!
+  defaulted: Int! = 7
+  optional: String
+  list: [Int!]
+  nested: Filter
+  selector: Selector
+  id: ID
+  mode: Mode
+}
+type Query { search(filter: Filter!): String }

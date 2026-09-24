@@ -1,0 +1,35 @@
+_:N492eec65925c46e38531e9298da78702 <http://www.w3.org/ns/shacl#result> _:N853bea73ea4f48219ea89e78ee9d5668 .
+_:N327b276e1c9a4534994fe3a608129e95 <http://www.w3.org/ns/shacl#focusNode> "9"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:N327b276e1c9a4534994fe3a608129e95 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/pattern-001.test#TestShape> .
+_:N261a2dc0aa1c4a8899481dc88321c4b0 <http://www.w3.org/ns/shacl#value> _:nb526a08bb77b4cb88feaff6895d1445db8 .
+_:Nc7da71105a814a64b8a35970a9c8e9e3 <http://www.w3.org/ns/shacl#focusNode> "John" .
+_:N853bea73ea4f48219ea89e78ee9d5668 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/pattern-001.test#Test> .
+_:N327b276e1c9a4534994fe3a608129e95 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N261a2dc0aa1c4a8899481dc88321c4b0 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/pattern-001.test#TestShape> .
+_:N853bea73ea4f48219ea89e78ee9d5668 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/pattern-001.test#TestShape> .
+_:N327b276e1c9a4534994fe3a608129e95 <http://www.w3.org/ns/shacl#value> "9"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:N492eec65925c46e38531e9298da78702 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Nc7da71105a814a64b8a35970a9c8e9e3 <http://www.w3.org/ns/shacl#value> "John" .
+_:N261a2dc0aa1c4a8899481dc88321c4b0 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N853bea73ea4f48219ea89e78ee9d5668 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nc7da71105a814a64b8a35970a9c8e9e3 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nc7da71105a814a64b8a35970a9c8e9e3 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/pattern-001.test#TestShape> .
+_:N853bea73ea4f48219ea89e78ee9d5668 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/pattern-001.test#Test> .
+_:nb526a08bb77b4cb88feaff6895d1445db8 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://datashapes.org/sh/tests/core/node/pattern-001.test#TestClass> .
+_:N327b276e1c9a4534994fe3a608129e95 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#PatternConstraintComponent> .
+_:N492eec65925c46e38531e9298da78702 <http://www.w3.org/ns/shacl#result> _:N261a2dc0aa1c4a8899481dc88321c4b0 .
+_:N492eec65925c46e38531e9298da78702 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N261a2dc0aa1c4a8899481dc88321c4b0 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#PatternConstraintComponent> .
+_:N853bea73ea4f48219ea89e78ee9d5668 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#PatternConstraintComponent> .
+_:N327b276e1c9a4534994fe3a608129e95 <http://www.w3.org/ns/shacl#resultMessage> "Value does not match pattern '^[2-8][0-9]*$'" .
+_:Nc7da71105a814a64b8a35970a9c8e9e3 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#PatternConstraintComponent> .
+_:N492eec65925c46e38531e9298da78702 <http://www.w3.org/ns/shacl#result> _:Nc7da71105a814a64b8a35970a9c8e9e3 .
+_:N327b276e1c9a4534994fe3a608129e95 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N261a2dc0aa1c4a8899481dc88321c4b0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N261a2dc0aa1c4a8899481dc88321c4b0 <http://www.w3.org/ns/shacl#resultMessage> "Value does not match pattern '^[2-8][0-9]*$'" .
+_:N853bea73ea4f48219ea89e78ee9d5668 <http://www.w3.org/ns/shacl#resultMessage> "Value does not match pattern '^[2-8][0-9]*$'" .
+_:Nc7da71105a814a64b8a35970a9c8e9e3 <http://www.w3.org/ns/shacl#resultMessage> "Value does not match pattern '^[2-8][0-9]*$'" .
+_:N492eec65925c46e38531e9298da78702 <http://www.w3.org/ns/shacl#result> _:N327b276e1c9a4534994fe3a608129e95 .
+_:N261a2dc0aa1c4a8899481dc88321c4b0 <http://www.w3.org/ns/shacl#focusNode> _:nb526a08bb77b4cb88feaff6895d1445db8 .
+_:N853bea73ea4f48219ea89e78ee9d5668 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nc7da71105a814a64b8a35970a9c8e9e3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .

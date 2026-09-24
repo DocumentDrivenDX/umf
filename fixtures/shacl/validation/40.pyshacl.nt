@@ -1,0 +1,23 @@
+_:N9bcfdb0ce2584b16aa37821841abb30d <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Ndfd1691158a24e24b3a7eb55df64ecb2 <http://www.w3.org/ns/shacl#result> _:Na75692de99b14775ac4dab0eb598767f .
+_:N9bcfdb0ce2584b16aa37821841abb30d <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:n3bae8b0831a846b1ab74347b2a47255eb2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> .
+_:N9bcfdb0ce2584b16aa37821841abb30d <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/path/path-complex-001.test#InvalidResource1> .
+_:Na75692de99b14775ac4dab0eb598767f <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nde56714d6004497dbd37f2b53ab23f1b <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:N4f2a19e6de4a4b74a76ee942ce22650c .
+_:Na75692de99b14775ac4dab0eb598767f <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Na75692de99b14775ac4dab0eb598767f <http://www.w3.org/ns/shacl#resultMessage> "Node ex:InvalidResource2->( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) does not contain a value in the set: ['ex:Person']" .
+_:Ndfd1691158a24e24b3a7eb55df64ecb2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N9bcfdb0ce2584b16aa37821841abb30d <http://www.w3.org/ns/shacl#resultPath> _:n3bae8b0831a846b1ab74347b2a47255eb2 .
+_:N9bcfdb0ce2584b16aa37821841abb30d <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#HasValueConstraintComponent> .
+_:N4f2a19e6de4a4b74a76ee942ce22650c <http://www.w3.org/ns/shacl#zeroOrMorePath> <http://www.w3.org/2000/01/rdf-schema#subClassOf> .
+_:Na75692de99b14775ac4dab0eb598767f <http://www.w3.org/ns/shacl#resultPath> _:n3bae8b0831a846b1ab74347b2a47255eb2 .
+_:Na75692de99b14775ac4dab0eb598767f <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#HasValueConstraintComponent> .
+_:N9bcfdb0ce2584b16aa37821841abb30d <http://www.w3.org/ns/shacl#resultMessage> "Node ex:InvalidResource1->( rdf:type [ sh:zeroOrMorePath rdfs:subClassOf ] ) does not contain a value in the set: ['ex:Person']" .
+_:Nde56714d6004497dbd37f2b53ab23f1b <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:Ndfd1691158a24e24b3a7eb55df64ecb2 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N9bcfdb0ce2584b16aa37821841abb30d <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/path/path-complex-001.test#TestShape> .
+_:n3bae8b0831a846b1ab74347b2a47255eb2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:Nde56714d6004497dbd37f2b53ab23f1b .
+_:Na75692de99b14775ac4dab0eb598767f <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/path/path-complex-001.test#InvalidResource2> .
+_:Na75692de99b14775ac4dab0eb598767f <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/path/path-complex-001.test#TestShape> .
+_:Ndfd1691158a24e24b3a7eb55df64ecb2 <http://www.w3.org/ns/shacl#result> _:N9bcfdb0ce2584b16aa37821841abb30d .

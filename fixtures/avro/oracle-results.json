@@ -1,0 +1,38 @@
+{
+  "profile": "Avro 1.12.0 schema JSON; original UMF order fixture",
+  "versions": {
+    "avro": "1.12.0",
+    "fastavro": "1.12.2"
+  },
+  "inputSha256": "89d3c67341c965f1f85ad8ff5d593ea91e7efc9caf54e4660855006ccf28c0b9",
+  "checks": [
+    "all native metadata retained, independently parsed",
+    "vector 0: four binary encoders agree before/after",
+    "vector 0: apache decode 0",
+    "vector 0: fastavro decode 0",
+    "vector 0: apache decode 1",
+    "vector 0: fastavro decode 1",
+    "vector 1: four binary encoders agree before/after",
+    "vector 1: apache decode 0",
+    "vector 1: fastavro decode 0",
+    "vector 1: apache decode 1",
+    "vector 1: fastavro decode 1",
+    "apache reader schema adds default",
+    "fastavro reader schema adds default",
+    "apache: rejects invalid count",
+    "apache: rejects invalid token",
+    "apache: rejects invalid status",
+    "apache: default does not make writer field optional (strict encoding)",
+    "fastavro: rejects invalid token",
+    "fastavro: rejects invalid status",
+    "fastavro: default does not make writer field optional (strict encoding)",
+    "negative control detects default corruption"
+  ],
+  "passed": 21,
+  "limitations": [
+    "fastavro strict writer accepts int outside signed 32-bit range; Apache rejects it",
+    "No upstream conformance corpus yet",
+    "No IDL, protocol/RPC or object-container support claim",
+    "No cross-format projection claim"
+  ]
+}

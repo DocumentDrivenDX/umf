@@ -1,0 +1,92 @@
+[
+  {
+    "file": "primer-corrected",
+    "format": "json",
+    "quads": 202,
+    "headers": [
+      {
+        "node": {
+          "kind": "iri",
+          "value": "http://example.com/owl/families"
+        },
+        "versionIRIs": [],
+        "imports": [
+          {
+            "kind": "iri",
+            "value": "http://example.org/otherOntologies/families.owl"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "primer-corrected",
+    "format": "yaml",
+    "quads": 202,
+    "headers": [
+      {
+        "node": {
+          "kind": "iri",
+          "value": "http://example.com/owl/families"
+        },
+        "versionIRIs": [],
+        "imports": [
+          {
+            "kind": "iri",
+            "value": "http://example.org/otherOntologies/families.owl"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "authored",
+    "format": "json",
+    "quads": 26,
+    "headers": [
+      {
+        "node": {
+          "kind": "iri",
+          "value": "https://example.org/domain"
+        },
+        "versionIRIs": [
+          {
+            "kind": "iri",
+            "value": "https://example.org/v2"
+          }
+        ],
+        "imports": [
+          {
+            "kind": "iri",
+            "value": "https://example.org/external"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "file": "authored",
+    "format": "yaml",
+    "quads": 26,
+    "headers": [
+      {
+        "node": {
+          "kind": "iri",
+          "value": "https://example.org/domain"
+        },
+        "versionIRIs": [
+          {
+            "kind": "iri",
+            "value": "https://example.org/v2"
+          }
+        ],
+        "imports": [
+          {
+            "kind": "iri",
+            "value": "https://example.org/external"
+          }
+        ]
+      }
+    ]
+  }
+]

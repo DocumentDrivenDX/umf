@@ -1,0 +1,17 @@
+{
+  "oracle": "pyarrow 21.0.0",
+  "equalTables": [
+    "int64.stream.arrow",
+    "int64.file.arrow",
+    "dictionary.stream.arrow",
+    "dictionary.file.arrow",
+    "list.stream.arrow",
+    "list.file.arrow",
+    "struct.stream.arrow",
+    "struct.file.arrow",
+    "map.stream.arrow",
+    "map.file.arrow",
+    "union.stream.arrow",
+    "union.file.arrow"
+  ]
+}

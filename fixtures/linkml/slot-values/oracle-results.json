@@ -1,0 +1,951 @@
+{
+  "modelVersion": "1.11.0",
+  "runtimeVersion": "1.11.0rc2",
+  "scalarFields": [
+    "domain",
+    "inherited",
+    "readonly",
+    "ifabsent",
+    "list_elements_unique",
+    "list_elements_ordered",
+    "shared",
+    "key",
+    "identifier",
+    "designates_type",
+    "role",
+    "relational_role",
+    "range",
+    "required",
+    "recommended",
+    "multivalued",
+    "inlined",
+    "inlined_as_list",
+    "minimum_value",
+    "maximum_value",
+    "pattern",
+    "value_presence",
+    "equals_string",
+    "equals_number",
+    "equals_expression",
+    "exact_cardinality",
+    "minimum_cardinality",
+    "maximum_cardinality",
+    "description"
+  ],
+  "results": [
+    {
+      "className": "Parent",
+      "slotName": "id",
+      "format": "json",
+      "fields": {
+        "identifier": true,
+        "range": "string",
+        "required": true
+      },
+      "encodedFields": {
+        "identifier": "true",
+        "range": "\"string\"",
+        "required": "true"
+      }
+    },
+    {
+      "className": "Parent",
+      "slotName": "id",
+      "format": "yaml",
+      "fields": {
+        "identifier": true,
+        "range": "string",
+        "required": true
+      },
+      "encodedFields": {
+        "identifier": "true",
+        "range": "\"string\"",
+        "required": "true"
+      }
+    },
+    {
+      "className": "Parent",
+      "slotName": "child",
+      "format": "json",
+      "fields": {
+        "range": "integer",
+        "required": false,
+        "multivalued": true,
+        "minimum_value": -10,
+        "description": "own description"
+      },
+      "encodedFields": {
+        "range": "\"integer\"",
+        "required": "false",
+        "multivalued": "true",
+        "minimum_value": "-10",
+        "description": "\"own description\""
+      }
+    },
+    {
+      "className": "Parent",
+      "slotName": "child",
+      "format": "yaml",
+      "fields": {
+        "range": "integer",
+        "required": false,
+        "multivalued": true,
+        "minimum_value": -10,
+        "description": "own description"
+      },
+      "encodedFields": {
+        "range": "\"integer\"",
+        "required": "false",
+        "multivalued": "true",
+        "minimum_value": "-10",
+        "description": "\"own description\""
+      }
+    },
+    {
+      "className": "Parent",
+      "slotName": "age",
+      "format": "json",
+      "fields": {
+        "range": "integer",
+        "minimum_value": 18,
+        "maximum_value": 100,
+        "description": "parent usage"
+      },
+      "encodedFields": {
+        "range": "\"integer\"",
+        "minimum_value": "18",
+        "maximum_value": "100",
+        "description": "\"parent usage\""
+      }
+    },
+    {
+      "className": "Parent",
+      "slotName": "age",
+      "format": "yaml",
+      "fields": {
+        "range": "integer",
+        "minimum_value": 18,
+        "maximum_value": 100,
+        "description": "parent usage"
+      },
+      "encodedFields": {
+        "range": "\"integer\"",
+        "minimum_value": "18",
+        "maximum_value": "100",
+        "description": "\"parent usage\""
+      }
+    },
+    {
+      "className": "Parent",
+      "slotName": "defaulted",
+      "format": "json",
+      "fields": {
+        "range": "string"
+      },
+      "encodedFields": {
+        "range": "\"string\""
+      }
+    },
+    {
+      "className": "Parent",
+      "slotName": "defaulted",
+      "format": "yaml",
+      "fields": {
+        "range": "string"
+      },
+      "encodedFields": {
+        "range": "\"string\""
+      }
+    },
+    {
+      "className": "Parent",
+      "slotName": "listed",
+      "format": "json",
+      "fields": {
+        "range": "string",
+        "inlined": true,
+        "inlined_as_list": true
+      },
+      "encodedFields": {
+        "range": "\"string\"",
+        "inlined": "true",
+        "inlined_as_list": "true"
+      }
+    },
+    {
+      "className": "Parent",
+      "slotName": "listed",
+      "format": "yaml",
+      "fields": {
+        "range": "string",
+        "inlined": true,
+        "inlined_as_list": true
+      },
+      "encodedFields": {
+        "range": "\"string\"",
+        "inlined": "true",
+        "inlined_as_list": "true"
+      }
+    },
+    {
+      "className": "Parent",
+      "slotName": "keyed",
+      "format": "json",
+      "fields": {
+        "key": true,
+        "range": "string",
+        "required": true
+      },
+      "encodedFields": {
+        "key": "true",
+        "range": "\"string\"",
+        "required": "true"
+      }
+    },
+    {
+      "className": "Parent",
+      "slotName": "keyed",
+      "format": "yaml",
+      "fields": {
+        "key": true,
+        "range": "string",
+        "required": true
+      },
+      "encodedFields": {
+        "key": "true",
+        "range": "\"string\"",
+        "required": "true"
+      }
+    },
+    {
+      "className": "Child",
+      "slotName": "local",
+      "format": "json",
+      "fields": {
+        "range": "integer",
+        "required": false
+      },
+      "encodedFields": {
+        "range": "\"integer\"",
+        "required": "false"
+      }
+    },
+    {
+      "className": "Child",
+      "slotName": "local",
+      "format": "yaml",
+      "fields": {
+        "range": "integer",
+        "required": false
+      },
+      "encodedFields": {
+        "range": "\"integer\"",
+        "required": "false"
+      }
+    },
+    {
+      "className": "Child",
+      "slotName": "defaulted",
+      "format": "json",
+      "fields": {
+        "range": "string",
+        "description": "attribute wins"
+      },
+      "encodedFields": {
+        "range": "\"string\"",
+        "description": "\"attribute wins\""
+      }
+    },
+    {
+      "className": "Child",
+      "slotName": "defaulted",
+      "format": "yaml",
+      "fields": {
+        "range": "string",
+        "description": "attribute wins"
+      },
+      "encodedFields": {
+        "range": "\"string\"",
+        "description": "\"attribute wins\""
+      }
+    },
+    {
+      "className": "Child",
+      "slotName": "id",
+      "format": "json",
+      "fields": {
+        "identifier": true,
+        "range": "string",
+        "required": true
+      },
+      "encodedFields": {
+        "identifier": "true",
+        "range": "\"string\"",
+        "required": "true"
+      }
+    },
+    {
+      "className": "Child",
+      "slotName": "id",
+      "format": "yaml",
+      "fields": {
+        "identifier": true,
+        "range": "string",
+        "required": true
+      },
+      "encodedFields": {
+        "identifier": "true",
+        "range": "\"string\"",
+        "required": "true"
+      }
+    },
+    {
+      "className": "Child",
+      "slotName": "child",
+      "format": "json",
+      "fields": {
+        "range": "integer",
+        "required": false,
+        "multivalued": true,
+        "minimum_value": -10,
+        "description": "own description"
+      },
+      "encodedFields": {
+        "range": "\"integer\"",
+        "required": "false",
+        "multivalued": "true",
+        "minimum_value": "-10",
+        "description": "\"own description\""
+      }
+    },
+    {
+      "className": "Child",
+      "slotName": "child",
+      "format": "yaml",
+      "fields": {
+        "range": "integer",
+        "required": false,
+        "multivalued": true,
+        "minimum_value": -10,
+        "description": "own description"
+      },
+      "encodedFields": {
+        "range": "\"integer\"",
+        "required": "false",
+        "multivalued": "true",
+        "minimum_value": "-10",
+        "description": "\"own description\""
+      }
+    },
+    {
+      "className": "Child",
+      "slotName": "age",
+      "format": "json",
+      "fields": {
+        "range": "integer",
+        "minimum_value": 21,
+        "maximum_value": 80,
+        "description": "child usage"
+      },
+      "encodedFields": {
+        "range": "\"integer\"",
+        "minimum_value": "21",
+        "maximum_value": "80",
+        "description": "\"child usage\""
+      }
+    },
+    {
+      "className": "Child",
+      "slotName": "age",
+      "format": "yaml",
+      "fields": {
+        "range": "integer",
+        "minimum_value": 21,
+        "maximum_value": 80,
+        "description": "child usage"
+      },
+      "encodedFields": {
+        "range": "\"integer\"",
+        "minimum_value": "21",
+        "maximum_value": "80",
+        "description": "\"child usage\""
+      }
+    },
+    {
+      "className": "Child",
+      "slotName": "listed",
+      "format": "json",
+      "fields": {
+        "range": "string",
+        "inlined": true,
+        "inlined_as_list": true
+      },
+      "encodedFields": {
+        "range": "\"string\"",
+        "inlined": "true",
+        "inlined_as_list": "true"
+      }
+    },
+    {
+      "className": "Child",
+      "slotName": "listed",
+      "format": "yaml",
+      "fields": {
+        "range": "string",
+        "inlined": true,
+        "inlined_as_list": true
+      },
+      "encodedFields": {
+        "range": "\"string\"",
+        "inlined": "true",
+        "inlined_as_list": "true"
+      }
+    },
+    {
+      "className": "Child",
+      "slotName": "keyed",
+      "format": "json",
+      "fields": {
+        "key": true,
+        "range": "string",
+        "required": true
+      },
+      "encodedFields": {
+        "key": "true",
+        "range": "\"string\"",
+        "required": "true"
+      }
+    },
+    {
+      "className": "Child",
+      "slotName": "keyed",
+      "format": "yaml",
+      "fields": {
+        "key": true,
+        "range": "string",
+        "required": true
+      },
+      "encodedFields": {
+        "key": "true",
+        "range": "\"string\"",
+        "required": "true"
+      }
+    },
+    {
+      "className": "Plain",
+      "slotName": "child",
+      "format": "json",
+      "fields": {
+        "range": "integer",
+        "required": true,
+        "multivalued": true,
+        "minimum_value": -10,
+        "description": "own description"
+      },
+      "encodedFields": {
+        "range": "\"integer\"",
+        "required": "true",
+        "multivalued": "true",
+        "minimum_value": "-10",
+        "description": "\"own description\""
+      }
+    },
+    {
+      "className": "Plain",
+      "slotName": "child",
+      "format": "yaml",
+      "fields": {
+        "range": "integer",
+        "required": true,
+        "multivalued": true,
+        "minimum_value": -10,
+        "description": "own description"
+      },
+      "encodedFields": {
+        "range": "\"integer\"",
+        "required": "true",
+        "multivalued": "true",
+        "minimum_value": "-10",
+        "description": "\"own description\""
+      }
+    },
+    {
+      "className": "Plain",
+      "slotName": "age",
+      "format": "json",
+      "fields": {
+        "range": "integer",
+        "minimum_value": 0,
+        "maximum_value": 150
+      },
+      "encodedFields": {
+        "range": "\"integer\"",
+        "minimum_value": "0",
+        "maximum_value": "150"
+      }
+    },
+    {
+      "className": "Plain",
+      "slotName": "age",
+      "format": "yaml",
+      "fields": {
+        "range": "integer",
+        "minimum_value": 0,
+        "maximum_value": 150
+      },
+      "encodedFields": {
+        "range": "\"integer\"",
+        "minimum_value": "0",
+        "maximum_value": "150"
+      }
+    },
+    {
+      "className": "Plain",
+      "slotName": "defaulted",
+      "format": "json",
+      "fields": {
+        "range": "string"
+      },
+      "encodedFields": {
+        "range": "\"string\""
+      }
+    },
+    {
+      "className": "Plain",
+      "slotName": "defaulted",
+      "format": "yaml",
+      "fields": {
+        "range": "string"
+      },
+      "encodedFields": {
+        "range": "\"string\""
+      }
+    },
+    {
+      "className": "Plain",
+      "slotName": "listed",
+      "format": "json",
+      "fields": {
+        "range": "string",
+        "inlined": true,
+        "inlined_as_list": true
+      },
+      "encodedFields": {
+        "range": "\"string\"",
+        "inlined": "true",
+        "inlined_as_list": "true"
+      }
+    },
+    {
+      "className": "Plain",
+      "slotName": "listed",
+      "format": "yaml",
+      "fields": {
+        "range": "string",
+        "inlined": true,
+        "inlined_as_list": true
+      },
+      "encodedFields": {
+        "range": "\"string\"",
+        "inlined": "true",
+        "inlined_as_list": "true"
+      }
+    },
+    {
+      "className": "Plain",
+      "slotName": "keyed",
+      "format": "json",
+      "fields": {
+        "key": true,
+        "range": "string",
+        "required": true
+      },
+      "encodedFields": {
+        "key": "true",
+        "range": "\"string\"",
+        "required": "true"
+      }
+    },
+    {
+      "className": "Plain",
+      "slotName": "keyed",
+      "format": "yaml",
+      "fields": {
+        "key": true,
+        "range": "string",
+        "required": true
+      },
+      "encodedFields": {
+        "key": "true",
+        "range": "\"string\"",
+        "required": "true"
+      }
+    },
+    {
+      "className": "AttributeChild",
+      "slotName": "child",
+      "format": "json",
+      "fields": {
+        "range": "decimal",
+        "required": false,
+        "multivalued": false
+      },
+      "encodedFields": {
+        "range": "\"decimal\"",
+        "required": "false",
+        "multivalued": "false"
+      }
+    },
+    {
+      "className": "AttributeChild",
+      "slotName": "child",
+      "format": "yaml",
+      "fields": {
+        "range": "decimal",
+        "required": false,
+        "multivalued": false
+      },
+      "encodedFields": {
+        "range": "\"decimal\"",
+        "required": "false",
+        "multivalued": "false"
+      }
+    },
+    {
+      "className": "AttributeChild",
+      "slotName": "local",
+      "format": "json",
+      "fields": {
+        "range": "integer",
+        "required": false
+      },
+      "encodedFields": {
+        "range": "\"integer\"",
+        "required": "false"
+      }
+    },
+    {
+      "className": "AttributeChild",
+      "slotName": "local",
+      "format": "yaml",
+      "fields": {
+        "range": "integer",
+        "required": false
+      },
+      "encodedFields": {
+        "range": "\"integer\"",
+        "required": "false"
+      }
+    },
+    {
+      "className": "AttributeChild",
+      "slotName": "defaulted",
+      "format": "json",
+      "fields": {
+        "range": "string",
+        "description": "attribute wins"
+      },
+      "encodedFields": {
+        "range": "\"string\"",
+        "description": "\"attribute wins\""
+      }
+    },
+    {
+      "className": "AttributeChild",
+      "slotName": "defaulted",
+      "format": "yaml",
+      "fields": {
+        "range": "string",
+        "description": "attribute wins"
+      },
+      "encodedFields": {
+        "range": "\"string\"",
+        "description": "\"attribute wins\""
+      }
+    },
+    {
+      "className": "AttributeChild",
+      "slotName": "id",
+      "format": "json",
+      "fields": {
+        "identifier": true,
+        "range": "string",
+        "required": true
+      },
+      "encodedFields": {
+        "identifier": "true",
+        "range": "\"string\"",
+        "required": "true"
+      }
+    },
+    {
+      "className": "AttributeChild",
+      "slotName": "id",
+      "format": "yaml",
+      "fields": {
+        "identifier": true,
+        "range": "string",
+        "required": true
+      },
+      "encodedFields": {
+        "identifier": "true",
+        "range": "\"string\"",
+        "required": "true"
+      }
+    },
+    {
+      "className": "AttributeChild",
+      "slotName": "age",
+      "format": "json",
+      "fields": {
+        "range": "integer",
+        "minimum_value": 21,
+        "maximum_value": 80,
+        "description": "child usage"
+      },
+      "encodedFields": {
+        "range": "\"integer\"",
+        "minimum_value": "21",
+        "maximum_value": "80",
+        "description": "\"child usage\""
+      }
+    },
+    {
+      "className": "AttributeChild",
+      "slotName": "age",
+      "format": "yaml",
+      "fields": {
+        "range": "integer",
+        "minimum_value": 21,
+        "maximum_value": 80,
+        "description": "child usage"
+      },
+      "encodedFields": {
+        "range": "\"integer\"",
+        "minimum_value": "21",
+        "maximum_value": "80",
+        "description": "\"child usage\""
+      }
+    },
+    {
+      "className": "AttributeChild",
+      "slotName": "listed",
+      "format": "json",
+      "fields": {
+        "range": "string",
+        "inlined": true,
+        "inlined_as_list": true
+      },
+      "encodedFields": {
+        "range": "\"string\"",
+        "inlined": "true",
+        "inlined_as_list": "true"
+      }
+    },
+    {
+      "className": "AttributeChild",
+      "slotName": "listed",
+      "format": "yaml",
+      "fields": {
+        "range": "string",
+        "inlined": true,
+        "inlined_as_list": true
+      },
+      "encodedFields": {
+        "range": "\"string\"",
+        "inlined": "true",
+        "inlined_as_list": "true"
+      }
+    },
+    {
+      "className": "AttributeChild",
+      "slotName": "keyed",
+      "format": "json",
+      "fields": {
+        "key": true,
+        "range": "string",
+        "required": true
+      },
+      "encodedFields": {
+        "key": "true",
+        "range": "\"string\"",
+        "required": "true"
+      }
+    },
+    {
+      "className": "AttributeChild",
+      "slotName": "keyed",
+      "format": "yaml",
+      "fields": {
+        "key": true,
+        "range": "string",
+        "required": true
+      },
+      "encodedFields": {
+        "key": "true",
+        "range": "\"string\"",
+        "required": "true"
+      }
+    },
+    {
+      "className": "AllFields",
+      "slotName": "all_child",
+      "format": "json",
+      "fields": {
+        "domain": "Parent",
+        "inherited": true,
+        "readonly": "true",
+        "ifabsent": "string(default)",
+        "list_elements_unique": true,
+        "list_elements_ordered": true,
+        "shared": true,
+        "key": true,
+        "identifier": true,
+        "designates_type": true,
+        "role": "semantic-role",
+        "relational_role": "SUBJECT",
+        "range": "string",
+        "required": true,
+        "recommended": true,
+        "multivalued": true,
+        "inlined": true,
+        "inlined_as_list": true,
+        "minimum_value": -1,
+        "maximum_value": 99,
+        "pattern": "^[a-z]+$",
+        "value_presence": "PRESENT",
+        "equals_string": "example",
+        "equals_number": 3,
+        "equals_expression": "{other}",
+        "exact_cardinality": 1,
+        "minimum_cardinality": 1,
+        "maximum_cardinality": 2
+      },
+      "encodedFields": {
+        "domain": "\"Parent\"",
+        "inherited": "true",
+        "readonly": "\"true\"",
+        "ifabsent": "\"string(default)\"",
+        "list_elements_unique": "true",
+        "list_elements_ordered": "true",
+        "shared": "true",
+        "key": "true",
+        "identifier": "true",
+        "designates_type": "true",
+        "role": "\"semantic-role\"",
+        "relational_role": "\"SUBJECT\"",
+        "range": "\"string\"",
+        "required": "true",
+        "recommended": "true",
+        "multivalued": "true",
+        "inlined": "true",
+        "inlined_as_list": "true",
+        "minimum_value": "-1",
+        "maximum_value": "99",
+        "pattern": "\"^[a-z]+$\"",
+        "value_presence": "\"PRESENT\"",
+        "equals_string": "\"example\"",
+        "equals_number": "3",
+        "equals_expression": "\"{other}\"",
+        "exact_cardinality": "1",
+        "minimum_cardinality": "1",
+        "maximum_cardinality": "2"
+      }
+    },
+    {
+      "className": "AllFields",
+      "slotName": "all_child",
+      "format": "yaml",
+      "fields": {
+        "domain": "Parent",
+        "inherited": true,
+        "readonly": "true",
+        "ifabsent": "string(default)",
+        "list_elements_unique": true,
+        "list_elements_ordered": true,
+        "shared": true,
+        "key": true,
+        "identifier": true,
+        "designates_type": true,
+        "role": "semantic-role",
+        "relational_role": "SUBJECT",
+        "range": "string",
+        "required": true,
+        "recommended": true,
+        "multivalued": true,
+        "inlined": true,
+        "inlined_as_list": true,
+        "minimum_value": -1,
+        "maximum_value": 99,
+        "pattern": "^[a-z]+$",
+        "value_presence": "PRESENT",
+        "equals_string": "example",
+        "equals_number": 3,
+        "equals_expression": "{other}",
+        "exact_cardinality": 1,
+        "minimum_cardinality": 1,
+        "maximum_cardinality": 2
+      },
+      "encodedFields": {
+        "domain": "\"Parent\"",
+        "inherited": "true",
+        "readonly": "\"true\"",
+        "ifabsent": "\"string(default)\"",
+        "list_elements_unique": "true",
+        "list_elements_ordered": "true",
+        "shared": "true",
+        "key": "true",
+        "identifier": "true",
+        "designates_type": "true",
+        "role": "\"semantic-role\"",
+        "relational_role": "\"SUBJECT\"",
+        "range": "\"string\"",
+        "required": "true",
+        "recommended": "true",
+        "multivalued": "true",
+        "inlined": "true",
+        "inlined_as_list": "true",
+        "minimum_value": "-1",
+        "maximum_value": "99",
+        "pattern": "\"^[a-z]+$\"",
+        "value_presence": "\"PRESENT\"",
+        "equals_string": "\"example\"",
+        "equals_number": "3",
+        "equals_expression": "\"{other}\"",
+        "exact_cardinality": "1",
+        "minimum_cardinality": "1",
+        "maximum_cardinality": "2"
+      }
+    },
+    {
+      "className": "AllFields",
+      "slotName": "large",
+      "format": "json",
+      "fields": {
+        "range": "string",
+        "minimum_value": 9007199254740995,
+        "maximum_value": 18446744073709551614
+      },
+      "encodedFields": {
+        "range": "\"string\"",
+        "minimum_value": "9007199254740995",
+        "maximum_value": "18446744073709551614"
+      }
+    },
+    {
+      "className": "AllFields",
+      "slotName": "large",
+      "format": "yaml",
+      "fields": {
+        "range": "string",
+        "minimum_value": 9007199254740995,
+        "maximum_value": 18446744073709551614
+      },
+      "encodedFields": {
+        "range": "\"string\"",
+        "minimum_value": "9007199254740995",
+        "maximum_value": "18446744073709551614"
+      }
+    }
+  ]
+}

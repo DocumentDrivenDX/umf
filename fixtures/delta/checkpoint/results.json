@@ -1,0 +1,792 @@
+{
+  "results": [
+    {
+      "status": "reconciled",
+      "complete": false,
+      "sources": [],
+      "diagnostics": [
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "/checkpoint",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "/checkpoint",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_HISTORY_UNVERIFIED",
+          "path": "",
+          "message": "Action state only: feature requirements, encoded-path aliases, file contents, transaction legality and tombstone expiry remain unverified",
+          "severity": "warning"
+        }
+      ],
+      "state": {
+        "version": "10",
+        "protocol": {
+          "kind": "object",
+          "members": {
+            "minReaderVersion": {
+              "kind": "number",
+              "value": "3"
+            },
+            "minWriterVersion": {
+              "kind": "number",
+              "value": "7"
+            },
+            "readerFeatures": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "string",
+                  "value": "v2Checkpoint"
+                }
+              ]
+            },
+            "writerFeatures": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "string",
+                  "value": "v2Checkpoint"
+                }
+              ]
+            }
+          }
+        },
+        "metaData": {
+          "kind": "object",
+          "members": {
+            "id": {
+              "kind": "string",
+              "value": "12345678-1234-1234-1234-123456789abc"
+            },
+            "format": {
+              "kind": "object",
+              "members": {
+                "provider": {
+                  "kind": "string",
+                  "value": "parquet"
+                },
+                "options": {
+                  "kind": "object",
+                  "members": {}
+                }
+              }
+            },
+            "schemaString": {
+              "kind": "string",
+              "value": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}"
+            },
+            "partitionColumns": {
+              "kind": "array",
+              "items": []
+            },
+            "configuration": {
+              "kind": "object",
+              "members": {}
+            },
+            "name": {
+              "kind": "string",
+              "value": "renamed"
+            },
+            "description": {
+              "kind": "string",
+              "value": "metadata replaced"
+            }
+          }
+        },
+        "adds": [
+          {
+            "kind": "object",
+            "members": {
+              "path": {
+                "kind": "string",
+                "value": "b.parquet"
+              },
+              "partitionValues": {
+                "kind": "object",
+                "members": {}
+              },
+              "size": {
+                "kind": "number",
+                "value": "482"
+              },
+              "modificationTime": {
+                "kind": "number",
+                "value": "0"
+              },
+              "dataChange": {
+                "kind": "boolean",
+                "value": false
+              },
+              "stats": {
+                "kind": "string",
+                "value": "{\"numRecords\": 1, \"minValues\": {\"id\": 2}, \"maxValues\": {\"id\": 2}, \"nullCount\": {\"id\": 0}}"
+              },
+              "tags": {
+                "kind": "object",
+                "members": {
+                  "revision": {
+                    "kind": "string",
+                    "value": "updated"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "kind": "object",
+            "members": {
+              "path": {
+                "kind": "string",
+                "value": "a.parquet"
+              },
+              "partitionValues": {
+                "kind": "object",
+                "members": {}
+              },
+              "size": {
+                "kind": "number",
+                "value": "482"
+              },
+              "modificationTime": {
+                "kind": "number",
+                "value": "0"
+              },
+              "dataChange": {
+                "kind": "boolean",
+                "value": true
+              },
+              "stats": {
+                "kind": "string",
+                "value": "{\"numRecords\": 1, \"minValues\": {\"id\": 1}, \"maxValues\": {\"id\": 1}, \"nullCount\": {\"id\": 0}}"
+              }
+            }
+          }
+        ],
+        "removes": [],
+        "transactions": [
+          {
+            "kind": "object",
+            "members": {
+              "appId": {
+                "kind": "string",
+                "value": "job"
+              },
+              "version": {
+                "kind": "number",
+                "value": "2"
+              }
+            }
+          },
+          {
+            "kind": "object",
+            "members": {
+              "appId": {
+                "kind": "string",
+                "value": "other"
+              },
+              "version": {
+                "kind": "number",
+                "value": "9223372036854775807"
+              }
+            }
+          }
+        ],
+        "domains": [],
+        "commitInfo": [],
+        "deferred": []
+      },
+      "checkpoint": {
+        "version": "10",
+        "source": {
+          "umf": "0.1.0",
+          "id": "checkpoint-10",
+          "vocabularies": {
+            "umf.delta.log": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "log",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.delta.log": {
+                      "profile": "delta-jsonl-source",
+                      "text": "{\"checkpointMetadata\":{\"version\":10}}\n{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"v2Checkpoint\"],\"writerFeatures\":[\"v2Checkpoint\"]}}\n{\"metaData\":{\"id\":\"12345678-1234-1234-1234-123456789abc\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"name\":\"renamed\",\"description\":\"metadata replaced\"}}\n{\"add\":{\"path\":\"b.parquet\",\"partitionValues\":{},\"size\":482,\"modificationTime\":0,\"dataChange\":false,\"stats\":\"{\\\"numRecords\\\": 1, \\\"minValues\\\": {\\\"id\\\": 2}, \\\"maxValues\\\": {\\\"id\\\": 2}, \\\"nullCount\\\": {\\\"id\\\": 0}}\",\"tags\":{\"revision\":\"updated\"}}}\n{\"add\":{\"path\":\"a.parquet\",\"partitionValues\":{},\"size\":482,\"modificationTime\":0,\"dataChange\":true,\"stats\":\"{\\\"numRecords\\\": 1, \\\"minValues\\\": {\\\"id\\\": 1}, \\\"maxValues\\\": {\\\"id\\\": 1}, \\\"nullCount\\\": {\\\"id\\\": 0}}\"}}\n{\"txn\":{\"appId\":\"job\",\"version\":2}}\n{\"txn\":{\"appId\":\"other\",\"version\":9223372036854775807}}\n"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "status": "reconciled",
+      "complete": false,
+      "sources": [
+        {
+          "version": "11",
+          "source": {
+            "umf": "0.1.0",
+            "id": "commit-11",
+            "vocabularies": {
+              "umf.delta.log": {
+                "version": "0.1.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "log",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "source",
+                    "extensions": {
+                      "umf.delta.log": {
+                        "profile": "delta-jsonl-source",
+                        "text": "{\"remove\":{\"path\":\"b.parquet\",\"dataChange\":true,\"deletionTimestamp\":11}}\n{\"txn\":{\"appId\":\"job\",\"version\":1}}\n"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "/checkpoint",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "/checkpoint",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "/sources/0",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "/sources/0",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_HISTORY_UNVERIFIED",
+          "path": "",
+          "message": "Action state only: feature requirements, encoded-path aliases, file contents, transaction legality and tombstone expiry remain unverified",
+          "severity": "warning"
+        }
+      ],
+      "state": {
+        "version": "11",
+        "protocol": {
+          "kind": "object",
+          "members": {
+            "minReaderVersion": {
+              "kind": "number",
+              "value": "3"
+            },
+            "minWriterVersion": {
+              "kind": "number",
+              "value": "7"
+            },
+            "readerFeatures": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "string",
+                  "value": "v2Checkpoint"
+                }
+              ]
+            },
+            "writerFeatures": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "string",
+                  "value": "v2Checkpoint"
+                }
+              ]
+            }
+          }
+        },
+        "metaData": {
+          "kind": "object",
+          "members": {
+            "id": {
+              "kind": "string",
+              "value": "12345678-1234-1234-1234-123456789abc"
+            },
+            "format": {
+              "kind": "object",
+              "members": {
+                "provider": {
+                  "kind": "string",
+                  "value": "parquet"
+                },
+                "options": {
+                  "kind": "object",
+                  "members": {}
+                }
+              }
+            },
+            "schemaString": {
+              "kind": "string",
+              "value": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}"
+            },
+            "partitionColumns": {
+              "kind": "array",
+              "items": []
+            },
+            "configuration": {
+              "kind": "object",
+              "members": {}
+            },
+            "name": {
+              "kind": "string",
+              "value": "renamed"
+            },
+            "description": {
+              "kind": "string",
+              "value": "metadata replaced"
+            }
+          }
+        },
+        "adds": [
+          {
+            "kind": "object",
+            "members": {
+              "path": {
+                "kind": "string",
+                "value": "a.parquet"
+              },
+              "partitionValues": {
+                "kind": "object",
+                "members": {}
+              },
+              "size": {
+                "kind": "number",
+                "value": "482"
+              },
+              "modificationTime": {
+                "kind": "number",
+                "value": "0"
+              },
+              "dataChange": {
+                "kind": "boolean",
+                "value": true
+              },
+              "stats": {
+                "kind": "string",
+                "value": "{\"numRecords\": 1, \"minValues\": {\"id\": 1}, \"maxValues\": {\"id\": 1}, \"nullCount\": {\"id\": 0}}"
+              }
+            }
+          }
+        ],
+        "removes": [
+          {
+            "kind": "object",
+            "members": {
+              "path": {
+                "kind": "string",
+                "value": "b.parquet"
+              },
+              "dataChange": {
+                "kind": "boolean",
+                "value": true
+              },
+              "deletionTimestamp": {
+                "kind": "number",
+                "value": "11"
+              }
+            }
+          }
+        ],
+        "transactions": [
+          {
+            "kind": "object",
+            "members": {
+              "appId": {
+                "kind": "string",
+                "value": "job"
+              },
+              "version": {
+                "kind": "number",
+                "value": "1"
+              }
+            }
+          },
+          {
+            "kind": "object",
+            "members": {
+              "appId": {
+                "kind": "string",
+                "value": "other"
+              },
+              "version": {
+                "kind": "number",
+                "value": "9223372036854775807"
+              }
+            }
+          }
+        ],
+        "domains": [],
+        "commitInfo": [],
+        "deferred": []
+      },
+      "checkpoint": {
+        "version": "10",
+        "source": {
+          "umf": "0.1.0",
+          "id": "checkpoint-10",
+          "vocabularies": {
+            "umf.delta.log": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "log",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.delta.log": {
+                      "profile": "delta-jsonl-source",
+                      "text": "{\"checkpointMetadata\":{\"version\":10}}\n{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"v2Checkpoint\"],\"writerFeatures\":[\"v2Checkpoint\"]}}\n{\"metaData\":{\"id\":\"12345678-1234-1234-1234-123456789abc\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"name\":\"renamed\",\"description\":\"metadata replaced\"}}\n{\"add\":{\"path\":\"b.parquet\",\"partitionValues\":{},\"size\":482,\"modificationTime\":0,\"dataChange\":false,\"stats\":\"{\\\"numRecords\\\": 1, \\\"minValues\\\": {\\\"id\\\": 2}, \\\"maxValues\\\": {\\\"id\\\": 2}, \\\"nullCount\\\": {\\\"id\\\": 0}}\",\"tags\":{\"revision\":\"updated\"}}}\n{\"add\":{\"path\":\"a.parquet\",\"partitionValues\":{},\"size\":482,\"modificationTime\":0,\"dataChange\":true,\"stats\":\"{\\\"numRecords\\\": 1, \\\"minValues\\\": {\\\"id\\\": 1}, \\\"maxValues\\\": {\\\"id\\\": 1}, \\\"nullCount\\\": {\\\"id\\\": 0}}\"}}\n{\"txn\":{\"appId\":\"job\",\"version\":2}}\n{\"txn\":{\"appId\":\"other\",\"version\":9223372036854775807}}\n"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "status": "reconciled",
+      "complete": false,
+      "sources": [
+        {
+          "version": "11",
+          "source": {
+            "umf": "0.1.0",
+            "id": "commit-11",
+            "vocabularies": {
+              "umf.delta.log": {
+                "version": "0.1.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "log",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "source",
+                    "extensions": {
+                      "umf.delta.log": {
+                        "profile": "delta-jsonl-source",
+                        "text": "{\"remove\":{\"path\":\"b.parquet\",\"dataChange\":true,\"deletionTimestamp\":11}}\n{\"txn\":{\"appId\":\"job\",\"version\":1}}\n"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "version": "12",
+          "source": {
+            "umf": "0.1.0",
+            "id": "commit-12",
+            "vocabularies": {
+              "umf.delta.log": {
+                "version": "0.1.0"
+              }
+            },
+            "modules": [
+              {
+                "id": "log",
+                "namespace": "",
+                "elements": [
+                  {
+                    "id": "source",
+                    "extensions": {
+                      "umf.delta.log": {
+                        "profile": "delta-jsonl-source",
+                        "text": "{\"commitInfo\":{\"operation\":\"CHECKPOINT RECOVERY\"}}\n"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "diagnostics": [
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "/checkpoint",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "/checkpoint",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "/sources/0",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "/sources/0",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_LOG_UNVERIFIED",
+          "path": "/sources/1",
+          "severity": "warning",
+          "message": "Parsed action envelopes do not establish action semantics, transaction validity or reconciled state"
+        },
+        {
+          "code": "DELTA_ACTION_CONTEXT_UNVERIFIED",
+          "path": "/sources/1",
+          "message": "Field shapes do not validate feature requirements, embedded schemas/statistics, paths, deletion vectors or transaction/snapshot state",
+          "severity": "warning"
+        },
+        {
+          "code": "DELTA_HISTORY_UNVERIFIED",
+          "path": "",
+          "message": "Action state only: feature requirements, encoded-path aliases, file contents, transaction legality and tombstone expiry remain unverified",
+          "severity": "warning"
+        }
+      ],
+      "state": {
+        "version": "12",
+        "protocol": {
+          "kind": "object",
+          "members": {
+            "minReaderVersion": {
+              "kind": "number",
+              "value": "3"
+            },
+            "minWriterVersion": {
+              "kind": "number",
+              "value": "7"
+            },
+            "readerFeatures": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "string",
+                  "value": "v2Checkpoint"
+                }
+              ]
+            },
+            "writerFeatures": {
+              "kind": "array",
+              "items": [
+                {
+                  "kind": "string",
+                  "value": "v2Checkpoint"
+                }
+              ]
+            }
+          }
+        },
+        "metaData": {
+          "kind": "object",
+          "members": {
+            "id": {
+              "kind": "string",
+              "value": "12345678-1234-1234-1234-123456789abc"
+            },
+            "format": {
+              "kind": "object",
+              "members": {
+                "provider": {
+                  "kind": "string",
+                  "value": "parquet"
+                },
+                "options": {
+                  "kind": "object",
+                  "members": {}
+                }
+              }
+            },
+            "schemaString": {
+              "kind": "string",
+              "value": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]}"
+            },
+            "partitionColumns": {
+              "kind": "array",
+              "items": []
+            },
+            "configuration": {
+              "kind": "object",
+              "members": {}
+            },
+            "name": {
+              "kind": "string",
+              "value": "renamed"
+            },
+            "description": {
+              "kind": "string",
+              "value": "metadata replaced"
+            }
+          }
+        },
+        "adds": [
+          {
+            "kind": "object",
+            "members": {
+              "path": {
+                "kind": "string",
+                "value": "a.parquet"
+              },
+              "partitionValues": {
+                "kind": "object",
+                "members": {}
+              },
+              "size": {
+                "kind": "number",
+                "value": "482"
+              },
+              "modificationTime": {
+                "kind": "number",
+                "value": "0"
+              },
+              "dataChange": {
+                "kind": "boolean",
+                "value": true
+              },
+              "stats": {
+                "kind": "string",
+                "value": "{\"numRecords\": 1, \"minValues\": {\"id\": 1}, \"maxValues\": {\"id\": 1}, \"nullCount\": {\"id\": 0}}"
+              }
+            }
+          }
+        ],
+        "removes": [
+          {
+            "kind": "object",
+            "members": {
+              "path": {
+                "kind": "string",
+                "value": "b.parquet"
+              },
+              "dataChange": {
+                "kind": "boolean",
+                "value": true
+              },
+              "deletionTimestamp": {
+                "kind": "number",
+                "value": "11"
+              }
+            }
+          }
+        ],
+        "transactions": [
+          {
+            "kind": "object",
+            "members": {
+              "appId": {
+                "kind": "string",
+                "value": "job"
+              },
+              "version": {
+                "kind": "number",
+                "value": "1"
+              }
+            }
+          },
+          {
+            "kind": "object",
+            "members": {
+              "appId": {
+                "kind": "string",
+                "value": "other"
+              },
+              "version": {
+                "kind": "number",
+                "value": "9223372036854775807"
+              }
+            }
+          }
+        ],
+        "domains": [],
+        "commitInfo": [
+          {
+            "kind": "object",
+            "members": {
+              "operation": {
+                "kind": "string",
+                "value": "CHECKPOINT RECOVERY"
+              }
+            }
+          }
+        ],
+        "deferred": []
+      },
+      "checkpoint": {
+        "version": "10",
+        "source": {
+          "umf": "0.1.0",
+          "id": "checkpoint-10",
+          "vocabularies": {
+            "umf.delta.log": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "log",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "source",
+                  "extensions": {
+                    "umf.delta.log": {
+                      "profile": "delta-jsonl-source",
+                      "text": "{\"checkpointMetadata\":{\"version\":10}}\n{\"protocol\":{\"minReaderVersion\":3,\"minWriterVersion\":7,\"readerFeatures\":[\"v2Checkpoint\"],\"writerFeatures\":[\"v2Checkpoint\"]}}\n{\"metaData\":{\"id\":\"12345678-1234-1234-1234-123456789abc\",\"format\":{\"provider\":\"parquet\",\"options\":{}},\"schemaString\":\"{\\\"type\\\":\\\"struct\\\",\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"type\\\":\\\"long\\\",\\\"nullable\\\":true,\\\"metadata\\\":{}}]}\",\"partitionColumns\":[],\"configuration\":{},\"name\":\"renamed\",\"description\":\"metadata replaced\"}}\n{\"add\":{\"path\":\"b.parquet\",\"partitionValues\":{},\"size\":482,\"modificationTime\":0,\"dataChange\":false,\"stats\":\"{\\\"numRecords\\\": 1, \\\"minValues\\\": {\\\"id\\\": 2}, \\\"maxValues\\\": {\\\"id\\\": 2}, \\\"nullCount\\\": {\\\"id\\\": 0}}\",\"tags\":{\"revision\":\"updated\"}}}\n{\"add\":{\"path\":\"a.parquet\",\"partitionValues\":{},\"size\":482,\"modificationTime\":0,\"dataChange\":true,\"stats\":\"{\\\"numRecords\\\": 1, \\\"minValues\\\": {\\\"id\\\": 1}, \\\"maxValues\\\": {\\\"id\\\": 1}, \\\"nullCount\\\": {\\\"id\\\": 0}}\"}}\n{\"txn\":{\"appId\":\"job\",\"version\":2}}\n{\"txn\":{\"appId\":\"other\",\"version\":9223372036854775807}}\n"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

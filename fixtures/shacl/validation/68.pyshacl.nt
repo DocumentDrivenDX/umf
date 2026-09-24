@@ -1,0 +1,29 @@
+_:N83bef6e2395b4233b6da3ded1a2c7abd <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/maxExclusive-001.test#TestShape-property> .
+_:Nc974c922762e4a3ab08b63740ac9967c <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nc974c922762e4a3ab08b63740ac9967c <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxExclusiveConstraintComponent> .
+_:Nc0259d3fdaf14a2cb0b0b2eb28f96c0e <http://www.w3.org/ns/shacl#resultMessage> "Value is not < Literal(\"1\", datatype=xsd:integer)" .
+_:N83bef6e2395b4233b6da3ded1a2c7abd <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/maxExclusive-001.test#property> .
+_:Nc974c922762e4a3ab08b63740ac9967c <http://www.w3.org/ns/shacl#value> "a" .
+_:Nc974c922762e4a3ab08b63740ac9967c <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/maxExclusive-001.test#TestShape-property> .
+_:Ne3c472f1ded24c4086547f36cf77fda9 <http://www.w3.org/ns/shacl#result> _:N83bef6e2395b4233b6da3ded1a2c7abd .
+_:N83bef6e2395b4233b6da3ded1a2c7abd <http://www.w3.org/ns/shacl#value> "1"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:N83bef6e2395b4233b6da3ded1a2c7abd <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Ne3c472f1ded24c4086547f36cf77fda9 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Nc0259d3fdaf14a2cb0b0b2eb28f96c0e <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/maxExclusive-001.test#TestShape-property> .
+_:Nc974c922762e4a3ab08b63740ac9967c <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/maxExclusive-001.test#property> .
+_:Ne3c472f1ded24c4086547f36cf77fda9 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N83bef6e2395b4233b6da3ded1a2c7abd <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/maxExclusive-001.test#InvalidResource1> .
+_:Ne3c472f1ded24c4086547f36cf77fda9 <http://www.w3.org/ns/shacl#result> _:Nc974c922762e4a3ab08b63740ac9967c .
+_:N83bef6e2395b4233b6da3ded1a2c7abd <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nc974c922762e4a3ab08b63740ac9967c <http://www.w3.org/ns/shacl#resultMessage> "Value is not < Literal(\"1\", datatype=xsd:integer)" .
+_:Nc0259d3fdaf14a2cb0b0b2eb28f96c0e <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/maxExclusive-001.test#InvalidResource2> .
+_:N83bef6e2395b4233b6da3ded1a2c7abd <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxExclusiveConstraintComponent> .
+_:Nc974c922762e4a3ab08b63740ac9967c <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/maxExclusive-001.test#InvalidResource3> .
+_:Nc974c922762e4a3ab08b63740ac9967c <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nc0259d3fdaf14a2cb0b0b2eb28f96c0e <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Ne3c472f1ded24c4086547f36cf77fda9 <http://www.w3.org/ns/shacl#result> _:Nc0259d3fdaf14a2cb0b0b2eb28f96c0e .
+_:Nc0259d3fdaf14a2cb0b0b2eb28f96c0e <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nc0259d3fdaf14a2cb0b0b2eb28f96c0e <http://www.w3.org/ns/shacl#value> "2"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:Nc0259d3fdaf14a2cb0b0b2eb28f96c0e <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxExclusiveConstraintComponent> .
+_:Nc0259d3fdaf14a2cb0b0b2eb28f96c0e <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/maxExclusive-001.test#property> .
+_:N83bef6e2395b4233b6da3ded1a2c7abd <http://www.w3.org/ns/shacl#resultMessage> "Value is not < Literal(\"1\", datatype=xsd:integer)" .

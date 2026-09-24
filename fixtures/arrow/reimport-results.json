@@ -1,0 +1,1889 @@
+{
+  "cases": 49,
+  "equal": 48,
+  "changed": 1,
+  "results": [
+    {
+      "id": "type-0",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "null"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-1",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "bool"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-2",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "utf8"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-3",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "largeutf8"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-4",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "binary"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-5",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "largebinary"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-6",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "utf8view"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-7",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "binaryview"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-8",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "int",
+              "bitWidth": 8,
+              "isSigned": true
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-9",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "int",
+              "bitWidth": 8,
+              "isSigned": false
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-10",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "int",
+              "bitWidth": 16,
+              "isSigned": true
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-11",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "int",
+              "bitWidth": 16,
+              "isSigned": false
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-12",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "int",
+              "bitWidth": 32,
+              "isSigned": true
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-13",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "int",
+              "bitWidth": 32,
+              "isSigned": false
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-14",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "int",
+              "bitWidth": 64,
+              "isSigned": true
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-15",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "int",
+              "bitWidth": 64,
+              "isSigned": false
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-16",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "floatingpoint",
+              "precision": "HALF"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-17",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "floatingpoint",
+              "precision": "SINGLE"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-18",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "floatingpoint",
+              "precision": "DOUBLE"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-19",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "decimal",
+              "scale": 4,
+              "precision": 9,
+              "bitWidth": 32
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-20",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "decimal",
+              "scale": 4,
+              "precision": 18,
+              "bitWidth": 64
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-21",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "decimal",
+              "scale": 4,
+              "precision": 38,
+              "bitWidth": 128
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-22",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "decimal",
+              "scale": 4,
+              "precision": 76,
+              "bitWidth": 256
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-23",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "date",
+              "unit": "DAY"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-24",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "date",
+              "unit": "MILLISECOND"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-25",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "time",
+              "unit": "SECOND",
+              "bitWidth": 32
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-26",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "timestamp",
+              "unit": "SECOND",
+              "timezone": "America/New_York"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-27",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "duration",
+              "unit": "SECOND"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-28",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "time",
+              "unit": "MILLISECOND",
+              "bitWidth": 32
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-29",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "timestamp",
+              "unit": "MILLISECOND",
+              "timezone": "America/New_York"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-30",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "duration",
+              "unit": "MILLISECOND"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-31",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "time",
+              "unit": "MICROSECOND",
+              "bitWidth": 64
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-32",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "timestamp",
+              "unit": "MICROSECOND",
+              "timezone": "America/New_York"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-33",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "duration",
+              "unit": "MICROSECOND"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-34",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "time",
+              "unit": "NANOSECOND",
+              "bitWidth": 64
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-35",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "timestamp",
+              "unit": "NANOSECOND",
+              "timezone": "America/New_York"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-36",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "duration",
+              "unit": "NANOSECOND"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-37",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "interval",
+              "unit": "YEAR_MONTH"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-38",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "interval",
+              "unit": "DAY_TIME"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-39",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "interval",
+              "unit": "MONTH_DAY_NANO"
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-40",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "fixedsizebinary",
+              "byteWidth": 16
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-41",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "list"
+            },
+            "children": [
+              {
+                "name": "item",
+                "nullable": true,
+                "type": {
+                  "name": "int",
+                  "bitWidth": 32,
+                  "isSigned": true
+                },
+                "children": [],
+                "metadata": []
+              }
+            ],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-42",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "largelist"
+            },
+            "children": [
+              {
+                "name": "item",
+                "nullable": true,
+                "type": {
+                  "name": "int",
+                  "bitWidth": 32,
+                  "isSigned": true
+                },
+                "children": [],
+                "metadata": []
+              }
+            ],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-43",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "fixedsizelist",
+              "listSize": 3
+            },
+            "children": [
+              {
+                "name": "item",
+                "nullable": true,
+                "type": {
+                  "name": "int",
+                  "bitWidth": 32,
+                  "isSigned": true
+                },
+                "children": [],
+                "metadata": []
+              }
+            ],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-44",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "struct_"
+            },
+            "children": [
+              {
+                "name": "item",
+                "nullable": true,
+                "type": {
+                  "name": "int",
+                  "bitWidth": 32,
+                  "isSigned": true
+                },
+                "children": [],
+                "metadata": []
+              }
+            ],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-45",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "union",
+              "mode": "DENSE",
+              "typeIds": [
+                5
+              ]
+            },
+            "children": [
+              {
+                "name": "item",
+                "nullable": true,
+                "type": {
+                  "name": "int",
+                  "bitWidth": 32,
+                  "isSigned": true
+                },
+                "children": [],
+                "metadata": []
+              }
+            ],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "type-46",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "value",
+            "nullable": true,
+            "type": {
+              "name": "union",
+              "mode": "SPARSE",
+              "typeIds": [
+                5
+              ]
+            },
+            "children": [
+              {
+                "name": "item",
+                "nullable": true,
+                "type": {
+                  "name": "int",
+                  "bitWidth": 32,
+                  "isSigned": true
+                },
+                "children": [],
+                "metadata": []
+              }
+            ],
+            "metadata": [
+              {
+                "key": "ARROW:extension:name",
+                "value": "example.semantic"
+              },
+              {
+                "key": "ARROW:extension:metadata",
+                "value": "{\"unit\":\"money\"}"
+              },
+              {
+                "key": "unicode",
+                "value": "café"
+              }
+            ]
+          }
+        ],
+        "metadata": [
+          {
+            "key": "schema-note",
+            "value": "preserve"
+          }
+        ]
+      }
+    },
+    {
+      "id": "duplicate-metadata",
+      "equal": true,
+      "reimported": {
+        "fields": [
+          {
+            "name": "item",
+            "nullable": true,
+            "type": {
+              "name": "int",
+              "bitWidth": 32,
+              "isSigned": true
+            },
+            "children": [],
+            "metadata": [
+              {
+                "key": "same",
+                "value": "second"
+              }
+            ]
+          }
+        ],
+        "metadata": []
+      }
+    },
+    {
+      "id": "dictionary-large-id",
+      "equal": false,
+      "reimported": {
+        "fields": [
+          {
+            "name": "dict",
+            "nullable": true,
+            "type": {
+              "name": "utf8"
+            },
+            "children": [],
+            "metadata": [],
+            "dictionary": {
+              "id": 0,
+              "indexType": {
+                "name": "int",
+                "bitWidth": 32,
+                "isSigned": true
+              },
+              "isOrdered": true
+            }
+          }
+        ],
+        "metadata": []
+      }
+    }
+  ]
+}

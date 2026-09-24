@@ -1,0 +1,476 @@
+{
+  "umf": "0.1.0",
+  "id": "authored",
+  "vocabularies": {
+    "umf.owl": {
+      "version": "0.1.0"
+    }
+  },
+  "modules": [
+    {
+      "id": "dataset",
+      "namespace": "",
+      "elements": [
+        {
+          "id": "dataset",
+          "extensions": {
+            "umf.owl": {
+              "profile": "rdf11-turtle",
+              "baseIRI": "https://example.org/",
+              "blankNodeScope": "authored",
+              "quads": [
+                {
+                  "subject": {
+                    "kind": "iri",
+                    "value": "https://example.org/domain"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                  },
+                  "object": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/2002/07/owl#Ontology"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "iri",
+                    "value": "https://example.org/domain"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/2002/07/owl#versionIRI"
+                  },
+                  "object": {
+                    "kind": "iri",
+                    "value": "https://example.org/v2"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "iri",
+                    "value": "https://example.org/domain"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/2002/07/owl#imports"
+                  },
+                  "object": {
+                    "kind": "iri",
+                    "value": "https://example.org/external"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "blank",
+                    "value": "g_0"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "https://example.org/mode"
+                  },
+                  "object": {
+                    "kind": "literal",
+                    "value": "retain",
+                    "datatype": "http://www.w3.org/2001/XMLSchema#string"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "iri",
+                    "value": "https://example.org/domain"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "https://example.org/policy"
+                  },
+                  "object": {
+                    "kind": "blank",
+                    "value": "g_0"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "iri",
+                    "value": "https://example.org/Order"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                  },
+                  "object": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/2002/07/owl#Class"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "iri",
+                    "value": "https://example.org/Order"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                  },
+                  "object": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/2002/07/owl#NamedIndividual"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "blank",
+                    "value": "g_1"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+                  },
+                  "object": {
+                    "kind": "iri",
+                    "value": "https://example.org/orderId"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "blank",
+                    "value": "g_1"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+                  },
+                  "object": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "iri",
+                    "value": "https://example.org/Order"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/2002/07/owl#hasKey"
+                  },
+                  "object": {
+                    "kind": "blank",
+                    "value": "g_1"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "iri",
+                    "value": "https://example.org/orderId"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                  },
+                  "object": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/2002/07/owl#DatatypeProperty"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "blank",
+                    "value": "g_2"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                  },
+                  "object": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/2002/07/owl#Restriction"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "blank",
+                    "value": "g_2"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/2002/07/owl#onProperty"
+                  },
+                  "object": {
+                    "kind": "iri",
+                    "value": "https://example.org/lines"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "blank",
+                    "value": "g_2"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/2002/07/owl#minQualifiedCardinality"
+                  },
+                  "object": {
+                    "kind": "literal",
+                    "value": "9007199254740993",
+                    "datatype": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "blank",
+                    "value": "g_2"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/2002/07/owl#onClass"
+                  },
+                  "object": {
+                    "kind": "iri",
+                    "value": "https://example.org/Line"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "iri",
+                    "value": "https://example.org/Order"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/2002/07/owl#equivalentClass"
+                  },
+                  "object": {
+                    "kind": "blank",
+                    "value": "g_2"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "blank",
+                    "value": "g_3"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+                  },
+                  "object": {
+                    "kind": "iri",
+                    "value": "https://example.org/customer"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "blank",
+                    "value": "g_3"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+                  },
+                  "object": {
+                    "kind": "blank",
+                    "value": "g_4"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "blank",
+                    "value": "g_4"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#first"
+                  },
+                  "object": {
+                    "kind": "iri",
+                    "value": "https://example.org/address"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "blank",
+                    "value": "g_4"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"
+                  },
+                  "object": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "iri",
+                    "value": "https://example.org/shipsTo"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/2002/07/owl#propertyChainAxiom"
+                  },
+                  "object": {
+                    "kind": "blank",
+                    "value": "g_3"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "blank",
+                    "value": "g_5"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+                  },
+                  "object": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/2002/07/owl#Axiom"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "blank",
+                    "value": "g_5"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/2002/07/owl#annotatedSource"
+                  },
+                  "object": {
+                    "kind": "iri",
+                    "value": "https://example.org/Order"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "blank",
+                    "value": "g_5"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/2002/07/owl#annotatedProperty"
+                  },
+                  "object": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/2002/07/owl#equivalentClass"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "blank",
+                    "value": "g_5"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "http://www.w3.org/2002/07/owl#annotatedTarget"
+                  },
+                  "object": {
+                    "kind": "iri",
+                    "value": "https://example.org/Other"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                },
+                {
+                  "subject": {
+                    "kind": "blank",
+                    "value": "g_5"
+                  },
+                  "predicate": {
+                    "kind": "iri",
+                    "value": "https://example.org/confidence"
+                  },
+                  "object": {
+                    "kind": "literal",
+                    "value": "0.900",
+                    "datatype": "http://www.w3.org/2001/XMLSchema#decimal"
+                  },
+                  "graph": {
+                    "kind": "default"
+                  }
+                }
+              ],
+              "originalSource": "@prefix owl: <http://www.w3.org/2002/07/owl#> .\n@prefix ex: <https://example.org/> .\n@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\nex:domain a owl:Ontology ; owl:versionIRI ex:v2 ; owl:imports ex:external ; ex:policy [ex:mode \"retain\"] .\nex:Order a owl:Class, owl:NamedIndividual ; owl:hasKey (ex:orderId) .\nex:orderId a owl:DatatypeProperty .\nex:Order owl:equivalentClass [a owl:Restriction ; owl:onProperty ex:lines ; owl:minQualifiedCardinality \"9007199254740993\"^^xsd:nonNegativeInteger ; owl:onClass ex:Line] .\nex:shipsTo owl:propertyChainAxiom (ex:customer ex:address) .\n[] a owl:Axiom ; owl:annotatedSource ex:Order ; owl:annotatedProperty owl:equivalentClass ; owl:annotatedTarget ex:Other ; ex:confidence \"0.900\"^^xsd:decimal .\n",
+              "owlVersion": "2"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

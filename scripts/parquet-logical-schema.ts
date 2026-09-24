@@ -1,0 +1,3 @@
+export {};
+const schema=await Bun.file('spec/extensions/parquet/schema-inspection.schema.json').json();schema.$id='urn:umf:parquet:logical-inspection:0.1.0';schema.properties.annotations={type:'array',items:{type:'object',required:['index','origin','name','parameters','validation'],properties:{index:{type:'integer',minimum:0},origin:{enum:['logical','converted']},name:{type:'string'},parameters:{type:'object'},validation:{enum:['checked','uninterpreted','invalid']}},additionalProperties:false}};
+await Bun.write('spec/extensions/parquet/logical-inspection.schema.json',JSON.stringify(schema,null,2)+'\n');

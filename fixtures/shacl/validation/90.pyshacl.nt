@@ -1,0 +1,10 @@
+_:N82a732a12bb14676857ec3bab7773a61 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N82a732a12bb14676857ec3bab7773a61 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/targets/multipleTargets-001.test#InvalidResource1> .
+_:N82a732a12bb14676857ec3bab7773a61 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N82a732a12bb14676857ec3bab7773a61 <http://www.w3.org/ns/shacl#resultMessage> "Value ex:InvalidResource1 not in list ['ex:ValidResource1', 'ex:ValidResource2']" .
+_:N82a732a12bb14676857ec3bab7773a61 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/targets/multipleTargets-001.test#InvalidResource1> .
+_:N85c6ac6f446644679a5eeb51b1232de8 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N82a732a12bb14676857ec3bab7773a61 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#InConstraintComponent> .
+_:N85c6ac6f446644679a5eeb51b1232de8 <http://www.w3.org/ns/shacl#result> _:N82a732a12bb14676857ec3bab7773a61 .
+_:N82a732a12bb14676857ec3bab7773a61 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/targets/multipleTargets-001.test#TestShape> .
+_:N85c6ac6f446644679a5eeb51b1232de8 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .

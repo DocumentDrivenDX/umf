@@ -1,0 +1,1871 @@
+{
+  "commit": "219e3f12a62f9476e830c21e26d030d231f7c017",
+  "compiler": "thriftpy2 0.5.3",
+  "definitions": {
+    "Type": {
+      "kind": "enum",
+      "values": {
+        "BOOLEAN": 0,
+        "INT32": 1,
+        "INT64": 2,
+        "INT96": 3,
+        "FLOAT": 4,
+        "DOUBLE": 5,
+        "BYTE_ARRAY": 6,
+        "FIXED_LEN_BYTE_ARRAY": 7
+      }
+    },
+    "ConvertedType": {
+      "kind": "enum",
+      "values": {
+        "UTF8": 0,
+        "MAP": 1,
+        "MAP_KEY_VALUE": 2,
+        "LIST": 3,
+        "ENUM": 4,
+        "DECIMAL": 5,
+        "DATE": 6,
+        "TIME_MILLIS": 7,
+        "TIME_MICROS": 8,
+        "TIMESTAMP_MILLIS": 9,
+        "TIMESTAMP_MICROS": 10,
+        "UINT_8": 11,
+        "UINT_16": 12,
+        "UINT_32": 13,
+        "UINT_64": 14,
+        "INT_8": 15,
+        "INT_16": 16,
+        "INT_32": 17,
+        "INT_64": 18,
+        "JSON": 19,
+        "BSON": 20,
+        "INTERVAL": 21
+      }
+    },
+    "FieldRepetitionType": {
+      "kind": "enum",
+      "values": {
+        "REQUIRED": 0,
+        "OPTIONAL": 1,
+        "REPEATED": 2
+      }
+    },
+    "SizeStatistics": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "unencoded_byte_array_data_bytes",
+          "required": false,
+          "type": {
+            "kind": "i64"
+          }
+        },
+        {
+          "id": 2,
+          "name": "repetition_level_histogram",
+          "required": false,
+          "type": {
+            "kind": "list",
+            "item": {
+              "kind": "i64"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "name": "definition_level_histogram",
+          "required": false,
+          "type": {
+            "kind": "list",
+            "item": {
+              "kind": "i64"
+            }
+          }
+        }
+      ]
+    },
+    "BoundingBox": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "xmin",
+          "required": true,
+          "type": {
+            "kind": "double"
+          }
+        },
+        {
+          "id": 2,
+          "name": "xmax",
+          "required": true,
+          "type": {
+            "kind": "double"
+          }
+        },
+        {
+          "id": 3,
+          "name": "ymin",
+          "required": true,
+          "type": {
+            "kind": "double"
+          }
+        },
+        {
+          "id": 4,
+          "name": "ymax",
+          "required": true,
+          "type": {
+            "kind": "double"
+          }
+        },
+        {
+          "id": 5,
+          "name": "zmin",
+          "required": false,
+          "type": {
+            "kind": "double"
+          }
+        },
+        {
+          "id": 6,
+          "name": "zmax",
+          "required": false,
+          "type": {
+            "kind": "double"
+          }
+        },
+        {
+          "id": 7,
+          "name": "mmin",
+          "required": false,
+          "type": {
+            "kind": "double"
+          }
+        },
+        {
+          "id": 8,
+          "name": "mmax",
+          "required": false,
+          "type": {
+            "kind": "double"
+          }
+        }
+      ]
+    },
+    "GeospatialStatistics": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "bbox",
+          "required": false,
+          "type": {
+            "ref": "BoundingBox"
+          }
+        },
+        {
+          "id": 2,
+          "name": "geospatial_types",
+          "required": false,
+          "type": {
+            "kind": "list",
+            "item": {
+              "kind": "i32"
+            }
+          }
+        }
+      ]
+    },
+    "Statistics": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "max",
+          "required": false,
+          "type": {
+            "kind": "binary"
+          }
+        },
+        {
+          "id": 2,
+          "name": "min",
+          "required": false,
+          "type": {
+            "kind": "binary"
+          }
+        },
+        {
+          "id": 3,
+          "name": "null_count",
+          "required": false,
+          "type": {
+            "kind": "i64"
+          }
+        },
+        {
+          "id": 4,
+          "name": "distinct_count",
+          "required": false,
+          "type": {
+            "kind": "i64"
+          }
+        },
+        {
+          "id": 5,
+          "name": "max_value",
+          "required": false,
+          "type": {
+            "kind": "binary"
+          }
+        },
+        {
+          "id": 6,
+          "name": "min_value",
+          "required": false,
+          "type": {
+            "kind": "binary"
+          }
+        },
+        {
+          "id": 7,
+          "name": "is_max_value_exact",
+          "required": false,
+          "type": {
+            "kind": "bool"
+          }
+        },
+        {
+          "id": 8,
+          "name": "is_min_value_exact",
+          "required": false,
+          "type": {
+            "kind": "bool"
+          }
+        },
+        {
+          "id": 9,
+          "name": "nan_count",
+          "required": false,
+          "type": {
+            "kind": "i64"
+          }
+        }
+      ]
+    },
+    "StringType": {
+      "kind": "struct",
+      "fields": []
+    },
+    "UUIDType": {
+      "kind": "struct",
+      "fields": []
+    },
+    "MapType": {
+      "kind": "struct",
+      "fields": []
+    },
+    "ListType": {
+      "kind": "struct",
+      "fields": []
+    },
+    "EnumType": {
+      "kind": "struct",
+      "fields": []
+    },
+    "DateType": {
+      "kind": "struct",
+      "fields": []
+    },
+    "Float16Type": {
+      "kind": "struct",
+      "fields": []
+    },
+    "NullType": {
+      "kind": "struct",
+      "fields": []
+    },
+    "DecimalType": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "scale",
+          "required": true,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 2,
+          "name": "precision",
+          "required": true,
+          "type": {
+            "kind": "i32"
+          }
+        }
+      ]
+    },
+    "MilliSeconds": {
+      "kind": "struct",
+      "fields": []
+    },
+    "MicroSeconds": {
+      "kind": "struct",
+      "fields": []
+    },
+    "NanoSeconds": {
+      "kind": "struct",
+      "fields": []
+    },
+    "TimeUnit": {
+      "kind": "union",
+      "fields": [
+        {
+          "id": 1,
+          "name": "MILLIS",
+          "required": false,
+          "type": {
+            "ref": "MilliSeconds"
+          }
+        },
+        {
+          "id": 2,
+          "name": "MICROS",
+          "required": false,
+          "type": {
+            "ref": "MicroSeconds"
+          }
+        },
+        {
+          "id": 3,
+          "name": "NANOS",
+          "required": false,
+          "type": {
+            "ref": "NanoSeconds"
+          }
+        }
+      ]
+    },
+    "TimestampType": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "isAdjustedToUTC",
+          "required": true,
+          "type": {
+            "kind": "bool"
+          }
+        },
+        {
+          "id": 2,
+          "name": "unit",
+          "required": true,
+          "type": {
+            "ref": "TimeUnit"
+          }
+        }
+      ]
+    },
+    "TimeType": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "isAdjustedToUTC",
+          "required": true,
+          "type": {
+            "kind": "bool"
+          }
+        },
+        {
+          "id": 2,
+          "name": "unit",
+          "required": true,
+          "type": {
+            "ref": "TimeUnit"
+          }
+        }
+      ]
+    },
+    "IntType": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "bitWidth",
+          "required": true,
+          "type": {
+            "kind": "i8"
+          }
+        },
+        {
+          "id": 2,
+          "name": "isSigned",
+          "required": true,
+          "type": {
+            "kind": "bool"
+          }
+        }
+      ]
+    },
+    "JsonType": {
+      "kind": "struct",
+      "fields": []
+    },
+    "BsonType": {
+      "kind": "struct",
+      "fields": []
+    },
+    "VariantType": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "specification_version",
+          "required": false,
+          "type": {
+            "kind": "i8"
+          }
+        }
+      ]
+    },
+    "EdgeInterpolationAlgorithm": {
+      "kind": "enum",
+      "values": {
+        "SPHERICAL": 0,
+        "VINCENTY": 1,
+        "THOMAS": 2,
+        "ANDOYER": 3,
+        "KARNEY": 4
+      }
+    },
+    "GeometryType": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "crs",
+          "required": false,
+          "type": {
+            "kind": "string"
+          }
+        }
+      ]
+    },
+    "GeographyType": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "crs",
+          "required": false,
+          "type": {
+            "kind": "string"
+          }
+        },
+        {
+          "id": 2,
+          "name": "algorithm",
+          "required": false,
+          "type": {
+            "ref": "EdgeInterpolationAlgorithm"
+          }
+        }
+      ]
+    },
+    "FileType": {
+      "kind": "struct",
+      "fields": []
+    },
+    "LogicalType": {
+      "kind": "union",
+      "fields": [
+        {
+          "id": 1,
+          "name": "STRING",
+          "required": false,
+          "type": {
+            "ref": "StringType"
+          }
+        },
+        {
+          "id": 2,
+          "name": "MAP",
+          "required": false,
+          "type": {
+            "ref": "MapType"
+          }
+        },
+        {
+          "id": 3,
+          "name": "LIST",
+          "required": false,
+          "type": {
+            "ref": "ListType"
+          }
+        },
+        {
+          "id": 4,
+          "name": "ENUM",
+          "required": false,
+          "type": {
+            "ref": "EnumType"
+          }
+        },
+        {
+          "id": 5,
+          "name": "DECIMAL",
+          "required": false,
+          "type": {
+            "ref": "DecimalType"
+          }
+        },
+        {
+          "id": 6,
+          "name": "DATE",
+          "required": false,
+          "type": {
+            "ref": "DateType"
+          }
+        },
+        {
+          "id": 7,
+          "name": "TIME",
+          "required": false,
+          "type": {
+            "ref": "TimeType"
+          }
+        },
+        {
+          "id": 8,
+          "name": "TIMESTAMP",
+          "required": false,
+          "type": {
+            "ref": "TimestampType"
+          }
+        },
+        {
+          "id": 10,
+          "name": "INTEGER",
+          "required": false,
+          "type": {
+            "ref": "IntType"
+          }
+        },
+        {
+          "id": 11,
+          "name": "UNKNOWN",
+          "required": false,
+          "type": {
+            "ref": "NullType"
+          }
+        },
+        {
+          "id": 12,
+          "name": "JSON",
+          "required": false,
+          "type": {
+            "ref": "JsonType"
+          }
+        },
+        {
+          "id": 13,
+          "name": "BSON",
+          "required": false,
+          "type": {
+            "ref": "BsonType"
+          }
+        },
+        {
+          "id": 14,
+          "name": "UUID",
+          "required": false,
+          "type": {
+            "ref": "UUIDType"
+          }
+        },
+        {
+          "id": 15,
+          "name": "FLOAT16",
+          "required": false,
+          "type": {
+            "ref": "Float16Type"
+          }
+        },
+        {
+          "id": 16,
+          "name": "VARIANT",
+          "required": false,
+          "type": {
+            "ref": "VariantType"
+          }
+        },
+        {
+          "id": 17,
+          "name": "GEOMETRY",
+          "required": false,
+          "type": {
+            "ref": "GeometryType"
+          }
+        },
+        {
+          "id": 18,
+          "name": "GEOGRAPHY",
+          "required": false,
+          "type": {
+            "ref": "GeographyType"
+          }
+        },
+        {
+          "id": 19,
+          "name": "FILE",
+          "required": false,
+          "type": {
+            "ref": "FileType"
+          }
+        }
+      ]
+    },
+    "SchemaElement": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "type",
+          "required": false,
+          "type": {
+            "ref": "Type"
+          }
+        },
+        {
+          "id": 2,
+          "name": "type_length",
+          "required": false,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 3,
+          "name": "repetition_type",
+          "required": false,
+          "type": {
+            "ref": "FieldRepetitionType"
+          }
+        },
+        {
+          "id": 4,
+          "name": "name",
+          "required": true,
+          "type": {
+            "kind": "string"
+          }
+        },
+        {
+          "id": 5,
+          "name": "num_children",
+          "required": false,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 6,
+          "name": "converted_type",
+          "required": false,
+          "type": {
+            "ref": "ConvertedType"
+          }
+        },
+        {
+          "id": 7,
+          "name": "scale",
+          "required": false,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 8,
+          "name": "precision",
+          "required": false,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 9,
+          "name": "field_id",
+          "required": false,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 10,
+          "name": "logicalType",
+          "required": false,
+          "type": {
+            "ref": "LogicalType"
+          }
+        }
+      ]
+    },
+    "Encoding": {
+      "kind": "enum",
+      "values": {
+        "PLAIN": 0,
+        "PLAIN_DICTIONARY": 2,
+        "RLE": 3,
+        "BIT_PACKED": 4,
+        "DELTA_BINARY_PACKED": 5,
+        "DELTA_LENGTH_BYTE_ARRAY": 6,
+        "DELTA_BYTE_ARRAY": 7,
+        "RLE_DICTIONARY": 8,
+        "BYTE_STREAM_SPLIT": 9,
+        "ALP": 10
+      }
+    },
+    "CompressionCodec": {
+      "kind": "enum",
+      "values": {
+        "UNCOMPRESSED": 0,
+        "SNAPPY": 1,
+        "GZIP": 2,
+        "LZO": 3,
+        "BROTLI": 4,
+        "LZ4": 5,
+        "ZSTD": 6,
+        "LZ4_RAW": 7
+      }
+    },
+    "PageType": {
+      "kind": "enum",
+      "values": {
+        "DATA_PAGE": 0,
+        "INDEX_PAGE": 1,
+        "DICTIONARY_PAGE": 2,
+        "DATA_PAGE_V2": 3
+      }
+    },
+    "BoundaryOrder": {
+      "kind": "enum",
+      "values": {
+        "UNORDERED": 0,
+        "ASCENDING": 1,
+        "DESCENDING": 2
+      }
+    },
+    "DataPageHeader": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "num_values",
+          "required": true,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 2,
+          "name": "encoding",
+          "required": true,
+          "type": {
+            "ref": "Encoding"
+          }
+        },
+        {
+          "id": 3,
+          "name": "definition_level_encoding",
+          "required": true,
+          "type": {
+            "ref": "Encoding"
+          }
+        },
+        {
+          "id": 4,
+          "name": "repetition_level_encoding",
+          "required": true,
+          "type": {
+            "ref": "Encoding"
+          }
+        },
+        {
+          "id": 5,
+          "name": "statistics",
+          "required": false,
+          "type": {
+            "ref": "Statistics"
+          }
+        }
+      ]
+    },
+    "IndexPageHeader": {
+      "kind": "struct",
+      "fields": []
+    },
+    "DictionaryPageHeader": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "num_values",
+          "required": true,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 2,
+          "name": "encoding",
+          "required": true,
+          "type": {
+            "ref": "Encoding"
+          }
+        },
+        {
+          "id": 3,
+          "name": "is_sorted",
+          "required": false,
+          "type": {
+            "kind": "bool"
+          }
+        }
+      ]
+    },
+    "DataPageHeaderV2": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "num_values",
+          "required": true,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 2,
+          "name": "num_nulls",
+          "required": true,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 3,
+          "name": "num_rows",
+          "required": true,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 4,
+          "name": "encoding",
+          "required": true,
+          "type": {
+            "ref": "Encoding"
+          }
+        },
+        {
+          "id": 5,
+          "name": "definition_levels_byte_length",
+          "required": true,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 6,
+          "name": "repetition_levels_byte_length",
+          "required": true,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 7,
+          "name": "is_compressed",
+          "required": false,
+          "type": {
+            "kind": "bool"
+          },
+          "default": true
+        },
+        {
+          "id": 8,
+          "name": "statistics",
+          "required": false,
+          "type": {
+            "ref": "Statistics"
+          }
+        }
+      ]
+    },
+    "SplitBlockAlgorithm": {
+      "kind": "struct",
+      "fields": []
+    },
+    "BloomFilterAlgorithm": {
+      "kind": "union",
+      "fields": [
+        {
+          "id": 1,
+          "name": "BLOCK",
+          "required": false,
+          "type": {
+            "ref": "SplitBlockAlgorithm"
+          }
+        }
+      ]
+    },
+    "XxHash": {
+      "kind": "struct",
+      "fields": []
+    },
+    "BloomFilterHash": {
+      "kind": "union",
+      "fields": [
+        {
+          "id": 1,
+          "name": "XXHASH",
+          "required": false,
+          "type": {
+            "ref": "XxHash"
+          }
+        }
+      ]
+    },
+    "Uncompressed": {
+      "kind": "struct",
+      "fields": []
+    },
+    "BloomFilterCompression": {
+      "kind": "union",
+      "fields": [
+        {
+          "id": 1,
+          "name": "UNCOMPRESSED",
+          "required": false,
+          "type": {
+            "ref": "Uncompressed"
+          }
+        }
+      ]
+    },
+    "BloomFilterHeader": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "numBytes",
+          "required": true,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 2,
+          "name": "algorithm",
+          "required": true,
+          "type": {
+            "ref": "BloomFilterAlgorithm"
+          }
+        },
+        {
+          "id": 3,
+          "name": "hash",
+          "required": true,
+          "type": {
+            "ref": "BloomFilterHash"
+          }
+        },
+        {
+          "id": 4,
+          "name": "compression",
+          "required": true,
+          "type": {
+            "ref": "BloomFilterCompression"
+          }
+        }
+      ]
+    },
+    "PageHeader": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "type",
+          "required": true,
+          "type": {
+            "ref": "PageType"
+          }
+        },
+        {
+          "id": 2,
+          "name": "uncompressed_page_size",
+          "required": true,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 3,
+          "name": "compressed_page_size",
+          "required": true,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 4,
+          "name": "crc",
+          "required": false,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 5,
+          "name": "data_page_header",
+          "required": false,
+          "type": {
+            "ref": "DataPageHeader"
+          }
+        },
+        {
+          "id": 6,
+          "name": "index_page_header",
+          "required": false,
+          "type": {
+            "ref": "IndexPageHeader"
+          }
+        },
+        {
+          "id": 7,
+          "name": "dictionary_page_header",
+          "required": false,
+          "type": {
+            "ref": "DictionaryPageHeader"
+          }
+        },
+        {
+          "id": 8,
+          "name": "data_page_header_v2",
+          "required": false,
+          "type": {
+            "ref": "DataPageHeaderV2"
+          }
+        }
+      ]
+    },
+    "KeyValue": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "key",
+          "required": true,
+          "type": {
+            "kind": "string"
+          }
+        },
+        {
+          "id": 2,
+          "name": "value",
+          "required": false,
+          "type": {
+            "kind": "string"
+          }
+        }
+      ]
+    },
+    "SortingColumn": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "column_idx",
+          "required": true,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 2,
+          "name": "descending",
+          "required": true,
+          "type": {
+            "kind": "bool"
+          }
+        },
+        {
+          "id": 3,
+          "name": "nulls_first",
+          "required": true,
+          "type": {
+            "kind": "bool"
+          }
+        }
+      ]
+    },
+    "PageEncodingStats": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "page_type",
+          "required": true,
+          "type": {
+            "ref": "PageType"
+          }
+        },
+        {
+          "id": 2,
+          "name": "encoding",
+          "required": true,
+          "type": {
+            "ref": "Encoding"
+          }
+        },
+        {
+          "id": 3,
+          "name": "count",
+          "required": true,
+          "type": {
+            "kind": "i32"
+          }
+        }
+      ]
+    },
+    "ColumnMetaData": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "type",
+          "required": true,
+          "type": {
+            "ref": "Type"
+          }
+        },
+        {
+          "id": 2,
+          "name": "encodings",
+          "required": true,
+          "type": {
+            "kind": "list",
+            "item": {
+              "ref": "Encoding"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "name": "path_in_schema",
+          "required": true,
+          "type": {
+            "kind": "list",
+            "item": {
+              "kind": "string"
+            }
+          }
+        },
+        {
+          "id": 4,
+          "name": "codec",
+          "required": true,
+          "type": {
+            "ref": "CompressionCodec"
+          }
+        },
+        {
+          "id": 5,
+          "name": "num_values",
+          "required": true,
+          "type": {
+            "kind": "i64"
+          }
+        },
+        {
+          "id": 6,
+          "name": "total_uncompressed_size",
+          "required": true,
+          "type": {
+            "kind": "i64"
+          }
+        },
+        {
+          "id": 7,
+          "name": "total_compressed_size",
+          "required": true,
+          "type": {
+            "kind": "i64"
+          }
+        },
+        {
+          "id": 8,
+          "name": "key_value_metadata",
+          "required": false,
+          "type": {
+            "kind": "list",
+            "item": {
+              "ref": "KeyValue"
+            }
+          }
+        },
+        {
+          "id": 9,
+          "name": "data_page_offset",
+          "required": true,
+          "type": {
+            "kind": "i64"
+          }
+        },
+        {
+          "id": 10,
+          "name": "index_page_offset",
+          "required": false,
+          "type": {
+            "kind": "i64"
+          }
+        },
+        {
+          "id": 11,
+          "name": "dictionary_page_offset",
+          "required": false,
+          "type": {
+            "kind": "i64"
+          }
+        },
+        {
+          "id": 12,
+          "name": "statistics",
+          "required": false,
+          "type": {
+            "ref": "Statistics"
+          }
+        },
+        {
+          "id": 13,
+          "name": "encoding_stats",
+          "required": false,
+          "type": {
+            "kind": "list",
+            "item": {
+              "ref": "PageEncodingStats"
+            }
+          }
+        },
+        {
+          "id": 14,
+          "name": "bloom_filter_offset",
+          "required": false,
+          "type": {
+            "kind": "i64"
+          }
+        },
+        {
+          "id": 15,
+          "name": "bloom_filter_length",
+          "required": false,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 16,
+          "name": "size_statistics",
+          "required": false,
+          "type": {
+            "ref": "SizeStatistics"
+          }
+        },
+        {
+          "id": 17,
+          "name": "geospatial_statistics",
+          "required": false,
+          "type": {
+            "ref": "GeospatialStatistics"
+          }
+        }
+      ]
+    },
+    "EncryptionWithFooterKey": {
+      "kind": "struct",
+      "fields": []
+    },
+    "EncryptionWithColumnKey": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "path_in_schema",
+          "required": true,
+          "type": {
+            "kind": "list",
+            "item": {
+              "kind": "string"
+            }
+          }
+        },
+        {
+          "id": 2,
+          "name": "key_metadata",
+          "required": false,
+          "type": {
+            "kind": "binary"
+          }
+        }
+      ]
+    },
+    "ColumnCryptoMetaData": {
+      "kind": "union",
+      "fields": [
+        {
+          "id": 1,
+          "name": "ENCRYPTION_WITH_FOOTER_KEY",
+          "required": false,
+          "type": {
+            "ref": "EncryptionWithFooterKey"
+          }
+        },
+        {
+          "id": 2,
+          "name": "ENCRYPTION_WITH_COLUMN_KEY",
+          "required": false,
+          "type": {
+            "ref": "EncryptionWithColumnKey"
+          }
+        }
+      ]
+    },
+    "ColumnChunk": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "file_path",
+          "required": false,
+          "type": {
+            "kind": "string"
+          }
+        },
+        {
+          "id": 2,
+          "name": "file_offset",
+          "required": true,
+          "type": {
+            "kind": "i64"
+          },
+          "default": 0
+        },
+        {
+          "id": 3,
+          "name": "meta_data",
+          "required": false,
+          "type": {
+            "ref": "ColumnMetaData"
+          }
+        },
+        {
+          "id": 4,
+          "name": "offset_index_offset",
+          "required": false,
+          "type": {
+            "kind": "i64"
+          }
+        },
+        {
+          "id": 5,
+          "name": "offset_index_length",
+          "required": false,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 6,
+          "name": "column_index_offset",
+          "required": false,
+          "type": {
+            "kind": "i64"
+          }
+        },
+        {
+          "id": 7,
+          "name": "column_index_length",
+          "required": false,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 8,
+          "name": "crypto_metadata",
+          "required": false,
+          "type": {
+            "ref": "ColumnCryptoMetaData"
+          }
+        },
+        {
+          "id": 9,
+          "name": "encrypted_column_metadata",
+          "required": false,
+          "type": {
+            "kind": "binary"
+          }
+        }
+      ]
+    },
+    "RowGroup": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "columns",
+          "required": true,
+          "type": {
+            "kind": "list",
+            "item": {
+              "ref": "ColumnChunk"
+            }
+          }
+        },
+        {
+          "id": 2,
+          "name": "total_byte_size",
+          "required": true,
+          "type": {
+            "kind": "i64"
+          }
+        },
+        {
+          "id": 3,
+          "name": "num_rows",
+          "required": true,
+          "type": {
+            "kind": "i64"
+          }
+        },
+        {
+          "id": 4,
+          "name": "sorting_columns",
+          "required": false,
+          "type": {
+            "kind": "list",
+            "item": {
+              "ref": "SortingColumn"
+            }
+          }
+        },
+        {
+          "id": 5,
+          "name": "file_offset",
+          "required": false,
+          "type": {
+            "kind": "i64"
+          }
+        },
+        {
+          "id": 6,
+          "name": "total_compressed_size",
+          "required": false,
+          "type": {
+            "kind": "i64"
+          }
+        },
+        {
+          "id": 7,
+          "name": "ordinal",
+          "required": false,
+          "type": {
+            "kind": "i16"
+          }
+        }
+      ]
+    },
+    "TypeDefinedOrder": {
+      "kind": "struct",
+      "fields": []
+    },
+    "IEEE754TotalOrder": {
+      "kind": "struct",
+      "fields": []
+    },
+    "Int96TimestampOrder": {
+      "kind": "struct",
+      "fields": []
+    },
+    "ColumnOrder": {
+      "kind": "union",
+      "fields": [
+        {
+          "id": 1,
+          "name": "TYPE_ORDER",
+          "required": false,
+          "type": {
+            "ref": "TypeDefinedOrder"
+          }
+        },
+        {
+          "id": 2,
+          "name": "IEEE_754_TOTAL_ORDER",
+          "required": false,
+          "type": {
+            "ref": "IEEE754TotalOrder"
+          }
+        },
+        {
+          "id": 3,
+          "name": "INT96_TIMESTAMP_ORDER",
+          "required": false,
+          "type": {
+            "ref": "Int96TimestampOrder"
+          }
+        }
+      ]
+    },
+    "PageLocation": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "offset",
+          "required": true,
+          "type": {
+            "kind": "i64"
+          }
+        },
+        {
+          "id": 2,
+          "name": "compressed_page_size",
+          "required": true,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 3,
+          "name": "first_row_index",
+          "required": true,
+          "type": {
+            "kind": "i64"
+          }
+        }
+      ]
+    },
+    "OffsetIndex": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "page_locations",
+          "required": true,
+          "type": {
+            "kind": "list",
+            "item": {
+              "ref": "PageLocation"
+            }
+          }
+        },
+        {
+          "id": 2,
+          "name": "unencoded_byte_array_data_bytes",
+          "required": false,
+          "type": {
+            "kind": "list",
+            "item": {
+              "kind": "i64"
+            }
+          }
+        }
+      ]
+    },
+    "ColumnIndex": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "null_pages",
+          "required": true,
+          "type": {
+            "kind": "list",
+            "item": {
+              "kind": "bool"
+            }
+          }
+        },
+        {
+          "id": 2,
+          "name": "min_values",
+          "required": true,
+          "type": {
+            "kind": "list",
+            "item": {
+              "kind": "binary"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "name": "max_values",
+          "required": true,
+          "type": {
+            "kind": "list",
+            "item": {
+              "kind": "binary"
+            }
+          }
+        },
+        {
+          "id": 4,
+          "name": "boundary_order",
+          "required": true,
+          "type": {
+            "ref": "BoundaryOrder"
+          }
+        },
+        {
+          "id": 5,
+          "name": "null_counts",
+          "required": false,
+          "type": {
+            "kind": "list",
+            "item": {
+              "kind": "i64"
+            }
+          }
+        },
+        {
+          "id": 6,
+          "name": "repetition_level_histograms",
+          "required": false,
+          "type": {
+            "kind": "list",
+            "item": {
+              "kind": "i64"
+            }
+          }
+        },
+        {
+          "id": 7,
+          "name": "definition_level_histograms",
+          "required": false,
+          "type": {
+            "kind": "list",
+            "item": {
+              "kind": "i64"
+            }
+          }
+        },
+        {
+          "id": 8,
+          "name": "nan_counts",
+          "required": false,
+          "type": {
+            "kind": "list",
+            "item": {
+              "kind": "i64"
+            }
+          }
+        }
+      ]
+    },
+    "AesGcmV1": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "aad_prefix",
+          "required": false,
+          "type": {
+            "kind": "binary"
+          }
+        },
+        {
+          "id": 2,
+          "name": "aad_file_unique",
+          "required": false,
+          "type": {
+            "kind": "binary"
+          }
+        },
+        {
+          "id": 3,
+          "name": "supply_aad_prefix",
+          "required": false,
+          "type": {
+            "kind": "bool"
+          }
+        }
+      ]
+    },
+    "AesGcmCtrV1": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "aad_prefix",
+          "required": false,
+          "type": {
+            "kind": "binary"
+          }
+        },
+        {
+          "id": 2,
+          "name": "aad_file_unique",
+          "required": false,
+          "type": {
+            "kind": "binary"
+          }
+        },
+        {
+          "id": 3,
+          "name": "supply_aad_prefix",
+          "required": false,
+          "type": {
+            "kind": "bool"
+          }
+        }
+      ]
+    },
+    "EncryptionAlgorithm": {
+      "kind": "union",
+      "fields": [
+        {
+          "id": 1,
+          "name": "AES_GCM_V1",
+          "required": false,
+          "type": {
+            "ref": "AesGcmV1"
+          }
+        },
+        {
+          "id": 2,
+          "name": "AES_GCM_CTR_V1",
+          "required": false,
+          "type": {
+            "ref": "AesGcmCtrV1"
+          }
+        }
+      ]
+    },
+    "FileMetaData": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "version",
+          "required": true,
+          "type": {
+            "kind": "i32"
+          }
+        },
+        {
+          "id": 2,
+          "name": "schema",
+          "required": true,
+          "type": {
+            "kind": "list",
+            "item": {
+              "ref": "SchemaElement"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "name": "num_rows",
+          "required": true,
+          "type": {
+            "kind": "i64"
+          }
+        },
+        {
+          "id": 4,
+          "name": "row_groups",
+          "required": true,
+          "type": {
+            "kind": "list",
+            "item": {
+              "ref": "RowGroup"
+            }
+          }
+        },
+        {
+          "id": 5,
+          "name": "key_value_metadata",
+          "required": false,
+          "type": {
+            "kind": "list",
+            "item": {
+              "ref": "KeyValue"
+            }
+          }
+        },
+        {
+          "id": 6,
+          "name": "created_by",
+          "required": false,
+          "type": {
+            "kind": "string"
+          }
+        },
+        {
+          "id": 7,
+          "name": "column_orders",
+          "required": false,
+          "type": {
+            "kind": "list",
+            "item": {
+              "ref": "ColumnOrder"
+            }
+          }
+        },
+        {
+          "id": 8,
+          "name": "encryption_algorithm",
+          "required": false,
+          "type": {
+            "ref": "EncryptionAlgorithm"
+          }
+        },
+        {
+          "id": 9,
+          "name": "footer_signing_key_metadata",
+          "required": false,
+          "type": {
+            "kind": "binary"
+          }
+        }
+      ]
+    },
+    "FileCryptoMetaData": {
+      "kind": "struct",
+      "fields": [
+        {
+          "id": 1,
+          "name": "encryption_algorithm",
+          "required": true,
+          "type": {
+            "ref": "EncryptionAlgorithm"
+          }
+        },
+        {
+          "id": 2,
+          "name": "key_metadata",
+          "required": false,
+          "type": {
+            "kind": "binary"
+          }
+        }
+      ]
+    }
+  }
+}

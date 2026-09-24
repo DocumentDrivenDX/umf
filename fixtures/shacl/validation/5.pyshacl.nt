@@ -1,0 +1,10 @@
+_:N5d918a8420d64a9f98b011a0cba91c8c <http://www.w3.org/ns/shacl#focusNode> "Hello" .
+_:Nc637b440b84246ee8c554f66a8b6d6a1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N5d918a8420d64a9f98b011a0cba91c8c <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nc637b440b84246ee8c554f66a8b6d6a1 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N5d918a8420d64a9f98b011a0cba91c8c <http://www.w3.org/ns/shacl#value> "Hello" .
+_:N5d918a8420d64a9f98b011a0cba91c8c <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Warning> .
+_:Nc637b440b84246ee8c554f66a8b6d6a1 <http://www.w3.org/ns/shacl#result> _:N5d918a8420d64a9f98b011a0cba91c8c .
+_:N5d918a8420d64a9f98b011a0cba91c8c <http://www.w3.org/ns/shacl#resultMessage> "Value is not Literal with datatype xsd:integer" .
+_:N5d918a8420d64a9f98b011a0cba91c8c <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/misc/severity-001.test#TestShape> .
+_:N5d918a8420d64a9f98b011a0cba91c8c <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .

@@ -1,0 +1,49 @@
+{
+  "cases": [
+    {
+      "id": "exact-and-unknown",
+      "path": "fixtures/delta/parquet-actions/authored/exact-and-unknown.parquet",
+      "status": "projected"
+    },
+    {
+      "id": "null-pointer",
+      "path": "fixtures/delta/parquet-actions/authored/null-pointer.parquet",
+      "status": "projected"
+    },
+    {
+      "id": "duplicate-map",
+      "path": "fixtures/delta/parquet-actions/authored/duplicate-map.parquet",
+      "status": "blocked"
+    },
+    {
+      "id": "float-needs-policy",
+      "path": "fixtures/delta/parquet-actions/authored/float-needs-policy.parquet",
+      "status": "blocked"
+    },
+    {
+      "id": "required-null",
+      "path": "fixtures/delta/parquet-actions/authored/required-null.parquet",
+      "status": "blocked"
+    },
+    {
+      "id": "multiple-actions",
+      "path": "fixtures/delta/parquet-actions/authored/multiple-actions.parquet",
+      "status": "blocked"
+    },
+    {
+      "id": "unknown-action",
+      "path": "fixtures/delta/parquet-actions/authored/unknown-action.parquet",
+      "status": "projected"
+    },
+    {
+      "id": "typed-statistics",
+      "path": "fixtures/delta/parquet-actions/authored/typed-statistics.parquet",
+      "status": "projected"
+    },
+    {
+      "id": "nonfinite-statistics",
+      "path": "fixtures/delta/parquet-actions/authored/nonfinite-statistics.parquet",
+      "status": "blocked"
+    }
+  ]
+}

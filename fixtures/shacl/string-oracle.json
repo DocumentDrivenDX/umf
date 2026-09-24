@@ -1,0 +1,749 @@
+{
+  "oracle": "PySHACL",
+  "version": "0.30.1",
+  "rdflib": "7.6.0",
+  "results": [
+    {
+      "id": "emoji-minLength-0",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "emoji-minLength-1",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "emoji-minLength-2",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "emoji-minLength-3",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "emoji-maxLength-0",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "emoji-maxLength-1",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "emoji-maxLength-2",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "emoji-maxLength-3",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "combining-minLength-0",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "combining-minLength-1",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "combining-minLength-2",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "combining-minLength-3",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "combining-maxLength-0",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "combining-maxLength-1",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "combining-maxLength-2",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "combining-maxLength-3",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "joined-minLength-0",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "joined-minLength-1",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "joined-minLength-2",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "joined-minLength-3",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "joined-maxLength-0",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "joined-maxLength-1",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "joined-maxLength-2",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "joined-maxLength-3",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "empty-minLength-0",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "empty-minLength-1",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "empty-minLength-2",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "empty-minLength-3",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "empty-maxLength-0",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "empty-maxLength-1",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "empty-maxLength-2",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "empty-maxLength-3",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "iri-minLength-0",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "iri-minLength-1",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "iri-minLength-2",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "iri-minLength-3",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "iri-maxLength-0",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "iri-maxLength-1",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "iri-maxLength-2",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "iri-maxLength-3",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "typed-minLength-0",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "typed-minLength-1",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "typed-minLength-2",
+      "conforms": false,
+      "expected": true,
+      "equal": false,
+      "resultCount": 1
+    },
+    {
+      "id": "typed-minLength-3",
+      "conforms": false,
+      "expected": true,
+      "equal": false,
+      "resultCount": 1
+    },
+    {
+      "id": "typed-maxLength-0",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "typed-maxLength-1",
+      "conforms": true,
+      "expected": false,
+      "equal": false,
+      "resultCount": 0
+    },
+    {
+      "id": "typed-maxLength-2",
+      "conforms": true,
+      "expected": false,
+      "equal": false,
+      "resultCount": 0
+    },
+    {
+      "id": "typed-maxLength-3",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "blank-minLength-0",
+      "conforms": true,
+      "expected": false,
+      "equal": false,
+      "resultCount": 0
+    },
+    {
+      "id": "blank-minLength-1",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "blank-minLength-2",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "blank-minLength-3",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "blank-maxLength-0",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "blank-maxLength-1",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "blank-maxLength-2",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "blank-maxLength-3",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "case-minInclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "case-minExclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "case-maxInclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "case-maxExclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "case-lessThan",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "case-lessThanOrEquals",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "accent-minInclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "accent-minExclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "accent-maxInclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "accent-maxExclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "accent-lessThan",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "accent-lessThanOrEquals",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "scalar-minInclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "scalar-minExclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "scalar-maxInclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "scalar-maxExclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "scalar-lessThan",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "scalar-lessThanOrEquals",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "empty-minInclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "empty-minExclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "empty-maxInclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "empty-maxExclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "empty-lessThan",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "empty-lessThanOrEquals",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "prefix-minInclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "prefix-minExclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "prefix-maxInclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "prefix-maxExclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "prefix-lessThan",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "prefix-lessThanOrEquals",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "equal-minInclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "equal-minExclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "equal-maxInclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "equal-maxExclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "equal-lessThan",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "equal-lessThanOrEquals",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "normalization-minInclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "normalization-minExclusive",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "normalization-maxInclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "normalization-maxExclusive",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "normalization-lessThan",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "normalization-lessThanOrEquals",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "language-case",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "language-subtag",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "language-boundary",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "language-wildcard",
+      "conforms": true,
+      "expected": true,
+      "equal": true,
+      "resultCount": 0
+    },
+    {
+      "id": "language-untagged",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "language-regional",
+      "conforms": false,
+      "expected": true,
+      "equal": false,
+      "resultCount": 1
+    },
+    {
+      "id": "language-reverse",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    },
+    {
+      "id": "language-mismatch",
+      "conforms": false,
+      "expected": false,
+      "equal": true,
+      "resultCount": 1
+    }
+  ]
+}

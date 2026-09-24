@@ -1,0 +1,480 @@
+{
+  "package": "dbt-semantic-interfaces",
+  "version": "0.8.5",
+  "pydantic": "1.10.26",
+  "derivation": "PydanticSemanticManifest.schema(), then anyOf null for each native allow_none field; no parser coercion, default insertion or semantic validation implied",
+  "nullableFields": 67,
+  "definitions": 41,
+  "runtimeSourceFiles": [
+    {
+      "distributionPath": "dbt_semantic_interfaces/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/call_parameter_sets.py",
+      "sha256": "f703ad6e492e286ad0dc550f0fccf4c2df84b60dd58a19a37aacc97a2c4b3bfb"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/dataclass_serialization.py",
+      "sha256": "dc90f7385fb63c6bcf1f5655190e398c7de0b1e5590873314729a41f90c1d04d"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/enum_extension.py",
+      "sha256": "8bdb25ec0601de07097262da89aacf880110b18d965354f7036f38861cbc2e6f"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/errors.py",
+      "sha256": "fa3214bf1202566ff63841b2a6aea93e1f813d08ab39fe5cb63cf3832ddd087e"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/implementations/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/implementations/base.py",
+      "sha256": "445bb330ac9512989489e3bbdb143e4d7b0361fb581b8f5751eb10cde133de9f"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/implementations/element_config.py",
+      "sha256": "6a251149d7ad7b98c53a98c17864015435906da53094948f80e6acbbedba1279"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/implementations/elements/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/implementations/elements/dimension.py",
+      "sha256": "695fdc9764766088b4edc79defa54a91ca457bfe91b64f1c51c493cec2dd255b"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/implementations/elements/entity.py",
+      "sha256": "0ce568e5f69478eb3622e59746cbe317b78b90ec0b34532d23dbb20072fa1d9e"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/implementations/elements/measure.py",
+      "sha256": "34060f06d575bc024c375cdf2b47aa1ddda5adbacd21d6044bf6179a10a43dbb"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/implementations/export.py",
+      "sha256": "e9ec2b58951343bd1d41fbe6b5606ed6c549aa57ae83366845ca93b629c9b86f"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/implementations/filters/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/implementations/filters/where_filter.py",
+      "sha256": "e2094b0eca666cd4ee4cebf7514132931f041fac1708f37ba14b6ff26fd88d27"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/implementations/metadata.py",
+      "sha256": "e509542c138b71211826a8b37171a046fd8a619ddcc3219ea5921b7744a97acc"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/implementations/metric.py",
+      "sha256": "5e0b9c8b8f2494aa7fcec1a86e8b2c53ac4315bdae06b3567758e46aae9a1b8f"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/implementations/node_relation.py",
+      "sha256": "551282d80352727838b208a3407328436b2a6a8e19f67d78eda00b9c270a2d1c"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/implementations/project_configuration.py",
+      "sha256": "e7ae3ab6b4c5d30185509d001ef144b6455b0300fa18b689f1612a5ca830373c"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/implementations/saved_query.py",
+      "sha256": "f9775f890c079337b0efa7542359b3a1e8582fafbb457cbee57897cf520f3dc6"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/implementations/semantic_manifest.py",
+      "sha256": "79fc1d04ce57b26852a90b3945ca1c3fe425c370295d83fac1ffb7cb2eec02b1"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/implementations/semantic_model.py",
+      "sha256": "f84ee3a655b2668d5715dd89b3e9bbaa10015cb431b32ec774497bb03dc02bcb"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/implementations/semantic_version.py",
+      "sha256": "06dd0d60bee66d93155970a7700af431eeb48c08321cdb224d3235c062855f25"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/implementations/time_spine.py",
+      "sha256": "8b55409769b36b4e354ebdb89a480996d72d990a9ea3f5f810dc849ccb4a1dfe"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/implementations/time_spine_table_configuration.py",
+      "sha256": "08eac01b98eb6bfc633903ade28d02fc5a152c2a50913293280fcdebc3863ae2"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/naming/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/naming/dundered.py",
+      "sha256": "e1acd072860451941efec3213331914ba7b9d4c8bdec1fb35a7115d273739c33"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/naming/keywords.py",
+      "sha256": "06dfc5e7fcd43cfb422a405a1ecb8cce280dfaa8c80237addbd8b635d22a8d67"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/parsing/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/parsing/dir_to_model.py",
+      "sha256": "2651774d595dc2f2754a6b18112c21d34006571b98d4c77d44b9792b805cd084"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/parsing/generate_json_schema_file.py",
+      "sha256": "2b0649382b7024c7aec0162a3305ee7674dc6d89fe9e3c5fcf66cbc6467d9ace"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/parsing/objects.py",
+      "sha256": "956068ff940cdd5eb3672944c482ab7a69c09e2f53d0315ad545ea83d92073db"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/parsing/schema_validator.py",
+      "sha256": "8811dc1b32f365d6335d9a3e3388e238d59d54e36de47cad5209b61b412d3821"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/parsing/schemas.py",
+      "sha256": "28497cb4a2e2efb87334c7d154a3904515a9bf4b9162e31d6f067d0c079f4f09"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/parsing/text_input/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/parsing/text_input/description_renderer.py",
+      "sha256": "aeeaf65da348448fbffaaabb8866636a8cf730cf36e70bd29c176574704112dd"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/parsing/text_input/rendering_helper.py",
+      "sha256": "cc44039d7ad9b0debfcea7bfedb4789bec792b97c34b31774bdc13420a02f705"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/parsing/text_input/ti_description.py",
+      "sha256": "4993668972f9f8131f2586821ac8520108890189fedada2d51e6915c99b005bd"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/parsing/text_input/ti_exceptions.py",
+      "sha256": "03e87eca5de037c2e677719d0e4a3d78eda40f1e4d445ad4c1e8387f1e7d0470"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/parsing/text_input/ti_processor.py",
+      "sha256": "a1f8274de45ac1c1a2fac0867ee77dfff4f364c5f013c6f2ab05cd3f635884a1"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/parsing/text_input/valid_method.py",
+      "sha256": "84549a6378004c15be4ccee42ff96e46f07e0af83e25f15c7ca93b1fd08ef9e3"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/parsing/where_filter/parameter_set_factory.py",
+      "sha256": "4b464a30594f9ecf3ff5b06c3a8591e847ae3cbd749c9ef0884f3eca2568e5b1"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/parsing/where_filter/where_filter_dimension.py",
+      "sha256": "161cdaa4f91f831609eea7bc1822f5b081102dfca7843b18db72815c5d5270a8"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/parsing/where_filter/where_filter_entity.py",
+      "sha256": "dbd040fae6603e87f8bcfe0a468b346fa3c69fc4a38607434a11b1b36be713a2"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/parsing/where_filter/where_filter_parser.py",
+      "sha256": "a64c13fd7accb3b11d2c35891b17752e8fa63f12d741c7645228c6fce81eb207"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/parsing/yaml_loader.py",
+      "sha256": "e4e39e921e5edc58431766c5f1ae3a4bb56fec2080cd8a3c9e1ab78f58273393"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/pretty_print.py",
+      "sha256": "f09084938acd731cdda7bcdd4a214135c89f462a05daaaf8de89667ef313047d"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/protocols/__init__.py",
+      "sha256": "3dcf86f38fd36cde27f6f163cbedbb3b851180cc7dc3646fb3af8f8bef311641"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/protocols/dimension.py",
+      "sha256": "4e8ee6ea3c90bd862873c7c1896f6a0a2bfc782a842f7386c7741648b6739759"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/protocols/entity.py",
+      "sha256": "9c0e00b8a119f6348874d496dbd3d003f696159fb1ef8343dc12d28937dee924"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/protocols/export.py",
+      "sha256": "5301100fb977fc8e7577b468be5bcd9a9a962bdb7ef1a1feed7a52d45a0d09f6"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/protocols/measure.py",
+      "sha256": "bdd849e97d008ada26f3574ae3c6d5eafb75e3b4ae6fb19e99ff325a2b548325"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/protocols/meta.py",
+      "sha256": "ece780040c6f96b01cfc6cf0e7c2a1c95c0d2392fc40d4dfd324f735b839c674"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/protocols/metadata.py",
+      "sha256": "18e94bff4a97f9119414ccc0eaf2d231e1a3dba83a76bd727cb9247d364ec3a4"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/protocols/metric.py",
+      "sha256": "2e48ba82af06860cfb1c84ab4971342c152f3f13ced7fa65077599469661d555"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/protocols/node_relation.py",
+      "sha256": "46508f8f2a9505a3ef94cf0c6f5fa923550a563054bdd441956af8f56ae045ea"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/protocols/project_configuration.py",
+      "sha256": "d9ce57ce82bdd12f46b231ac0a2228202b0fc5652336a673d559f7b51305be91"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/protocols/protocol_hint.py",
+      "sha256": "cb4c0c7044d16c40105d987a424802e9d26c6f724b7e5311c33e2f0c8900bf7f"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/protocols/query_interface.py",
+      "sha256": "ee1d935db40e88617eb5aeb39cfe8cf8a29afd8300b5c5172c27178e448bcc1d"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/protocols/saved_query.py",
+      "sha256": "6c359827912a158f6490d9895d4652c453334a2107ef21fcfe6b005a398c53aa"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/protocols/semantic_manifest.py",
+      "sha256": "afcefb9138aae4046a33e6cdbf5559d4c2257c56e77d9864c9c7e16959f7ed25"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/protocols/semantic_model.py",
+      "sha256": "94eefe2cd9cb72b14ad80a549bb224cd438aeeaa6b41add35a3eba4560dd3af8"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/protocols/semantic_version.py",
+      "sha256": "ff5aa450aed788b0ea170f0e70f3dd48330cd875bf7d011039e10e55330273a6"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/protocols/time_spine.py",
+      "sha256": "2300121c4fc66f6b9872cf3189481f81eb43689f183412ab11b4155987eec932"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/protocols/time_spine_configuration.py",
+      "sha256": "c79ba2f397dab29ebadd778623ecf045bd1fb4c80af9a380c8a9a4360a4969f4"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/protocols/where_filter.py",
+      "sha256": "91d93cff342f3d864f5428aa0fc95d643f29d5147c74e0c0db0714b5e4a14a3a"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/references.py",
+      "sha256": "ad1baf75647d9c5d4a1826ba0f4ce808293b88568b3e9a4a4fe042ea9d82d178"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/test_helpers/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/test_helpers/dataclass_serialization.py",
+      "sha256": "210f8d8b05e06dcd2986b685afea522a278632d8fd57fe1a7463ea814109c341"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/test_utils.py",
+      "sha256": "4630955a0231de3c267f4da45cf217474fce408f0f637d4840f5fa91e164988b"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/transformations/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/transformations/add_input_metric_measures.py",
+      "sha256": "2db74b3c7ec245133f67716ee0d8a01dbe25dffac783ecd57bc0a4b596021f6c"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/transformations/boolean_measure.py",
+      "sha256": "8aae81cafe17c8378118eb2ed28bab74253fc4f1895f8cd2b5c776ea20256537"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/transformations/convert_count.py",
+      "sha256": "5793a987785218ef913fbc1adf36d80b4573c71b943c2a317bf5d94a2fdf1a3f"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/transformations/convert_median.py",
+      "sha256": "b8b6bb1ad2f862a1efc2f063e91de9348cca27322efe396795646b226df7d1fd"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/transformations/cumulative_type_params.py",
+      "sha256": "71abc91a908b82e5527463aa5f7d29c560a207ed1af023c9e7b9f8a97b21547a"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/transformations/names.py",
+      "sha256": "4d3bc1b320582896925fe338adbbb871bb0377d1107d7861b21575ce141fda9d"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/transformations/proxy_measure.py",
+      "sha256": "003858523575a0d10cf17b34484b418874116f8ff55ad29994d5d4f704519711"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/transformations/pydantic_rule_set.py",
+      "sha256": "c699db8af70e43164601ef24dddbed88b6fc81fae52ab1c3c83e836cf584917f"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/transformations/remove_plural_from_window_granularity.py",
+      "sha256": "344be351ca17187d428accaabeeaff67c75e213cccee8bcd5f296f8005ac0085"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/transformations/rule_set.py",
+      "sha256": "a6051a2748ddaa98794407f7aec752b7715cafdd257b8a37f8076771277009fd"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/transformations/semantic_manifest_transformer.py",
+      "sha256": "9ed146c255b49715e432176aa17d4d408b2050b7b316f03bcec2ea97ffb62532"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/transformations/transform_rule.py",
+      "sha256": "fcb636dbece8d93dd3c5d1f1441ff154bf114689dd8813b398c0341f71cb5ef5"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/type_enums/__init__.py",
+      "sha256": "a47138791440b60da46bec52dcdc00adc98507c3fc9727eb5ab2e2af0c129606"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/type_enums/aggregation_type.py",
+      "sha256": "df4c20294e3d23d359421b04e3a7e873f47b24916f45a021ef47c521dc77b7a6"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/type_enums/conversion_calculation_type.py",
+      "sha256": "5705e684da1e1376efe5b76af26a501cee16feaf05501e97aa767fb3614baa12"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/type_enums/date_part.py",
+      "sha256": "6660a0dab7b42d7a71d14f48961c63b4cb59198c705ba4c2b34d7504be37703c"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/type_enums/dimension_type.py",
+      "sha256": "ee7f7012c8e54d5092f31d4b4c88c295889011d0ca2b17898d43cf1db4f2eadb"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/type_enums/entity_type.py",
+      "sha256": "ba2d743d46174c82f66cfe85a5cdbe0a517e7fb1435250f57d782e2cf04bda69"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/type_enums/export_destination_type.py",
+      "sha256": "246cf0082cbaf70b2b53d2620c71fab7ab2d934a7f61ead10fe93cde7f2b5247"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/type_enums/metric_type.py",
+      "sha256": "510f91e8115fa2d73a9ada6750daa4368d141b5640de1b2950ca61106b5b9da6"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/type_enums/period_agg.py",
+      "sha256": "73eb2f9783cfb4755d1de35d44e99449aa048b144fffd89f41010b799b90dc7b"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/type_enums/semantic_manifest_node_type.py",
+      "sha256": "48f091d3ca89150f19de74b6f5f933601b06708d71e43e3386f7189bf9a43c11"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/type_enums/time_granularity.py",
+      "sha256": "5f91892b9f0a849f16b8b202f71e4dac87967f1d65ea9cb292f340285276374f"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/validations/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/validations/agg_time_dimension.py",
+      "sha256": "100efaa954475cbab00b0ec8f5b0a846c861c5791db0795912dbfd1974e1ef96"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/validations/common_entities.py",
+      "sha256": "c7f2a33e18b328e535667b9bd57ba1a137a0428412acae7e23a4ae2ac738d435"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/validations/dimension_const.py",
+      "sha256": "ca2895af686109b21dc8a760b0eece9a63986f8566d7c292a982b9c51c44d180"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/validations/element_const.py",
+      "sha256": "736a5c3cdeb635edeffe22cb19a7cdad8aab7240eeb7a8669f46b7f0cefa35be"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/validations/entities.py",
+      "sha256": "973011bb595368f256cd3932602c8f39eb74509e3f9b7f8c87d401f9b55e8a71"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/validations/labels.py",
+      "sha256": "cac2a1ad6d2f4b7fa175287d41a03ce4d4095aa58cfd22300d93abefd328dd99"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/validations/measures.py",
+      "sha256": "57c6a662f93ce7cc8ffaf3058fa2fa0d002b70f8520eab2692e26d4c051c64e1"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/validations/metrics.py",
+      "sha256": "fb9efd0abdfaa647328859ef1020e57c3904ada0a388cd65af0b413051011d38"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/validations/non_empty.py",
+      "sha256": "fb460ae0bb5319eab2b62870db4cbfb20eac9326d1c2c5a2d8ca39e32125b830"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/validations/primary_entity.py",
+      "sha256": "7741b9a2a016ca422a335d7d016c08093e22fa363959d88287dafa0b514267b1"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/validations/reserved_keywords.py",
+      "sha256": "70f7bb4930abf692a81dc12ae8a0f175db73da0c0b3bc57a3a354d1f2870bbde"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/validations/saved_query.py",
+      "sha256": "01944b6a0cf8bc3c144e069b6a9b4f4bdc2265ceca8967a7526a2a49b5231e49"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/validations/semantic_manifest_validator.py",
+      "sha256": "1bf07d8af92be9ac7252cb502ed8747ecb2a672fc5c4187bf49a3cf8583c56df"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/validations/semantic_models.py",
+      "sha256": "8b05162180541ed1c9d104d08dcc20735f19f3581fd08c9469ed4cf4a0f6915b"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/validations/time_spines.py",
+      "sha256": "0bd393a9caecef2101e482a0dc783685414455e93a713c6d29736b1362f488a5"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/validations/unique_valid_name.py",
+      "sha256": "0ee87cd11f950ceb3a14e8c272379b6cc9c7573ac1854a10a6d5b1d51cc56314"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/validations/validator_helpers.py",
+      "sha256": "8a7ca0e0142030d61924ae3f4af4c7f7b6d24d97e81d16b4d826b043f86002ea"
+    },
+    {
+      "distributionPath": "dbt_semantic_interfaces/validations/where_filters.py",
+      "sha256": "f6badff370a9f8f577cf0bcb25a9feeeda694d130d697324bd7f445c1dbf0e2c"
+    }
+  ],
+  "files": [
+    {
+      "path": "native/dbt/semantic-sources/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "native/dbt/semantic-sources/nullable-fields.json",
+      "sha256": "046510ec53cb0a8447c52632938e57c6cc71844e6cad4dffb53aa4a7d83a1269"
+    },
+    {
+      "path": "native/dbt/semantic-sources/pydantic-schema.json",
+      "sha256": "a1f699a14098cd08d759782422d957c7b8537b3dca69f955cb0241ecd1181376"
+    },
+    {
+      "path": "native/dbt/semantic-sources/serialized-schema.json",
+      "sha256": "f35a1e28d77f8a493fc9e6beae49d4c7a8fbc128be707e739e819482d4771ba8"
+    }
+  ]
+}

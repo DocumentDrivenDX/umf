@@ -1,0 +1,85 @@
+{
+  "validator": "jsonschema 4.26.0",
+  "comparisons": 26,
+  "checks": [
+    {
+      "strategy": "string",
+      "case": "rounded-literal-accepted",
+      "before": true,
+      "after": false
+    },
+    {
+      "strategy": "string",
+      "case": "exact-source-literal-rejected",
+      "before": false,
+      "after": false
+    },
+    {
+      "strategy": "string",
+      "case": "edited-percent-bound",
+      "before": true,
+      "after": true
+    },
+    {
+      "strategy": "string",
+      "case": "percent-lower-bound",
+      "before": false,
+      "after": false
+    },
+    {
+      "strategy": "string",
+      "case": "int64-overflow-accepted",
+      "before": true,
+      "after": true
+    },
+    {
+      "strategy": "string",
+      "case": "negative-uint64-accepted",
+      "before": true,
+      "after": true
+    },
+    {
+      "strategy": "string",
+      "case": "nonnumeric-string-accepted",
+      "before": true,
+      "after": true
+    },
+    {
+      "strategy": "number",
+      "case": "rounded-literal-accepted",
+      "before": true,
+      "after": false
+    },
+    {
+      "strategy": "number",
+      "case": "exact-source-literal-rejected",
+      "before": false,
+      "after": false
+    },
+    {
+      "strategy": "number",
+      "case": "edited-percent-bound",
+      "before": true,
+      "after": true
+    },
+    {
+      "strategy": "number",
+      "case": "percent-lower-bound",
+      "before": false,
+      "after": false
+    },
+    {
+      "strategy": "number",
+      "case": "int64-overflow-accepted",
+      "before": true,
+      "after": true
+    },
+    {
+      "strategy": "number",
+      "case": "negative-uint64-accepted",
+      "before": true,
+      "after": true
+    }
+  ],
+  "scope": "Native-emitter numeric losses and edited bounds; exact Python integers expose rounded literals. Acceptance of out-of-domain values is a demonstrated loss, not conformance."
+}

@@ -1,0 +1,48 @@
+{
+  "runtime": "dbt Core 1.10.0 map builders + NetworkX 3.6.1",
+  "sourceSha256": "3cb2f6904d9fd4cc4ec584c5532707ac9a6c266340435476ceb91519fd22769c",
+  "selectionSha256": "483b9adede3d3a757eadae23aa2b4daf7fa727fb5722270b77645bdc8cbf5343",
+  "results": [
+    {
+      "id": "semantic-chain",
+      "nodes": 5,
+      "minimumDepthsAgree": true,
+      "inducedEdgesAgree": true,
+      "nativeReachabilityWithinDepthCompared": true,
+      "nodeBoundRootOnly": false
+    },
+    {
+      "id": "depth-bound",
+      "nodes": 2,
+      "minimumDepthsAgree": true,
+      "inducedEdgesAgree": true,
+      "nativeReachabilityWithinDepthCompared": true,
+      "nodeBoundRootOnly": false
+    },
+    {
+      "id": "node-bound",
+      "nodes": 1,
+      "minimumDepthsAgree": true,
+      "inducedEdgesAgree": true,
+      "nativeReachabilityWithinDepthCompared": false,
+      "nodeBoundRootOnly": true
+    },
+    {
+      "id": "resource-only",
+      "nodes": 3,
+      "minimumDepthsAgree": true,
+      "inducedEdgesAgree": true,
+      "nativeReachabilityWithinDepthCompared": true,
+      "nodeBoundRootOnly": false
+    },
+    {
+      "id": "with-macros",
+      "nodes": 11,
+      "minimumDepthsAgree": true,
+      "inducedEdgesAgree": true,
+      "nativeReachabilityWithinDepthCompared": true,
+      "nodeBoundRootOnly": false
+    }
+  ],
+  "limits": "UMF node-budget policy is not dbt CLI selection syntax; native comparison uses explicit reference reachability"
+}

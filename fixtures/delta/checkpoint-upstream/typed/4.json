@@ -1,0 +1,68 @@
+[
+  {
+    "txn": null,
+    "add": null,
+    "remove": null,
+    "metaData": {
+      "id": "7998c165-cb06-408d-bba0-e5c4e532ba21",
+      "name": null,
+      "description": null,
+      "format": {
+        "provider": "parquet",
+        "options": {}
+      },
+      "schemaString": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}",
+      "partitionColumns": [],
+      "createdTime": {
+        "$int64": "1742317196814"
+      },
+      "configuration": {
+        "delta.feature.catalogowned": "supported"
+      }
+    },
+    "protocol": null,
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": null,
+    "remove": null,
+    "metaData": null,
+    "protocol": {
+      "minReaderVersion": 3,
+      "minWriterVersion": 7,
+      "readerFeatures": [
+        "catalogOwned"
+      ],
+      "writerFeatures": [
+        "catalogOwned",
+        "appendOnly",
+        "invariants"
+      ]
+    },
+    "domainMetadata": null
+  },
+  {
+    "txn": null,
+    "add": {
+      "path": "a735be79-daea-40b6-94f0-317a77a03df6-000.parquet",
+      "partitionValues": {},
+      "size": {
+        "$int64": "1918"
+      },
+      "modificationTime": {
+        "$int64": "1742317197691"
+      },
+      "dataChange": true,
+      "deletionVector": null,
+      "tags": null,
+      "baseRowId": null,
+      "defaultRowCommitVersion": null,
+      "stats": "{\"numRecords\":600,\"minValues\":{\"id\":16},\"maxValues\":{\"id\":3251},\"nullCounts\":{\"id\":30}}"
+    },
+    "remove": null,
+    "metaData": null,
+    "protocol": null,
+    "domainMetadata": null
+  }
+]

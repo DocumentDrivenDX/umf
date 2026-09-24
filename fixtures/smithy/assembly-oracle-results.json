@@ -1,0 +1,1015 @@
+{
+  "compiler": "smithy-model@1.73.0/teavm@0.15.0/umf-compat-v1",
+  "runtimeSha256": "602a90b691aaeeaaab841b472d68592236a520f2c59ce9ae1e69addc7e654898",
+  "cases": [
+    {
+      "file": "fixtures/smithy/domain.json",
+      "status": "assembled",
+      "modelSha256": "bebccb5189ad9bd5443c3ddedc7914ca6e6872fa917706b54cd062f21e7d1895",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/__shared.json",
+      "status": "assembled",
+      "modelSha256": "f0933f06045d7ee6c24adc0c5a97efa02b48d4de1362b1172aa154ca6c44cdc9",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/apply/apply-block-empty.json",
+      "status": "assembled",
+      "modelSha256": "d56ab59c381239e9eaef2caee5ecc32a2cc83776c5014b62633c996daffd04af",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/apply/apply-statements.json",
+      "status": "assembled",
+      "modelSha256": "7850d4cd490ac525d75d4bfa4163b23a825ba69bc824dde096ffb808253702dc",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/apply/block-apply-statement.json",
+      "status": "assembled",
+      "modelSha256": "5f399047ed686f893a69a4eef0f93022ebb0c0791bc0f98b35048b5509b94a6e",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/defaults/members-can-be-default-and-required.json",
+      "status": "assembled",
+      "modelSha256": "f726cc8eebc9a9a004043edff9892ce39f45d5416597da517c64f3bbd004cd89",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/defaults/valid-defaults.json",
+      "status": "assembled",
+      "modelSha256": "2a3393a6f8adfa5bee43709a6c61b9578238d8122148c948efa9b08f2e85af52",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/doc-comments/doc-comments-ignored-after-shape.json",
+      "status": "assembled",
+      "modelSha256": "e79c45bd7f05ba3ba92e0bce3cc00b814532242a8f3fc5230d8314c0c052080e",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/doc-comments/doc-comments.json",
+      "status": "assembled",
+      "modelSha256": "c01777ee70d7cd323d1fc1ff7cfd74d79a71faba231ce12795fd1ba21006aa2d",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/elided-members.json",
+      "status": "assembled",
+      "modelSha256": "74f2a7c4d3778d14968a843c94d640e49504ea8c21eba6e9d0dc8c8077a46bda",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/empty.json",
+      "status": "assembled",
+      "modelSha256": "b1135f38f460608e3e62c12be0526e9813925a2bd342137e6cf8a74df58194bc",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/enums/enum-docs.json",
+      "status": "assembled",
+      "modelSha256": "67ff2e3f9fcc52e0e332a9e32b7f5d33d22154416178a478ce6410147947743f",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/enums/enums.json",
+      "status": "assembled",
+      "modelSha256": "253fea4f658b1257c2b8721db922e6379c7ea8c694b602d328f6fbdacd7d2311",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/enums/short-form-enum.json",
+      "status": "assembled",
+      "modelSha256": "391ab3c67a76f3ac5f65333f6a3d96c6daeabbd7cff04081fd998dd00c008ba5",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/expects-br.json",
+      "status": "assembled",
+      "modelSha256": "81b4b0c40085aab34afab1bf262f38d01d61fd6470164ed7ceed6422efe26bc9",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/forward-reference-resolver.json",
+      "status": "assembled",
+      "modelSha256": "ed9d64c216c82067304b395d2c91a4636c4ae41e2ad98d405bf98a5ea038d552",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/inline-io/custom-suffix.json",
+      "status": "assembled",
+      "modelSha256": "db0c34629ad79bcf8ed886fbd6042620039a9ebcd65002e204f4186038bad6e8",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/inline-io/inline-io.json",
+      "status": "assembled",
+      "modelSha256": "f4d3141bfc26cb9b750ce9cf01ccb8264ef8fcf45db90d3d0226e7e4cb0743ba",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/list-and-sets.json",
+      "status": "assembled",
+      "modelSha256": "70571e7dc64b208ca11c8db0808c1d2e7b821a8a202ec949400b53f8df4d4d97",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/main-test.json",
+      "status": "assembled",
+      "modelSha256": "1bc8d747bf8c420f182f830661f599855cd138e46c98a591ee4be73c3b9d79c3",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/maps-2.0.json",
+      "status": "assembled",
+      "modelSha256": "539bdc51615317860e2a3121e845f281778a116f35c2058ce04f8f9318a8c494",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/maps.json",
+      "status": "assembled",
+      "modelSha256": "d50cd30a28e614f9122b1d6dd611ec90ec711facaf802229789b9924b4db04f5",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/metadata.json",
+      "status": "assembled",
+      "modelSha256": "2aa16072ca07046438a2615c189b1617de4c6de216463e5d1de70aafecd247b6",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/enum-mixins.json",
+      "status": "assembled",
+      "modelSha256": "c06c8325c7bd9b8754189a2fb76a523b0e7bc9fc0abb6e8eb08d6e6b586c3254",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/idl-mixins-redefine-member.json",
+      "status": "assembled",
+      "modelSha256": "0c5c8be15cc6f86bbd3404da441638161510b0ee88eabf3ecd41e2744c335670",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/loads-mixins-with-whitespace.json",
+      "status": "assembled",
+      "modelSha256": "8c1cf9f2c2758f6cc3da02fe0ed2f73bc4590aceb9dab74dbad50e0e895e2c3a",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/loads-mixins.json",
+      "status": "assembled",
+      "modelSha256": "d859b583e697b1b47fff3ebbd575697c8a0ff12243dfe5f5d241ecc4ca4aa1f2",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/mixin-names.json",
+      "status": "assembled",
+      "modelSha256": "874390727cd0dab7696a785deb092961664273b0f7c585e25b4a27fe6947b07d",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/mixins-on-operation.json",
+      "status": "assembled",
+      "modelSha256": "d9b47b3c69d6e1dddcc9e995d4bd5c53c5c293e77ca83cc6b5803543cb960cfb",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/mixins-with-members-and-traits.json",
+      "status": "assembled",
+      "modelSha256": "e73606e4b0a090f34d5afaf4947b07a42ce3710a97eccefc2c1f12f9b71b7dec",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/mixins-with-members.json",
+      "status": "assembled",
+      "modelSha256": "8df3769543614f04844adb982b9c8ab38980f1b880e6d52b96286bd6250f4ac9",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/mixins-with-mixin-local-traits.json",
+      "status": "assembled",
+      "modelSha256": "fb88c737e92d6c07f2ed37d687041540d123f305db1852471306656a262de678",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/no-empty-apply-types.json",
+      "status": "assembled",
+      "modelSha256": "e510bd50438bf5c94bfad50793403c0891db8fa62eb3b241c5201b662228b18e",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/operations.json",
+      "status": "assembled",
+      "modelSha256": "cf30b66ae7c40de804078f243ed79f4cce6727dd0c772525e69a05fe1efb07df",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/resources.json",
+      "status": "assembled",
+      "modelSha256": "65198136f1b766cf46090cd170cc9ce4581cd28fb98e8c1c5545e569cee2232e",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/mixins/services.json",
+      "status": "assembled",
+      "modelSha256": "32e88ba279f8598096676e0371e6deac4c423876462e9e64699f65af5c108250",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/multiple-traits-same-name.json",
+      "status": "assembled",
+      "modelSha256": "8a1cec44cea9e421f7b53ecb84c429bfa805ef318828d662fd28226554df4d56",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/operations/errors-before-input.json",
+      "status": "assembled",
+      "modelSha256": "f11fad21acf23b25a60de3d66cbe0208f36484728b45e1c1a4e286762eadce03",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/operations/operation-no-newline-after-properties.json",
+      "status": "assembled",
+      "modelSha256": "b7d75cc6c4f95f41efd730297f08949ce3331f3435d6a29956a4e695f5165b1e",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/operations/operation-with-all.json",
+      "status": "assembled",
+      "modelSha256": "b7d75cc6c4f95f41efd730297f08949ce3331f3435d6a29956a4e695f5165b1e",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/operations/operation-with-errors.json",
+      "status": "assembled",
+      "modelSha256": "33b2e15778895103a1b8448b5402e73d49c151a21c9ebde5e78fe846507b8b9e",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/operations/operation-with-inline-input.json",
+      "status": "assembled",
+      "modelSha256": "f11fad21acf23b25a60de3d66cbe0208f36484728b45e1c1a4e286762eadce03",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/operations/operation-with-input-and-output.json",
+      "status": "assembled",
+      "modelSha256": "b7d75cc6c4f95f41efd730297f08949ce3331f3435d6a29956a4e695f5165b1e",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/operations/operation-with-input.json",
+      "status": "assembled",
+      "modelSha256": "f11fad21acf23b25a60de3d66cbe0208f36484728b45e1c1a4e286762eadce03",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/operations/operation-with-no-properties.json",
+      "status": "assembled",
+      "modelSha256": "33b2e15778895103a1b8448b5402e73d49c151a21c9ebde5e78fe846507b8b9e",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/operations/operation-with-output.json",
+      "status": "assembled",
+      "modelSha256": "fda3a209cfaf883e1f1d0759fc759754e9cf0897a9dc5a2c6a3e0a9b18de09a8",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/operations/output-before-input.json",
+      "status": "assembled",
+      "modelSha256": "b7d75cc6c4f95f41efd730297f08949ce3331f3435d6a29956a4e695f5165b1e",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/optional-commas.json",
+      "status": "assembled",
+      "modelSha256": "741ef6df79078daa38419a3d614421ca80fd3615c5824e9aa15ee0987018b1fb",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/service-version-not-required.json",
+      "status": "assembled",
+      "modelSha256": "b94fa1849531f4f9ab4b98f803b565ad2ab0c51c1a00b5bcfd5bb0ce9c92f8d1",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/service-with-errors.json",
+      "status": "assembled",
+      "modelSha256": "477c410900b897ea7df84c013aff4694bcab92e715b5d11cd1ca4df93335310d",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/service-with-nonconflicting-unit.json",
+      "status": "assembled",
+      "modelSha256": "ff8d40cc5992f2d7847b1eab8e71b337078db9f3273ce76ceed19bf6b93a78b9",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/service-with-rename.json",
+      "status": "blocked",
+      "modelSha256": null,
+      "serializationStable": null,
+      "flattenedModelStable": null
+    },
+    {
+      "file": "fixtures/smithy/upstream/simple-shapes.json",
+      "status": "assembled",
+      "modelSha256": "886b568938a7d9ebfe9c141cf6b5ec23810f091a3205e95eba38421a050bf64c",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/structures.json",
+      "status": "assembled",
+      "modelSha256": "fa5c06d885d96a761b7461827182c59b48b428744b24497eb17dd6f28c6ab32b",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/text-blocks.json",
+      "status": "assembled",
+      "modelSha256": "259c81b14aa1d0c07141ac02edbc1c06eeaa0d268af711fd809e7f104b800677",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/trait-definitions.json",
+      "status": "assembled",
+      "modelSha256": "a87d99d49e287c5d592611c075ebba0b9db6b87e6e37683f59e1084bbd9505ef",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/traits.json",
+      "status": "assembled",
+      "modelSha256": "40cc771bd5e34a1779d0a1c788dcb7d70039a2a7cca0733d5c8a4b4fd2120e86",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/traits/reference-shape-from-trait.json",
+      "status": "assembled",
+      "modelSha256": "d2424b107fcbaafe015759824fd3cd31b5a18eb9b5fb710c2163685f49e6e1bc",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/unions.json",
+      "status": "assembled",
+      "modelSha256": "a330f06b4ca73bc531bdf988a0b8d9f110e84ac8cdfd04b69706413c852466d9",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/unknown-control-statement.json",
+      "status": "assembled",
+      "modelSha256": "b1135f38f460608e3e62c12be0526e9813925a2bd342137e6cf8a74df58194bc",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/use/use-shapes.json",
+      "status": "blocked",
+      "modelSha256": null,
+      "serializationStable": null,
+      "flattenedModelStable": null
+    },
+    {
+      "file": "fixtures/smithy/upstream/use/use-traits.json",
+      "status": "assembled",
+      "modelSha256": "6fc0009de5e01615f0f3261c444cc854bab0a5833dc90fe9368857aa6df8b32d",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/version-full.json",
+      "status": "assembled",
+      "modelSha256": "b1135f38f460608e3e62c12be0526e9813925a2bd342137e6cf8a74df58194bc",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/upstream/version-simple.json",
+      "status": "assembled",
+      "modelSha256": "b1135f38f460608e3e62c12be0526e9813925a2bd342137e6cf8a74df58194bc",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/apply/apply-block-empty.smithy",
+      "status": "assembled",
+      "modelSha256": "d56ab59c381239e9eaef2caee5ecc32a2cc83776c5014b62633c996daffd04af",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/apply/apply-statements.smithy",
+      "status": "assembled",
+      "modelSha256": "7850d4cd490ac525d75d4bfa4163b23a825ba69bc824dde096ffb808253702dc",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/apply/block-apply-statement.smithy",
+      "status": "assembled",
+      "modelSha256": "5f399047ed686f893a69a4eef0f93022ebb0c0791bc0f98b35048b5509b94a6e",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/defaults/members-can-be-default-and-required.smithy",
+      "status": "assembled",
+      "modelSha256": "f726cc8eebc9a9a004043edff9892ce39f45d5416597da517c64f3bbd004cd89",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/defaults/valid-defaults.smithy",
+      "status": "assembled",
+      "modelSha256": "2a3393a6f8adfa5bee43709a6c61b9578238d8122148c948efa9b08f2e85af52",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/doc-comments/doc-comments-ignored-after-shape.smithy",
+      "status": "assembled",
+      "modelSha256": "e79c45bd7f05ba3ba92e0bce3cc00b814532242a8f3fc5230d8314c0c052080e",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/doc-comments/doc-comments.smithy",
+      "status": "assembled",
+      "modelSha256": "c01777ee70d7cd323d1fc1ff7cfd74d79a71faba231ce12795fd1ba21006aa2d",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/elided-members.smithy",
+      "status": "assembled",
+      "modelSha256": "74f2a7c4d3778d14968a843c94d640e49504ea8c21eba6e9d0dc8c8077a46bda",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/empty.smithy",
+      "status": "assembled",
+      "modelSha256": "b1135f38f460608e3e62c12be0526e9813925a2bd342137e6cf8a74df58194bc",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/enums/enum-docs.smithy",
+      "status": "assembled",
+      "modelSha256": "67ff2e3f9fcc52e0e332a9e32b7f5d33d22154416178a478ce6410147947743f",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/enums/enums.smithy",
+      "status": "assembled",
+      "modelSha256": "253fea4f658b1257c2b8721db922e6379c7ea8c694b602d328f6fbdacd7d2311",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/enums/short-form-enum.smithy",
+      "status": "assembled",
+      "modelSha256": "391ab3c67a76f3ac5f65333f6a3d96c6daeabbd7cff04081fd998dd00c008ba5",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/expects-br.smithy",
+      "status": "assembled",
+      "modelSha256": "81b4b0c40085aab34afab1bf262f38d01d61fd6470164ed7ceed6422efe26bc9",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/forward-reference-resolver.smithy",
+      "status": "assembled",
+      "modelSha256": "ed9d64c216c82067304b395d2c91a4636c4ae41e2ad98d405bf98a5ea038d552",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/inline-io/custom-suffix.smithy",
+      "status": "assembled",
+      "modelSha256": "db0c34629ad79bcf8ed886fbd6042620039a9ebcd65002e204f4186038bad6e8",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/inline-io/inline-io.smithy",
+      "status": "assembled",
+      "modelSha256": "f4d3141bfc26cb9b750ce9cf01ccb8264ef8fcf45db90d3d0226e7e4cb0743ba",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/list-and-sets.smithy",
+      "status": "assembled",
+      "modelSha256": "70571e7dc64b208ca11c8db0808c1d2e7b821a8a202ec949400b53f8df4d4d97",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/main-test.smithy",
+      "status": "assembled",
+      "modelSha256": "d820955d83e3fcceb77bada2da441ff41f3fe68e2d3500f219154cfaa0401ca8",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/maps-2.0.smithy",
+      "status": "assembled",
+      "modelSha256": "539bdc51615317860e2a3121e845f281778a116f35c2058ce04f8f9318a8c494",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/maps.smithy",
+      "status": "assembled",
+      "modelSha256": "d50cd30a28e614f9122b1d6dd611ec90ec711facaf802229789b9924b4db04f5",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/metadata.smithy",
+      "status": "assembled",
+      "modelSha256": "2aa16072ca07046438a2615c189b1617de4c6de216463e5d1de70aafecd247b6",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/enum-mixins.flattened.smithy",
+      "status": "assembled",
+      "modelSha256": "066c6f5fe0d25e8d244f47c3d2ad12ef1d4552dff2e874ffed2c6a701323fe66",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/enum-mixins.smithy",
+      "status": "assembled",
+      "modelSha256": "c06c8325c7bd9b8754189a2fb76a523b0e7bc9fc0abb6e8eb08d6e6b586c3254",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/idl-mixins-redefine-member.flattened.smithy",
+      "status": "assembled",
+      "modelSha256": "88e632c31b132f70291ae10a1e27e4513859c21bd18ed1cf285cb625b978314c",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/idl-mixins-redefine-member.smithy",
+      "status": "assembled",
+      "modelSha256": "0c5c8be15cc6f86bbd3404da441638161510b0ee88eabf3ecd41e2744c335670",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/loads-mixins-with-whitespace.smithy",
+      "status": "assembled",
+      "modelSha256": "8c1cf9f2c2758f6cc3da02fe0ed2f73bc4590aceb9dab74dbad50e0e895e2c3a",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/loads-mixins.flattened.smithy",
+      "status": "assembled",
+      "modelSha256": "53a5900267f8599bc4df2b1d87f146a1cf4bef72c93808fd65d42c408c77f93f",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/loads-mixins.smithy",
+      "status": "assembled",
+      "modelSha256": "d859b583e697b1b47fff3ebbd575697c8a0ff12243dfe5f5d241ecc4ca4aa1f2",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixin-names.smithy",
+      "status": "assembled",
+      "modelSha256": "874390727cd0dab7696a785deb092961664273b0f7c585e25b4a27fe6947b07d",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-on-operation.smithy",
+      "status": "assembled",
+      "modelSha256": "d9b47b3c69d6e1dddcc9e995d4bd5c53c5c293e77ca83cc6b5803543cb960cfb",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-member-override-1.flattened.smithy",
+      "status": "assembled",
+      "modelSha256": "615e0cb04c2f271fb48957022743e0353ed1a63d2b0d4cd4af436fffc66c7068",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-member-override-1.smithy",
+      "status": "assembled",
+      "modelSha256": "ba80825eb394eed6e6bba0c1a7612abd43991f99185edf9014b3a27e368a62aa",
+      "serializationStable": false,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-member-override-2.flattened.smithy",
+      "status": "assembled",
+      "modelSha256": "1a12311b39fe3293096e21e7ccc7c25063bccc43363eaa2b2bcb984a653aafc7",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-member-override-2.smithy",
+      "status": "assembled",
+      "modelSha256": "1cfd61c0a83ff22f891b837ca79917f8f608d8a1c3012c1a1fe3c2715ffd275a",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-member-override-3.flattened.smithy",
+      "status": "assembled",
+      "modelSha256": "6dd654af4856b5908bf39e3b76f399e9d0c22ebb3ddd9dc0d37f2daedc2075fc",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-member-override-3.smithy",
+      "status": "assembled",
+      "modelSha256": "74eb5ad6772520570364fedc0e7d304fc85d7f65c86ac061ef7eaef3d5acd10a",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-member-override-4.flattened.smithy",
+      "status": "assembled",
+      "modelSha256": "33aeb0e41566ff396c2e4b7616575a7d1a15febe7b110b242d8a226cb6e43dcf",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-member-override-4.smithy",
+      "status": "assembled",
+      "modelSha256": "8b7dd849f55dd2e95a75783ec552bf3ff0d98dd5666116c60cf60000e998b3b5",
+      "serializationStable": false,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-members-and-traits.flattened.smithy",
+      "status": "assembled",
+      "modelSha256": "8b2c310367d8ccb68fc6a903031db46923d8132b5211d78eecf64d5f3991c1ce",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-members-and-traits.smithy",
+      "status": "assembled",
+      "modelSha256": "e73606e4b0a090f34d5afaf4947b07a42ce3710a97eccefc2c1f12f9b71b7dec",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-members.flattened.smithy",
+      "status": "assembled",
+      "modelSha256": "5ab8dab3a2e56a07c775c037ae105309b808202e9cf802f2ab958f531a391991",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-members.smithy",
+      "status": "assembled",
+      "modelSha256": "8df3769543614f04844adb982b9c8ab38980f1b880e6d52b96286bd6250f4ac9",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-mixin-local-traits.flattened.smithy",
+      "status": "assembled",
+      "modelSha256": "780e67c5b174c7edf2a52a35c8961eba00815d822dd0a2aa80bb624cccf84191",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/mixins-with-mixin-local-traits.smithy",
+      "status": "assembled",
+      "modelSha256": "fb88c737e92d6c07f2ed37d687041540d123f305db1852471306656a262de678",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/no-empty-apply-types.smithy",
+      "status": "assembled",
+      "modelSha256": "e510bd50438bf5c94bfad50793403c0891db8fa62eb3b241c5201b662228b18e",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/operations.flattened.smithy",
+      "status": "assembled",
+      "modelSha256": "47f026fe26f90429273b9d5419ba178b462248a9dd13821170ee419c1123f0cc",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/operations.smithy",
+      "status": "assembled",
+      "modelSha256": "cf30b66ae7c40de804078f243ed79f4cce6727dd0c772525e69a05fe1efb07df",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/resources.flattened.smithy",
+      "status": "assembled",
+      "modelSha256": "c47a20789428bd0f62c39ff78d045cd41ef928ee5b189c9668a2e4dde67072b8",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/resources.smithy",
+      "status": "assembled",
+      "modelSha256": "65198136f1b766cf46090cd170cc9ce4581cd28fb98e8c1c5545e569cee2232e",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/services.flattened.smithy",
+      "status": "assembled",
+      "modelSha256": "67d72a082aeef381bac513395452b56c09d900154ad8a84fc9c4a35ba41476f9",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/mixins/services.smithy",
+      "status": "assembled",
+      "modelSha256": "32e88ba279f8598096676e0371e6deac4c423876462e9e64699f65af5c108250",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/multiple-traits-same-name.smithy",
+      "status": "assembled",
+      "modelSha256": "8a1cec44cea9e421f7b53ecb84c429bfa805ef318828d662fd28226554df4d56",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/operations/errors-before-input.smithy",
+      "status": "assembled",
+      "modelSha256": "f11fad21acf23b25a60de3d66cbe0208f36484728b45e1c1a4e286762eadce03",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/operations/operation-no-newline-after-properties.smithy",
+      "status": "assembled",
+      "modelSha256": "b7d75cc6c4f95f41efd730297f08949ce3331f3435d6a29956a4e695f5165b1e",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/operations/operation-with-all.smithy",
+      "status": "assembled",
+      "modelSha256": "b7d75cc6c4f95f41efd730297f08949ce3331f3435d6a29956a4e695f5165b1e",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/operations/operation-with-errors.smithy",
+      "status": "assembled",
+      "modelSha256": "33b2e15778895103a1b8448b5402e73d49c151a21c9ebde5e78fe846507b8b9e",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/operations/operation-with-inline-input.smithy",
+      "status": "assembled",
+      "modelSha256": "f11fad21acf23b25a60de3d66cbe0208f36484728b45e1c1a4e286762eadce03",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/operations/operation-with-input-and-output.smithy",
+      "status": "assembled",
+      "modelSha256": "b7d75cc6c4f95f41efd730297f08949ce3331f3435d6a29956a4e695f5165b1e",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/operations/operation-with-input.smithy",
+      "status": "assembled",
+      "modelSha256": "f11fad21acf23b25a60de3d66cbe0208f36484728b45e1c1a4e286762eadce03",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/operations/operation-with-no-properties.smithy",
+      "status": "assembled",
+      "modelSha256": "33b2e15778895103a1b8448b5402e73d49c151a21c9ebde5e78fe846507b8b9e",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/operations/operation-with-output.smithy",
+      "status": "assembled",
+      "modelSha256": "fda3a209cfaf883e1f1d0759fc759754e9cf0897a9dc5a2c6a3e0a9b18de09a8",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/operations/output-before-input.smithy",
+      "status": "assembled",
+      "modelSha256": "b7d75cc6c4f95f41efd730297f08949ce3331f3435d6a29956a4e695f5165b1e",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/optional-commas.smithy",
+      "status": "assembled",
+      "modelSha256": "741ef6df79078daa38419a3d614421ca80fd3615c5824e9aa15ee0987018b1fb",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/service-version-not-required.smithy",
+      "status": "assembled",
+      "modelSha256": "b94fa1849531f4f9ab4b98f803b565ad2ab0c51c1a00b5bcfd5bb0ce9c92f8d1",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/service-with-errors.smithy",
+      "status": "assembled",
+      "modelSha256": "477c410900b897ea7df84c013aff4694bcab92e715b5d11cd1ca4df93335310d",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/service-with-nonconflicting-unit.smithy",
+      "status": "assembled",
+      "modelSha256": "ff8d40cc5992f2d7847b1eab8e71b337078db9f3273ce76ceed19bf6b93a78b9",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/service-with-rename.smithy",
+      "status": "blocked",
+      "modelSha256": null,
+      "serializationStable": null,
+      "flattenedModelStable": null
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/simple-shapes.smithy",
+      "status": "assembled",
+      "modelSha256": "886b568938a7d9ebfe9c141cf6b5ec23810f091a3205e95eba38421a050bf64c",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/structures.smithy",
+      "status": "assembled",
+      "modelSha256": "fa5c06d885d96a761b7461827182c59b48b428744b24497eb17dd6f28c6ab32b",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/text-blocks.smithy",
+      "status": "assembled",
+      "modelSha256": "259c81b14aa1d0c07141ac02edbc1c06eeaa0d268af711fd809e7f104b800677",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/trait-definitions.smithy",
+      "status": "assembled",
+      "modelSha256": "a87d99d49e287c5d592611c075ebba0b9db6b87e6e37683f59e1084bbd9505ef",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/trait-locations.smithy",
+      "status": "assembled",
+      "modelSha256": "23bc6908c0de36b0e1efc3c169dcee0c9797cf9153a1bec4e049139a2925fa1e",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/traits.smithy",
+      "status": "assembled",
+      "modelSha256": "40cc771bd5e34a1779d0a1c788dcb7d70039a2a7cca0733d5c8a4b4fd2120e86",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/traits/reference-shape-from-trait.smithy",
+      "status": "assembled",
+      "modelSha256": "d2424b107fcbaafe015759824fd3cd31b5a18eb9b5fb710c2163685f49e6e1bc",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/unions.smithy",
+      "status": "assembled",
+      "modelSha256": "a330f06b4ca73bc531bdf988a0b8d9f110e84ac8cdfd04b69706413c852466d9",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/unknown-control-statement.smithy",
+      "status": "assembled",
+      "modelSha256": "b1135f38f460608e3e62c12be0526e9813925a2bd342137e6cf8a74df58194bc",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/use/use-shapes.smithy",
+      "status": "blocked",
+      "modelSha256": null,
+      "serializationStable": null,
+      "flattenedModelStable": null
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/use/use-traits.smithy",
+      "status": "assembled",
+      "modelSha256": "6fc0009de5e01615f0f3261c444cc854bab0a5833dc90fe9368857aa6df8b32d",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/version-full.smithy",
+      "status": "assembled",
+      "modelSha256": "b1135f38f460608e3e62c12be0526e9813925a2bd342137e6cf8a74df58194bc",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    },
+    {
+      "file": "fixtures/smithy/idl-upstream/version-simple.smithy",
+      "status": "assembled",
+      "modelSha256": "b1135f38f460608e3e62c12be0526e9813925a2bd342137e6cf8a74df58194bc",
+      "serializationStable": true,
+      "flattenedModelStable": true
+    }
+  ],
+  "scope": "Public API/schema, exact native model hash and diagnostic IDs agree with JVM across AST/IDL corpus; assembled UMF models survive YAML. Remaining reflection/protocol/projection limits remain explicit."
+}

@@ -1,0 +1,186 @@
+{
+  "value": {
+    "kind": "struct",
+    "fields": [
+      {
+        "id": 1,
+        "value": {
+          "kind": "bool",
+          "value": true
+        }
+      },
+      {
+        "id": 2,
+        "value": {
+          "kind": "bool",
+          "value": false
+        }
+      },
+      {
+        "id": 8,
+        "value": {
+          "kind": "i8",
+          "value": "-128"
+        }
+      },
+      {
+        "id": 20,
+        "value": {
+          "kind": "i16",
+          "value": "-32768"
+        }
+      },
+      {
+        "id": -3,
+        "value": {
+          "kind": "i16",
+          "value": "32767"
+        }
+      },
+      {
+        "id": 100,
+        "value": {
+          "kind": "i32",
+          "value": "-2147483648"
+        }
+      },
+      {
+        "id": 99,
+        "value": {
+          "kind": "i64",
+          "value": "-9223372036854775808"
+        }
+      },
+      {
+        "id": 101,
+        "value": {
+          "kind": "i64",
+          "value": "9223372036854775807"
+        }
+      },
+      {
+        "id": 102,
+        "value": {
+          "kind": "double",
+          "bits": "0000000000000080"
+        }
+      },
+      {
+        "id": 103,
+        "value": {
+          "kind": "double",
+          "bits": "000000000000f07f"
+        }
+      },
+      {
+        "id": 104,
+        "value": {
+          "kind": "double",
+          "bits": "000000000000f87f"
+        }
+      },
+      {
+        "id": 105,
+        "value": {
+          "kind": "binary",
+          "hex": "00ff80"
+        }
+      },
+      {
+        "id": 106,
+        "value": {
+          "kind": "list",
+          "elementType": "bool",
+          "items": [
+            {
+              "kind": "bool",
+              "value": true
+            },
+            {
+              "kind": "bool",
+              "value": false
+            }
+          ]
+        }
+      },
+      {
+        "id": 107,
+        "value": {
+          "kind": "set",
+          "elementType": "i16",
+          "items": [
+            {
+              "kind": "i16",
+              "value": "3"
+            },
+            {
+              "kind": "i16",
+              "value": "3"
+            }
+          ]
+        }
+      },
+      {
+        "id": 108,
+        "value": {
+          "kind": "map",
+          "keyType": "binary",
+          "valueType": "i64",
+          "entries": [
+            {
+              "key": {
+                "kind": "binary",
+                "hex": "6475706c6963617465"
+              },
+              "value": {
+                "kind": "i64",
+                "value": "-9223372036854775808"
+              }
+            },
+            {
+              "key": {
+                "kind": "binary",
+                "hex": "6475706c6963617465"
+              },
+              "value": {
+                "kind": "i64",
+                "value": "9223372036854775807"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": 109,
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "id": 1,
+              "value": {
+                "kind": "binary",
+                "hex": "667574757265"
+              }
+            },
+            {
+              "id": 1,
+              "value": {
+                "kind": "binary",
+                "hex": "7265706561746564"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": 110,
+        "value": {
+          "kind": "map",
+          "entries": []
+        }
+      }
+    ]
+  },
+  "consumedBytes": 152,
+  "trailingBytes": 0
+}

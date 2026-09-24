@@ -1,0 +1,1129 @@
+{
+  "version": "SHACL 1.0 (2017)",
+  "baseIRI": "https://example.org/",
+  "results": [
+    {
+      "name": "predicate",
+      "focus": "a",
+      "path": {
+        "kind": "predicate",
+        "iri": "https://example.org/p"
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/c"
+        }
+      ]
+    },
+    {
+      "name": "predicate",
+      "focus": "b",
+      "path": {
+        "kind": "predicate",
+        "iri": "https://example.org/p"
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ]
+    },
+    {
+      "name": "predicate",
+      "focus": "d",
+      "path": {
+        "kind": "predicate",
+        "iri": "https://example.org/p"
+      },
+      "values": []
+    },
+    {
+      "name": "predicate",
+      "focus": "missing",
+      "path": {
+        "kind": "predicate",
+        "iri": "https://example.org/p"
+      },
+      "values": []
+    },
+    {
+      "name": "inverse",
+      "focus": "a",
+      "path": {
+        "kind": "inverse",
+        "path": {
+          "kind": "predicate",
+          "iri": "https://example.org/p"
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        }
+      ]
+    },
+    {
+      "name": "inverse",
+      "focus": "b",
+      "path": {
+        "kind": "inverse",
+        "path": {
+          "kind": "predicate",
+          "iri": "https://example.org/p"
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ]
+    },
+    {
+      "name": "inverse",
+      "focus": "d",
+      "path": {
+        "kind": "inverse",
+        "path": {
+          "kind": "predicate",
+          "iri": "https://example.org/p"
+        }
+      },
+      "values": []
+    },
+    {
+      "name": "inverse",
+      "focus": "missing",
+      "path": {
+        "kind": "inverse",
+        "path": {
+          "kind": "predicate",
+          "iri": "https://example.org/p"
+        }
+      },
+      "values": []
+    },
+    {
+      "name": "sequence",
+      "focus": "a",
+      "path": {
+        "kind": "sequence",
+        "paths": [
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/p"
+          },
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/q"
+          }
+        ]
+      },
+      "values": [
+        {
+          "kind": "literal",
+          "value": "hello",
+          "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+          "language": "en"
+        },
+        {
+          "kind": "literal",
+          "value": "9007199254740993",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/d"
+        }
+      ]
+    },
+    {
+      "name": "sequence",
+      "focus": "b",
+      "path": {
+        "kind": "sequence",
+        "paths": [
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/p"
+          },
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/q"
+          }
+        ]
+      },
+      "values": []
+    },
+    {
+      "name": "sequence",
+      "focus": "d",
+      "path": {
+        "kind": "sequence",
+        "paths": [
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/p"
+          },
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/q"
+          }
+        ]
+      },
+      "values": []
+    },
+    {
+      "name": "sequence",
+      "focus": "missing",
+      "path": {
+        "kind": "sequence",
+        "paths": [
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/p"
+          },
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/q"
+          }
+        ]
+      },
+      "values": []
+    },
+    {
+      "name": "alternative",
+      "focus": "a",
+      "path": {
+        "kind": "alternative",
+        "paths": [
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/p"
+          },
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/q"
+          }
+        ]
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/c"
+        }
+      ]
+    },
+    {
+      "name": "alternative",
+      "focus": "b",
+      "path": {
+        "kind": "alternative",
+        "paths": [
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/p"
+          },
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/q"
+          }
+        ]
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        },
+        {
+          "kind": "literal",
+          "value": "hello",
+          "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+          "language": "en"
+        },
+        {
+          "kind": "literal",
+          "value": "9007199254740993",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ]
+    },
+    {
+      "name": "alternative",
+      "focus": "d",
+      "path": {
+        "kind": "alternative",
+        "paths": [
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/p"
+          },
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/q"
+          }
+        ]
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ]
+    },
+    {
+      "name": "alternative",
+      "focus": "missing",
+      "path": {
+        "kind": "alternative",
+        "paths": [
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/p"
+          },
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/q"
+          }
+        ]
+      },
+      "values": []
+    },
+    {
+      "name": "star",
+      "focus": "a",
+      "path": {
+        "kind": "zeroOrMore",
+        "path": {
+          "kind": "predicate",
+          "iri": "https://example.org/p"
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/c"
+        }
+      ]
+    },
+    {
+      "name": "star",
+      "focus": "b",
+      "path": {
+        "kind": "zeroOrMore",
+        "path": {
+          "kind": "predicate",
+          "iri": "https://example.org/p"
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/c"
+        }
+      ]
+    },
+    {
+      "name": "star",
+      "focus": "d",
+      "path": {
+        "kind": "zeroOrMore",
+        "path": {
+          "kind": "predicate",
+          "iri": "https://example.org/p"
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/d"
+        }
+      ]
+    },
+    {
+      "name": "star",
+      "focus": "missing",
+      "path": {
+        "kind": "zeroOrMore",
+        "path": {
+          "kind": "predicate",
+          "iri": "https://example.org/p"
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/missing"
+        }
+      ]
+    },
+    {
+      "name": "plus",
+      "focus": "a",
+      "path": {
+        "kind": "oneOrMore",
+        "path": {
+          "kind": "predicate",
+          "iri": "https://example.org/p"
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/c"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ]
+    },
+    {
+      "name": "plus",
+      "focus": "b",
+      "path": {
+        "kind": "oneOrMore",
+        "path": {
+          "kind": "predicate",
+          "iri": "https://example.org/p"
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/c"
+        }
+      ]
+    },
+    {
+      "name": "plus",
+      "focus": "d",
+      "path": {
+        "kind": "oneOrMore",
+        "path": {
+          "kind": "predicate",
+          "iri": "https://example.org/p"
+        }
+      },
+      "values": []
+    },
+    {
+      "name": "plus",
+      "focus": "missing",
+      "path": {
+        "kind": "oneOrMore",
+        "path": {
+          "kind": "predicate",
+          "iri": "https://example.org/p"
+        }
+      },
+      "values": []
+    },
+    {
+      "name": "optional",
+      "focus": "a",
+      "path": {
+        "kind": "zeroOrOne",
+        "path": {
+          "kind": "predicate",
+          "iri": "https://example.org/p"
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/c"
+        }
+      ]
+    },
+    {
+      "name": "optional",
+      "focus": "b",
+      "path": {
+        "kind": "zeroOrOne",
+        "path": {
+          "kind": "predicate",
+          "iri": "https://example.org/p"
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ]
+    },
+    {
+      "name": "optional",
+      "focus": "d",
+      "path": {
+        "kind": "zeroOrOne",
+        "path": {
+          "kind": "predicate",
+          "iri": "https://example.org/p"
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/d"
+        }
+      ]
+    },
+    {
+      "name": "optional",
+      "focus": "missing",
+      "path": {
+        "kind": "zeroOrOne",
+        "path": {
+          "kind": "predicate",
+          "iri": "https://example.org/p"
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/missing"
+        }
+      ]
+    },
+    {
+      "name": "inverseSequence",
+      "focus": "a",
+      "path": {
+        "kind": "inverse",
+        "path": {
+          "kind": "sequence",
+          "paths": [
+            {
+              "kind": "predicate",
+              "iri": "https://example.org/p"
+            },
+            {
+              "kind": "predicate",
+              "iri": "https://example.org/q"
+            }
+          ]
+        }
+      },
+      "values": []
+    },
+    {
+      "name": "inverseSequence",
+      "focus": "b",
+      "path": {
+        "kind": "inverse",
+        "path": {
+          "kind": "sequence",
+          "paths": [
+            {
+              "kind": "predicate",
+              "iri": "https://example.org/p"
+            },
+            {
+              "kind": "predicate",
+              "iri": "https://example.org/q"
+            }
+          ]
+        }
+      },
+      "values": []
+    },
+    {
+      "name": "inverseSequence",
+      "focus": "d",
+      "path": {
+        "kind": "inverse",
+        "path": {
+          "kind": "sequence",
+          "paths": [
+            {
+              "kind": "predicate",
+              "iri": "https://example.org/p"
+            },
+            {
+              "kind": "predicate",
+              "iri": "https://example.org/q"
+            }
+          ]
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/c"
+        }
+      ]
+    },
+    {
+      "name": "inverseSequence",
+      "focus": "missing",
+      "path": {
+        "kind": "inverse",
+        "path": {
+          "kind": "sequence",
+          "paths": [
+            {
+              "kind": "predicate",
+              "iri": "https://example.org/p"
+            },
+            {
+              "kind": "predicate",
+              "iri": "https://example.org/q"
+            }
+          ]
+        }
+      },
+      "values": []
+    },
+    {
+      "name": "nested",
+      "focus": "a",
+      "path": {
+        "kind": "sequence",
+        "paths": [
+          {
+            "kind": "oneOrMore",
+            "path": {
+              "kind": "predicate",
+              "iri": "https://example.org/p"
+            }
+          },
+          {
+            "kind": "alternative",
+            "paths": [
+              {
+                "kind": "predicate",
+                "iri": "https://example.org/q"
+              },
+              {
+                "kind": "inverse",
+                "path": {
+                  "kind": "predicate",
+                  "iri": "https://example.org/q"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "values": [
+        {
+          "kind": "literal",
+          "value": "hello",
+          "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+          "language": "en"
+        },
+        {
+          "kind": "literal",
+          "value": "9007199254740993",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/d"
+        }
+      ]
+    },
+    {
+      "name": "nested",
+      "focus": "b",
+      "path": {
+        "kind": "sequence",
+        "paths": [
+          {
+            "kind": "oneOrMore",
+            "path": {
+              "kind": "predicate",
+              "iri": "https://example.org/p"
+            }
+          },
+          {
+            "kind": "alternative",
+            "paths": [
+              {
+                "kind": "predicate",
+                "iri": "https://example.org/q"
+              },
+              {
+                "kind": "inverse",
+                "path": {
+                  "kind": "predicate",
+                  "iri": "https://example.org/q"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "values": [
+        {
+          "kind": "literal",
+          "value": "hello",
+          "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+          "language": "en"
+        },
+        {
+          "kind": "literal",
+          "value": "9007199254740993",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/d"
+        }
+      ]
+    },
+    {
+      "name": "nested",
+      "focus": "d",
+      "path": {
+        "kind": "sequence",
+        "paths": [
+          {
+            "kind": "oneOrMore",
+            "path": {
+              "kind": "predicate",
+              "iri": "https://example.org/p"
+            }
+          },
+          {
+            "kind": "alternative",
+            "paths": [
+              {
+                "kind": "predicate",
+                "iri": "https://example.org/q"
+              },
+              {
+                "kind": "inverse",
+                "path": {
+                  "kind": "predicate",
+                  "iri": "https://example.org/q"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "values": []
+    },
+    {
+      "name": "nested",
+      "focus": "missing",
+      "path": {
+        "kind": "sequence",
+        "paths": [
+          {
+            "kind": "oneOrMore",
+            "path": {
+              "kind": "predicate",
+              "iri": "https://example.org/p"
+            }
+          },
+          {
+            "kind": "alternative",
+            "paths": [
+              {
+                "kind": "predicate",
+                "iri": "https://example.org/q"
+              },
+              {
+                "kind": "inverse",
+                "path": {
+                  "kind": "predicate",
+                  "iri": "https://example.org/q"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "values": []
+    },
+    {
+      "name": "doubleInverse",
+      "focus": "a",
+      "path": {
+        "kind": "inverse",
+        "path": {
+          "kind": "inverse",
+          "path": {
+            "kind": "predicate",
+            "iri": "https://example.org/p"
+          }
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/c"
+        }
+      ]
+    },
+    {
+      "name": "doubleInverse",
+      "focus": "b",
+      "path": {
+        "kind": "inverse",
+        "path": {
+          "kind": "inverse",
+          "path": {
+            "kind": "predicate",
+            "iri": "https://example.org/p"
+          }
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ]
+    },
+    {
+      "name": "doubleInverse",
+      "focus": "d",
+      "path": {
+        "kind": "inverse",
+        "path": {
+          "kind": "inverse",
+          "path": {
+            "kind": "predicate",
+            "iri": "https://example.org/p"
+          }
+        }
+      },
+      "values": []
+    },
+    {
+      "name": "doubleInverse",
+      "focus": "missing",
+      "path": {
+        "kind": "inverse",
+        "path": {
+          "kind": "inverse",
+          "path": {
+            "kind": "predicate",
+            "iri": "https://example.org/p"
+          }
+        }
+      },
+      "values": []
+    },
+    {
+      "name": "inverseStar",
+      "focus": "a",
+      "path": {
+        "kind": "inverse",
+        "path": {
+          "kind": "zeroOrMore",
+          "path": {
+            "kind": "predicate",
+            "iri": "https://example.org/p"
+          }
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        }
+      ]
+    },
+    {
+      "name": "inverseStar",
+      "focus": "b",
+      "path": {
+        "kind": "inverse",
+        "path": {
+          "kind": "zeroOrMore",
+          "path": {
+            "kind": "predicate",
+            "iri": "https://example.org/p"
+          }
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ]
+    },
+    {
+      "name": "inverseStar",
+      "focus": "d",
+      "path": {
+        "kind": "inverse",
+        "path": {
+          "kind": "zeroOrMore",
+          "path": {
+            "kind": "predicate",
+            "iri": "https://example.org/p"
+          }
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/d"
+        }
+      ]
+    },
+    {
+      "name": "inverseStar",
+      "focus": "missing",
+      "path": {
+        "kind": "inverse",
+        "path": {
+          "kind": "zeroOrMore",
+          "path": {
+            "kind": "predicate",
+            "iri": "https://example.org/p"
+          }
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/missing"
+        }
+      ]
+    },
+    {
+      "name": "nullablePlus",
+      "focus": "a",
+      "path": {
+        "kind": "oneOrMore",
+        "path": {
+          "kind": "zeroOrOne",
+          "path": {
+            "kind": "predicate",
+            "iri": "https://example.org/absent"
+          }
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/a"
+        }
+      ]
+    },
+    {
+      "name": "nullablePlus",
+      "focus": "b",
+      "path": {
+        "kind": "oneOrMore",
+        "path": {
+          "kind": "zeroOrOne",
+          "path": {
+            "kind": "predicate",
+            "iri": "https://example.org/absent"
+          }
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/b"
+        }
+      ]
+    },
+    {
+      "name": "nullablePlus",
+      "focus": "d",
+      "path": {
+        "kind": "oneOrMore",
+        "path": {
+          "kind": "zeroOrOne",
+          "path": {
+            "kind": "predicate",
+            "iri": "https://example.org/absent"
+          }
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/d"
+        }
+      ]
+    },
+    {
+      "name": "nullablePlus",
+      "focus": "missing",
+      "path": {
+        "kind": "oneOrMore",
+        "path": {
+          "kind": "zeroOrOne",
+          "path": {
+            "kind": "predicate",
+            "iri": "https://example.org/absent"
+          }
+        }
+      },
+      "values": [
+        {
+          "kind": "iri",
+          "value": "https://example.org/missing"
+        }
+      ]
+    },
+    {
+      "name": "sequenceWithAnnotation",
+      "focus": "a",
+      "path": {
+        "kind": "sequence",
+        "paths": [
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/p"
+          },
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/q"
+          }
+        ]
+      },
+      "values": [
+        {
+          "kind": "literal",
+          "value": "hello",
+          "datatype": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+          "language": "en"
+        },
+        {
+          "kind": "literal",
+          "value": "9007199254740993",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+        },
+        {
+          "kind": "iri",
+          "value": "https://example.org/d"
+        }
+      ]
+    },
+    {
+      "name": "sequenceWithAnnotation",
+      "focus": "b",
+      "path": {
+        "kind": "sequence",
+        "paths": [
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/p"
+          },
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/q"
+          }
+        ]
+      },
+      "values": []
+    },
+    {
+      "name": "sequenceWithAnnotation",
+      "focus": "d",
+      "path": {
+        "kind": "sequence",
+        "paths": [
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/p"
+          },
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/q"
+          }
+        ]
+      },
+      "values": []
+    },
+    {
+      "name": "sequenceWithAnnotation",
+      "focus": "missing",
+      "path": {
+        "kind": "sequence",
+        "paths": [
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/p"
+          },
+          {
+            "kind": "predicate",
+            "iri": "https://example.org/q"
+          }
+        ]
+      },
+      "values": []
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+<http://example.org/base#a> <http://example.org/base#b> <http://example.org/base#c> .
+<http://example.org/base#a> <http://example.org/base#d> <http://example.org/base#e> .
+<http://example.org/base#a> <http://example.org/base#f> <http://example.org/base#g> .
+<http://example/graph> { <http://example.org/base#a> <http://example.org/base#b> <http://example.org/base#c> . }
+<http://example/graph> { <http://example.org/base#a> <http://example.org/base#d> <http://example.org/base#e> . }
+<http://example/graph> { <http://example.org/base#a> <http://example.org/base#f> <http://example.org/base#g> . }
+_:m_1_0 <urn:example:related> <urn:example:resource> .
+<urn:example:populated> { _:m_1_0 <urn:example:label> "Original label" . }
+<urn:example:empty> {}
+_:m_1_0 {}

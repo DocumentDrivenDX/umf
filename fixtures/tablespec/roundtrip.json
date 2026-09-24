@@ -1,0 +1,256 @@
+{
+  "results": [
+    {
+      "id": "providers",
+      "format": "yaml",
+      "input": "version: \"1.0\"\ntable_name: Providers\ndescription: Healthcare provider directory\ncolumns:\n  - name: provider_id\n    data_type: VARCHAR\n    length: 20\n    description: Unique provider identifier\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_name\n    data_type: VARCHAR\n    length: 200\n    description: Provider full name\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_npi\n    data_type: VARCHAR\n    length: 10\n    description: National Provider Identifier\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n  - name: state_code\n    data_type: VARCHAR\n    length: 2\n    description: Provider state code\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n    sample_values:\n      - \"CA\"\n      - \"NY\"\n      - \"TX\"\n",
+      "scalars": [
+        "string",
+        "string",
+        "string",
+        "string"
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "text": "version: \"1.0\"\ntable_name: Providers\ndescription: Healthcare provider directory\ncolumns:\n  - name: provider_id\n    data_type: VARCHAR\n    length: 20\n    description: Unique provider identifier\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_name\n    data_type: VARCHAR\n    length: 200\n    description: Provider full name\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_npi\n    data_type: VARCHAR\n    length: 10\n    description: National Provider Identifier\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n  - name: state_code\n    data_type: VARCHAR\n    length: 2\n    description: Provider state code\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n    sample_values:\n      - \"CA\"\n      - \"NY\"\n      - \"TX\"\n"
+        },
+        {
+          "format": "yaml",
+          "text": "version: \"1.0\"\ntable_name: Providers\ndescription: Healthcare provider directory\ncolumns:\n  - name: provider_id\n    data_type: VARCHAR\n    length: 20\n    description: Unique provider identifier\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_name\n    data_type: VARCHAR\n    length: 200\n    description: Provider full name\n    nullable:\n      MD: false\n      MP: false\n      ME: false\n  - name: provider_npi\n    data_type: VARCHAR\n    length: 10\n    description: National Provider Identifier\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n  - name: state_code\n    data_type: VARCHAR\n    length: 2\n    description: Provider state code\n    nullable:\n      MD: true\n      MP: true\n      ME: true\n    sample_values:\n      - \"CA\"\n      - \"NY\"\n      - \"TX\"\n"
+        }
+      ]
+    },
+    {
+      "id": "BOOLEAN",
+      "format": "json",
+      "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"BOOLEAN\",\"nullable\":false}]}",
+      "scalars": [
+        "boolean"
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"BOOLEAN\",\"nullable\":false}]}"
+        },
+        {
+          "format": "yaml",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"BOOLEAN\",\"nullable\":false}]}"
+        }
+      ]
+    },
+    {
+      "id": "INTEGER",
+      "format": "json",
+      "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"INTEGER\",\"nullable\":false}]}",
+      "scalars": [
+        "integer"
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"INTEGER\",\"nullable\":false}]}"
+        },
+        {
+          "format": "yaml",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"INTEGER\",\"nullable\":false}]}"
+        }
+      ]
+    },
+    {
+      "id": "DECIMAL",
+      "format": "json",
+      "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\",\"nullable\":false,\"precision\":18,\"scale\":4}]}",
+      "scalars": [
+        "decimal"
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\",\"nullable\":false,\"precision\":18,\"scale\":4}]}"
+        },
+        {
+          "format": "yaml",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\",\"nullable\":false,\"precision\":18,\"scale\":4}]}"
+        }
+      ]
+    },
+    {
+      "id": "FLOAT",
+      "format": "json",
+      "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"FLOAT\",\"nullable\":false}]}",
+      "scalars": [
+        "float"
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"FLOAT\",\"nullable\":false}]}"
+        },
+        {
+          "format": "yaml",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"FLOAT\",\"nullable\":false}]}"
+        }
+      ]
+    },
+    {
+      "id": "VARCHAR",
+      "format": "json",
+      "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"VARCHAR\",\"nullable\":false,\"length\":80}]}",
+      "scalars": [
+        "string"
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"VARCHAR\",\"nullable\":false,\"length\":80}]}"
+        },
+        {
+          "format": "yaml",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"VARCHAR\",\"nullable\":false,\"length\":80}]}"
+        }
+      ]
+    },
+    {
+      "id": "TEXT",
+      "format": "json",
+      "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"TEXT\",\"nullable\":false}]}",
+      "scalars": [
+        "string"
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"TEXT\",\"nullable\":false}]}"
+        },
+        {
+          "format": "yaml",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"TEXT\",\"nullable\":false}]}"
+        }
+      ]
+    },
+    {
+      "id": "CHAR",
+      "format": "json",
+      "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"CHAR\",\"nullable\":false}]}",
+      "scalars": [
+        "string"
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"CHAR\",\"nullable\":false}]}"
+        },
+        {
+          "format": "yaml",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"CHAR\",\"nullable\":false}]}"
+        }
+      ]
+    },
+    {
+      "id": "DATE",
+      "format": "json",
+      "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DATE\",\"nullable\":false}]}",
+      "scalars": [
+        "date"
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DATE\",\"nullable\":false}]}"
+        },
+        {
+          "format": "yaml",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DATE\",\"nullable\":false}]}"
+        }
+      ]
+    },
+    {
+      "id": "DATETIME",
+      "format": "json",
+      "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DATETIME\",\"nullable\":false}]}",
+      "scalars": [
+        "timestamp"
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DATETIME\",\"nullable\":false}]}"
+        },
+        {
+          "format": "yaml",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DATETIME\",\"nullable\":false}]}"
+        }
+      ]
+    },
+    {
+      "id": "TIMESTAMP",
+      "format": "json",
+      "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"TIMESTAMP\",\"nullable\":false}]}",
+      "scalars": [
+        "timestamp"
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"TIMESTAMP\",\"nullable\":false}]}"
+        },
+        {
+          "format": "yaml",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"TIMESTAMP\",\"nullable\":false}]}"
+        }
+      ]
+    },
+    {
+      "id": "EMBEDDING",
+      "format": "json",
+      "input": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"EMBEDDING\",\"nullable\":false,\"dimension\":3}]}",
+      "scalars": [
+        null
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"EMBEDDING\",\"nullable\":false,\"dimension\":3}]}"
+        },
+        {
+          "format": "yaml",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"sample\",\"columns\":[{\"name\":\"value\",\"data_type\":\"EMBEDDING\",\"nullable\":false,\"dimension\":3}]}"
+        }
+      ]
+    },
+    {
+      "id": "edited",
+      "format": "json",
+      "input": "{\"version\":\"1.0\",\"table_name\":\"edited\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\",\"nullable\":false,\"future\":\"retained\",\"precision\":18,\"scale\":4}]}",
+      "originalInput": "{\"version\":\"1.0\",\"table_name\":\"edited\",\"columns\":[{\"name\":\"value\",\"data_type\":\"INTEGER\",\"nullable\":false,\"future\":\"retained\"}]}",
+      "changes": {
+        "data_type": {
+          "kind": "string",
+          "value": "DECIMAL"
+        },
+        "precision": {
+          "kind": "number",
+          "value": "18"
+        },
+        "scale": {
+          "kind": "number",
+          "value": "4"
+        }
+      },
+      "scalars": [
+        "decimal"
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"edited\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\",\"nullable\":false,\"future\":\"retained\",\"precision\":18,\"scale\":4}]}\n"
+        },
+        {
+          "format": "yaml",
+          "text": "{\"version\":\"1.0\",\"table_name\":\"edited\",\"columns\":[{\"name\":\"value\",\"data_type\":\"DECIMAL\",\"nullable\":false,\"future\":\"retained\",\"precision\":18,\"scale\":4}]}\n"
+        }
+      ]
+    }
+  ]
+}

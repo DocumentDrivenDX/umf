@@ -1,0 +1,106 @@
+txn: struct<appId: string, version: int64, lastUpdated: int64>
+  child 0, appId: string
+  child 1, version: int64
+  child 2, lastUpdated: int64
+add: struct<path: string, partitionValues: map<string, string ('partitionValues')>, size: int64, modifica (... 1035 chars omitted)
+  child 0, path: string
+  child 1, partitionValues: map<string, string ('partitionValues')>
+      child 0, partitionValues: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+  child 2, size: int64
+  child 3, modificationTime: int64
+  child 4, dataChange: bool
+  child 5, tags: map<string, string ('tags')>
+      child 0, tags: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+  child 6, stats_parsed: struct<numRecords: int64, minValues: struct<integer: int32, double: double, decimal: decimal128(8, 5 (... 849 chars omitted)
+      child 0, numRecords: int64
+      child 1, minValues: struct<integer: int32, double: double, decimal: decimal128(8, 5), string: string, date: date32[day], (... 163 chars omitted)
+          child 0, integer: int32
+          child 1, double: double
+          child 2, decimal: decimal128(8, 5)
+          child 3, string: string
+          child 4, date: date32[day]
+          child 5, timestamp: timestamp[ns]
+          child 6, struct: struct<struct_element: string>
+              child 0, struct_element: string
+          child 7, nested_struct: struct<struct_element: struct<nested_struct_element: string>>
+              child 0, struct_element: struct<nested_struct_element: string>
+                  child 0, nested_struct_element: string
+          child 8, new_column: int32
+      child 2, maxValues: struct<integer: int32, double: double, decimal: decimal128(8, 5), string: string, date: date32[day], (... 163 chars omitted)
+          child 0, integer: int32
+          child 1, double: double
+          child 2, decimal: decimal128(8, 5)
+          child 3, string: string
+          child 4, date: date32[day]
+          child 5, timestamp: timestamp[ns]
+          child 6, struct: struct<struct_element: string>
+              child 0, struct_element: string
+          child 7, nested_struct: struct<struct_element: struct<nested_struct_element: string>>
+              child 0, struct_element: struct<nested_struct_element: string>
+                  child 0, nested_struct_element: string
+          child 8, new_column: int32
+      child 3, nullCount: struct<integer: int64, null: int64, boolean: int64, double: int64, decimal: int64, string: int64, bi (... 259 chars omitted)
+          child 0, integer: int64
+          child 1, null: int64
+          child 2, boolean: int64
+          child 3, double: int64
+          child 4, decimal: int64
+          child 5, string: int64
+          child 6, binary: int64
+          child 7, date: int64
+          child 8, timestamp: int64
+          child 9, struct: struct<struct_element: int64>
+              child 0, struct_element: int64
+          child 10, map: int64
+          child 11, array: int64
+          child 12, nested_struct: struct<struct_element: struct<nested_struct_element: int64>>
+              child 0, struct_element: struct<nested_struct_element: int64>
+                  child 0, nested_struct_element: int64
+          child 13, struct_of_array_of_map: struct<struct_element: int64>
+              child 0, struct_element: int64
+          child 14, new_column: int64
+remove: struct<path: string, deletionTimestamp: int64, dataChange: bool, extendedFileMetadata: bool, partiti (... 99 chars omitted)
+  child 0, path: string
+  child 1, deletionTimestamp: int64
+  child 2, dataChange: bool
+  child 3, extendedFileMetadata: bool
+  child 4, partitionValues: map<string, string ('partitionValues')>
+      child 0, partitionValues: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+  child 5, size: int64
+  child 6, tags: map<string, string ('tags')>
+      child 0, tags: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+metaData: struct<id: string, name: string, description: string, format: struct<provider: string, options: map< (... 166 chars omitted)
+  child 0, id: string
+  child 1, name: string
+  child 2, description: string
+  child 3, format: struct<provider: string, options: map<string, string ('options')>>
+      child 0, provider: string
+      child 1, options: map<string, string ('options')>
+          child 0, options: struct<key: string not null, value: string> not null
+              child 0, key: string not null
+              child 1, value: string
+  child 4, schemaString: string
+  child 5, partitionColumns: list<element: string>
+      child 0, element: string
+  child 6, configuration: map<string, string ('configuration')>
+      child 0, configuration: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+  child 7, createdTime: int64
+protocol: struct<minReaderVersion: int32, minWriterVersion: int32>
+  child 0, minReaderVersion: int32
+  child 1, minWriterVersion: int32
+-- schema metadata --
+org.apache.spark.timeZone: 'GMT'
+org.apache.spark.legacyINT96: ''
+org.apache.spark.version: '3.2.1'
+org.apache.spark.sql.parquet.row.metadata: '{"type":"struct","fields":[{"' + 6312
+org.apache.spark.legacyDateTime: ''

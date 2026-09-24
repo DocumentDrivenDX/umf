@@ -1,0 +1,14 @@
+{
+  "oracle": "Python referencing 0.37.0",
+  "references": [
+    "child#named",
+    "#local",
+    "#/$defs/Local",
+    "https://example.test/external.json#external"
+  ],
+  "passed": 4,
+  "limitations": [
+    "OpenAPI document identity and role discovery are authored tests; this oracle checks JSON Schema static references only",
+    "No dynamic-reference evaluation"
+  ]
+}

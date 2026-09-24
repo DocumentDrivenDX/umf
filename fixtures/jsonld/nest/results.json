@@ -1,0 +1,119 @@
+{
+  "results": [
+    {
+      "id": "siblings-protected",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/nest/siblings-protected.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/nest/siblings-protected.yaml.jsonld"
+        }
+      ],
+      "edits": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/nest/siblings-protected.json.edited.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/nest/siblings-protected.yaml.edited.jsonld"
+        }
+      ]
+    },
+    {
+      "id": "recursive",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/nest/recursive.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/nest/recursive.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "array",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/nest/array.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/nest/array.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "remote-coercion",
+      "status": "candidate",
+      "resourcesUsed": [
+        "https://example.org/scoped"
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/nest/remote-coercion.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/nest/remote-coercion.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "value-alias-invalid",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_EXPANSION_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid JSON-LD syntax; nested value must be a node object."
+        }
+      ]
+    },
+    {
+      "id": "scalar-invalid",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_EXPANSION_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid JSON-LD syntax; nested value must be a node object."
+        }
+      ]
+    },
+    {
+      "id": "opaque-json",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/nest/opaque-json.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/nest/opaque-json.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    }
+  ]
+}

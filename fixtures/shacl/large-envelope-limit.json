@@ -1,0 +1,14 @@
+{
+  "source": "native/shacl/sources/data-shapes-test-suite/reports/SHACLEX_EarlReport_SHACL.ttl",
+  "sourceBytes": 2948679,
+  "options": {
+    "id": "report",
+    "baseIRI": "https://example.org/report"
+  },
+  "prettyJsonCharacters": 6500509,
+  "coreMaxTextLength": 4000000,
+  "import": "accepted",
+  "jsonWrite": "blocked",
+  "error": "LIMIT: Serialized text exceeds limit",
+  "scope": "Historical report inventory, outside official test-resource matrix"
+}

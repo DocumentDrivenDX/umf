@@ -1,0 +1,29 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b21556 .
+_:report <http://www.w3.org/ns/shacl#result> _:b21557 .
+_:report <http://www.w3.org/ns/shacl#result> _:b21558 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b21556 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b21556 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b21556 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LessThanConstraintComponent> .
+_:b21556 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/lessThan-001.test#TestShape-property1> .
+_:b21556 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/lessThan-001.test#InvalidResource1> .
+_:b21556 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/lessThan-001.test#property1> .
+_:b21556 <http://www.w3.org/ns/shacl#value> "4"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:b21556 <http://www.w3.org/ns/shacl#resultMessage> "Value is not less than value of <http://datashapes.org/sh/tests/core/property/lessThan-001.test#property2>" .
+_:b21557 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b21557 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b21557 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LessThanConstraintComponent> .
+_:b21557 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/lessThan-001.test#TestShape-property1> .
+_:b21557 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/lessThan-001.test#InvalidResource2> .
+_:b21557 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/lessThan-001.test#property1> .
+_:b21557 <http://www.w3.org/ns/shacl#value> "6"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:b21557 <http://www.w3.org/ns/shacl#resultMessage> "Value is not less than value of <http://datashapes.org/sh/tests/core/property/lessThan-001.test#property2>" .
+_:b21558 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b21558 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b21558 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LessThanConstraintComponent> .
+_:b21558 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/lessThan-001.test#TestShape-property1> .
+_:b21558 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/lessThan-001.test#InvalidResource3> .
+_:b21558 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/lessThan-001.test#property1> .
+_:b21558 <http://www.w3.org/ns/shacl#value> "5"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:b21558 <http://www.w3.org/ns/shacl#resultMessage> "Value is not less than value of <http://datashapes.org/sh/tests/core/property/lessThan-001.test#property2>" .

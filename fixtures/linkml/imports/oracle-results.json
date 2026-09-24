@@ -1,0 +1,41 @@
+{
+  "modelVersion": "1.11.0",
+  "runtimeVersion": "1.11.0rc2",
+  "results": [
+    {
+      "id": "diamond",
+      "comparison": "reachable-set",
+      "nativeClosure": [
+        "shared",
+        "left",
+        "right",
+        "root"
+      ],
+      "formats": 2,
+      "retrievalAttempts": []
+    },
+    {
+      "id": "cycle-repeat",
+      "comparison": "reachable-set",
+      "nativeClosure": [
+        "left",
+        "root"
+      ],
+      "formats": 2,
+      "retrievalAttempts": []
+    },
+    {
+      "id": "missing",
+      "comparison": "unresolved",
+      "formats": 2,
+      "retrievalAttempts": [
+        "missing"
+      ]
+    },
+    {
+      "id": "scoped",
+      "comparison": "not-comparable",
+      "reason": "Importer-scoped common aliases have different targets; no native retrieval equivalence claim"
+    }
+  ]
+}

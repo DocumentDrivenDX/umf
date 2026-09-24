@@ -1,0 +1,29 @@
+_:N7d46a678f8fe4d3f99a6258f4ef2fa04 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LessThanConstraintComponent> .
+_:N7d46a678f8fe4d3f99a6258f4ef2fa04 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N75b1a416866b4b90a4ce09d3cc1ec120 <http://www.w3.org/ns/shacl#result> _:N7d46a678f8fe4d3f99a6258f4ef2fa04 .
+_:N7d46a678f8fe4d3f99a6258f4ef2fa04 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nb932192ce563463ab99314f1c1814d1b <http://www.w3.org/ns/shacl#value> "6"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:N7d46a678f8fe4d3f99a6258f4ef2fa04 <http://www.w3.org/ns/shacl#resultMessage> "Value of ex:InvalidResource1->ex:property2 <= Literal(\"4\", datatype=xsd:integer)" .
+_:N3c18ae87da5c45b38ed5a50a78d7293e <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N7d46a678f8fe4d3f99a6258f4ef2fa04 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/lessThan-001.test#property1> .
+_:N3c18ae87da5c45b38ed5a50a78d7293e <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nb932192ce563463ab99314f1c1814d1b <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/lessThan-001.test#property1> .
+_:Nb932192ce563463ab99314f1c1814d1b <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nb932192ce563463ab99314f1c1814d1b <http://www.w3.org/ns/shacl#resultMessage> "Value of ex:InvalidResource2->ex:property2 <= Literal(\"6\", datatype=xsd:integer)" .
+_:N7d46a678f8fe4d3f99a6258f4ef2fa04 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/lessThan-001.test#InvalidResource1> .
+_:Nb932192ce563463ab99314f1c1814d1b <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N75b1a416866b4b90a4ce09d3cc1ec120 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N7d46a678f8fe4d3f99a6258f4ef2fa04 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/lessThan-001.test#TestShape-property1> .
+_:N3c18ae87da5c45b38ed5a50a78d7293e <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/lessThan-001.test#property1> .
+_:N3c18ae87da5c45b38ed5a50a78d7293e <http://www.w3.org/ns/shacl#resultMessage> "Value of ex:InvalidResource3->ex:property2 <= Literal(\"5\", datatype=xsd:integer)" .
+_:N3c18ae87da5c45b38ed5a50a78d7293e <http://www.w3.org/ns/shacl#value> "5"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:N75b1a416866b4b90a4ce09d3cc1ec120 <http://www.w3.org/ns/shacl#result> _:N3c18ae87da5c45b38ed5a50a78d7293e .
+_:N3c18ae87da5c45b38ed5a50a78d7293e <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/lessThan-001.test#TestShape-property1> .
+_:N75b1a416866b4b90a4ce09d3cc1ec120 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N3c18ae87da5c45b38ed5a50a78d7293e <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/lessThan-001.test#InvalidResource3> .
+_:N7d46a678f8fe4d3f99a6258f4ef2fa04 <http://www.w3.org/ns/shacl#value> "4"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:Nb932192ce563463ab99314f1c1814d1b <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/lessThan-001.test#InvalidResource2> .
+_:Nb932192ce563463ab99314f1c1814d1b <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/lessThan-001.test#TestShape-property1> .
+_:N3c18ae87da5c45b38ed5a50a78d7293e <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LessThanConstraintComponent> .
+_:N75b1a416866b4b90a4ce09d3cc1ec120 <http://www.w3.org/ns/shacl#result> _:Nb932192ce563463ab99314f1c1814d1b .
+_:Nb932192ce563463ab99314f1c1814d1b <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LessThanConstraintComponent> .

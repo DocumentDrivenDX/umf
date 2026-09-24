@@ -1,0 +1,8 @@
+import {importLinkmlDocument,proposeLinkmlImportMerge,exportLinkmlDocument,readDocument,writeDocument} from '../src';
+const imported=await Bun.file('fixtures/linkml/imports/results.json').json(),cases=[];
+for(const c of imported.cases){const sources=c.sources.map((s:any)=>{const root=JSON.parse(s.text);root.description='Schema metadata '+s.key;root.default_range='string';root.prefixes={p:'https://example.org/'+s.key+'/'};for(const collection of ['classes','slots','enums','subsets','types']){const declaration:any={description:s.key,from_schema:'https://example.org/original-provenance'};if(collection==='classes')declaration.attributes={local:null};if(collection==='types')declaration.base='str';root[collection]={[s.key+'_own']:declaration,...(s.key!=='root'?{Collision:declaration}:{}),RootWins:declaration};}return {key:s.key,text:JSON.stringify(root)};});
+ const context={...c.context,schemas:sources.map((s:any)=>({key:s.key,document:importLinkmlDocument(s.text,{id:s.key,format:'json'})}))},reports=[];
+ for(const mode of ['view','merge-imports'] as const)for(const format of ['json','yaml'] as const){const restored={...context,schemas:context.schemas.map((s:any)=>({...s,document:readDocument(writeDocument(s.document,format),format)}))},r=proposeLinkmlImportMerge(restored,{mode});reports.push({mode,format,report:r,...(r.candidate?{output:exportLinkmlDocument(r.candidate)}:{})});}
+ cases.push({id:c.id,sources,context,reports});
+}
+await Bun.write('fixtures/linkml/merge/results.json',JSON.stringify({cases},null,2)+'\n');console.log('LinkML merge: four contexts, two policies, two UMF formats');

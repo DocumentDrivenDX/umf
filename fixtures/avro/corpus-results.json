@@ -1,0 +1,280 @@
+{
+  "commit": "8c27801dc8d42ccc00997f25c0b8f45f8d4a233e",
+  "scope": [
+    "share/test/schemas",
+    "lang/java/avro/src/test/resources",
+    "lang/java/compiler/src/test/resources"
+  ],
+  "files": [
+    {
+      "path": "share/test/schemas/FooBarSpecificRecord.avsc",
+      "sha256": "91a193a616ad610b8f5cf234ead2295a284409f970a2e6c3a55746a2b8e14015",
+      "valid": true,
+      "complete": true,
+      "diagnostics": [],
+      "exported": "{\"type\":\"record\",\"name\":\"FooBarSpecificRecord\",\"namespace\":\"org.apache.avro\",\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"nicknames\",\"type\":{\"type\":\"array\",\"items\":\"string\"}},{\"name\":\"relatedids\",\"type\":{\"type\":\"array\",\"items\":\"int\"}},{\"name\":\"typeEnum\",\"type\":[\"null\",{\"type\":\"enum\",\"name\":\"TypeEnum\",\"namespace\":\"org.apache.avro\",\"symbols\":[\"a\",\"b\",\"c\"]}],\"default\":null}]}\n"
+    },
+    {
+      "path": "share/test/schemas/RecordWithRequiredFields.avsc",
+      "sha256": "e360064ad0157bcf735359bc19a4c5b56d43261c92469d27300fe965913f99a2",
+      "valid": true,
+      "complete": true,
+      "diagnostics": [],
+      "exported": "{\"type\":\"record\",\"name\":\"RecordWithRequiredFields\",\"namespace\":\"org.apache.avro\",\"fields\":[{\"name\":\"strField\",\"type\":\"string\"},{\"name\":\"unionField\",\"type\":[\"null\",{\"type\":\"record\",\"name\":\"UnionRecord\",\"fields\":[{\"name\":\"strField\",\"type\":\"string\"},{\"name\":\"arrayField\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"ArrayRecord\",\"fields\":[{\"name\":\"strField\",\"type\":\"string\"},{\"name\":\"mapField\",\"type\":{\"type\":\"map\",\"values\":{\"type\":\"record\",\"name\":\"MapRecord\",\"fields\":[{\"name\":\"enumField\",\"type\":{\"type\":\"enum\",\"name\":\"MapRecordEnum\",\"symbols\":[\"A\",\"B\"],\"default\":\"A\"}},{\"name\":\"strField\",\"type\":\"string\"}]}}}]}}}]}]}]}\n"
+    },
+    {
+      "path": "share/test/schemas/interop.avsc",
+      "sha256": "7e894e5e1fe8d78331ce93c103248d152772dc476dda1c3e11ea16931d203619",
+      "valid": true,
+      "complete": true,
+      "diagnostics": [],
+      "exported": "{\"type\":\"record\",\"name\":\"Interop\",\"namespace\":\"org.apache.avro\",\"fields\":[{\"name\":\"intField\",\"type\":\"int\"},{\"name\":\"longField\",\"type\":\"long\"},{\"name\":\"stringField\",\"type\":\"string\"},{\"name\":\"boolField\",\"type\":\"boolean\"},{\"name\":\"floatField\",\"type\":\"float\"},{\"name\":\"doubleField\",\"type\":\"double\"},{\"name\":\"bytesField\",\"type\":\"bytes\"},{\"name\":\"nullField\",\"type\":\"null\"},{\"name\":\"arrayField\",\"type\":{\"type\":\"array\",\"items\":\"double\"}},{\"name\":\"mapField\",\"type\":{\"type\":\"map\",\"values\":{\"type\":\"record\",\"name\":\"Foo\",\"fields\":[{\"name\":\"label\",\"type\":\"string\"}]}}},{\"name\":\"unionField\",\"type\":[\"boolean\",\"double\",{\"type\":\"array\",\"items\":\"bytes\"}]},{\"name\":\"enumField\",\"type\":{\"type\":\"enum\",\"name\":\"Kind\",\"symbols\":[\"A\",\"B\",\"C\"]}},{\"name\":\"fixedField\",\"type\":{\"type\":\"fixed\",\"name\":\"MD5\",\"size\":16}},{\"name\":\"recordField\",\"type\":{\"type\":\"record\",\"name\":\"Node\",\"fields\":[{\"name\":\"label\",\"type\":\"string\"},{\"name\":\"children\",\"type\":{\"type\":\"array\",\"items\":\"Node\"}}]}}]}\n"
+    },
+    {
+      "path": "share/test/schemas/reserved.avsc",
+      "sha256": "d9551feb8565e6e21bcfb95cb51605967aa2c1a5f67120b28f3264d3cfdf2488",
+      "valid": true,
+      "complete": true,
+      "diagnostics": [],
+      "exported": "{\"name\":\"org.apache.avro.test.Reserved\",\"type\":\"enum\",\"symbols\":[\"default\",\"class\",\"int\"]}\n"
+    },
+    {
+      "path": "share/test/schemas/weather.avsc",
+      "sha256": "baf2c69442e2aa01d2ddfdd416899fb9af7ff524920c237409b842450a7c291a",
+      "valid": true,
+      "complete": true,
+      "diagnostics": [],
+      "exported": "{\"type\":\"record\",\"name\":\"test.Weather\",\"doc\":\"A weather reading.\",\"fields\":[{\"name\":\"station\",\"type\":\"string\",\"order\":\"ignore\"},{\"name\":\"time\",\"type\":\"long\"},{\"name\":\"temp\",\"type\":\"int\"}]}\n"
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/SchemaBuilder.avsc",
+      "sha256": "c51a254c85d2141c1fa03cb075eafee08c386e31d0555882a9cddb449d18b1ba",
+      "valid": true,
+      "complete": true,
+      "diagnostics": [],
+      "exported": "{\"type\":\"record\",\"name\":\"recordAll\",\"fields\":[{\"name\":\"requiredBoolean\",\"type\":\"boolean\"},{\"name\":\"requiredBooleanWithDefault\",\"type\":\"boolean\",\"default\":true},{\"name\":\"optionalBoolean\",\"type\":[\"null\",\"boolean\"],\"default\":null},{\"name\":\"optionalBooleanWithDefault\",\"type\":[\"boolean\",\"null\"],\"default\":true},{\"name\":\"requiredInt\",\"type\":\"int\"},{\"name\":\"optionalInt\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"optionalIntWithDefault\",\"type\":[\"int\",\"null\"],\"default\":1},{\"name\":\"requiredLong\",\"type\":\"long\"},{\"name\":\"optionalLong\",\"type\":[\"null\",\"long\"],\"default\":null},{\"name\":\"optionalLongWithDefault\",\"type\":[\"long\",\"null\"],\"default\":1},{\"name\":\"requiredFloat\",\"type\":\"float\"},{\"name\":\"optionalFloat\",\"type\":[\"null\",\"float\"],\"default\":null},{\"name\":\"optionalFloatWithDefault\",\"type\":[\"float\",\"null\"],\"default\":1.0},{\"name\":\"requiredDouble\",\"type\":\"double\"},{\"name\":\"optionalDouble\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"optionalDoubleWithDefault\",\"type\":[\"double\",\"null\"],\"default\":1.0},{\"name\":\"requiredBytes\",\"type\":\"bytes\"},{\"name\":\"optionalBytes\",\"type\":[\"null\",\"bytes\"],\"default\":null},{\"name\":\"optionalBytesWithDefault\",\"type\":[\"bytes\",\"null\"],\"default\":\"A\"},{\"name\":\"requiredString\",\"type\":\"string\"},{\"name\":\"optionalString\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"optionalStringWithDefault\",\"type\":[\"string\",\"null\"],\"default\":\"a\"},{\"name\":\"requiredRecord\",\"type\":{\"type\":\"record\",\"name\":\"nestedRequiredRecord\",\"fields\":[{\"name\":\"nestedRequiredBoolean\",\"type\":\"boolean\"}]}},{\"name\":\"optionalRecord\",\"type\":[\"null\",{\"type\":\"record\",\"name\":\"nestedOptionalRecord\",\"fields\":[{\"name\":\"nestedRequiredBoolean\",\"type\":\"boolean\"}]}],\"default\":null},{\"name\":\"optionalRecordWithDefault\",\"type\":[{\"type\":\"record\",\"name\":\"nestedOptionalRecordWithDefault\",\"fields\":[{\"name\":\"nestedRequiredBoolean\",\"type\":\"boolean\"}]},\"null\"],\"default\":{\"nestedRequiredBoolean\":true}},{\"name\":\"requiredEnum\",\"type\":{\"type\":\"enum\",\"name\":\"requiredEnum\",\"symbols\":[\"a\",\"b\"]}},{\"name\":\"optionalEnum\",\"type\":[\"null\",{\"type\":\"enum\",\"name\":\"optionalEnum\",\"symbols\":[\"a\",\"b\"]}],\"default\":null},{\"name\":\"optionalEnumWithDefault\",\"type\":[{\"type\":\"enum\",\"name\":\"optionalEnumWithDefault\",\"symbols\":[\"a\",\"b\"]},\"null\"],\"default\":\"b\"},{\"name\":\"requiredArray\",\"type\":{\"type\":\"array\",\"items\":\"string\"}},{\"name\":\"optionalArray\",\"type\":[\"null\",{\"type\":\"array\",\"items\":\"string\"}],\"default\":null},{\"name\":\"optionalArrayWithDefault\",\"type\":[{\"type\":\"array\",\"items\":\"string\"},\"null\"],\"default\":[\"a\"]},{\"name\":\"requiredMap\",\"type\":{\"type\":\"map\",\"values\":\"string\"}},{\"name\":\"optionalMap\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}],\"default\":null},{\"name\":\"optionalMapWithDefault\",\"type\":[{\"type\":\"map\",\"values\":\"string\"},\"null\"],\"default\":{\"a\":\"b\"}},{\"name\":\"requiredFixed\",\"type\":{\"type\":\"fixed\",\"name\":\"requiredFixed\",\"size\":1}},{\"name\":\"optionalFixed\",\"type\":[\"null\",{\"type\":\"fixed\",\"name\":\"optionalFixed\",\"size\":1}],\"default\":null},{\"name\":\"optionalFixedWithDefault\",\"type\":[{\"type\":\"fixed\",\"name\":\"optionalFixedWithDefault\",\"size\":1},\"null\"],\"default\":\"A\"},{\"name\":\"unionType\",\"type\":[\"long\",\"null\"]},{\"name\":\"unionBooleanWithDefault\",\"type\":[\"boolean\",\"int\"],\"default\":true},{\"name\":\"unionIntWithDefault\",\"type\":[\"int\",\"null\"],\"default\":1},{\"name\":\"unionLongWithDefault\",\"type\":[\"long\",\"int\"],\"default\":1},{\"name\":\"unionFloatWithDefault\",\"type\":[\"float\",\"int\"],\"default\":1.0},{\"name\":\"unionDoubleWithDefault\",\"type\":[\"double\",\"int\"],\"default\":1.0},{\"name\":\"unionBytesWithDefault\",\"type\":[\"bytes\",\"int\"],\"default\":\"A\"},{\"name\":\"unionStringWithDefault\",\"type\":[\"string\",\"int\"],\"default\":\"a\"},{\"name\":\"unionRecordWithDefault\",\"type\":[{\"type\":\"record\",\"name\":\"nestedUnionRecordWithDefault\",\"fields\":[{\"name\":\"nestedRequiredBoolean\",\"type\":\"boolean\"}]},\"int\"],\"default\":{\"nestedRequiredBoolean\":true}},{\"name\":\"unionEnumWithDefault\",\"type\":[{\"type\":\"enum\",\"name\":\"nestedUnionEnumWithDefault\",\"symbols\":[\"a\",\"b\"]},\"int\"],\"default\":\"b\"},{\"name\":\"unionArrayWithDefault\",\"type\":[{\"type\":\"array\",\"items\":\"string\"},\"int\"],\"default\":[\"a\"]},{\"name\":\"unionMapWithDefault\",\"type\":[{\"type\":\"map\",\"values\":\"string\"},\"int\"],\"default\":{\"a\":\"b\"}},{\"name\":\"unionFixedWithDefault\",\"type\":[{\"type\":\"fixed\",\"name\":\"nestedUnionFixedWithDefault\",\"size\":1},\"int\"],\"default\":\"A\"}]}\n"
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/TestRecordWithLogicalTypes.avsc",
+      "sha256": "919b39297578be025fc8a8aeba3c29fc1ac9516a18ee075550f37e6612d072a2",
+      "valid": true,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "AVRO_LOGICAL_TYPE",
+          "path": "/root/fields/6/type/logicalType",
+          "message": "Logical type retained; this browser profile validates its underlying carrier only",
+          "severity": "warning"
+        },
+        {
+          "code": "AVRO_LOGICAL_TYPE",
+          "path": "/root/fields/7/type/logicalType",
+          "message": "Logical type retained; this browser profile validates its underlying carrier only",
+          "severity": "warning"
+        },
+        {
+          "code": "AVRO_LOGICAL_TYPE",
+          "path": "/root/fields/8/type/logicalType",
+          "message": "Logical type retained; this browser profile validates its underlying carrier only",
+          "severity": "warning"
+        },
+        {
+          "code": "AVRO_LOGICAL_TYPE",
+          "path": "/root/fields/9/type/logicalType",
+          "message": "Logical type retained; this browser profile validates its underlying carrier only",
+          "severity": "warning"
+        }
+      ],
+      "exported": "{\"type\":\"record\",\"name\":\"TestRecordWithLogicalTypes\",\"doc\":\"Schema for TestRecordWithLogicalTypes and TestRecordWithoutLogicalTypes, see TestSpecificLogicalTypes\",\"namespace\":\"org.apache.avro.specific\",\"fields\":[{\"name\":\"b\",\"type\":\"boolean\"},{\"name\":\"i32\",\"type\":\"int\"},{\"name\":\"i64\",\"type\":\"long\"},{\"name\":\"f32\",\"type\":\"float\"},{\"name\":\"f64\",\"type\":\"double\"},{\"name\":\"s\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"d\",\"type\":{\"type\":\"int\",\"logicalType\":\"date\"}},{\"name\":\"t\",\"type\":{\"type\":\"int\",\"logicalType\":\"time-millis\"}},{\"name\":\"ts\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}},{\"name\":\"bd\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"big-decimal\"}}]}\n"
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/TestRecordWithMapsAndArrays.avsc",
+      "sha256": "bd5acb1394119bfba673ed1bc9de2b9d77170fd1691e15de543313d31b4e6433",
+      "valid": true,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "AVRO_METADATA",
+          "path": "/root/fields/0/type/default",
+          "message": "Uninterpreted native metadata retained",
+          "severity": "warning"
+        },
+        {
+          "code": "AVRO_METADATA",
+          "path": "/root/fields/1/type/default",
+          "message": "Uninterpreted native metadata retained",
+          "severity": "warning"
+        },
+        {
+          "code": "AVRO_METADATA",
+          "path": "/root/fields/2/type/default",
+          "message": "Uninterpreted native metadata retained",
+          "severity": "warning"
+        },
+        {
+          "code": "AVRO_METADATA",
+          "path": "/root/fields/2/type/items/default",
+          "message": "Uninterpreted native metadata retained",
+          "severity": "warning"
+        },
+        {
+          "code": "AVRO_METADATA",
+          "path": "/root/fields/3/type/default",
+          "message": "Uninterpreted native metadata retained",
+          "severity": "warning"
+        },
+        {
+          "code": "AVRO_METADATA",
+          "path": "/root/fields/3/type/values/default",
+          "message": "Uninterpreted native metadata retained",
+          "severity": "warning"
+        }
+      ],
+      "exported": "{\"type\":\"record\",\"name\":\"TestRecordWithMapsAndArrays\",\"namespace\":\"org.apache.avro.specific\",\"fields\":[{\"name\":\"arr\",\"type\":{\"type\":\"array\",\"items\":\"string\",\"default\":[]}},{\"name\":\"map\",\"type\":{\"type\":\"map\",\"values\":\"long\",\"default\":{}}},{\"name\":\"nested_arr\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"array\",\"items\":\"string\",\"default\":[]},\"default\":[]}},{\"name\":\"nested_map\",\"type\":{\"type\":\"map\",\"values\":{\"type\":\"map\",\"values\":\"long\",\"default\":{}},\"default\":{}}}]}\n"
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/TestUnionRecord.avsc",
+      "sha256": "48dc269544e8900c86aabf49129dc59913167b6e0e9a31b56f2828c3a721715b",
+      "valid": true,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "AVRO_LOGICAL_TYPE",
+          "path": "/root/1/fields/0/type/1/logicalType",
+          "message": "Logical type retained; this browser profile validates its underlying carrier only",
+          "severity": "warning"
+        }
+      ],
+      "exported": "[\"null\",{\"namespace\":\"org.apache.avro.specific\",\"type\":\"record\",\"name\":\"TestUnionRecord\",\"fields\":[{\"name\":\"amount\",\"type\":[\"null\",{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":31,\"scale\":8}],\"default\":null}]}]\n"
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/multipleFile/ApplicationEvent.avsc",
+      "sha256": "9ced72444aa332f68b5db3600495d931d72d8a827180db3c148eccfb3cfd482c",
+      "valid": true,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "AVRO_VALIDATOR_LIMIT",
+          "path": "/root",
+          "message": "Native schema could not be interpreted by avsc 5.7.9: Error: undefined type name: model.DocumentInfo",
+          "severity": "warning"
+        }
+      ],
+      "exported": "{\"namespace\":\"model\",\"type\":\"record\",\"doc\":\"\",\"name\":\"ApplicationEvent\",\"fields\":[{\"name\":\"applicationId\",\"type\":\"string\",\"doc\":\"Application ID\"},{\"name\":\"status\",\"type\":\"string\",\"doc\":\"Application Status\"},{\"name\":\"documents\",\"type\":[\"null\",{\"type\":\"array\",\"items\":\"model.DocumentInfo\"}],\"doc\":\"\",\"default\":null}]}\n"
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/multipleFile/DocumentInfo.avsc",
+      "sha256": "7f4b836194e6f52eaef596efd6a7e73bc47035530a24b4d28fec37f786c0a8b7",
+      "valid": true,
+      "complete": true,
+      "diagnostics": [],
+      "exported": "{\"namespace\":\"model\",\"type\":\"record\",\"doc\":\"\",\"name\":\"DocumentInfo\",\"fields\":[{\"name\":\"documentId\",\"type\":\"string\",\"doc\":\"Document ID\"},{\"name\":\"filePath\",\"type\":\"string\",\"doc\":\"Document Path\"}]}\n"
+    },
+    {
+      "path": "lang/java/avro/src/test/resources/multipleFile/MyResponse.avsc",
+      "sha256": "727827658af224cb77bc4b41a33447e229d6d2e29f20026e5d239dc171d07832",
+      "valid": true,
+      "complete": true,
+      "diagnostics": [],
+      "exported": "{\"namespace\":\"model\",\"type\":\"record\",\"doc\":\"\",\"name\":\"MyResponse\",\"fields\":[{\"name\":\"isSuccessful\",\"type\":\"boolean\",\"doc\":\"Indicator for successful or unsuccessful call\"}]}\n"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/foo.Bar.avsc",
+      "sha256": "9f61a396eb826b86e375eb9fa59a4d8d402d875bb818ff8730d70154446893e4",
+      "valid": true,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "AVRO_LOGICAL_TYPE",
+          "path": "/root/fields/1/type/1/logicalType",
+          "message": "Logical type retained; this browser profile validates its underlying carrier only",
+          "severity": "warning"
+        }
+      ],
+      "exported": "{\"fields\":[{\"name\":\"title\",\"type\":\"string\"},{\"name\":\"created_at\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Bar\",\"namespace\":\"foo\",\"type\":\"record\"}\n"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/full_record_v1.avsc",
+      "sha256": "af46e090056002d163f215b296745e2105107aaa7a609f40bfe13157676a5293",
+      "valid": true,
+      "complete": true,
+      "diagnostics": [],
+      "exported": "{\"type\":\"record\",\"name\":\"FullRecordV1\",\"doc\":\"Test schema changes: this is the 'old' schema the SpecificRecord expects to see\",\"namespace\":\"org.apache.avro.specific.test\",\"fields\":[{\"name\":\"b\",\"type\":\"boolean\"},{\"name\":\"i32\",\"type\":\"int\"},{\"name\":\"i64\",\"type\":\"long\"},{\"name\":\"f32\",\"type\":\"float\"},{\"name\":\"f64\",\"type\":\"double\"},{\"name\":\"s\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"h\",\"type\":[\"null\",\"string\"]}]}\n"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/full_record_v2.avsc",
+      "sha256": "e5e861f4e3a774ac70acd3a04e9ad889b21cb6aa0e29e9bd3300308a1a341eb1",
+      "valid": true,
+      "complete": true,
+      "diagnostics": [],
+      "exported": "{\"type\":\"record\",\"name\":\"FullRecordV2\",\"doc\":\"Test schema changes: this is the 'new' schema actually used to write data\",\"namespace\":\"org.apache.avro.specific.test\",\"fields\":[{\"name\":\"b\",\"type\":\"boolean\"},{\"name\":\"i64\",\"type\":\"int\"},{\"name\":\"i32\",\"type\":\"int\"},{\"name\":\"f64\",\"type\":\"long\"},{\"name\":\"f32\",\"type\":[\"float\",\"null\"]},{\"name\":\"newfield\",\"type\":\"string\"},{\"name\":\"h\",\"type\":\"bytes\"},{\"name\":\"myMap\",\"type\":{\"type\":\"map\",\"values\":\"string\"}}]}\n"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/logical-uuid.avsc",
+      "sha256": "d8df15663ac6ea2862e496107513d28a9e7e7350a4e8e64332ddfbfa088b4a98",
+      "valid": true,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "AVRO_LOGICAL_TYPE",
+          "path": "/root/fields/1/type/logicalType",
+          "message": "Logical type retained; this browser profile validates its underlying carrier only",
+          "severity": "warning"
+        },
+        {
+          "code": "AVRO_LOGICAL_TYPE",
+          "path": "/root/fields/2/type/logicalType",
+          "message": "Logical type retained; this browser profile validates its underlying carrier only",
+          "severity": "warning"
+        }
+      ],
+      "exported": "{\"namespace\":\"schema.common\",\"type\":\"record\",\"name\":\"Action\",\"fields\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"guid\",\"type\":{\"type\":\"string\",\"logicalType\":\"uuid\"}},{\"name\":\"time\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}},{\"name\":\"requestId\",\"type\":[\"null\",\"string\"],\"default\":null}]}\n"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/logical_types_with_multiple_fields.avsc",
+      "sha256": "f3762c63b16d7b2be2f2fd3a6824d5fd517008924d06b66ba213897b649edee8",
+      "valid": true,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "AVRO_LOGICAL_TYPE",
+          "path": "/root/fields/2/type/logicalType",
+          "message": "Logical type retained; this browser profile validates its underlying carrier only",
+          "severity": "warning"
+        }
+      ],
+      "exported": "{\"namespace\":\"schema.common\",\"type\":\"record\",\"name\":\"Action\",\"fields\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"uuid\",\"type\":\"string\"},{\"name\":\"time\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}},{\"name\":\"requestId\",\"type\":[\"null\",\"string\"],\"default\":null}]}\n"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/regression_error_field_in_record.avsc",
+      "sha256": "e7a7015904ed7b4b04e3e8cb49e62d1019453e4f07ef52b4aceb491bae89951e",
+      "valid": true,
+      "complete": true,
+      "diagnostics": [],
+      "exported": "{\"type\":\"record\",\"name\":\"RecordWithErrorField\",\"doc\":\"With custom coders in Avro 1.9, previously successful records with error fields now fail to compile.\",\"namespace\":\"org.apache.avro.specific.test\",\"fields\":[{\"name\":\"s\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"e\",\"type\":[\"null\",{\"type\":\"error\",\"name\":\"TestError\",\"fields\":[{\"name\":\"message\",\"type\":\"string\"}]}],\"default\":null}]}\n"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/simple_record.avsc",
+      "sha256": "bacaf260944b1f6bfea0e3345b29468fbd10dd63a9788222ead244bc899b1006",
+      "valid": true,
+      "complete": true,
+      "diagnostics": [],
+      "exported": "{\"type\":\"record\",\"name\":\"SimpleRecord\",\"fields\":[{\"name\":\"value\",\"type\":\"int\"},{\"name\":\"nullableValue\",\"type\":[\"null\",\"int\"],\"doc\":\"doc\"}]}\n"
+    },
+    {
+      "path": "lang/java/compiler/src/test/resources/union_and_fixed_fields.avsc",
+      "sha256": "6ecaa27206f408030d5ece2b14eb429eb22a78681d259bf958260e1d681026d9",
+      "valid": true,
+      "complete": false,
+      "diagnostics": [
+        {
+          "code": "AVRO_LOGICAL_TYPE",
+          "path": "/root/fields/1/type/1/logicalType",
+          "message": "Logical type retained; this browser profile validates its underlying carrier only",
+          "severity": "warning"
+        }
+      ],
+      "exported": "{\"type\":\"record\",\"name\":\"UnionAndFixedFields\",\"doc\":\"Schema for UnionAndFixedFields designed to trigger fixed compiler warnings in generated code\",\"namespace\":\"org.apache.avro.specific\",\"fields\":[{\"name\":\"u\",\"type\":[\"boolean\",\"int\",\"long\",\"float\",\"string\"]},{\"name\":\"l\",\"type\":[\"string\",{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}]},{\"name\":\"f\",\"type\":{\"type\":\"fixed\",\"size\":16,\"name\":\"md5\"}}]}\n"
+    }
+  ]
+}

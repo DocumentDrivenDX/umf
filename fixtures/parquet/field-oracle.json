@@ -1,0 +1,82 @@
+{
+  "pyarrow": "21.0.0",
+  "cases": [
+    {
+      "id": "decimal32",
+      "nativeSchemaAgrees": true,
+      "arrowSchema": "value: decimal128(9, 2)"
+    },
+    {
+      "id": "decimal64",
+      "nativeSchemaAgrees": true,
+      "arrowSchema": "value: decimal128(18, 2)"
+    },
+    {
+      "id": "decimal-fixed",
+      "nativeSchemaAgrees": true,
+      "arrowSchema": "value: decimal128(38, 9)"
+    },
+    {
+      "id": "decimal-legacy-default",
+      "nativeSchemaAgrees": true,
+      "arrowSchema": "value: decimal128(5, 0)"
+    },
+    {
+      "id": "decimal-legacy-conflict",
+      "nativeSchemaAgrees": true,
+      "arrowSchema": "value: decimal128(5, 2)"
+    },
+    {
+      "id": "uint32",
+      "nativeSchemaAgrees": true,
+      "arrowSchema": "value: uint32"
+    },
+    {
+      "id": "int8",
+      "nativeSchemaAgrees": true,
+      "arrowSchema": "value: int8"
+    },
+    {
+      "id": "timestamp-local",
+      "nativeSchemaAgrees": true,
+      "arrowSchema": "value: timestamp[us]"
+    },
+    {
+      "id": "time-ms",
+      "nativeSchemaAgrees": true,
+      "arrowSchema": "value: time32[ms]"
+    },
+    {
+      "id": "time-nanos",
+      "nativeSchemaAgrees": true,
+      "arrowSchema": "value: time64[ns]"
+    },
+    {
+      "id": "string",
+      "nativeSchemaAgrees": true,
+      "arrowSchema": "value: string"
+    },
+    {
+      "id": "uuid",
+      "nativeSchemaAgrees": true,
+      "arrowSchema": "value: extension<arrow.uuid>"
+    },
+    {
+      "id": "float16",
+      "nativeSchemaAgrees": true,
+      "arrowSchema": "value: halffloat"
+    },
+    {
+      "id": "date",
+      "nativeSchemaAgrees": true,
+      "arrowSchema": "value: date32[day]"
+    },
+    {
+      "id": "interval",
+      "nativeSchemaAgrees": true,
+      "arrowSchema": "value: fixed_size_binary[12]"
+    }
+  ],
+  "renamedRows": 8,
+  "renameAgrees": true
+}

@@ -1,0 +1,432 @@
+[
+  {
+    "rowGroup": 0,
+    "column": 0,
+    "offset": 4,
+    "headerBytes": 15,
+    "bodyOffset": 19,
+    "bodyBytes": 42,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "64",
+      "compressed_page_size": "42",
+      "dictionary_page_header": {
+        "num_values": "8",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "00000000000000000100000000000000020000000000000003000000000000000400000000000000050000000000000006000000000000000700000000000000",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 0,
+    "offset": 61,
+    "headerBytes": 61,
+    "bodyOffset": 122,
+    "bodyBytes": 7,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "5",
+      "compressed_page_size": "7",
+      "data_page_header": {
+        "num_values": "8",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3",
+        "statistics": {
+          "max": {
+            "hex": "0700000000000000"
+          },
+          "min": {
+            "hex": "0000000000000000"
+          },
+          "null_count": "0",
+          "max_value": {
+            "hex": "0700000000000000"
+          },
+          "min_value": {
+            "hex": "0000000000000000"
+          }
+        }
+      }
+    },
+    "bodyHex": "030388c6fa",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 1,
+    "offset": 129,
+    "headerBytes": 15,
+    "bodyOffset": 144,
+    "bodyBytes": 46,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "84",
+      "compressed_page_size": "46",
+      "dictionary_page_header": {
+        "num_values": "7",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "08000000e6b3a8e69687203008000000e6b3a8e69687203208000000e6b3a8e69687203308000000e6b3a8e69687203408000000e6b3a8e69687203508000000e6b3a8e69687203608000000e6b3a8e696872037",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 1,
+    "offset": 190,
+    "headerBytes": 41,
+    "bodyOffset": 231,
+    "bodyBytes": 14,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "12",
+      "compressed_page_size": "14",
+      "data_page_header": {
+        "num_values": "8",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3",
+        "statistics": {
+          "null_count": "1",
+          "max_value": {
+            "hex": "e6b3a8e696872037"
+          },
+          "min_value": {
+            "hex": "e6b3a8e696872030"
+          }
+        }
+      }
+    },
+    "bodyHex": "0300000003a2aa030388c61a",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 2,
+    "offset": 245,
+    "headerBytes": 14,
+    "bodyOffset": 259,
+    "bodyBytes": 8,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "6",
+      "compressed_page_size": "8",
+      "dictionary_page_header": {
+        "num_values": "1",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "000000003039",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 2,
+    "offset": 267,
+    "headerBytes": 53,
+    "bodyOffset": 320,
+    "bodyBytes": 12,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "10",
+      "compressed_page_size": "12",
+      "data_page_header": {
+        "num_values": "8",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3",
+        "statistics": {
+          "max": {
+            "hex": "000000003039"
+          },
+          "min": {
+            "hex": "000000003039"
+          },
+          "null_count": "1",
+          "max_value": {
+            "hex": "000000003039"
+          },
+          "min_value": {
+            "hex": "000000003039"
+          }
+        }
+      }
+    },
+    "bodyHex": "0300000003a2aa010e00",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 3,
+    "offset": 332,
+    "headerBytes": 14,
+    "bodyOffset": 346,
+    "bodyBytes": 12,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "10",
+      "compressed_page_size": "12",
+      "dictionary_page_header": {
+        "num_values": "2",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "01000000610100000062",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 3,
+    "offset": 358,
+    "headerBytes": 27,
+    "bodyOffset": 385,
+    "bodyBytes": 25,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "23",
+      "compressed_page_size": "25",
+      "data_page_header": {
+        "num_values": "20",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3",
+        "statistics": {
+          "null_count": "8",
+          "max_value": {
+            "hex": "62"
+          },
+          "min_value": {
+            "hex": "61"
+          }
+        }
+      }
+    },
+    "bodyHex": "040000000736b60d0700000007fb4efbbeef000105aa0a",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 4,
+    "offset": 410,
+    "headerBytes": 14,
+    "bodyOffset": 424,
+    "bodyBytes": 21,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "19",
+      "compressed_page_size": "21",
+      "dictionary_page_header": {
+        "num_values": "2",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "050000006669727374060000007365636f6e64",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 4,
+    "offset": 445,
+    "headerBytes": 36,
+    "bodyOffset": 481,
+    "bodyBytes": 22,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "20",
+      "compressed_page_size": "22",
+      "data_page_header": {
+        "num_values": "14",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3",
+        "statistics": {
+          "null_count": "2",
+          "max_value": {
+            "hex": "7365636f6e64"
+          },
+          "min_value": {
+            "hex": "6669727374"
+          }
+        }
+      }
+    },
+    "bodyHex": "0300000005aa2805000000100203a40a0105aa0a",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 5,
+    "offset": 503,
+    "headerBytes": 14,
+    "bodyOffset": 517,
+    "bodyBytes": 26,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "24",
+      "compressed_page_size": "26",
+      "dictionary_page_header": {
+        "num_values": "6",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "000000000100000002000000030000000600000007000000",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 5,
+    "offset": 543,
+    "headerBytes": 45,
+    "bodyOffset": 588,
+    "bodyBytes": 23,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "21",
+      "compressed_page_size": "23",
+      "data_page_header": {
+        "num_values": "14",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3",
+        "statistics": {
+          "max": {
+            "hex": "07000000"
+          },
+          "min": {
+            "hex": "00000000"
+          },
+          "null_count": "8",
+          "max_value": {
+            "hex": "07000000"
+          },
+          "min_value": {
+            "hex": "00000000"
+          }
+        }
+      }
+    },
+    "bodyHex": "0300000005aa280500000005bbbbb40b030388c602",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 6,
+    "offset": 611,
+    "headerBytes": 14,
+    "bodyOffset": 625,
+    "bodyBytes": 32,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "32",
+      "compressed_page_size": "32",
+      "dictionary_page_header": {
+        "num_values": "4",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "00f00b555247060080742a555247060000f9485552470600807d675552470600",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 6,
+    "offset": 657,
+    "headerBytes": 61,
+    "bodyOffset": 718,
+    "bodyBytes": 24,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "22",
+      "compressed_page_size": "24",
+      "data_page_header": {
+        "num_values": "12",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3",
+        "statistics": {
+          "max": {
+            "hex": "807d675552470600"
+          },
+          "min": {
+            "hex": "00f00b5552470600"
+          },
+          "null_count": "4",
+          "max_value": {
+            "hex": "807d675552470600"
+          },
+          "min_value": {
+            "hex": "00f00b5552470600"
+          }
+        }
+      }
+    },
+    "bodyHex": "03000000059204070000000554a850a102000203e400",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 7,
+    "offset": 742,
+    "headerBytes": 14,
+    "bodyOffset": 756,
+    "bodyBytes": 18,
+    "header": {
+      "type": "2",
+      "uncompressed_page_size": "16",
+      "compressed_page_size": "18",
+      "dictionary_page_header": {
+        "num_values": "4",
+        "encoding": "0",
+        "is_sorted": false
+      }
+    },
+    "bodyHex": "00000000020000000400000006000000",
+    "checksum": "absent"
+  },
+  {
+    "rowGroup": 0,
+    "column": 7,
+    "offset": 774,
+    "headerBytes": 45,
+    "bodyOffset": 819,
+    "bodyBytes": 24,
+    "header": {
+      "type": "0",
+      "uncompressed_page_size": "22",
+      "compressed_page_size": "24",
+      "data_page_header": {
+        "num_values": "12",
+        "encoding": "8",
+        "definition_level_encoding": "3",
+        "repetition_level_encoding": "3",
+        "statistics": {
+          "max": {
+            "hex": "06000000"
+          },
+          "min": {
+            "hex": "00000000"
+          },
+          "null_count": "4",
+          "max_value": {
+            "hex": "06000000"
+          },
+          "min_value": {
+            "hex": "00000000"
+          }
+        }
+      }
+    },
+    "bodyHex": "03000000059204070000000554a850a102000203e400",
+    "checksum": "absent"
+  }
+]

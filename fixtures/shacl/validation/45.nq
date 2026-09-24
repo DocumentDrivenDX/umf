@@ -1,0 +1,24 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b17383 .
+_:report <http://www.w3.org/ns/shacl#result> _:b17384 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b17383 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b17383 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b17383 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinCountConstraintComponent> .
+_:b17383 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/path/path-sequence-002.test#TestShape> .
+_:b17383 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/path/path-sequence-002.test#InvalidResource1> .
+_:b17383 <http://www.w3.org/ns/shacl#resultPath> _:s_g_0 .
+_:b17383 <http://www.w3.org/ns/shacl#resultMessage> "Less than 1 values" .
+_:s_g_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://datashapes.org/sh/tests/core/path/path-sequence-002.test#property1> .
+_:s_g_0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:s_g_1 .
+_:s_g_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://datashapes.org/sh/tests/core/path/path-sequence-002.test#property2> .
+_:s_g_1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:s_g_2 .
+_:s_g_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://datashapes.org/sh/tests/core/path/path-sequence-002.test#property3> .
+_:s_g_2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:b17384 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b17384 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b17384 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MinCountConstraintComponent> .
+_:b17384 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/path/path-sequence-002.test#TestShape> .
+_:b17384 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/path/path-sequence-002.test#InvalidResource2> .
+_:b17384 <http://www.w3.org/ns/shacl#resultPath> _:s_g_0 .
+_:b17384 <http://www.w3.org/ns/shacl#resultMessage> "Less than 1 values" .

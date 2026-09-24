@@ -1,0 +1,50 @@
+[
+  {
+    "id": "0",
+    "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"x\":9223372036854775807}}]}"
+  },
+  {
+    "id": "1",
+    "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"x\":-9223372036854775808}}]}"
+  },
+  {
+    "id": "2",
+    "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"x\":9223372036854775808}}]}"
+  },
+  {
+    "id": "3",
+    "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"x\":-9223372036854775809}}]}"
+  },
+  {
+    "id": "4",
+    "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"x\":9007199254740993.25}}]}"
+  },
+  {
+    "id": "5",
+    "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"x\":1e400}}]}"
+  },
+  {
+    "id": "6",
+    "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"x\":[1,2.5]}}]}"
+  },
+  {
+    "id": "7",
+    "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"x\":[null]}}]}"
+  },
+  {
+    "id": "8",
+    "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"x\":[[1]]}}]}"
+  },
+  {
+    "id": "9",
+    "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"x\":[]}}]}"
+  },
+  {
+    "id": "10",
+    "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"string\",\"nullable\":true,\"metadata\":{\"x\":null}}]}"
+  },
+  {
+    "id": "11",
+    "text": "{\"type\":\"struct\",\"fields\":[{\"name\":\"x\",\"type\":\"string\",\"metadata\":{}}]}"
+  }
+]

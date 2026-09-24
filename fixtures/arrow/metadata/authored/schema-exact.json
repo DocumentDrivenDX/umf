@@ -1,0 +1,32 @@
+{
+  "endianness": "Big",
+  "features": [
+    "DICTIONARY_REPLACEMENT",
+    "COMPRESSED_BODY"
+  ],
+  "fields": [
+    {
+      "name": "value",
+      "type_type": "Utf8",
+      "type": {},
+      "dictionary": {
+        "id": 9223372036854775807,
+        "indexType": {
+          "bitWidth": 32,
+          "is_signed": true
+        },
+        "isOrdered": true
+      }
+    }
+  ],
+  "custom_metadata": [
+    {
+      "key": "duplicate",
+      "value": "first"
+    },
+    {
+      "key": "duplicate",
+      "value": "second"
+    }
+  ]
+}

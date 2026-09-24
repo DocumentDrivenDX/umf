@@ -1,0 +1,10 @@
+import {equalJsonLdText} from './jsonld-compare';
+import {importRdfNQuads,exportRdfNQuads,proposeRdfToJsonLd,exportJsonLdDocument,readDocument,writeDocument} from '../src';
+const manifest=await Bun.file('native/jsonld/sources/fromRdf-manifest.jsonld').json(),cases=[];
+for(const c of manifest.sequence){
+ const id=c['@id'].slice(1),path='native/jsonld/sources/'+c.input,raw=await Bun.file(path).text(),options={id:id+'-jsonld',baseIRI:manifest.baseIri+c.input,lossPolicy:'report' as const,processingMode:c.option?.processingMode??c.option?.specVersion??'json-ld-1.1',useNativeTypes:c.option?.useNativeTypes??false,useRdfType:c.option?.useRdfType??false,rdfDirection:c.option?.rdfDirection??null},d=importRdfNQuads(raw,{id}),r=await proposeRdfToJsonLd(d,options),exports=[];
+ for(const format of ['json','yaml'] as const){if(exportRdfNQuads(readDocument(writeDocument(d,format),format))!==raw)throw Error('RDF source differs');if(r.candidate){const out='fixtures/jsonld/from-rdf/'+id+'.'+format+'.jsonld';await Bun.write(out,exportJsonLdDocument(readDocument(writeDocument(r.candidate,format),format)));exports.push({format,path:out});}}
+ const expected=c.expect?await Bun.file('native/jsonld/sources/'+c.expect).text():undefined;
+ cases.push({id,path,options,positive:c['@type'].includes('jld:PositiveEvaluationTest'),expectedPath:c.expect?'native/jsonld/sources/'+c.expect:undefined,expectedError:c.expectErrorCode,status:r.status,diagnostics:r.diagnostics,exports,...(r.candidate&&expected!==undefined?{matchesExpected:equalJsonLdText(exportJsonLdDocument(r.candidate),expected)}:{})});
+}
+await Bun.write('fixtures/jsonld/from-rdf/results.json',JSON.stringify({cases},null,2)+'\n');console.log({cases:cases.length,candidates:cases.filter(c=>c.status==='candidate').length,positiveBlocked:cases.filter(c=>c.positive&&c.status==='blocked').map(c=>c.id),negativeAccepted:cases.filter(c=>!c.positive&&c.status==='candidate').map(c=>c.id),mismatches:cases.filter(c=>c.matchesExpected===false).map(c=>c.id)});

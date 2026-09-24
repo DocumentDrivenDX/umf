@@ -1,0 +1,143 @@
+[
+  {
+    "metaData": null,
+    "protocol": {
+      "minReaderVersion": 1,
+      "minWriterVersion": 2
+    },
+    "txn": null,
+    "add": null,
+    "remove": null
+  },
+  {
+    "metaData": {
+      "id": "98c9faeb-7940-43eb-9898-50b2a99c0a7e",
+      "name": null,
+      "description": null,
+      "schemaString": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"price\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"sold\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"deleted\",\"type\":\"boolean\",\"nullable\":true,\"metadata\":{}}]}",
+      "createdTime": {
+        "$int64": "1709986334419"
+      },
+      "partitionColumns": [],
+      "configuration": {},
+      "format": {
+        "provider": "parquet",
+        "options": {}
+      }
+    },
+    "protocol": null,
+    "txn": null,
+    "add": null,
+    "remove": null
+  },
+  {
+    "metaData": null,
+    "protocol": null,
+    "txn": null,
+    "add": {
+      "path": "part-00001-fed6d112-d244-4c54-810d-25ba3f0a4016-c000.snappy.parquet",
+      "size": {
+        "$int64": "1432"
+      },
+      "modificationTime": {
+        "$int64": "1709986334474"
+      },
+      "dataChange": false,
+      "stats": "{\"numRecords\":5,\"minValues\":{\"deleted\":false,\"price\":0,\"id\":\"1\",\"sold\":0},\"maxValues\":{\"price\":4,\"id\":\"5\",\"sold\":4,\"deleted\":false},\"nullCount\":{\"id\":0,\"sold\":0,\"deleted\":0,\"price\":0}}",
+      "partitionValues": {},
+      "tags": {},
+      "deletionVector": null,
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "5"
+        },
+        "minValues": {
+          "id": "1",
+          "price": {
+            "$int64": "0"
+          },
+          "sold": 0,
+          "deleted": false
+        },
+        "maxValues": {
+          "id": "5",
+          "price": {
+            "$int64": "4"
+          },
+          "sold": 4,
+          "deleted": false
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "price": {
+            "$int64": "0"
+          },
+          "sold": {
+            "$int64": "0"
+          },
+          "deleted": {
+            "$int64": "0"
+          }
+        }
+      }
+    },
+    "remove": null
+  },
+  {
+    "metaData": null,
+    "protocol": null,
+    "txn": null,
+    "add": {
+      "path": "part-00001-9c90a84d-6999-463c-bd2d-f68333e6d03d-c000.snappy.parquet",
+      "size": {
+        "$int64": "1432"
+      },
+      "modificationTime": {
+        "$int64": "1709986334424"
+      },
+      "dataChange": false,
+      "stats": "{\"numRecords\":5,\"minValues\":{\"deleted\":false,\"id\":\"1\",\"sold\":0,\"price\":0},\"maxValues\":{\"price\":4,\"id\":\"5\",\"deleted\":false,\"sold\":4},\"nullCount\":{\"deleted\":0,\"id\":0,\"price\":0,\"sold\":0}}",
+      "partitionValues": {},
+      "tags": {},
+      "deletionVector": null,
+      "stats_parsed": {
+        "numRecords": {
+          "$int64": "5"
+        },
+        "minValues": {
+          "id": "1",
+          "price": {
+            "$int64": "0"
+          },
+          "sold": 0,
+          "deleted": false
+        },
+        "maxValues": {
+          "id": "5",
+          "price": {
+            "$int64": "4"
+          },
+          "sold": 4,
+          "deleted": false
+        },
+        "nullCount": {
+          "id": {
+            "$int64": "0"
+          },
+          "price": {
+            "$int64": "0"
+          },
+          "sold": {
+            "$int64": "0"
+          },
+          "deleted": {
+            "$int64": "0"
+          }
+        }
+      }
+    },
+    "remove": null
+  }
+]

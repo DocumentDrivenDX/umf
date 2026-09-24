@@ -1,0 +1,2 @@
+{"protocol":{"minReaderVersion":1,"minWriterVersion":4}}
+{"metaData":{"id":"abd7ff9d-5fac-48fb-8d13-06c3ce1811ac","format":{"provider":"parquet","options":{}},"schemaString":"{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}","partitionColumns":[],"configuration":{"description":"CDC test Table","delta.enableChangeDataFeed":"true"},"createdTime":1671962429466}}

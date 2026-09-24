@@ -1,0 +1,2091 @@
+{
+  "package": "@libpg-query/parser@17.6.10",
+  "adapterSha256": "a88fea4cf15c9c3c3f0ad1f0a36d8f5de42a42ce8ea9712499f609beee3ea751",
+  "postgresql": 170004,
+  "upstream": "1c1a32ed2f4c7799830d50bf4cb159222aafec48",
+  "cases": 416,
+  "roundTrips": 416,
+  "blocked": 0,
+  "results": [
+    {
+      "id": "deparse-001",
+      "status": "round-trip",
+      "sql": "SELECT 1"
+    },
+    {
+      "id": "deparse-002",
+      "status": "round-trip",
+      "sql": "SELECT 1; SELECT 2"
+    },
+    {
+      "id": "deparse-003",
+      "status": "round-trip",
+      "sql": "SELECT 1 FROM t(1)"
+    },
+    {
+      "id": "deparse-004",
+      "status": "round-trip",
+      "sql": "SELECT sum(unique1) FILTER (WHERE unique1 IN (SELECT unique1 FROM onek WHERE unique1 < 100)) FROM tenk1"
+    },
+    {
+      "id": "deparse-005",
+      "status": "round-trip",
+      "sql": "SELECT a AS b FROM x WHERE y = 5 AND z = y"
+    },
+    {
+      "id": "deparse-006",
+      "status": "round-trip",
+      "sql": "SELECT FROM x WHERE y = 5 AND z = y"
+    },
+    {
+      "id": "deparse-007",
+      "status": "round-trip",
+      "sql": "SELECT a AS b FROM public.x WHERE y = 5 AND z = y"
+    },
+    {
+      "id": "deparse-008",
+      "status": "round-trip",
+      "sql": "SELECT DISTINCT a, b, * FROM c WHERE d = e"
+    },
+    {
+      "id": "deparse-009",
+      "status": "round-trip",
+      "sql": "SELECT DISTINCT ON (a) a, b FROM c"
+    },
+    {
+      "id": "deparse-010",
+      "status": "round-trip",
+      "sql": "SELECT * INTO films_recent FROM films WHERE date_prod >= '2002-01-01'"
+    },
+    {
+      "id": "deparse-011",
+      "status": "round-trip",
+      "sql": "SELECT current_timestamp"
+    },
+    {
+      "id": "deparse-012",
+      "status": "round-trip",
+      "sql": "SELECT current_time(2)"
+    },
+    {
+      "id": "deparse-013",
+      "status": "round-trip",
+      "sql": "SELECT memory_total_bytes, memory_swap_total_bytes - memory_swap_free_bytes AS swap, date_part('year', s.collected_at) AS collected_at FROM snapshots s JOIN system_snapshots ON snapshot_id = s.id WHERE s.database_id = 23 AND s.collected_at >= 90 AND s.collected_at <= 160 ORDER BY collected_at ASC"
+    },
+    {
+      "id": "deparse-014",
+      "status": "round-trip",
+      "sql": "SELECT * FROM a ORDER BY x ASC NULLS FIRST"
+    },
+    {
+      "id": "deparse-015",
+      "status": "round-trip",
+      "sql": "SELECT * FROM a ORDER BY x ASC NULLS LAST"
+    },
+    {
+      "id": "deparse-016",
+      "status": "round-trip",
+      "sql": "SELECT * FROM a ORDER BY x COLLATE \"tr_TR\" DESC NULLS LAST"
+    },
+    {
+      "id": "deparse-017",
+      "status": "round-trip",
+      "sql": "SELECT 'foo' COLLATE \"tr_TR\""
+    },
+    {
+      "id": "deparse-018",
+      "status": "round-trip",
+      "sql": "WITH kodsis AS (SELECT * FROM application), kodsis2 AS (SELECT * FROM application) SELECT * FROM kodsis UNION SELECT * FROM kodsis ORDER BY id DESC"
+    },
+    {
+      "id": "deparse-019",
+      "status": "round-trip",
+      "sql": "SELECT id, name FROM table1 UNION (SELECT id, name FROM table2 ORDER BY name) ORDER BY id ASC"
+    },
+    {
+      "id": "deparse-020",
+      "status": "round-trip",
+      "sql": "SELECT a FROM kodsis EXCEPT SELECT a FROM application"
+    },
+    {
+      "id": "deparse-021",
+      "status": "round-trip",
+      "sql": "SELECT * FROM (VALUES ('anne', 'smith'), ('bob', 'jones'), ('joe', 'blow')) names(first, last)"
+    },
+    {
+      "id": "deparse-022",
+      "status": "round-trip",
+      "sql": "SELECT * FROM users WHERE name LIKE 'postgresql:%'"
+    },
+    {
+      "id": "deparse-023",
+      "status": "round-trip",
+      "sql": "SELECT * FROM users WHERE name NOT LIKE 'postgresql:%'"
+    },
+    {
+      "id": "deparse-024",
+      "status": "round-trip",
+      "sql": "SELECT * FROM users WHERE name ILIKE 'postgresql:%'"
+    },
+    {
+      "id": "deparse-025",
+      "status": "round-trip",
+      "sql": "SELECT * FROM users WHERE name NOT ILIKE 'postgresql:%'"
+    },
+    {
+      "id": "deparse-026",
+      "status": "round-trip",
+      "sql": "WITH t AS (SELECT random() AS x FROM generate_series(1, 3)) SELECT * FROM t"
+    },
+    {
+      "id": "deparse-027",
+      "status": "round-trip",
+      "sql": "WITH RECURSIVE search_graph(id, link, data, depth, path, cycle) AS (SELECT g.id, g.link, g.data, 1, ARRAY[ROW(g.f1, g.f2)], false FROM graph g UNION ALL SELECT g.id, g.link, g.data, sg.depth + 1, path || ROW(g.f1, g.f2), ROW(g.f1, g.f2) = ANY(path) FROM graph g, search_graph sg WHERE g.id = sg.link AND NOT cycle) SELECT id, data, link FROM search_graph"
+    },
+    {
+      "id": "deparse-028",
+      "status": "round-trip",
+      "sql": "SELECT OVERLAY(m.name PLACING '******' FROM 3 FOR 6) AS tc_kimlik FROM tb_test m"
+    },
+    {
+      "id": "deparse-029",
+      "status": "round-trip",
+      "sql": "SELECT sum(price_cents) FROM products"
+    },
+    {
+      "id": "deparse-030",
+      "status": "round-trip",
+      "sql": "SELECT ARRAY(SELECT id FROM products)::bigint[]"
+    },
+    {
+      "id": "deparse-031",
+      "status": "round-trip",
+      "sql": "SELECT m.name AS mname, pname FROM manufacturers m, LATERAL get_product_names(m.id) pname"
+    },
+    {
+      "id": "deparse-032",
+      "status": "round-trip",
+      "sql": "SELECT m.name AS mname, pname FROM manufacturers m LEFT JOIN LATERAL get_product_names(m.id) pname ON true"
+    },
+    {
+      "id": "deparse-033",
+      "status": "round-trip",
+      "sql": "SELECT * FROM tb_test_main mh JOIN LATERAL (SELECT ftnrm.* FROM test ftnrm WHERE ftnrm.hizmet_id = mh.id UNION ALL SELECT ftarc.* FROM test.test2 ftarc WHERE ftarc.hizmet_id = mh.id) ft ON true"
+    },
+    {
+      "id": "deparse-034",
+      "status": "round-trip",
+      "sql": "SELECT x, y FROM a CROSS JOIN b"
+    },
+    {
+      "id": "deparse-035",
+      "status": "round-trip",
+      "sql": "SELECT x, y FROM a NATURAL JOIN b"
+    },
+    {
+      "id": "deparse-036",
+      "status": "round-trip",
+      "sql": "SELECT x, y FROM a LEFT JOIN b ON 1 > 0"
+    },
+    {
+      "id": "deparse-037",
+      "status": "round-trip",
+      "sql": "SELECT x, y FROM a RIGHT JOIN b ON 1 > 0"
+    },
+    {
+      "id": "deparse-038",
+      "status": "round-trip",
+      "sql": "SELECT x, y FROM a FULL JOIN b ON 1 > 0"
+    },
+    {
+      "id": "deparse-039",
+      "status": "round-trip",
+      "sql": "SELECT x, y FROM a JOIN b USING (z)"
+    },
+    {
+      "id": "deparse-040",
+      "status": "round-trip",
+      "sql": "SELECT 2 + 2"
+    },
+    {
+      "id": "deparse-041",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x WHERE y IS NULL"
+    },
+    {
+      "id": "deparse-042",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x WHERE y IS NOT NULL"
+    },
+    {
+      "id": "deparse-043",
+      "status": "round-trip",
+      "sql": "SELECT count(*) FROM x WHERE y IS NOT NULL"
+    },
+    {
+      "id": "deparse-044",
+      "status": "round-trip",
+      "sql": "SELECT count(DISTINCT a) FROM x WHERE y IS NOT NULL"
+    },
+    {
+      "id": "deparse-045",
+      "status": "round-trip",
+      "sql": "SELECT CASE WHEN a.status = 1 THEN 'active' WHEN a.status = 2 THEN 'inactive' END FROM accounts a"
+    },
+    {
+      "id": "deparse-046",
+      "status": "round-trip",
+      "sql": "SELECT CASE 1 > 0 WHEN true THEN 'ok' ELSE NULL END"
+    },
+    {
+      "id": "deparse-047",
+      "status": "round-trip",
+      "sql": "SELECT CASE WHEN a.status = 1 THEN 'active' WHEN a.status = 2 THEN 'inactive' ELSE 'unknown' END FROM accounts a"
+    },
+    {
+      "id": "deparse-048",
+      "status": "round-trip",
+      "sql": "SELECT * FROM accounts WHERE status = CASE WHEN x = 1 THEN 'active' ELSE 'inactive' END"
+    },
+    {
+      "id": "deparse-049",
+      "status": "round-trip",
+      "sql": "SELECT CASE WHEN EXISTS (SELECT 1) THEN 1 ELSE 2 END"
+    },
+    {
+      "id": "deparse-050",
+      "status": "round-trip",
+      "sql": "SELECT (SELECT 'x')"
+    },
+    {
+      "id": "deparse-051",
+      "status": "round-trip",
+      "sql": "SELECT * FROM (SELECT generate_series(0, 100)) a"
+    },
+    {
+      "id": "deparse-052",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x WHERE id IN (1, 2, 3)"
+    },
+    {
+      "id": "deparse-053",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x WHERE id IN (SELECT id FROM account)"
+    },
+    {
+      "id": "deparse-054",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x WHERE id NOT IN (1, 2, 3)"
+    },
+    {
+      "id": "deparse-055",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x JOIN (SELECT n FROM z) b ON a.id = b.id"
+    },
+    {
+      "id": "deparse-056",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x WHERE y = z[5]"
+    },
+    {
+      "id": "deparse-057",
+      "status": "round-trip",
+      "sql": "SELECT (foo(1)).y"
+    },
+    {
+      "id": "deparse-058",
+      "status": "round-trip",
+      "sql": "SELECT proname, (SELECT regexp_split_to_array(proargtypes::text, ' '))[idx] AS argtype, proargnames[idx] AS argname FROM pg_proc"
+    },
+    {
+      "id": "deparse-059",
+      "status": "round-trip",
+      "sql": "SELECT COALESCE((SELECT customer.sp_person(n.id) AS sp_person).city_id, NULL::int) AS city_id FROM customer.tb_customer n"
+    },
+    {
+      "id": "deparse-060",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x WHERE y = z[1][4]"
+    },
+    {
+      "id": "deparse-061",
+      "status": "round-trip",
+      "sql": "SELECT (k #= hstore('{id}'::text[], ARRAY[1::text])).* FROM test k"
+    },
+    {
+      "id": "deparse-062",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x WHERE NOT y"
+    },
+    {
+      "id": "deparse-063",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x WHERE x OR y"
+    },
+    {
+      "id": "deparse-064",
+      "status": "round-trip",
+      "sql": "SELECT 1 WHERE (1 = 1 OR 1 = 2) AND 1 = 2"
+    },
+    {
+      "id": "deparse-065",
+      "status": "round-trip",
+      "sql": "SELECT 1 WHERE (1 = 1 AND 2 = 2) OR 2 = 3"
+    },
+    {
+      "id": "deparse-066",
+      "status": "round-trip",
+      "sql": "SELECT 1 WHERE 1 = 1 OR 2 = 2 OR 2 = 3"
+    },
+    {
+      "id": "deparse-067",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x WHERE x = ALL (SELECT x FROM y WHERE z = 20)"
+    },
+    {
+      "id": "deparse-068",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x WHERE x = ANY (SELECT x FROM y WHERE z = 20)"
+    },
+    {
+      "id": "deparse-069",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x WHERE x = COALESCE(y, z)"
+    },
+    {
+      "id": "deparse-070",
+      "status": "round-trip",
+      "sql": "SELECT a, b, max(c) FROM c WHERE d = 1 GROUP BY a, b"
+    },
+    {
+      "id": "deparse-071",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x LIMIT 50"
+    },
+    {
+      "id": "deparse-072",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x OFFSET 50"
+    },
+    {
+      "id": "deparse-073",
+      "status": "round-trip",
+      "sql": "SELECT amount * 0.5"
+    },
+    {
+      "id": "deparse-074",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x WHERE x BETWEEN '2016-01-01' AND '2016-02-02'"
+    },
+    {
+      "id": "deparse-075",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x WHERE x NOT BETWEEN '2016-01-01' AND '2016-02-02'"
+    },
+    {
+      "id": "deparse-076",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x WHERE x BETWEEN SYMMETRIC 20 AND 10"
+    },
+    {
+      "id": "deparse-077",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x WHERE x NOT BETWEEN SYMMETRIC 20 AND 10"
+    },
+    {
+      "id": "deparse-078",
+      "status": "round-trip",
+      "sql": "SELECT NULLIF(id, 0) AS id FROM x"
+    },
+    {
+      "id": "deparse-079",
+      "status": "round-trip",
+      "sql": "SELECT NULL FROM x"
+    },
+    {
+      "id": "deparse-080",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x WHERE y IS TRUE"
+    },
+    {
+      "id": "deparse-081",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x WHERE y IS NOT TRUE"
+    },
+    {
+      "id": "deparse-082",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x WHERE y IS FALSE"
+    },
+    {
+      "id": "deparse-083",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x WHERE y IS NOT FALSE"
+    },
+    {
+      "id": "deparse-084",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x WHERE y IS UNKNOWN"
+    },
+    {
+      "id": "deparse-085",
+      "status": "round-trip",
+      "sql": "SELECT * FROM x WHERE y IS NOT UNKNOWN"
+    },
+    {
+      "id": "deparse-086",
+      "status": "round-trip",
+      "sql": "SELECT * FROM crosstab('SELECT department, role, COUNT(id) FROM users GROUP BY department, role ORDER BY department, role', 'VALUES (''admin''::text), (''ordinary''::text)') AS (department varchar, admin int, ordinary int)"
+    },
+    {
+      "id": "deparse-087",
+      "status": "round-trip",
+      "sql": "SELECT * FROM crosstab('SELECT department, role, COUNT(id) FROM users GROUP BY department, role ORDER BY department, role', 'VALUES (''admin''::text), (''ordinary''::text)') ctab (department varchar, admin int, ordinary int)"
+    },
+    {
+      "id": "deparse-088",
+      "status": "round-trip",
+      "sql": "SELECT row_cols[0] AS dept, row_cols[1] AS sub, admin, ordinary FROM crosstab('SELECT ARRAY[department, sub] AS row_cols, role, COUNT(id) FROM users GROUP BY department, role ORDER BY department, role', 'VALUES (''admin''::text), (''ordinary''::text)') AS (row_cols varchar[], admin int, ordinary int)"
+    },
+    {
+      "id": "deparse-089",
+      "status": "round-trip",
+      "sql": "SELECT 1::int8"
+    },
+    {
+      "id": "deparse-090",
+      "status": "round-trip",
+      "sql": "SELECT CAST(1 + 3 AS int8)"
+    },
+    {
+      "id": "deparse-091",
+      "status": "round-trip",
+      "sql": "SELECT x::regclass"
+    },
+    {
+      "id": "deparse-092",
+      "status": "round-trip",
+      "sql": "SELECT table_field::bool, table_field::boolean FROM t"
+    },
+    {
+      "id": "deparse-093",
+      "status": "round-trip",
+      "sql": "SELECT true, false"
+    },
+    {
+      "id": "deparse-094",
+      "status": "round-trip",
+      "sql": "SELECT 1::boolean, 0::boolean"
+    },
+    {
+      "id": "deparse-095",
+      "status": "round-trip",
+      "sql": "SELECT $5"
+    },
+    {
+      "id": "deparse-096",
+      "status": "round-trip",
+      "sql": "INSERT INTO x (y, z) VALUES (1, 'abc')"
+    },
+    {
+      "id": "deparse-097",
+      "status": "round-trip",
+      "sql": "INSERT INTO x (\"user\") VALUES ('abc')"
+    },
+    {
+      "id": "deparse-098",
+      "status": "round-trip",
+      "sql": "INSERT INTO x (y, z) VALUES (1, 'abc') RETURNING id"
+    },
+    {
+      "id": "deparse-099",
+      "status": "round-trip",
+      "sql": "INSERT INTO x SELECT * FROM y"
+    },
+    {
+      "id": "deparse-100",
+      "status": "round-trip",
+      "sql": "WITH moved AS (DELETE FROM employees WHERE manager_name = 'Mary') INSERT INTO employees_of_mary SELECT * FROM moved"
+    },
+    {
+      "id": "deparse-101",
+      "status": "round-trip",
+      "sql": "INSERT INTO x (y, z) VALUES (1, 'abc') ON CONFLICT (y) DO UPDATE SET \"user\" = excluded.\"user\" RETURNING y"
+    },
+    {
+      "id": "deparse-102",
+      "status": "round-trip",
+      "sql": "INSERT INTO x (y, z) VALUES (1, 'abc') ON CONFLICT (y) DO NOTHING RETURNING y"
+    },
+    {
+      "id": "deparse-103",
+      "status": "round-trip",
+      "sql": "INSERT INTO distributors (did, dname) VALUES (10, 'Conrad International') ON CONFLICT (did) WHERE is_active DO NOTHING"
+    },
+    {
+      "id": "deparse-104",
+      "status": "round-trip",
+      "sql": "INSERT INTO distributors (did, dname) VALUES (9, 'Antwerp Design') ON CONFLICT ON CONSTRAINT distributors_pkey DO NOTHING"
+    },
+    {
+      "id": "deparse-105",
+      "status": "round-trip",
+      "sql": "INSERT INTO foo (a, b, c, d) VALUES ($1) ON CONFLICT (id) DO UPDATE SET (a, b, c, d) = (excluded.a, excluded.b, excluded.c, CASE WHEN foo.d = excluded.d THEN excluded.d END)"
+    },
+    {
+      "id": "deparse-106",
+      "status": "round-trip",
+      "sql": "INSERT INTO employees SELECT * FROM people WHERE 1 = 1 GROUP BY name HAVING count(name) > 1 ORDER BY name DESC LIMIT 10 OFFSET 15 FOR UPDATE"
+    },
+    {
+      "id": "deparse-107",
+      "status": "round-trip",
+      "sql": "INSERT INTO films VALUES ('T_601', 'Yojimbo', 106, DEFAULT, 'Drama', DEFAULT)"
+    },
+    {
+      "id": "deparse-108",
+      "status": "round-trip",
+      "sql": "SELECT * FROM people FOR UPDATE OF name, email"
+    },
+    {
+      "id": "deparse-109",
+      "status": "round-trip",
+      "sql": "SELECT name::varchar(255) FROM people"
+    },
+    {
+      "id": "deparse-110",
+      "status": "round-trip",
+      "sql": "SELECT name::varchar FROM people"
+    },
+    {
+      "id": "deparse-111",
+      "status": "round-trip",
+      "sql": "SELECT age::numeric(5, 2) FROM people"
+    },
+    {
+      "id": "deparse-112",
+      "status": "round-trip",
+      "sql": "SELECT age::numeric FROM people"
+    },
+    {
+      "id": "deparse-113",
+      "status": "round-trip",
+      "sql": "UPDATE x SET y = 1 WHERE z = 'abc'"
+    },
+    {
+      "id": "deparse-114",
+      "status": "round-trip",
+      "sql": "UPDATE ONLY x table_x SET y = 1 WHERE z = 'abc' RETURNING y AS changed_y"
+    },
+    {
+      "id": "deparse-115",
+      "status": "round-trip",
+      "sql": "WITH archived AS (DELETE FROM employees WHERE manager_name = 'Mary') UPDATE users SET archived = true WHERE users.id IN (SELECT user_id FROM moved)"
+    },
+    {
+      "id": "deparse-116",
+      "status": "round-trip",
+      "sql": "WITH archived AS (DELETE FROM employees WHERE manager_name = 'Mary' RETURNING user_id) UPDATE users SET archived = true FROM archived WHERE archived.user_id = id RETURNING id"
+    },
+    {
+      "id": "deparse-117",
+      "status": "round-trip",
+      "sql": "INSERT INTO jackdanger_card_totals (id, amount_cents, created_at) SELECT series.i, random() * 1000, (SELECT '2015-08-25 00:00:00 -0700'::timestamp + (('2015-08-25 23:59:59 -0700'::timestamp - '2015-08-25 00:00:00 -0700'::timestamp) * random())) FROM generate_series(1, 10000) series(i)"
+    },
+    {
+      "id": "deparse-118",
+      "status": "round-trip",
+      "sql": "UPDATE foo SET a = 24, b = true"
+    },
+    {
+      "id": "deparse-119",
+      "status": "round-trip",
+      "sql": "UPDATE x SET \"user\" = 'emin'"
+    },
+    {
+      "id": "deparse-120",
+      "status": "round-trip",
+      "sql": "DELETE FROM x WHERE y = 1"
+    },
+    {
+      "id": "deparse-121",
+      "status": "round-trip",
+      "sql": "DELETE FROM ONLY x table_x USING table_z WHERE y = 1 RETURNING *"
+    },
+    {
+      "id": "deparse-122",
+      "status": "round-trip",
+      "sql": "WITH archived AS (DELETE FROM employees WHERE manager_name = 'Mary') DELETE FROM users WHERE users.id IN (SELECT user_id FROM moved)"
+    },
+    {
+      "id": "deparse-123",
+      "status": "round-trip",
+      "sql": "CREATE CAST (bigint AS int4) WITH FUNCTION int4(bigint) AS ASSIGNMENT"
+    },
+    {
+      "id": "deparse-124",
+      "status": "round-trip",
+      "sql": "CREATE CAST (bigint AS int4) WITHOUT FUNCTION AS IMPLICIT"
+    },
+    {
+      "id": "deparse-125",
+      "status": "round-trip",
+      "sql": "CREATE CAST (bigint AS int4) WITH INOUT AS ASSIGNMENT"
+    },
+    {
+      "id": "deparse-126",
+      "status": "round-trip",
+      "sql": "CREATE DOMAIN us_postal_code AS text CHECK (\"VALUE\" ~ E'^\\\\d{5}$' OR \"VALUE\" ~ E'^\\\\d{5}-\\\\d{4}$')"
+    },
+    {
+      "id": "deparse-127",
+      "status": "round-trip",
+      "sql": "CREATE FUNCTION getfoo(int) RETURNS SETOF users AS $$SELECT * FROM \"users\" WHERE users.id = $1;$$ LANGUAGE sql"
+    },
+    {
+      "id": "deparse-128",
+      "status": "round-trip",
+      "sql": "CREATE OR REPLACE FUNCTION getfoo(int) RETURNS SETOF users AS $$SELECT * FROM \"users\" WHERE users.id = $1;$$ LANGUAGE sql"
+    },
+    {
+      "id": "deparse-129",
+      "status": "round-trip",
+      "sql": "CREATE OR REPLACE FUNCTION getfoo(int) RETURNS SETOF users AS $$SELECT * FROM \"users\" WHERE users.id = $1;$$ LANGUAGE sql IMMUTABLE"
+    },
+    {
+      "id": "deparse-130",
+      "status": "round-trip",
+      "sql": "CREATE OR REPLACE FUNCTION getfoo(int) RETURNS SETOF users AS $$SELECT * FROM \"users\" WHERE users.id = $1;$$ LANGUAGE sql IMMUTABLE RETURNS NULL ON NULL INPUT"
+    },
+    {
+      "id": "deparse-131",
+      "status": "round-trip",
+      "sql": "CREATE OR REPLACE FUNCTION getfoo(int) RETURNS SETOF users AS $$SELECT * FROM \"users\" WHERE users.id = $1;$$ LANGUAGE sql IMMUTABLE CALLED ON NULL INPUT"
+    },
+    {
+      "id": "deparse-132",
+      "status": "round-trip",
+      "sql": "CREATE OR REPLACE FUNCTION getfoo() RETURNS text AS $$SELECT name FROM \"users\" LIMIT 1$$ LANGUAGE sql IMMUTABLE CALLED ON NULL INPUT"
+    },
+    {
+      "id": "deparse-133",
+      "status": "round-trip",
+      "sql": "CREATE SCHEMA myschema"
+    },
+    {
+      "id": "deparse-134",
+      "status": "round-trip",
+      "sql": "CREATE SCHEMA AUTHORIZATION joe"
+    },
+    {
+      "id": "deparse-135",
+      "status": "round-trip",
+      "sql": "CREATE SCHEMA IF NOT EXISTS test AUTHORIZATION joe"
+    },
+    {
+      "id": "deparse-136",
+      "status": "round-trip",
+      "sql": "CREATE SCHEMA hollywood CREATE TABLE films (title text, release date, awards text[]) CREATE VIEW winners AS SELECT title, release FROM films WHERE awards IS NOT NULL"
+    },
+    {
+      "id": "deparse-137",
+      "status": "round-trip",
+      "sql": "CREATE UNLOGGED TABLE cities (name text, population real, altitude double, identifier smallint, postal_code int, foreign_id bigint)"
+    },
+    {
+      "id": "deparse-138",
+      "status": "round-trip",
+      "sql": "CREATE TABLE IF NOT EXISTS distributors (name varchar(40) DEFAULT 'Luso Films', len interval hour to second(3), name varchar(40) DEFAULT 'Luso Films', did int DEFAULT nextval('distributors_serial'), stamp timestamp DEFAULT now() NOT NULL, stamptz timestamp with time zone, \"time\" time NOT NULL, timetz time with time zone, CONSTRAINT name_len PRIMARY KEY (name, len))"
+    },
+    {
+      "id": "deparse-139",
+      "status": "round-trip",
+      "sql": "CREATE TABLE types (a real, b double precision, c numeric(2, 3), d char(4), e char(5), f varchar(6), g varchar(7))"
+    },
+    {
+      "id": "deparse-140",
+      "status": "round-trip",
+      "sql": "CREATE TABLE types (a geometry(point) NOT NULL)"
+    },
+    {
+      "id": "deparse-141",
+      "status": "round-trip",
+      "sql": "CREATE TABLE tablename (colname int NOT NULL DEFAULT nextval('tablename_colname_seq'))"
+    },
+    {
+      "id": "deparse-142",
+      "status": "round-trip",
+      "sql": "CREATE TABLE capitals (state char(2)) INHERITS (cities)"
+    },
+    {
+      "id": "deparse-143",
+      "status": "round-trip",
+      "sql": "CREATE TEMPORARY TABLE temp AS SELECT c FROM t"
+    },
+    {
+      "id": "deparse-144",
+      "status": "round-trip",
+      "sql": "CREATE TABLE films2 AS SELECT * FROM films"
+    },
+    {
+      "id": "deparse-145",
+      "status": "round-trip",
+      "sql": "CREATE TEMPORARY TABLE films_recent ON COMMIT DROP AS SELECT * FROM films WHERE date_prod > $1"
+    },
+    {
+      "id": "deparse-146",
+      "status": "round-trip",
+      "sql": "DROP SERVER IF EXISTS foo"
+    },
+    {
+      "id": "deparse-147",
+      "status": "round-trip",
+      "sql": "DROP PUBLICATION mypublication"
+    },
+    {
+      "id": "deparse-148",
+      "status": "round-trip",
+      "sql": "DROP TYPE box"
+    },
+    {
+      "id": "deparse-149",
+      "status": "round-trip",
+      "sql": "DROP TABLESPACE mystuff"
+    },
+    {
+      "id": "deparse-150",
+      "status": "round-trip",
+      "sql": "DROP CONVERSION myname"
+    },
+    {
+      "id": "deparse-151",
+      "status": "round-trip",
+      "sql": "DROP SEQUENCE serial"
+    },
+    {
+      "id": "deparse-152",
+      "status": "round-trip",
+      "sql": "DROP INDEX title_idx"
+    },
+    {
+      "id": "deparse-153",
+      "status": "round-trip",
+      "sql": "DROP MATERIALIZED VIEW order_summary"
+    },
+    {
+      "id": "deparse-154",
+      "status": "round-trip",
+      "sql": "DROP TRIGGER if_dist_exists ON films"
+    },
+    {
+      "id": "deparse-155",
+      "status": "round-trip",
+      "sql": "DROP RULE newrule ON mytable"
+    },
+    {
+      "id": "deparse-156",
+      "status": "round-trip",
+      "sql": "DROP CAST (text AS int)"
+    },
+    {
+      "id": "deparse-157",
+      "status": "round-trip",
+      "sql": "DROP OPERATOR FAMILY float_ops USING btree"
+    },
+    {
+      "id": "deparse-158",
+      "status": "round-trip",
+      "sql": "DROP AGGREGATE myavg(int), myavg(bigint)"
+    },
+    {
+      "id": "deparse-159",
+      "status": "round-trip",
+      "sql": "DROP COLLATION german"
+    },
+    {
+      "id": "deparse-160",
+      "status": "round-trip",
+      "sql": "DROP FOREIGN DATA WRAPPER dbi"
+    },
+    {
+      "id": "deparse-161",
+      "status": "round-trip",
+      "sql": "DROP ACCESS METHOD heptree"
+    },
+    {
+      "id": "deparse-162",
+      "status": "round-trip",
+      "sql": "DROP STATISTICS IF EXISTS accounting.users_uid_creation, public.grants_user_role"
+    },
+    {
+      "id": "deparse-163",
+      "status": "round-trip",
+      "sql": "DROP TEXT SEARCH DICTIONARY english"
+    },
+    {
+      "id": "deparse-164",
+      "status": "round-trip",
+      "sql": "DROP OPERATOR CLASS widget_ops USING btree"
+    },
+    {
+      "id": "deparse-165",
+      "status": "round-trip",
+      "sql": "DROP POLICY p1 ON my_table"
+    },
+    {
+      "id": "deparse-166",
+      "status": "round-trip",
+      "sql": "DROP SUBSCRIPTION mysub"
+    },
+    {
+      "id": "deparse-167",
+      "status": "round-trip",
+      "sql": "DROP TEXT SEARCH CONFIGURATION my_english"
+    },
+    {
+      "id": "deparse-168",
+      "status": "round-trip",
+      "sql": "DROP EVENT TRIGGER snitch"
+    },
+    {
+      "id": "deparse-169",
+      "status": "round-trip",
+      "sql": "DROP TEXT SEARCH PARSER my_parser"
+    },
+    {
+      "id": "deparse-170",
+      "status": "round-trip",
+      "sql": "DROP EXTENSION hstore"
+    },
+    {
+      "id": "deparse-171",
+      "status": "round-trip",
+      "sql": "DROP DOMAIN box"
+    },
+    {
+      "id": "deparse-172",
+      "status": "round-trip",
+      "sql": "DROP TEXT SEARCH TEMPLATE thesaurus"
+    },
+    {
+      "id": "deparse-173",
+      "status": "round-trip",
+      "sql": "DROP TRANSFORM FOR hstore LANGUAGE plpythonu"
+    },
+    {
+      "id": "deparse-174",
+      "status": "round-trip",
+      "sql": "DROP FOREIGN TABLE films, distributors"
+    },
+    {
+      "id": "deparse-175",
+      "status": "round-trip",
+      "sql": "DROP FUNCTION sqrt(int)"
+    },
+    {
+      "id": "deparse-176",
+      "status": "round-trip",
+      "sql": "DROP FUNCTION update_employee_salaries()"
+    },
+    {
+      "id": "deparse-177",
+      "status": "round-trip",
+      "sql": "DROP FUNCTION update_employee_salaries"
+    },
+    {
+      "id": "deparse-178",
+      "status": "round-trip",
+      "sql": "DROP TABLE IF EXISTS any_table CASCADE"
+    },
+    {
+      "id": "deparse-179",
+      "status": "round-trip",
+      "sql": "DROP TABLE IF EXISTS any_table"
+    },
+    {
+      "id": "deparse-180",
+      "status": "round-trip",
+      "sql": "DROP SCHEMA IF EXISTS any_schema"
+    },
+    {
+      "id": "deparse-181",
+      "status": "round-trip",
+      "sql": "ALTER TABLE distributors DROP CONSTRAINT distributors_pkey, ADD CONSTRAINT distributors_pkey PRIMARY KEY USING INDEX dist_id_temp_idx, ADD CONSTRAINT zipchk CHECK (char_length(zipcode) = 5), ALTER COLUMN tstamp DROP DEFAULT, ALTER COLUMN tstamp TYPE timestamp with time zone USING 'epoch'::timestamp with time zone + (date_part('epoch', tstamp) * '1 second'::interval), ALTER COLUMN tstamp SET DEFAULT now(), ALTER COLUMN tstamp DROP DEFAULT, ALTER COLUMN tstamp SET STATISTICS -5, ADD COLUMN some_int int NOT NULL, DROP IF EXISTS other_column CASCADE"
+    },
+    {
+      "id": "deparse-182",
+      "status": "round-trip",
+      "sql": "ALTER TABLE distributors RENAME TO suppliers"
+    },
+    {
+      "id": "deparse-183",
+      "status": "round-trip",
+      "sql": "ALTER TABLE distributors ADD CONSTRAINT distfk FOREIGN KEY (address) REFERENCES addresses (address)"
+    },
+    {
+      "id": "deparse-184",
+      "status": "round-trip",
+      "sql": "ALTER TABLE distributors ADD CONSTRAINT distfk FOREIGN KEY (address) REFERENCES addresses (address) NOT VALID"
+    },
+    {
+      "id": "deparse-185",
+      "status": "round-trip",
+      "sql": "ALTER TRIGGER emp_stamp ON emp RENAME TO emp_track_chgs"
+    },
+    {
+      "id": "deparse-186",
+      "status": "round-trip",
+      "sql": "ALTER CONVERSION iso_8859_1_to_utf8 RENAME TO latin1_to_unicode"
+    },
+    {
+      "id": "deparse-187",
+      "status": "round-trip",
+      "sql": "ALTER TABLE distributors RENAME CONSTRAINT zipchk TO zip_check"
+    },
+    {
+      "id": "deparse-188",
+      "status": "round-trip",
+      "sql": "ALTER INDEX distributors RENAME TO suppliers"
+    },
+    {
+      "id": "deparse-189",
+      "status": "round-trip",
+      "sql": "ALTER MATERIALIZED VIEW foo RENAME TO bar"
+    },
+    {
+      "id": "deparse-190",
+      "status": "round-trip",
+      "sql": "ALTER TABLESPACE index_space RENAME TO fast_raid"
+    },
+    {
+      "id": "deparse-191",
+      "status": "round-trip",
+      "sql": "ALTER TABLE distributors RENAME COLUMN address TO city"
+    },
+    {
+      "id": "deparse-192",
+      "status": "round-trip",
+      "sql": "ALTER COLLATION \"de_DE\" RENAME TO german"
+    },
+    {
+      "id": "deparse-193",
+      "status": "round-trip",
+      "sql": "ALTER TYPE electronic_mail RENAME TO email"
+    },
+    {
+      "id": "deparse-194",
+      "status": "round-trip",
+      "sql": "ALTER DOMAIN zipcode RENAME CONSTRAINT zipchk TO zip_check"
+    },
+    {
+      "id": "deparse-195",
+      "status": "round-trip",
+      "sql": "ALTER AGGREGATE myavg(int) RENAME TO my_average"
+    },
+    {
+      "id": "deparse-196",
+      "status": "round-trip",
+      "sql": "ALTER FUNCTION sqrt(int) RENAME TO square_root"
+    },
+    {
+      "id": "deparse-197",
+      "status": "round-trip",
+      "sql": "ALTER RULE notify_all ON emp RENAME TO notify_me"
+    },
+    {
+      "id": "deparse-198",
+      "status": "round-trip",
+      "sql": "BEGIN"
+    },
+    {
+      "id": "deparse-199",
+      "status": "round-trip",
+      "sql": "BEGIN ISOLATION LEVEL SERIALIZABLE"
+    },
+    {
+      "id": "deparse-200",
+      "status": "round-trip",
+      "sql": "BEGIN READ ONLY"
+    },
+    {
+      "id": "deparse-201",
+      "status": "round-trip",
+      "sql": "BEGIN ISOLATION LEVEL READ COMMITTED, DEFERRABLE"
+    },
+    {
+      "id": "deparse-202",
+      "status": "round-trip",
+      "sql": "START TRANSACTION READ ONLY"
+    },
+    {
+      "id": "deparse-203",
+      "status": "round-trip",
+      "sql": "ROLLBACK"
+    },
+    {
+      "id": "deparse-204",
+      "status": "round-trip",
+      "sql": "ROLLBACK AND CHAIN"
+    },
+    {
+      "id": "deparse-205",
+      "status": "round-trip",
+      "sql": "COMMIT"
+    },
+    {
+      "id": "deparse-206",
+      "status": "round-trip",
+      "sql": "COMMIT AND CHAIN"
+    },
+    {
+      "id": "deparse-207",
+      "status": "round-trip",
+      "sql": "SAVEPOINT \"x y\""
+    },
+    {
+      "id": "deparse-208",
+      "status": "round-trip",
+      "sql": "ROLLBACK TO SAVEPOINT x"
+    },
+    {
+      "id": "deparse-209",
+      "status": "round-trip",
+      "sql": "RELEASE x"
+    },
+    {
+      "id": "deparse-210",
+      "status": "round-trip",
+      "sql": "SELECT rank(*) OVER ()"
+    },
+    {
+      "id": "deparse-211",
+      "status": "round-trip",
+      "sql": "SELECT rank(*) OVER (PARTITION BY id)"
+    },
+    {
+      "id": "deparse-212",
+      "status": "round-trip",
+      "sql": "SELECT rank(*) OVER (ORDER BY id)"
+    },
+    {
+      "id": "deparse-213",
+      "status": "round-trip",
+      "sql": "SELECT rank(*) OVER (PARTITION BY id, id2 ORDER BY id DESC, id2)"
+    },
+    {
+      "id": "deparse-214",
+      "status": "round-trip",
+      "sql": "SELECT rank(*) OVER named_window"
+    },
+    {
+      "id": "deparse-215",
+      "status": "round-trip",
+      "sql": "SELECT max(create_date::date) FILTER (WHERE cancel_date IS NULL) OVER (ORDER BY create_date DESC) FROM tb_x"
+    },
+    {
+      "id": "deparse-216",
+      "status": "round-trip",
+      "sql": "ALTER VIEW foo RENAME TO bar"
+    },
+    {
+      "id": "deparse-217",
+      "status": "round-trip",
+      "sql": "CREATE OR REPLACE TEMPORARY VIEW view_a AS SELECT * FROM a(1) WITH CHECK OPTION"
+    },
+    {
+      "id": "deparse-218",
+      "status": "round-trip",
+      "sql": "DROP VIEW kinds"
+    },
+    {
+      "id": "deparse-219",
+      "status": "round-trip",
+      "sql": "CREATE VIEW view_a (a, b) AS WITH RECURSIVE view_a(a, b) AS (SELECT * FROM a(1)) SELECT a, b FROM view_a"
+    },
+    {
+      "id": "deparse-220",
+      "status": "round-trip",
+      "sql": "SET statement_timeout TO 10000"
+    },
+    {
+      "id": "deparse-221",
+      "status": "round-trip",
+      "sql": "SET search_path TO my_schema, public"
+    },
+    {
+      "id": "deparse-222",
+      "status": "round-trip",
+      "sql": "SET LOCAL search_path TO my_schema, public"
+    },
+    {
+      "id": "deparse-223",
+      "status": "round-trip",
+      "sql": "SET \"user\" TO 4"
+    },
+    {
+      "id": "deparse-224",
+      "status": "round-trip",
+      "sql": "SET TIME ZONE interval '+00:00' hour to minute"
+    },
+    {
+      "id": "deparse-225",
+      "status": "round-trip",
+      "sql": "SET timezone TO -7"
+    },
+    {
+      "id": "deparse-226",
+      "status": "round-trip",
+      "sql": "VACUUM"
+    },
+    {
+      "id": "deparse-227",
+      "status": "round-trip",
+      "sql": "VACUUM t"
+    },
+    {
+      "id": "deparse-228",
+      "status": "round-trip",
+      "sql": "VACUUM (FULL) t"
+    },
+    {
+      "id": "deparse-229",
+      "status": "round-trip",
+      "sql": "VACUUM (FREEZE) t"
+    },
+    {
+      "id": "deparse-230",
+      "status": "round-trip",
+      "sql": "VACUUM (VERBOSE) t"
+    },
+    {
+      "id": "deparse-231",
+      "status": "round-trip",
+      "sql": "VACUUM (ANALYZE) t"
+    },
+    {
+      "id": "deparse-232",
+      "status": "round-trip",
+      "sql": "VACUUM (FULL, FREEZE, VERBOSE, ANALYZE)"
+    },
+    {
+      "id": "deparse-233",
+      "status": "round-trip",
+      "sql": "VACUUM (ANALYZE) t(a, b)"
+    },
+    {
+      "id": "deparse-234",
+      "status": "round-trip",
+      "sql": "LOCK TABLE t"
+    },
+    {
+      "id": "deparse-235",
+      "status": "round-trip",
+      "sql": "LOCK TABLE t, u"
+    },
+    {
+      "id": "deparse-236",
+      "status": "round-trip",
+      "sql": "EXPLAIN SELECT a FROM b"
+    },
+    {
+      "id": "deparse-237",
+      "status": "round-trip",
+      "sql": "EXPLAIN (ANALYZE) SELECT a FROM b"
+    },
+    {
+      "id": "deparse-238",
+      "status": "round-trip",
+      "sql": "EXPLAIN (ANALYZE, BUFFERS) SELECT a FROM b"
+    },
+    {
+      "id": "deparse-239",
+      "status": "round-trip",
+      "sql": "COPY t FROM STDIN"
+    },
+    {
+      "id": "deparse-240",
+      "status": "round-trip",
+      "sql": "COPY t(c1, c2) FROM STDIN"
+    },
+    {
+      "id": "deparse-241",
+      "status": "round-trip",
+      "sql": "COPY t FROM PROGRAM '/bin/false'"
+    },
+    {
+      "id": "deparse-242",
+      "status": "round-trip",
+      "sql": "COPY t FROM '/dev/null'"
+    },
+    {
+      "id": "deparse-243",
+      "status": "round-trip",
+      "sql": "COPY t TO STDOUT"
+    },
+    {
+      "id": "deparse-244",
+      "status": "round-trip",
+      "sql": "COPY (SELECT 1 FROM foo) TO STDOUT"
+    },
+    {
+      "id": "deparse-245",
+      "status": "round-trip",
+      "sql": "COPY t FROM STDIN WITH (convert_selectively, some_str test, some_num 1, some_list (a), some_star *)"
+    },
+    {
+      "id": "deparse-246",
+      "status": "round-trip",
+      "sql": "DO $$BEGIN PERFORM * FROM information_schema.tables; END$$"
+    },
+    {
+      "id": "deparse-247",
+      "status": "round-trip",
+      "sql": "DO LANGUAGE plpgsql $$ BEGIN PERFORM * FROM information_schema.tables; END $$"
+    },
+    {
+      "id": "deparse-248",
+      "status": "round-trip",
+      "sql": "DO $$ BEGIN PERFORM * FROM information_schema.tables; END $$ LANGUAGE plpgsql"
+    },
+    {
+      "id": "deparse-249",
+      "status": "round-trip",
+      "sql": "DISCARD ALL"
+    },
+    {
+      "id": "deparse-250",
+      "status": "round-trip",
+      "sql": "DISCARD PLANS"
+    },
+    {
+      "id": "deparse-251",
+      "status": "round-trip",
+      "sql": "DISCARD SEQUENCES"
+    },
+    {
+      "id": "deparse-252",
+      "status": "round-trip",
+      "sql": "DISCARD TEMP"
+    },
+    {
+      "id": "deparse-253",
+      "status": "round-trip",
+      "sql": "CREATE AGGREGATE aggregate1 (int4) (sfunc = sfunc1, stype = stype1)"
+    },
+    {
+      "id": "deparse-254",
+      "status": "round-trip",
+      "sql": "CREATE AGGREGATE aggregate1 (int4, bool) (sfunc = sfunc1, stype = stype1)"
+    },
+    {
+      "id": "deparse-255",
+      "status": "round-trip",
+      "sql": "CREATE AGGREGATE aggregate1 (*) (sfunc = sfunc1, stype = stype1)"
+    },
+    {
+      "id": "deparse-256",
+      "status": "round-trip",
+      "sql": "CREATE AGGREGATE aggregate1 (int4) (sfunc = sfunc1, stype = stype1, finalfunc_extra, mfinalfuncextra)"
+    },
+    {
+      "id": "deparse-257",
+      "status": "round-trip",
+      "sql": "CREATE AGGREGATE aggregate1 (int4) (sfunc = sfunc1, stype = stype1, finalfunc_modify = read_only, parallel = restricted)"
+    },
+    {
+      "id": "deparse-258",
+      "status": "round-trip",
+      "sql": "CREATE AGGREGATE percentile_disc (float8 ORDER BY anyelement) (sfunc = ordered_set_transition, stype = internal, finalfunc = percentile_disc_final, finalfunc_extra)"
+    },
+    {
+      "id": "deparse-259",
+      "status": "round-trip",
+      "sql": "CREATE OPERATOR + (procedure = plusfunc)"
+    },
+    {
+      "id": "deparse-260",
+      "status": "round-trip",
+      "sql": "CREATE OPERATOR + (procedure = plusfunc, leftarg = int4, rightarg = int4)"
+    },
+    {
+      "id": "deparse-261",
+      "status": "round-trip",
+      "sql": "CREATE OPERATOR + (procedure = plusfunc, hashes, merges)"
+    },
+    {
+      "id": "deparse-262",
+      "status": "round-trip",
+      "sql": "CREATE TYPE type1"
+    },
+    {
+      "id": "deparse-263",
+      "status": "round-trip",
+      "sql": "CREATE TYPE type1 AS (attr1 int4, attr2 bool)"
+    },
+    {
+      "id": "deparse-264",
+      "status": "round-trip",
+      "sql": "CREATE TYPE type1 AS (attr1 int4 COLLATE collation1, attr2 bool)"
+    },
+    {
+      "id": "deparse-265",
+      "status": "round-trip",
+      "sql": "CREATE TYPE type1 AS ENUM ('value1', 'value2', 'value3')"
+    },
+    {
+      "id": "deparse-266",
+      "status": "round-trip",
+      "sql": "CREATE TYPE type1 AS RANGE (subtype = int4)"
+    },
+    {
+      "id": "deparse-267",
+      "status": "round-trip",
+      "sql": "CREATE TYPE type1 AS RANGE (subtype = int4, receive = receive_func, passedbyvalue)"
+    },
+    {
+      "id": "deparse-268",
+      "status": "round-trip",
+      "sql": "CREATE TYPE type1 (input = input1, output = output1)"
+    },
+    {
+      "id": "deparse-269",
+      "status": "round-trip",
+      "sql": "CREATE TYPE type1 (input = input1, output = output1, passedbyvalue)"
+    },
+    {
+      "id": "deparse-270",
+      "status": "round-trip",
+      "sql": "GRANT select ON \"table\" TO \"user\""
+    },
+    {
+      "id": "deparse-271",
+      "status": "round-trip",
+      "sql": "GRANT select, update, insert ON \"table\" TO \"user\""
+    },
+    {
+      "id": "deparse-272",
+      "status": "round-trip",
+      "sql": "GRANT select ON ALL TABLES IN SCHEMA schema TO \"user\""
+    },
+    {
+      "id": "deparse-273",
+      "status": "round-trip",
+      "sql": "GRANT select ON \"table\" TO user1, user2"
+    },
+    {
+      "id": "deparse-274",
+      "status": "round-trip",
+      "sql": "GRANT select ON \"table\" TO public"
+    },
+    {
+      "id": "deparse-275",
+      "status": "round-trip",
+      "sql": "GRANT select ON \"table\" TO CURRENT_USER"
+    },
+    {
+      "id": "deparse-276",
+      "status": "round-trip",
+      "sql": "GRANT select ON \"table\" TO SESSION_USER"
+    },
+    {
+      "id": "deparse-277",
+      "status": "round-trip",
+      "sql": "GRANT ALL ON \"table\" TO \"user\""
+    },
+    {
+      "id": "deparse-278",
+      "status": "round-trip",
+      "sql": "GRANT select ON \"table\" TO \"user\" WITH GRANT OPTION"
+    },
+    {
+      "id": "deparse-279",
+      "status": "round-trip",
+      "sql": "GRANT select (\"column\") ON \"table\" TO \"user\""
+    },
+    {
+      "id": "deparse-280",
+      "status": "round-trip",
+      "sql": "GRANT select (column1, column2) ON \"table\" TO \"user\""
+    },
+    {
+      "id": "deparse-281",
+      "status": "round-trip",
+      "sql": "GRANT usage ON SEQUENCE sequence TO \"user\""
+    },
+    {
+      "id": "deparse-282",
+      "status": "round-trip",
+      "sql": "GRANT usage ON ALL SEQUENCES IN SCHEMA schema TO \"user\""
+    },
+    {
+      "id": "deparse-283",
+      "status": "round-trip",
+      "sql": "GRANT create ON DATABASE database TO \"user\""
+    },
+    {
+      "id": "deparse-284",
+      "status": "round-trip",
+      "sql": "GRANT usage ON DOMAIN domain TO \"user\""
+    },
+    {
+      "id": "deparse-285",
+      "status": "round-trip",
+      "sql": "GRANT usage ON FOREIGN DATA WRAPPER fdw TO \"user\""
+    },
+    {
+      "id": "deparse-286",
+      "status": "round-trip",
+      "sql": "GRANT usage ON FOREIGN SERVER server TO \"user\""
+    },
+    {
+      "id": "deparse-287",
+      "status": "round-trip",
+      "sql": "GRANT execute ON FUNCTION function TO \"user\""
+    },
+    {
+      "id": "deparse-288",
+      "status": "round-trip",
+      "sql": "GRANT execute ON FUNCTION function() TO \"user\""
+    },
+    {
+      "id": "deparse-289",
+      "status": "round-trip",
+      "sql": "GRANT execute ON FUNCTION function(string) TO \"user\""
+    },
+    {
+      "id": "deparse-290",
+      "status": "round-trip",
+      "sql": "GRANT execute ON FUNCTION function(string, string, boolean) TO \"user\""
+    },
+    {
+      "id": "deparse-291",
+      "status": "round-trip",
+      "sql": "GRANT execute ON ALL FUNCTIONS IN SCHEMA schema TO \"user\""
+    },
+    {
+      "id": "deparse-292",
+      "status": "round-trip",
+      "sql": "GRANT usage ON LANGUAGE plpgsql TO \"user\""
+    },
+    {
+      "id": "deparse-293",
+      "status": "round-trip",
+      "sql": "GRANT select ON LARGE OBJECT 1234 TO \"user\""
+    },
+    {
+      "id": "deparse-294",
+      "status": "round-trip",
+      "sql": "GRANT create ON SCHEMA schema TO \"user\""
+    },
+    {
+      "id": "deparse-295",
+      "status": "round-trip",
+      "sql": "GRANT create ON TABLESPACE tablespace TO \"user\""
+    },
+    {
+      "id": "deparse-296",
+      "status": "round-trip",
+      "sql": "GRANT usage ON TYPE type TO \"user\""
+    },
+    {
+      "id": "deparse-297",
+      "status": "round-trip",
+      "sql": "GRANT role TO \"user\""
+    },
+    {
+      "id": "deparse-298",
+      "status": "round-trip",
+      "sql": "GRANT role1, role2 TO \"user\""
+    },
+    {
+      "id": "deparse-299",
+      "status": "round-trip",
+      "sql": "GRANT role TO \"user\" WITH ADMIN OPTION"
+    },
+    {
+      "id": "deparse-300",
+      "status": "round-trip",
+      "sql": "DROP ROLE jonathan"
+    },
+    {
+      "id": "deparse-301",
+      "status": "round-trip",
+      "sql": "REVOKE ALL ON kinds FROM manuel"
+    },
+    {
+      "id": "deparse-302",
+      "status": "round-trip",
+      "sql": "REVOKE admins FROM joe"
+    },
+    {
+      "id": "deparse-303",
+      "status": "round-trip",
+      "sql": "REVOKE insert ON films FROM public"
+    },
+    {
+      "id": "deparse-304",
+      "status": "round-trip",
+      "sql": "SELECT m.name AS mname, pname FROM manufacturers m LEFT JOIN LATERAL get_product_names(m.id) pname ON true"
+    },
+    {
+      "id": "deparse-305",
+      "status": "round-trip",
+      "sql": "SELECT m.name AS mname, pname FROM manufacturers m LEFT JOIN LATERAL get_product_names(m.id) pname ON true; INSERT INTO manufacturers_daily (a, b) SELECT a, b FROM manufacturers"
+    },
+    {
+      "id": "deparse-306",
+      "status": "round-trip",
+      "sql": "SELECT m.name AS mname, pname FROM manufacturers m LEFT JOIN LATERAL get_product_names(m.id) pname ON true; UPDATE users SET name = 'bobby; drop tables'; INSERT INTO manufacturers_daily (a, b) SELECT a, b FROM manufacturers"
+    },
+    {
+      "id": "deparse-307",
+      "status": "round-trip",
+      "sql": "SELECT * FROM a CROSS JOIN (b CROSS JOIN c)"
+    },
+    {
+      "id": "deparse-308",
+      "status": "round-trip",
+      "sql": "SELECT 1 FOR UPDATE"
+    },
+    {
+      "id": "deparse-309",
+      "status": "round-trip",
+      "sql": "SELECT 1 FOR UPDATE NOWAIT"
+    },
+    {
+      "id": "deparse-310",
+      "status": "round-trip",
+      "sql": "SELECT 1 FOR UPDATE SKIP LOCKED"
+    },
+    {
+      "id": "deparse-311",
+      "status": "round-trip",
+      "sql": "COMMENT ON POLICY a ON b IS 'test'"
+    },
+    {
+      "id": "deparse-312",
+      "status": "round-trip",
+      "sql": "COMMENT ON PROCEDURE a() IS 'test'"
+    },
+    {
+      "id": "deparse-313",
+      "status": "round-trip",
+      "sql": "COMMENT ON ROUTINE a() IS 'test'"
+    },
+    {
+      "id": "deparse-314",
+      "status": "round-trip",
+      "sql": "COMMENT ON TRANSFORM FOR int4 LANGUAGE sql IS 'test'"
+    },
+    {
+      "id": "deparse-315",
+      "status": "round-trip",
+      "sql": "COMMENT ON OPERATOR CLASS a USING b IS 'test'"
+    },
+    {
+      "id": "deparse-316",
+      "status": "round-trip",
+      "sql": "COMMENT ON OPERATOR FAMILY a USING b IS 'test'"
+    },
+    {
+      "id": "deparse-317",
+      "status": "round-trip",
+      "sql": "COMMENT ON LARGE OBJECT 42 IS 'test'"
+    },
+    {
+      "id": "deparse-318",
+      "status": "round-trip",
+      "sql": "COMMENT ON CAST (int4 AS int8) IS 'test'"
+    },
+    {
+      "id": "deparse-319",
+      "status": "round-trip",
+      "sql": "SELECT ROW(1 + 2)"
+    },
+    {
+      "id": "deparse-320",
+      "status": "round-trip",
+      "sql": "ALTER TABLE a ALTER COLUMN b SET DEFAULT 1"
+    },
+    {
+      "id": "deparse-321",
+      "status": "round-trip",
+      "sql": "ALTER TABLE a ALTER COLUMN b DROP DEFAULT"
+    },
+    {
+      "id": "deparse-322",
+      "status": "round-trip",
+      "sql": "SELECT (3 + 3) OPERATOR(pg_catalog.*) 2"
+    },
+    {
+      "id": "deparse-323",
+      "status": "round-trip",
+      "sql": "SELECT 3 + (3 * 2)"
+    },
+    {
+      "id": "deparse-324",
+      "status": "round-trip",
+      "sql": "SELECT LIMIT ALL"
+    },
+    {
+      "id": "deparse-325",
+      "status": "round-trip",
+      "sql": "SELECT * FROM ROWS FROM (foo() AS (foo_res_a text COLLATE a, foo_res_b text))"
+    },
+    {
+      "id": "deparse-326",
+      "status": "round-trip",
+      "sql": "CREATE DATABASE x OWNER abc CONNECTION LIMIT 5"
+    },
+    {
+      "id": "deparse-327",
+      "status": "round-trip",
+      "sql": "CREATE DATABASE x ENCODING \"SQL_ASCII\""
+    },
+    {
+      "id": "deparse-328",
+      "status": "round-trip",
+      "sql": "CREATE DATABASE x LC_COLLATE \"en_US.UTF-8\""
+    },
+    {
+      "id": "deparse-329",
+      "status": "round-trip",
+      "sql": "CREATE DATABASE x LOCATION DEFAULT"
+    },
+    {
+      "id": "deparse-330",
+      "status": "round-trip",
+      "sql": "CREATE DATABASE x TABLESPACE abc"
+    },
+    {
+      "id": "deparse-331",
+      "status": "round-trip",
+      "sql": "CREATE DATABASE x TEMPLATE TRUE"
+    },
+    {
+      "id": "deparse-332",
+      "status": "round-trip",
+      "sql": "ALTER DATABASE x CONNECTION LIMIT 5"
+    },
+    {
+      "id": "deparse-333",
+      "status": "round-trip",
+      "sql": "ALTER DATABASE x ALLOW_CONNECTIONS FALSE"
+    },
+    {
+      "id": "deparse-334",
+      "status": "round-trip",
+      "sql": "ALTER DATABASE x IS_TEMPLATE TRUE"
+    },
+    {
+      "id": "deparse-335",
+      "status": "round-trip",
+      "sql": "ALTER DATABASE x TABLESPACE abc"
+    },
+    {
+      "id": "deparse-336",
+      "status": "round-trip",
+      "sql": "ALTER DATABASE x SET work_mem TO \"10MB\""
+    },
+    {
+      "id": "deparse-337",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x UPDATE"
+    },
+    {
+      "id": "deparse-338",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x UPDATE TO \"1.2\""
+    },
+    {
+      "id": "deparse-339",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD ACCESS METHOD a"
+    },
+    {
+      "id": "deparse-340",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x DROP ACCESS METHOD a"
+    },
+    {
+      "id": "deparse-341",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD AGGREGATE a(b)"
+    },
+    {
+      "id": "deparse-342",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD CAST (a AS b)"
+    },
+    {
+      "id": "deparse-343",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD COLLATION a"
+    },
+    {
+      "id": "deparse-344",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD CONVERSION a"
+    },
+    {
+      "id": "deparse-345",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD DOMAIN a"
+    },
+    {
+      "id": "deparse-346",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD FUNCTION a(b)"
+    },
+    {
+      "id": "deparse-347",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD LANGUAGE a"
+    },
+    {
+      "id": "deparse-348",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD OPERATOR ~~(a, b)"
+    },
+    {
+      "id": "deparse-349",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD OPERATOR CLASS a USING b"
+    },
+    {
+      "id": "deparse-350",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD OPERATOR FAMILY a USING b"
+    },
+    {
+      "id": "deparse-351",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD PROCEDURE a(b)"
+    },
+    {
+      "id": "deparse-352",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD ROUTINE a(b)"
+    },
+    {
+      "id": "deparse-353",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD SCHEMA a"
+    },
+    {
+      "id": "deparse-354",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD EVENT TRIGGER a"
+    },
+    {
+      "id": "deparse-355",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD TABLE a"
+    },
+    {
+      "id": "deparse-356",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD TEXT SEARCH PARSER a"
+    },
+    {
+      "id": "deparse-357",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD TEXT SEARCH DICTIONARY a"
+    },
+    {
+      "id": "deparse-358",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD TEXT SEARCH TEMPLATE a"
+    },
+    {
+      "id": "deparse-359",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD TEXT SEARCH CONFIGURATION a"
+    },
+    {
+      "id": "deparse-360",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD SEQUENCE a"
+    },
+    {
+      "id": "deparse-361",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD VIEW a"
+    },
+    {
+      "id": "deparse-362",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD MATERIALIZED VIEW a"
+    },
+    {
+      "id": "deparse-363",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD FOREIGN TABLE a"
+    },
+    {
+      "id": "deparse-364",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD FOREIGN DATA WRAPPER a"
+    },
+    {
+      "id": "deparse-365",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD SERVER a"
+    },
+    {
+      "id": "deparse-366",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD TRANSFORM FOR a LANGUAGE b"
+    },
+    {
+      "id": "deparse-367",
+      "status": "round-trip",
+      "sql": "ALTER EXTENSION x ADD TYPE a"
+    },
+    {
+      "id": "deparse-368",
+      "status": "round-trip",
+      "sql": "ALTER TABLESPACE x SET (seq_page_cost=3)"
+    },
+    {
+      "id": "deparse-369",
+      "status": "round-trip",
+      "sql": "ALTER TABLESPACE x RESET (random_page_cost)"
+    },
+    {
+      "id": "deparse-370",
+      "status": "round-trip",
+      "sql": "CREATE TABLESPACE x LOCATION 'a'"
+    },
+    {
+      "id": "deparse-371",
+      "status": "round-trip",
+      "sql": "CREATE TABLESPACE x OWNER a LOCATION 'b' WITH (random_page_cost=42, seq_page_cost=3)"
+    },
+    {
+      "id": "deparse-372",
+      "status": "round-trip",
+      "sql": "ALTER FUNCTION x(y) DEPENDS ON EXTENSION a"
+    },
+    {
+      "id": "deparse-373",
+      "status": "round-trip",
+      "sql": "ALTER FUNCTION x(y) NO DEPENDS ON EXTENSION a"
+    },
+    {
+      "id": "deparse-374",
+      "status": "round-trip",
+      "sql": "ALTER PROCEDURE x(y) DEPENDS ON EXTENSION a"
+    },
+    {
+      "id": "deparse-375",
+      "status": "round-trip",
+      "sql": "ALTER ROUTINE x(y) DEPENDS ON EXTENSION a"
+    },
+    {
+      "id": "deparse-376",
+      "status": "round-trip",
+      "sql": "ALTER TRIGGER x ON y DEPENDS ON EXTENSION a"
+    },
+    {
+      "id": "deparse-377",
+      "status": "round-trip",
+      "sql": "ALTER MATERIALIZED VIEW x DEPENDS ON EXTENSION a"
+    },
+    {
+      "id": "deparse-378",
+      "status": "round-trip",
+      "sql": "ALTER INDEX x DEPENDS ON EXTENSION a"
+    },
+    {
+      "id": "deparse-379",
+      "status": "round-trip",
+      "sql": "LOAD 'test file'"
+    },
+    {
+      "id": "deparse-380",
+      "status": "round-trip",
+      "sql": "ALTER SYSTEM SET fsync TO OFF"
+    },
+    {
+      "id": "deparse-381",
+      "status": "round-trip",
+      "sql": "ALTER SYSTEM RESET fsync"
+    },
+    {
+      "id": "deparse-382",
+      "status": "round-trip",
+      "sql": "CREATE EXTENSION x"
+    },
+    {
+      "id": "deparse-383",
+      "status": "round-trip",
+      "sql": "CREATE EXTENSION IF NOT EXISTS x CASCADE VERSION \"1.2\" SCHEMA a"
+    },
+    {
+      "id": "deparse-384",
+      "status": "round-trip",
+      "sql": "CREATE TABLE like_constraint_rename_cache (LIKE constraint_rename_cache INCLUDING ALL)"
+    },
+    {
+      "id": "deparse-385",
+      "status": "round-trip",
+      "sql": "COPY manual_export TO STDOUT CSV HEADER"
+    },
+    {
+      "id": "deparse-386",
+      "status": "round-trip",
+      "sql": "SELECT 1 FROM a.b.c"
+    },
+    {
+      "id": "deparse-387",
+      "status": "round-trip",
+      "sql": "CREATE PUBLICATION foo FOR TABLES IN SCHEMA bar"
+    },
+    {
+      "id": "deparse-388",
+      "status": "round-trip",
+      "sql": "ALTER TABLE ALL IN TABLESPACE foo OWNED BY bar, quux SET TABLESPACE fred NOWAIT"
+    },
+    {
+      "id": "deparse-389",
+      "status": "round-trip",
+      "sql": "MERGE INTO measurement m USING new_measurement nm ON m.city_id = nm.city_id AND m.logdate = nm.logdate WHEN MATCHED AND nm.peaktemp IS NULL THEN DELETE WHEN MATCHED THEN UPDATE SET peaktemp = GREATEST(m.peaktemp, nm.peaktemp), unitsales = m.unitsales + COALESCE(nm.unitsales, 0) WHEN NOT MATCHED THEN INSERT (city_id, logdate, peaktemp, unitsales) VALUES (city_id, logdate, peaktemp, unitsales)"
+    },
+    {
+      "id": "deparse-390",
+      "status": "round-trip",
+      "sql": "COPY vistest FROM STDIN FREEZE CSV"
+    },
+    {
+      "id": "deparse-391",
+      "status": "round-trip",
+      "sql": "CREATE INDEX \"foo.index\" ON foo USING btree (bar)"
+    },
+    {
+      "id": "deparse-392",
+      "status": "round-trip",
+      "sql": "CREATE TABLE distributors (did int, name varchar(40), UNIQUE (name) WITH (fillfactor=70)) WITH (fillfactor=70)"
+    },
+    {
+      "id": "deparse-393",
+      "status": "round-trip",
+      "sql": "SHOW ALL"
+    },
+    {
+      "id": "deparse-394",
+      "status": "round-trip",
+      "sql": "ALTER TABLE ONLY public.\"Test 123\" ADD CONSTRAINT \"Test 123_pkey\" PRIMARY KEY (c1)"
+    },
+    {
+      "id": "deparse-395",
+      "status": "round-trip",
+      "sql": "CREATE PROCEDURE insert_data(a int, b int) LANGUAGE sql BEGIN ATOMIC INSERT INTO tbl VALUES (a); INSERT INTO tbl VALUES (b); END"
+    },
+    {
+      "id": "deparse-396",
+      "status": "round-trip",
+      "sql": "CREATE PROCEDURE do_nothing() LANGUAGE sql BEGIN ATOMIC END"
+    },
+    {
+      "id": "deparse-397",
+      "status": "round-trip",
+      "sql": "CREATE PROCEDURE returns_one() LANGUAGE sql BEGIN ATOMIC RETURN 1; END"
+    },
+    {
+      "id": "deparse-398",
+      "status": "round-trip",
+      "sql": "CREATE PROCEDURE updates_and_returns_one() LANGUAGE sql BEGIN ATOMIC UPDATE tbl SET a = 1; RETURN 1; END"
+    },
+    {
+      "id": "deparse-399",
+      "status": "round-trip",
+      "sql": "SELECT 1 FROM tbl LIMIT COALESCE($1, $2)"
+    },
+    {
+      "id": "deparse-400",
+      "status": "round-trip",
+      "sql": "SELECT (false AND true) IS FALSE"
+    },
+    {
+      "id": "deparse-401",
+      "status": "round-trip",
+      "sql": "SELECT a = (true IS FALSE)"
+    },
+    {
+      "id": "deparse-402",
+      "status": "round-trip",
+      "sql": "ALTER TABLE a ENABLE TRIGGER b"
+    },
+    {
+      "id": "deparse-403",
+      "status": "round-trip",
+      "sql": "ALTER TABLE a ENABLE TRIGGER ALL"
+    },
+    {
+      "id": "deparse-404",
+      "status": "round-trip",
+      "sql": "ALTER TABLE a ENABLE TRIGGER USER"
+    },
+    {
+      "id": "deparse-405",
+      "status": "round-trip",
+      "sql": "ALTER TABLE a DISABLE TRIGGER b"
+    },
+    {
+      "id": "deparse-406",
+      "status": "round-trip",
+      "sql": "ALTER TABLE a DISABLE TRIGGER ALL"
+    },
+    {
+      "id": "deparse-407",
+      "status": "round-trip",
+      "sql": "ALTER TABLE a DISABLE TRIGGER USER"
+    },
+    {
+      "id": "deparse-408",
+      "status": "round-trip",
+      "sql": "CREATE INDEX myindex ON public.mytable USING btree (col1, (col2::varchar) varchar_pattern_ops)"
+    },
+    {
+      "id": "deparse-409",
+      "status": "round-trip",
+      "sql": "SELECT * FROM CAST(1 AS text)"
+    },
+    {
+      "id": "deparse-410",
+      "status": "round-trip",
+      "sql": "DECLARE \"Foo1\" SCROLL CURSOR FOR SELECT * FROM tenk1 ORDER BY unique2"
+    },
+    {
+      "id": "deparse-411",
+      "status": "round-trip",
+      "sql": "FETCH BACKWARD 23 \"Foo1\""
+    },
+    {
+      "id": "deparse-412",
+      "status": "round-trip",
+      "sql": "CREATE TABLE my_table (created_at timestamptz NOT NULL DEFAULT (now() AT TIME ZONE 'UTC'))"
+    },
+    {
+      "id": "deparse-413",
+      "status": "round-trip",
+      "sql": "CREATE TABLE my_table (created_at timestamptz NOT NULL DEFAULT (now() AT LOCAL))"
+    },
+    {
+      "id": "deparse-414",
+      "status": "round-trip",
+      "sql": "CREATE TABLE my_table (created_at timestamptz NOT NULL DEFAULT '1 hour'::interval + (current_timestamp AT TIME ZONE 'UTC'))"
+    },
+    {
+      "id": "deparse-415",
+      "status": "round-trip",
+      "sql": "ALTER TABLE my_table ADD COLUMN created_at timestamptz NOT NULL DEFAULT '1 hour'::interval + (current_timestamp AT TIME ZONE 'UTC')"
+    },
+    {
+      "id": "deparse-416",
+      "status": "round-trip",
+      "sql": "CREATE TABLE my_table (created_at int NOT NULL DEFAULT 1 + 2)"
+    }
+  ]
+}

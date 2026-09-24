@@ -1,0 +1,47 @@
+_:Nd718b463f3cc42449ba1336153b1a766 <http://www.w3.org/ns/shacl#value> "A" .
+_:N312c375ef5ca46de8600d3f6363643ac <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nb411e3a6b25f4c72841f4fa376606812 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Neaeb06070e4a43bd97d81c90fb1d6d3b <http://www.w3.org/ns/shacl#resultMessage> "Value of ex:InvalidResource1->ex:property2 != Literal(\"A\")" .
+_:Nb411e3a6b25f4c72841f4fa376606812 <http://www.w3.org/ns/shacl#result> _:Neaeb06070e4a43bd97d81c90fb1d6d3b .
+_:Nb411e3a6b25f4c72841f4fa376606812 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Nd718b463f3cc42449ba1336153b1a766 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/equals-001.test#property1> .
+_:N3971ff8458fe4ae9b0d1554773ab9d00 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nd718b463f3cc42449ba1336153b1a766 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/equals-001.test#TestShape-property1> .
+_:Nd718b463f3cc42449ba1336153b1a766 <http://www.w3.org/ns/shacl#resultMessage> "Value of ex:InvalidResource2->ex:property2 != Literal(\"A\")" .
+_:N312c375ef5ca46de8600d3f6363643ac <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/equals-001.test#property1> .
+_:N312c375ef5ca46de8600d3f6363643ac <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/equals-001.test#InvalidResource1> .
+_:Nb87279889b9c4c88ae586d7abfdd3273 <http://www.w3.org/ns/shacl#value> "A" .
+_:N3971ff8458fe4ae9b0d1554773ab9d00 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#EqualsConstraintComponent> .
+_:N3971ff8458fe4ae9b0d1554773ab9d00 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/equals-001.test#InvalidResource4> .
+_:Nb87279889b9c4c88ae586d7abfdd3273 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/equals-001.test#property1> .
+_:N312c375ef5ca46de8600d3f6363643ac <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/equals-001.test#TestShape-property1> .
+_:N312c375ef5ca46de8600d3f6363643ac <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nb87279889b9c4c88ae586d7abfdd3273 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/equals-001.test#TestShape-property1> .
+_:Neaeb06070e4a43bd97d81c90fb1d6d3b <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nd718b463f3cc42449ba1336153b1a766 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#EqualsConstraintComponent> .
+_:Nd718b463f3cc42449ba1336153b1a766 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Neaeb06070e4a43bd97d81c90fb1d6d3b <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/equals-001.test#property1> .
+_:N3971ff8458fe4ae9b0d1554773ab9d00 <http://www.w3.org/ns/shacl#value> "B" .
+_:Neaeb06070e4a43bd97d81c90fb1d6d3b <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/equals-001.test#InvalidResource1> .
+_:Nb87279889b9c4c88ae586d7abfdd3273 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N312c375ef5ca46de8600d3f6363643ac <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#EqualsConstraintComponent> .
+_:N3971ff8458fe4ae9b0d1554773ab9d00 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nb411e3a6b25f4c72841f4fa376606812 <http://www.w3.org/ns/shacl#result> _:Nd718b463f3cc42449ba1336153b1a766 .
+_:Nb411e3a6b25f4c72841f4fa376606812 <http://www.w3.org/ns/shacl#result> _:Nb87279889b9c4c88ae586d7abfdd3273 .
+_:N3971ff8458fe4ae9b0d1554773ab9d00 <http://www.w3.org/ns/shacl#resultMessage> "Value of ex:InvalidResource4->ex:property2 != Literal(\"B\")" .
+_:Nb87279889b9c4c88ae586d7abfdd3273 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#EqualsConstraintComponent> .
+_:Neaeb06070e4a43bd97d81c90fb1d6d3b <http://www.w3.org/ns/shacl#value> "A" .
+_:Nb411e3a6b25f4c72841f4fa376606812 <http://www.w3.org/ns/shacl#result> _:N312c375ef5ca46de8600d3f6363643ac .
+_:Neaeb06070e4a43bd97d81c90fb1d6d3b <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/equals-001.test#TestShape-property1> .
+_:N3971ff8458fe4ae9b0d1554773ab9d00 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/equals-001.test#property1> .
+_:N312c375ef5ca46de8600d3f6363643ac <http://www.w3.org/ns/shacl#value> "B" .
+_:Nd718b463f3cc42449ba1336153b1a766 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Neaeb06070e4a43bd97d81c90fb1d6d3b <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#EqualsConstraintComponent> .
+_:Neaeb06070e4a43bd97d81c90fb1d6d3b <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N312c375ef5ca46de8600d3f6363643ac <http://www.w3.org/ns/shacl#resultMessage> "Value of ex:InvalidResource1->ex:property2 != Literal(\"B\")" .
+_:Nd718b463f3cc42449ba1336153b1a766 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/equals-001.test#InvalidResource2> .
+_:Nb87279889b9c4c88ae586d7abfdd3273 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/equals-001.test#InvalidResource3> .
+_:Nb87279889b9c4c88ae586d7abfdd3273 <http://www.w3.org/ns/shacl#resultMessage> "Value of ex:InvalidResource3->ex:property2 != Literal(\"A\")" .
+_:Nb411e3a6b25f4c72841f4fa376606812 <http://www.w3.org/ns/shacl#result> _:N3971ff8458fe4ae9b0d1554773ab9d00 .
+_:N3971ff8458fe4ae9b0d1554773ab9d00 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/equals-001.test#TestShape-property1> .
+_:Nb87279889b9c4c88ae586d7abfdd3273 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .

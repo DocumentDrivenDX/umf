@@ -1,0 +1,4 @@
+export {};
+const str={type:'string'},obj=(properties:any)=>({type:'object',properties,required:Object.keys(properties),additionalProperties:false}),diagnostics={type:'array',items:obj({code:str,path:str,severity:{enum:['error','warning']},message:str})};
+const row={...obj({path:str,scope:{enum:['schema','property']},status:{enum:['resolved','blocked']},pairs:{type:'array',items:obj({fromPath:str,toPath:str})},diagnostics}),allOf:[{if:{properties:{status:{const:'blocked'}}},then:{properties:{pairs:{maxItems:0}}},else:{properties:{pairs:{minItems:1}}}}]};
+await Bun.write('spec/extensions/odcs/relationship-schema.json',JSON.stringify({$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:odcs:relationship-report:0.1.0',...obj({source:{$ref:'urn:umf:core:0.1.0'},status:{enum:['checked','blocked']},complete:{const:false},relationships:{type:'array',items:row},diagnostics})},null,2)+'\n');

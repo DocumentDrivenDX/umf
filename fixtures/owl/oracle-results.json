@@ -1,0 +1,35 @@
+{
+  "oracle": "RDFLib",
+  "version": "7.6.0",
+  "scope": "RDF graph isomorphism only, no OWL reasoning or validity claim",
+  "results": [
+    {
+      "file": "primer-corrected",
+      "format": "json",
+      "originalTriples": 202,
+      "restoredTriples": 202,
+      "isomorphic": true
+    },
+    {
+      "file": "primer-corrected",
+      "format": "yaml",
+      "originalTriples": 202,
+      "restoredTriples": 202,
+      "isomorphic": true
+    },
+    {
+      "file": "authored",
+      "format": "json",
+      "originalTriples": 26,
+      "restoredTriples": 26,
+      "isomorphic": true
+    },
+    {
+      "file": "authored",
+      "format": "yaml",
+      "originalTriples": 26,
+      "restoredTriples": 26,
+      "isomorphic": true
+    }
+  ]
+}

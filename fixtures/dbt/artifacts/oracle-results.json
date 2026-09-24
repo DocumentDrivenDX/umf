@@ -1,0 +1,84 @@
+{
+  "runtime": "dbt Core 1.10.0 native artifacts; jsonschema 4.25.1 without format checking",
+  "results": [
+    {
+      "id": "run-results",
+      "format": "json",
+      "nativeParser": "RunResultsArtifact",
+      "onlyRequestedValueChanged": true,
+      "schemaValid": true,
+      "roundtripSha256": "c542d7fe1180239e3f5fa439ee2d57f17a9d061fbc51afd22c326f286f64a40a",
+      "editedSha256": "1ba5a572e6b4ff4f286c1c7f3d2ffea78961ab770faa54bd3980dbcc878f2448"
+    },
+    {
+      "id": "run-results",
+      "format": "yaml",
+      "nativeParser": "RunResultsArtifact",
+      "onlyRequestedValueChanged": true,
+      "schemaValid": true,
+      "roundtripSha256": "c542d7fe1180239e3f5fa439ee2d57f17a9d061fbc51afd22c326f286f64a40a",
+      "editedSha256": "1ba5a572e6b4ff4f286c1c7f3d2ffea78961ab770faa54bd3980dbcc878f2448"
+    },
+    {
+      "id": "rich-run-results",
+      "format": "json",
+      "nativeParser": "RunResultsArtifact",
+      "onlyRequestedValueChanged": true,
+      "schemaValid": true,
+      "roundtripSha256": "40f7fa6489fc2c7a417b6a2ee8c63631228a524d98836e3e4edf8e038ae5b56d",
+      "editedSha256": "3c40ca5b0e232a106e144eafd99920a4dab6d5356e1b81160981fee48df918df"
+    },
+    {
+      "id": "rich-run-results",
+      "format": "yaml",
+      "nativeParser": "RunResultsArtifact",
+      "onlyRequestedValueChanged": true,
+      "schemaValid": true,
+      "roundtripSha256": "40f7fa6489fc2c7a417b6a2ee8c63631228a524d98836e3e4edf8e038ae5b56d",
+      "editedSha256": "3c40ca5b0e232a106e144eafd99920a4dab6d5356e1b81160981fee48df918df"
+    },
+    {
+      "id": "failure-run-results",
+      "format": "json",
+      "nativeParser": "RunResultsArtifact",
+      "onlyRequestedValueChanged": true,
+      "schemaValid": true,
+      "roundtripSha256": "24b1e2a68bcc88d1c7a327225fceedb146ebb2f5a2c897beb3a2f5086931405e",
+      "editedSha256": "02aeb973cf635b70df5fa7a63517623c19b22d9177cf057bda4255e3f9c3e3fd"
+    },
+    {
+      "id": "failure-run-results",
+      "format": "yaml",
+      "nativeParser": "RunResultsArtifact",
+      "onlyRequestedValueChanged": true,
+      "schemaValid": true,
+      "roundtripSha256": "24b1e2a68bcc88d1c7a327225fceedb146ebb2f5a2c897beb3a2f5086931405e",
+      "editedSha256": "02aeb973cf635b70df5fa7a63517623c19b22d9177cf057bda4255e3f9c3e3fd"
+    },
+    {
+      "id": "catalog",
+      "format": "json",
+      "nativeParser": "CatalogArtifact",
+      "onlyRequestedValueChanged": true,
+      "schemaValid": true,
+      "roundtripSha256": "3fe8c0a099a28d6e86b58f72796f31bde13822b7e8800f1774f36e54aad0f83d",
+      "editedSha256": "3c0279d20869eb53c13f2a1e4ef43c1ec98b9a85f38dd4a3097e5da595149a52"
+    },
+    {
+      "id": "catalog",
+      "format": "yaml",
+      "nativeParser": "CatalogArtifact",
+      "onlyRequestedValueChanged": true,
+      "schemaValid": true,
+      "roundtripSha256": "3fe8c0a099a28d6e86b58f72796f31bde13822b7e8800f1774f36e54aad0f83d",
+      "editedSha256": "3c0279d20869eb53c13f2a1e4ef43c1ec98b9a85f38dd4a3097e5da595149a52"
+    }
+  ],
+  "declaredVsObserved": {
+    "model": "model.umf_fixture.order_totals",
+    "column": "total_amount",
+    "declared": "decimal(18,2)",
+    "observed": "DOUBLE",
+    "equivalenceClaimed": false
+  }
+}

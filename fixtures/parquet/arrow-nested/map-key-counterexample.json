@@ -1,0 +1,17 @@
+{
+  "pyarrow": "21.0.0",
+  "policy": {
+    "parquetIndex": 8,
+    "arrowFieldPath": [
+      1,
+      0,
+      0
+    ],
+    "name": "renamed",
+    "uninterpretedMetadata": "preserve-and-report"
+  },
+  "file": "fixtures/parquet/arrow-nested/map-key-counterexample.parquet",
+  "sha256": "c5e7a3475512bd9eb1b1323b4a367aa76c983b843ebe661686b77fc492583fae",
+  "embeddedReaderKeyName": "key",
+  "scope": "The raw encoded Arrow model renames the key field, but PyArrow reconstructs its role label as key. This is not a successful native schema rename."
+}

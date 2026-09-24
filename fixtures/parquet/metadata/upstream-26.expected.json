@@ -1,0 +1,3395 @@
+{
+  "version": "1",
+  "schema": [
+    {
+      "name": "spark_schema",
+      "num_children": "6"
+    },
+    {
+      "repetition_type": "1",
+      "name": "txn",
+      "num_children": "3"
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "appId",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "version"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "lastUpdated"
+    },
+    {
+      "repetition_type": "1",
+      "name": "add",
+      "num_children": "11"
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "path",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "repetition_type": "1",
+      "name": "partitionValues",
+      "num_children": "1",
+      "converted_type": "1",
+      "logicalType": {
+        "MAP": {}
+      }
+    },
+    {
+      "repetition_type": "2",
+      "name": "key_value",
+      "num_children": "2"
+    },
+    {
+      "type": "6",
+      "repetition_type": "0",
+      "name": "key",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "value",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "size"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "modificationTime"
+    },
+    {
+      "type": "0",
+      "repetition_type": "1",
+      "name": "dataChange"
+    },
+    {
+      "repetition_type": "1",
+      "name": "tags",
+      "num_children": "1",
+      "converted_type": "1",
+      "logicalType": {
+        "MAP": {}
+      }
+    },
+    {
+      "repetition_type": "2",
+      "name": "key_value",
+      "num_children": "2"
+    },
+    {
+      "type": "6",
+      "repetition_type": "0",
+      "name": "key",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "value",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "repetition_type": "1",
+      "name": "deletionVector",
+      "num_children": "6"
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "storageType",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "pathOrInlineDv",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "1",
+      "repetition_type": "1",
+      "name": "offset"
+    },
+    {
+      "type": "1",
+      "repetition_type": "1",
+      "name": "sizeInBytes"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "cardinality"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "maxRowIndex"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "baseRowId"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "defaultRowCommitVersion"
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "clusteringProvider",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "stats",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "repetition_type": "1",
+      "name": "remove",
+      "num_children": "9"
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "path",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "deletionTimestamp"
+    },
+    {
+      "type": "0",
+      "repetition_type": "1",
+      "name": "dataChange"
+    },
+    {
+      "type": "0",
+      "repetition_type": "1",
+      "name": "extendedFileMetadata"
+    },
+    {
+      "repetition_type": "1",
+      "name": "partitionValues",
+      "num_children": "1",
+      "converted_type": "1",
+      "logicalType": {
+        "MAP": {}
+      }
+    },
+    {
+      "repetition_type": "2",
+      "name": "key_value",
+      "num_children": "2"
+    },
+    {
+      "type": "6",
+      "repetition_type": "0",
+      "name": "key",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "value",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "size"
+    },
+    {
+      "repetition_type": "1",
+      "name": "deletionVector",
+      "num_children": "6"
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "storageType",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "pathOrInlineDv",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "1",
+      "repetition_type": "1",
+      "name": "offset"
+    },
+    {
+      "type": "1",
+      "repetition_type": "1",
+      "name": "sizeInBytes"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "cardinality"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "maxRowIndex"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "baseRowId"
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "defaultRowCommitVersion"
+    },
+    {
+      "repetition_type": "1",
+      "name": "metaData",
+      "num_children": "8"
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "id",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "name",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "description",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "repetition_type": "1",
+      "name": "format",
+      "num_children": "2"
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "provider",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "repetition_type": "1",
+      "name": "options",
+      "num_children": "1",
+      "converted_type": "1",
+      "logicalType": {
+        "MAP": {}
+      }
+    },
+    {
+      "repetition_type": "2",
+      "name": "key_value",
+      "num_children": "2"
+    },
+    {
+      "type": "6",
+      "repetition_type": "0",
+      "name": "key",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "value",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "schemaString",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "repetition_type": "1",
+      "name": "partitionColumns",
+      "num_children": "1",
+      "converted_type": "3",
+      "logicalType": {
+        "LIST": {}
+      }
+    },
+    {
+      "repetition_type": "2",
+      "name": "list",
+      "num_children": "1"
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "element",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "repetition_type": "1",
+      "name": "configuration",
+      "num_children": "1",
+      "converted_type": "1",
+      "logicalType": {
+        "MAP": {}
+      }
+    },
+    {
+      "repetition_type": "2",
+      "name": "key_value",
+      "num_children": "2"
+    },
+    {
+      "type": "6",
+      "repetition_type": "0",
+      "name": "key",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "value",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "2",
+      "repetition_type": "1",
+      "name": "createdTime"
+    },
+    {
+      "repetition_type": "1",
+      "name": "protocol",
+      "num_children": "4"
+    },
+    {
+      "type": "1",
+      "repetition_type": "1",
+      "name": "minReaderVersion"
+    },
+    {
+      "type": "1",
+      "repetition_type": "1",
+      "name": "minWriterVersion"
+    },
+    {
+      "repetition_type": "1",
+      "name": "readerFeatures",
+      "num_children": "1",
+      "converted_type": "3",
+      "logicalType": {
+        "LIST": {}
+      }
+    },
+    {
+      "repetition_type": "2",
+      "name": "list",
+      "num_children": "1"
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "element",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "repetition_type": "1",
+      "name": "writerFeatures",
+      "num_children": "1",
+      "converted_type": "3",
+      "logicalType": {
+        "LIST": {}
+      }
+    },
+    {
+      "repetition_type": "2",
+      "name": "list",
+      "num_children": "1"
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "element",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "repetition_type": "1",
+      "name": "domainMetadata",
+      "num_children": "3"
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "domain",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "6",
+      "repetition_type": "1",
+      "name": "configuration",
+      "converted_type": "0",
+      "logicalType": {
+        "STRING": {}
+      }
+    },
+    {
+      "type": "0",
+      "repetition_type": "1",
+      "name": "removed"
+    }
+  ],
+  "num_rows": "6",
+  "row_groups": [
+    {
+      "columns": [
+        {
+          "file_offset": "4",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "txn",
+              "appId"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "4",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "0",
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "6",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "4744",
+          "offset_index_length": "13",
+          "column_index_offset": "2800",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "36",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "txn",
+              "version"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "36",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "6",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "4757",
+          "offset_index_length": "10",
+          "column_index_offset": "2823",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "68",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "txn",
+              "lastUpdated"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "68",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "6",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "4767",
+          "offset_index_length": "11",
+          "column_index_offset": "2846",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "100",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "path"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "316",
+            "total_compressed_size": "254",
+            "data_page_offset": "100",
+            "statistics": {
+              "null_count": "2",
+              "max_value": {
+                "hex": "706172742d30303030312d36363433313364332d313462342d346462662d383131302d3737303031623837373138322d633030302e736e617070792e70617271756574"
+              },
+              "min_value": {
+                "hex": "706172742d30303030302d31366338353264662d626136362d343038302d626532352d3533306130353932323432322d633030302e736e617070792e70617271756574"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "268",
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "2",
+                "0",
+                "4"
+              ]
+            }
+          },
+          "offset_index_offset": "4778",
+          "offset_index_length": "16",
+          "column_index_offset": "2869",
+          "column_index_length": "151"
+        },
+        {
+          "file_offset": "354",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "partitionValues",
+              "key_value",
+              "key"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "36",
+            "total_compressed_size": "38",
+            "data_page_offset": "354",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "0",
+              "repetition_level_histogram": [
+                "6",
+                "0"
+              ],
+              "definition_level_histogram": [
+                "2",
+                "0",
+                "4",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "4794",
+          "offset_index_length": "14",
+          "column_index_offset": "3020",
+          "column_index_length": "25"
+        },
+        {
+          "file_offset": "392",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "partitionValues",
+              "key_value",
+              "value"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "37",
+            "total_compressed_size": "39",
+            "data_page_offset": "392",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "0",
+              "repetition_level_histogram": [
+                "6",
+                "0"
+              ],
+              "definition_level_histogram": [
+                "2",
+                "0",
+                "4",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "4808",
+          "offset_index_length": "14",
+          "column_index_offset": "3045",
+          "column_index_length": "26"
+        },
+        {
+          "file_offset": "474",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "4",
+              "2",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "size"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "77",
+            "total_compressed_size": "79",
+            "data_page_offset": "474",
+            "dictionary_page_offset": "431",
+            "statistics": {
+              "max": {
+                "hex": "131d000000000000"
+              },
+              "min": {
+                "hex": "d013000000000000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "131d000000000000"
+              },
+              "min_value": {
+                "hex": "d013000000000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "2",
+                "0",
+                "4"
+              ]
+            }
+          },
+          "offset_index_offset": "4822",
+          "offset_index_length": "11",
+          "column_index_offset": "3071",
+          "column_index_length": "39"
+        },
+        {
+          "file_offset": "555",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "4",
+              "2",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "modificationTime"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "77",
+            "total_compressed_size": "81",
+            "data_page_offset": "555",
+            "dictionary_page_offset": "510",
+            "statistics": {
+              "max": {
+                "hex": "2aeb9b5891010000"
+              },
+              "min": {
+                "hex": "0ce39b5891010000"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "2aeb9b5891010000"
+              },
+              "min_value": {
+                "hex": "0ce39b5891010000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "2",
+                "encoding": "2",
+                "count": "1"
+              },
+              {
+                "page_type": "0",
+                "encoding": "2",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "2",
+                "0",
+                "4"
+              ]
+            }
+          },
+          "offset_index_offset": "4833",
+          "offset_index_length": "11",
+          "column_index_offset": "3110",
+          "column_index_length": "39"
+        },
+        {
+          "file_offset": "591",
+          "meta_data": {
+            "type": "0",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "dataChange"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "591",
+            "statistics": {
+              "max": {
+                "hex": "00"
+              },
+              "min": {
+                "hex": "00"
+              },
+              "null_count": "2",
+              "max_value": {
+                "hex": "00"
+              },
+              "min_value": {
+                "hex": "00"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "2",
+                "0",
+                "4"
+              ]
+            }
+          },
+          "offset_index_offset": "4844",
+          "offset_index_length": "11",
+          "column_index_offset": "3149",
+          "column_index_length": "25"
+        },
+        {
+          "file_offset": "623",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "tags",
+              "key_value",
+              "key"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "36",
+            "total_compressed_size": "38",
+            "data_page_offset": "623",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "0",
+              "repetition_level_histogram": [
+                "6",
+                "0"
+              ],
+              "definition_level_histogram": [
+                "2",
+                "4",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "4855",
+          "offset_index_length": "14",
+          "column_index_offset": "3174",
+          "column_index_length": "25"
+        },
+        {
+          "file_offset": "661",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "tags",
+              "key_value",
+              "value"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "37",
+            "total_compressed_size": "39",
+            "data_page_offset": "661",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "0",
+              "repetition_level_histogram": [
+                "6",
+                "0"
+              ],
+              "definition_level_histogram": [
+                "2",
+                "4",
+                "0",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "4869",
+          "offset_index_length": "14",
+          "column_index_offset": "3199",
+          "column_index_length": "26"
+        },
+        {
+          "file_offset": "700",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "deletionVector",
+              "storageType"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "700",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "0",
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "2",
+                "4",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "4883",
+          "offset_index_length": "14",
+          "column_index_offset": "3225",
+          "column_index_length": "24"
+        },
+        {
+          "file_offset": "732",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "deletionVector",
+              "pathOrInlineDv"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "732",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "0",
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "2",
+                "4",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "4897",
+          "offset_index_length": "14",
+          "column_index_offset": "3249",
+          "column_index_length": "24"
+        },
+        {
+          "file_offset": "764",
+          "meta_data": {
+            "type": "1",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "deletionVector",
+              "offset"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "764",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "2",
+                "4",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "4911",
+          "offset_index_length": "11",
+          "column_index_offset": "3273",
+          "column_index_length": "24"
+        },
+        {
+          "file_offset": "796",
+          "meta_data": {
+            "type": "1",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "deletionVector",
+              "sizeInBytes"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "796",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "2",
+                "4",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "4922",
+          "offset_index_length": "11",
+          "column_index_offset": "3297",
+          "column_index_length": "24"
+        },
+        {
+          "file_offset": "828",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "deletionVector",
+              "cardinality"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "828",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "2",
+                "4",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "4933",
+          "offset_index_length": "11",
+          "column_index_offset": "3321",
+          "column_index_length": "24"
+        },
+        {
+          "file_offset": "860",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "deletionVector",
+              "maxRowIndex"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "860",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "2",
+                "4",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "4944",
+          "offset_index_length": "11",
+          "column_index_offset": "3345",
+          "column_index_length": "24"
+        },
+        {
+          "file_offset": "892",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "baseRowId"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "892",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "2",
+                "4",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "4955",
+          "offset_index_length": "11",
+          "column_index_offset": "3369",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "924",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "defaultRowCommitVersion"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "924",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "2",
+                "4",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "4966",
+          "offset_index_length": "11",
+          "column_index_offset": "3392",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "956",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "clusteringProvider"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "956",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "0",
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "2",
+                "4",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "4977",
+          "offset_index_length": "14",
+          "column_index_offset": "3415",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "988",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "add",
+              "stats"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "957",
+            "total_compressed_size": "238",
+            "data_page_offset": "988",
+            "statistics": {
+              "null_count": "2",
+              "max_value": {
+                "hex": "7b226e756d5265636f726473223a35302c226d696e56616c756573223a7b226964223a35307d2c226d617856616c756573223a7b226964223a39397d2c226e756c6c436f756e74223a7b226964223a302c2276223a302c2261727261795f6f665f76617269616e7473223a302c227374727563745f6f665f76617269616e7473223a7b2276223a307d2c226d61705f6f665f76617269616e7473223a302c2261727261795f6f665f7374727563745f6f665f76617269616e7473223a302c227374727563745f6f665f61727261795f6f665f76617269616e7473223a7b2276223a307d7d7d"
+              },
+              "min_value": {
+                "hex": "7b226e756d5265636f726473223a312c226d696e56616c756573223a7b226964223a307d2c226d617856616c756573223a7b226964223a307d2c226e756c6c436f756e74223a7b226964223a302c2276223a302c2261727261795f6f665f76617269616e7473223a302c227374727563745f6f665f76617269616e7473223a7b2276223a307d2c226d61705f6f665f76617269616e7473223a302c2261727261795f6f665f7374727563745f6f665f76617269616e7473223a302c227374727563745f6f665f61727261795f6f665f76617269616e7473223a7b2276223a307d7d7d"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "909",
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "2",
+                "0",
+                "4"
+              ]
+            }
+          },
+          "offset_index_offset": "4991",
+          "offset_index_length": "16",
+          "column_index_offset": "3438",
+          "column_index_length": "151"
+        },
+        {
+          "file_offset": "1226",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "path"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "1226",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "0",
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "6",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5007",
+          "offset_index_length": "14",
+          "column_index_offset": "3589",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "1258",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "deletionTimestamp"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "1258",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "6",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5021",
+          "offset_index_length": "11",
+          "column_index_offset": "3612",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "1290",
+          "meta_data": {
+            "type": "0",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "dataChange"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "1290",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "6",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5032",
+          "offset_index_length": "11",
+          "column_index_offset": "3635",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "1322",
+          "meta_data": {
+            "type": "0",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "extendedFileMetadata"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "1322",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "6",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5043",
+          "offset_index_length": "11",
+          "column_index_offset": "3658",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "1354",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "partitionValues",
+              "key_value",
+              "key"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "36",
+            "total_compressed_size": "38",
+            "data_page_offset": "1354",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "0",
+              "repetition_level_histogram": [
+                "6",
+                "0"
+              ],
+              "definition_level_histogram": [
+                "6",
+                "0",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5054",
+          "offset_index_length": "14",
+          "column_index_offset": "3681",
+          "column_index_length": "25"
+        },
+        {
+          "file_offset": "1392",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "partitionValues",
+              "key_value",
+              "value"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "37",
+            "total_compressed_size": "39",
+            "data_page_offset": "1392",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "0",
+              "repetition_level_histogram": [
+                "6",
+                "0"
+              ],
+              "definition_level_histogram": [
+                "6",
+                "0",
+                "0",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5068",
+          "offset_index_length": "14",
+          "column_index_offset": "3706",
+          "column_index_length": "26"
+        },
+        {
+          "file_offset": "1431",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "size"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "1431",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "6",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5082",
+          "offset_index_length": "11",
+          "column_index_offset": "3732",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "1463",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "deletionVector",
+              "storageType"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "1463",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "0",
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "6",
+                "0",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5093",
+          "offset_index_length": "14",
+          "column_index_offset": "3755",
+          "column_index_length": "24"
+        },
+        {
+          "file_offset": "1495",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "deletionVector",
+              "pathOrInlineDv"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "1495",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "0",
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "6",
+                "0",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5107",
+          "offset_index_length": "14",
+          "column_index_offset": "3779",
+          "column_index_length": "24"
+        },
+        {
+          "file_offset": "1527",
+          "meta_data": {
+            "type": "1",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "deletionVector",
+              "offset"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "1527",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "6",
+                "0",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5121",
+          "offset_index_length": "11",
+          "column_index_offset": "3803",
+          "column_index_length": "24"
+        },
+        {
+          "file_offset": "1559",
+          "meta_data": {
+            "type": "1",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "deletionVector",
+              "sizeInBytes"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "1559",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "6",
+                "0",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5132",
+          "offset_index_length": "11",
+          "column_index_offset": "3827",
+          "column_index_length": "24"
+        },
+        {
+          "file_offset": "1591",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "deletionVector",
+              "cardinality"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "1591",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "6",
+                "0",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5143",
+          "offset_index_length": "11",
+          "column_index_offset": "3851",
+          "column_index_length": "24"
+        },
+        {
+          "file_offset": "1623",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "deletionVector",
+              "maxRowIndex"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "1623",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "6",
+                "0",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5154",
+          "offset_index_length": "11",
+          "column_index_offset": "3875",
+          "column_index_length": "24"
+        },
+        {
+          "file_offset": "1655",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "baseRowId"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "1655",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "6",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5165",
+          "offset_index_length": "11",
+          "column_index_offset": "3899",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "1687",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "remove",
+              "defaultRowCommitVersion"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "1687",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "6",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5176",
+          "offset_index_length": "11",
+          "column_index_offset": "3922",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "1719",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "metaData",
+              "id"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "70",
+            "total_compressed_size": "72",
+            "data_page_offset": "1719",
+            "statistics": {
+              "max": {
+                "hex": "64376562303834382d623030322d346530622d396438642d646433333563393039343666"
+              },
+              "min": {
+                "hex": "64376562303834382d623030322d346530622d396438642d646433333563393039343666"
+              },
+              "null_count": "5",
+              "max_value": {
+                "hex": "64376562303834382d623030322d346530622d396438642d646433333563393039343666"
+              },
+              "min_value": {
+                "hex": "64376562303834382d623030322d346530622d396438642d646433333563393039343666"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "36",
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "5",
+                "0",
+                "1"
+              ]
+            }
+          },
+          "offset_index_offset": "5187",
+          "offset_index_length": "15",
+          "column_index_offset": "3945",
+          "column_index_length": "95"
+        },
+        {
+          "file_offset": "1791",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "metaData",
+              "name"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "1791",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "0",
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "5",
+                "1",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5202",
+          "offset_index_length": "14",
+          "column_index_offset": "4040",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "1823",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "metaData",
+              "description"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "1823",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "0",
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "5",
+                "1",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5216",
+          "offset_index_length": "14",
+          "column_index_offset": "4063",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "1855",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "metaData",
+              "format",
+              "provider"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "41",
+            "total_compressed_size": "43",
+            "data_page_offset": "1855",
+            "statistics": {
+              "max": {
+                "hex": "70617271756574"
+              },
+              "min": {
+                "hex": "70617271756574"
+              },
+              "null_count": "5",
+              "max_value": {
+                "hex": "70617271756574"
+              },
+              "min_value": {
+                "hex": "70617271756574"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "7",
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "5",
+                "0",
+                "0",
+                "1"
+              ]
+            }
+          },
+          "offset_index_offset": "5230",
+          "offset_index_length": "14",
+          "column_index_offset": "4086",
+          "column_index_length": "38"
+        },
+        {
+          "file_offset": "1898",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "metaData",
+              "format",
+              "options",
+              "key_value",
+              "key"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "36",
+            "total_compressed_size": "38",
+            "data_page_offset": "1898",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "0",
+              "repetition_level_histogram": [
+                "6",
+                "0"
+              ],
+              "definition_level_histogram": [
+                "5",
+                "0",
+                "0",
+                "1",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5244",
+          "offset_index_length": "14",
+          "column_index_offset": "4124",
+          "column_index_length": "26"
+        },
+        {
+          "file_offset": "1936",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "metaData",
+              "format",
+              "options",
+              "key_value",
+              "value"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "36",
+            "total_compressed_size": "38",
+            "data_page_offset": "1936",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "0",
+              "repetition_level_histogram": [
+                "6",
+                "0"
+              ],
+              "definition_level_histogram": [
+                "5",
+                "0",
+                "0",
+                "1",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5258",
+          "offset_index_length": "14",
+          "column_index_offset": "4150",
+          "column_index_length": "27"
+        },
+        {
+          "file_offset": "1974",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "metaData",
+              "schemaString"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "1042",
+            "total_compressed_size": "319",
+            "data_page_offset": "1974",
+            "statistics": {
+              "max": {
+                "hex": "7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a226964222c2274797065223a226c6f6e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2276222c2274797065223a2276617269616e74222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2261727261795f6f665f76617269616e7473222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a2276617269616e74222c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a227374727563745f6f665f76617269616e7473222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a2276222c2274797065223a2276617269616e74222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226d61705f6f665f76617269616e7473222c2274797065223a7b2274797065223a226d6170222c226b657954797065223a22737472696e67222c2276616c756554797065223a2276617269616e74222c2276616c7565436f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2261727261795f6f665f7374727563745f6f665f76617269616e7473222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a2276222c2274797065223a2276617269616e74222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a227374727563745f6f665f61727261795f6f665f76617269616e7473222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a2276222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a2276617269616e74222c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d"
+              },
+              "min": {
+                "hex": "7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a226964222c2274797065223a226c6f6e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2276222c2274797065223a2276617269616e74222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2261727261795f6f665f76617269616e7473222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a2276617269616e74222c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a227374727563745f6f665f76617269616e7473222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a2276222c2274797065223a2276617269616e74222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226d61705f6f665f76617269616e7473222c2274797065223a7b2274797065223a226d6170222c226b657954797065223a22737472696e67222c2276616c756554797065223a2276617269616e74222c2276616c7565436f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2261727261795f6f665f7374727563745f6f665f76617269616e7473222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a2276222c2274797065223a2276617269616e74222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a227374727563745f6f665f61727261795f6f665f76617269616e7473222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a2276222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a2276617269616e74222c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d"
+              },
+              "null_count": "5",
+              "max_value": {
+                "hex": "7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a226964222c2274797065223a226c6f6e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2276222c2274797065223a2276617269616e74222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2261727261795f6f665f76617269616e7473222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a2276617269616e74222c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a227374727563745f6f665f76617269616e7473222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a2276222c2274797065223a2276617269616e74222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226d61705f6f665f76617269616e7473222c2274797065223a7b2274797065223a226d6170222c226b657954797065223a22737472696e67222c2276616c756554797065223a2276617269616e74222c2276616c7565436f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2261727261795f6f665f7374727563745f6f665f76617269616e7473222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a2276222c2274797065223a2276617269616e74222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a227374727563745f6f665f61727261795f6f665f76617269616e7473222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a2276222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a2276617269616e74222c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d"
+              },
+              "min_value": {
+                "hex": "7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a226964222c2274797065223a226c6f6e67222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2276222c2274797065223a2276617269616e74222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2261727261795f6f665f76617269616e7473222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a2276617269616e74222c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a227374727563745f6f665f76617269616e7473222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a2276222c2274797065223a2276617269616e74222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a226d61705f6f665f76617269616e7473222c2274797065223a7b2274797065223a226d6170222c226b657954797065223a22737472696e67222c2276616c756554797065223a2276617269616e74222c2276616c7565436f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a2261727261795f6f665f7374727563745f6f665f76617269616e7473222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a2276222c2274797065223a2276617269616e74222c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d2c7b226e616d65223a227374727563745f6f665f61727261795f6f665f76617269616e7473222c2274797065223a7b2274797065223a22737472756374222c226669656c6473223a5b7b226e616d65223a2276222c2274797065223a7b2274797065223a226172726179222c22656c656d656e7454797065223a2276617269616e74222c22636f6e7461696e734e756c6c223a747275657d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d2c226e756c6c61626c65223a747275652c226d65746164617461223a7b7d7d5d7d"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "1006",
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "5",
+                "0",
+                "1"
+              ]
+            }
+          },
+          "offset_index_offset": "5272",
+          "offset_index_length": "16",
+          "column_index_offset": "4177",
+          "column_index_length": "151"
+        },
+        {
+          "file_offset": "2293",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "metaData",
+              "partitionColumns",
+              "list",
+              "element"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "37",
+            "total_compressed_size": "39",
+            "data_page_offset": "2293",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "0",
+              "repetition_level_histogram": [
+                "6",
+                "0"
+              ],
+              "definition_level_histogram": [
+                "5",
+                "0",
+                "1",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5288",
+          "offset_index_length": "14",
+          "column_index_offset": "4328",
+          "column_index_length": "26"
+        },
+        {
+          "file_offset": "2332",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "metaData",
+              "configuration",
+              "key_value",
+              "key"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "64",
+            "total_compressed_size": "65",
+            "data_page_offset": "2332",
+            "statistics": {
+              "max": {
+                "hex": "64656c74612e636865636b706f696e74496e74657276616c"
+              },
+              "min": {
+                "hex": "64656c74612e636865636b706f696e74496e74657276616c"
+              },
+              "null_count": "5",
+              "max_value": {
+                "hex": "64656c74612e636865636b706f696e74496e74657276616c"
+              },
+              "min_value": {
+                "hex": "64656c74612e636865636b706f696e74496e74657276616c"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "24",
+              "repetition_level_histogram": [
+                "6",
+                "0"
+              ],
+              "definition_level_histogram": [
+                "5",
+                "0",
+                "0",
+                "1"
+              ]
+            }
+          },
+          "offset_index_offset": "5302",
+          "offset_index_length": "15",
+          "column_index_offset": "4354",
+          "column_index_length": "73"
+        },
+        {
+          "file_offset": "2397",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "metaData",
+              "configuration",
+              "key_value",
+              "value"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "42",
+            "total_compressed_size": "44",
+            "data_page_offset": "2397",
+            "statistics": {
+              "max": {
+                "hex": "32"
+              },
+              "min": {
+                "hex": "32"
+              },
+              "null_count": "5",
+              "max_value": {
+                "hex": "32"
+              },
+              "min_value": {
+                "hex": "32"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "1",
+              "repetition_level_histogram": [
+                "6",
+                "0"
+              ],
+              "definition_level_histogram": [
+                "5",
+                "0",
+                "0",
+                "0",
+                "1"
+              ]
+            }
+          },
+          "offset_index_offset": "5317",
+          "offset_index_length": "14",
+          "column_index_offset": "4427",
+          "column_index_length": "28"
+        },
+        {
+          "file_offset": "2441",
+          "meta_data": {
+            "type": "2",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "metaData",
+              "createdTime"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "38",
+            "total_compressed_size": "40",
+            "data_page_offset": "2441",
+            "statistics": {
+              "max": {
+                "hex": "c6dc9b5891010000"
+              },
+              "min": {
+                "hex": "c6dc9b5891010000"
+              },
+              "null_count": "5",
+              "max_value": {
+                "hex": "c6dc9b5891010000"
+              },
+              "min_value": {
+                "hex": "c6dc9b5891010000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "5",
+                "0",
+                "1"
+              ]
+            }
+          },
+          "offset_index_offset": "5331",
+          "offset_index_length": "11",
+          "column_index_offset": "4455",
+          "column_index_length": "39"
+        },
+        {
+          "file_offset": "2481",
+          "meta_data": {
+            "type": "1",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "protocol",
+              "minReaderVersion"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "33",
+            "total_compressed_size": "35",
+            "data_page_offset": "2481",
+            "statistics": {
+              "max": {
+                "hex": "03000000"
+              },
+              "min": {
+                "hex": "03000000"
+              },
+              "null_count": "5",
+              "max_value": {
+                "hex": "03000000"
+              },
+              "min_value": {
+                "hex": "03000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "5",
+                "0",
+                "1"
+              ]
+            }
+          },
+          "offset_index_offset": "5342",
+          "offset_index_length": "11",
+          "column_index_offset": "4494",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "2516",
+          "meta_data": {
+            "type": "1",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "protocol",
+              "minWriterVersion"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "34",
+            "total_compressed_size": "36",
+            "data_page_offset": "2516",
+            "statistics": {
+              "max": {
+                "hex": "07000000"
+              },
+              "min": {
+                "hex": "07000000"
+              },
+              "null_count": "5",
+              "max_value": {
+                "hex": "07000000"
+              },
+              "min_value": {
+                "hex": "07000000"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "5",
+                "0",
+                "1"
+              ]
+            }
+          },
+          "offset_index_offset": "5353",
+          "offset_index_length": "11",
+          "column_index_offset": "4525",
+          "column_index_length": "31"
+        },
+        {
+          "file_offset": "2552",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "protocol",
+              "readerFeatures",
+              "list",
+              "element"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "60",
+            "total_compressed_size": "61",
+            "data_page_offset": "2552",
+            "statistics": {
+              "max": {
+                "hex": "76617269616e74547970652d70726576696577"
+              },
+              "min": {
+                "hex": "76617269616e74547970652d70726576696577"
+              },
+              "null_count": "5",
+              "max_value": {
+                "hex": "76617269616e74547970652d70726576696577"
+              },
+              "min_value": {
+                "hex": "76617269616e74547970652d70726576696577"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "19",
+              "repetition_level_histogram": [
+                "6",
+                "0"
+              ],
+              "definition_level_histogram": [
+                "5",
+                "0",
+                "0",
+                "0",
+                "1"
+              ]
+            }
+          },
+          "offset_index_offset": "5364",
+          "offset_index_length": "14",
+          "column_index_offset": "4556",
+          "column_index_length": "64"
+        },
+        {
+          "file_offset": "2613",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "3"
+            ],
+            "path_in_schema": [
+              "protocol",
+              "writerFeatures",
+              "list",
+              "element"
+            ],
+            "codec": "1",
+            "num_values": "8",
+            "total_uncompressed_size": "90",
+            "total_compressed_size": "91",
+            "data_page_offset": "2613",
+            "statistics": {
+              "null_count": "5",
+              "max_value": {
+                "hex": "76617269616e74547970652d70726576696577"
+              },
+              "min_value": {
+                "hex": "617070656e644f6e6c79"
+              }
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "39",
+              "repetition_level_histogram": [
+                "6",
+                "2"
+              ],
+              "definition_level_histogram": [
+                "5",
+                "0",
+                "0",
+                "0",
+                "3"
+              ]
+            }
+          },
+          "offset_index_offset": "5378",
+          "offset_index_length": "15",
+          "column_index_offset": "4620",
+          "column_index_length": "55"
+        },
+        {
+          "file_offset": "2704",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "domainMetadata",
+              "domain"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "2704",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "0",
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "6",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5393",
+          "offset_index_length": "14",
+          "column_index_offset": "4675",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "2736",
+          "meta_data": {
+            "type": "6",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "domainMetadata",
+              "configuration"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "2736",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "unencoded_byte_array_data_bytes": "0",
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "6",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5407",
+          "offset_index_length": "14",
+          "column_index_offset": "4698",
+          "column_index_length": "23"
+        },
+        {
+          "file_offset": "2768",
+          "meta_data": {
+            "type": "0",
+            "encodings": [
+              "0",
+              "4",
+              "3"
+            ],
+            "path_in_schema": [
+              "domainMetadata",
+              "removed"
+            ],
+            "codec": "1",
+            "num_values": "6",
+            "total_uncompressed_size": "30",
+            "total_compressed_size": "32",
+            "data_page_offset": "2768",
+            "statistics": {
+              "null_count": "6"
+            },
+            "encoding_stats": [
+              {
+                "page_type": "0",
+                "encoding": "0",
+                "count": "1"
+              }
+            ],
+            "size_statistics": {
+              "repetition_level_histogram": [
+                "6"
+              ],
+              "definition_level_histogram": [
+                "6",
+                "0",
+                "0"
+              ]
+            }
+          },
+          "offset_index_offset": "5421",
+          "offset_index_length": "11",
+          "column_index_offset": "4721",
+          "column_index_length": "23"
+        }
+      ],
+      "total_byte_size": "4199",
+      "num_rows": "6",
+      "file_offset": "4",
+      "total_compressed_size": "2796",
+      "ordinal": "0"
+    }
+  ],
+  "key_value_metadata": [
+    {
+      "key": "org.apache.spark.version",
+      "value": "4.0.0"
+    },
+    {
+      "key": "org.apache.spark.sql.parquet.row.metadata",
+      "value": "{\"type\":\"struct\",\"fields\":[{\"name\":\"txn\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"appId\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"version\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"lastUpdated\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"add\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"path\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"partitionValues\",\"type\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"string\",\"valueContainsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"size\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"modificationTime\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"dataChange\",\"type\":\"boolean\",\"nullable\":true,\"metadata\":{}},{\"name\":\"tags\",\"type\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"string\",\"valueContainsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"deletionVector\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"storageType\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"pathOrInlineDv\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"offset\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"sizeInBytes\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"cardinality\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"maxRowIndex\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"baseRowId\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"defaultRowCommitVersion\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"clusteringProvider\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"stats\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"remove\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"path\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"deletionTimestamp\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"dataChange\",\"type\":\"boolean\",\"nullable\":true,\"metadata\":{}},{\"name\":\"extendedFileMetadata\",\"type\":\"boolean\",\"nullable\":true,\"metadata\":{}},{\"name\":\"partitionValues\",\"type\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"string\",\"valueContainsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"size\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"deletionVector\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"storageType\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"pathOrInlineDv\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"offset\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"sizeInBytes\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"cardinality\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"maxRowIndex\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"baseRowId\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}},{\"name\":\"defaultRowCommitVersion\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"metaData\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"name\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"description\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"format\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"provider\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"options\",\"type\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"string\",\"valueContainsNull\":true},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"schemaString\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"partitionColumns\",\"type\":{\"type\":\"array\",\"elementType\":\"string\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"configuration\",\"type\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"string\",\"valueContainsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"createdTime\",\"type\":\"long\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"protocol\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"minReaderVersion\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"minWriterVersion\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"readerFeatures\",\"type\":{\"type\":\"array\",\"elementType\":\"string\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"writerFeatures\",\"type\":{\"type\":\"array\",\"elementType\":\"string\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"domainMetadata\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"domain\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"configuration\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"removed\",\"type\":\"boolean\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}}]}"
+    }
+  ],
+  "created_by": "parquet-mr version 1.14.1 (build 97ede968377400d1d79e3196636ba3de392196ba)",
+  "column_orders": [
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    },
+    {
+      "TYPE_ORDER": {}
+    }
+  ]
+}

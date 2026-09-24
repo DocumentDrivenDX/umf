@@ -1,0 +1,116 @@
+{
+  "priorEvidence": "fixtures/jsonld/to-rdf/unicode-iri-gap.json",
+  "report": {
+    "source": {
+      "umf": "0.1.0",
+      "id": "unicode-iri-resolution",
+      "vocabularies": {
+        "umf.jsonld": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "jsonld",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "document",
+              "extensions": {
+                "umf.jsonld": {
+                  "profile": "jsonld-source",
+                  "processingMode": "json-ld-1.1",
+                  "baseIRI": "https://example.org/",
+                  "root": {
+                    "kind": "object",
+                    "members": {
+                      "@id": {
+                        "kind": "string",
+                        "value": "urn:s"
+                      },
+                      "urn:p": {
+                        "kind": "object",
+                        "members": {
+                          "@id": {
+                            "kind": "string",
+                            "value": "urn:x/ "
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "originalSource": "{\"@id\":\"urn:s\",\"urn:p\":{\"@id\":\"urn:x/ \"}}",
+                  "contexts": []
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "id": "resolved-rdf",
+    "numericPolicy": "strict",
+    "lossPolicy": "reject",
+    "rdfDirection": null,
+    "status": "candidate",
+    "complete": false,
+    "resourcesUsed": [],
+    "diagnostics": [
+      {
+        "code": "JSONLD_TO_RDF",
+        "path": "",
+        "severity": "warning",
+        "message": "RDF projection is a derived dataset. Source syntax, contexts, lexical forms and annotations remain authoritative in this report; blank labels are local. No ontology equivalence or lossless replacement is asserted."
+      }
+    ],
+    "candidate": {
+      "umf": "0.1.0",
+      "id": "resolved-rdf",
+      "vocabularies": {
+        "umf.rdf": {
+          "version": "0.1.0"
+        }
+      },
+      "modules": [
+        {
+          "id": "dataset",
+          "namespace": "",
+          "elements": [
+            {
+              "id": "dataset",
+              "extensions": {
+                "umf.rdf": {
+                  "profile": "rdf11-nquads",
+                  "blankNodeScope": "resolved-rdf",
+                  "quads": [
+                    {
+                      "subject": {
+                        "kind": "iri",
+                        "value": "urn:s"
+                      },
+                      "predicate": {
+                        "kind": "iri",
+                        "value": "urn:p"
+                      },
+                      "object": {
+                        "kind": "iri",
+                        "value": "urn:x/ "
+                      },
+                      "graph": {
+                        "kind": "default"
+                      }
+                    }
+                  ],
+                  "originalSource": "<urn:s> <urn:p> <urn:x/ > .\n"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "output": "<urn:s> <urn:p> <urn:x/ > .\n",
+  "expected": "<urn:s> <urn:p> <urn:x/ > .\n",
+  "resolved": true
+}

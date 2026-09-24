@@ -1,0 +1,10 @@
+import {importJsonLdDocument,exportJsonLdDocument,proposeJsonLdExpansion,proposeJsonLdNodeEdit,readDocument,writeDocument} from '../src';
+const cases=await Bun.file('native/jsonld/examples/nest-cases.json').json(),results=[];
+function sort(v:any):any{return Array.isArray(v)?v.map(sort):v&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,sort(v[k])])):v;}
+for(const c of cases){const options={id:c.id,baseIRI:'https://example.org/source',contexts:c.contexts??[]},source=importJsonLdDocument(JSON.stringify(c.source),options),r=await proposeJsonLdExpansion(source,{lossPolicy:'report'}),exports=[];
+ if(c.blocked){if(r.status!=='blocked')throw Error('Invalid nested value accepted');results.push({id:c.id,status:r.status,diagnostics:r.diagnostics});continue;}
+ if(!r.candidate||JSON.stringify(sort(JSON.parse(exportJsonLdDocument(r.candidate))))!==JSON.stringify(sort(c.expected)))throw Error(c.id+': '+JSON.stringify(r));
+ for(const format of ['json','yaml'] as const){const path='fixtures/jsonld/nest/'+c.id+'.'+format+'.jsonld';await Bun.write(path,exportJsonLdDocument(readDocument(writeDocument(r.candidate,format),format)));exports.push({format,path});}
+ const edits=[];if(c.edit){const edited=proposeJsonLdNodeEdit(source,c.edit.pointer,c.edit.text).document,e=await proposeJsonLdExpansion(edited,{lossPolicy:'report'});if(!e.candidate||JSON.stringify(sort(JSON.parse(exportJsonLdDocument(e.candidate))))!==JSON.stringify(sort(c.editedExpected)))throw Error('Edit differs');for(const format of ['json','yaml'] as const){const path='fixtures/jsonld/nest/'+c.id+'.'+format+'.edited.jsonld';await Bun.write(path,exportJsonLdDocument(readDocument(writeDocument(e.candidate,format),format)));edits.push({format,path});}}
+ results.push({id:c.id,status:r.status,resourcesUsed:r.resourcesUsed,exports,edits});}
+await Bun.write('fixtures/jsonld/nest/results.json',JSON.stringify({results},null,2)+'\n');console.log({cases:results.length,candidates:results.filter(r=>r.status==='candidate').length});

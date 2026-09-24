@@ -1,0 +1,345 @@
+{
+  "id": "umf.shacl",
+  "version": "0.1.0",
+  "coreVersion": "0.1.0",
+  "description": "SHACL 1.0 shapes graphs with source-preserving RDF representation and explicit property-path interpretation",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:shacl:0.1.0",
+    "type": "object",
+    "properties": {
+      "profile": {
+        "enum": [
+          "rdf11-nquads",
+          "rdf11-turtle",
+          "rdf11-trig"
+        ]
+      },
+      "baseIRI": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 4096
+      },
+      "namedGraphs": {
+        "type": "array",
+        "maxItems": 10000,
+        "items": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "iri"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "kind",
+                "value"
+              ],
+              "additionalProperties": true
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "blank"
+                },
+                "value": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "kind",
+                "value"
+              ],
+              "additionalProperties": true
+            }
+          ]
+        }
+      },
+      "blankNodeScope": {
+        "type": "string",
+        "minLength": 1
+      },
+      "quads": {
+        "type": "array",
+        "maxItems": 10000,
+        "items": {
+          "type": "object",
+          "properties": {
+            "subject": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "iri"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "value"
+                  ],
+                  "additionalProperties": true
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "blank"
+                    },
+                    "value": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "value"
+                  ],
+                  "additionalProperties": true
+                }
+              ]
+            },
+            "predicate": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "iri"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "kind",
+                "value"
+              ],
+              "additionalProperties": true
+            },
+            "object": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "iri"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "value"
+                  ],
+                  "additionalProperties": true
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "blank"
+                    },
+                    "value": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "value"
+                  ],
+                  "additionalProperties": true
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "literal"
+                    },
+                    "value": {
+                      "type": "string"
+                    },
+                    "datatype": {
+                      "type": "string"
+                    },
+                    "language": {
+                      "type": "string",
+                      "pattern": "^[a-z]+(?:-[a-z0-9]+)*$"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "value",
+                    "datatype"
+                  ],
+                  "additionalProperties": true
+                }
+              ]
+            },
+            "graph": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "iri"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "value"
+                  ],
+                  "additionalProperties": true
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "blank"
+                    },
+                    "value": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "value"
+                  ],
+                  "additionalProperties": true
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "default"
+                    }
+                  },
+                  "required": [
+                    "kind"
+                  ],
+                  "additionalProperties": true
+                }
+              ]
+            }
+          },
+          "required": [
+            "subject",
+            "predicate",
+            "object",
+            "graph"
+          ],
+          "additionalProperties": true
+        }
+      },
+      "originalSource": {
+        "type": "string",
+        "maxLength": 4000000
+      },
+      "shaclVersion": {
+        "const": "1.0"
+      }
+    },
+    "required": [
+      "profile",
+      "blankNodeScope",
+      "quads",
+      "originalSource",
+      "shaclVersion"
+    ],
+    "additionalProperties": true,
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "profile": {
+              "enum": [
+                "rdf11-turtle",
+                "rdf11-trig"
+              ]
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "baseIRI": {}
+          },
+          "required": [
+            "baseIRI"
+          ]
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "profile": {
+              "const": "rdf11-trig"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "namedGraphs": {}
+          },
+          "required": [
+            "namedGraphs"
+          ]
+        }
+      }
+    ]
+  },
+  "semantics": "CONTRACT-028; SHACL 2017 Recommendation, source graph preservation, property paths and Core target selection; verified constraint conformance remains unimplemented; experimental engine proposal available",
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "semantic",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "SHACL",
+      "version": "W3C Recommendation 2017-07-20",
+      "subset": "RDF 1.1 Turtle shapes graph; all seven property-path forms and Core target selection; no constraint conformance, SPARQL execution, imports, entailment or SHACL 1.2 claim"
+    },
+    "evidence": [
+      "tests/shacl/paths.test.ts",
+      "fixtures/shacl/oracle-results.json",
+      "fixtures/shacl/browser-results.json",
+      "fixtures/shacl/corpus-results.json",
+      "fixtures/shacl/corpus-oracle-results.json",
+      "fixtures/shacl/target-oracle-results.json",
+      "fixtures/shacl/target-browser-results.json",
+      "fixtures/shacl/validation-results.json",
+      "fixtures/shacl/report-comparison.json",
+      "fixtures/shacl/validation-browser-results.json",
+      "fixtures/shacl/exact-numeric-results.json",
+      "fixtures/shacl/exact-numeric-oracle.json",
+      "fixtures/shacl/exact-numeric-browser-results.json",
+      "fixtures/shacl/float-results.json",
+      "fixtures/shacl/float-oracle.json",
+      "fixtures/shacl/float-browser-results.json",
+      "tests/shacl/metadata.test.ts",
+      "fixtures/shacl/metadata.json",
+      "fixtures/shacl/metadata-browser-results.json",
+      "tests/shacl/lists.test.ts",
+      "fixtures/shacl/list-gap.json",
+      "fixtures/shacl/string-results.json",
+      "fixtures/shacl/string-oracle.json",
+      "fixtures/shacl/string-browser-results.json"
+    ]
+  }
+}

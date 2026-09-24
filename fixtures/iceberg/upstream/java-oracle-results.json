@@ -1,0 +1,130 @@
+{
+  "runtime" : "Apache Iceberg Java 1.11.0",
+  "javaVersion" : "21.0.2",
+  "results" : [ {
+    "id" : "schema-0",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "schema-1",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "schema-2",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "schema-3",
+    "umf" : "rejected",
+    "nativeAccepted" : false,
+    "nativeError" : "IllegalArgumentException: Cannot parse type from json: {\"fields\":[{\"id\":1,\"name\":\"x\",\"required\":true,\"type\":\"long\"},{\"id\":2,\"name\":\"y\",\"required\":true,\"type\":\"long\",\"doc\":\"comment\"},{\"id\":3,\"name\":\"z\",\"required\":true,\"type\":\"long\"}]}"
+  }, {
+    "id" : "schema-4",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "schema-5",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "schema-6",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "schema-7",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "schema-8",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "schema-9",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "schema-10",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "schema-11",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "schema-12",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "schema-13",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "schema-14",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "schema-15",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "schema-16",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "schema-17",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "schema-18",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "schema-19",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  }, {
+    "id" : "schema-20",
+    "umf" : "roundtripped",
+    "nativeAccepted" : true,
+    "formatsAgree" : 2,
+    "editVerified" : true
+  } ]
+}

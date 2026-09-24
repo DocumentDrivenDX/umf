@@ -1,0 +1,54 @@
+<http://example/s> <http://example/p> <http://example/o> .
+<http://example/s> <http://example/p> "UMF reviewed literal" .
+<http://example/s> <http://example/p> _:e_00006f .
+<http://example/c/s> <http://example/c/p> <http://example/c/o> .
+<http://example/c/s> <http://example/c/p> "Alice" .
+<http://example/c/s> <http://example/c/p> _:e_00006f .
+<http://example/b/s> <http://example/b/p> <http://example/b/o> .
+<http://example/b/s> <http://example/b/p> "Alice" .
+<http://example/b/s> <http://example/b/p> _:e_00006f .
+_:e_000073 <http://example/c/p> <http://example/c/o> .
+_:e_000073 <http://example/c/p> "Alice" .
+_:e_000073 <http://example/c/p> _:e_00006f .
+_:g_0 <http://example/c/p> <http://example/c/o> .
+_:g_1 <http://example/c/p> "Alice" .
+_:g_2 <http://example/c/p> _:e_00006f .
+_:g_4 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://example/c/o> .
+_:g_4 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:g_3 <http://example/c/p> _:g_4 .
+_:g_6 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:e_00006f .
+_:g_6 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:g_5 <http://example/c/p> _:g_6 .
+_:g_8 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> "Alice" .
+_:g_8 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:g_7 <http://example/c/p> _:g_8 .
+_:g_10 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://example/o> .
+_:g_10 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:g_9 <http://example/c/p> _:g_10 .
+<http://example/c/s> <http://example/c/p> <http://example/c/o> .
+<http://example/c/s> <http://example/c/p> <http://example/c/o2> .
+<http://example/c/s> <http://example/c/p> "Alice" .
+<http://example/c/s> <http://example/c/p> "Ted" .
+<http://example/c/s> <http://example/c/p> _:e_00006f .
+<http://example/c/s> <http://example/c/p> _:e_00006f000032 .
+<http://example/c/s> <http://example/c/p> <http://example/c/o> .
+<http://example/c/s> <http://example/c/p2> <http://example/c/o2> .
+<http://example/c/s> <http://example/c/p> "Alice" .
+<http://example/c/s> <http://example/c/p2> "Ted" .
+<http://example/c/s> <http://example/c/p> _:e_00006f .
+<http://example/c/s> <http://example/c/p2> _:e_00006f000032 .
+<http://example/g> { <http://example/c/s> <http://example/c/p> <http://example/c/o> . }
+<http://example/g> { <http://example/c/s> <http://example/c/p> "Alice" . }
+<http://example/g> { <http://example/c/s> <http://example/c/p> _:e_00006f . }
+<http://example/c/s> { <http://example/c/s> <http://example/c/p> <http://example/c/o> . }
+<http://example/c/s> { <http://example/c/s> <http://example/c/p> "Alice" . }
+<http://example/c/s> { <http://example/c/s> <http://example/c/p> _:e_00006f . }
+_:e_000073 { <http://example/c/s> <http://example/c/p> <http://example/c/o> . }
+_:e_000073 { <http://example/c/s> <http://example/c/p> "Alice" . }
+_:e_000073 { <http://example/c/s> <http://example/c/p> _:e_00006f . }
+<http://example/c/> { <http://example/c/> <http://example/c/> <http://example/c/> . }
+<http://example/c/> <http://example/c/> <http://example/c/> .
+<http://example/c/> { <http://example/c/> <http://example/c/> <http://example/c/> . }
+<http://example/c/> { <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> <http://example/c/> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> . }
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> <http://example/c/> _:g_11 .
+<http://example/c/> { _:g_12 <http://example/c/> _:g_13 . }

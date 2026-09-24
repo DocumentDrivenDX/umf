@@ -1,0 +1,11 @@
+_:Na40532af43554793b828cf40a70fa935 <http://www.w3.org/ns/shacl#resultMessage> "String length not <= Literal(\"2\", datatype=xsd:integer)" .
+_:Na40532af43554793b828cf40a70fa935 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/maxLength-001.test#TestShape-testProperty> .
+_:N2ae5513218054ed2a270c5518776f6fb <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Na40532af43554793b828cf40a70fa935 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/maxLength-001.test#testProperty> .
+_:Na40532af43554793b828cf40a70fa935 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxLengthConstraintComponent> .
+_:Na40532af43554793b828cf40a70fa935 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/maxLength-001.test#InvalidInstance1> .
+_:Na40532af43554793b828cf40a70fa935 <http://www.w3.org/ns/shacl#value> "ABC" .
+_:Na40532af43554793b828cf40a70fa935 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N2ae5513218054ed2a270c5518776f6fb <http://www.w3.org/ns/shacl#result> _:Na40532af43554793b828cf40a70fa935 .
+_:N2ae5513218054ed2a270c5518776f6fb <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Na40532af43554793b828cf40a70fa935 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .

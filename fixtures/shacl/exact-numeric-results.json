@@ -1,0 +1,680 @@
+{
+  "profile": "umf-numeric-2",
+  "cases": [
+    {
+      "id": "large-adjacent-minInclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/large-adjacent-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/large-adjacent-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/large-adjacent-minInclusive.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "large-adjacent-minExclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/large-adjacent-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/large-adjacent-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/large-adjacent-minExclusive.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "large-adjacent-maxInclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/large-adjacent-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/large-adjacent-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/large-adjacent-maxInclusive.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "large-adjacent-maxExclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/large-adjacent-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/large-adjacent-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/large-adjacent-maxExclusive.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "large-adjacent-lessThan",
+      "shapesPath": "fixtures/shacl/exact-numeric/large-adjacent-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/large-adjacent-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/large-adjacent-lessThan.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "large-adjacent-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/exact-numeric/large-adjacent-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/large-adjacent-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/large-adjacent-lessThanOrEquals.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "large-reversed-minInclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/large-reversed-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/large-reversed-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/large-reversed-minInclusive.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "large-reversed-minExclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/large-reversed-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/large-reversed-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/large-reversed-minExclusive.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "large-reversed-maxInclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/large-reversed-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/large-reversed-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/large-reversed-maxInclusive.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "large-reversed-maxExclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/large-reversed-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/large-reversed-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/large-reversed-maxExclusive.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "large-reversed-lessThan",
+      "shapesPath": "fixtures/shacl/exact-numeric/large-reversed-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/large-reversed-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/large-reversed-lessThan.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "large-reversed-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/exact-numeric/large-reversed-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/large-reversed-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/large-reversed-lessThanOrEquals.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "negative-minInclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/negative-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/negative-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/negative-minInclusive.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "negative-minExclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/negative-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/negative-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/negative-minExclusive.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "negative-maxInclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/negative-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/negative-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/negative-maxInclusive.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "negative-maxExclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/negative-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/negative-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/negative-maxExclusive.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "negative-lessThan",
+      "shapesPath": "fixtures/shacl/exact-numeric/negative-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/negative-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/negative-lessThan.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "negative-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/exact-numeric/negative-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/negative-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/negative-lessThanOrEquals.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "fraction-minInclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/fraction-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/fraction-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/fraction-minInclusive.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "fraction-minExclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/fraction-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/fraction-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/fraction-minExclusive.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "fraction-maxInclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/fraction-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/fraction-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/fraction-maxInclusive.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "fraction-maxExclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/fraction-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/fraction-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/fraction-maxExclusive.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "fraction-lessThan",
+      "shapesPath": "fixtures/shacl/exact-numeric/fraction-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/fraction-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/fraction-lessThan.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "fraction-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/exact-numeric/fraction-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/fraction-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/fraction-lessThanOrEquals.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "spelling-minInclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/spelling-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/spelling-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/spelling-minInclusive.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "spelling-minExclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/spelling-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/spelling-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/spelling-minExclusive.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "spelling-maxInclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/spelling-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/spelling-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/spelling-maxInclusive.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "spelling-maxExclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/spelling-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/spelling-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/spelling-maxExclusive.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "spelling-lessThan",
+      "shapesPath": "fixtures/shacl/exact-numeric/spelling-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/spelling-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/spelling-lessThan.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "spelling-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/exact-numeric/spelling-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/spelling-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/spelling-lessThanOrEquals.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "zero-minInclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/zero-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/zero-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/zero-minInclusive.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "zero-minExclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/zero-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/zero-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/zero-minExclusive.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "zero-maxInclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/zero-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/zero-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/zero-maxInclusive.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "zero-maxExclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/zero-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/zero-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/zero-maxExclusive.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "zero-lessThan",
+      "shapesPath": "fixtures/shacl/exact-numeric/zero-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/zero-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/zero-lessThan.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "zero-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/exact-numeric/zero-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/zero-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/zero-lessThanOrEquals.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "overflow-minInclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/overflow-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/overflow-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/overflow-minInclusive.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "overflow-minExclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/overflow-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/overflow-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/overflow-minExclusive.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "overflow-maxInclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/overflow-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/overflow-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/overflow-maxInclusive.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "overflow-maxExclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/overflow-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/overflow-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/overflow-maxExclusive.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "overflow-lessThan",
+      "shapesPath": "fixtures/shacl/exact-numeric/overflow-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/overflow-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/overflow-lessThan.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "overflow-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/exact-numeric/overflow-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/overflow-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/overflow-lessThanOrEquals.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "underflow-minInclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/underflow-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/underflow-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/underflow-minInclusive.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "underflow-minExclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/underflow-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/underflow-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/underflow-minExclusive.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "underflow-maxInclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/underflow-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/underflow-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/underflow-maxInclusive.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "underflow-maxExclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/underflow-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/underflow-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/underflow-maxExclusive.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "underflow-lessThan",
+      "shapesPath": "fixtures/shacl/exact-numeric/underflow-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/underflow-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/underflow-lessThan.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "underflow-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/exact-numeric/underflow-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/underflow-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/underflow-lessThanOrEquals.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "long-minInclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/long-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/long-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/long-minInclusive.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "long-minExclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/long-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/long-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/long-minExclusive.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "long-maxInclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/long-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/long-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/long-maxInclusive.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "long-maxExclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/long-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/long-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/long-maxExclusive.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "long-lessThan",
+      "shapesPath": "fixtures/shacl/exact-numeric/long-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/long-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/long-lessThan.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "long-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/exact-numeric/long-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/long-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/long-lessThanOrEquals.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "whitespace-minInclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/whitespace-minInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/whitespace-minInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/whitespace-minInclusive.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "whitespace-minExclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/whitespace-minExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/whitespace-minExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/whitespace-minExclusive.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "whitespace-maxInclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/whitespace-maxInclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/whitespace-maxInclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/whitespace-maxInclusive.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "whitespace-maxExclusive",
+      "shapesPath": "fixtures/shacl/exact-numeric/whitespace-maxExclusive.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/whitespace-maxExclusive.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/whitespace-maxExclusive.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "whitespace-lessThan",
+      "shapesPath": "fixtures/shacl/exact-numeric/whitespace-lessThan.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/whitespace-lessThan.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/whitespace-lessThan.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "whitespace-lessThanOrEquals",
+      "shapesPath": "fixtures/shacl/exact-numeric/whitespace-lessThanOrEquals.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/whitespace-lessThanOrEquals.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/whitespace-lessThanOrEquals.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "datatype-int-60",
+      "shapesPath": "fixtures/shacl/exact-numeric/datatype-int-60.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/datatype-int-60.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/datatype-int-60.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "datatype-int-61",
+      "shapesPath": "fixtures/shacl/exact-numeric/datatype-int-61.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/datatype-int-61.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/datatype-int-61.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "datatype-int-62",
+      "shapesPath": "fixtures/shacl/exact-numeric/datatype-int-62.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/datatype-int-62.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/datatype-int-62.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "datatype-int-63",
+      "shapesPath": "fixtures/shacl/exact-numeric/datatype-int-63.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/datatype-int-63.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/datatype-int-63.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "datatype-long-64",
+      "shapesPath": "fixtures/shacl/exact-numeric/datatype-long-64.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/datatype-long-64.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/datatype-long-64.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "datatype-long-65",
+      "shapesPath": "fixtures/shacl/exact-numeric/datatype-long-65.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/datatype-long-65.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/datatype-long-65.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "datatype-unsignedLong-66",
+      "shapesPath": "fixtures/shacl/exact-numeric/datatype-unsignedLong-66.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/datatype-unsignedLong-66.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/datatype-unsignedLong-66.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "datatype-unsignedLong-67",
+      "shapesPath": "fixtures/shacl/exact-numeric/datatype-unsignedLong-67.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/datatype-unsignedLong-67.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/datatype-unsignedLong-67.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "datatype-decimal-68",
+      "shapesPath": "fixtures/shacl/exact-numeric/datatype-decimal-68.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/datatype-decimal-68.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/datatype-decimal-68.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "datatype-decimal-69",
+      "shapesPath": "fixtures/shacl/exact-numeric/datatype-decimal-69.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/datatype-decimal-69.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/datatype-decimal-69.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "datatype-integer-70",
+      "shapesPath": "fixtures/shacl/exact-numeric/datatype-integer-70.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/datatype-integer-70.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/datatype-integer-70.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    },
+    {
+      "id": "datatype-decimal-71",
+      "shapesPath": "fixtures/shacl/exact-numeric/datatype-decimal-71.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/datatype-decimal-71.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/datatype-decimal-71.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "datatype-decimal-72",
+      "shapesPath": "fixtures/shacl/exact-numeric/datatype-decimal-72.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/datatype-decimal-72.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/datatype-decimal-72.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "datatype-integer-73",
+      "shapesPath": "fixtures/shacl/exact-numeric/datatype-integer-73.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/datatype-integer-73.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/datatype-integer-73.nq",
+      "expected": true,
+      "status": "evaluated",
+      "conforms": true
+    },
+    {
+      "id": "datatype-integer-74",
+      "shapesPath": "fixtures/shacl/exact-numeric/datatype-integer-74.shapes.ttl",
+      "dataPath": "fixtures/shacl/exact-numeric/datatype-integer-74.data.ttl",
+      "reportPath": "fixtures/shacl/exact-numeric/datatype-integer-74.nq",
+      "expected": false,
+      "status": "evaluated",
+      "conforms": false
+    }
+  ]
+}

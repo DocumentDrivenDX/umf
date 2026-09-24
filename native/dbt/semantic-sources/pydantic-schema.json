@@ -1,0 +1,1046 @@
+{
+  "title": "PydanticSemanticManifest",
+  "description": "Model holds all the information the SemanticLayer needs to render a query.",
+  "type": "object",
+  "properties": {
+    "semantic_models": {
+      "title": "Semantic Models",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/PydanticSemanticModel"
+      }
+    },
+    "metrics": {
+      "title": "Metrics",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/PydanticMetric"
+      }
+    },
+    "project_configuration": {
+      "$ref": "#/definitions/PydanticProjectConfiguration"
+    },
+    "saved_queries": {
+      "title": "Saved Queries",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/PydanticSavedQuery"
+      }
+    }
+  },
+  "required": [
+    "semantic_models",
+    "metrics",
+    "project_configuration"
+  ],
+  "definitions": {
+    "PydanticSemanticModelDefaults": {
+      "title": "PydanticSemanticModelDefaults",
+      "description": "Extends BaseModel with a generic hash function.",
+      "type": "object",
+      "properties": {
+        "agg_time_dimension": {
+          "title": "Agg Time Dimension",
+          "type": "string"
+        }
+      }
+    },
+    "PydanticNodeRelation": {
+      "title": "PydanticNodeRelation",
+      "description": "Path object to where the data should be.",
+      "type": "object",
+      "properties": {
+        "alias": {
+          "title": "Alias",
+          "type": "string"
+        },
+        "schema_name": {
+          "title": "Schema Name",
+          "type": "string"
+        },
+        "database": {
+          "title": "Database",
+          "type": "string"
+        },
+        "relation_name": {
+          "title": "Relation Name",
+          "default": "",
+          "type": "string"
+        }
+      },
+      "required": [
+        "alias",
+        "schema_name"
+      ]
+    },
+    "EntityType": {
+      "title": "EntityType",
+      "description": "Defines uniqueness and the extent to which an entity represents the common entity for a semantic model.",
+      "enum": [
+        "foreign",
+        "natural",
+        "primary",
+        "unique"
+      ]
+    },
+    "PydanticFileSlice": {
+      "title": "PydanticFileSlice",
+      "description": "Extends BaseModel with a generic hash function.",
+      "type": "object",
+      "properties": {
+        "filename": {
+          "title": "Filename",
+          "type": "string"
+        },
+        "content": {
+          "title": "Content",
+          "type": "string"
+        },
+        "start_line_number": {
+          "title": "Start Line Number",
+          "type": "integer"
+        },
+        "end_line_number": {
+          "title": "End Line Number",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "filename",
+        "content",
+        "start_line_number",
+        "end_line_number"
+      ]
+    },
+    "PydanticMetadata": {
+      "title": "PydanticMetadata",
+      "description": "Extends BaseModel with a generic hash function.",
+      "type": "object",
+      "properties": {
+        "repo_file_path": {
+          "title": "Repo File Path",
+          "type": "string"
+        },
+        "file_slice": {
+          "$ref": "#/definitions/PydanticFileSlice"
+        }
+      },
+      "required": [
+        "repo_file_path",
+        "file_slice"
+      ]
+    },
+    "PydanticSemanticLayerElementConfig": {
+      "title": "PydanticSemanticLayerElementConfig",
+      "description": "PydanticDimension config.",
+      "type": "object",
+      "properties": {
+        "meta": {
+          "title": "Meta",
+          "type": "object"
+        }
+      }
+    },
+    "PydanticEntity": {
+      "title": "PydanticEntity",
+      "description": "Describes a entity.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/EntityType"
+        },
+        "role": {
+          "title": "Role",
+          "type": "string"
+        },
+        "expr": {
+          "title": "Expr",
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/definitions/PydanticMetadata"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "config": {
+          "$ref": "#/definitions/PydanticSemanticLayerElementConfig"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ]
+    },
+    "AggregationType": {
+      "title": "AggregationType",
+      "description": "Aggregation methods for measures.",
+      "enum": [
+        "sum",
+        "min",
+        "max",
+        "count_distinct",
+        "sum_boolean",
+        "average",
+        "percentile",
+        "median",
+        "count"
+      ]
+    },
+    "PydanticMeasureAggregationParameters": {
+      "title": "PydanticMeasureAggregationParameters",
+      "description": "Describes parameters for aggregations.",
+      "type": "object",
+      "properties": {
+        "percentile": {
+          "title": "Percentile",
+          "type": "number"
+        },
+        "use_discrete_percentile": {
+          "title": "Use Discrete Percentile",
+          "default": false,
+          "type": "boolean"
+        },
+        "use_approximate_percentile": {
+          "title": "Use Approximate Percentile",
+          "default": false,
+          "type": "boolean"
+        }
+      }
+    },
+    "PydanticNonAdditiveDimensionParameters": {
+      "title": "PydanticNonAdditiveDimensionParameters",
+      "description": "Describes the params for specifying non-additive dimensions in a measure.\n\nNOTE: Currently, only TimeDimensions are supported for this filter",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "window_choice": {
+          "default": "min",
+          "allOf": [
+            {
+              "$ref": "#/definitions/AggregationType"
+            }
+          ]
+        },
+        "window_groupings": {
+          "title": "Window Groupings",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "PydanticMeasure": {
+      "title": "PydanticMeasure",
+      "description": "Describes a measure.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "agg": {
+          "$ref": "#/definitions/AggregationType"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "create_metric": {
+          "title": "Create Metric",
+          "type": "boolean"
+        },
+        "expr": {
+          "title": "Expr",
+          "type": "string"
+        },
+        "agg_params": {
+          "$ref": "#/definitions/PydanticMeasureAggregationParameters"
+        },
+        "metadata": {
+          "$ref": "#/definitions/PydanticMetadata"
+        },
+        "non_additive_dimension": {
+          "$ref": "#/definitions/PydanticNonAdditiveDimensionParameters"
+        },
+        "agg_time_dimension": {
+          "title": "Agg Time Dimension",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "config": {
+          "$ref": "#/definitions/PydanticSemanticLayerElementConfig"
+        }
+      },
+      "required": [
+        "name",
+        "agg"
+      ]
+    },
+    "DimensionType": {
+      "title": "DimensionType",
+      "description": "Determines types of values expected of dimensions.",
+      "enum": [
+        "categorical",
+        "time"
+      ]
+    },
+    "TimeGranularity": {
+      "title": "TimeGranularity",
+      "description": "For time dimensions, the smallest possible difference between two time values.\n\nNeeded for calculating adjacency when merging 2 different time ranges.",
+      "enum": [
+        "nanosecond",
+        "microsecond",
+        "millisecond",
+        "second",
+        "minute",
+        "hour",
+        "day",
+        "week",
+        "month",
+        "quarter",
+        "year"
+      ]
+    },
+    "PydanticDimensionValidityParams": {
+      "title": "PydanticDimensionValidityParams",
+      "description": "Parameters identifying a given dimension as an entity for validity state.\n\nThis construct is used for supporting SCD Type II tables, such as might be\ncreated via dbt's snapshot feature, or generated via periodic loads from external\ndimension semantic models. In either of those cases, there is typically a time dimension\nassociated with the SCD semantic model that indicates the start and end times of a\nvalidity window, where the dimension value is valid for any time within that range.",
+      "type": "object",
+      "properties": {
+        "is_start": {
+          "title": "Is Start",
+          "default": false,
+          "type": "boolean"
+        },
+        "is_end": {
+          "title": "Is End",
+          "default": false,
+          "type": "boolean"
+        }
+      }
+    },
+    "PydanticDimensionTypeParams": {
+      "title": "PydanticDimensionTypeParams",
+      "description": "PydanticDimension type params add additional context to some types (time) of dimensions.",
+      "type": "object",
+      "properties": {
+        "time_granularity": {
+          "$ref": "#/definitions/TimeGranularity"
+        },
+        "validity_params": {
+          "$ref": "#/definitions/PydanticDimensionValidityParams"
+        }
+      },
+      "required": [
+        "time_granularity"
+      ]
+    },
+    "PydanticDimension": {
+      "title": "PydanticDimension",
+      "description": "Describes a dimension.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/DimensionType"
+        },
+        "is_partition": {
+          "title": "Is Partition",
+          "default": false,
+          "type": "boolean"
+        },
+        "type_params": {
+          "$ref": "#/definitions/PydanticDimensionTypeParams"
+        },
+        "expr": {
+          "title": "Expr",
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/definitions/PydanticMetadata"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "config": {
+          "$ref": "#/definitions/PydanticSemanticLayerElementConfig"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ]
+    },
+    "PydanticSemanticModel": {
+      "title": "PydanticSemanticModel",
+      "description": "Describes a semantic model.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "defaults": {
+          "$ref": "#/definitions/PydanticSemanticModelDefaults"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "node_relation": {
+          "$ref": "#/definitions/PydanticNodeRelation"
+        },
+        "primary_entity": {
+          "title": "Primary Entity",
+          "type": "string"
+        },
+        "entities": {
+          "title": "Entities",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PydanticEntity"
+          }
+        },
+        "measures": {
+          "title": "Measures",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PydanticMeasure"
+          }
+        },
+        "dimensions": {
+          "title": "Dimensions",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PydanticDimension"
+          }
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/definitions/PydanticMetadata"
+        },
+        "config": {
+          "$ref": "#/definitions/PydanticSemanticLayerElementConfig"
+        }
+      },
+      "required": [
+        "name",
+        "node_relation"
+      ]
+    },
+    "MetricType": {
+      "title": "MetricType",
+      "description": "Currently supported metric types.",
+      "enum": [
+        "simple",
+        "ratio",
+        "cumulative",
+        "derived",
+        "conversion"
+      ]
+    },
+    "PydanticWhereFilter": {
+      "title": "PydanticWhereFilter",
+      "description": "Pydantic implementation of a WhereFilter.\n\nThis specifies a templated SQl where expression, with templates allowing for extraction of dimensions and\nentities (and, eventually, measures and metrics) to include in the filter itself. This filter will then\nbe applied to an input data set, either from an original input source or an intermediate subquery output.\n\nThe data set will contain entities and dimensions as referenced in the query along with the entities and dimensions\nthat are referenced in any of these filters, whether they are part of the query request or metric definition.",
+      "type": "object",
+      "properties": {
+        "where_sql_template": {
+          "title": "Where Sql Template",
+          "type": "string"
+        }
+      },
+      "required": [
+        "where_sql_template"
+      ]
+    },
+    "PydanticWhereFilterIntersection": {
+      "title": "PydanticWhereFilterIntersection",
+      "description": "Pydantic implementation of a WhereFilterIntersection.",
+      "type": "object",
+      "properties": {
+        "where_filters": {
+          "title": "Where Filters",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PydanticWhereFilter"
+          }
+        }
+      },
+      "required": [
+        "where_filters"
+      ]
+    },
+    "PydanticMetricInputMeasure": {
+      "title": "PydanticMetricInputMeasure",
+      "description": "Provides a pointer to a measure along with metric-specific processing directives.\n\nIf an alias is set, this will be used as the string name reference for this measure after the aggregation\nphase in the SQL plan.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "filter": {
+          "$ref": "#/definitions/PydanticWhereFilterIntersection"
+        },
+        "alias": {
+          "title": "Alias",
+          "type": "string"
+        },
+        "join_to_timespine": {
+          "title": "Join To Timespine",
+          "default": false,
+          "type": "boolean"
+        },
+        "fill_nulls_with": {
+          "title": "Fill Nulls With",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "PydanticMetricTimeWindow": {
+      "title": "PydanticMetricTimeWindow",
+      "description": "Describes the window of time the metric should be accumulated over, e.g., '1 day', '2 weeks', etc.",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "Count",
+          "type": "integer"
+        },
+        "granularity": {
+          "title": "Granularity",
+          "type": "string"
+        }
+      },
+      "required": [
+        "count",
+        "granularity"
+      ]
+    },
+    "PydanticMetricInput": {
+      "title": "PydanticMetricInput",
+      "description": "Provides a pointer to a metric along with the additional properties used on that metric.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "filter": {
+          "$ref": "#/definitions/PydanticWhereFilterIntersection"
+        },
+        "alias": {
+          "title": "Alias",
+          "type": "string"
+        },
+        "offset_window": {
+          "$ref": "#/definitions/PydanticMetricTimeWindow"
+        },
+        "offset_to_grain": {
+          "title": "Offset To Grain",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "ConversionCalculationType": {
+      "title": "ConversionCalculationType",
+      "description": "Types of calculations for a conversion metric.",
+      "enum": [
+        "conversions",
+        "conversion_rate"
+      ]
+    },
+    "PydanticConstantPropertyInput": {
+      "title": "PydanticConstantPropertyInput",
+      "description": "Input of a constant property used in conversion metrics.",
+      "type": "object",
+      "properties": {
+        "base_property": {
+          "title": "Base Property",
+          "type": "string"
+        },
+        "conversion_property": {
+          "title": "Conversion Property",
+          "type": "string"
+        }
+      },
+      "required": [
+        "base_property",
+        "conversion_property"
+      ]
+    },
+    "PydanticConversionTypeParams": {
+      "title": "PydanticConversionTypeParams",
+      "description": "Type params to provide context for conversion metrics properties.",
+      "type": "object",
+      "properties": {
+        "base_measure": {
+          "$ref": "#/definitions/PydanticMetricInputMeasure"
+        },
+        "conversion_measure": {
+          "$ref": "#/definitions/PydanticMetricInputMeasure"
+        },
+        "entity": {
+          "title": "Entity",
+          "type": "string"
+        },
+        "calculation": {
+          "default": "conversion_rate",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ConversionCalculationType"
+            }
+          ]
+        },
+        "window": {
+          "$ref": "#/definitions/PydanticMetricTimeWindow"
+        },
+        "constant_properties": {
+          "title": "Constant Properties",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PydanticConstantPropertyInput"
+          }
+        }
+      },
+      "required": [
+        "base_measure",
+        "conversion_measure",
+        "entity"
+      ]
+    },
+    "PeriodAggregation": {
+      "title": "PeriodAggregation",
+      "description": "Options for how to aggregate across a time period.",
+      "enum": [
+        "first",
+        "last",
+        "average"
+      ]
+    },
+    "PydanticCumulativeTypeParams": {
+      "title": "PydanticCumulativeTypeParams",
+      "description": "Type params to provide context for cumulative metrics properties.",
+      "type": "object",
+      "properties": {
+        "window": {
+          "$ref": "#/definitions/PydanticMetricTimeWindow"
+        },
+        "grain_to_date": {
+          "title": "Grain To Date",
+          "type": "string"
+        },
+        "period_agg": {
+          "default": "first",
+          "allOf": [
+            {
+              "$ref": "#/definitions/PeriodAggregation"
+            }
+          ]
+        }
+      }
+    },
+    "PydanticMetricTypeParams": {
+      "title": "PydanticMetricTypeParams",
+      "description": "Type params add additional context to certain metric types (the context depends on the metric type).",
+      "type": "object",
+      "properties": {
+        "measure": {
+          "$ref": "#/definitions/PydanticMetricInputMeasure"
+        },
+        "numerator": {
+          "$ref": "#/definitions/PydanticMetricInput"
+        },
+        "denominator": {
+          "$ref": "#/definitions/PydanticMetricInput"
+        },
+        "expr": {
+          "title": "Expr",
+          "type": "string"
+        },
+        "window": {
+          "$ref": "#/definitions/PydanticMetricTimeWindow"
+        },
+        "grain_to_date": {
+          "$ref": "#/definitions/TimeGranularity"
+        },
+        "metrics": {
+          "title": "Metrics",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PydanticMetricInput"
+          }
+        },
+        "conversion_type_params": {
+          "$ref": "#/definitions/PydanticConversionTypeParams"
+        },
+        "cumulative_type_params": {
+          "$ref": "#/definitions/PydanticCumulativeTypeParams"
+        },
+        "input_measures": {
+          "title": "Input Measures",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PydanticMetricInputMeasure"
+          }
+        }
+      }
+    },
+    "PydanticMetric": {
+      "title": "PydanticMetric",
+      "description": "Describes a metric.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/MetricType"
+        },
+        "type_params": {
+          "$ref": "#/definitions/PydanticMetricTypeParams"
+        },
+        "filter": {
+          "$ref": "#/definitions/PydanticWhereFilterIntersection"
+        },
+        "metadata": {
+          "$ref": "#/definitions/PydanticMetadata"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "config": {
+          "$ref": "#/definitions/PydanticSemanticLayerElementConfig"
+        },
+        "time_granularity": {
+          "title": "Time Granularity",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "type_params"
+      ]
+    },
+    "PydanticTimeSpineTableConfiguration": {
+      "title": "PydanticTimeSpineTableConfiguration",
+      "description": "Legacy Pydantic implementation of SemanticVersion. In the process of deprecation.",
+      "type": "object",
+      "properties": {
+        "location": {
+          "title": "Location",
+          "type": "string"
+        },
+        "column_name": {
+          "title": "Column Name",
+          "type": "string"
+        },
+        "grain": {
+          "$ref": "#/definitions/TimeGranularity"
+        }
+      },
+      "required": [
+        "location",
+        "column_name",
+        "grain"
+      ]
+    },
+    "PydanticSemanticVersion": {
+      "title": "PydanticSemanticVersion",
+      "description": "Pydantic implementation of SemanticVersion.",
+      "type": "object",
+      "properties": {
+        "major_version": {
+          "title": "Major Version",
+          "type": "string"
+        },
+        "minor_version": {
+          "title": "Minor Version",
+          "type": "string"
+        },
+        "patch_version": {
+          "title": "Patch Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "major_version",
+        "minor_version"
+      ]
+    },
+    "PydanticTimeSpinePrimaryColumn": {
+      "title": "PydanticTimeSpinePrimaryColumn",
+      "description": "Extends BaseModel with a generic hash function.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "time_granularity": {
+          "$ref": "#/definitions/TimeGranularity"
+        }
+      },
+      "required": [
+        "name",
+        "time_granularity"
+      ]
+    },
+    "PydanticTimeSpineCustomGranularityColumn": {
+      "title": "PydanticTimeSpineCustomGranularityColumn",
+      "description": "Extends BaseModel with a generic hash function.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "column_name": {
+          "title": "Column Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "PydanticTimeSpine": {
+      "title": "PydanticTimeSpine",
+      "description": "Extends BaseModel with a generic hash function.",
+      "type": "object",
+      "properties": {
+        "node_relation": {
+          "$ref": "#/definitions/PydanticNodeRelation"
+        },
+        "primary_column": {
+          "$ref": "#/definitions/PydanticTimeSpinePrimaryColumn"
+        },
+        "custom_granularities": {
+          "title": "Custom Granularities",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PydanticTimeSpineCustomGranularityColumn"
+          }
+        }
+      },
+      "required": [
+        "node_relation",
+        "primary_column"
+      ]
+    },
+    "PydanticProjectConfiguration": {
+      "title": "PydanticProjectConfiguration",
+      "description": "Pydantic implementation of ProjectConfiguration.",
+      "type": "object",
+      "properties": {
+        "time_spine_table_configurations": {
+          "title": "Time Spine Table Configurations",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PydanticTimeSpineTableConfiguration"
+          }
+        },
+        "metadata": {
+          "$ref": "#/definitions/PydanticMetadata"
+        },
+        "dsi_package_version": {
+          "title": "Dsi Package Version",
+          "default": {
+            "major_version": "0",
+            "minor_version": "0",
+            "patch_version": "0"
+          },
+          "allOf": [
+            {
+              "$ref": "#/definitions/PydanticSemanticVersion"
+            }
+          ]
+        },
+        "time_spines": {
+          "title": "Time Spines",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PydanticTimeSpine"
+          }
+        }
+      }
+    },
+    "PydanticSavedQueryQueryParams": {
+      "title": "PydanticSavedQueryQueryParams",
+      "description": "Pydantic implementation of SavedQuery.",
+      "type": "object",
+      "properties": {
+        "metrics": {
+          "title": "Metrics",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "group_by": {
+          "title": "Group By",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "order_by": {
+          "title": "Order By",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "limit": {
+          "title": "Limit",
+          "type": "integer"
+        },
+        "where": {
+          "$ref": "#/definitions/PydanticWhereFilterIntersection"
+        }
+      },
+      "required": [
+        "metrics"
+      ]
+    },
+    "ExportDestinationType": {
+      "title": "ExportDestinationType",
+      "description": "Types of destinations that exports can be written to.",
+      "enum": [
+        "table",
+        "view"
+      ]
+    },
+    "PydanticExportConfig": {
+      "title": "PydanticExportConfig",
+      "description": "Pydantic implementation of ExportConfig.\n\nNote on `schema_name`: `schema` is an existing BaseModel attribute, so we need to alias it here.\n`Field.alias=\"schema\"` enables using the `schema` key in YAML. `Config.allow_population_by_field_name`\nenables parsing for both `schema` and `schema_name` when deserializing from JSON.",
+      "type": "object",
+      "properties": {
+        "export_as": {
+          "$ref": "#/definitions/ExportDestinationType"
+        },
+        "schema": {
+          "title": "Schema",
+          "type": "string"
+        },
+        "alias": {
+          "title": "Alias",
+          "type": "string"
+        }
+      },
+      "required": [
+        "export_as"
+      ]
+    },
+    "PydanticExport": {
+      "title": "PydanticExport",
+      "description": "Pydantic implementation of Export.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "config": {
+          "$ref": "#/definitions/PydanticExportConfig"
+        }
+      },
+      "required": [
+        "name",
+        "config"
+      ]
+    },
+    "PydanticSavedQuery": {
+      "title": "PydanticSavedQuery",
+      "description": "Pydantic implementation of SavedQuery.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "query_params": {
+          "$ref": "#/definitions/PydanticSavedQueryQueryParams"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "#/definitions/PydanticMetadata"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "exports": {
+          "title": "Exports",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PydanticExport"
+          }
+        },
+        "tags": {
+          "title": "Tags",
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "query_params"
+      ]
+    }
+  }
+}

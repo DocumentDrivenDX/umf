@@ -1,0 +1,257 @@
+{
+  "results": [
+    {
+      "id": "TableMetadataPartitionStatisticsFiles",
+      "path": "fixtures/iceberg/upstream/core/src/test/resources/TableMetadataPartitionStatisticsFiles.json",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_TABLE_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Metadata shapes do not validate physical files, schema evolution, transforms, reference histories, defaults, encryption or safe commits"
+        },
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "/schemas/0",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        }
+      ]
+    },
+    {
+      "id": "TableMetadataStatisticsFiles",
+      "path": "fixtures/iceberg/upstream/core/src/test/resources/TableMetadataStatisticsFiles.json",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_TABLE_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Metadata shapes do not validate physical files, schema evolution, transforms, reference histories, defaults, encryption or safe commits"
+        },
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "/schemas/0",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        }
+      ]
+    },
+    {
+      "id": "TableMetadataUnsupportedVersion",
+      "path": "fixtures/iceberg/upstream/core/src/test/resources/TableMetadataUnsupportedVersion.json",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_TABLE_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Metadata shapes do not validate physical files, schema evolution, transforms, reference histories, defaults, encryption or safe commits"
+        },
+        {
+          "code": "ICEBERG_TABLE_VERSION",
+          "path": "/format-version",
+          "message": "Unknown table version preserved without native interpretation",
+          "severity": "warning"
+        },
+        {
+          "code": "ICEBERG_TABLE_UNKNOWN",
+          "path": "/table-uuid",
+          "message": "Unknown native property preserved",
+          "severity": "warning"
+        },
+        {
+          "code": "ICEBERG_TABLE_UNKNOWN",
+          "path": "/location",
+          "message": "Unknown native property preserved",
+          "severity": "warning"
+        },
+        {
+          "code": "ICEBERG_TABLE_UNKNOWN",
+          "path": "/last-updated-ms",
+          "message": "Unknown native property preserved",
+          "severity": "warning"
+        },
+        {
+          "code": "ICEBERG_TABLE_UNKNOWN",
+          "path": "/last-sequence-number",
+          "message": "Unknown native property preserved",
+          "severity": "warning"
+        },
+        {
+          "code": "ICEBERG_TABLE_UNKNOWN",
+          "path": "/last-column-id",
+          "message": "Unknown native property preserved",
+          "severity": "warning"
+        },
+        {
+          "code": "ICEBERG_TABLE_UNKNOWN",
+          "path": "/schema",
+          "message": "Unknown native property preserved",
+          "severity": "warning"
+        },
+        {
+          "code": "ICEBERG_TABLE_UNKNOWN",
+          "path": "/partition-spec",
+          "message": "Unknown native property preserved",
+          "severity": "warning"
+        },
+        {
+          "code": "ICEBERG_TABLE_UNKNOWN",
+          "path": "/properties",
+          "message": "Unknown native property preserved",
+          "severity": "warning"
+        },
+        {
+          "code": "ICEBERG_TABLE_UNKNOWN",
+          "path": "/current-snapshot-id",
+          "message": "Unknown native property preserved",
+          "severity": "warning"
+        },
+        {
+          "code": "ICEBERG_TABLE_UNKNOWN",
+          "path": "/snapshots",
+          "message": "Unknown native property preserved",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "TableMetadataV1MissingSchemaType",
+      "path": "fixtures/iceberg/upstream/core/src/test/resources/TableMetadataV1MissingSchemaType.json",
+      "status": "rejected",
+      "error": "[{\"code\":\"ICEBERG_TABLE_CONTEXT\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Metadata shapes do not validate physical files, schema evolution, transforms, reference histories, defaults, encryption or safe commits\"},{\"code\":\"ICEBERG_TABLE_STRUCTURE\",\"path\":\"/schema\",\"message\":\"must have required property 'type'\",\"severity\":\"error\"},{\"code\":\"ICEBERG_TABLE_STRUCTURE\",\"path\":\"\",\"message\":\"must match \\\"then\\\" schema\",\"severity\":\"error\"}]"
+    },
+    {
+      "id": "TableMetadataV1Valid",
+      "path": "fixtures/iceberg/upstream/core/src/test/resources/TableMetadataV1Valid.json",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_TABLE_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Metadata shapes do not validate physical files, schema evolution, transforms, reference histories, defaults, encryption or safe commits"
+        },
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "/schema",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        },
+        {
+          "code": "ICEBERG_SCHEMA_ID_CONTEXT",
+          "path": "/schema",
+          "message": "Missing schema-id is retained; table format version determines whether it is required",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "TableMetadataV2CurrentSchemaNotFound",
+      "path": "fixtures/iceberg/upstream/core/src/test/resources/TableMetadataV2CurrentSchemaNotFound.json",
+      "status": "rejected",
+      "error": "[{\"code\":\"ICEBERG_TABLE_CONTEXT\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Metadata shapes do not validate physical files, schema evolution, transforms, reference histories, defaults, encryption or safe commits\"},{\"code\":\"ICEBERG_TABLE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'last-partition-id'\",\"severity\":\"error\"},{\"code\":\"ICEBERG_TABLE_STRUCTURE\",\"path\":\"\",\"message\":\"must match \\\"then\\\" schema\",\"severity\":\"error\"}]"
+    },
+    {
+      "id": "TableMetadataV2MissingLastPartitionId",
+      "path": "fixtures/iceberg/upstream/core/src/test/resources/TableMetadataV2MissingLastPartitionId.json",
+      "status": "rejected",
+      "error": "[{\"code\":\"ICEBERG_TABLE_CONTEXT\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Metadata shapes do not validate physical files, schema evolution, transforms, reference histories, defaults, encryption or safe commits\"},{\"code\":\"ICEBERG_TABLE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'last-partition-id'\",\"severity\":\"error\"},{\"code\":\"ICEBERG_TABLE_STRUCTURE\",\"path\":\"\",\"message\":\"must match \\\"then\\\" schema\",\"severity\":\"error\"}]"
+    },
+    {
+      "id": "TableMetadataV2MissingPartitionSpecs",
+      "path": "fixtures/iceberg/upstream/core/src/test/resources/TableMetadataV2MissingPartitionSpecs.json",
+      "status": "rejected",
+      "error": "[{\"code\":\"ICEBERG_TABLE_CONTEXT\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Metadata shapes do not validate physical files, schema evolution, transforms, reference histories, defaults, encryption or safe commits\"},{\"code\":\"ICEBERG_TABLE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'partition-specs'\",\"severity\":\"error\"},{\"code\":\"ICEBERG_TABLE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'default-spec-id'\",\"severity\":\"error\"},{\"code\":\"ICEBERG_TABLE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'last-partition-id'\",\"severity\":\"error\"},{\"code\":\"ICEBERG_TABLE_STRUCTURE\",\"path\":\"\",\"message\":\"must match \\\"then\\\" schema\",\"severity\":\"error\"}]"
+    },
+    {
+      "id": "TableMetadataV2MissingSchemas",
+      "path": "fixtures/iceberg/upstream/core/src/test/resources/TableMetadataV2MissingSchemas.json",
+      "status": "rejected",
+      "error": "[{\"code\":\"ICEBERG_TABLE_CONTEXT\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Metadata shapes do not validate physical files, schema evolution, transforms, reference histories, defaults, encryption or safe commits\"},{\"code\":\"ICEBERG_TABLE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'schemas'\",\"severity\":\"error\"},{\"code\":\"ICEBERG_TABLE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'current-schema-id'\",\"severity\":\"error\"},{\"code\":\"ICEBERG_TABLE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'last-partition-id'\",\"severity\":\"error\"},{\"code\":\"ICEBERG_TABLE_STRUCTURE\",\"path\":\"\",\"message\":\"must match \\\"then\\\" schema\",\"severity\":\"error\"}]"
+    },
+    {
+      "id": "TableMetadataV2MissingSortOrder",
+      "path": "fixtures/iceberg/upstream/core/src/test/resources/TableMetadataV2MissingSortOrder.json",
+      "status": "rejected",
+      "error": "[{\"code\":\"ICEBERG_TABLE_CONTEXT\",\"path\":\"\",\"severity\":\"warning\",\"message\":\"Metadata shapes do not validate physical files, schema evolution, transforms, reference histories, defaults, encryption or safe commits\"},{\"code\":\"ICEBERG_TABLE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'sort-orders'\",\"severity\":\"error\"},{\"code\":\"ICEBERG_TABLE_STRUCTURE\",\"path\":\"\",\"message\":\"must have required property 'default-sort-order-id'\",\"severity\":\"error\"},{\"code\":\"ICEBERG_TABLE_STRUCTURE\",\"path\":\"\",\"message\":\"must match \\\"then\\\" schema\",\"severity\":\"error\"}]"
+    },
+    {
+      "id": "TableMetadataV2Valid",
+      "path": "fixtures/iceberg/upstream/core/src/test/resources/TableMetadataV2Valid.json",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_TABLE_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Metadata shapes do not validate physical files, schema evolution, transforms, reference histories, defaults, encryption or safe commits"
+        },
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "/schemas/0",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        },
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "/schemas/1",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        }
+      ]
+    },
+    {
+      "id": "TableMetadataV2ValidMinimal",
+      "path": "fixtures/iceberg/upstream/core/src/test/resources/TableMetadataV2ValidMinimal.json",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_TABLE_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Metadata shapes do not validate physical files, schema evolution, transforms, reference histories, defaults, encryption or safe commits"
+        },
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "/schemas/0",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        }
+      ]
+    },
+    {
+      "id": "TableMetadataV3ValidMinimal",
+      "path": "fixtures/iceberg/upstream/core/src/test/resources/TableMetadataV3ValidMinimal.json",
+      "status": "roundtripped",
+      "diagnostics": [
+        {
+          "code": "ICEBERG_TABLE_CONTEXT",
+          "path": "",
+          "severity": "warning",
+          "message": "Metadata shapes do not validate physical files, schema evolution, transforms, reference histories, defaults, encryption or safe commits"
+        },
+        {
+          "code": "ICEBERG_CONTEXT_UNVERIFIED",
+          "path": "/schemas/0",
+          "severity": "warning",
+          "message": "Standalone schema does not establish table format-version, evolution legality, default execution or data-reader support"
+        },
+        {
+          "code": "ICEBERG_DEFAULT_UNVERIFIED",
+          "path": "/schemas/0/fields/0/initial-default",
+          "message": "Default retained exactly; type encoding and historical execution require separate checks",
+          "severity": "warning"
+        },
+        {
+          "code": "ICEBERG_DEFAULT_UNVERIFIED",
+          "path": "/schemas/0/fields/0/write-default",
+          "message": "Default retained exactly; type encoding and historical execution require separate checks",
+          "severity": "warning"
+        }
+      ]
+    }
+  ]
+}

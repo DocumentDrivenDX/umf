@@ -1,0 +1,8 @@
+{
+  "pyarrow": "21.0.0",
+  "rows": 3,
+  "schema": "id: int64 not null\nunsigned: uint64\namount: decimal128(20, 4)\nprofile: struct<label: string not null, score: float>\n  child 0, label: string not null\n  child 1, score: float\nitems: list<element: int32>\n  child 0, element: int32\nlookup: map<int32, string ('lookup')>\n  child 0, lookup: struct<key: int32 not null, value: string> not null\n      child 0, key: int32 not null\n      child 1, value: string\nmatrix: list<element: list<element: int64>>\n  child 0, element: list<element: int64>\n      child 0, element: int64\nstamp: timestamp[ns, tz=UTC]\nlocal: timestamp[us]\nday: date32[day]\nclock: time64[ns]\nbytes: fixed_size_binary[3]\nsmall: int8",
+  "uint64Exact": true,
+  "duplicateEntriesRetained": true,
+  "nanosecondsExact": true
+}

@@ -1,0 +1,261 @@
+{
+  "libraries": {
+    "@typespec/http": "1.16.0",
+    "@typespec/rest": "0.86.0",
+    "@typespec/openapi": "1.16.0",
+    "@typespec/streams": "0.86.0"
+  },
+  "compiler": "@typespec/compiler@1.16.0",
+  "programs": [
+    {
+      "entry": "authentication/main.tsp",
+      "valid": true,
+      "diagnosticCodes": []
+    },
+    {
+      "entry": "binary/main.tsp",
+      "valid": true,
+      "diagnosticCodes": []
+    },
+    {
+      "entry": "documentation/main.tsp",
+      "valid": true,
+      "diagnosticCodes": []
+    },
+    {
+      "entry": "emitters/graphql/main.tsp",
+      "valid": false,
+      "diagnosticCodes": [
+        "import-not-found",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref"
+      ]
+    },
+    {
+      "entry": "emitters/json-schema/main.tsp",
+      "valid": false,
+      "diagnosticCodes": [
+        "import-not-found",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref"
+      ]
+    },
+    {
+      "entry": "emitters/protobuf-kiosk/main.tsp",
+      "valid": false,
+      "diagnosticCodes": [
+        "import-not-found",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref"
+      ]
+    },
+    {
+      "entry": "encoded-names/main.tsp",
+      "valid": true,
+      "diagnosticCodes": []
+    },
+    {
+      "entry": "encoding/main.tsp",
+      "valid": true,
+      "diagnosticCodes": []
+    },
+    {
+      "entry": "getting-started/http-service/main.tsp",
+      "valid": true,
+      "diagnosticCodes": []
+    },
+    {
+      "entry": "getting-started/rest-framework/main.tsp",
+      "valid": true,
+      "diagnosticCodes": []
+    },
+    {
+      "entry": "grpc-kiosk-example/main.tsp",
+      "valid": true,
+      "diagnosticCodes": []
+    },
+    {
+      "entry": "grpc-library-example/main.tsp",
+      "valid": true,
+      "diagnosticCodes": []
+    },
+    {
+      "entry": "init/main.tsp",
+      "valid": true,
+      "diagnosticCodes": []
+    },
+    {
+      "entry": "language/api-versioning/main.tsp",
+      "valid": false,
+      "diagnosticCodes": [
+        "import-not-found",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref"
+      ]
+    },
+    {
+      "entry": "language/discriminated-unions/main.tsp",
+      "valid": false,
+      "diagnosticCodes": [
+        "import-not-found"
+      ]
+    },
+    {
+      "entry": "multipart/main.tsp",
+      "valid": true,
+      "diagnosticCodes": []
+    },
+    {
+      "entry": "openapi-extensions/main.tsp",
+      "valid": true,
+      "diagnosticCodes": []
+    },
+    {
+      "entry": "param-decorators/main.tsp",
+      "valid": true,
+      "diagnosticCodes": []
+    },
+    {
+      "entry": "petstore/petstore.tsp",
+      "valid": false,
+      "diagnosticCodes": [
+        "import-not-found",
+        "invalid-ref"
+      ]
+    },
+    {
+      "entry": "polymorphism/main.tsp",
+      "valid": true,
+      "diagnosticCodes": []
+    },
+    {
+      "entry": "rest-metadata-emitter/main.tsp",
+      "valid": false,
+      "diagnosticCodes": [
+        "import-not-found",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref"
+      ]
+    },
+    {
+      "entry": "rest/petstore/petstore.tsp",
+      "valid": true,
+      "diagnosticCodes": []
+    },
+    {
+      "entry": "signatures/main.tsp",
+      "valid": true,
+      "diagnosticCodes": []
+    },
+    {
+      "entry": "status-code-ranges/main.tsp",
+      "valid": true,
+      "diagnosticCodes": []
+    },
+    {
+      "entry": "string-template/main.tsp",
+      "valid": true,
+      "diagnosticCodes": []
+    },
+    {
+      "entry": "tags/main.tsp",
+      "valid": true,
+      "diagnosticCodes": []
+    },
+    {
+      "entry": "todoApp/main.tsp",
+      "valid": false,
+      "diagnosticCodes": [
+        "import-not-found",
+        "import-not-found",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref"
+      ]
+    },
+    {
+      "entry": "use-versioned-lib/main.tsp",
+      "valid": false,
+      "diagnosticCodes": [
+        "import-not-found",
+        "import-not-found",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref"
+      ]
+    },
+    {
+      "entry": "versioning/main.tsp",
+      "valid": false,
+      "diagnosticCodes": [
+        "import-not-found",
+        "import-not-found",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref",
+        "invalid-ref"
+      ]
+    },
+    {
+      "entry": "visibility/main.tsp",
+      "valid": true,
+      "diagnosticCodes": []
+    }
+  ],
+  "scope": "Filesystem host versus memory host, supplied .tsp files only; selected pinned libraries enabled; other configuration/custom JS context remains archived. Same compiler implementation."
+}

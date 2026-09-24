@@ -1,0 +1,11 @@
+name: umf_fixture
+version: '1.0.0'
+config-version: 2
+profile: umf_fixture
+model-paths: [models]
+seed-paths: [seeds]
+clean-targets: [target]
+analysis-paths: [analyses]
+snapshot-paths: [snapshots]
+macro-paths: [macros]
+on-run-end: ['select 1 as synthetic_hook']

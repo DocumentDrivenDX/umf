@@ -1,0 +1,41 @@
+{
+  "scope": "Separate emitted artifact and native reconstruction from all runner results; diagnostic edits are candidates only",
+  "results": [
+    {
+      "id": "sources",
+      "path": "/results/0/adapter_response/_message",
+      "value": "Reviewed synthetic diagnostic.",
+      "sourceSha256": "0892198cbbddcbdeae14fcb7bbc8effbe140f9a644db49c4293c525c634001fd",
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_ARTIFACT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Native shapes do not establish execution outcomes, warehouse state, artifact correlation, format constraints or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "runner-results",
+      "path": "/results/0/error",
+      "value": "Reviewed synthetic diagnostic.",
+      "sourceSha256": "50b314623e55048cdc0a727bc13e6ac9481b895eaf96cda665d7071dff10ede2",
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_ARTIFACT_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Native shapes do not establish execution outcomes, warehouse state, artifact correlation, format constraints or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    }
+  ]
+}

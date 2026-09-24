@@ -1,0 +1,29 @@
+_:N7537f99ff1674764a559c925ec9b4bf8 <http://www.w3.org/ns/shacl#value> "c"^^<http://www.w3.org/2001/XMLSchema#byte> .
+_:N7537f99ff1674764a559c925ec9b4bf8 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N29e467cdc87545df8f89dfd103e65f8e <http://www.w3.org/ns/shacl#resultPath> <http://example.org/shacl-test/p> .
+_:N29e467cdc87545df8f89dfd103e65f8e <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N29e467cdc87545df8f89dfd103e65f8e <http://www.w3.org/ns/shacl#sourceShape> <http://example.org/shacl-test/s> .
+_:Nae5c15cc74d64c698f8bf9e6136547c2 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:Nae5c15cc74d64c698f8bf9e6136547c2 <http://www.w3.org/ns/shacl#focusNode> <http://example.org/shacl-test/i> .
+_:N78ac760561004e8f918bf7e185194688 <http://www.w3.org/ns/shacl#result> _:N29e467cdc87545df8f89dfd103e65f8e .
+_:N78ac760561004e8f918bf7e185194688 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Nae5c15cc74d64c698f8bf9e6136547c2 <http://www.w3.org/ns/shacl#sourceShape> <http://example.org/shacl-test/s> .
+_:N7537f99ff1674764a559c925ec9b4bf8 <http://www.w3.org/ns/shacl#focusNode> <http://example.org/shacl-test/i> .
+_:N29e467cdc87545df8f89dfd103e65f8e <http://www.w3.org/ns/shacl#value> "55"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:N7537f99ff1674764a559c925ec9b4bf8 <http://www.w3.org/ns/shacl#resultMessage> "Value is not Literal with datatype xsd:byte" .
+_:Nae5c15cc74d64c698f8bf9e6136547c2 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nae5c15cc74d64c698f8bf9e6136547c2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:Nae5c15cc74d64c698f8bf9e6136547c2 <http://www.w3.org/ns/shacl#resultPath> <http://example.org/shacl-test/p> .
+_:N78ac760561004e8f918bf7e185194688 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N7537f99ff1674764a559c925ec9b4bf8 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:N29e467cdc87545df8f89dfd103e65f8e <http://www.w3.org/ns/shacl#resultMessage> "Value is not Literal with datatype xsd:byte" .
+_:N29e467cdc87545df8f89dfd103e65f8e <http://www.w3.org/ns/shacl#focusNode> <http://example.org/shacl-test/i> .
+_:N78ac760561004e8f918bf7e185194688 <http://www.w3.org/ns/shacl#result> _:Nae5c15cc74d64c698f8bf9e6136547c2 .
+_:N78ac760561004e8f918bf7e185194688 <http://www.w3.org/ns/shacl#result> _:N7537f99ff1674764a559c925ec9b4bf8 .
+_:N7537f99ff1674764a559c925ec9b4bf8 <http://www.w3.org/ns/shacl#resultPath> <http://example.org/shacl-test/p> .
+_:N29e467cdc87545df8f89dfd103e65f8e <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#DatatypeConstraintComponent> .
+_:Nae5c15cc74d64c698f8bf9e6136547c2 <http://www.w3.org/ns/shacl#resultMessage> "Value is not Literal with datatype xsd:byte" .
+_:Nae5c15cc74d64c698f8bf9e6136547c2 <http://www.w3.org/ns/shacl#value> "300"^^<http://www.w3.org/2001/XMLSchema#byte> .
+_:N7537f99ff1674764a559c925ec9b4bf8 <http://www.w3.org/ns/shacl#sourceShape> <http://example.org/shacl-test/s> .
+_:N7537f99ff1674764a559c925ec9b4bf8 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N29e467cdc87545df8f89dfd103e65f8e <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .

@@ -1,0 +1,1774 @@
+{
+  "cases": [
+    {
+      "id": "scale",
+      "editText": "3",
+      "result": {
+        "status": "candidate",
+        "source": {
+          "umf": "0.1.0",
+          "id": "invoice",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            },
+            "example.future": {
+              "version": "7.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Invoice"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "amount"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "bytes"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "decimal"
+                                      },
+                                      "precision": {
+                                        "kind": "number",
+                                        "value": "8"
+                                      },
+                                      "scale": {
+                                        "kind": "number",
+                                        "value": "2"
+                                      }
+                                    }
+                                  },
+                                  "future.field": {
+                                    "kind": "object",
+                                    "members": {
+                                      "unit": {
+                                        "kind": "string",
+                                        "value": "money"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "created"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "long"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "timestamp-micros"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "count"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "long"
+                                  },
+                                  "default": {
+                                    "kind": "number",
+                                    "value": "0"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "amount",
+                  "scalarType": "decimal",
+                  "extensions": {},
+                  "future.consumer": {
+                    "label": "Amount"
+                  }
+                },
+                {
+                  "id": "[null,\"/fields/1\"]",
+                  "name": "created",
+                  "scalarType": "timestamp",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/2\"]",
+                  "name": "count",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ],
+          "extensions": {
+            "example.future": {
+              "opaque": [
+                "preserve"
+              ]
+            }
+          }
+        },
+        "document": {
+          "umf": "0.1.0",
+          "id": "invoice",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            },
+            "example.future": {
+              "version": "7.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Invoice"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "amount"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "bytes"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "decimal"
+                                      },
+                                      "precision": {
+                                        "kind": "number",
+                                        "value": "8"
+                                      },
+                                      "scale": {
+                                        "kind": "number",
+                                        "value": "3"
+                                      }
+                                    }
+                                  },
+                                  "future.field": {
+                                    "kind": "object",
+                                    "members": {
+                                      "unit": {
+                                        "kind": "string",
+                                        "value": "money"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "created"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "long"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "timestamp-micros"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "count"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "long"
+                                  },
+                                  "default": {
+                                    "kind": "number",
+                                    "value": "0"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "amount",
+                  "extensions": {},
+                  "future.consumer": {
+                    "label": "Amount"
+                  },
+                  "scalarType": "decimal"
+                },
+                {
+                  "id": "[null,\"/fields/1\"]",
+                  "name": "created",
+                  "extensions": {},
+                  "scalarType": "timestamp"
+                },
+                {
+                  "id": "[null,\"/fields/2\"]",
+                  "name": "count",
+                  "extensions": {},
+                  "scalarType": "integer"
+                }
+              ]
+            }
+          ],
+          "extensions": {
+            "example.future": {
+              "opaque": [
+                "preserve"
+              ]
+            }
+          }
+        },
+        "validation": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "UNKNOWN_EXTENSION",
+              "path": "/vocabularies/example.future",
+              "message": "Exact extension version unavailable; content retained",
+              "severity": "warning"
+            },
+            {
+              "code": "AVRO_METADATA",
+              "path": "/root/fields/0/future.field",
+              "message": "Uninterpreted field metadata retained",
+              "severity": "warning"
+            },
+            {
+              "code": "AVRO_LOGICAL_TYPE",
+              "path": "/root/fields/0/type/logicalType",
+              "message": "Logical type retained; this browser profile validates its underlying carrier only",
+              "severity": "warning"
+            },
+            {
+              "code": "AVRO_LOGICAL_TYPE",
+              "path": "/root/fields/1/type/logicalType",
+              "message": "Logical type retained; this browser profile validates its underlying carrier only",
+              "severity": "warning"
+            },
+            {
+              "code": "UNKNOWN_CORE_FIELD",
+              "path": "/modules/1/elements/0/future.consumer",
+              "message": "Field retained without interpretation",
+              "severity": "warning"
+            }
+          ]
+        },
+        "edit": {
+          "path": "/fields/0/type/scale",
+          "replacement": {
+            "kind": "number",
+            "value": "3"
+          }
+        }
+      },
+      "exports": [
+        {
+          "format": "json",
+          "schema": "{\"type\":\"record\",\"name\":\"Invoice\",\"fields\":[{\"name\":\"amount\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":8,\"scale\":3},\"future.field\":{\"unit\":\"money\"}},{\"name\":\"created\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\"}},{\"name\":\"count\",\"type\":\"long\",\"default\":0}]}\n",
+          "dependencies": []
+        },
+        {
+          "format": "yaml",
+          "schema": "{\"type\":\"record\",\"name\":\"Invoice\",\"fields\":[{\"name\":\"amount\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":8,\"scale\":3},\"future.field\":{\"unit\":\"money\"}},{\"name\":\"created\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\"}},{\"name\":\"count\",\"type\":\"long\",\"default\":0}]}\n",
+          "dependencies": []
+        }
+      ]
+    },
+    {
+      "id": "local",
+      "editText": "\"local-timestamp-micros\"",
+      "result": {
+        "status": "candidate",
+        "source": {
+          "umf": "0.1.0",
+          "id": "invoice",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            },
+            "example.future": {
+              "version": "7.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Invoice"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "amount"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "bytes"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "decimal"
+                                      },
+                                      "precision": {
+                                        "kind": "number",
+                                        "value": "8"
+                                      },
+                                      "scale": {
+                                        "kind": "number",
+                                        "value": "2"
+                                      }
+                                    }
+                                  },
+                                  "future.field": {
+                                    "kind": "object",
+                                    "members": {
+                                      "unit": {
+                                        "kind": "string",
+                                        "value": "money"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "created"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "long"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "timestamp-micros"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "count"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "long"
+                                  },
+                                  "default": {
+                                    "kind": "number",
+                                    "value": "0"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "amount",
+                  "scalarType": "decimal",
+                  "extensions": {},
+                  "future.consumer": {
+                    "label": "Amount"
+                  }
+                },
+                {
+                  "id": "[null,\"/fields/1\"]",
+                  "name": "created",
+                  "scalarType": "timestamp",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/2\"]",
+                  "name": "count",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ],
+          "extensions": {
+            "example.future": {
+              "opaque": [
+                "preserve"
+              ]
+            }
+          }
+        },
+        "document": {
+          "umf": "0.1.0",
+          "id": "invoice",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            },
+            "example.future": {
+              "version": "7.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Invoice"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "amount"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "bytes"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "decimal"
+                                      },
+                                      "precision": {
+                                        "kind": "number",
+                                        "value": "8"
+                                      },
+                                      "scale": {
+                                        "kind": "number",
+                                        "value": "2"
+                                      }
+                                    }
+                                  },
+                                  "future.field": {
+                                    "kind": "object",
+                                    "members": {
+                                      "unit": {
+                                        "kind": "string",
+                                        "value": "money"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "created"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "long"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "local-timestamp-micros"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "count"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "long"
+                                  },
+                                  "default": {
+                                    "kind": "number",
+                                    "value": "0"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "amount",
+                  "extensions": {},
+                  "future.consumer": {
+                    "label": "Amount"
+                  },
+                  "scalarType": "decimal"
+                },
+                {
+                  "id": "[null,\"/fields/1\"]",
+                  "name": "created",
+                  "extensions": {},
+                  "scalarType": "timestamp"
+                },
+                {
+                  "id": "[null,\"/fields/2\"]",
+                  "name": "count",
+                  "extensions": {},
+                  "scalarType": "integer"
+                }
+              ]
+            }
+          ],
+          "extensions": {
+            "example.future": {
+              "opaque": [
+                "preserve"
+              ]
+            }
+          }
+        },
+        "validation": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "UNKNOWN_EXTENSION",
+              "path": "/vocabularies/example.future",
+              "message": "Exact extension version unavailable; content retained",
+              "severity": "warning"
+            },
+            {
+              "code": "AVRO_METADATA",
+              "path": "/root/fields/0/future.field",
+              "message": "Uninterpreted field metadata retained",
+              "severity": "warning"
+            },
+            {
+              "code": "AVRO_LOGICAL_TYPE",
+              "path": "/root/fields/0/type/logicalType",
+              "message": "Logical type retained; this browser profile validates its underlying carrier only",
+              "severity": "warning"
+            },
+            {
+              "code": "AVRO_LOGICAL_TYPE",
+              "path": "/root/fields/1/type/logicalType",
+              "message": "Logical type retained; this browser profile validates its underlying carrier only",
+              "severity": "warning"
+            },
+            {
+              "code": "UNKNOWN_CORE_FIELD",
+              "path": "/modules/1/elements/0/future.consumer",
+              "message": "Field retained without interpretation",
+              "severity": "warning"
+            }
+          ]
+        },
+        "edit": {
+          "path": "/fields/1/type/logicalType",
+          "replacement": {
+            "kind": "string",
+            "value": "local-timestamp-micros"
+          }
+        }
+      },
+      "exports": [
+        {
+          "format": "json",
+          "schema": "{\"type\":\"record\",\"name\":\"Invoice\",\"fields\":[{\"name\":\"amount\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":8,\"scale\":2},\"future.field\":{\"unit\":\"money\"}},{\"name\":\"created\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros\"}},{\"name\":\"count\",\"type\":\"long\",\"default\":0}]}\n",
+          "dependencies": []
+        },
+        {
+          "format": "yaml",
+          "schema": "{\"type\":\"record\",\"name\":\"Invoice\",\"fields\":[{\"name\":\"amount\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":8,\"scale\":2},\"future.field\":{\"unit\":\"money\"}},{\"name\":\"created\",\"type\":{\"type\":\"long\",\"logicalType\":\"local-timestamp-micros\"}},{\"name\":\"count\",\"type\":\"long\",\"default\":0}]}\n",
+          "dependencies": []
+        }
+      ]
+    },
+    {
+      "id": "unknown",
+      "editText": "\"timestamp-micros\\n\"",
+      "result": {
+        "status": "candidate",
+        "source": {
+          "umf": "0.1.0",
+          "id": "invoice",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            },
+            "example.future": {
+              "version": "7.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Invoice"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "amount"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "bytes"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "decimal"
+                                      },
+                                      "precision": {
+                                        "kind": "number",
+                                        "value": "8"
+                                      },
+                                      "scale": {
+                                        "kind": "number",
+                                        "value": "2"
+                                      }
+                                    }
+                                  },
+                                  "future.field": {
+                                    "kind": "object",
+                                    "members": {
+                                      "unit": {
+                                        "kind": "string",
+                                        "value": "money"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "created"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "long"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "timestamp-micros"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "count"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "long"
+                                  },
+                                  "default": {
+                                    "kind": "number",
+                                    "value": "0"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "amount",
+                  "scalarType": "decimal",
+                  "extensions": {},
+                  "future.consumer": {
+                    "label": "Amount"
+                  }
+                },
+                {
+                  "id": "[null,\"/fields/1\"]",
+                  "name": "created",
+                  "scalarType": "timestamp",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/2\"]",
+                  "name": "count",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ],
+          "extensions": {
+            "example.future": {
+              "opaque": [
+                "preserve"
+              ]
+            }
+          }
+        },
+        "document": {
+          "umf": "0.1.0",
+          "id": "invoice",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            },
+            "example.future": {
+              "version": "7.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Invoice"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "amount"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "bytes"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "decimal"
+                                      },
+                                      "precision": {
+                                        "kind": "number",
+                                        "value": "8"
+                                      },
+                                      "scale": {
+                                        "kind": "number",
+                                        "value": "2"
+                                      }
+                                    }
+                                  },
+                                  "future.field": {
+                                    "kind": "object",
+                                    "members": {
+                                      "unit": {
+                                        "kind": "string",
+                                        "value": "money"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "created"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "long"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "timestamp-micros\n"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "count"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "long"
+                                  },
+                                  "default": {
+                                    "kind": "number",
+                                    "value": "0"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "amount",
+                  "extensions": {},
+                  "future.consumer": {
+                    "label": "Amount"
+                  },
+                  "scalarType": "decimal"
+                },
+                {
+                  "id": "[null,\"/fields/1\"]",
+                  "name": "created",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/2\"]",
+                  "name": "count",
+                  "extensions": {},
+                  "scalarType": "integer"
+                }
+              ]
+            }
+          ],
+          "extensions": {
+            "example.future": {
+              "opaque": [
+                "preserve"
+              ]
+            }
+          }
+        },
+        "validation": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "UNKNOWN_EXTENSION",
+              "path": "/vocabularies/example.future",
+              "message": "Exact extension version unavailable; content retained",
+              "severity": "warning"
+            },
+            {
+              "code": "AVRO_METADATA",
+              "path": "/root/fields/0/future.field",
+              "message": "Uninterpreted field metadata retained",
+              "severity": "warning"
+            },
+            {
+              "code": "AVRO_LOGICAL_TYPE",
+              "path": "/root/fields/0/type/logicalType",
+              "message": "Logical type retained; this browser profile validates its underlying carrier only",
+              "severity": "warning"
+            },
+            {
+              "code": "AVRO_LOGICAL_TYPE",
+              "path": "/root/fields/1/type/logicalType",
+              "message": "Logical type retained; this browser profile validates its underlying carrier only",
+              "severity": "warning"
+            },
+            {
+              "code": "UNKNOWN_CORE_FIELD",
+              "path": "/modules/1/elements/0/future.consumer",
+              "message": "Field retained without interpretation",
+              "severity": "warning"
+            }
+          ]
+        },
+        "edit": {
+          "path": "/fields/1/type/logicalType",
+          "replacement": {
+            "kind": "string",
+            "value": "timestamp-micros\n"
+          }
+        }
+      },
+      "exports": [
+        {
+          "format": "json",
+          "schema": "{\"type\":\"record\",\"name\":\"Invoice\",\"fields\":[{\"name\":\"amount\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":8,\"scale\":2},\"future.field\":{\"unit\":\"money\"}},{\"name\":\"created\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\\n\"}},{\"name\":\"count\",\"type\":\"long\",\"default\":0}]}\n",
+          "dependencies": []
+        },
+        {
+          "format": "yaml",
+          "schema": "{\"type\":\"record\",\"name\":\"Invoice\",\"fields\":[{\"name\":\"amount\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":8,\"scale\":2},\"future.field\":{\"unit\":\"money\"}},{\"name\":\"created\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\\n\"}},{\"name\":\"count\",\"type\":\"long\",\"default\":0}]}\n",
+          "dependencies": []
+        }
+      ]
+    },
+    {
+      "id": "exact-default",
+      "editText": "9223372036854775807",
+      "result": {
+        "status": "candidate",
+        "source": {
+          "umf": "0.1.0",
+          "id": "invoice",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            },
+            "example.future": {
+              "version": "7.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Invoice"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "amount"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "bytes"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "decimal"
+                                      },
+                                      "precision": {
+                                        "kind": "number",
+                                        "value": "8"
+                                      },
+                                      "scale": {
+                                        "kind": "number",
+                                        "value": "2"
+                                      }
+                                    }
+                                  },
+                                  "future.field": {
+                                    "kind": "object",
+                                    "members": {
+                                      "unit": {
+                                        "kind": "string",
+                                        "value": "money"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "created"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "long"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "timestamp-micros"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "count"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "long"
+                                  },
+                                  "default": {
+                                    "kind": "number",
+                                    "value": "0"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "amount",
+                  "scalarType": "decimal",
+                  "extensions": {},
+                  "future.consumer": {
+                    "label": "Amount"
+                  }
+                },
+                {
+                  "id": "[null,\"/fields/1\"]",
+                  "name": "created",
+                  "scalarType": "timestamp",
+                  "extensions": {}
+                },
+                {
+                  "id": "[null,\"/fields/2\"]",
+                  "name": "count",
+                  "scalarType": "integer",
+                  "extensions": {}
+                }
+              ]
+            }
+          ],
+          "extensions": {
+            "example.future": {
+              "opaque": [
+                "preserve"
+              ]
+            }
+          }
+        },
+        "document": {
+          "umf": "0.1.0",
+          "id": "invoice",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            },
+            "example.future": {
+              "version": "7.0.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "Invoice"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "amount"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "bytes"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "decimal"
+                                      },
+                                      "precision": {
+                                        "kind": "number",
+                                        "value": "8"
+                                      },
+                                      "scale": {
+                                        "kind": "number",
+                                        "value": "2"
+                                      }
+                                    }
+                                  },
+                                  "future.field": {
+                                    "kind": "object",
+                                    "members": {
+                                      "unit": {
+                                        "kind": "string",
+                                        "value": "money"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "created"
+                                  },
+                                  "type": {
+                                    "kind": "object",
+                                    "members": {
+                                      "type": {
+                                        "kind": "string",
+                                        "value": "long"
+                                      },
+                                      "logicalType": {
+                                        "kind": "string",
+                                        "value": "timestamp-micros"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "count"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "long"
+                                  },
+                                  "default": {
+                                    "kind": "number",
+                                    "value": "9223372036854775807"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "amount",
+                  "extensions": {},
+                  "future.consumer": {
+                    "label": "Amount"
+                  },
+                  "scalarType": "decimal"
+                },
+                {
+                  "id": "[null,\"/fields/1\"]",
+                  "name": "created",
+                  "extensions": {},
+                  "scalarType": "timestamp"
+                },
+                {
+                  "id": "[null,\"/fields/2\"]",
+                  "name": "count",
+                  "extensions": {},
+                  "scalarType": "integer"
+                }
+              ]
+            }
+          ],
+          "extensions": {
+            "example.future": {
+              "opaque": [
+                "preserve"
+              ]
+            }
+          }
+        },
+        "validation": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "UNKNOWN_EXTENSION",
+              "path": "/vocabularies/example.future",
+              "message": "Exact extension version unavailable; content retained",
+              "severity": "warning"
+            },
+            {
+              "code": "AVRO_METADATA",
+              "path": "/root/fields/0/future.field",
+              "message": "Uninterpreted field metadata retained",
+              "severity": "warning"
+            },
+            {
+              "code": "AVRO_LOGICAL_TYPE",
+              "path": "/root/fields/0/type/logicalType",
+              "message": "Logical type retained; this browser profile validates its underlying carrier only",
+              "severity": "warning"
+            },
+            {
+              "code": "AVRO_LOGICAL_TYPE",
+              "path": "/root/fields/1/type/logicalType",
+              "message": "Logical type retained; this browser profile validates its underlying carrier only",
+              "severity": "warning"
+            },
+            {
+              "code": "AVRO_NUMERIC",
+              "path": "/root",
+              "message": "Exact native tokens retained; host interpretation is unavailable: UmfError: Integer exceeds exact JavaScript range",
+              "severity": "warning"
+            },
+            {
+              "code": "UNKNOWN_CORE_FIELD",
+              "path": "/modules/1/elements/0/future.consumer",
+              "message": "Field retained without interpretation",
+              "severity": "warning"
+            }
+          ]
+        },
+        "edit": {
+          "path": "/fields/2/default",
+          "replacement": {
+            "kind": "number",
+            "value": "9223372036854775807"
+          }
+        }
+      },
+      "exports": [
+        {
+          "format": "json",
+          "schema": "{\"type\":\"record\",\"name\":\"Invoice\",\"fields\":[{\"name\":\"amount\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":8,\"scale\":2},\"future.field\":{\"unit\":\"money\"}},{\"name\":\"created\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\"}},{\"name\":\"count\",\"type\":\"long\",\"default\":9223372036854775807}]}\n",
+          "dependencies": []
+        },
+        {
+          "format": "yaml",
+          "schema": "{\"type\":\"record\",\"name\":\"Invoice\",\"fields\":[{\"name\":\"amount\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":8,\"scale\":2},\"future.field\":{\"unit\":\"money\"}},{\"name\":\"created\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-micros\"}},{\"name\":\"count\",\"type\":\"long\",\"default\":9223372036854775807}]}\n",
+          "dependencies": []
+        }
+      ]
+    },
+    {
+      "id": "dependency",
+      "editText": "3",
+      "result": {
+        "status": "candidate",
+        "source": {
+          "umf": "0.1.0",
+          "id": "dependent",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "R"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "amount"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "money.Amount"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "dependencies": [
+                        {
+                          "id": "money.avsc",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "fixed"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "money.Amount"
+                              },
+                              "size": {
+                                "kind": "number",
+                                "value": "4"
+                              },
+                              "logicalType": {
+                                "kind": "string",
+                                "value": "decimal"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "8"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "2"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "amount",
+                  "scalarType": "decimal",
+                  "extensions": {}
+                }
+              ]
+            }
+          ]
+        },
+        "document": {
+          "umf": "0.1.0",
+          "id": "dependent",
+          "vocabularies": {
+            "umf.avro": {
+              "version": "0.1.0"
+            }
+          },
+          "modules": [
+            {
+              "id": "schema",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "schema",
+                  "extensions": {
+                    "umf.avro": {
+                      "version": "1.12.0",
+                      "root": {
+                        "kind": "object",
+                        "members": {
+                          "type": {
+                            "kind": "string",
+                            "value": "record"
+                          },
+                          "name": {
+                            "kind": "string",
+                            "value": "R"
+                          },
+                          "fields": {
+                            "kind": "array",
+                            "items": [
+                              {
+                                "kind": "object",
+                                "members": {
+                                  "name": {
+                                    "kind": "string",
+                                    "value": "amount"
+                                  },
+                                  "type": {
+                                    "kind": "string",
+                                    "value": "money.Amount"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "dependencies": [
+                        {
+                          "id": "money.avsc",
+                          "root": {
+                            "kind": "object",
+                            "members": {
+                              "type": {
+                                "kind": "string",
+                                "value": "fixed"
+                              },
+                              "name": {
+                                "kind": "string",
+                                "value": "money.Amount"
+                              },
+                              "size": {
+                                "kind": "number",
+                                "value": "4"
+                              },
+                              "logicalType": {
+                                "kind": "string",
+                                "value": "decimal"
+                              },
+                              "precision": {
+                                "kind": "number",
+                                "value": "8"
+                              },
+                              "scale": {
+                                "kind": "number",
+                                "value": "3"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "avro.fields",
+              "namespace": "",
+              "elements": [
+                {
+                  "id": "[null,\"/fields/0\"]",
+                  "name": "amount",
+                  "extensions": {},
+                  "scalarType": "decimal"
+                }
+              ]
+            }
+          ]
+        },
+        "validation": {
+          "valid": true,
+          "complete": false,
+          "diagnostics": [
+            {
+              "code": "AVRO_LOGICAL_TYPE",
+              "path": "/dependencies/0/root/logicalType",
+              "message": "Logical type retained; this browser profile validates its underlying carrier only",
+              "severity": "warning"
+            }
+          ]
+        },
+        "edit": {
+          "path": "/scale",
+          "dependencyId": "money.avsc",
+          "replacement": {
+            "kind": "number",
+            "value": "3"
+          }
+        }
+      },
+      "exports": [
+        {
+          "format": "json",
+          "schema": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"amount\",\"type\":\"money.Amount\"}]}\n",
+          "dependencies": [
+            {
+              "id": "money.avsc",
+              "schema": "{\"type\":\"fixed\",\"name\":\"money.Amount\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":8,\"scale\":3}\n"
+            }
+          ]
+        },
+        {
+          "format": "yaml",
+          "schema": "{\"type\":\"record\",\"name\":\"R\",\"fields\":[{\"name\":\"amount\",\"type\":\"money.Amount\"}]}\n",
+          "dependencies": [
+            {
+              "id": "money.avsc",
+              "schema": "{\"type\":\"fixed\",\"name\":\"money.Amount\",\"size\":4,\"logicalType\":\"decimal\",\"precision\":8,\"scale\":3}\n"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

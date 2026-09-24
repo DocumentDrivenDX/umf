@@ -1,0 +1,10 @@
+_:Nc425408285b04c3e801614b7ecf7a6b2 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxCountConstraintComponent> .
+_:N7c17486121ce4edca2a4853b2313c264 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:Nc425408285b04c3e801614b7ecf7a6b2 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/maxCount-001.test#PersonShape-firstName> .
+_:N7c17486121ce4edca2a4853b2313c264 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:Nc425408285b04c3e801614b7ecf7a6b2 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/maxCount-001.test#firstName> .
+_:Nc425408285b04c3e801614b7ecf7a6b2 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/maxCount-001.test#InvalidPerson> .
+_:Nc425408285b04c3e801614b7ecf7a6b2 <http://www.w3.org/ns/shacl#resultMessage> "More than 1 values on ex:InvalidPerson->ex:firstName" .
+_:N7c17486121ce4edca2a4853b2313c264 <http://www.w3.org/ns/shacl#result> _:Nc425408285b04c3e801614b7ecf7a6b2 .
+_:Nc425408285b04c3e801614b7ecf7a6b2 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:Nc425408285b04c3e801614b7ecf7a6b2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .

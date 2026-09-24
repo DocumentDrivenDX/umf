@@ -1,0 +1,13 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b3531 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b3531 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b3531 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b3531 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LessThanConstraintComponent> .
+_:b3531 <http://www.w3.org/ns/shacl#sourceShape> _:s_g_0 .
+_:b3531 <http://www.w3.org/ns/shacl#focusNode> <https://example.org/a> .
+_:b3531 <http://www.w3.org/ns/shacl#resultPath> <https://example.org/p> .
+_:b3531 <http://www.w3.org/ns/shacl#value> "9007199254740993"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:b3531 <http://www.w3.org/ns/shacl#resultMessage> "Value is not less than value of <https://example.org/q>" .
+_:s_g_0 <http://www.w3.org/ns/shacl#path> <https://example.org/p> .
+_:s_g_0 <http://www.w3.org/ns/shacl#lessThan> <https://example.org/q> .

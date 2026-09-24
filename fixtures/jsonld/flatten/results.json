@@ -1,0 +1,2309 @@
+{
+  "cases": [
+    {
+      "id": "t0001",
+      "path": "native/jsonld/sources/flatten/0001-in.jsonld",
+      "inputs": {
+        "id": "t0001",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0001-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0001-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "object with only @id: Dropping object with only @id."
+        },
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0001.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0001.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0002",
+      "path": "native/jsonld/sources/flatten/0002-in.jsonld",
+      "inputs": {
+        "id": "t0002",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0002-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0002-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0002.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0002.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0003",
+      "path": "native/jsonld/sources/flatten/0003-in.jsonld",
+      "inputs": {
+        "id": "t0003",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0003-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0003-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "invalid property: Dropping property that did not expand into an absolute IRI or keyword."
+        },
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "object with only @id: Dropping object with only @id."
+        },
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0003.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0003.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0004",
+      "path": "native/jsonld/sources/flatten/0004-in.jsonld",
+      "inputs": {
+        "id": "t0004",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0004-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0004-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "null @value value: Dropping null @value value."
+        },
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0004.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0004.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0005",
+      "path": "native/jsonld/sources/flatten/0005-in.jsonld",
+      "inputs": {
+        "id": "t0005",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0005-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0005-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "reserved term: Terms beginning with \"@\" are reserved for future use and dropped."
+        },
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0005.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0005.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0006",
+      "path": "native/jsonld/sources/flatten/0006-in.jsonld",
+      "inputs": {
+        "id": "t0006",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0006-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0006-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0006.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0006.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0007",
+      "path": "native/jsonld/sources/flatten/0007-in.jsonld",
+      "inputs": {
+        "id": "t0007",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0007-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0007-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0007.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0007.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0008",
+      "path": "native/jsonld/sources/flatten/0008-in.jsonld",
+      "inputs": {
+        "id": "t0008",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0008-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0008-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "object with only @language: Dropping object with only @language."
+        },
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0008.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0008.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0009",
+      "path": "native/jsonld/sources/flatten/0009-in.jsonld",
+      "inputs": {
+        "id": "t0009",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0009-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0009-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0009.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0009.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0010",
+      "path": "native/jsonld/sources/flatten/0010-in.jsonld",
+      "inputs": {
+        "id": "t0010",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0010-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0010-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0010.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0010.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0011",
+      "path": "native/jsonld/sources/flatten/0011-in.jsonld",
+      "inputs": {
+        "id": "t0011",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0011-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0011-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0011.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0011.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0012",
+      "path": "native/jsonld/sources/flatten/0012-in.jsonld",
+      "inputs": {
+        "id": "t0012",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0012-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0012-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0012.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0012.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0013",
+      "path": "native/jsonld/sources/flatten/0013-in.jsonld",
+      "inputs": {
+        "id": "t0013",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0013-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0013-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0013.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0013.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0014",
+      "path": "native/jsonld/sources/flatten/0014-in.jsonld",
+      "inputs": {
+        "id": "t0014",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0014-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0014-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "null @value value: Dropping null @value value."
+        },
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0014.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0014.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0015",
+      "path": "native/jsonld/sources/flatten/0015-in.jsonld",
+      "inputs": {
+        "id": "t0015",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0015-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0015-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0015.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0015.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0016",
+      "path": "native/jsonld/sources/flatten/0016-in.jsonld",
+      "inputs": {
+        "id": "t0016",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0016-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0016-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "invalid property: Dropping property that did not expand into an absolute IRI or keyword."
+        },
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "invalid property: Dropping property that did not expand into an absolute IRI or keyword."
+        },
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "invalid property: Dropping property that did not expand into an absolute IRI or keyword."
+        },
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "invalid property: Dropping property that did not expand into an absolute IRI or keyword."
+        },
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "invalid property: Dropping property that did not expand into an absolute IRI or keyword."
+        },
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "invalid property: Dropping property that did not expand into an absolute IRI or keyword."
+        },
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "invalid property: Dropping property that did not expand into an absolute IRI or keyword."
+        },
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "invalid property: Dropping property that did not expand into an absolute IRI or keyword."
+        },
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0016.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0016.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0017",
+      "path": "native/jsonld/sources/flatten/0017-in.jsonld",
+      "inputs": {
+        "id": "t0017",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0017-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0017-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0017.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0017.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0018",
+      "path": "native/jsonld/sources/flatten/0018-in.jsonld",
+      "inputs": {
+        "id": "t0018",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0018-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0018-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0018.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0018.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0019",
+      "path": "native/jsonld/sources/flatten/0019-in.jsonld",
+      "inputs": {
+        "id": "t0019",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0019-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0019-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "null @value value: Dropping null @value value."
+        },
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "empty object: Dropping empty object."
+        },
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0019.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0019.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0020",
+      "path": "native/jsonld/sources/flatten/0020-in.jsonld",
+      "inputs": {
+        "id": "t0020",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0020-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0020-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0020.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0020.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0021",
+      "path": "native/jsonld/sources/flatten/0021-in.jsonld",
+      "inputs": {
+        "id": "t0021",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0021-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0021-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0021.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0021.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0022",
+      "path": "native/jsonld/sources/flatten/0022-in.jsonld",
+      "inputs": {
+        "id": "t0022",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0022-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0022-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0022.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0022.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0023",
+      "path": "native/jsonld/sources/flatten/0023-in.jsonld",
+      "inputs": {
+        "id": "t0023",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0023-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0023-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0023.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0023.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0024",
+      "path": "native/jsonld/sources/flatten/0024-in.jsonld",
+      "inputs": {
+        "id": "t0024",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0024-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0024-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0024.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0024.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0025",
+      "path": "native/jsonld/sources/flatten/0025-in.jsonld",
+      "inputs": {
+        "id": "t0025",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0025-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0025-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0025.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0025.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0026",
+      "path": "native/jsonld/sources/flatten/0026-in.jsonld",
+      "inputs": {
+        "id": "t0026",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0026-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0026-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0026.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0026.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0027",
+      "path": "native/jsonld/sources/flatten/0027-in.jsonld",
+      "inputs": {
+        "id": "t0027",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0027-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0027-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0027.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0027.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0028",
+      "path": "native/jsonld/sources/flatten/0028-in.jsonld",
+      "inputs": {
+        "id": "t0028",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0028-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0028-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0028.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0028.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0030",
+      "path": "native/jsonld/sources/flatten/0030-in.jsonld",
+      "inputs": {
+        "id": "t0030",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0030-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0030-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0030.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0030.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0031",
+      "path": "native/jsonld/sources/flatten/0031-in.jsonld",
+      "inputs": {
+        "id": "t0031",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0031-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0031-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0031.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0031.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0032",
+      "path": "native/jsonld/sources/flatten/0032-in.jsonld",
+      "inputs": {
+        "id": "t0032",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0032-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0032-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "invalid property: Dropping property that did not expand into an absolute IRI or keyword."
+        },
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "invalid property: Dropping property that did not expand into an absolute IRI or keyword."
+        },
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0032.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0032.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0033",
+      "path": "native/jsonld/sources/flatten/0033-in.jsonld",
+      "inputs": {
+        "id": "t0033",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0033-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0033-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0033.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0033.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0034",
+      "path": "native/jsonld/sources/flatten/0034-in.jsonld",
+      "inputs": {
+        "id": "t0034",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0034-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0034-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0034.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0034.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0035",
+      "path": "native/jsonld/sources/flatten/0035-in.jsonld",
+      "inputs": {
+        "id": "t0035",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0035-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0035-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0035.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0035.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0036",
+      "path": "native/jsonld/sources/flatten/0036-in.jsonld",
+      "inputs": {
+        "id": "t0036",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0036-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0036-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "null @value value: Dropping null @value value."
+        },
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0036.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0036.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0037",
+      "path": "native/jsonld/sources/flatten/0037-in.jsonld",
+      "inputs": {
+        "id": "t0037",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0037-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0037-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0037.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0037.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0038",
+      "path": "native/jsonld/sources/flatten/0038-in.jsonld",
+      "inputs": {
+        "id": "t0038",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0038-in.jsonld",
+        "processingMode": "json-ld-1.0",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0038-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0038.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0038.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0039",
+      "path": "native/jsonld/sources/flatten/0039-in.jsonld",
+      "inputs": {
+        "id": "t0039",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0039-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0039-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0039.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0039.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0040",
+      "path": "native/jsonld/sources/flatten/0040-in.jsonld",
+      "inputs": {
+        "id": "t0040",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0040-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0040-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0040.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0040.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0041",
+      "path": "native/jsonld/sources/flatten/0041-in.jsonld",
+      "inputs": {
+        "id": "t0041",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0041-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0041-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "free-floating scalar: Dropping free-floating scalar not in a list."
+        },
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "object with only @id: Dropping object with only @id."
+        },
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "free-floating scalar: Dropping free-floating scalar not in a list."
+        },
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "object with only @list: Dropping object with only @list."
+        },
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0041.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0041.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0042",
+      "path": "native/jsonld/sources/flatten/0042-in.jsonld",
+      "inputs": {
+        "id": "t0042",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0042-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0042-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0042.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0042.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0043",
+      "path": "native/jsonld/sources/flatten/0043-in.jsonld",
+      "inputs": {
+        "id": "t0043",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0043-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0043-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0043.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0043.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0044",
+      "path": "native/jsonld/sources/flatten/0044-in.jsonld",
+      "inputs": {
+        "id": "t0044",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0044-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": false,
+        "context": "{\n  \"@context\": {\n    \"term\": \"http://example/term\"\n  }\n}"
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0044-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0044.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0044.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0045",
+      "path": "native/jsonld/sources/flatten/0045-in.jsonld",
+      "inputs": {
+        "id": "t0045",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0045-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0045-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0045.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0045.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0046",
+      "path": "native/jsonld/sources/flatten/0046-in.jsonld",
+      "inputs": {
+        "id": "t0046",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0046-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0046-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "relative @id reference: Relative @id reference found."
+        },
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "relative @id reference: Relative @id reference found."
+        },
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "relative @id reference: Relative @id reference found."
+        },
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0046.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0046.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0047",
+      "path": "native/jsonld/sources/flatten/0047-in.jsonld",
+      "inputs": {
+        "id": "t0047",
+        "baseIRI": "http://example.org/",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0047-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0047.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0047.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0048",
+      "path": "native/jsonld/sources/flatten/0048-in.jsonld",
+      "inputs": {
+        "id": "t0048",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0048-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0048-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0048.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0048.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "t0049",
+      "path": "native/jsonld/sources/flatten/0049-in.jsonld",
+      "inputs": {
+        "id": "t0049",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/0049-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/0049-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/t0049.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/t0049.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "te001",
+      "path": "native/jsonld/sources/flatten/e001-in.jsonld",
+      "inputs": {
+        "id": "te001",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/e001-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": false,
+      "expectedError": "conflicting indexes",
+      "status": "blocked",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid JSON-LD syntax; conflicting @index property detected."
+        }
+      ],
+      "exports": []
+    },
+    {
+      "id": "tin01",
+      "path": "native/jsonld/sources/flatten/in01-in.jsonld",
+      "inputs": {
+        "id": "tin01",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/in01-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/in01-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/tin01.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/tin01.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tin02",
+      "path": "native/jsonld/sources/flatten/in02-in.jsonld",
+      "inputs": {
+        "id": "tin02",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/in02-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/in02-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/tin02.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/tin02.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tin03",
+      "path": "native/jsonld/sources/flatten/in03-in.jsonld",
+      "inputs": {
+        "id": "tin03",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/in03-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/in03-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/tin03.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/tin03.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tin04",
+      "path": "native/jsonld/sources/flatten/in04-in.jsonld",
+      "inputs": {
+        "id": "tin04",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/in04-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/in04-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/tin04.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/tin04.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tin05",
+      "path": "native/jsonld/sources/flatten/in05-in.jsonld",
+      "inputs": {
+        "id": "tin05",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/in05-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/in05-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/tin05.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/tin05.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tin06",
+      "path": "native/jsonld/sources/flatten/in06-in.jsonld",
+      "inputs": {
+        "id": "tin06",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/in06-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/in06-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "invalid property: Dropping property that did not expand into an absolute IRI or keyword."
+        },
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/tin06.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/tin06.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tli01",
+      "path": "native/jsonld/sources/flatten/li01-in.jsonld",
+      "inputs": {
+        "id": "tli01",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/li01-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/li01-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/tli01.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/tli01.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tli02",
+      "path": "native/jsonld/sources/flatten/li02-in.jsonld",
+      "inputs": {
+        "id": "tli02",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/li02-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/li02-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/tli02.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/tli02.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    },
+    {
+      "id": "tli03",
+      "path": "native/jsonld/sources/flatten/li03-in.jsonld",
+      "inputs": {
+        "id": "tli03",
+        "baseIRI": "https://w3c.github.io/json-ld-api/tests/flatten/li03-in.jsonld",
+        "processingMode": "json-ld-1.1",
+        "contexts": []
+      },
+      "flattenOptions": {
+        "lossPolicy": "report",
+        "compactArrays": true
+      },
+      "positive": true,
+      "expectedPath": "native/jsonld/sources/flatten/li03-out.jsonld",
+      "status": "candidate",
+      "resourcesUsed": [],
+      "diagnostics": [
+        {
+          "code": "JSONLD_FLATTEN",
+          "path": "",
+          "severity": "warning",
+          "message": "Flattened candidate retains source/context archives. Node descriptions merge by identifier, blank labels are assigned locally and duplicate unordered values are removed; target context may compact aliases. This is not an RDF equivalence or global blank-node identity proof."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/flatten/tli03.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/flatten/tli03.yaml.jsonld"
+        }
+      ],
+      "matchesExpected": true
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b11557 .
+_:report <http://www.w3.org/ns/shacl#result> _:b11558 .
+_:report <http://www.w3.org/ns/shacl#result> _:b11559 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b11557 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b11557 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b11557 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LanguageInConstraintComponent> .
+_:b11557 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/languageIn-001.test#TestShape> .
+_:b11557 <http://www.w3.org/ns/shacl#focusNode> <http://www.w3.org/2000/01/rdf-schema#Resource> .
+_:b11557 <http://www.w3.org/ns/shacl#value> <http://www.w3.org/2000/01/rdf-schema#Resource> .
+_:b11557 <http://www.w3.org/ns/shacl#resultMessage> "Language does not match any of " .
+_:b11558 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b11558 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b11558 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LanguageInConstraintComponent> .
+_:b11558 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/languageIn-001.test#TestShape> .
+_:b11558 <http://www.w3.org/ns/shacl#focusNode> "Deutsch"@de .
+_:b11558 <http://www.w3.org/ns/shacl#value> "Deutsch"@de .
+_:b11558 <http://www.w3.org/ns/shacl#resultMessage> "Language does not match any of " .
+_:b11559 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b11559 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b11559 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#LanguageInConstraintComponent> .
+_:b11559 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/languageIn-001.test#TestShape> .
+_:b11559 <http://www.w3.org/ns/shacl#focusNode> "Plain String" .
+_:b11559 <http://www.w3.org/ns/shacl#value> "Plain String" .
+_:b11559 <http://www.w3.org/ns/shacl#resultMessage> "Language does not match any of " .

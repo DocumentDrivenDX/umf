@@ -1,0 +1,880 @@
+{
+  "modelVersion": "1.11.0",
+  "runtimeVersion": "1.11.0rc2",
+  "results": [
+    {
+      "rawSchemaErrors": 17,
+      "normalizedSchemaErrors": 0,
+      "rawErrorExamples": [
+        {
+          "path": [
+            "types",
+            "boolean"
+          ],
+          "message": "{'uri': 'xsd:boolean', 'base': 'Bool', 'repr': 'bool', 'description': 'A binary (true or false) value', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\".', 'exact_mappings': ['schema:Boolean'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "objectidentifier"
+          ],
+          "message": "{'uri': 'shex:iri', 'base': 'ElementIdentifier', 'repr': 'str', 'description': 'A URI or CURIE that represents an object in the model.', 'comments': ['Used for inheritance and type checking'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\".', 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "double"
+          ],
+          "message": "{'uri': 'xsd:double', 'base': 'float', 'description': 'A real number that conforms to the xsd:double specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\".', 'close_mappings': ['schema:Float'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        }
+      ],
+      "entry": "annotations",
+      "mode": "view",
+      "closure": [
+        "types",
+        "extensions",
+        "annotations"
+      ],
+      "outputSha256": "7dd85b5f96479f3776927b5b4cc683b5eb043e34ef0dea85296bed768f6e577e",
+      "normalizedSha256": "58ef4857cf660d9d0005ab3ea04ea9debb8cf49e4b9dfc752872f266efd8c019",
+      "definitions": {
+        "prefixes": 4,
+        "classes": 5,
+        "slots": 4,
+        "enums": 0,
+        "subsets": 0,
+        "types": 19
+      }
+    },
+    {
+      "rawSchemaErrors": 17,
+      "normalizedSchemaErrors": 0,
+      "rawErrorExamples": [
+        {
+          "path": [
+            "types",
+            "boolean"
+          ],
+          "message": "{'uri': 'xsd:boolean', 'base': 'Bool', 'repr': 'bool', 'description': 'A binary (true or false) value', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\".', 'exact_mappings': ['schema:Boolean'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "objectidentifier"
+          ],
+          "message": "{'uri': 'shex:iri', 'base': 'ElementIdentifier', 'repr': 'str', 'description': 'A URI or CURIE that represents an object in the model.', 'comments': ['Used for inheritance and type checking'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\".', 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "double"
+          ],
+          "message": "{'uri': 'xsd:double', 'base': 'float', 'description': 'A real number that conforms to the xsd:double specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\".', 'close_mappings': ['schema:Float'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        }
+      ],
+      "entry": "annotations",
+      "mode": "merge-imports",
+      "closure": [
+        "types",
+        "extensions",
+        "annotations"
+      ],
+      "outputSha256": "60aa28106581a6433a7fe9587854cfe4238160953f4f8cad59fcc0daaee9d14c",
+      "normalizedSha256": "58ef4857cf660d9d0005ab3ea04ea9debb8cf49e4b9dfc752872f266efd8c019",
+      "definitions": {
+        "prefixes": 4,
+        "classes": 5,
+        "slots": 4,
+        "enums": 0,
+        "subsets": 0,
+        "types": 19
+      }
+    },
+    {
+      "rawSchemaErrors": 17,
+      "normalizedSchemaErrors": 0,
+      "rawErrorExamples": [
+        {
+          "path": [
+            "types",
+            "boolean"
+          ],
+          "message": "{'uri': 'xsd:boolean', 'base': 'Bool', 'repr': 'bool', 'description': 'A binary (true or false) value', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\".', 'exact_mappings': ['schema:Boolean'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "objectidentifier"
+          ],
+          "message": "{'uri': 'shex:iri', 'base': 'ElementIdentifier', 'repr': 'str', 'description': 'A URI or CURIE that represents an object in the model.', 'comments': ['Used for inheritance and type checking'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\".', 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "double"
+          ],
+          "message": "{'uri': 'xsd:double', 'base': 'float', 'description': 'A real number that conforms to the xsd:double specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\".', 'close_mappings': ['schema:Float'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        }
+      ],
+      "entry": "arrays",
+      "mode": "view",
+      "closure": [
+        "types",
+        "arrays"
+      ],
+      "outputSha256": "60a1ea0d03e775f38f4f254ca5bb3e903f9c226295c21358dacfc40d01a182f2",
+      "normalizedSha256": "67a220468130bf5eacd2e39f51a633937daa41eac8506d9c9ed16157a60aab94",
+      "definitions": {
+        "prefixes": 6,
+        "classes": 8,
+        "slots": 11,
+        "enums": 1,
+        "subsets": 0,
+        "types": 19
+      }
+    },
+    {
+      "rawSchemaErrors": 17,
+      "normalizedSchemaErrors": 0,
+      "rawErrorExamples": [
+        {
+          "path": [
+            "types",
+            "boolean"
+          ],
+          "message": "{'uri': 'xsd:boolean', 'base': 'Bool', 'repr': 'bool', 'description': 'A binary (true or false) value', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\".', 'exact_mappings': ['schema:Boolean'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "objectidentifier"
+          ],
+          "message": "{'uri': 'shex:iri', 'base': 'ElementIdentifier', 'repr': 'str', 'description': 'A URI or CURIE that represents an object in the model.', 'comments': ['Used for inheritance and type checking'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\".', 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "double"
+          ],
+          "message": "{'uri': 'xsd:double', 'base': 'float', 'description': 'A real number that conforms to the xsd:double specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\".', 'close_mappings': ['schema:Float'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        }
+      ],
+      "entry": "arrays",
+      "mode": "merge-imports",
+      "closure": [
+        "types",
+        "arrays"
+      ],
+      "outputSha256": "4cb96abc7e903d6c8aff0c2461731b9bb541251ef63e261f6f20b8f0fc3644d5",
+      "normalizedSha256": "67a220468130bf5eacd2e39f51a633937daa41eac8506d9c9ed16157a60aab94",
+      "definitions": {
+        "prefixes": 6,
+        "classes": 8,
+        "slots": 11,
+        "enums": 1,
+        "subsets": 0,
+        "types": 19
+      }
+    },
+    {
+      "rawSchemaErrors": 17,
+      "normalizedSchemaErrors": 0,
+      "rawErrorExamples": [
+        {
+          "path": [
+            "types",
+            "boolean"
+          ],
+          "message": "{'uri': 'xsd:boolean', 'base': 'Bool', 'repr': 'bool', 'description': 'A binary (true or false) value', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\".', 'exact_mappings': ['schema:Boolean'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "objectidentifier"
+          ],
+          "message": "{'uri': 'shex:iri', 'base': 'ElementIdentifier', 'repr': 'str', 'description': 'A URI or CURIE that represents an object in the model.', 'comments': ['Used for inheritance and type checking'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\".', 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "double"
+          ],
+          "message": "{'uri': 'xsd:double', 'base': 'float', 'description': 'A real number that conforms to the xsd:double specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\".', 'close_mappings': ['schema:Float'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        }
+      ],
+      "entry": "datasets",
+      "mode": "view",
+      "closure": [
+        "types",
+        "datasets"
+      ],
+      "outputSha256": "5a6918df8ac7dc4c1573066b6a33494c8af1ab05957608ba2df3e636ca019bf9",
+      "normalizedSha256": "fea49c443e51b7c14690ee1ec0060d5b62159e04f96136b3b822f3dc221f6365",
+      "definitions": {
+        "prefixes": 16,
+        "classes": 4,
+        "slots": 34,
+        "enums": 3,
+        "subsets": 0,
+        "types": 19
+      }
+    },
+    {
+      "rawSchemaErrors": 17,
+      "normalizedSchemaErrors": 0,
+      "rawErrorExamples": [
+        {
+          "path": [
+            "types",
+            "boolean"
+          ],
+          "message": "{'uri': 'xsd:boolean', 'base': 'Bool', 'repr': 'bool', 'description': 'A binary (true or false) value', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\".', 'exact_mappings': ['schema:Boolean'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "objectidentifier"
+          ],
+          "message": "{'uri': 'shex:iri', 'base': 'ElementIdentifier', 'repr': 'str', 'description': 'A URI or CURIE that represents an object in the model.', 'comments': ['Used for inheritance and type checking'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\".', 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "double"
+          ],
+          "message": "{'uri': 'xsd:double', 'base': 'float', 'description': 'A real number that conforms to the xsd:double specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\".', 'close_mappings': ['schema:Float'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        }
+      ],
+      "entry": "datasets",
+      "mode": "merge-imports",
+      "closure": [
+        "types",
+        "datasets"
+      ],
+      "outputSha256": "e10ec04be3b0bcbcc828ca16047754751207a4317a040eacd80279335bec7ce0",
+      "normalizedSha256": "fea49c443e51b7c14690ee1ec0060d5b62159e04f96136b3b822f3dc221f6365",
+      "definitions": {
+        "prefixes": 16,
+        "classes": 4,
+        "slots": 34,
+        "enums": 3,
+        "subsets": 0,
+        "types": 19
+      }
+    },
+    {
+      "rawSchemaErrors": 17,
+      "normalizedSchemaErrors": 0,
+      "rawErrorExamples": [
+        {
+          "path": [
+            "types",
+            "boolean"
+          ],
+          "message": "{'uri': 'xsd:boolean', 'base': 'Bool', 'repr': 'bool', 'description': 'A binary (true or false) value', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\".', 'exact_mappings': ['schema:Boolean'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "objectidentifier"
+          ],
+          "message": "{'uri': 'shex:iri', 'base': 'ElementIdentifier', 'repr': 'str', 'description': 'A URI or CURIE that represents an object in the model.', 'comments': ['Used for inheritance and type checking'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\".', 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "double"
+          ],
+          "message": "{'uri': 'xsd:double', 'base': 'float', 'description': 'A real number that conforms to the xsd:double specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\".', 'close_mappings': ['schema:Float'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        }
+      ],
+      "entry": "extended_types",
+      "mode": "view",
+      "closure": [
+        "types",
+        "extended_types"
+      ],
+      "outputSha256": "1331ade1c5d6b77ee9efbe6f306a23e8cff3c4cf80280fd82fd2d5dbc6b6e825",
+      "normalizedSha256": "28061024a74c5daff14dec533df3616e4c4e02f8511364b99243232895230a37",
+      "definitions": {
+        "prefixes": 4,
+        "classes": 1,
+        "slots": 0,
+        "enums": 0,
+        "subsets": 0,
+        "types": 33
+      }
+    },
+    {
+      "rawSchemaErrors": 17,
+      "normalizedSchemaErrors": 0,
+      "rawErrorExamples": [
+        {
+          "path": [
+            "types",
+            "boolean"
+          ],
+          "message": "{'uri': 'xsd:boolean', 'base': 'Bool', 'repr': 'bool', 'description': 'A binary (true or false) value', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\".', 'exact_mappings': ['schema:Boolean'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "objectidentifier"
+          ],
+          "message": "{'uri': 'shex:iri', 'base': 'ElementIdentifier', 'repr': 'str', 'description': 'A URI or CURIE that represents an object in the model.', 'comments': ['Used for inheritance and type checking'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\".', 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "double"
+          ],
+          "message": "{'uri': 'xsd:double', 'base': 'float', 'description': 'A real number that conforms to the xsd:double specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\".', 'close_mappings': ['schema:Float'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        }
+      ],
+      "entry": "extended_types",
+      "mode": "merge-imports",
+      "closure": [
+        "types",
+        "extended_types"
+      ],
+      "outputSha256": "f653e45a786a8078571e8ce18e233eaa3b0205ae52f3d04821c2bcbc13f4c570",
+      "normalizedSha256": "28061024a74c5daff14dec533df3616e4c4e02f8511364b99243232895230a37",
+      "definitions": {
+        "prefixes": 4,
+        "classes": 1,
+        "slots": 0,
+        "enums": 0,
+        "subsets": 0,
+        "types": 33
+      }
+    },
+    {
+      "rawSchemaErrors": 17,
+      "normalizedSchemaErrors": 0,
+      "rawErrorExamples": [
+        {
+          "path": [
+            "types",
+            "boolean"
+          ],
+          "message": "{'uri': 'xsd:boolean', 'base': 'Bool', 'repr': 'bool', 'description': 'A binary (true or false) value', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\".', 'exact_mappings': ['schema:Boolean'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "objectidentifier"
+          ],
+          "message": "{'uri': 'shex:iri', 'base': 'ElementIdentifier', 'repr': 'str', 'description': 'A URI or CURIE that represents an object in the model.', 'comments': ['Used for inheritance and type checking'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\".', 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "double"
+          ],
+          "message": "{'uri': 'xsd:double', 'base': 'float', 'description': 'A real number that conforms to the xsd:double specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\".', 'close_mappings': ['schema:Float'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        }
+      ],
+      "entry": "extensions",
+      "mode": "view",
+      "closure": [
+        "types",
+        "extensions"
+      ],
+      "outputSha256": "c6d427745dc8b6e04b44bf295621d3a1fcc99cadb6e64deb3a7eb38d1e6339e3",
+      "normalizedSha256": "3462c37e69738c825dde10b0981f809d2c2265906317a38eb4d9fa612d68163c",
+      "definitions": {
+        "prefixes": 4,
+        "classes": 3,
+        "slots": 3,
+        "enums": 0,
+        "subsets": 0,
+        "types": 19
+      }
+    },
+    {
+      "rawSchemaErrors": 17,
+      "normalizedSchemaErrors": 0,
+      "rawErrorExamples": [
+        {
+          "path": [
+            "types",
+            "boolean"
+          ],
+          "message": "{'uri': 'xsd:boolean', 'base': 'Bool', 'repr': 'bool', 'description': 'A binary (true or false) value', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\".', 'exact_mappings': ['schema:Boolean'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "objectidentifier"
+          ],
+          "message": "{'uri': 'shex:iri', 'base': 'ElementIdentifier', 'repr': 'str', 'description': 'A URI or CURIE that represents an object in the model.', 'comments': ['Used for inheritance and type checking'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\".', 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "double"
+          ],
+          "message": "{'uri': 'xsd:double', 'base': 'float', 'description': 'A real number that conforms to the xsd:double specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\".', 'close_mappings': ['schema:Float'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        }
+      ],
+      "entry": "extensions",
+      "mode": "merge-imports",
+      "closure": [
+        "types",
+        "extensions"
+      ],
+      "outputSha256": "c6d427745dc8b6e04b44bf295621d3a1fcc99cadb6e64deb3a7eb38d1e6339e3",
+      "normalizedSha256": "3462c37e69738c825dde10b0981f809d2c2265906317a38eb4d9fa612d68163c",
+      "definitions": {
+        "prefixes": 4,
+        "classes": 3,
+        "slots": 3,
+        "enums": 0,
+        "subsets": 0,
+        "types": 19
+      }
+    },
+    {
+      "rawSchemaErrors": 17,
+      "normalizedSchemaErrors": 0,
+      "rawErrorExamples": [
+        {
+          "path": [
+            "types",
+            "boolean"
+          ],
+          "message": "{'uri': 'xsd:boolean', 'base': 'Bool', 'repr': 'bool', 'description': 'A binary (true or false) value', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\".', 'exact_mappings': ['schema:Boolean'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "objectidentifier"
+          ],
+          "message": "{'uri': 'shex:iri', 'base': 'ElementIdentifier', 'repr': 'str', 'description': 'A URI or CURIE that represents an object in the model.', 'comments': ['Used for inheritance and type checking'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\".', 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "double"
+          ],
+          "message": "{'uri': 'xsd:double', 'base': 'float', 'description': 'A real number that conforms to the xsd:double specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\".', 'close_mappings': ['schema:Float'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        }
+      ],
+      "entry": "mappings",
+      "mode": "view",
+      "closure": [
+        "types",
+        "mappings"
+      ],
+      "outputSha256": "e1a5bc2fb46c7a59746ddb50be5f20db6b0211dc8043eefcdca0eb4a5109ee85",
+      "normalizedSha256": "a9c8f401182245e678b4729db4997e58ce37ed1597f6a56c7c9be4440121ce8d",
+      "definitions": {
+        "prefixes": 7,
+        "classes": 0,
+        "slots": 8,
+        "enums": 0,
+        "subsets": 0,
+        "types": 19
+      }
+    },
+    {
+      "rawSchemaErrors": 17,
+      "normalizedSchemaErrors": 0,
+      "rawErrorExamples": [
+        {
+          "path": [
+            "types",
+            "boolean"
+          ],
+          "message": "{'uri': 'xsd:boolean', 'base': 'Bool', 'repr': 'bool', 'description': 'A binary (true or false) value', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\".', 'exact_mappings': ['schema:Boolean'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "objectidentifier"
+          ],
+          "message": "{'uri': 'shex:iri', 'base': 'ElementIdentifier', 'repr': 'str', 'description': 'A URI or CURIE that represents an object in the model.', 'comments': ['Used for inheritance and type checking'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\".', 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "double"
+          ],
+          "message": "{'uri': 'xsd:double', 'base': 'float', 'description': 'A real number that conforms to the xsd:double specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\".', 'close_mappings': ['schema:Float'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        }
+      ],
+      "entry": "mappings",
+      "mode": "merge-imports",
+      "closure": [
+        "types",
+        "mappings"
+      ],
+      "outputSha256": "a348398b04a0bf7bc58a6e7d9a27c449b5e1794e4cde2a0627afca90d5a2e75b",
+      "normalizedSha256": "a9c8f401182245e678b4729db4997e58ce37ed1597f6a56c7c9be4440121ce8d",
+      "definitions": {
+        "prefixes": 7,
+        "classes": 0,
+        "slots": 8,
+        "enums": 0,
+        "subsets": 0,
+        "types": 19
+      }
+    },
+    {
+      "rawSchemaErrors": 17,
+      "normalizedSchemaErrors": 0,
+      "rawErrorExamples": [
+        {
+          "path": [
+            "types",
+            "boolean"
+          ],
+          "message": "{'uri': 'xsd:boolean', 'base': 'Bool', 'repr': 'bool', 'description': 'A binary (true or false) value', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\".', 'exact_mappings': ['schema:Boolean'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "objectidentifier"
+          ],
+          "message": "{'uri': 'shex:iri', 'base': 'ElementIdentifier', 'repr': 'str', 'description': 'A URI or CURIE that represents an object in the model.', 'comments': ['Used for inheritance and type checking'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\".', 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "double"
+          ],
+          "message": "{'uri': 'xsd:double', 'base': 'float', 'description': 'A real number that conforms to the xsd:double specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\".', 'close_mappings': ['schema:Float'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        }
+      ],
+      "entry": "meta",
+      "mode": "view",
+      "closure": [
+        "types",
+        "mappings",
+        "extensions",
+        "annotations",
+        "units",
+        "meta"
+      ],
+      "outputSha256": "05e87fd3bda4b24c1a73f6a0741d08894a259043b31c772ae3b92f1b7dc73519",
+      "normalizedSha256": "b1fc470149bd14d99423dcd898a2c87ec8c5bc6d910b7456bb11ab50ce4a1756",
+      "definitions": {
+        "prefixes": 21,
+        "classes": 46,
+        "slots": 236,
+        "enums": 5,
+        "subsets": 6,
+        "types": 19
+      }
+    },
+    {
+      "rawSchemaErrors": 17,
+      "normalizedSchemaErrors": 0,
+      "rawErrorExamples": [
+        {
+          "path": [
+            "types",
+            "boolean"
+          ],
+          "message": "{'uri': 'xsd:boolean', 'base': 'Bool', 'repr': 'bool', 'description': 'A binary (true or false) value', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\".', 'exact_mappings': ['schema:Boolean'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "objectidentifier"
+          ],
+          "message": "{'uri': 'shex:iri', 'base': 'ElementIdentifier', 'repr': 'str', 'description': 'A URI or CURIE that represents an object in the model.', 'comments': ['Used for inheritance and type checking'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\".', 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "double"
+          ],
+          "message": "{'uri': 'xsd:double', 'base': 'float', 'description': 'A real number that conforms to the xsd:double specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\".', 'close_mappings': ['schema:Float'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        }
+      ],
+      "entry": "meta",
+      "mode": "merge-imports",
+      "closure": [
+        "types",
+        "mappings",
+        "extensions",
+        "annotations",
+        "units",
+        "meta"
+      ],
+      "outputSha256": "4512fc50035dbe6781ae2c3d598993e9f6200e0b80de052ad4c3d15bfdd0fcf3",
+      "normalizedSha256": "b1fc470149bd14d99423dcd898a2c87ec8c5bc6d910b7456bb11ab50ce4a1756",
+      "definitions": {
+        "prefixes": 21,
+        "classes": 46,
+        "slots": 236,
+        "enums": 5,
+        "subsets": 6,
+        "types": 19
+      }
+    },
+    {
+      "rawSchemaErrors": 17,
+      "normalizedSchemaErrors": 0,
+      "rawErrorExamples": [
+        {
+          "path": [
+            "types",
+            "boolean"
+          ],
+          "message": "{'uri': 'xsd:boolean', 'base': 'Bool', 'repr': 'bool', 'description': 'A binary (true or false) value', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\".', 'exact_mappings': ['schema:Boolean'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "objectidentifier"
+          ],
+          "message": "{'uri': 'shex:iri', 'base': 'ElementIdentifier', 'repr': 'str', 'description': 'A URI or CURIE that represents an object in the model.', 'comments': ['Used for inheritance and type checking'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\".', 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "double"
+          ],
+          "message": "{'uri': 'xsd:double', 'base': 'float', 'description': 'A real number that conforms to the xsd:double specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\".', 'close_mappings': ['schema:Float'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        }
+      ],
+      "entry": "types",
+      "mode": "view",
+      "closure": [
+        "types"
+      ],
+      "outputSha256": "d4324445a1329ee87bfac44a8eb29f02bedd64480a007189586d590f42e8b3d5",
+      "normalizedSha256": "9fd9a7c81d9910332fcaf27783e8e84f7f0f92116b4666ce6c90c04ecf9b2918",
+      "definitions": {
+        "prefixes": 4,
+        "classes": 0,
+        "slots": 0,
+        "enums": 0,
+        "subsets": 0,
+        "types": 19
+      }
+    },
+    {
+      "rawSchemaErrors": 17,
+      "normalizedSchemaErrors": 0,
+      "rawErrorExamples": [
+        {
+          "path": [
+            "types",
+            "boolean"
+          ],
+          "message": "{'uri': 'xsd:boolean', 'base': 'Bool', 'repr': 'bool', 'description': 'A binary (true or false) value', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\".', 'exact_mappings': ['schema:Boolean'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "objectidentifier"
+          ],
+          "message": "{'uri': 'shex:iri', 'base': 'ElementIdentifier', 'repr': 'str', 'description': 'A URI or CURIE that represents an object in the model.', 'comments': ['Used for inheritance and type checking'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\".', 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "double"
+          ],
+          "message": "{'uri': 'xsd:double', 'base': 'float', 'description': 'A real number that conforms to the xsd:double specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\".', 'close_mappings': ['schema:Float'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        }
+      ],
+      "entry": "types",
+      "mode": "merge-imports",
+      "closure": [
+        "types"
+      ],
+      "outputSha256": "d4324445a1329ee87bfac44a8eb29f02bedd64480a007189586d590f42e8b3d5",
+      "normalizedSha256": "9fd9a7c81d9910332fcaf27783e8e84f7f0f92116b4666ce6c90c04ecf9b2918",
+      "definitions": {
+        "prefixes": 4,
+        "classes": 0,
+        "slots": 0,
+        "enums": 0,
+        "subsets": 0,
+        "types": 19
+      }
+    },
+    {
+      "rawSchemaErrors": 17,
+      "normalizedSchemaErrors": 0,
+      "rawErrorExamples": [
+        {
+          "path": [
+            "types",
+            "boolean"
+          ],
+          "message": "{'uri': 'xsd:boolean', 'base': 'Bool', 'repr': 'bool', 'description': 'A binary (true or false) value', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\".', 'exact_mappings': ['schema:Boolean'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "objectidentifier"
+          ],
+          "message": "{'uri': 'shex:iri', 'base': 'ElementIdentifier', 'repr': 'str', 'description': 'A URI or CURIE that represents an object in the model.', 'comments': ['Used for inheritance and type checking'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\".', 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "double"
+          ],
+          "message": "{'uri': 'xsd:double', 'base': 'float', 'description': 'A real number that conforms to the xsd:double specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\".', 'close_mappings': ['schema:Float'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        }
+      ],
+      "entry": "units",
+      "mode": "view",
+      "closure": [
+        "types",
+        "extensions",
+        "annotations",
+        "mappings",
+        "units"
+      ],
+      "outputSha256": "bb2fb34cb02f357c5b2234d4d1e9266372c30d9f518d65a2dfcefd2092e9182e",
+      "normalizedSha256": "9b828f02b2b2af4f4121a4538e993f8d9e2ebb498529fdfc83c212462e3662e7",
+      "definitions": {
+        "prefixes": 8,
+        "classes": 6,
+        "slots": 20,
+        "enums": 0,
+        "subsets": 0,
+        "types": 19
+      }
+    },
+    {
+      "rawSchemaErrors": 17,
+      "normalizedSchemaErrors": 0,
+      "rawErrorExamples": [
+        {
+          "path": [
+            "types",
+            "boolean"
+          ],
+          "message": "{'uri': 'xsd:boolean', 'base': 'Bool', 'repr': 'bool', 'description': 'A binary (true or false) value', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\".', 'exact_mappings': ['schema:Boolean'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "objectidentifier"
+          ],
+          "message": "{'uri': 'shex:iri', 'base': 'ElementIdentifier', 'repr': 'str', 'description': 'A URI or CURIE that represents an object in the model.', 'comments': ['Used for inheritance and type checking'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\".', 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "double"
+          ],
+          "message": "{'uri': 'xsd:double', 'base': 'float', 'description': 'A real number that conforms to the xsd:double specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\".', 'close_mappings': ['schema:Float'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        }
+      ],
+      "entry": "units",
+      "mode": "merge-imports",
+      "closure": [
+        "types",
+        "extensions",
+        "annotations",
+        "mappings",
+        "units"
+      ],
+      "outputSha256": "f63fde05866786d428f5b1062994de74cccd89f123b55960d90ccf3c6161edc7",
+      "normalizedSha256": "9b828f02b2b2af4f4121a4538e993f8d9e2ebb498529fdfc83c212462e3662e7",
+      "definitions": {
+        "prefixes": 8,
+        "classes": 6,
+        "slots": 20,
+        "enums": 0,
+        "subsets": 0,
+        "types": 19
+      }
+    },
+    {
+      "rawSchemaErrors": 17,
+      "normalizedSchemaErrors": 0,
+      "rawErrorExamples": [
+        {
+          "path": [
+            "types",
+            "boolean"
+          ],
+          "message": "{'uri': 'xsd:boolean', 'base': 'Bool', 'repr': 'bool', 'description': 'A binary (true or false) value', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\".', 'exact_mappings': ['schema:Boolean'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "objectidentifier"
+          ],
+          "message": "{'uri': 'shex:iri', 'base': 'ElementIdentifier', 'repr': 'str', 'description': 'A URI or CURIE that represents an object in the model.', 'comments': ['Used for inheritance and type checking'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\".', 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "double"
+          ],
+          "message": "{'uri': 'xsd:double', 'base': 'float', 'description': 'A real number that conforms to the xsd:double specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\".', 'close_mappings': ['schema:Float'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        }
+      ],
+      "entry": "reporting",
+      "mode": "view",
+      "closure": [
+        "types",
+        "reporting"
+      ],
+      "outputSha256": "8e1a43b999ab35acde768d395acbe8eb6d77f3484d03616f4b413b58fa62912c",
+      "normalizedSha256": "d65ba150ace4edda711e5f3df5e31d14449a9bb48e2b61e0bbca9da33b6c11e8",
+      "definitions": {
+        "prefixes": 8,
+        "classes": 2,
+        "slots": 9,
+        "enums": 2,
+        "subsets": 0,
+        "types": 19
+      }
+    },
+    {
+      "rawSchemaErrors": 17,
+      "normalizedSchemaErrors": 0,
+      "rawErrorExamples": [
+        {
+          "path": [
+            "types",
+            "boolean"
+          ],
+          "message": "{'uri': 'xsd:boolean', 'base': 'Bool', 'repr': 'bool', 'description': 'A binary (true or false) value', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"boolean\".', 'exact_mappings': ['schema:Boolean'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "objectidentifier"
+          ],
+          "message": "{'uri': 'shex:iri', 'base': 'ElementIdentifier', 'repr': 'str', 'description': 'A URI or CURIE that represents an object in the model.', 'comments': ['Used for inheritance and type checking'], 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"objectidentifier\".', 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        },
+        {
+          "path": [
+            "types",
+            "double"
+          ],
+          "message": "{'uri': 'xsd:double', 'base': 'float', 'description': 'A real number that conforms to the xsd:double specification', 'notes': 'If you are authoring schemas in LinkML YAML, the type is referenced with the lower case \"double\".', 'close_mappings': ['schema:Float'], 'from_schema': 'https://w3id.org/linkml/types'} is not valid under any of the given schemas"
+        }
+      ],
+      "entry": "reporting",
+      "mode": "merge-imports",
+      "closure": [
+        "types",
+        "reporting"
+      ],
+      "outputSha256": "6d9661409dd721326780273b537c53935cfaa2fb76d8b331391de0616f31c1b4",
+      "normalizedSha256": "d65ba150ace4edda711e5f3df5e31d14449a9bb48e2b61e0bbca9da33b6c11e8",
+      "definitions": {
+        "prefixes": 8,
+        "classes": 2,
+        "slots": 9,
+        "enums": 2,
+        "subsets": 0,
+        "types": 19
+      }
+    }
+  ]
+}

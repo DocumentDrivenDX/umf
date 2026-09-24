@@ -1,0 +1,10 @@
+_:N1b7f47d82e2d49efa174896ed4e01f30 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#XoneConstraintComponent> .
+_:Nc2b12eb74ea64140959f5d2cd5796468 <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N1b7f47d82e2d49efa174896ed4e01f30 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/xone-001.test#XoneConstraintExampleShape> .
+_:Nc2b12eb74ea64140959f5d2cd5796468 <http://www.w3.org/ns/shacl#result> _:N1b7f47d82e2d49efa174896ed4e01f30 .
+_:N1b7f47d82e2d49efa174896ed4e01f30 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N1b7f47d82e2d49efa174896ed4e01f30 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/xone-001.test#Dory> .
+_:Nc2b12eb74ea64140959f5d2cd5796468 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N1b7f47d82e2d49efa174896ed4e01f30 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/xone-001.test#Dory> .
+_:N1b7f47d82e2d49efa174896ed4e01f30 <http://www.w3.org/ns/shacl#resultMessage> "Node ex:Dory must conform to exactly one shape in [ sh:property [ sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:fullName ] ] , [ sh:property [ sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:firstName ], [ sh:minCount Literal(\"1\", datatype=xsd:integer) ; sh:path ex:lastName ] ]" .
+_:N1b7f47d82e2d49efa174896ed4e01f30 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .

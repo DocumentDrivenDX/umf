@@ -1,0 +1,10 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b26962 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b26962 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b26962 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b26962 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#QualifiedMinCountConstraintComponent> .
+_:b26962 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/property/qualifiedValueShape-001.test#APGARObservationShape-related> .
+_:b26962 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/property/qualifiedValueShape-001.test#Observation1> .
+_:b26962 <http://www.w3.org/ns/shacl#resultPath> <http://datashapes.org/sh/tests/core/property/qualifiedValueShape-001.test#related> .
+_:b26962 <http://www.w3.org/ns/shacl#resultMessage> "Less than 3 values have shape " .

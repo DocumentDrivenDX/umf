@@ -1,0 +1,190 @@
+[
+  {
+    "add": null,
+    "metaData": null,
+    "protocol": {
+      "minReaderVersion": 1,
+      "minWriterVersion": 2,
+      "readerFeatures": null,
+      "writerFeatures": null
+    },
+    "remove": null,
+    "txn": null
+  },
+  {
+    "add": null,
+    "metaData": {
+      "configuration": {
+        "delta.checkpoint.writeStatsAsJson": "false",
+        "delta.checkpoint.writeStatsAsStruct": "true"
+      },
+      "createdTime": {
+        "$int64": "1666652369483"
+      },
+      "description": null,
+      "format": {
+        "options": {},
+        "provider": "parquet"
+      },
+      "id": "8d3d2b8a-f091-4d7d-8a37-432a9beaf17b",
+      "name": null,
+      "partitionColumns": [],
+      "schemaString": "{\"type\":\"struct\",\"fields\":[{\"name\":\"integer\",\"type\":\"integer\",\"nullable\":false,\"metadata\":{}},{\"name\":\"null\",\"type\":\"boolean\",\"nullable\":true,\"metadata\":{}},{\"name\":\"boolean\",\"type\":\"boolean\",\"nullable\":true,\"metadata\":{}},{\"name\":\"double\",\"type\":\"double\",\"nullable\":true,\"metadata\":{}},{\"name\":\"decimal\",\"type\":\"decimal(8,5)\",\"nullable\":true,\"metadata\":{}},{\"name\":\"string\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}},{\"name\":\"binary\",\"type\":\"binary\",\"nullable\":true,\"metadata\":{}},{\"name\":\"date\",\"type\":\"date\",\"nullable\":true,\"metadata\":{}},{\"name\":\"timestamp\",\"type\":\"timestamp\",\"nullable\":true,\"metadata\":{}},{\"name\":\"struct\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"struct_element\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"map\",\"type\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"string\",\"valueContainsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"array\",\"type\":{\"type\":\"array\",\"elementType\":\"string\",\"containsNull\":true},\"nullable\":true,\"metadata\":{}},{\"name\":\"nested_struct\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"struct_element\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"nested_struct_element\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}},{\"name\":\"struct_of_array_of_map\",\"type\":{\"type\":\"struct\",\"fields\":[{\"name\":\"struct_element\",\"type\":{\"type\":\"array\",\"elementType\":{\"type\":\"map\",\"keyType\":\"string\",\"valueType\":\"string\",\"valueContainsNull\":true},\"containsNull\":true},\"nullable\":true,\"metadata\":{}}]},\"nullable\":true,\"metadata\":{}}]}"
+    },
+    "protocol": null,
+    "remove": null,
+    "txn": null
+  },
+  {
+    "add": {
+      "dataChange": false,
+      "deletionVector": null,
+      "modificationTime": {
+        "$int64": "1666652374000"
+      },
+      "partitionValues": {},
+      "path": "part-00000-28925d3a-bdf2-411e-bca9-b067444cbcb0-c000.snappy.parquet",
+      "size": {
+        "$int64": "5489"
+      },
+      "stats_parsed": null,
+      "tags": {
+        "INSERTION_TIME": "1666652374000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      }
+    },
+    "metaData": null,
+    "protocol": null,
+    "remove": null,
+    "txn": null
+  },
+  {
+    "add": {
+      "dataChange": false,
+      "deletionVector": null,
+      "modificationTime": {
+        "$int64": "1666652373000"
+      },
+      "partitionValues": {},
+      "path": "part-00000-7a509247-4f58-4453-9202-51d75dee59af-c000.snappy.parquet",
+      "size": {
+        "$int64": "5489"
+      },
+      "stats_parsed": {
+        "maxValues": {
+          "boolean": null,
+          "date": {
+            "$dateDays": 19289
+          },
+          "decimal": -5.678000000000001,
+          "double": 1.234,
+          "integer": 0,
+          "nested_struct": {
+            "struct_element": {
+              "nested_struct_element": "nested_struct_value"
+            }
+          },
+          "null": null,
+          "string": "string",
+          "struct": {
+            "struct_element": "struct_value"
+          },
+          "timestamp": {
+            "$timestamp": {
+              "unit": "us",
+              "value": "1666652372846000"
+            }
+          }
+        },
+        "minValues": {
+          "boolean": null,
+          "date": {
+            "$dateDays": 19289
+          },
+          "decimal": -5.678000000000001,
+          "double": 1.234,
+          "integer": 0,
+          "nested_struct": {
+            "struct_element": {
+              "nested_struct_element": "nested_struct_value"
+            }
+          },
+          "null": null,
+          "string": "string",
+          "struct": {
+            "struct_element": "struct_value"
+          },
+          "timestamp": {
+            "$timestamp": {
+              "unit": "us",
+              "value": "1666652372846000"
+            }
+          }
+        },
+        "nullCount": {
+          "array": {
+            "$int64": "0"
+          },
+          "binary": {
+            "$int64": "0"
+          },
+          "boolean": {
+            "$int64": "0"
+          },
+          "date": {
+            "$int64": "0"
+          },
+          "decimal": {
+            "$int64": "0"
+          },
+          "double": {
+            "$int64": "0"
+          },
+          "integer": {
+            "$int64": "0"
+          },
+          "map": {
+            "$int64": "0"
+          },
+          "nested_struct": {
+            "struct_element": {
+              "nested_struct_element": {
+                "$int64": "0"
+              }
+            }
+          },
+          "null": {
+            "$int64": "1"
+          },
+          "string": {
+            "$int64": "0"
+          },
+          "struct": {
+            "struct_element": {
+              "$int64": "0"
+            }
+          },
+          "struct_of_array_of_map": {
+            "struct_element": {
+              "$int64": "0"
+            }
+          },
+          "timestamp": {
+            "$int64": "0"
+          }
+        },
+        "numRecords": {
+          "$int64": "1"
+        }
+      },
+      "tags": {
+        "INSERTION_TIME": "1666652373000000",
+        "OPTIMIZE_TARGET_SIZE": "268435456"
+      }
+    },
+    "metaData": null,
+    "protocol": null,
+    "remove": null,
+    "txn": null
+  }
+]

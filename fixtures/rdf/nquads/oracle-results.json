@@ -1,0 +1,614 @@
+{
+  "rdflib": "7.6.0",
+  "literalNormalization": false,
+  "results": [
+    {
+      "id": "nq-syntax-uri-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": []
+    },
+    {
+      "id": "nq-syntax-uri-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": []
+    },
+    {
+      "id": "nq-syntax-uri-03",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": []
+    },
+    {
+      "id": "nq-syntax-uri-04",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "nq-syntax-uri-05",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "nq-syntax-uri-06",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "nq-syntax-bnode-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": []
+    },
+    {
+      "id": "nq-syntax-bnode-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": []
+    },
+    {
+      "id": "nq-syntax-bnode-03",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": []
+    },
+    {
+      "id": "nq-syntax-bnode-04",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "nq-syntax-bnode-05",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "nq-syntax-bnode-06",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "nq-syntax-bad-literal-01",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nq-syntax-bad-literal-02",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nq-syntax-bad-literal-03",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nq-syntax-bad-uri-01",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nq-syntax-bad-quint-01",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nt-syntax-file-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": []
+    },
+    {
+      "id": "nt-syntax-file-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": []
+    },
+    {
+      "id": "nt-syntax-file-03",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": []
+    },
+    {
+      "id": "nt-syntax-uri-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": []
+    },
+    {
+      "id": "nt-syntax-uri-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": []
+    },
+    {
+      "id": "nt-syntax-uri-03",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": []
+    },
+    {
+      "id": "nt-syntax-uri-04",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": []
+    },
+    {
+      "id": "nt-syntax-string-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "nt-syntax-string-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "nt-syntax-string-03",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "nt-syntax-str-esc-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "nt-syntax-str-esc-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "nt-syntax-str-esc-03",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "nt-syntax-bnode-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": []
+    },
+    {
+      "id": "nt-syntax-bnode-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": []
+    },
+    {
+      "id": "nt-syntax-bnode-03",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": []
+    },
+    {
+      "id": "nt-syntax-datatypes-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "nt-syntax-datatypes-02",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "nt-syntax-bad-uri-01",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nt-syntax-bad-uri-02",
+      "native": "accepted-negative",
+      "note": "Official negative expectation takes precedence over this parser acceptance"
+    },
+    {
+      "id": "nt-syntax-bad-uri-03",
+      "native": "accepted-negative",
+      "note": "Official negative expectation takes precedence over this parser acceptance"
+    },
+    {
+      "id": "nt-syntax-bad-uri-04",
+      "native": "accepted-negative",
+      "note": "Official negative expectation takes precedence over this parser acceptance"
+    },
+    {
+      "id": "nt-syntax-bad-uri-05",
+      "native": "accepted-negative",
+      "note": "Official negative expectation takes precedence over this parser acceptance"
+    },
+    {
+      "id": "nt-syntax-bad-uri-06",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nt-syntax-bad-uri-07",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nt-syntax-bad-uri-08",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nt-syntax-bad-uri-09",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nt-syntax-bad-prefix-01",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nt-syntax-bad-base-01",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nt-syntax-bad-bnode-01",
+      "native": "accepted-negative",
+      "note": "Official negative expectation takes precedence over this parser acceptance"
+    },
+    {
+      "id": "nt-syntax-bad-bnode-02",
+      "native": "accepted-negative",
+      "note": "Official negative expectation takes precedence over this parser acceptance"
+    },
+    {
+      "id": "nt-syntax-bad-struct-01",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nt-syntax-bad-struct-02",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nt-syntax-bad-lang-01",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nt-syntax-bad-esc-01",
+      "native": "accepted-negative",
+      "note": "Official negative expectation takes precedence over this parser acceptance"
+    },
+    {
+      "id": "nt-syntax-bad-esc-02",
+      "native": "accepted-negative",
+      "note": "Official negative expectation takes precedence over this parser acceptance"
+    },
+    {
+      "id": "nt-syntax-bad-esc-03",
+      "native": "accepted-negative",
+      "note": "Official negative expectation takes precedence over this parser acceptance"
+    },
+    {
+      "id": "nt-syntax-bad-string-01",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nt-syntax-bad-string-02",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nt-syntax-bad-string-03",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nt-syntax-bad-string-04",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nt-syntax-bad-string-05",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nt-syntax-bad-string-06",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nt-syntax-bad-string-07",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nt-syntax-bad-num-01",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nt-syntax-bad-num-02",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nt-syntax-bad-num-03",
+      "native": "rejected",
+      "error": "ParserError"
+    },
+    {
+      "id": "nt-syntax-subm-01",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "comment_following_triple",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_all_controls",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_all_punctuation",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_ascii_boundaries",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_2_dquotes",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_2_squotes",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_BACKSPACE",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_CARRIAGE_RETURN",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_CHARACTER_TABULATION",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_dquote",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_FORM_FEED",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_LINE_FEED",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_numeric_escape4",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_numeric_escape8",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_REVERSE_SOLIDUS",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_REVERSE_SOLIDUS2",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_squote",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "literal_with_UTF8_boundaries",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "langtagged_string",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "lantag_with_subtag",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "minimal_whitespace",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    },
+    {
+      "id": "authored-schema",
+      "native": "accepted",
+      "datasetIsomorphic": true,
+      "edits": [
+        "json",
+        "yaml"
+      ]
+    }
+  ]
+}

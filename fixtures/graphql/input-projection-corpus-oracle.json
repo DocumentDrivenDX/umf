@@ -1,0 +1,50 @@
+{
+  "scope": "Three named mutation input examples from the 90-input pinned GitHub fixture",
+  "comparisons": [
+    {
+      "type": "AddCommentInput",
+      "case": "valid",
+      "accepted": true
+    },
+    {
+      "type": "AddCommentInput",
+      "case": "missing",
+      "accepted": false
+    },
+    {
+      "type": "AddCommentInput",
+      "case": "extra",
+      "accepted": false
+    },
+    {
+      "type": "CreateIssueInput",
+      "case": "valid",
+      "accepted": true
+    },
+    {
+      "type": "CreateIssueInput",
+      "case": "missing",
+      "accepted": false
+    },
+    {
+      "type": "CreateIssueInput",
+      "case": "extra",
+      "accepted": false
+    },
+    {
+      "type": "CreateProjectInput",
+      "case": "valid",
+      "accepted": true
+    },
+    {
+      "type": "CreateProjectInput",
+      "case": "missing",
+      "accepted": false
+    },
+    {
+      "type": "CreateProjectInput",
+      "case": "extra",
+      "accepted": false
+    }
+  ]
+}

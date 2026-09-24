@@ -1,0 +1,220 @@
+{
+  "runtime": "hyparquet 1.31.1 / Bun",
+  "exactDecimalOverride": true,
+  "files": 35,
+  "matched": 35,
+  "different": 0,
+  "rejected": 0,
+  "results": [
+    {
+      "id": "0",
+      "path": "crates/core/tests/data_err_logs/table_a/_delta_log/00000000000000000010.checkpoint.parquet",
+      "rows": 102,
+      "status": "matched"
+    },
+    {
+      "id": "1",
+      "path": "crates/core/tests/data_err_logs/table_b/_delta_log/00000000000000000010.checkpoint.parquet",
+      "rows": 102,
+      "status": "matched"
+    },
+    {
+      "id": "2",
+      "path": "crates/core/tests/data_err_logs/table_c/_delta_log/00000000000000000010.checkpoint.parquet",
+      "rows": 102,
+      "status": "matched"
+    },
+    {
+      "id": "3",
+      "path": "crates/core/tests/data_err_logs/table_d/_delta_log/00000000000000000000.checkpoint.parquet",
+      "rows": 2,
+      "status": "matched"
+    },
+    {
+      "id": "4",
+      "path": "crates/core/tests/data_err_logs/table_e/_delta_log/00000000000000000000.checkpoint.parquet",
+      "rows": 3,
+      "status": "matched"
+    },
+    {
+      "id": "5",
+      "path": "crates/core/tests/data_err_logs/table_f/_delta_log/00000000000000000010.checkpoint.parquet",
+      "rows": 13,
+      "status": "matched"
+    },
+    {
+      "id": "6",
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000000010.checkpoint.parquet",
+      "rows": 102,
+      "status": "matched"
+    },
+    {
+      "id": "7",
+      "path": "crates/core/tests/data_err_logs/table_g/_delta_log/00000000000000009999.checkpoint.parquet",
+      "rows": 102,
+      "status": "matched"
+    },
+    {
+      "id": "8",
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000000010.checkpoint.parquet",
+      "rows": 102,
+      "status": "matched"
+    },
+    {
+      "id": "9",
+      "path": "crates/core/tests/data_err_logs/table_h/_delta_log/00000000000000009999.checkpoint.parquet",
+      "rows": 2,
+      "status": "matched"
+    },
+    {
+      "id": "10",
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000000010.checkpoint.parquet",
+      "rows": 102,
+      "status": "matched"
+    },
+    {
+      "id": "11",
+      "path": "crates/core/tests/data_err_logs/table_i/_delta_log/00000000000000009999.checkpoint.parquet",
+      "rows": 3,
+      "status": "matched"
+    },
+    {
+      "id": "12",
+      "path": "crates/test/tests/data/checkpoint-cdf-table/_delta_log/00000000000000000003.checkpoint.parquet",
+      "rows": 11,
+      "status": "matched"
+    },
+    {
+      "id": "13",
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/_sidecars/00000000000000000006.checkpoint.0000000001.0000000001.1a1516f4-8a39-48f0-9ccd-cc3790d824c7.parquet",
+      "rows": 5,
+      "status": "matched"
+    },
+    {
+      "id": "14",
+      "path": "crates/test/tests/data/checkpoint-v2-table/_delta_log/_sidecars/00000000000000000008.checkpoint.0000000001.0000000001.d55fb2cb-b8d3-4362-8572-c52142a9da1f.parquet",
+      "rows": 7,
+      "status": "matched"
+    },
+    {
+      "id": "15",
+      "path": "crates/test/tests/data/checkpoint_with_partitions/_delta_log/00000000000000000002.checkpoint.parquet",
+      "rows": 4,
+      "status": "matched"
+    },
+    {
+      "id": "16",
+      "path": "crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000005.checkpoint.parquet",
+      "rows": 7,
+      "status": "matched"
+    },
+    {
+      "id": "17",
+      "path": "crates/test/tests/data/checkpoints_vacuumed/_delta_log/00000000000000000010.checkpoint.parquet",
+      "rows": 12,
+      "status": "matched"
+    },
+    {
+      "id": "18",
+      "path": "crates/test/tests/data/delta-0.2.0/_delta_log/00000000000000000003.checkpoint.parquet",
+      "rows": 10,
+      "status": "matched"
+    },
+    {
+      "id": "19",
+      "path": "crates/test/tests/data/delta-1.2.1-only-struct-stats/_delta_log/00000000000000000010.checkpoint.parquet",
+      "rows": 12,
+      "status": "matched"
+    },
+    {
+      "id": "20",
+      "path": "crates/test/tests/data/delta-checkpoint-stats-optional/_delta_log/00000000000000000002.checkpoint.parquet",
+      "rows": 4,
+      "status": "matched"
+    },
+    {
+      "id": "21",
+      "path": "crates/test/tests/data/issue_1374/_delta_log/00000000000000000001.checkpoint.parquet",
+      "rows": 4,
+      "status": "matched"
+    },
+    {
+      "id": "22",
+      "path": "crates/test/tests/data/latest_not_checkpointed/_delta_log/00000000000000000002.checkpoint.parquet",
+      "rows": 4,
+      "status": "matched"
+    },
+    {
+      "id": "23",
+      "path": "crates/test/tests/data/python-0.25.5-checkpoint/_delta_log/00000000000000000000.checkpoint.parquet",
+      "rows": 3,
+      "status": "matched"
+    },
+    {
+      "id": "24",
+      "path": "crates/test/tests/data/simple_table_with_checkpoint/_delta_log/00000000000000000010.checkpoint.parquet",
+      "rows": 13,
+      "status": "matched"
+    },
+    {
+      "id": "25",
+      "path": "crates/test/tests/data/spark-shredded-variant-preview-delta/_delta_log/00000000000000000002.checkpoint.parquet",
+      "rows": 6,
+      "status": "matched"
+    },
+    {
+      "id": "26",
+      "path": "crates/test/tests/data/spark-variant-checkpoint/_delta_log/00000000000000000002.checkpoint.parquet",
+      "rows": 6,
+      "status": "matched"
+    },
+    {
+      "id": "27",
+      "path": "crates/test/tests/data/table-with-domain-metadata/_delta_log/00000000000000000108.checkpoint.parquet",
+      "rows": 114,
+      "status": "matched"
+    },
+    {
+      "id": "28",
+      "path": "crates/test/tests/data/table_failed_last_checkpoint_update/_delta_log/00000000000000000001.checkpoint.parquet",
+      "rows": 4,
+      "status": "matched"
+    },
+    {
+      "id": "29",
+      "path": "crates/test/tests/data/table_failed_last_checkpoint_update/_delta_log/00000000000000000003.checkpoint.parquet",
+      "rows": 6,
+      "status": "matched"
+    },
+    {
+      "id": "30",
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000010.checkpoint.parquet",
+      "rows": 5,
+      "status": "matched"
+    },
+    {
+      "id": "31",
+      "path": "crates/test/tests/data/table_with_deletion_logs/_delta_log/00000000000000000020.checkpoint.parquet",
+      "rows": 5,
+      "status": "matched"
+    },
+    {
+      "id": "32",
+      "path": "crates/test/tests/data/v2-classic-checkpoint-json/_delta_log/00000000000000000001.checkpoint.parquet",
+      "rows": 4,
+      "status": "matched"
+    },
+    {
+      "id": "33",
+      "path": "crates/test/tests/data/v2-classic-checkpoint-json/_delta_log/_sidecars/00000000000000000001.checkpoint.0000000001.0000000001.c1bacf45-f3a9-4846-bd44-87cdacd4620f.parquet",
+      "rows": 4,
+      "status": "matched"
+    },
+    {
+      "id": "34",
+      "path": "crates/test/tests/data/with_checkpoint_no_last_checkpoint/_delta_log/00000000000000000002.checkpoint.parquet",
+      "rows": 4,
+      "status": "matched"
+    }
+  ]
+}

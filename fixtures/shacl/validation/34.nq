@@ -1,0 +1,35 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b14826 .
+_:report <http://www.w3.org/ns/shacl#result> _:b14827 .
+_:report <http://www.w3.org/ns/shacl#result> _:b14828 .
+_:report <http://www.w3.org/ns/shacl#result> _:b14829 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b14826 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b14826 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b14826 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#PatternConstraintComponent> .
+_:b14826 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/pattern-001.test#TestShape> .
+_:b14826 <http://www.w3.org/ns/shacl#focusNode> _:s_e_000062000032000032000034000031000035 .
+_:b14826 <http://www.w3.org/ns/shacl#value> _:s_e_000062000032000032000034000031000035 .
+_:b14826 <http://www.w3.org/ns/shacl#resultMessage> "Value does not match pattern \"^[2-8][0-9]*$\"" .
+_:s_e_000062000032000032000034000031000035 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://datashapes.org/sh/tests/core/node/pattern-001.test#TestClass> .
+_:b14827 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b14827 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b14827 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#PatternConstraintComponent> .
+_:b14827 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/pattern-001.test#TestShape> .
+_:b14827 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/pattern-001.test#Test> .
+_:b14827 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/pattern-001.test#Test> .
+_:b14827 <http://www.w3.org/ns/shacl#resultMessage> "Value does not match pattern \"^[2-8][0-9]*$\"" .
+_:b14828 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b14828 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b14828 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#PatternConstraintComponent> .
+_:b14828 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/pattern-001.test#TestShape> .
+_:b14828 <http://www.w3.org/ns/shacl#focusNode> "9"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:b14828 <http://www.w3.org/ns/shacl#value> "9"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:b14828 <http://www.w3.org/ns/shacl#resultMessage> "Value does not match pattern \"^[2-8][0-9]*$\"" .
+_:b14829 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b14829 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b14829 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#PatternConstraintComponent> .
+_:b14829 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/pattern-001.test#TestShape> .
+_:b14829 <http://www.w3.org/ns/shacl#focusNode> "John" .
+_:b14829 <http://www.w3.org/ns/shacl#value> "John" .
+_:b14829 <http://www.w3.org/ns/shacl#resultMessage> "Value does not match pattern \"^[2-8][0-9]*$\"" .

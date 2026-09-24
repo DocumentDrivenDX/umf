@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:linkml:import-context:0.1.0",
+  "type": "object",
+  "properties": {
+    "entry": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "schemas": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 128,
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "document": {
+            "$ref": "urn:umf:core:0.1.0"
+          }
+        },
+        "required": [
+          "key",
+          "document"
+        ],
+        "additionalProperties": true
+      }
+    },
+    "bindings": {
+      "type": "array",
+      "maxItems": 4096,
+      "items": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "import": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "target": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          }
+        },
+        "required": [
+          "from",
+          "import",
+          "target"
+        ],
+        "additionalProperties": true
+      }
+    }
+  },
+  "required": [
+    "entry",
+    "schemas",
+    "bindings"
+  ],
+  "additionalProperties": true
+}

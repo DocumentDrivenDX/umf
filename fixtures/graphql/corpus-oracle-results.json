@@ -1,0 +1,352 @@
+{
+  "commit": "71606d736c79b77588a15b32b9c9497e397adae0",
+  "version": "3.2.12",
+  "typeCount": 552,
+  "fullIntrospectionEqual": true,
+  "exactSourceAndAst": true,
+  "negativeControl": "Changing Query.viewer output type changes introspection",
+  "parserCases": [
+    {
+      "line": 84,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 114,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 130,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 149,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 165,
+      "graphqlJsSyntaxValid": false,
+      "graphqlCoreSyntaxValid": false,
+      "agrees": true,
+      "error": "Syntax Error: Unexpected Int '1'.\n\nGraphQL request:1:15\n1 | \"Description\" 1\n  |               ^"
+    },
+    {
+      "line": 172,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 201,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 220,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 238,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 269,
+      "graphqlJsSyntaxValid": false,
+      "graphqlCoreSyntaxValid": false,
+      "agrees": true,
+      "error": "Syntax Error: Unexpected <EOF>.\n\nGraphQL request:1:20\n1 | extend scalar Hello\n  |                    ^"
+    },
+    {
+      "line": 274,
+      "graphqlJsSyntaxValid": false,
+      "graphqlCoreSyntaxValid": false,
+      "agrees": true,
+      "error": "Syntax Error: Unexpected <EOF>.\n\nGraphQL request:1:18\n1 | extend type Hello\n  |                  ^"
+    },
+    {
+      "line": 279,
+      "graphqlJsSyntaxValid": false,
+      "graphqlCoreSyntaxValid": false,
+      "agrees": true,
+      "error": "Syntax Error: Unexpected <EOF>.\n\nGraphQL request:1:23\n1 | extend interface Hello\n  |                       ^"
+    },
+    {
+      "line": 284,
+      "graphqlJsSyntaxValid": false,
+      "graphqlCoreSyntaxValid": false,
+      "agrees": true,
+      "error": "Syntax Error: Unexpected <EOF>.\n\nGraphQL request:1:19\n1 | extend union Hello\n  |                   ^"
+    },
+    {
+      "line": 289,
+      "graphqlJsSyntaxValid": false,
+      "graphqlCoreSyntaxValid": false,
+      "agrees": true,
+      "error": "Syntax Error: Unexpected <EOF>.\n\nGraphQL request:1:18\n1 | extend enum Hello\n  |                  ^"
+    },
+    {
+      "line": 294,
+      "graphqlJsSyntaxValid": false,
+      "graphqlCoreSyntaxValid": false,
+      "agrees": true,
+      "error": "Syntax Error: Unexpected <EOF>.\n\nGraphQL request:1:19\n1 | extend input Hello\n  |                   ^"
+    },
+    {
+      "line": 301,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 331,
+      "graphqlJsSyntaxValid": false,
+      "graphqlCoreSyntaxValid": false,
+      "agrees": true,
+      "error": "Syntax Error: Unexpected description, only GraphQL definitions support descriptions.\n\nGraphQL request:2:7\n1 |\n2 |       \"Description\"\n  |       ^\n3 |       extend type Hello {"
+    },
+    {
+      "line": 342,
+      "graphqlJsSyntaxValid": false,
+      "graphqlCoreSyntaxValid": false,
+      "agrees": true,
+      "error": "Syntax Error: Unexpected String 'Description'.\n\nGraphQL request:2:14\n1 |\n2 |       extend \"Description\" type Hello {\n  |              ^\n3 |         world: String"
+    },
+    {
+      "line": 353,
+      "graphqlJsSyntaxValid": false,
+      "graphqlCoreSyntaxValid": false,
+      "agrees": true,
+      "error": "Syntax Error: Unexpected description, only GraphQL definitions support descriptions.\n\nGraphQL request:2:7\n1 |\n2 |       \"Description\"\n  |       ^\n3 |       extend interface Hello {"
+    },
+    {
+      "line": 364,
+      "graphqlJsSyntaxValid": false,
+      "graphqlCoreSyntaxValid": false,
+      "agrees": true,
+      "error": "Syntax Error: Unexpected String 'Description'.\n\nGraphQL request:2:14\n1 |\n2 |       extend \"Description\" interface Hello {\n  |              ^\n3 |         world: String"
+    },
+    {
+      "line": 426,
+      "graphqlJsSyntaxValid": false,
+      "graphqlCoreSyntaxValid": false,
+      "agrees": true,
+      "error": "Syntax Error: Unexpected <EOF>.\n\nGraphQL request:1:14\n1 | extend schema\n  |              ^"
+    },
+    {
+      "line": 433,
+      "graphqlJsSyntaxValid": false,
+      "graphqlCoreSyntaxValid": false,
+      "agrees": true,
+      "error": "Syntax Error: Unexpected Name 'unknown'.\n\nGraphQL request:1:17\n1 | extend schema { unknown: SomeType }\n  |                 ^"
+    },
+    {
+      "line": 440,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 474,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 499,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 525,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 554,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 582,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 611,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 641,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 660,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 682,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 712,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 750,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 792,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 834,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 878,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 897,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 919,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 941,
+      "graphqlJsSyntaxValid": false,
+      "graphqlCoreSyntaxValid": false,
+      "agrees": true,
+      "error": "Syntax Error: Expected Name, found <EOF>.\n\nGraphQL request:1:16\n1 | union Hello = |\n  |                ^"
+    },
+    {
+      "line": 948,
+      "graphqlJsSyntaxValid": false,
+      "graphqlCoreSyntaxValid": false,
+      "agrees": true,
+      "error": "Syntax Error: Expected Name, found '|'.\n\nGraphQL request:1:16\n1 | union Hello = || Wo | Rld\n  |                ^"
+    },
+    {
+      "line": 955,
+      "graphqlJsSyntaxValid": false,
+      "graphqlCoreSyntaxValid": false,
+      "agrees": true,
+      "error": "Syntax Error: Expected Name, found '|'.\n\nGraphQL request:1:19\n1 | union Hello = Wo || Rld\n  |                   ^"
+    },
+    {
+      "line": 962,
+      "graphqlJsSyntaxValid": false,
+      "graphqlCoreSyntaxValid": false,
+      "agrees": true,
+      "error": "Syntax Error: Expected Name, found <EOF>.\n\nGraphQL request:1:27\n1 | union Hello = | Wo | Rld |\n  |                           ^"
+    },
+    {
+      "line": 969,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 987,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": true,
+      "agrees": true,
+      "error": null
+    },
+    {
+      "line": 1016,
+      "graphqlJsSyntaxValid": false,
+      "graphqlCoreSyntaxValid": false,
+      "agrees": true,
+      "error": "Syntax Error: Expected ':', found '('.\n\nGraphQL request:3:14\n2 |       input Hello {\n3 |         world(foo: Int): String\n  |              ^\n4 |       }"
+    },
+    {
+      "line": 1101,
+      "graphqlJsSyntaxValid": false,
+      "graphqlCoreSyntaxValid": false,
+      "agrees": true,
+      "error": "Syntax Error: Unexpected Name 'INCORRECT_LOCATION'.\n\nGraphQL request:1:27\n1 | directive @foo on FIELD | INCORRECT_LOCATION\n  |                           ^"
+    },
+    {
+      "line": 1110,
+      "graphqlJsSyntaxValid": true,
+      "graphqlCoreSyntaxValid": false,
+      "agrees": false,
+      "error": "Syntax Error: Unexpected Name 'directive'.\n\nGraphQL request:1:8\n1 | extend directive @foo @bar\n  |        ^"
+    }
+  ],
+  "parserAgreement": 47,
+  "limitations": [
+    "GraphQL-core shares GraphQL.js ancestry",
+    "SDL parser cases may be incomplete standalone models; grammar acceptance is separate from schema validity",
+    "GraphQL.js 17 grammar additions may exceed the Python runtime profile"
+  ]
+}

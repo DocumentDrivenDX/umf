@@ -1,0 +1,97 @@
+{
+  "oracle": "RDFLib",
+  "version": "7.6.0",
+  "scope": "Exact RDF term matching and malformed reification classification; duplicate occurrence counts are outside RDF graph-set comparison",
+  "results": [
+    {
+      "id": "blank-different",
+      "roots": 0,
+      "malformed": 0,
+      "equal": true
+    },
+    {
+      "id": "blank-match",
+      "roots": 1,
+      "malformed": 0,
+      "equal": true
+    },
+    {
+      "id": "datatype-different",
+      "roots": 0,
+      "malformed": 0,
+      "equal": true
+    },
+    {
+      "id": "duplicates",
+      "roots": 1,
+      "malformed": 0,
+      "equal": true
+    },
+    {
+      "id": "language-case",
+      "roots": 1,
+      "malformed": 0,
+      "equal": true
+    },
+    {
+      "id": "language-different",
+      "roots": 0,
+      "malformed": 0,
+      "equal": true
+    },
+    {
+      "id": "lexical-different",
+      "roots": 0,
+      "malformed": 0,
+      "equal": true
+    },
+    {
+      "id": "property-blank",
+      "roots": 0,
+      "malformed": 1,
+      "equal": true
+    },
+    {
+      "id": "property-multiple",
+      "roots": 0,
+      "malformed": 1,
+      "equal": true
+    },
+    {
+      "id": "source-literal",
+      "roots": 0,
+      "malformed": 1,
+      "equal": true
+    },
+    {
+      "id": "source-missing",
+      "roots": 0,
+      "malformed": 1,
+      "equal": true
+    },
+    {
+      "id": "source-multiple",
+      "roots": 0,
+      "malformed": 1,
+      "equal": true
+    },
+    {
+      "id": "target-missing",
+      "roots": 0,
+      "malformed": 1,
+      "equal": true
+    },
+    {
+      "id": "target-multiple",
+      "roots": 0,
+      "malformed": 1,
+      "equal": true
+    },
+    {
+      "id": "two-types",
+      "roots": 0,
+      "malformed": 1,
+      "equal": true
+    }
+  ]
+}

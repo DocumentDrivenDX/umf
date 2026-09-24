@@ -1,0 +1,85 @@
+[
+  {
+    "add": null,
+    "metaData": null,
+    "protocol": {
+      "minReaderVersion": 1,
+      "minWriterVersion": 2
+    },
+    "remove": null,
+    "txn": null
+  },
+  {
+    "add": null,
+    "metaData": {
+      "configuration": {},
+      "createdTime": {
+        "$int64": "1661662807027"
+      },
+      "description": null,
+      "format": {
+        "options": {},
+        "provider": "parquet"
+      },
+      "id": "94ba8468-c676-4468-b326-adde3ab9dcd2",
+      "name": null,
+      "partitionColumns": [
+        "color"
+      ],
+      "schemaString": "{\"type\":\"struct\",\"fields\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"color\",\"type\":\"string\",\"nullable\":true,\"metadata\":{}}]}"
+    },
+    "protocol": null,
+    "remove": null,
+    "txn": null
+  },
+  {
+    "add": {
+      "dataChange": false,
+      "modificationTime": {
+        "$int64": "1661662807080"
+      },
+      "partitionValues": {
+        "color": "red"
+      },
+      "partitionValues_parsed": {
+        "color": "red"
+      },
+      "path": "f62d8868-d952-4f9d-8bb2-fd4e011ebf36",
+      "size": {
+        "$int64": "100"
+      },
+      "stats": null,
+      "stats_parsed": null,
+      "tags": null
+    },
+    "metaData": null,
+    "protocol": null,
+    "remove": null,
+    "txn": null
+  },
+  {
+    "add": {
+      "dataChange": false,
+      "modificationTime": {
+        "$int64": "1661662807097"
+      },
+      "partitionValues": {
+        "color": null
+      },
+      "partitionValues_parsed": {
+        "color": null
+      },
+      "path": "8ac7d8e1-daab-48ef-9d05-ec22fb4b0d2f",
+      "size": {
+        "$int64": "100"
+      },
+      "stats": null,
+      "stats_parsed": null,
+      "tags": null
+    },
+    "metaData": null,
+    "protocol": null,
+    "remove": null,
+    "txn": null
+  }
+]

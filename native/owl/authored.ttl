@@ -1,0 +1,9 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix ex: <https://example.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+ex:domain a owl:Ontology ; owl:versionIRI ex:v2 ; owl:imports ex:external ; ex:policy [ex:mode "retain"] .
+ex:Order a owl:Class, owl:NamedIndividual ; owl:hasKey (ex:orderId) .
+ex:orderId a owl:DatatypeProperty .
+ex:Order owl:equivalentClass [a owl:Restriction ; owl:onProperty ex:lines ; owl:minQualifiedCardinality "9007199254740993"^^xsd:nonNegativeInteger ; owl:onClass ex:Line] .
+ex:shipsTo owl:propertyChainAxiom (ex:customer ex:address) .
+[] a owl:Axiom ; owl:annotatedSource ex:Order ; owl:annotatedProperty owl:equivalentClass ; owl:annotatedTarget ex:Other ; ex:confidence "0.900"^^xsd:decimal .

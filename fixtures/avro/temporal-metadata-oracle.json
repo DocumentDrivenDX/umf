@@ -1,0 +1,1390 @@
+{
+  "avro": "1.12.0",
+  "fastavro": "1.12.2",
+  "sourceSha256": "c4b0e7e789c9f9a647e193800b6fedcaebd847f9529e4604a11bed999175cb64",
+  "cases": [
+    {
+      "id": "timestamp-millis-valid",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "datetime",
+        "value": "1970-01-01 00:20:34.567000+00:00",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-millis-valid",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "datetime",
+        "value": "1970-01-01 00:20:34.567000+00:00",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-millis-suffix0",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown timestamp-millis\n, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-millis-suffix0",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-millis-suffix1",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown timestamp-millis\r, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-millis-suffix1",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-millis-suffix2",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown timestamp-millis\u2028, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-millis-suffix2",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-millis-suffix3",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown timestamp-millis\u2029, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-millis-suffix3",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-millis-suffix4",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown timestamp-millis , using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-millis-suffix4",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-millis-suffix5",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown timestamp-millis\u0000, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-millis-suffix5",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-millis-array",
+      "engine": "apache",
+      "observation": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Type property \"{'type': 'long', 'logicalType': ['timestamp-millis']}\" not a valid Avro schema: unhashable type: 'list'",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-millis-array",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-millis-wrong-carrier",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Logical type timestamp-millis requires literal type long, not int."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-millis-wrong-carrier",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-micros-valid",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "datetime",
+        "value": "1970-01-01 00:00:01.234567+00:00",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-micros-valid",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "datetime",
+        "value": "1970-01-01 00:00:01.234567+00:00",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-micros-suffix0",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown timestamp-micros\n, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-micros-suffix0",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-micros-suffix1",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown timestamp-micros\r, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-micros-suffix1",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-micros-suffix2",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown timestamp-micros\u2028, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-micros-suffix2",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-micros-suffix3",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown timestamp-micros\u2029, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-micros-suffix3",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-micros-suffix4",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown timestamp-micros , using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-micros-suffix4",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-micros-suffix5",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown timestamp-micros\u0000, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-micros-suffix5",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-micros-array",
+      "engine": "apache",
+      "observation": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Type property \"{'type': 'long', 'logicalType': ['timestamp-micros']}\" not a valid Avro schema: unhashable type: 'list'",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-micros-array",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-micros-wrong-carrier",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Logical type timestamp-micros requires literal type long, not int."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-micros-wrong-carrier",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-nanos-valid",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown timestamp-nanos, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-nanos-valid",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-nanos-suffix0",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown timestamp-nanos\n, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-nanos-suffix0",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-nanos-suffix1",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown timestamp-nanos\r, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-nanos-suffix1",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-nanos-suffix2",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown timestamp-nanos\u2028, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-nanos-suffix2",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-nanos-suffix3",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown timestamp-nanos\u2029, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-nanos-suffix3",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-nanos-suffix4",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown timestamp-nanos , using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-nanos-suffix4",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-nanos-suffix5",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown timestamp-nanos\u0000, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-nanos-suffix5",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-nanos-array",
+      "engine": "apache",
+      "observation": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Type property \"{'type': 'long', 'logicalType': ['timestamp-nanos']}\" not a valid Avro schema: unhashable type: 'list'",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-nanos-array",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-nanos-wrong-carrier",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown timestamp-nanos, using int."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "timestamp-nanos-wrong-carrier",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-millis-valid",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-millis, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-millis-valid",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "datetime",
+        "value": "1970-01-01 00:20:34.567000",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-millis-suffix0",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-millis\n, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-millis-suffix0",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-millis-suffix1",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-millis\r, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-millis-suffix1",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-millis-suffix2",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-millis\u2028, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-millis-suffix2",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-millis-suffix3",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-millis\u2029, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-millis-suffix3",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-millis-suffix4",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-millis , using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-millis-suffix4",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-millis-suffix5",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-millis\u0000, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-millis-suffix5",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-millis-array",
+      "engine": "apache",
+      "observation": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Type property \"{'type': 'long', 'logicalType': ['local-timestamp-millis']}\" not a valid Avro schema: unhashable type: 'list'",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-millis-array",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-millis-wrong-carrier",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-millis, using int."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-millis-wrong-carrier",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-micros-valid",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-micros, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-micros-valid",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "datetime",
+        "value": "1970-01-01 00:00:01.234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-micros-suffix0",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-micros\n, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-micros-suffix0",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-micros-suffix1",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-micros\r, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-micros-suffix1",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-micros-suffix2",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-micros\u2028, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-micros-suffix2",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-micros-suffix3",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-micros\u2029, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-micros-suffix3",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-micros-suffix4",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-micros , using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-micros-suffix4",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-micros-suffix5",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-micros\u0000, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-micros-suffix5",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-micros-array",
+      "engine": "apache",
+      "observation": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Type property \"{'type': 'long', 'logicalType': ['local-timestamp-micros']}\" not a valid Avro schema: unhashable type: 'list'",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-micros-array",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-micros-wrong-carrier",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-micros, using int."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-micros-wrong-carrier",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-nanos-valid",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-nanos, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-nanos-valid",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-nanos-suffix0",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-nanos\n, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-nanos-suffix0",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-nanos-suffix1",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-nanos\r, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-nanos-suffix1",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-nanos-suffix2",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-nanos\u2028, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-nanos-suffix2",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-nanos-suffix3",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-nanos\u2029, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-nanos-suffix3",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-nanos-suffix4",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-nanos , using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-nanos-suffix4",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-nanos-suffix5",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-nanos\u0000, using long."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-nanos-suffix5",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-nanos-array",
+      "engine": "apache",
+      "observation": {
+        "accepted": false,
+        "errorType": "SchemaParseException",
+        "message": "Type property \"{'type': 'long', 'logicalType': ['local-timestamp-nanos']}\" not a valid Avro schema: unhashable type: 'list'",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-nanos-array",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-nanos-wrong-carrier",
+      "engine": "apache",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": [
+          "Unknown local-timestamp-nanos, using int."
+        ]
+      },
+      "recoveriesAgree": 2
+    },
+    {
+      "id": "local-timestamp-nanos-wrong-carrier",
+      "engine": "fastavro",
+      "observation": {
+        "accepted": true,
+        "valueType": "int",
+        "value": "1234567",
+        "hex": "8eda9601",
+        "warnings": []
+      },
+      "recoveriesAgree": 2
+    }
+  ],
+  "scope": "Schema recovery and one native binary carrier per case. Unknown temporal spellings retain integer carriers. Native support for valid annotations differs; parser rejection and warnings are recorded. No complete temporal-range or cross-system value equivalence claim."
+}

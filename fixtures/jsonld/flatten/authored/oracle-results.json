@@ -1,0 +1,216 @@
+{
+  "processor": "PyLD 2.0.4",
+  "numberLoader": "Exact integer/selective Decimal input; exact comparisons; no processor changes",
+  "results": [
+    {
+      "id": "precise-duplicates",
+      "umf": "candidate",
+      "lossPolicy": "report",
+      "native": "accepted",
+      "expectedEqual": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true
+        }
+      ],
+      "editedEqual": true
+    },
+    {
+      "id": "signed-zero",
+      "umf": "candidate",
+      "lossPolicy": "report",
+      "native": "accepted",
+      "expectedEqual": false,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": false
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": false
+        }
+      ]
+    },
+    {
+      "id": "ordered-list",
+      "umf": "candidate",
+      "lossPolicy": "report",
+      "native": "accepted",
+      "expectedEqual": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true
+        }
+      ]
+    },
+    {
+      "id": "direction-distinction",
+      "umf": "candidate",
+      "lossPolicy": "report",
+      "native": "accepted",
+      "expectedEqual": false,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": false
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": false
+        }
+      ]
+    },
+    {
+      "id": "opaque-json",
+      "umf": "candidate",
+      "lossPolicy": "report",
+      "native": "accepted",
+      "expectedEqual": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true
+        }
+      ]
+    },
+    {
+      "id": "compact-exact",
+      "umf": "candidate",
+      "lossPolicy": "report",
+      "native": "accepted",
+      "expectedEqual": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true
+        }
+      ]
+    },
+    {
+      "id": "compact-array",
+      "umf": "candidate",
+      "lossPolicy": "report",
+      "native": "accepted",
+      "expectedEqual": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true
+        }
+      ]
+    },
+    {
+      "id": "remote-target",
+      "umf": "candidate",
+      "lossPolicy": "report",
+      "native": "accepted",
+      "expectedEqual": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true
+        }
+      ]
+    },
+    {
+      "id": "named-graph",
+      "umf": "candidate",
+      "lossPolicy": "report",
+      "native": "accepted",
+      "expectedEqual": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true
+        }
+      ]
+    },
+    {
+      "id": "blank-reverse",
+      "umf": "candidate",
+      "lossPolicy": "report",
+      "native": "accepted",
+      "expectedEqual": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true
+        }
+      ]
+    },
+    {
+      "id": "conflicting-index",
+      "umf": "blocked",
+      "lossPolicy": "report",
+      "native": "rejected",
+      "error": "('Invalid JSON-LD syntax; conflicting @index property  detected.',)\nType: jsonld.SyntaxError\nCode: conflicting indexes\nDetails: {'node': {'@id': 'urn:s', '@index': 'a', 'urn:p': [{'@value': 'x'}]}}"
+    },
+    {
+      "id": "missing-target",
+      "umf": "blocked",
+      "lossPolicy": "report",
+      "native": "rejected",
+      "error": "('Could not compact flattened output.',)\nType: jsonld.FlattenError\nCause: ('Could not process context before compaction.',)\nType: jsonld.CompactError\nCause: ('Dereferencing a URL did not result in a valid JSON-LD object. Possible causes are an inaccessible URL perhaps due to a same-origin policy (ensure the server uses CORS if you are using client-side JavaScript), too many redirects, a non-JSON response, or more than one HTTP Link Header was provided for a remote context.',)\nType: jsonld.InvalidUrl\nCode: loading remote context failed\nDetails: {'url': 'https://example.org/missing', 'cause': Exception('No supplied context https://example.org/missing')}  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 726, in compact\n    active_ctx = self.process_context(active_ctx, ctx, options)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 1273, in process_context\n    return self._process_context(active_ctx, local_ctx, options)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 3049, in _process_context\n    resolved = options['contextResolver'].resolve(active_ctx, local_ctx, options.get('base', ''))\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/context_resolver.py\", line 58, in resolve\n    resolved = self._resolve_remote_context(\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/context_resolver.py\", line 108, in _resolve_remote_context\n    context, remote_doc = self._fetch_context(active_ctx, url, cycles)\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/context_resolver.py\", line 148, in _fetch_context\n    raise jsonld.JsonLdError(\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 928, in flatten\n    compacted = self.compact(flattened, ctx, options)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/erik/Projects/umf/.cache/jsonld-venv/lib/python3.12/site-packages/pyld/jsonld.py\", line 728, in compact\n    raise JsonLdError(\n"
+    },
+    {
+      "id": "loss-reject",
+      "umf": "blocked",
+      "lossPolicy": "reject",
+      "native": "accepted",
+      "expectedEqual": null,
+      "exports": []
+    },
+    {
+      "id": "expand-context-once",
+      "umf": "candidate",
+      "lossPolicy": "report",
+      "native": "accepted",
+      "expectedEqual": true,
+      "exports": [
+        {
+          "format": "json",
+          "nativeEqual": true
+        },
+        {
+          "format": "yaml",
+          "nativeEqual": true
+        }
+      ]
+    }
+  ]
+}

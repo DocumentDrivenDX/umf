@@ -1,0 +1,204 @@
+{
+  "results": [
+    {
+      "id": "large-integer",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_EXPANSION",
+          "path": "",
+          "severity": "warning",
+          "message": "Expanded JSON-LD candidate retains full source/context archives. Term aliases, context layout, JSON numeric spelling and other surface forms can change. Processor warning events are recorded; expansion does not prove RDF equivalence, preserve every syntactic distinction or execute ontology constraints."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/numeric/large-integer.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/numeric/large-integer.yaml.jsonld"
+        }
+      ],
+      "edits": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/numeric/large-integer.json.edited.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/numeric/large-integer.yaml.edited.jsonld"
+        }
+      ]
+    },
+    {
+      "id": "typed-decimal",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_EXPANSION",
+          "path": "",
+          "severity": "warning",
+          "message": "Expanded JSON-LD candidate retains full source/context archives. Term aliases, context layout, JSON numeric spelling and other surface forms can change. Processor warning events are recorded; expansion does not prove RDF equivalence, preserve every syntactic distinction or execute ontology constraints."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/numeric/typed-decimal.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/numeric/typed-decimal.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "extreme-values",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_EXPANSION",
+          "path": "",
+          "severity": "warning",
+          "message": "Expanded JSON-LD candidate retains full source/context archives. Term aliases, context layout, JSON numeric spelling and other surface forms can change. Processor warning events are recorded; expansion does not prove RDF equivalence, preserve every syntactic distinction or execute ontology constraints."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/numeric/extreme-values.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/numeric/extreme-values.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "json-literal",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_EXPANSION",
+          "path": "",
+          "severity": "warning",
+          "message": "Expanded JSON-LD candidate retains full source/context archives. Term aliases, context layout, JSON numeric spelling and other surface forms can change. Processor warning events are recorded; expansion does not prove RDF equivalence, preserve every syntactic distinction or execute ontology constraints."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/numeric/json-literal.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/numeric/json-literal.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "string-control",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_EXPANSION",
+          "path": "",
+          "severity": "warning",
+          "message": "Expanded JSON-LD candidate retains full source/context archives. Term aliases, context layout, JSON numeric spelling and other surface forms can change. Processor warning events are recorded; expansion does not prove RDF equivalence, preserve every syntactic distinction or execute ontology constraints."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/numeric/string-control.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/numeric/string-control.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "id-coercion-numeric",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_EXPANSION",
+          "path": "",
+          "severity": "warning",
+          "message": "Expanded JSON-LD candidate retains full source/context archives. Term aliases, context layout, JSON numeric spelling and other surface forms can change. Processor warning events are recorded; expansion does not prove RDF equivalence, preserve every syntactic distinction or execute ontology constraints."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/numeric/id-coercion-numeric.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/numeric/id-coercion-numeric.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    },
+    {
+      "id": "invalid-id",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_EXPANSION_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "jsonld.SyntaxError: Invalid JSON-LD syntax; \"@id\" value must a string."
+        }
+      ]
+    },
+    {
+      "id": "invalid-version",
+      "status": "blocked",
+      "diagnostics": [
+        {
+          "code": "JSONLD_EXPANSION_BLOCKED",
+          "path": "",
+          "severity": "error",
+          "message": "UmfError: Exact expansion number cannot be coerced for arithmetic"
+        }
+      ]
+    },
+    {
+      "id": "free-floating",
+      "status": "candidate",
+      "diagnostics": [
+        {
+          "code": "JSONLD_EVENT",
+          "path": "",
+          "severity": "warning",
+          "message": "free-floating scalar: Dropping free-floating scalar not in a list."
+        },
+        {
+          "code": "JSONLD_EXPANSION",
+          "path": "",
+          "severity": "warning",
+          "message": "Expanded JSON-LD candidate retains full source/context archives. Term aliases, context layout, JSON numeric spelling and other surface forms can change. Processor warning events are recorded; expansion does not prove RDF equivalence, preserve every syntactic distinction or execute ontology constraints."
+        }
+      ],
+      "exports": [
+        {
+          "format": "json",
+          "path": "fixtures/jsonld/numeric/free-floating.json.jsonld"
+        },
+        {
+          "format": "yaml",
+          "path": "fixtures/jsonld/numeric/free-floating.yaml.jsonld"
+        }
+      ],
+      "edits": []
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+_:N3ba1b4805ef0437db3e9eb2772e407d4 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:N3ba1b4805ef0437db3e9eb2772e407d4 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/path/path-sequence-duplicate-001.test#A> .
+_:N3ba1b4805ef0437db3e9eb2772e407d4 <http://www.w3.org/ns/shacl#value> "value" .
+_:na4c8f38c63db4c8ca644e9f3791ea6c5b3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://datashapes.org/sh/tests/core/path/path-sequence-duplicate-001.test#p1> .
+_:N80b1a060fbf740a0abb5e55cdf46c5ab <http://www.w3.org/ns/shacl#result> _:N3ba1b4805ef0437db3e9eb2772e407d4 .
+_:N9a151dcd52d849d4aa1c24a32ab8e53a <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://datashapes.org/sh/tests/core/path/path-sequence-duplicate-001.test#p2> .
+_:na4c8f38c63db4c8ca644e9f3791ea6c5b3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:N9a151dcd52d849d4aa1c24a32ab8e53a .
+_:N9a151dcd52d849d4aa1c24a32ab8e53a <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:N80b1a060fbf740a0abb5e55cdf46c5ab <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:N3ba1b4805ef0437db3e9eb2772e407d4 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#NodeKindConstraintComponent> .
+_:N3ba1b4805ef0437db3e9eb2772e407d4 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:N3ba1b4805ef0437db3e9eb2772e407d4 <http://www.w3.org/ns/shacl#resultMessage> "Value is not of Node Kind sh:IRI" .
+_:N3ba1b4805ef0437db3e9eb2772e407d4 <http://www.w3.org/ns/shacl#resultPath> _:na4c8f38c63db4c8ca644e9f3791ea6c5b3 .
+_:N80b1a060fbf740a0abb5e55cdf46c5ab <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:N3ba1b4805ef0437db3e9eb2772e407d4 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/path/path-sequence-duplicate-001.test#SP> .

@@ -1,0 +1,51 @@
+_:report <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationReport> .
+_:report <http://www.w3.org/ns/shacl#result> _:b11789 .
+_:report <http://www.w3.org/ns/shacl#result> _:b11790 .
+_:report <http://www.w3.org/ns/shacl#result> _:b11791 .
+_:report <http://www.w3.org/ns/shacl#result> _:b11792 .
+_:report <http://www.w3.org/ns/shacl#result> _:b11793 .
+_:report <http://www.w3.org/ns/shacl#result> _:b11794 .
+_:report <http://www.w3.org/ns/shacl#conforms> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+_:b11789 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b11789 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b11789 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxExclusiveConstraintComponent> .
+_:b11789 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxExclusive-001.test#TestShape> .
+_:b11789 <http://www.w3.org/ns/shacl#focusNode> _:s_e_000062000031000031000039000038000032 .
+_:b11789 <http://www.w3.org/ns/shacl#value> _:s_e_000062000031000031000039000038000032 .
+_:b11789 <http://www.w3.org/ns/shacl#resultMessage> "Value is not less than 4" .
+_:s_e_000062000031000031000039000038000032 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://datashapes.org/sh/tests/core/node/maxExclusive-001.test#TestClass> .
+_:b11790 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b11790 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b11790 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxExclusiveConstraintComponent> .
+_:b11790 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxExclusive-001.test#TestShape> .
+_:b11790 <http://www.w3.org/ns/shacl#focusNode> "4"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:b11790 <http://www.w3.org/ns/shacl#value> "4"^^<http://www.w3.org/2001/XMLSchema#integer> .
+_:b11790 <http://www.w3.org/ns/shacl#resultMessage> "Value is not less than 4" .
+_:b11791 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b11791 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b11791 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxExclusiveConstraintComponent> .
+_:b11791 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxExclusive-001.test#TestShape> .
+_:b11791 <http://www.w3.org/ns/shacl#focusNode> <http://datashapes.org/sh/tests/core/node/maxExclusive-001.test#John> .
+_:b11791 <http://www.w3.org/ns/shacl#value> <http://datashapes.org/sh/tests/core/node/maxExclusive-001.test#John> .
+_:b11791 <http://www.w3.org/ns/shacl#resultMessage> "Value is not less than 4" .
+_:b11792 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b11792 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b11792 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxExclusiveConstraintComponent> .
+_:b11792 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxExclusive-001.test#TestShape> .
+_:b11792 <http://www.w3.org/ns/shacl#focusNode> "4.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+_:b11792 <http://www.w3.org/ns/shacl#value> "4.0"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+_:b11792 <http://www.w3.org/ns/shacl#resultMessage> "Value is not less than 4" .
+_:b11793 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b11793 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b11793 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxExclusiveConstraintComponent> .
+_:b11793 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxExclusive-001.test#TestShape> .
+_:b11793 <http://www.w3.org/ns/shacl#focusNode> "4.1"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+_:b11793 <http://www.w3.org/ns/shacl#value> "4.1"^^<http://www.w3.org/2001/XMLSchema#decimal> .
+_:b11793 <http://www.w3.org/ns/shacl#resultMessage> "Value is not less than 4" .
+_:b11794 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#ValidationResult> .
+_:b11794 <http://www.w3.org/ns/shacl#resultSeverity> <http://www.w3.org/ns/shacl#Violation> .
+_:b11794 <http://www.w3.org/ns/shacl#sourceConstraintComponent> <http://www.w3.org/ns/shacl#MaxExclusiveConstraintComponent> .
+_:b11794 <http://www.w3.org/ns/shacl#sourceShape> <http://datashapes.org/sh/tests/core/node/maxExclusive-001.test#TestShape> .
+_:b11794 <http://www.w3.org/ns/shacl#focusNode> "Hello" .
+_:b11794 <http://www.w3.org/ns/shacl#value> "Hello" .
+_:b11794 <http://www.w3.org/ns/shacl#resultMessage> "Value is not less than 4" .

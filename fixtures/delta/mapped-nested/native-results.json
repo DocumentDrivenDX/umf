@@ -1,0 +1,438 @@
+{
+  "runtime": "deltalake 1.6.4 DataFusion scan",
+  "cases": 4,
+  "results": [
+    {
+      "id": "name-legacy",
+      "before": [
+        {
+          "id": 1,
+          "items": [
+            {
+              "count": 9223372036854775807
+            },
+            null,
+            {
+              "count": null
+            }
+          ],
+          "attributes": [
+            [
+              "a",
+              {
+                "qty": 10
+              }
+            ],
+            [
+              "b",
+              null
+            ]
+          ]
+        },
+        {
+          "id": 2,
+          "items": [],
+          "attributes": []
+        },
+        {
+          "id": 3,
+          "items": null,
+          "attributes": null
+        },
+        {
+          "id": 4,
+          "items": [
+            {
+              "count": -9223372036854775808
+            }
+          ],
+          "attributes": [
+            [
+              "empty",
+              {
+                "qty": null
+              }
+            ]
+          ]
+        }
+      ],
+      "after": [
+        {
+          "id": 1,
+          "lines": [
+            {
+              "quantity": 9223372036854775807
+            },
+            null,
+            {
+              "quantity": null
+            }
+          ],
+          "attributes": [
+            [
+              "a",
+              {
+                "amount": 10
+              }
+            ],
+            [
+              "b",
+              null
+            ]
+          ]
+        },
+        {
+          "id": 2,
+          "lines": [],
+          "attributes": []
+        },
+        {
+          "id": 3,
+          "lines": null,
+          "attributes": null
+        },
+        {
+          "id": 4,
+          "lines": [
+            {
+              "quantity": -9223372036854775808
+            }
+          ],
+          "attributes": [
+            [
+              "empty",
+              {
+                "amount": null
+              }
+            ]
+          ]
+        }
+      ],
+      "parquetSha256": "c598fb84c3111296fb751ded2ad85426785fd12944275679aba360ddc590a317"
+    },
+    {
+      "id": "name-features",
+      "before": [
+        {
+          "id": 1,
+          "items": [
+            {
+              "count": 9223372036854775807
+            },
+            null,
+            {
+              "count": null
+            }
+          ],
+          "attributes": [
+            [
+              "a",
+              {
+                "qty": 10
+              }
+            ],
+            [
+              "b",
+              null
+            ]
+          ]
+        },
+        {
+          "id": 2,
+          "items": [],
+          "attributes": []
+        },
+        {
+          "id": 3,
+          "items": null,
+          "attributes": null
+        },
+        {
+          "id": 4,
+          "items": [
+            {
+              "count": -9223372036854775808
+            }
+          ],
+          "attributes": [
+            [
+              "empty",
+              {
+                "qty": null
+              }
+            ]
+          ]
+        }
+      ],
+      "after": [
+        {
+          "id": 1,
+          "lines": [
+            {
+              "quantity": 9223372036854775807
+            },
+            null,
+            {
+              "quantity": null
+            }
+          ],
+          "attributes": [
+            [
+              "a",
+              {
+                "amount": 10
+              }
+            ],
+            [
+              "b",
+              null
+            ]
+          ]
+        },
+        {
+          "id": 2,
+          "lines": [],
+          "attributes": []
+        },
+        {
+          "id": 3,
+          "lines": null,
+          "attributes": null
+        },
+        {
+          "id": 4,
+          "lines": [
+            {
+              "quantity": -9223372036854775808
+            }
+          ],
+          "attributes": [
+            [
+              "empty",
+              {
+                "amount": null
+              }
+            ]
+          ]
+        }
+      ],
+      "parquetSha256": "c598fb84c3111296fb751ded2ad85426785fd12944275679aba360ddc590a317"
+    },
+    {
+      "id": "id-legacy",
+      "before": [
+        {
+          "id": 1,
+          "items": [
+            {
+              "count": 9223372036854775807
+            },
+            null,
+            {
+              "count": null
+            }
+          ],
+          "attributes": [
+            [
+              "a",
+              {
+                "qty": 10
+              }
+            ],
+            [
+              "b",
+              null
+            ]
+          ]
+        },
+        {
+          "id": 2,
+          "items": [],
+          "attributes": []
+        },
+        {
+          "id": 3,
+          "items": null,
+          "attributes": null
+        },
+        {
+          "id": 4,
+          "items": [
+            {
+              "count": -9223372036854775808
+            }
+          ],
+          "attributes": [
+            [
+              "empty",
+              {
+                "qty": null
+              }
+            ]
+          ]
+        }
+      ],
+      "after": [
+        {
+          "id": 1,
+          "lines": [
+            {
+              "quantity": 9223372036854775807
+            },
+            null,
+            {
+              "quantity": null
+            }
+          ],
+          "attributes": [
+            [
+              "a",
+              {
+                "amount": 10
+              }
+            ],
+            [
+              "b",
+              null
+            ]
+          ]
+        },
+        {
+          "id": 2,
+          "lines": [],
+          "attributes": []
+        },
+        {
+          "id": 3,
+          "lines": null,
+          "attributes": null
+        },
+        {
+          "id": 4,
+          "lines": [
+            {
+              "quantity": -9223372036854775808
+            }
+          ],
+          "attributes": [
+            [
+              "empty",
+              {
+                "amount": null
+              }
+            ]
+          ]
+        }
+      ],
+      "parquetSha256": "c598fb84c3111296fb751ded2ad85426785fd12944275679aba360ddc590a317"
+    },
+    {
+      "id": "id-features",
+      "before": [
+        {
+          "id": 1,
+          "items": [
+            {
+              "count": 9223372036854775807
+            },
+            null,
+            {
+              "count": null
+            }
+          ],
+          "attributes": [
+            [
+              "a",
+              {
+                "qty": 10
+              }
+            ],
+            [
+              "b",
+              null
+            ]
+          ]
+        },
+        {
+          "id": 2,
+          "items": [],
+          "attributes": []
+        },
+        {
+          "id": 3,
+          "items": null,
+          "attributes": null
+        },
+        {
+          "id": 4,
+          "items": [
+            {
+              "count": -9223372036854775808
+            }
+          ],
+          "attributes": [
+            [
+              "empty",
+              {
+                "qty": null
+              }
+            ]
+          ]
+        }
+      ],
+      "after": [
+        {
+          "id": 1,
+          "lines": [
+            {
+              "quantity": 9223372036854775807
+            },
+            null,
+            {
+              "quantity": null
+            }
+          ],
+          "attributes": [
+            [
+              "a",
+              {
+                "amount": 10
+              }
+            ],
+            [
+              "b",
+              null
+            ]
+          ]
+        },
+        {
+          "id": 2,
+          "lines": [],
+          "attributes": []
+        },
+        {
+          "id": 3,
+          "lines": null,
+          "attributes": null
+        },
+        {
+          "id": 4,
+          "lines": [
+            {
+              "quantity": -9223372036854775808
+            }
+          ],
+          "attributes": [
+            [
+              "empty",
+              {
+                "amount": null
+              }
+            ]
+          ]
+        }
+      ],
+      "parquetSha256": "c598fb84c3111296fb751ded2ad85426785fd12944275679aba360ddc590a317"
+    }
+  ]
+}

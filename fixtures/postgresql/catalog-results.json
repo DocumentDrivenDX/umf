@@ -1,0 +1,265 @@
+{
+  "image": "postgres@sha256:304ab813518754228f9f792f79d6da36359b82d8ecf418096c636725f8c930ad",
+  "serverVersion": 170004,
+  "parserVersion": 170004,
+  "pgDumpVersion": "pg_dump (PostgreSQL) 17.4 (Debian 17.4-1.pgdg120+2)",
+  "sourceStatements": 28,
+  "catalogComparisons": [
+    "authored SQL versus UMF-regenerated SQL",
+    "source database versus pg_dump through UMF into a fresh database"
+  ],
+  "catalogsEqual": true,
+  "rowProjectionCases": 3,
+  "rowProjectionDatabases": 3,
+  "captureJsonAndYamlRoundTrip": true,
+  "captureAdapterSha256": "348a9ed42354acc7011df220447e1c1f7f365cb07e318b1f07dc605e344e5fe8",
+  "captureSchemaSha256": "c66fa1c1e3de6494135510f83ba968276adef6a14081a35c83b5efe7c3697217",
+  "reconstructionFromCapture": true,
+  "behavior": [
+    {
+      "database": "source",
+      "id": "exact-default-and-generated-value",
+      "status": "passed"
+    },
+    {
+      "database": "source",
+      "id": "sql-function-unicode",
+      "status": "passed"
+    },
+    {
+      "database": "source",
+      "id": "row-level-security-and-public-select",
+      "status": "passed"
+    },
+    {
+      "database": "source",
+      "id": "composite-range-multirange-trigger",
+      "status": "passed"
+    },
+    {
+      "database": "source",
+      "id": "exact-sequence",
+      "status": "passed"
+    },
+    {
+      "database": "source",
+      "id": "materialized-view-refresh",
+      "status": "passed"
+    },
+    {
+      "database": "source",
+      "id": "dependent-type-cascade",
+      "status": "passed"
+    },
+    {
+      "database": "source",
+      "id": "negative-domain",
+      "status": "rejected",
+      "sqlstate": "23514"
+    },
+    {
+      "database": "source",
+      "id": "missing-foreign-key",
+      "status": "rejected",
+      "sqlstate": "23503"
+    },
+    {
+      "database": "source",
+      "id": "invalid-quantity",
+      "status": "rejected",
+      "sqlstate": "23514"
+    },
+    {
+      "database": "source",
+      "id": "duplicate-unique-value",
+      "status": "rejected",
+      "sqlstate": "23505"
+    },
+    {
+      "database": "source",
+      "id": "reader-cannot-insert",
+      "status": "rejected",
+      "sqlstate": "42501"
+    },
+    {
+      "database": "source",
+      "id": "reversed-range-bounds",
+      "status": "rejected",
+      "sqlstate": "22000"
+    },
+    {
+      "database": "source",
+      "id": "dependent-type-restrict",
+      "status": "rejected",
+      "sqlstate": "2BP01"
+    },
+    {
+      "database": "regenerated",
+      "id": "exact-default-and-generated-value",
+      "status": "passed"
+    },
+    {
+      "database": "regenerated",
+      "id": "sql-function-unicode",
+      "status": "passed"
+    },
+    {
+      "database": "regenerated",
+      "id": "row-level-security-and-public-select",
+      "status": "passed"
+    },
+    {
+      "database": "regenerated",
+      "id": "composite-range-multirange-trigger",
+      "status": "passed"
+    },
+    {
+      "database": "regenerated",
+      "id": "exact-sequence",
+      "status": "passed"
+    },
+    {
+      "database": "regenerated",
+      "id": "materialized-view-refresh",
+      "status": "passed"
+    },
+    {
+      "database": "regenerated",
+      "id": "dependent-type-cascade",
+      "status": "passed"
+    },
+    {
+      "database": "regenerated",
+      "id": "negative-domain",
+      "status": "rejected",
+      "sqlstate": "23514"
+    },
+    {
+      "database": "regenerated",
+      "id": "missing-foreign-key",
+      "status": "rejected",
+      "sqlstate": "23503"
+    },
+    {
+      "database": "regenerated",
+      "id": "invalid-quantity",
+      "status": "rejected",
+      "sqlstate": "23514"
+    },
+    {
+      "database": "regenerated",
+      "id": "duplicate-unique-value",
+      "status": "rejected",
+      "sqlstate": "23505"
+    },
+    {
+      "database": "regenerated",
+      "id": "reader-cannot-insert",
+      "status": "rejected",
+      "sqlstate": "42501"
+    },
+    {
+      "database": "regenerated",
+      "id": "reversed-range-bounds",
+      "status": "rejected",
+      "sqlstate": "22000"
+    },
+    {
+      "database": "regenerated",
+      "id": "dependent-type-restrict",
+      "status": "rejected",
+      "sqlstate": "2BP01"
+    },
+    {
+      "database": "restored",
+      "id": "exact-default-and-generated-value",
+      "status": "passed"
+    },
+    {
+      "database": "restored",
+      "id": "sql-function-unicode",
+      "status": "passed"
+    },
+    {
+      "database": "restored",
+      "id": "row-level-security-and-public-select",
+      "status": "passed"
+    },
+    {
+      "database": "restored",
+      "id": "composite-range-multirange-trigger",
+      "status": "passed"
+    },
+    {
+      "database": "restored",
+      "id": "exact-sequence",
+      "status": "passed"
+    },
+    {
+      "database": "restored",
+      "id": "materialized-view-refresh",
+      "status": "passed"
+    },
+    {
+      "database": "restored",
+      "id": "dependent-type-cascade",
+      "status": "passed"
+    },
+    {
+      "database": "restored",
+      "id": "negative-domain",
+      "status": "rejected",
+      "sqlstate": "23514"
+    },
+    {
+      "database": "restored",
+      "id": "missing-foreign-key",
+      "status": "rejected",
+      "sqlstate": "23503"
+    },
+    {
+      "database": "restored",
+      "id": "invalid-quantity",
+      "status": "rejected",
+      "sqlstate": "23514"
+    },
+    {
+      "database": "restored",
+      "id": "duplicate-unique-value",
+      "status": "rejected",
+      "sqlstate": "23505"
+    },
+    {
+      "database": "restored",
+      "id": "reader-cannot-insert",
+      "status": "rejected",
+      "sqlstate": "42501"
+    },
+    {
+      "database": "restored",
+      "id": "reversed-range-bounds",
+      "status": "rejected",
+      "sqlstate": "22000"
+    },
+    {
+      "database": "restored",
+      "id": "dependent-type-restrict",
+      "status": "rejected",
+      "sqlstate": "2BP01"
+    }
+  ],
+  "dependencyEdges": 117,
+  "relations": 11,
+  "types": 3,
+  "triggers": 1,
+  "compositeTypes": 1,
+  "rangeTypes": 1,
+  "collations": 1,
+  "functions": 7,
+  "snapshotQuerySha256": "90d558bdf04ecaf9799c76ce904c791eaa9f3eb7c2a951b9da46d5121fa87f77",
+  "probesSha256": "f51f9c3a434250a78b242de5d9e9b91316a4a03e7eae3ee2a5a852e166d9c04c",
+  "adapterSha256": "a88fea4cf15c9c3c3f0ad1f0a36d8f5de42a42ce8ea9712499f609beee3ea751",
+  "sourceSha256": "264a45afcf9d7af61f744c56c79e7e0cbfd1d280ac209241670e02c74c23d31f",
+  "dumpSha256": "ae32309bdc546350d14773b79648b06032020b6ba007cc8b659714ee1c25b6c7",
+  "scope": "Only the authored fixtures and fields in the evidence query. OIDs and physical identifiers excluded; no complete catalog interchange, cluster roles/tablespaces, data backup, arbitrary dump, migration or cross-system equivalence claim."
+}

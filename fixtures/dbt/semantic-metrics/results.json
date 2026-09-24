@@ -1,0 +1,237 @@
+{
+  "sourceSha256": "f7af06d50a83deb92a6f7fa8ba73f013c6e497af4163cc11b726d8033410e942",
+  "results": [
+    {
+      "id": "measure-average",
+      "editPath": "/semantic_models/0/measures/0/agg",
+      "value": "average",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": true,
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_SEMANTIC_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Derived nullable shapes do not establish semantic rule validity, metric execution, joins, SQL semantics, parser coercion/defaults or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ratio-alias",
+      "editPath": "/metrics/2/type_params/numerator/alias",
+      "value": "numerator_amount",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": true,
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_SEMANTIC_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Derived nullable shapes do not establish semantic rule validity, metric execution, joins, SQL semantics, parser coercion/defaults or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "derived-offset",
+      "editPath": "/metrics/3/type_params/metrics/1/offset_window/count",
+      "value": 2,
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": true,
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_SEMANTIC_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Derived nullable shapes do not establish semantic rule validity, metric execution, joins, SQL semantics, parser coercion/defaults or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rolling-window",
+      "editPath": "/metrics/4/type_params/cumulative_type_params/window/count",
+      "value": 14,
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": true,
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_SEMANTIC_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Derived nullable shapes do not establish semantic rule validity, metric execution, joins, SQL semantics, parser coercion/defaults or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "period-aggregation",
+      "editPath": "/metrics/5/type_params/cumulative_type_params/period_agg",
+      "value": "first",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": true,
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_SEMANTIC_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Derived nullable shapes do not establish semantic rule validity, metric execution, joins, SQL semantics, parser coercion/defaults or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "conversion-calculation",
+      "editPath": "/metrics/6/type_params/conversion_type_params/calculation",
+      "value": "conversions",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": true,
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_SEMANTIC_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Derived nullable shapes do not establish semantic rule validity, metric execution, joins, SQL semantics, parser coercion/defaults or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "conflicting-window",
+      "editPath": "/metrics/4/type_params/cumulative_type_params/grain_to_date",
+      "value": "month",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": false,
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_SEMANTIC_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Derived nullable shapes do not establish semantic rule validity, metric execution, joins, SQL semantics, parser coercion/defaults or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "missing-input-metric",
+      "editPath": "/metrics/3/type_params/metrics/0/name",
+      "value": "missing_metric",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": false,
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_SEMANTIC_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Derived nullable shapes do not establish semantic rule validity, metric execution, joins, SQL semantics, parser coercion/defaults or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "missing-conversion-entity",
+      "editPath": "/metrics/6/type_params/conversion_type_params/entity",
+      "value": "missing_entity",
+      "shapeValid": true,
+      "parserValid": true,
+      "semanticValid": false,
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_SEMANTIC_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Derived nullable shapes do not establish semantic rule validity, metric execution, joins, SQL semantics, parser coercion/defaults or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "unknown-aggregation",
+      "editPath": "/semantic_models/0/measures/0/agg",
+      "value": "unknown_aggregation",
+      "shapeValid": false,
+      "parserValid": false,
+      "semanticValid": false,
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_SEMANTIC_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Derived nullable shapes do not establish semantic rule validity, metric execution, joins, SQL semantics, parser coercion/defaults or exact-number constraints beyond JS precision"
+          },
+          {
+            "code": "DBT_SEMANTIC_MANIFEST_NATIVE_SCHEMA",
+            "path": "/semantic_models/0/measures/0/agg",
+            "message": "must pass \"enum\" keyword validation",
+            "severity": "warning"
+          }
+        ]
+      }
+    },
+    {
+      "id": "null-metrics",
+      "editPath": "/metrics",
+      "value": null,
+      "shapeValid": false,
+      "parserValid": false,
+      "semanticValid": false,
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_SEMANTIC_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Derived nullable shapes do not establish semantic rule validity, metric execution, joins, SQL semantics, parser coercion/defaults or exact-number constraints beyond JS precision"
+          },
+          {
+            "code": "DBT_SEMANTIC_MANIFEST_NATIVE_SCHEMA",
+            "path": "/metrics",
+            "message": "must be array",
+            "severity": "warning"
+          }
+        ]
+      }
+    }
+  ]
+}

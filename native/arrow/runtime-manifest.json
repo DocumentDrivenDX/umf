@@ -1,0 +1,23 @@
+{
+  "package": "apache-arrow",
+  "version": "21.2.0",
+  "artifacts": [
+    {
+      "path": "package.json",
+      "sha256": "7310620c8b44940f359bdca63d6023ce2c2b90b3a1eeb405544741d80e2c3e4d"
+    },
+    {
+      "path": "src/ipc/metadata/json.ts",
+      "sha256": "e2afef9d0d86b18e5cb51a91f03bd65a1ed3888b1703439a728f000206da86d6"
+    },
+    {
+      "path": "src/ipc/writer.ts",
+      "sha256": "281536b09dd982392440bc602fdfdb9a6eb5775c05f1bb4e8b8b6a43aceb8685"
+    },
+    {
+      "path": "src/visitor/jsontypeassembler.ts",
+      "sha256": "27b55415e8b9a86cb957321fe74c93dda1d0824092c9675302bcd87d14dac316"
+    }
+  ],
+  "scope": "Pinned native JavaScript schema probe; not a public UMF Arrow extension"
+}

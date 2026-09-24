@@ -1,0 +1,5 @@
+export {};
+const rdf=await Bun.file('spec/extensions/rdf/schema.json').json(),node=rdf.properties.quads.items.properties.subject,term=rdf.properties.quads.items.properties.object,iri=rdf.properties.quads.items.properties.predicate;
+const obj=(properties:any)=>({type:'object',properties,required:Object.keys(properties),additionalProperties:false}),indexes={type:'array',minItems:1,uniqueItems:true,items:{type:'integer',minimum:0}};
+const axioms={oneOf:['propertyChain','key','disjointUnion'].map(kind=>obj({kind:{const:kind},node:kind==='disjointUnion'?iri:node,head:node,members:{type:'array',minItems:kind==='key'?1:2,items:node},quadIndexes:indexes,listQuadIndexes:indexes}))};
+await Bun.write('spec/extensions/owl/list-axioms-schema.json',JSON.stringify({$schema:rdf.$schema,$id:'urn:umf:owl:list-axioms:0.1.0',...obj({profile:{const:'owl-list-axioms-1'},complete:{const:false},source:{$ref:'urn:umf:core:0.1.0'},blankNodeScope:{type:'string'},axioms:{type:'array',items:axioms},malformed:{type:'array',items:obj({kind:{enum:['propertyChain','key','disjointUnion']},node,head:term,quadIndexes:indexes,reason:{type:'string',minLength:1}})}})},null,2)+'\n');

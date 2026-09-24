@@ -1,0 +1,10 @@
+edition = "2023";
+package umf.fixture.edition;
+option features.field_presence = EXPLICIT;
+message Account {
+  string name = 1;
+  int64 amount = 2 [features.field_presence = IMPLICIT];
+  repeated int32 changes = 3 [features.repeated_field_encoding = EXPANDED];
+  enum Status { option features.enum_type = CLOSED; UNKNOWN = 0; ACTIVE = 1; }
+  Status status = 4;
+}

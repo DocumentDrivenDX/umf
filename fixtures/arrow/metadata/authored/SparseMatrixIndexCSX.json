@@ -1,0 +1,40 @@
+{
+  "type_type": "Int",
+  "type": {
+    "bitWidth": 64,
+    "is_signed": true
+  },
+  "shape": [
+    {
+      "size": 2
+    },
+    {
+      "size": 2
+    }
+  ],
+  "non_zero_length": 2,
+  "sparseIndex_type": "SparseMatrixIndexCSX",
+  "sparseIndex": {
+    "compressedAxis": "Row",
+    "indptrType": {
+      "bitWidth": 32,
+      "is_signed": true
+    },
+    "indptrBuffer": {
+      "offset": 0,
+      "length": 12
+    },
+    "indicesType": {
+      "bitWidth": 32,
+      "is_signed": true
+    },
+    "indicesBuffer": {
+      "offset": 0,
+      "length": 8
+    }
+  },
+  "data": {
+    "offset": 0,
+    "length": 16
+  }
+}

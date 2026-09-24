@@ -1,0 +1,8 @@
+export {};
+const s={type:'string'},name={type:'string',pattern:'^[A-Za-z][A-Za-z0-9_]{0,127}(?![\\s\\S])'},object=(properties:Record<string,unknown>,required=Object.keys(properties))=>({type:'object',properties,required,additionalProperties:false});
+const representation={enum:['string','integer32','float32','boolean','decimal','date','timestamp','local-timestamp','hex-text','json-text']};
+const policy=object({id:{type:'string',minLength:1},tableName:name,fields:{type:'object',minProperties:1,additionalProperties:object({name,representation})},lossPolicy:{enum:['strict','allow-reported-loss']}});
+const issue=object({path:s,code:s,classification:{enum:['representation-change','not-enforced','unsupported','annotation-only']},detail:s,retainedInSource:{const:true}}),mapping=object({sourcePath:s,field:s,column:s,representation,nullable:{type:'boolean'}}),target={$ref:'urn:umf:core:0.1.0'};
+const properties={status:{enum:['blocked','projected']},source:target,policy,issues:{type:'array',items:issue},mappings:{type:'array',items:mapping},target,nativeSchema:s};
+const schema={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:projection:avro-tablespec:0.1.0',...object(properties,['status','source','policy','issues','mappings']),allOf:[{if:{properties:{status:{const:'projected'}}},then:{properties:{target,nativeSchema:s},required:['target','nativeSchema']},else:{not:{anyOf:[{properties:{target},required:['target']},{properties:{nativeSchema:s},required:['nativeSchema']}]}}}]};
+await Bun.write('spec/projections/avro-tablespec.schema.json',JSON.stringify(schema,null,2)+'\n');

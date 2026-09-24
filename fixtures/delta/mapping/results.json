@@ -1,0 +1,47 @@
+{
+  "cases": 8,
+  "results": [
+    {
+      "id": "name-legacy",
+      "codes": []
+    },
+    {
+      "id": "name-features",
+      "codes": []
+    },
+    {
+      "id": "id-legacy",
+      "codes": []
+    },
+    {
+      "id": "id-features",
+      "codes": []
+    },
+    {
+      "id": "duplicate-id",
+      "codes": [
+        "DELTA_MAPPING_DUPLICATE_ID"
+      ]
+    },
+    {
+      "id": "missing-physical",
+      "codes": [
+        "DELTA_MAPPING_PHYSICAL_NAME"
+      ]
+    },
+    {
+      "id": "max-below",
+      "codes": [
+        "DELTA_MAPPING_MAX_ID_BELOW_FIELD",
+        "DELTA_MAPPING_MAX_ID_BELOW_FIELD"
+      ]
+    },
+    {
+      "id": "unsupported-protocol",
+      "codes": [
+        "DELTA_MAPPING_READER_PROTOCOL",
+        "DELTA_MAPPING_WRITER_PROTOCOL"
+      ]
+    }
+  ]
+}

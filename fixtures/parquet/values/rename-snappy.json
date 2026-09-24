@@ -1,0 +1,1005 @@
+[
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "order",
+        "value": {
+          "kind": "int",
+          "bits": 64,
+          "value": "0",
+          "physical": {
+            "type": "INT64",
+            "value": "0"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "name": "detail",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 3,
+              "name": "item.name",
+              "value": {
+                "kind": "string",
+                "value": "注文 0",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "e6b3a8e696872030"
+                }
+              }
+            },
+            {
+              "index": 4,
+              "name": "price",
+              "value": {
+                "kind": "decimal",
+                "value": "12.345",
+                "physical": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "000000003039"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 5,
+        "name": "tags",
+        "value": {
+          "kind": "list",
+          "items": [
+            {
+              "kind": "string",
+              "value": "a",
+              "physical": {
+                "type": "BYTE_ARRAY",
+                "hex": "61"
+              }
+            },
+            null,
+            {
+              "kind": "string",
+              "value": "b",
+              "physical": {
+                "type": "BYTE_ARRAY",
+                "hex": "62"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 8,
+        "name": "attributes",
+        "value": {
+          "kind": "map",
+          "duplicateKeys": "last-value",
+          "entries": [
+            {
+              "key": {
+                "kind": "string",
+                "value": "first",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "6669727374"
+                }
+              },
+              "value": {
+                "kind": "int",
+                "bits": 32,
+                "value": "0",
+                "physical": {
+                  "type": "INT32",
+                  "value": "0"
+                }
+              }
+            },
+            {
+              "key": {
+                "kind": "string",
+                "value": "second",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7365636f6e64"
+                }
+              },
+              "value": null
+            }
+          ]
+        }
+      },
+      {
+        "index": 12,
+        "name": "events",
+        "value": {
+          "kind": "list",
+          "items": [
+            {
+              "kind": "struct",
+              "fields": [
+                {
+                  "index": 15,
+                  "name": "at",
+                  "value": {
+                    "kind": "timestamp",
+                    "unit": "MICROS",
+                    "isAdjustedToUTC": false,
+                    "value": "1767268800000000",
+                    "physical": {
+                      "type": "INT64",
+                      "value": "1767268800000000"
+                    }
+                  }
+                },
+                {
+                  "index": 16,
+                  "name": "value",
+                  "value": {
+                    "kind": "int",
+                    "bits": 32,
+                    "value": "0",
+                    "physical": {
+                      "type": "INT32",
+                      "value": "0"
+                    }
+                  }
+                }
+              ]
+            },
+            null
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "order",
+        "value": {
+          "kind": "int",
+          "bits": 64,
+          "value": "1",
+          "physical": {
+            "type": "INT64",
+            "value": "1"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "name": "detail",
+        "value": null
+      },
+      {
+        "index": 5,
+        "name": "tags",
+        "value": {
+          "kind": "list",
+          "items": [
+            {
+              "kind": "string",
+              "value": "a",
+              "physical": {
+                "type": "BYTE_ARRAY",
+                "hex": "61"
+              }
+            },
+            null,
+            {
+              "kind": "string",
+              "value": "b",
+              "physical": {
+                "type": "BYTE_ARRAY",
+                "hex": "62"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 8,
+        "name": "attributes",
+        "value": {
+          "kind": "map",
+          "duplicateKeys": "last-value",
+          "entries": [
+            {
+              "key": {
+                "kind": "string",
+                "value": "first",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "6669727374"
+                }
+              },
+              "value": {
+                "kind": "int",
+                "bits": 32,
+                "value": "1",
+                "physical": {
+                  "type": "INT32",
+                  "value": "1"
+                }
+              }
+            },
+            {
+              "key": {
+                "kind": "string",
+                "value": "second",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7365636f6e64"
+                }
+              },
+              "value": null
+            }
+          ]
+        }
+      },
+      {
+        "index": 12,
+        "name": "events",
+        "value": {
+          "kind": "list",
+          "items": []
+        }
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "order",
+        "value": {
+          "kind": "int",
+          "bits": 64,
+          "value": "2",
+          "physical": {
+            "type": "INT64",
+            "value": "2"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "name": "detail",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 3,
+              "name": "item.name",
+              "value": {
+                "kind": "string",
+                "value": "注文 2",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "e6b3a8e696872032"
+                }
+              }
+            },
+            {
+              "index": 4,
+              "name": "price",
+              "value": {
+                "kind": "decimal",
+                "value": "12.345",
+                "physical": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "000000003039"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 5,
+        "name": "tags",
+        "value": null
+      },
+      {
+        "index": 8,
+        "name": "attributes",
+        "value": {
+          "kind": "map",
+          "duplicateKeys": "last-value",
+          "entries": [
+            {
+              "key": {
+                "kind": "string",
+                "value": "first",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "6669727374"
+                }
+              },
+              "value": {
+                "kind": "int",
+                "bits": 32,
+                "value": "2",
+                "physical": {
+                  "type": "INT32",
+                  "value": "2"
+                }
+              }
+            },
+            {
+              "key": {
+                "kind": "string",
+                "value": "second",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7365636f6e64"
+                }
+              },
+              "value": null
+            }
+          ]
+        }
+      },
+      {
+        "index": 12,
+        "name": "events",
+        "value": {
+          "kind": "list",
+          "items": [
+            {
+              "kind": "struct",
+              "fields": [
+                {
+                  "index": 15,
+                  "name": "at",
+                  "value": {
+                    "kind": "timestamp",
+                    "unit": "MICROS",
+                    "isAdjustedToUTC": false,
+                    "value": "1767268802000000",
+                    "physical": {
+                      "type": "INT64",
+                      "value": "1767268802000000"
+                    }
+                  }
+                },
+                {
+                  "index": 16,
+                  "name": "value",
+                  "value": {
+                    "kind": "int",
+                    "bits": 32,
+                    "value": "2",
+                    "physical": {
+                      "type": "INT32",
+                      "value": "2"
+                    }
+                  }
+                }
+              ]
+            },
+            null
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "order",
+        "value": {
+          "kind": "int",
+          "bits": 64,
+          "value": "3",
+          "physical": {
+            "type": "INT64",
+            "value": "3"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "name": "detail",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 3,
+              "name": "item.name",
+              "value": {
+                "kind": "string",
+                "value": "注文 3",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "e6b3a8e696872033"
+                }
+              }
+            },
+            {
+              "index": 4,
+              "name": "price",
+              "value": {
+                "kind": "decimal",
+                "value": "12.345",
+                "physical": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "000000003039"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 5,
+        "name": "tags",
+        "value": {
+          "kind": "list",
+          "items": []
+        }
+      },
+      {
+        "index": 8,
+        "name": "attributes",
+        "value": {
+          "kind": "map",
+          "duplicateKeys": "last-value",
+          "entries": [
+            {
+              "key": {
+                "kind": "string",
+                "value": "first",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "6669727374"
+                }
+              },
+              "value": {
+                "kind": "int",
+                "bits": 32,
+                "value": "3",
+                "physical": {
+                  "type": "INT32",
+                  "value": "3"
+                }
+              }
+            },
+            {
+              "key": {
+                "kind": "string",
+                "value": "second",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7365636f6e64"
+                }
+              },
+              "value": null
+            }
+          ]
+        }
+      },
+      {
+        "index": 12,
+        "name": "events",
+        "value": {
+          "kind": "list",
+          "items": []
+        }
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "order",
+        "value": {
+          "kind": "int",
+          "bits": 64,
+          "value": "4",
+          "physical": {
+            "type": "INT64",
+            "value": "4"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "name": "detail",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 3,
+              "name": "item.name",
+              "value": {
+                "kind": "string",
+                "value": "注文 4",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "e6b3a8e696872034"
+                }
+              }
+            },
+            {
+              "index": 4,
+              "name": "price",
+              "value": {
+                "kind": "decimal",
+                "value": "12.345",
+                "physical": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "000000003039"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 5,
+        "name": "tags",
+        "value": {
+          "kind": "list",
+          "items": [
+            {
+              "kind": "string",
+              "value": "a",
+              "physical": {
+                "type": "BYTE_ARRAY",
+                "hex": "61"
+              }
+            },
+            null,
+            {
+              "kind": "string",
+              "value": "b",
+              "physical": {
+                "type": "BYTE_ARRAY",
+                "hex": "62"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 8,
+        "name": "attributes",
+        "value": null
+      },
+      {
+        "index": 12,
+        "name": "events",
+        "value": {
+          "kind": "list",
+          "items": [
+            {
+              "kind": "struct",
+              "fields": [
+                {
+                  "index": 15,
+                  "name": "at",
+                  "value": {
+                    "kind": "timestamp",
+                    "unit": "MICROS",
+                    "isAdjustedToUTC": false,
+                    "value": "1767268804000000",
+                    "physical": {
+                      "type": "INT64",
+                      "value": "1767268804000000"
+                    }
+                  }
+                },
+                {
+                  "index": 16,
+                  "name": "value",
+                  "value": {
+                    "kind": "int",
+                    "bits": 32,
+                    "value": "4",
+                    "physical": {
+                      "type": "INT32",
+                      "value": "4"
+                    }
+                  }
+                }
+              ]
+            },
+            null
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "order",
+        "value": {
+          "kind": "int",
+          "bits": 64,
+          "value": "5",
+          "physical": {
+            "type": "INT64",
+            "value": "5"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "name": "detail",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 3,
+              "name": "item.name",
+              "value": {
+                "kind": "string",
+                "value": "注文 5",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "e6b3a8e696872035"
+                }
+              }
+            },
+            {
+              "index": 4,
+              "name": "price",
+              "value": {
+                "kind": "decimal",
+                "value": "12.345",
+                "physical": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "000000003039"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 5,
+        "name": "tags",
+        "value": {
+          "kind": "list",
+          "items": [
+            {
+              "kind": "string",
+              "value": "a",
+              "physical": {
+                "type": "BYTE_ARRAY",
+                "hex": "61"
+              }
+            },
+            null,
+            {
+              "kind": "string",
+              "value": "b",
+              "physical": {
+                "type": "BYTE_ARRAY",
+                "hex": "62"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 8,
+        "name": "attributes",
+        "value": {
+          "kind": "map",
+          "duplicateKeys": "last-value",
+          "entries": []
+        }
+      },
+      {
+        "index": 12,
+        "name": "events",
+        "value": {
+          "kind": "list",
+          "items": []
+        }
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "order",
+        "value": {
+          "kind": "int",
+          "bits": 64,
+          "value": "6",
+          "physical": {
+            "type": "INT64",
+            "value": "6"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "name": "detail",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 3,
+              "name": "item.name",
+              "value": {
+                "kind": "string",
+                "value": "注文 6",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "e6b3a8e696872036"
+                }
+              }
+            },
+            {
+              "index": 4,
+              "name": "price",
+              "value": {
+                "kind": "decimal",
+                "value": "12.345",
+                "physical": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "000000003039"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 5,
+        "name": "tags",
+        "value": {
+          "kind": "list",
+          "items": [
+            {
+              "kind": "string",
+              "value": "a",
+              "physical": {
+                "type": "BYTE_ARRAY",
+                "hex": "61"
+              }
+            },
+            null,
+            {
+              "kind": "string",
+              "value": "b",
+              "physical": {
+                "type": "BYTE_ARRAY",
+                "hex": "62"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 8,
+        "name": "attributes",
+        "value": {
+          "kind": "map",
+          "duplicateKeys": "last-value",
+          "entries": [
+            {
+              "key": {
+                "kind": "string",
+                "value": "first",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "6669727374"
+                }
+              },
+              "value": {
+                "kind": "int",
+                "bits": 32,
+                "value": "6",
+                "physical": {
+                  "type": "INT32",
+                  "value": "6"
+                }
+              }
+            },
+            {
+              "key": {
+                "kind": "string",
+                "value": "second",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7365636f6e64"
+                }
+              },
+              "value": null
+            }
+          ]
+        }
+      },
+      {
+        "index": 12,
+        "name": "events",
+        "value": {
+          "kind": "list",
+          "items": [
+            {
+              "kind": "struct",
+              "fields": [
+                {
+                  "index": 15,
+                  "name": "at",
+                  "value": {
+                    "kind": "timestamp",
+                    "unit": "MICROS",
+                    "isAdjustedToUTC": false,
+                    "value": "1767268806000000",
+                    "physical": {
+                      "type": "INT64",
+                      "value": "1767268806000000"
+                    }
+                  }
+                },
+                {
+                  "index": 16,
+                  "name": "value",
+                  "value": {
+                    "kind": "int",
+                    "bits": 32,
+                    "value": "6",
+                    "physical": {
+                      "type": "INT32",
+                      "value": "6"
+                    }
+                  }
+                }
+              ]
+            },
+            null
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "fields": [
+      {
+        "index": 1,
+        "name": "order",
+        "value": {
+          "kind": "int",
+          "bits": 64,
+          "value": "7",
+          "physical": {
+            "type": "INT64",
+            "value": "7"
+          }
+        }
+      },
+      {
+        "index": 2,
+        "name": "detail",
+        "value": {
+          "kind": "struct",
+          "fields": [
+            {
+              "index": 3,
+              "name": "item.name",
+              "value": {
+                "kind": "string",
+                "value": "注文 7",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "e6b3a8e696872037"
+                }
+              }
+            },
+            {
+              "index": 4,
+              "name": "price",
+              "value": {
+                "kind": "decimal",
+                "value": "12.345",
+                "physical": {
+                  "type": "FIXED_LEN_BYTE_ARRAY",
+                  "hex": "000000003039"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 5,
+        "name": "tags",
+        "value": {
+          "kind": "list",
+          "items": [
+            {
+              "kind": "string",
+              "value": "a",
+              "physical": {
+                "type": "BYTE_ARRAY",
+                "hex": "61"
+              }
+            },
+            null,
+            {
+              "kind": "string",
+              "value": "b",
+              "physical": {
+                "type": "BYTE_ARRAY",
+                "hex": "62"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "index": 8,
+        "name": "attributes",
+        "value": {
+          "kind": "map",
+          "duplicateKeys": "last-value",
+          "entries": [
+            {
+              "key": {
+                "kind": "string",
+                "value": "first",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "6669727374"
+                }
+              },
+              "value": {
+                "kind": "int",
+                "bits": 32,
+                "value": "7",
+                "physical": {
+                  "type": "INT32",
+                  "value": "7"
+                }
+              }
+            },
+            {
+              "key": {
+                "kind": "string",
+                "value": "second",
+                "physical": {
+                  "type": "BYTE_ARRAY",
+                  "hex": "7365636f6e64"
+                }
+              },
+              "value": null
+            }
+          ]
+        }
+      },
+      {
+        "index": 12,
+        "name": "events",
+        "value": {
+          "kind": "list",
+          "items": []
+        }
+      }
+    ]
+  }
+]

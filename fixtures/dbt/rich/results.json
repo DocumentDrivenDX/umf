@@ -1,0 +1,255 @@
+{
+  "sourceSha256": "3cb2f6904d9fd4cc4ec584c5532707ac9a6c266340435476ceb91519fd22769c",
+  "collections": {
+    "nodes": 11,
+    "sources": 1,
+    "macros": 430,
+    "docs": 2,
+    "exposures": 1,
+    "metrics": 1,
+    "groups": 1,
+    "selectors": 1,
+    "disabled": 1,
+    "parent_map": 17,
+    "child_map": 17,
+    "group_map": 1,
+    "saved_queries": 1,
+    "semantic_models": 1,
+    "unit_tests": 1
+  },
+  "validation": {
+    "valid": true,
+    "complete": false,
+    "diagnostics": [
+      {
+        "code": "DBT_MANIFEST_CONTEXT",
+        "path": "",
+        "severity": "warning",
+        "message": "Native schema shapes do not establish graph/SQL/Jinja validity, format constraints or exact-number constraints beyond JS precision"
+      }
+    ]
+  },
+  "edits": [
+    {
+      "id": "edit-0",
+      "path": "/nodes/model.umf_fixture.order_totals/description",
+      "value": "Reviewed synthetic metadata 0",
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Native schema shapes do not establish graph/SQL/Jinja validity, format constraints or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "edit-1",
+      "path": "/nodes/snapshot.umf_fixture.order_history/description",
+      "value": "Reviewed synthetic metadata 1",
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Native schema shapes do not establish graph/SQL/Jinja validity, format constraints or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "edit-2",
+      "path": "/nodes/analysis.umf_fixture.order_audit/description",
+      "value": "Reviewed synthetic metadata 2",
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Native schema shapes do not establish graph/SQL/Jinja validity, format constraints or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "edit-3",
+      "path": "/sources/source.umf_fixture.seed_alias.orders/description",
+      "value": "Reviewed synthetic metadata 3",
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Native schema shapes do not establish graph/SQL/Jinja validity, format constraints or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "edit-4",
+      "path": "/exposures/exposure.umf_fixture.totals_dashboard/description",
+      "value": "Reviewed synthetic metadata 4",
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Native schema shapes do not establish graph/SQL/Jinja validity, format constraints or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "edit-5",
+      "path": "/metrics/metric.umf_fixture.total_amount/description",
+      "value": "Reviewed synthetic metadata 5",
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Native schema shapes do not establish graph/SQL/Jinja validity, format constraints or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "edit-6",
+      "path": "/groups/group.umf_fixture.finance/description",
+      "value": "Reviewed synthetic metadata 6",
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Native schema shapes do not establish graph/SQL/Jinja validity, format constraints or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "edit-7",
+      "path": "/semantic_models/semantic_model.umf_fixture.orders_semantic/description",
+      "value": "Reviewed synthetic metadata 7",
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Native schema shapes do not establish graph/SQL/Jinja validity, format constraints or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "edit-8",
+      "path": "/saved_queries/saved_query.umf_fixture.daily_totals/description",
+      "value": "Reviewed synthetic metadata 8",
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Native schema shapes do not establish graph/SQL/Jinja validity, format constraints or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "edit-9",
+      "path": "/unit_tests/unit_test.umf_fixture.order_totals.totals_include_adjustments/description",
+      "value": "Reviewed synthetic metadata 9",
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Native schema shapes do not establish graph/SQL/Jinja validity, format constraints or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "edit-10",
+      "path": "/macros/macro.umf_fixture.fixture_label/description",
+      "value": "Reviewed synthetic metadata 10",
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Native schema shapes do not establish graph/SQL/Jinja validity, format constraints or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "edit-11",
+      "path": "/docs/doc.umf_fixture.amount_meaning/block_contents",
+      "value": "Reviewed synthetic metadata 11",
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Native schema shapes do not establish graph/SQL/Jinja validity, format constraints or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    },
+    {
+      "id": "edit-12",
+      "path": "/disabled/model.umf_fixture.disabled/0/description",
+      "value": "Reviewed synthetic metadata 12",
+      "validation": {
+        "valid": true,
+        "complete": false,
+        "diagnostics": [
+          {
+            "code": "DBT_MANIFEST_CONTEXT",
+            "path": "",
+            "severity": "warning",
+            "message": "Native schema shapes do not establish graph/SQL/Jinja validity, format constraints or exact-number constraints beyond JS precision"
+          }
+        ]
+      }
+    }
+  ]
+}
