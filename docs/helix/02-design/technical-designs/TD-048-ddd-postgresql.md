@@ -46,6 +46,13 @@ maps against stable Key IDs and bound Field columns before planning any FK.
 Require an explicit source Key for junction/edge carriers and preserve a keyed
 association Record's own table and attributes. The renderer cannot choose a
 primary key, invent referencing columns or treat a native FK as authorship.
+The `postgresql-relationship-layout-1` proposal under
+`fixtures/projections/ddd-authored-relationships/` freezes ordered core
+Key-component, DDD-field and bound-column maps before the dependent validator
+bead. It uses a distinct unpartitioned binding for relationship-success DDL:
+PostgreSQL 17.4 rejects an id-only primary key on the original tenant-partitioned
+Order table. No generated FK may target that unenforced key, and the generator
+cannot silently add `tenant` to the authored Key.
 
 ## Component Changes
 

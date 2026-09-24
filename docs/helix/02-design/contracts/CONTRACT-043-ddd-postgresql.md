@@ -103,6 +103,32 @@ under CONTRACT-040. Missing, extra, duplicate or mismatched map entries block
 before DDL emission. The policy is target layout, never logical relationship
 meaning or an authored key.
 
+The initial portable policy profile is
+`postgresql-relationship-layout-1`, pinned to target version `17.4`. It
+extends the existing explicit table policy with `keyLayouts` and
+`relationshipLayouts`. Every entry is keyed by stable core IDs; neither a
+display name nor a native constraint name selects an authored assertion:
+
+| Entry | Required members | Validation |
+| --- | --- | --- |
+| `keyLayouts[]` | `record:{module,element}`, `key` (stable Key ID), `table`, `constraint`, ordered `components[]` | The referenced Record owns the exact named Key. Components match its ordered `Key.fields` one-to-one. Each component gives `keyField:{module,element}` (core Field ID), `boundField:{module,element,field}` (DDD field key), `column`, `sqlType`, and `nullable:false`. The core Field must be exclusively owned through `Record.members`; the bound field and column must resolve in the separate binding and table policy. The target must prove a native unique/primary constraint before an FK can reference it. |
+| `relationshipLayouts[]` | `relationship:{module,id}`, `storage`, `carrierTable`, `targetKey:{module,element,key}`, `targetConstraint`, ordered `targetComponents[]` | Exactly one layout matches each projected ID-based physical relationship choice. Its storage equals that choice. `targetKey` equals the authored relationship target and names a `keyLayouts` entry. The carrier table equals the bound source table for `foreign_key`; no DDD field name may stand in for a relationship ID. |
+| `sourceKey` and `sourceComponents[]` | Required for `junction`/`edge`, absent for initial `foreign_key` | `sourceKey` names a stable source Record Key and its ordered components; `sourceConstraint` names the carrier FK. An association Record uses its own bound table as carrier. |
+| `associationRecord` and `associationKey` | Required when the authored relationship names an association Record | Both resolve exactly to the same keyed Record and one `keyLayouts` entry; the carrier table is that Record's table. The table pass emits its own Key and every bound attribute. A bare pair table is a loss, never an implicit substitute. |
+
+Each relationship component gives `keyField` (core endpoint Key component),
+`endpointField` (the DDD field paired with it), `endpointColumn`,
+`carrierField` (the DDD field storing the reference), `carrierColumn`,
+`sqlType`, and `nullable`. The validator checks the ordered mapping against
+the authored Key, exclusive core membership, both bound DDD fields, the
+declared columns and table policy, target type/comparator compatibility and
+NULL behavior. It rejects stale, missing, extra, reordered, duplicated or
+cross-table maps before rendering any DDL. `sourceConstraint` and
+`targetConstraint` are physical names only. The exact concrete policy and
+both relationship choices are pinned in
+`fixtures/projections/ddd-authored-relationships/postgresql-layout-proposal.json`;
+the fixture is a design input, not a published schema or generator result.
+
 For `foreign_key`, the carrier table MUST be the single source Record's bound
 table, and ordered referencing columns MUST align one-to-one with the single
 target Record's named Key components. For `junction`, the policy MUST name a
@@ -126,6 +152,17 @@ strict blocks; report may emit the remaining complete DDL with a residual.
 Aggregate boundaries, opaque invariants and DDD context/lifecycle distinctions
 remain in source with explicit `not-enforced` or `not-expressible` entries,
 following CONTRACT-006.
+
+PostgreSQL 17.4 rejects `PRIMARY KEY (id)` on a table partitioned by
+`LIST (tenant)`, because the unique constraint omits the partition column;
+`PRIMARY KEY (id, tenant)` succeeds but is a different authored Key. The
+pinned DDL-only oracle is
+`fixtures/projections/ddd-authored-relationships/postgresql-partitioned-key.json`.
+The relationship-success fixture therefore uses a separate unpartitioned
+PostgreSQL binding for the same logical graph. The original tenant-partitioned
+binding remains a valid, separately reported table-stage example; the
+generator MUST NOT silently widen `Order.pk` or claim an FK to an unenforced
+id-only key.
 
 Result fields are status, copied logical source, copied binding source, policy,
 qualified mappings, diagnostics, residuals, optional complete `nativeSource`,

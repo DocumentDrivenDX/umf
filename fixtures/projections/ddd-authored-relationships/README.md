@@ -28,3 +28,17 @@ admission. After those gates, the full PostgreSQL and GraphQL generator beads
 will add authored relationships, migrate to the ID-based binding profile and
 check their emitted native targets. The current relationship-independent
 generator fixtures remain intact.
+
+`postgresql-layout-proposal.json` freezes the initial relationship-success
+layout design: four stable Key-to-DDD-column maps, an Order→Customer FK and an
+Order→Product junction carried by the keyed OrderProduct table. Its physical
+relationship choices remain outside the published `umf-binding-1` document
+until the ID-based package exists. This variant leaves Order unpartitioned so
+its id-only authored Key can be uniquely constrained. The original partitioned
+binding remains in `base.json` and continues to prove the separate partition
+table stage. `postgresql-partitioned-key.json` records the pinned PostgreSQL
+17.4 DDL counterexample: id-only PK rejected, `(id, tenant)` accepted but
+semantically different. The committed Key candidate validates this
+unpartitioned binding; the existing table/index stage reports four tables and
+five accepted index statements. No Key constraint or relationship DDL is
+claimed yet.
