@@ -9,8 +9,8 @@ import manifest from '../../spec/core/extension-package.schema.json';
 // JSON equality must not inspect prototypes or invoke valueOf/toString. Checked
 // values deliberately use null-prototype dictionaries, including reference arrays.
 function canonical(value: unknown): string {
- if(Array.isArray(value))return 'a'+JSON.stringify(value.map(canonical));
- if(value!==null&&typeof value==='object')return 'o'+JSON.stringify(Object.keys(value).sort().map(key=>[key,canonical((value as Record<string,unknown>)[key])]));
+ if(Array.isArray(value))return 'a['+value.map(canonical).join(',')+']';
+ if(value!==null&&typeof value==='object')return 'o{'+Object.keys(value).sort().map(key=>JSON.stringify(key)+':'+canonical((value as Record<string,unknown>)[key])).join(',')+'}';
  return JSON.stringify(value);
 }
 export function createValidator(strict=true) {

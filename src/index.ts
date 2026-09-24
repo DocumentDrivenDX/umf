@@ -336,3 +336,5 @@ export * from './core-ideals/key-tablespec-projection';
 
 export * from './adapters/postgresql/key-catalog';
 export * from './adapters/postgresql/key-correlation';
+
+export * from './core-ideals/key-postgresql';

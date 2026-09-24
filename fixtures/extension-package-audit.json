@@ -1,7 +1,7 @@
 {
   "scope": "Manifest validation, joint registry registration, standalone schema equality and local evidence existence only; no native conformance or inventory completeness claim",
-  "packages": 49,
-  "passed": 49,
+  "packages": 50,
+  "passed": 50,
   "results": [
     {
       "path": "spec/extensions/arrow-flatbuffer/package.json",
@@ -412,6 +412,19 @@
         "subset": "Scalar catalog-column facets with explicit stored/new non-null value scope, verified CHECKs and retained native refinements; no native equivalence; authored projection uses explicit checked, type-modifier or carrier-only SQL with resource limits and conversion residuals"
       },
       "evidenceCount": 9,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/postgresql-keys/package.json",
+      "id": "umf.postgresql.keys",
+      "version": "1.0.0",
+      "native": {
+        "system": "PostgreSQL",
+        "version": "17.4",
+        "subset": "Correlated captured indexes over relations including descendants; observed enforcement/equality only, no authored identity, authentication, exact-input conversion or native equivalence"
+      },
+      "evidenceCount": 4,
       "passed": true,
       "failures": []
     },

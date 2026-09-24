@@ -31,8 +31,8 @@ const validator=createValidator(false);
 for(const s of [legacy,fields,nullability,cardinality,facets,keys])validator.addSchema(s);
 const check=validator.compile(schema),checkRequest=validator.compile(schema.properties.request);
 function canonical(value:Json):string {
- if(Array.isArray(value))return 'a'+JSON.stringify(value.map(canonical));
- if(value!==null&&typeof value==='object')return 'o'+JSON.stringify(Object.keys(value).sort().map(k=>[k,canonical(value[k]!)]));
+ if(Array.isArray(value))return 'a['+value.map(canonical).join(',')+']';
+ if(value!==null&&typeof value==='object')return 'o{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+canonical(value[k]!)).join(',')+'}';
  return JSON.stringify(value);
 }
 function archive(source:Document):string|Record<string,string>{

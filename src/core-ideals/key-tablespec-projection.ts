@@ -21,7 +21,7 @@ export interface KeyTableSpecProjection {
 }
 const validator=createValidator(false);for(const s of [legacy,fields,nullability,cardinality,facets,keys,keyOperation])validator.addSchema(s);
 const check=validator.compile(schema),requestCheck=validator.compile(schema.properties.request);
-const canonical=(v:Json):string=>Array.isArray(v)?'a'+JSON.stringify(v.map(canonical)):v!==null&&typeof v==='object'?'o'+JSON.stringify(Object.keys(v).sort().map(k=>[k,canonical(v[k]!)])):JSON.stringify(v);
+const canonical=(v:Json):string=>Array.isArray(v)?'a['+v.map(canonical).join(',')+']':v!==null&&typeof v==='object'?'o{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k]!)).join(',')+'}':JSON.stringify(v);
 const same=(a:unknown,b:unknown)=>canonical(copyJson(a))===canonical(copyJson(b));
 const identity=(r:CoreRecordIdentity)=>JSON.stringify([r.module,r.element]);
 function locate(source:Document,ref:CoreRecordIdentity){const mi=source.modules.findIndex(m=>m.id===ref.module),ei=source.modules[mi]?.elements.findIndex(e=>e.id===ref.element)??-1;if(mi<0||ei<0)throw new UmfError('KEY_TABLESPEC_REFERENCE','Unresolved element identity');return {element:source.modules[mi]!.elements[ei]!,path:`/modules/${mi}/elements/${ei}`};}

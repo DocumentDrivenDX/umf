@@ -10,7 +10,7 @@ import resultSchema from '../../../spec/core/postgresql-key-catalog-correlation.
 export {default as postgresqlKeyCatalogCorrelationSchema} from '../../../spec/core/postgresql-key-catalog-correlation.schema.json';
 const validator=createValidator();validator.addSchema(nativeSchema);const checkResult=validator.compile(resultSchema);
 const fail=(message:string):never=>{throw new UmfError('POSTGRESQL_KEY_CORRELATION',message);};
-function canonical(v:any):string {if(Array.isArray(v))return 'a'+JSON.stringify(v.map(canonical));if(v!==null&&typeof v==='object')return 'o'+JSON.stringify(Object.keys(v).filter(k=>!['location','stmt_location','stmt_len'].includes(k)).sort().map(k=>[k,canonical(v[k])]));return JSON.stringify(v);}
+function canonical(v:any):string {if(Array.isArray(v))return 'a['+v.map(canonical).join(',')+']';if(v!==null&&typeof v==='object')return 'o{'+Object.keys(v).filter(k=>!['location','stmt_location','stmt_len'].includes(k)).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k])).join(',')+'}';return JSON.stringify(v);}
 /** Correlate complete overlapping native observations. This does not authenticate
  * either source, prove a shared transaction snapshot, or establish ideal equality. */
 export async function correlatePostgresqlKeyCatalog(document:Document,text:string,backend:PostgresqlBackend){

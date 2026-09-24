@@ -1,0 +1,67 @@
+{
+  "scope": "PostgreSQL Key native classification and shared JSON comparison regression only; authored projection, whole binding acceptance and ideal admission remain unfinished",
+  "command": [
+    "bun",
+    "test",
+    "./tests/core/cardinality-ideals.test.ts",
+    "./tests/core/cardinality-operations.test.ts",
+    "./tests/core/core.test.ts",
+    "./tests/core/deep-json-equality.test.ts",
+    "./tests/core/facet-authoring.test.ts",
+    "./tests/core/facet-ideals.test.ts",
+    "./tests/core/facet-transition.test.ts",
+    "./tests/core/field-ideals.test.ts",
+    "./tests/core/field-kind.test.ts",
+    "./tests/core/field-transition.test.ts",
+    "./tests/core/key-ideals.test.ts",
+    "./tests/core/key-operations.test.ts",
+    "./tests/core/key-transition.test.ts",
+    "./tests/core/key-tuple.test.ts",
+    "./tests/core/native-json.test.ts",
+    "./tests/core/nullability-authoring.test.ts",
+    "./tests/core/nullability-ideals.test.ts",
+    "./tests/core/nullability-transition.test.ts",
+    "./tests/core/scalar.test.ts",
+    "./tests/core/selection.test.ts",
+    "./tests/core-ideals/key-postgresql-catalog.test.ts",
+    "./tests/core-ideals/key-postgresql-correlation.test.ts",
+    "./tests/core-ideals/key-postgresql.test.ts",
+    "./tests/core-ideals/key-tablespec.test.ts",
+    "./tests/core-ideals/key-tablespec-projection.test.ts"
+  ],
+  "result": {
+    "tests": 183,
+    "assertions": 3961,
+    "files": 25,
+    "failures": 0
+  },
+  "checks": [
+    "bun run typecheck",
+    "bun run build",
+    "bun run build:postgresql",
+    "bun run test:schemas",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/key-postgresql-browser.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/key-postgresql-catalog-browser.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/key-tablespec-browser.ts"
+  ],
+  "schemas": 296,
+  "extensionPackages": 50,
+  "limitations": [
+    "Native classification consumes the existing pinned PostgreSQL 17.4 capture; this increment does not rerun native SQL probes.",
+    "An exploratory bun test tests/core command also selected core-ideals tests and historical conformance gates. It was intentionally stopped after field-conformance reported missing dist/avro-facet-selection.js. This is not a full-suite pass or a refreshed all-five gate."
+  ],
+  "sha256": {
+    "src/core-ideals/key-postgresql.ts": "73c34656d9e901a92ede5f8b2ca3cfd485d7809435bbff344bdfe45bb4643a9f",
+    "src/core-ideals/key-tablespec.ts": "df58e0e2420f28174ca8b83ba551ff3c44ce37af83ffa7fbacbb707d737c7d7b",
+    "src/core-ideals/key-tablespec-projection.ts": "5a9ea828f884ebbfa86e6a9523148a99a38c5df7d7322eaf30d75b39992616ef",
+    "src/adapters/postgresql/key-correlation.ts": "1c59de75fd8b1a0845f63944d018a3ddcb800251e06b338867a39b5e6291e652",
+    "src/validation/schema.ts": "8a695fe56f9864cdb4fa3b87c01e7c37681b708ec8ad254c520cf7942a7a4388",
+    "tests/core/deep-json-equality.test.ts": "dc728f41eb281c755c3cdf285f7e3f3cad48bee989137b742d32dc091a75ebe4",
+    "tests/core-ideals/key-postgresql.test.ts": "bc90d70ff832e181546a0e7523f7480fad1bae83f83cd8884778afbcfac8d107",
+    "fixtures/validation/key-postgresql-browser.json": "c8dd9ebe4529f2c3fb2301ce0f8c25d6af2b7739b4b81746e33fc92dd2e15e9b",
+    "fixtures/validation/key-postgresql-catalog-browser.json": "211b2fb3716f92ed51dcd47cdc39f0931e63481cfd8fc86c3dbeb4a2ba1dfb9e",
+    "fixtures/validation/key-tablespec-classification-browser.json": "ed2cb71220e2ba083929d06fb96469f23306957ed749a9342ffd45d1fcf63859",
+    "fixtures/extension-package-audit.json": "247170bc436f004c02ab354878becff5f8db82cc1ba2c2895b205bb73c177fdf",
+    "fixtures/json-schema-audit.json": "abb04551b98a002f4502e83b6d7238664a1474501718a4d194c7d23b48395396"
+  }
+}
