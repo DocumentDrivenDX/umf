@@ -166,9 +166,10 @@ delivery, both recovery directions and native/browser evidence. GraphQL, RDF
 and LinkML are additional bindings, not substitutes for TableSpec. No binding
 is native-equivalence graduation by default.
 
-`fixtures/relationship/authored/corpus.json` prepares seven authored shape
+`fixtures/relationship/authored/corpus.json` prepares eight authored shape
 cases against the Key 0.6.0 candidate, including an alternate target Key and
-a keyed association Record. Its Key base validates; the relationship proposals
+an owned Order→Line target and a keyed association Record. Its Key base
+validates; the relationship proposals
 remain separate until this core ideal is admitted and published. The corpus
 does not itself count as a down-projection or relationship-schema validation.
 

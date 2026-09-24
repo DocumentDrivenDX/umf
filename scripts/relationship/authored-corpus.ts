@@ -13,6 +13,7 @@ function record(id:string,keyName:string,extras:{name:string;type:'integer'|'str
  ],extensions:{}});
 }
 record('Order','id');
+record('Line','id',[{name:'quantity',type:'integer'}]);
 record('Invoice','id');
 record('Customer','id',[{name:'accountNumber',type:'string'}],{name:'account',field:'accountNumber'});
 record('Product','id');
@@ -27,6 +28,7 @@ const multiplicity=(min:number,max:number|'*')=>({min,max});
 const target=(element:string,key='pk')=>({...ref(element),key});
 const cases=[
  {id:'one-to-one',relationship:{id:'order-invoice',name:'invoice',source:[ref('Order')],target:[target('Invoice')],sourceMultiplicity:multiplicity(1,1),targetMultiplicity:multiplicity(0,1),targetLifecycle:'independent',directed:true,inverse:'order'}},
+ {id:'owned-one-to-many',relationship:{id:'order-lines',name:'lines',source:[ref('Order')],target:[target('Line')],sourceMultiplicity:multiplicity(1,1),targetMultiplicity:multiplicity(1,'*'),targetLifecycle:'owned',directed:true,inverse:'order'}},
  {id:'many-to-one-alternate-key',relationship:{id:'order-customer',name:'customer',source:[ref('Order')],target:[target('Customer','account')],sourceMultiplicity:multiplicity(0,'*'),targetMultiplicity:multiplicity(1,1),targetLifecycle:'independent',directed:true,inverse:'orders'}},
  {id:'many-to-many',relationship:{id:'order-product',name:'products',source:[ref('Order')],target:[target('Product')],sourceMultiplicity:multiplicity(0,'*'),targetMultiplicity:multiplicity(0,'*'),targetLifecycle:'independent',directed:true}},
  {id:'heterogeneous-source',relationship:{id:'sales-customer',name:'customerForSalesDocument',source:[ref('Order'),ref('Invoice')],target:[target('Customer','account')],sourceMultiplicity:multiplicity(0,'*'),targetMultiplicity:multiplicity(1,1),targetLifecycle:'independent',directed:true}},

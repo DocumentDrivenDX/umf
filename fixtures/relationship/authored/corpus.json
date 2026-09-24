@@ -35,6 +35,35 @@
             "extensions": {}
           },
           {
+            "id": "Line",
+            "name": "Line",
+            "kind": "record",
+            "members": [
+              {
+                "module": "sales",
+                "element": "Line.id"
+              },
+              {
+                "module": "sales",
+                "element": "Line.quantity"
+              }
+            ],
+            "keys": [
+              {
+                "id": "pk",
+                "name": "Line primary",
+                "primary": true,
+                "fields": [
+                  {
+                    "module": "sales",
+                    "element": "Line.id"
+                  }
+                ]
+              }
+            ],
+            "extensions": {}
+          },
+          {
             "id": "Invoice",
             "name": "Invoice",
             "kind": "record",
@@ -236,6 +265,22 @@
             "extensions": {}
           },
           {
+            "id": "Line.id",
+            "kind": "field",
+            "scalarType": "integer",
+            "nullability": "required",
+            "cardinality": "one",
+            "extensions": {}
+          },
+          {
+            "id": "Line.quantity",
+            "kind": "field",
+            "scalarType": "integer",
+            "nullability": "required",
+            "cardinality": "one",
+            "extensions": {}
+          },
+          {
             "id": "Invoice.id",
             "kind": "field",
             "scalarType": "integer",
@@ -339,6 +384,37 @@
           "max": 1
         },
         "targetLifecycle": "independent",
+        "directed": true,
+        "inverse": "order"
+      }
+    },
+    {
+      "id": "owned-one-to-many",
+      "relationship": {
+        "id": "order-lines",
+        "name": "lines",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Line",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 1,
+          "max": 1
+        },
+        "targetMultiplicity": {
+          "min": 1,
+          "max": "*"
+        },
+        "targetLifecycle": "owned",
         "directed": true,
         "inverse": "order"
       }
