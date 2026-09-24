@@ -120,7 +120,7 @@ export function inspectBinding(binding:Document,logical:Document):Validation{
     for(const [index,row]of payload.fields.entries()){
       const owner=logical.modules.find(m=>m.id===row.module)?.elements.find(e=>e.id===row.element);
       const ddd=owner?.extensions?.['umf.ddd'] as {fields?:Record<string,unknown>}|undefined;
-      const found=row.field===undefined ? !!owner && (owner.kind==='field'||logical.umf==='0.1.0') : !!ddd?.fields && Object.hasOwn(ddd.fields,row.field);
+      const found=row.field===undefined ? owner?.kind==='field' : !!ddd?.fields && Object.hasOwn(ddd.fields,row.field);
       if(!found)add('BINDING_REFERENCE',`/extensions/umf.binding/fields/${index}`,'Missing exact logical Field or DDD owner/field');
     }
     for(const [index,row]of payload.relationships.entries()){

@@ -1,7 +1,7 @@
 import {expect,test} from 'bun:test';
 import {bindingRegistry,copyJson,getBinding,inspectBinding,readBindingDocument,writeBindingDocument,type Document} from '../../src';
 
-const logical:Document={umf:'0.1.0',id:'orders-v1',vocabularies:{},modules:[{id:'sales',namespace:'sales',elements:[{id:'Order',extensions:{}},{id:'details',extensions:{}}]}]};
+const logical:Document={umf:'0.1.0',id:'orders-v1',vocabularies:{},modules:[{id:'sales',namespace:'sales',elements:[{id:'Order',extensions:{}},{id:'details',kind:'field',extensions:{}}]}]};
 const binding:Document={
   umf:'0.1.0',id:'orders-postgresql',vocabularies:{'umf.binding':{version:'0.1.0'}},modules:[],
   extensions:{'umf.binding':{
