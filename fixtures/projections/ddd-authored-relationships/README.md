@@ -51,3 +51,13 @@ catalog acceptance; `expected-postgresql-browser.json` records Chromium
 adapter/codec recovery. These prove target syntax and archive handling only:
 the DDL has not been emitted from the relationship ideal, and catalog
 constraints do not prove existing application rows satisfy the assertions.
+
+`expected-relationships.graphql` is the hand-authored SDL target for the
+same graph. It retains the existing scalar/nullability fields, adds only
+`Order.customer`, `Order.products` and their declared `orders` inverses, and
+keeps OrderProduct as its own object type. GraphQL SDL cannot express the
+target Key, source-end participation, lifecycle or the link between
+`Order.products` and OrderProduct's identity/quantity; those remain required
+projection residuals. GraphQL.js 17.0.2, GraphQL-core 3.2.12 and Chromium
+results are pinned beside the SDL. No resolver, argument, pagination or
+application operation is present, and this target is not generated output.
