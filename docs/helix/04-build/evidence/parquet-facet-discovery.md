@@ -206,3 +206,21 @@ verified after these checks. Complete aggregate native/browser qualification,
 priority compatibility and refreshed Field/Nullability/Cardinality conformance
 gates remain required before closing the binding. Facet admission/delivery,
 Key and native-equivalence graduation are separate and remain unclaimed.
+
+
+## Aggregate qualification preparation
+
+`facets-parquet-oracle.ts` runs discovery, native carriers, authored projections
+and a separate Bun composition check. `facets-parquet-browser.ts` runs the
+internal interpreter/emitter and public classification/projection browser checks.
+Each aggregate verifies child evidence fingerprints; its completion flag does
+not itself grant binding acceptance.
+
+The separate [Bun composition record](../../../../fixtures/validation/facets-parquet-composition.json)
+passes 177 emitted targets, 354 ideal recoveries and 354 native recoveries.
+Its 165 facet comparisons and 12 residual comparisons match Chromium, including
+six facetless controls. Native projection evidence is fingerprint-checked before
+composition, and emitted bytes must match the native-tested corpus. Typechecking
+passes. The full 87-stage compatibility refresh and priority regression are
+running; aggregate runtime acceptance and refreshed prior concept gates remain
+pending. This checkpoint does not close the Parquet binding.
