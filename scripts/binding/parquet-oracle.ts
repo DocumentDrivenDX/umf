@@ -1,0 +1,23 @@
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {existsSync} from 'node:fs';
+import {captureParquet,exportParquetCapture,projectBindingToParquet,type Document} from '../../src';
+
+const candidates=[process.env.UMF_PYTHON,'.venv/bin/python','../umf/.venv/bin/python'].filter((x):x is string=>!!x);
+const python=candidates.find(existsSync);
+assert.ok(python,'Set UMF_PYTHON to a Python environment with PyArrow 21.0.0');
+const child=Bun.spawn([python,'scripts/binding/parquet-native.py'],{stdout:'inherit',stderr:'inherit'});
+assert.equal(await child.exited,0);
+const caseFile='fixtures/binding/parquet/case.json',fixture=await Bun.file(caseFile).json();
+const bytes=new Uint8Array(await Bun.file(fixture.native).arrayBuffer());
+const proof=await Bun.file('fixtures/binding/parquet/native-oracle.json').json();
+assert.equal(createHash('sha256').update(bytes).digest('hex'),proof.sourceSha256);
+const archive=captureParquet(bytes,{id:'binding-parquet-native'});
+const report=projectBindingToParquet(fixture.logical as Document,fixture.binding as Document,'report',archive);
+assert.equal(report.status,'reported');
+assert.equal(report.residuals.filter(x=>x.path.includes('/indexes/')).length,8);
+assert.deepEqual(exportParquetCapture(report.nativeArchive!),bytes);
+const sha256=Object.fromEntries(await Promise.all([caseFile,fixture.native,'src/projections/binding-parquet/index.ts','scripts/binding/parquet-native.py'].map(async file=>[file,createHash('sha256').update(new Uint8Array(await Bun.file(file).arrayBuffer())).digest('hex')])));
+const evidence={scope:'Parquet physical binding residuals and source recovery; no generated Parquet candidate or native index-enforcement claim',target:{system:'parquet',version:'2.9',subset:'file-schema'},native:proof,residuals:report.residuals.length,sha256};
+await Bun.write('fixtures/binding/parquet/oracle.json',JSON.stringify(evidence,null,2)+'\n');
+console.log(JSON.stringify({residuals:evidence.residuals,nativeRuntime:proof.runtime}));

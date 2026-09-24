@@ -1,0 +1,190 @@
+{
+  "logical": {
+    "umf": "0.1.0",
+    "id": "parquet-logical",
+    "vocabularies": {},
+    "modules": [
+      {
+        "id": "data",
+        "namespace": "data",
+        "elements": [
+          {
+            "id": "Order",
+            "extensions": {}
+          },
+          {
+            "id": "id",
+            "extensions": {}
+          },
+          {
+            "id": "payload",
+            "extensions": {}
+          }
+        ]
+      }
+    ]
+  },
+  "binding": {
+    "umf": "0.1.0",
+    "id": "parquet-layout",
+    "vocabularies": {
+      "umf.binding": {
+        "version": "0.1.0"
+      }
+    },
+    "modules": [],
+    "extensions": {
+      "umf.binding": {
+        "profile": "umf-binding-1",
+        "logical": {
+          "documentId": "parquet-logical",
+          "coreVersion": "0.1.0"
+        },
+        "target": {
+          "system": "parquet",
+          "version": "2.9",
+          "subset": "file-schema"
+        },
+        "elements": [
+          {
+            "module": "data",
+            "element": "Order",
+            "table": "orders",
+            "partition": "sales"
+          }
+        ],
+        "fields": [
+          {
+            "module": "data",
+            "element": "id",
+            "storage": "column",
+            "column": "id"
+          },
+          {
+            "module": "data",
+            "element": "payload",
+            "storage": "embedded",
+            "documentColumn": "document",
+            "path": [
+              "order",
+              "payload"
+            ]
+          }
+        ],
+        "relationships": [],
+        "indexes": [
+          {
+            "name": "btree_idx",
+            "kind": "btree",
+            "on": [
+              {
+                "field": {
+                  "module": "data",
+                  "element": "id"
+                }
+              }
+            ],
+            "unique": false
+          },
+          {
+            "name": "hash_idx",
+            "kind": "hash",
+            "on": [
+              {
+                "field": {
+                  "module": "data",
+                  "element": "id"
+                }
+              }
+            ],
+            "unique": false
+          },
+          {
+            "name": "gin_idx",
+            "kind": "gin",
+            "on": [
+              {
+                "field": {
+                  "module": "data",
+                  "element": "id"
+                }
+              }
+            ],
+            "unique": false
+          },
+          {
+            "name": "gist_idx",
+            "kind": "gist",
+            "on": [
+              {
+                "field": {
+                  "module": "data",
+                  "element": "id"
+                }
+              }
+            ],
+            "unique": false
+          },
+          {
+            "name": "expression_idx",
+            "kind": "expression",
+            "on": [
+              {
+                "field": {
+                  "module": "data",
+                  "element": "id"
+                }
+              }
+            ],
+            "unique": false
+          },
+          {
+            "name": "partial_idx",
+            "kind": "partial",
+            "on": [
+              {
+                "field": {
+                  "module": "data",
+                  "element": "id"
+                }
+              }
+            ],
+            "unique": false,
+            "predicate": {
+              "language": "postgresql",
+              "version": "17",
+              "expression": "id > 0"
+            }
+          },
+          {
+            "name": "unique_idx",
+            "kind": "unique",
+            "on": [
+              {
+                "field": {
+                  "module": "data",
+                  "element": "id"
+                }
+              }
+            ],
+            "unique": true
+          },
+          {
+            "name": "clustering_idx",
+            "kind": "clustering",
+            "on": [
+              {
+                "field": {
+                  "module": "data",
+                  "element": "id"
+                }
+              }
+            ],
+            "unique": false
+          }
+        ]
+      }
+    }
+  },
+  "native": "fixtures/parquet/cardinality/scalar-1.parquet"
+}

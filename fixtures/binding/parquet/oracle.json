@@ -1,0 +1,23 @@
+{
+  "scope": "Parquet physical binding residuals and source recovery; no generated Parquet candidate or native index-enforcement claim",
+  "target": {
+    "system": "parquet",
+    "version": "2.9",
+    "subset": "file-schema"
+  },
+  "native": {
+    "scope": "Native source validity and retained byte archive only; no binding index or layout enforcement claim",
+    "runtime": "PyArrow 21.0.0",
+    "source": "fixtures/parquet/cardinality/scalar-1.parquet",
+    "sourceSha256": "9f24ac313b18efca4eb1c6d257260d1a89511148bca3c311097be137d6d75490",
+    "rows": 3,
+    "unknownMetadataRetained": true
+  },
+  "residuals": 12,
+  "sha256": {
+    "fixtures/binding/parquet/case.json": "25b3a81a2cc99a0a1eb309f5e15a4d3abd53b2d0be8a3ccff10507297e8a87b3",
+    "fixtures/parquet/cardinality/scalar-1.parquet": "9f24ac313b18efca4eb1c6d257260d1a89511148bca3c311097be137d6d75490",
+    "src/projections/binding-parquet/index.ts": "8df3c4b8405105eba7563713a0fff733cd35334ba216d770ec3f068447242a5a",
+    "scripts/binding/parquet-native.py": "95db597049450ea588bdd3a7c565444710978db31aef701f9491b085477c054e"
+  }
+}
