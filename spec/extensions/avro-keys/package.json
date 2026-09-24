@@ -123,7 +123,7 @@
       }
     }
   },
-  "semantics": "CONTRACT-040 and TD-044. Classification only; authored projection, binding acceptance and Key admission remain unfinished.",
+  "semantics": "CONTRACT-040 and TD-044. Native classification and separate core 0.6.0 authored projection retain all key obligations as residuals; full binding acceptance and Key admission remain unfinished.",
   "scopes": [
     "document"
   ],
@@ -141,7 +141,10 @@
     "evidence": [
       "tests/core-ideals/key-avro.test.ts",
       "fixtures/validation/key-avro-discovery-native.json",
-      "fixtures/validation/key-avro-browser.json"
+      "fixtures/validation/key-avro-browser.json",
+      "tests/core-ideals/key-avro-projection.test.ts",
+      "fixtures/validation/key-avro-projection-native.json",
+      "fixtures/validation/key-avro-projection-browser.json"
     ]
   }
 }

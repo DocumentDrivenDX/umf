@@ -1,0 +1,2470 @@
+{
+  "scope": "Generated scalar record schemas encode repeated whole records and repeated primary/alternate candidate values; encoding does not enforce keys. Missing writer fields refuse; fastavro boolean null input coerces to false while other tested null controls refuse. No exact-input or full binding acceptance claim.",
+  "versions": {
+    "apache": "1.12.0",
+    "fastavro": "1.12.2"
+  },
+  "rows": [
+    {
+      "case": "primary-report",
+      "writer": "apache",
+      "values": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "hex": "020261020261020262040261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "AvroTypeException"
+        },
+        {
+          "id": "null",
+          "error": "AvroTypeException"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "primary-report",
+      "writer": "fastavro",
+      "values": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "hex": "020261020261020262040261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "ValueError"
+        },
+        {
+          "id": "null",
+          "error": "TypeError"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "no-primary-report",
+      "writer": "apache",
+      "values": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "hex": "020261020261020262040261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "AvroTypeException"
+        },
+        {
+          "id": "null",
+          "error": "AvroTypeException"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "no-primary-report",
+      "writer": "fastavro",
+      "values": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "hex": "020261020261020262040261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "ValueError"
+        },
+        {
+          "id": "null",
+          "error": "TypeError"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "rename-and-reorder",
+      "writer": "apache",
+      "values": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "hex": "020261020261020262040261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "AvroTypeException"
+        },
+        {
+          "id": "null",
+          "error": "AvroTypeException"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "rename-and-reorder",
+      "writer": "fastavro",
+      "values": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "hex": "020261020261020262040261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "ValueError"
+        },
+        {
+          "id": "null",
+          "error": "TypeError"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "boolean",
+      "writer": "apache",
+      "values": [
+        {
+          "order_id": true,
+          "external_code": "a"
+        },
+        {
+          "order_id": true,
+          "external_code": "a"
+        },
+        {
+          "order_id": true,
+          "external_code": "b"
+        },
+        {
+          "order_id": false,
+          "external_code": "a"
+        }
+      ],
+      "hex": "010261010261010262000261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": true,
+            "external_code": "a"
+          },
+          {
+            "order_id": true,
+            "external_code": "a"
+          },
+          {
+            "order_id": true,
+            "external_code": "b"
+          },
+          {
+            "order_id": false,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": true,
+            "external_code": "a"
+          },
+          {
+            "order_id": true,
+            "external_code": "a"
+          },
+          {
+            "order_id": true,
+            "external_code": "b"
+          },
+          {
+            "order_id": false,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "AvroTypeException"
+        },
+        {
+          "id": "null",
+          "error": "AvroTypeException"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "boolean",
+      "writer": "fastavro",
+      "values": [
+        {
+          "order_id": true,
+          "external_code": "a"
+        },
+        {
+          "order_id": true,
+          "external_code": "a"
+        },
+        {
+          "order_id": true,
+          "external_code": "b"
+        },
+        {
+          "order_id": false,
+          "external_code": "a"
+        }
+      ],
+      "hex": "010261010261010262000261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": true,
+            "external_code": "a"
+          },
+          {
+            "order_id": true,
+            "external_code": "a"
+          },
+          {
+            "order_id": true,
+            "external_code": "b"
+          },
+          {
+            "order_id": false,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": true,
+            "external_code": "a"
+          },
+          {
+            "order_id": true,
+            "external_code": "a"
+          },
+          {
+            "order_id": true,
+            "external_code": "b"
+          },
+          {
+            "order_id": false,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "ValueError"
+        }
+      ],
+      "coercions": [
+        {
+          "id": "null",
+          "hex": "000261",
+          "decoded": {
+            "order_id": false,
+            "external_code": "a"
+          }
+        }
+      ]
+    },
+    {
+      "case": "decimal",
+      "writer": "apache",
+      "values": [
+        {
+          "order_id": {
+            "decimal": "1.20"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "decimal": "1.20"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "decimal": "1.20"
+          },
+          "external_code": "b"
+        },
+        {
+          "order_id": {
+            "decimal": "2.20"
+          },
+          "external_code": "a"
+        }
+      ],
+      "hex": "0278026102780261027802620400dc0261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": {
+              "decimal": "1.20"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "decimal": "1.20"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "decimal": "1.20"
+            },
+            "external_code": "b"
+          },
+          {
+            "order_id": {
+              "decimal": "2.20"
+            },
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": {
+              "decimal": "1.20"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "decimal": "1.20"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "decimal": "1.20"
+            },
+            "external_code": "b"
+          },
+          {
+            "order_id": {
+              "decimal": "2.20"
+            },
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "AvroTypeException"
+        },
+        {
+          "id": "null",
+          "error": "AvroTypeException"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "decimal",
+      "writer": "fastavro",
+      "values": [
+        {
+          "order_id": {
+            "decimal": "1.20"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "decimal": "1.20"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "decimal": "1.20"
+          },
+          "external_code": "b"
+        },
+        {
+          "order_id": {
+            "decimal": "2.20"
+          },
+          "external_code": "a"
+        }
+      ],
+      "hex": "0278026102780261027802620400dc0261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": {
+              "decimal": "1.20"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "decimal": "1.20"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "decimal": "1.20"
+            },
+            "external_code": "b"
+          },
+          {
+            "order_id": {
+              "decimal": "2.20"
+            },
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": {
+              "decimal": "1.20"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "decimal": "1.20"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "decimal": "1.20"
+            },
+            "external_code": "b"
+          },
+          {
+            "order_id": {
+              "decimal": "2.20"
+            },
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "ValueError"
+        },
+        {
+          "id": "null",
+          "error": "TypeError"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "binary",
+      "writer": "apache",
+      "values": [
+        {
+          "order_id": {
+            "bytesHex": "01"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "bytesHex": "01"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "bytesHex": "01"
+          },
+          "external_code": "b"
+        },
+        {
+          "order_id": {
+            "bytesHex": "02"
+          },
+          "external_code": "a"
+        }
+      ],
+      "hex": "02010261020102610201026202020261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "b"
+          },
+          {
+            "order_id": {
+              "bytesHex": "02"
+            },
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "b"
+          },
+          {
+            "order_id": {
+              "bytesHex": "02"
+            },
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "AvroTypeException"
+        },
+        {
+          "id": "null",
+          "error": "AvroTypeException"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "binary",
+      "writer": "fastavro",
+      "values": [
+        {
+          "order_id": {
+            "bytesHex": "01"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "bytesHex": "01"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "bytesHex": "01"
+          },
+          "external_code": "b"
+        },
+        {
+          "order_id": {
+            "bytesHex": "02"
+          },
+          "external_code": "a"
+        }
+      ],
+      "hex": "02010261020102610201026202020261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "b"
+          },
+          {
+            "order_id": {
+              "bytesHex": "02"
+            },
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "b"
+          },
+          {
+            "order_id": {
+              "bytesHex": "02"
+            },
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "ValueError"
+        },
+        {
+          "id": "null",
+          "error": "TypeError"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "integer-width",
+      "writer": "apache",
+      "values": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "hex": "020261020261020262040261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "AvroTypeException"
+        },
+        {
+          "id": "null",
+          "error": "AvroTypeException"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "integer-width",
+      "writer": "fastavro",
+      "values": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "hex": "020261020261020262040261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "ValueError"
+        },
+        {
+          "id": "null",
+          "error": "TypeError"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "unsigned",
+      "writer": "apache",
+      "values": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "hex": "020261020261020262040261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "AvroTypeException"
+        },
+        {
+          "id": "null",
+          "error": "AvroTypeException"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "unsigned",
+      "writer": "fastavro",
+      "values": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "hex": "020261020261020262040261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "ValueError"
+        },
+        {
+          "id": "null",
+          "error": "TypeError"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "string-length",
+      "writer": "apache",
+      "values": [
+        {
+          "order_id": "a",
+          "external_code": "a"
+        },
+        {
+          "order_id": "a",
+          "external_code": "a"
+        },
+        {
+          "order_id": "a",
+          "external_code": "b"
+        },
+        {
+          "order_id": "b",
+          "external_code": "a"
+        }
+      ],
+      "hex": "02610261026102610261026202620261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": "a",
+            "external_code": "a"
+          },
+          {
+            "order_id": "a",
+            "external_code": "a"
+          },
+          {
+            "order_id": "a",
+            "external_code": "b"
+          },
+          {
+            "order_id": "b",
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": "a",
+            "external_code": "a"
+          },
+          {
+            "order_id": "a",
+            "external_code": "a"
+          },
+          {
+            "order_id": "a",
+            "external_code": "b"
+          },
+          {
+            "order_id": "b",
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "AvroTypeException"
+        },
+        {
+          "id": "null",
+          "error": "AvroTypeException"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "string-length",
+      "writer": "fastavro",
+      "values": [
+        {
+          "order_id": "a",
+          "external_code": "a"
+        },
+        {
+          "order_id": "a",
+          "external_code": "a"
+        },
+        {
+          "order_id": "a",
+          "external_code": "b"
+        },
+        {
+          "order_id": "b",
+          "external_code": "a"
+        }
+      ],
+      "hex": "02610261026102610261026202620261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": "a",
+            "external_code": "a"
+          },
+          {
+            "order_id": "a",
+            "external_code": "a"
+          },
+          {
+            "order_id": "a",
+            "external_code": "b"
+          },
+          {
+            "order_id": "b",
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": "a",
+            "external_code": "a"
+          },
+          {
+            "order_id": "a",
+            "external_code": "a"
+          },
+          {
+            "order_id": "a",
+            "external_code": "b"
+          },
+          {
+            "order_id": "b",
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "ValueError"
+        },
+        {
+          "id": "null",
+          "error": "TypeError"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "binary-length",
+      "writer": "apache",
+      "values": [
+        {
+          "order_id": {
+            "bytesHex": "01"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "bytesHex": "01"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "bytesHex": "01"
+          },
+          "external_code": "b"
+        },
+        {
+          "order_id": {
+            "bytesHex": "02"
+          },
+          "external_code": "a"
+        }
+      ],
+      "hex": "02010261020102610201026202020261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "b"
+          },
+          {
+            "order_id": {
+              "bytesHex": "02"
+            },
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "b"
+          },
+          {
+            "order_id": {
+              "bytesHex": "02"
+            },
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "AvroTypeException"
+        },
+        {
+          "id": "null",
+          "error": "AvroTypeException"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "binary-length",
+      "writer": "fastavro",
+      "values": [
+        {
+          "order_id": {
+            "bytesHex": "01"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "bytesHex": "01"
+          },
+          "external_code": "a"
+        },
+        {
+          "order_id": {
+            "bytesHex": "01"
+          },
+          "external_code": "b"
+        },
+        {
+          "order_id": {
+            "bytesHex": "02"
+          },
+          "external_code": "a"
+        }
+      ],
+      "hex": "02010261020102610201026202020261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "b"
+          },
+          {
+            "order_id": {
+              "bytesHex": "02"
+            },
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "a"
+          },
+          {
+            "order_id": {
+              "bytesHex": "01"
+            },
+            "external_code": "b"
+          },
+          {
+            "order_id": {
+              "bytesHex": "02"
+            },
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "ValueError"
+        },
+        {
+          "id": "null",
+          "error": "TypeError"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "compound-ordered",
+      "writer": "apache",
+      "values": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "hex": "020261020261020262040261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "AvroTypeException"
+        },
+        {
+          "id": "null",
+          "error": "AvroTypeException"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "compound-ordered",
+      "writer": "fastavro",
+      "values": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "hex": "020261020261020262040261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "ValueError"
+        },
+        {
+          "id": "null",
+          "error": "TypeError"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "multiple-alternates",
+      "writer": "apache",
+      "values": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "hex": "020261020261020262040261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "AvroTypeException"
+        },
+        {
+          "id": "null",
+          "error": "AvroTypeException"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "multiple-alternates",
+      "writer": "fastavro",
+      "values": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "hex": "020261020261020262040261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "ValueError"
+        },
+        {
+          "id": "null",
+          "error": "TypeError"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "unknown-extension",
+      "writer": "apache",
+      "values": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "hex": "020261020261020262040261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "AvroTypeException"
+        },
+        {
+          "id": "null",
+          "error": "AvroTypeException"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "unknown-extension",
+      "writer": "fastavro",
+      "values": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "hex": "020261020261020262040261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "ValueError"
+        },
+        {
+          "id": "null",
+          "error": "TypeError"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "unknown-key-qualifier",
+      "writer": "apache",
+      "values": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "hex": "020261020261020262040261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "AvroTypeException"
+        },
+        {
+          "id": "null",
+          "error": "AvroTypeException"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "unknown-key-qualifier",
+      "writer": "fastavro",
+      "values": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "hex": "020261020261020262040261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "ValueError"
+        },
+        {
+          "id": "null",
+          "error": "TypeError"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "unknown-member-qualifier",
+      "writer": "apache",
+      "values": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "hex": "020261020261020262040261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "AvroTypeException"
+        },
+        {
+          "id": "null",
+          "error": "AvroTypeException"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "unknown-member-qualifier",
+      "writer": "fastavro",
+      "values": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "hex": "020261020261020262040261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "ValueError"
+        },
+        {
+          "id": "null",
+          "error": "TypeError"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "unknown-facet-qualifier",
+      "writer": "apache",
+      "values": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "hex": "020261020261020262040261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "AvroTypeException"
+        },
+        {
+          "id": "null",
+          "error": "AvroTypeException"
+        }
+      ],
+      "coercions": []
+    },
+    {
+      "case": "unknown-facet-qualifier",
+      "writer": "fastavro",
+      "values": [
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "a"
+        },
+        {
+          "order_id": 1,
+          "external_code": "b"
+        },
+        {
+          "order_id": 2,
+          "external_code": "a"
+        }
+      ],
+      "hex": "020261020261020262040261",
+      "reads": {
+        "apache": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "a"
+          },
+          {
+            "order_id": 1,
+            "external_code": "b"
+          },
+          {
+            "order_id": 2,
+            "external_code": "a"
+          }
+        ]
+      },
+      "refusals": [
+        {
+          "id": "missing",
+          "error": "ValueError"
+        },
+        {
+          "id": "null",
+          "error": "TypeError"
+        }
+      ],
+      "coercions": []
+    }
+  ],
+  "sha256": {
+    "fixtures/avro/key-projection-generated.json": "7d9c881ded77d46ce4fce77ea92719a58a9f6fc13ff21720e452114c62c9fe95",
+    "scripts/core-ideals/key-avro-projection-native.py": "7537dcea4da46a6a8134401ccfe188a136033347f49f04200badad9e6b74ee75",
+    "scripts/core-ideals/key-avro-projection-oracle.ts": "b413bf2bd0481490da8b4358bb7c2dd1606c9d2c1eaa8c3a16cd009784f59e43",
+    "scripts/core-ideals/key-avro-projection-cases.ts": "73aa0bace86f88afb97df8c30e5820563aa4ce081573bde012812d11d75cc84e",
+    "src/core-ideals/key-avro-projection.ts": "5451b02e0d546583666e07815b94eaace287ed4f62343bf73790103219b7823d",
+    "spec/core/key-avro-projection.schema.json": "09600e303c9e595d8f9c83ef6d3d3b163595fd2d4508b4ee5b6a0e08d21d912e"
+  }
+}

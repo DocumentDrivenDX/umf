@@ -342,3 +342,4 @@ export * from './core-ideals/key-postgresql-projection';
 export * from './core-ideals/key-sqlserver';
 export * from './core-ideals/key-sqlserver-projection';
 export * from './core-ideals/key-avro';
+export * from './core-ideals/key-avro-projection';

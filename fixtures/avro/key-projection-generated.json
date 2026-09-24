@@ -1,0 +1,600 @@
+{
+  "scope": "Generated required scalar Avro records; named authored key obligations remain in retained UMF residuals",
+  "cases": [
+    {
+      "name": "primary-report",
+      "schemaText": "{\"type\":\"record\",\"name\":\"Orders\",\"namespace\":\"umf_key_projection\",\"fields\":[{\"name\":\"order_id\",\"type\":\"long\"},{\"name\":\"external_code\",\"type\":\"string\"}]}\n",
+      "keyMappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/fields/0"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/fields/1"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "no-primary-report",
+      "schemaText": "{\"type\":\"record\",\"name\":\"Orders\",\"namespace\":\"umf_key_projection\",\"fields\":[{\"name\":\"order_id\",\"type\":\"long\"},{\"name\":\"external_code\",\"type\":\"string\"}]}\n",
+      "keyMappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/fields/0"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/fields/1"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "rename-and-reorder",
+      "schemaText": "{\"type\":\"record\",\"name\":\"Orders\",\"namespace\":\"umf_key_projection\",\"fields\":[{\"name\":\"order_id\",\"type\":\"long\"},{\"name\":\"external_code\",\"type\":\"string\"}]}\n",
+      "keyMappings": [
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/fields/1"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-id",
+          "keyName": "Renamed identity",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/fields/0"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "boolean",
+      "schemaText": "{\"type\":\"record\",\"name\":\"Orders\",\"namespace\":\"umf_key_projection\",\"fields\":[{\"name\":\"order_id\",\"type\":\"boolean\"},{\"name\":\"external_code\",\"type\":\"string\"}]}\n",
+      "keyMappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/fields/0"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/fields/1"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "decimal",
+      "schemaText": "{\"type\":\"record\",\"name\":\"Orders\",\"namespace\":\"umf_key_projection\",\"fields\":[{\"name\":\"order_id\",\"type\":{\"type\":\"bytes\",\"logicalType\":\"decimal\",\"precision\":5,\"scale\":2}},{\"name\":\"external_code\",\"type\":\"string\"}]}\n",
+      "keyMappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/fields/0"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/fields/1"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "binary",
+      "schemaText": "{\"type\":\"record\",\"name\":\"Orders\",\"namespace\":\"umf_key_projection\",\"fields\":[{\"name\":\"order_id\",\"type\":\"bytes\"},{\"name\":\"external_code\",\"type\":\"string\"}]}\n",
+      "keyMappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/fields/0"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/fields/1"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "integer-width",
+      "schemaText": "{\"type\":\"record\",\"name\":\"Orders\",\"namespace\":\"umf_key_projection\",\"fields\":[{\"name\":\"order_id\",\"type\":\"long\"},{\"name\":\"external_code\",\"type\":\"string\"}]}\n",
+      "keyMappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/fields/0"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/fields/1"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "unsigned",
+      "schemaText": "{\"type\":\"record\",\"name\":\"Orders\",\"namespace\":\"umf_key_projection\",\"fields\":[{\"name\":\"order_id\",\"type\":\"long\"},{\"name\":\"external_code\",\"type\":\"string\"}]}\n",
+      "keyMappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/fields/0"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/fields/1"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "string-length",
+      "schemaText": "{\"type\":\"record\",\"name\":\"Orders\",\"namespace\":\"umf_key_projection\",\"fields\":[{\"name\":\"order_id\",\"type\":\"string\"},{\"name\":\"external_code\",\"type\":\"string\"}]}\n",
+      "keyMappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/fields/0"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/fields/1"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "binary-length",
+      "schemaText": "{\"type\":\"record\",\"name\":\"Orders\",\"namespace\":\"umf_key_projection\",\"fields\":[{\"name\":\"order_id\",\"type\":\"bytes\"},{\"name\":\"external_code\",\"type\":\"string\"}]}\n",
+      "keyMappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/fields/0"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/fields/1"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "compound-ordered",
+      "schemaText": "{\"type\":\"record\",\"name\":\"Orders\",\"namespace\":\"umf_key_projection\",\"fields\":[{\"name\":\"order_id\",\"type\":\"long\"},{\"name\":\"external_code\",\"type\":\"string\"}]}\n",
+      "keyMappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Compound identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/fields/1",
+            "/fields/0"
+          ],
+          "columns": [
+            "external_code",
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/fields/1"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "multiple-alternates",
+      "schemaText": "{\"type\":\"record\",\"name\":\"Orders\",\"namespace\":\"umf_key_projection\",\"fields\":[{\"name\":\"order_id\",\"type\":\"long\"},{\"name\":\"external_code\",\"type\":\"string\"}]}\n",
+      "keyMappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/fields/0"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/fields/1"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "compound",
+          "keyName": "Extra alternate",
+          "idealPath": "/modules/0/elements/0/keys/2",
+          "nativePaths": [
+            "/fields/0",
+            "/fields/1"
+          ],
+          "columns": [
+            "order_id",
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "unknown-extension",
+      "schemaText": "{\"type\":\"record\",\"name\":\"Orders\",\"namespace\":\"umf_key_projection\",\"fields\":[{\"name\":\"order_id\",\"type\":\"long\"},{\"name\":\"external_code\",\"type\":\"string\"}]}\n",
+      "keyMappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/fields/0"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/fields/1"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "unknown-key-qualifier",
+      "schemaText": "{\"type\":\"record\",\"name\":\"Orders\",\"namespace\":\"umf_key_projection\",\"fields\":[{\"name\":\"order_id\",\"type\":\"long\"},{\"name\":\"external_code\",\"type\":\"string\"}]}\n",
+      "keyMappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/fields/0"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/fields/1"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "unknown-member-qualifier",
+      "schemaText": "{\"type\":\"record\",\"name\":\"Orders\",\"namespace\":\"umf_key_projection\",\"fields\":[{\"name\":\"order_id\",\"type\":\"long\"},{\"name\":\"external_code\",\"type\":\"string\"}]}\n",
+      "keyMappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/fields/0"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/fields/1"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "name": "unknown-facet-qualifier",
+      "schemaText": "{\"type\":\"record\",\"name\":\"Orders\",\"namespace\":\"umf_key_projection\",\"fields\":[{\"name\":\"order_id\",\"type\":\"long\"},{\"name\":\"external_code\",\"type\":\"string\"}]}\n",
+      "keyMappings": [
+        {
+          "keyId": "stable-id",
+          "keyName": "Order identity",
+          "idealPath": "/modules/0/elements/0/keys/0",
+          "nativePaths": [
+            "/fields/0"
+          ],
+          "columns": [
+            "order_id"
+          ],
+          "primary": true,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        },
+        {
+          "keyId": "stable-code",
+          "keyName": "External code",
+          "idealPath": "/modules/0/elements/0/keys/1",
+          "nativePaths": [
+            "/fields/1"
+          ],
+          "columns": [
+            "external_code"
+          ],
+          "primary": false,
+          "origin": "authored",
+          "enforcement": "not-expressible",
+          "outcome": "not-expressible"
+        }
+      ]
+    }
+  ]
+}

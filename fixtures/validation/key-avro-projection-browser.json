@@ -1,0 +1,19 @@
+{
+  "scope": "Authored Avro Key projection host/browser parity, retained ideal recovery and altered-receipt refusal; native execution is covered separately.",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "projected": 16,
+    "blocked": 4,
+    "recoveries": 32,
+    "refusals": 32
+  },
+  "externalRequests": [],
+  "sha256": {
+    "scripts/core-ideals/key-avro-projection-browser.ts": "106a9dda6565f517c3358371d84ad1b2a93f8bebd1951b68e9b9b2b15c35b67b",
+    "scripts/core-ideals/key-avro-projection-cases.ts": "73aa0bace86f88afb97df8c30e5820563aa4ce081573bde012812d11d75cc84e",
+    "src/core-ideals/key-avro-projection.ts": "5451b02e0d546583666e07815b94eaace287ed4f62343bf73790103219b7823d",
+    "spec/core/key-avro-projection.schema.json": "09600e303c9e595d8f9c83ef6d3d3b163595fd2d4508b4ee5b6a0e08d21d912e",
+    "src/index.ts": "7be15f700e85472a9efd056e41ee53039101708d9c9f21bab6e200346c65d4b8",
+    "dist/umf.js": "c560c0995e535e4f64d3da6649ab2762761b959cb08a0680d1e537d8c7468619"
+  }
+}

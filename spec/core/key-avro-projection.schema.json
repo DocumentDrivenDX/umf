@@ -1,0 +1,334 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:key-avro-projection:1.0.0",
+  "title": "Explicit authored Key projection to Avro declarations with retained ideal recovery",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation",
+    "version",
+    "status",
+    "source",
+    "authors",
+    "request",
+    "binding",
+    "mappings",
+    "residuals",
+    "diagnostics"
+  ],
+  "properties": {
+    "operation": {
+      "const": "project-keys-avro"
+    },
+    "version": {
+      "const": "1.0.0"
+    },
+    "status": {
+      "enum": [
+        "projected",
+        "blocked"
+      ]
+    },
+    "source": {
+      "$ref": "urn:umf:core:0.6.0"
+    },
+    "authors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "urn:umf:core:key-operation:1.0.0#/$defs/declaration"
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "record",
+        "recordName",
+        "namespace",
+        "mode",
+        "columns"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "module",
+            "element"
+          ],
+          "properties": {
+            "module": {
+              "type": "string",
+              "minLength": 1
+            },
+            "element": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "recordName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "mode": {
+          "enum": [
+            "strict",
+            "report"
+          ]
+        },
+        "columns": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "field",
+              "name",
+              "nativeType"
+            ],
+            "properties": {
+              "field": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "module",
+                  "element"
+                ],
+                "properties": {
+                  "module": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "element": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nativeType": {
+                "enum": [
+                  "boolean",
+                  "int",
+                  "long",
+                  "bytes",
+                  "string",
+                  "float",
+                  "double",
+                  "decimal-bytes"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "binding": {
+      "const": {
+        "id": "umf.avro.keys",
+        "version": "1.0.0",
+        "nativeVersion": "1.12.0",
+        "subset": "Authored required singular scalar Record Fields projected to explicit Avro carriers; no native collection uniqueness, key identity or exact input conversion; per-key residual recovery is required"
+      }
+    },
+    "target": {
+      "$ref": "urn:umf:core:0.1.0"
+    },
+    "mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "keyId",
+          "keyName",
+          "idealPath",
+          "nativePaths",
+          "columns",
+          "primary",
+          "origin",
+          "enforcement",
+          "outcome"
+        ],
+        "properties": {
+          "keyId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "keyName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "idealPath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "nativePaths": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "columns": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "primary": {
+            "type": "boolean"
+          },
+          "origin": {
+            "const": "authored"
+          },
+          "enforcement": {
+            "const": "not-expressible"
+          },
+          "outcome": {
+            "const": "not-expressible"
+          }
+        }
+      }
+    },
+    "residuals": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "value",
+          "reason",
+          "outcome",
+          "recovery"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {},
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outcome": {
+            "enum": [
+              "unknown",
+              "not-expressible"
+            ]
+          },
+          "recovery": {
+            "const": "Recover authored source from retained receipt; native import alone does not recover authored identity"
+          }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "path",
+          "message",
+          "severity"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "warning",
+              "error"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "projected"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "target"
+        ],
+        "properties": {
+          "request": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "const": "report"
+              }
+            }
+          },
+          "diagnostics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "warning"
+                }
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "target": false,
+          "diagnostics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "const": "error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

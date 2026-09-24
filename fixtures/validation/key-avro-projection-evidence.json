@@ -1,0 +1,49 @@
+{
+  "scope": "Authored Avro Key scalar-carrier projection and retained ideal recovery. Collection identity remains per-key residual; full Avro binding acceptance and Key admission remain unfinished.",
+  "tests": {
+    "command": [
+      "bun",
+      "test",
+      "./tests/core-ideals/key-avro.test.ts",
+      "./tests/core-ideals/key-avro-projection.test.ts"
+    ],
+    "passed": 40,
+    "failed": 0,
+    "assertions": 587
+  },
+  "native": {
+    "schemas": 16,
+    "writerCases": 32,
+    "crossReads": 64,
+    "refusals": 63,
+    "coercions": 1,
+    "counterexample": "fastavro 1.12.2 strict writer coerces boolean null input to false; the projector reports this loss explicitly"
+  },
+  "browser": {
+    "projected": 16,
+    "blocked": 4,
+    "recoveries": 32,
+    "refusals": 32
+  },
+  "checks": [
+    "bun run typecheck",
+    "bun run build",
+    "bun scripts/core-ideals/key-avro-oracle.ts",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/key-avro-projection-browser.ts",
+    "bun run test:schemas"
+  ],
+  "schemas": 303,
+  "packages": 52,
+  "sha256": {
+    "fixtures/validation/key-avro-projection-native.json": "e71e9dfa1f51c214a1d7146bb2f5dc67a06d0b132b571db4214a4caf1094d7a4",
+    "fixtures/validation/key-avro-projection-browser.json": "1acfa390bc7eeff519880bfa3af19f951d1b07605d3d0a68573988be564e827f",
+    "src/core-ideals/key-avro-projection.ts": "5451b02e0d546583666e07815b94eaace287ed4f62343bf73790103219b7823d",
+    "scripts/core-ideals/key-avro-projection-schema.ts": "e19f353465a4ce00e4ce8c30a3cc92c6861772468d837f578cb8cc70f54dd8c4",
+    "spec/core/key-avro-projection.schema.json": "09600e303c9e595d8f9c83ef6d3d3b163595fd2d4508b4ee5b6a0e08d21d912e",
+    "scripts/core-ideals/key-avro-oracle.ts": "4f8c10fb29e2a1f165ae63be52b192f0ee1e9eb3193e7ae74884b349a03d1abb",
+    "scripts/core-ideals/key-avro-projection-oracle.ts": "b413bf2bd0481490da8b4358bb7c2dd1606c9d2c1eaa8c3a16cd009784f59e43",
+    "tests/core-ideals/key-avro-projection.test.ts": "a9fe01dd13282900d11fcbc040058e50f13f5e4da677926517bc2ecba8c472d0",
+    "spec/extensions/avro-keys/package.json": "604111b690a9f1248c37bd63d9682b5028a4f5de707b490abe69d128a53c9948",
+    "src/index.ts": "7be15f700e85472a9efd056e41ee53039101708d9c9f21bab6e200346c65d4b8"
+  }
+}
