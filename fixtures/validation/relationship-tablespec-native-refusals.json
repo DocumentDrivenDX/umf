@@ -1,0 +1,14 @@
+[
+  {
+    "name": "invalid-native-primary-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"primary_key\":[\"missing\"]}"
+  },
+  {
+    "name": "invalid-native-context-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"context_column\":\"missing\"}"
+  },
+  {
+    "name": "invalid-native-dimension-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\",\"dimension\":3},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\",\"dimension\":3}]}"
+  }
+]

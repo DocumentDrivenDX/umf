@@ -52,11 +52,27 @@ export function projectRelationshipToTableSpec(input:Document,authorInput:CoreRe
  const block=(path:string,value:unknown,reason:string)=>{impossible=true;loss(path,value,reason);};
  loss('/',source,'Only the selected relationship metadata is emitted; the complete logical model and unknown content recover from this retained source');
  for(const key of ['id','name','source','target','sourceMultiplicity','targetMultiplicity','targetLifecycle','directed','inverse','associationRecord'])if(Object.hasOwn(rel,key))loss(current.path+'/'+key,rel[key],'Native outgoing metadata does not establish this authored obligation; stable identity, Key semantics, checked participation, lifecycle and presentation intent require the retained receipt');
- for(const path of current.uninterpretedPaths)loss(path,rel,'Unknown relationship qualifier remains uninterpreted','unknown');
+ for(const path of current.uninterpretedPaths){
+  let value:unknown=source;for(const part of path.slice(1).split('/').map(p=>p.replace(/~1/g,'/').replace(/~0/g,'~'))){
+   if(value===null||typeof value!=='object'||!Object.hasOwn(value,part))throw new UmfError('RELATIONSHIP_TABLESPEC_PATH','Unresolved qualifier diagnostic path');
+   value=(value as Record<string,unknown>)[part];
+  }
+  loss(path,value,'Unknown relationship qualifier remains uninterpreted','unknown');
+ }
  if(rel.source.length!==1||rel.target.length!==1)block(current.path,rel,'This outgoing-metadata profile cannot emit heterogeneous endpoint sets');
  if(rel.associationRecord)block(current.path+'/associationRecord',rel.associationRecord,'A separately keyed association Record requires an explicit physical layout; no attributes or identity may be discarded');
  for(const [label,node] of [['nativeSource',from],['nativeTarget',to]] as const){
   if(!nativeCheck(JSON.parse(renderTree(node))))block('/'+label,node,'Pinned native JSON Schema rejects the supplied table; original archive remains retained');
+  const nativeColumns=node.members.columns?.kind==='array'?node.members.columns.items:[];
+  const columnNames=new Set(nativeColumns.map(c=>c.kind==='object'?text(c.members.name):null));
+  const primary=node.members.primary_key;
+  if(primary?.kind==='array'&&primary.items.some(c=>c.kind==='string'&&!c.value.startsWith('meta_')&&!columnNames.has(c.value)))block('/'+label+'/primary_key',primary,'Pinned native model rejects primary-key columns absent from the supplied table');
+  const context=node.members.context_column;
+  if(context?.kind==='string'&&!columnNames.has(context.value))block('/'+label+'/context_column',context,'Pinned native model requires context_column to resolve locally');
+  for(const [i,c] of nativeColumns.entries())if(c.kind==='object'){
+   const embedding=text(c.members.data_type)?.toUpperCase()==='EMBEDDING',dimension=c.members.dimension;
+   if(embedding?dimension===undefined||dimension.kind==='null':dimension!==undefined&&dimension.kind!=='null')block('/'+label+'/columns/'+i,c,'Pinned native model requires dimension for EMBEDDING and forbids it on other native types');
+  }
   const names=[text(node.members.table_name),...(node.members.columns?.kind==='array'?node.members.columns.items.map(c=>c.kind==='object'?text(c.members.name):null):[])];
   if(names.some(n=>n===null||n.length>128||!/^[A-Za-z][A-Za-z0-9_]*(?![\s\S])/.test(n)))block('/'+label,node,'Pinned native model requires ASCII identifiers of at most 128 characters; no normalization is allowed');
  }

@@ -34,3 +34,11 @@ test('changed author, endpoint component and request accessors reject',()=>{
  const d=relationshipTableSpecCase();d.author.request.name='forged';expect(()=>projectRelationshipToTableSpec(d.source,d.author,d.nativeSource,d.nativeTarget,d.request)).toThrow();
  let reads=0;const e=relationshipTableSpecCase();expect(()=>projectRelationshipToTableSpec(e.source,e.author,e.nativeSource,e.nativeTarget,{...e.request,get mode(){reads++;return 'report' as const;}})).toThrow();expect(reads).toBe(0);
 });
+
+// @covers US-045-AC5
+test('unknown residual retains exactly the value at its qualified path',()=>{
+ const c=relationshipTableSpecCase('unknown');
+ const r=projectRelationshipToTableSpec(c.source,c.author,c.nativeSource,c.nativeTarget,c.request);
+ const residual=r.residuals.find(x=>x.path.endsWith('/future'))!;
+ expect(residual.value).toEqual({uninterpreted:true});expect(residual.outcome).toBe('unknown');
+});

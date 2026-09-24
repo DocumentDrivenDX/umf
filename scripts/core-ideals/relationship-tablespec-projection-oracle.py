@@ -2,6 +2,7 @@
 import hashlib, importlib.metadata, json, runpy
 from pathlib import Path
 import jsonschema
+from pydantic import ValidationError
 PIN='647e8e566ad78b864282ec65c0b0b2237aa63084'
 manifest_path=Path('native/tablespec/sources.json');manifest=json.loads(manifest_path.read_text());assert manifest['commit']==PIN
 paths=[Path(__file__),manifest_path,Path('scripts/core-ideals/relationship-tablespec-oracle.ts'),Path('scripts/core-ideals/relationship-tablespec-projection-cases.ts'),Path('src/core-ideals/relationship-tablespec-projection.ts'),Path('spec/core/relationship-tablespec-projection.schema.json'),Path('fixtures/validation/relationship-tablespec-projected-schemas.json')]
@@ -31,5 +32,15 @@ for row in rows:
  assert {k:v for k,v in native.items() if k!='relationships'}=={k:v for k,v in original.items() if k!='relationships'}
  results.append({'case':row['name'],'runtimeAccepted':True,'checkedSchemaAccepted':True,'columnPairs':len(pairs),'metadataPreserved':True})
 assert len(results)==12
-proof={'nativeVersion':PIN,'scope':'Outgoing relationship metadata and explicit column pairs accepted by pinned native model/schema; no referential enforcement or join execution established','bindingAccepted':False,'nativeEquivalence':False,'versions':{p:importlib.metadata.version(p) for p in ['pydantic','jsonschema']},'rows':results,'sha256':{str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(set(paths))}}
+refusal_path=Path('fixtures/validation/relationship-tablespec-native-refusals.json');paths.append(refusal_path)
+refusals=[]
+for row in json.loads(refusal_path.read_text()):
+ native=json.loads(row['native']);validator.validate(native)
+ try: UMF.model_validate(native)
+ except ValidationError: refused=True
+ else: refused=False
+ assert refused, row['name']
+ refusals.append({'case':row['name'],'checkedSchemaAccepted':True,'runtimeAccepted':False})
+assert len(refusals)==3
+proof={'nativeVersion':PIN,'scope':'Outgoing relationship metadata and explicit column pairs accepted by pinned native model/schema; no referential enforcement or join execution established','bindingAccepted':False,'nativeEquivalence':False,'versions':{p:importlib.metadata.version(p) for p in ['pydantic','jsonschema']},'rows':results,'refusals':refusals,'sha256':{str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(set(paths))}}
 Path('fixtures/validation/relationship-tablespec-projection-native.json').write_text(json.dumps(proof,indent=2)+'\n');print(json.dumps({'emitted':len(results),'nativeAccepted':len(results),'bindingAccepted':False}))

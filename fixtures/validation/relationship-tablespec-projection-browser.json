@@ -2,9 +2,9 @@
   "scope": "Authored outgoing-metadata projection, fresh import/classification and retained logical/native recoveries; no execution enforcement, full binding acceptance or ideal admission",
   "browser": "148.0.7778.0",
   "checks": {
-    "cases": 36,
+    "cases": 42,
     "projected": 12,
-    "blocked": 24,
+    "blocked": 30,
     "idealRecoveries": 24,
     "nativeSourcePairRecoveries": 24,
     "classifiedNativeRecoveries": 24,
@@ -13,15 +13,15 @@
   },
   "externalRequests": [],
   "sha256": {
-    "src/core-ideals/relationship-tablespec-projection.ts": "3c8a4578da37e091a583db83cdd3dde549f873378f5ab3121b4adb895c806a58",
+    "src/core-ideals/relationship-tablespec-projection.ts": "3620ed4f9bff2223ab00dee967b1b3e35e6ec09e94ee60db1189ea0daefc0f02",
     "src/core-ideals/relationship-tablespec.ts": "0f14cfa43cfe85fe5b0b921860b0042f22b69d4fe707b5ca95f87a6e80e07d3f",
     "src/index.ts": "9e9454769f562ac198cf198e864f82615e52f2240047fb2d05d40264cd036b15",
-    "scripts/core-ideals/relationship-tablespec-projection-cases.ts": "1381fb99c815c6eb1668aa9d163b3fd637ed9e3a1c817eba2d2f9cc680107f91",
+    "scripts/core-ideals/relationship-tablespec-projection-cases.ts": "718545bb2c21b94d4340ef66db059c964a4fb075e85aaf54eeb1cccbc1fb7144",
     "scripts/core-ideals/relationship-tablespec-projection-schema.ts": "5a2fde800375077b54d410d78e7bf31e04e81b53650fdcc937253b3c56e97d24",
-    "scripts/core-ideals/relationship-tablespec-projection-browser.ts": "1beee6770548439b1573ae97a651c5ac01f1bd3d6355070a3a5fd5b85fe76640",
-    "tests/core-ideals/relationship-tablespec-projection.test.ts": "a7875eee3435192d54afce304f5e0364d649ad18b7d0d11db474cb1e0f9ce1a6",
+    "scripts/core-ideals/relationship-tablespec-projection-browser.ts": "3f635c635dceb6798814b7bb6ffddbf01a35bcf94f4dbd2d751b29426d576ee0",
+    "tests/core-ideals/relationship-tablespec-projection.test.ts": "884727ef65bd5c0387e1778d8b438d134537915a091f8ae4ed3f70368142b51e",
     "spec/core/relationship-tablespec-projection.schema.json": "a65c41f20c9972102ca442c66a38d3139b9c8f112f1f4452884796989185d774",
-    "fixtures/validation/relationship-tablespec-projection-native.json": "94c73d5c0c4a67a13a03cc26c6a66fa5be51499f11ddae1f026ed2cefa724b5a",
-    "dist/umf.js": "16d5393b02f9cc76ecf93c5d6a2644c90bf6df359b4d063e478ff2fe754b3aa1"
+    "fixtures/validation/relationship-tablespec-projection-native.json": "b675cadb2ac1a14522aafceb2cd7747fa9e39d3f074b46dcf53439456aad2f65",
+    "dist/umf.js": "4854035cbdaafa6c3bab8353ce2fd6e66e29a778c78ee8039ca09137b2f252fe"
   }
 }

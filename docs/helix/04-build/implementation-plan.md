@@ -4903,3 +4903,24 @@ classification browser proof is also refreshed. Typecheck, build and
 Binding acceptance remains open pending its complete acceptance audit and wider
 compatibility verification. Relationship admission and other target bindings
 remain separate work.
+
+### TableSpec projection review corrections
+
+The projection review found that an unknown-qualifier residual retained the
+whole relationship instead of the value at its diagnostic path. Residuals now
+resolve that exact value, including escaped JSON Pointer segments. It also
+identified native tables whose checked schema accepts missing primary-key or
+context columns, or an embedding dimension on a non-embedding column, while
+the pinned runtime model rejects them. The projection blocks these cases and
+retains both original native sources. Independent native probes confirm all
+three schema/runtime disagreements.
+
+The expanded 42-case projection matrix has twelve emitted carriers and thirty
+blocks. All 91 TableSpec discovery/classification/projection tests pass 663
+assertions. Chromium confirms the expanded matrix and the same 24 recoveries
+in each composed direction; the classification browser proof is refreshed.
+Typechecking and build pass. The projection checkpoint retains the earlier
+execution counts in its history. Remaining native model validators, including
+source configuration and domain-specific column checks, still need review
+before broader binding acceptance; checked-schema acceptance alone cannot
+establish native runtime acceptance for arbitrary supplied tables.
