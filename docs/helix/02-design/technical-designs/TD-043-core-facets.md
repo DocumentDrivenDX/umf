@@ -24,7 +24,7 @@ separate solution design exists for this core slice. Field, Nullability and Card
 have passed their qualified five-system gates. Implementation starts from experimental
 core 0.4.0 with explicit item/value Field references. Experimental 0.5.0 facet
 validation, authoring, migration and metadata selection now pass core-task
-acceptance. Native facet bindings and admission remain separate tasks.
+acceptance. Native facet bindings and the separate admission/delivery gate now pass qualified acceptance; see the final checkpoint below.
 
 ## Technical Approach
 
@@ -149,7 +149,7 @@ and follow-up bindings; report mode must never imply execution enforcement.
 
 - [x] All story ACs have implementation/test responsibilities.
 - [x] Governing meaning stays in CONTRACT-040; native refinements are retained.
-- [ ] Schema/version transition, five bindings and regression evidence implemented.
+- [x] Schema/version transition, five bindings and regression evidence implemented within the published qualified profiles.
 
 
 ### Facet representation and implementation decision
@@ -942,3 +942,9 @@ compatibility regression and refreshed prior concept gates are all required
 before acceptance. A package description or a direct facet comparison alone
 cannot satisfy that gate. Parquet, facet admission/delivery and Key remain
 separate work; native equivalence is unclaimed.
+
+## Facet gate acceptance checkpoint
+
+Facets now pass the separate ideal-admission and qualified five-system delivery gate. Native equivalence remains unclaimed; native payloads and unknown extension content remain attached. Key is the next ordered concept. See the
+[admission evidence](../../04-build/evidence/facet-gate-admission.md) for exact counts, qualified versions, retained
+failures and scope limits. Earlier pending checkpoints above remain historical.

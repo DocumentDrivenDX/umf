@@ -3010,3 +3010,9 @@ with earlier native availability/container operations are not claimed.
 This completes the SQL Server facet binding only. Avro, Parquet, the separate
 facet ideal admission/delivery gate and Key remain required. Native equivalence
 is unclaimed; native payloads and unknown content remain recoverable.
+
+## Facet gate acceptance checkpoint
+
+Facets now pass the separate ideal-admission and qualified five-system delivery gate. Native equivalence remains unclaimed; native payloads and unknown extension content remain attached. Key is the next ordered concept. See the
+[admission evidence](../04-build/evidence/facet-gate-admission.md) for exact counts, qualified versions, retained
+failures and scope limits. Earlier pending checkpoints above remain historical.
