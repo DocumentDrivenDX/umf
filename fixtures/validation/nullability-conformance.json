@@ -31,30 +31,30 @@
     "records": [
       {
         "path": "fixtures/validation/nullability-core-acceptance-evidence.json",
-        "sha256": "bd4238352a2df6e8e6aef30c8f97430b38f3031e108d390c5611c721d70362f7"
+        "sha256": "ec2a6ab3d9f9d34d705e0be2030ef456f851423377e9f40865d69ac02f5184e7"
       },
       {
         "path": "fixtures/validation/tablespec-nullability-acceptance-evidence.json",
-        "sha256": "c1226a1d23b771517b31956499ba4a72424e14921e6b525a933fce3559f223aa"
+        "sha256": "5f5af360e8a5ef1147cec89bbb45b8a899a8315e4921a3a6502482dc7a408214"
       },
       {
         "path": "fixtures/validation/postgresql-nullability-acceptance-evidence.json",
-        "sha256": "f1e7bfc489a9cefb91f0e547a87485daea914d544e3fd62b2334923c8d1249e9"
+        "sha256": "9d6cb7006044e3cbe3bbf8018a15beabaa6b9940e1027517babb90d635b0c4b2"
       },
       {
         "path": "fixtures/validation/sqlserver-nullability-acceptance-evidence.json",
-        "sha256": "ee849ef233d1f782b72243ffd1e2fdbfa323688104949b236415d56720307550"
+        "sha256": "ab99e8dcea6635073ea5e9da628a1e5e15626223ea251bd4cb7b78372cd340a2"
       },
       {
         "path": "fixtures/validation/avro-nullability-acceptance-evidence.json",
-        "sha256": "0e4e0d279ca304af7071e4dd906d256f1fc61727d4073f4535f0270e9af6f0b4"
+        "sha256": "468de43a20dc48d5b5c9f0ef763d0dac2ab8122fc76f45ad1fc30a0e751c9808"
       },
       {
         "path": "fixtures/validation/parquet-nullability-acceptance-evidence.json",
-        "sha256": "4f5cd59ffffaf1aebd5d3c11864ebe4f70c2551223c63adaabce9f28bb3ac1f0"
+        "sha256": "1ab8328d5dac607edc03dd48b153e6e8499cee0597dc43566a8208ead64f1441"
       }
     ],
-    "fingerprints": 3116,
+    "fingerprints": 3547,
     "systems": [
       "tablespec",
       "postgresql",
@@ -62,7 +62,7 @@
       "avro",
       "parquet"
     ],
-    "refreshSha256": "8b26b22a0272a40d3945e4ad344fd967e1d2059c2c770b1553495d23f043e6be"
+    "refreshSha256": "21405ed734caeaa133873b549404d1175dbb6dd5860c3c1ef587f873365c2ed4"
   },
   "roundTrips": {
     "tablespec": {
