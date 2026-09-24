@@ -128,7 +128,9 @@ source/version and refinements, never `authored` provenance.
 | LinkML | Slot with range and `multivalued` for `targetMultiplicity.max > 1` under explicit class/range binding. | Opposite-end multiplicity, named target key, association identity and unsupported unions remain residual; retain native slot facets. |
 
 Native counterexample evidence is pinned at
-`fixtures/relationship-native/oracle-results.json`. The TableSpec 1.0 model
+`fixtures/relationship-native/oracle-results.json`; Chromium 148 codec recovery
+for the same source hashes is in `fixtures/relationship-native/browser-results.json`.
+The TableSpec 1.0 model
 accepts `relationships.foreign_keys` with source column, referenced table and
 column, and confidence; the current adapter archives it exactly. This proves a
 native carrier exists, but not an authored Relationship down-projection or Key
