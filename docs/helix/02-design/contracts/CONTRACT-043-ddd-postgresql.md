@@ -40,9 +40,11 @@ The relationship-independent table stage is implemented for a pinned PostgreSQL
 17.4 subset: DDD entities and a separate binding emit quoted tables, explicit
 scalar columns, a JSONB object carrier and LIST/default partition layout.
 The table-stage report retains every index choice, relationship choice, DDD
-identity and unsupported scalar/path obligation as a residual. This stage is
-not the complete projection defined below; the relationship, key and index
-composition still requires their dependent beads.
+identity and unsupported scalar/path obligation as a residual. A separate
+table-plus-index stage has pinned PostgreSQL 17.4 evidence for four supported
+indexes and explicit residuals for four unsupported choices. Neither stage is
+the complete projection defined below; relationship and Key composition still
+require their dependent beads.
 
 ## Scope and Boundaries
 
@@ -76,6 +78,36 @@ are checked. Unsupported or unsafe syntax blocks in either loss mode.
 | Relationship `inline` | Only an explicit supported inline carrier | Unsupported layout blocks or residualizes; never guess storage. |
 | Bound partition/index | PostgreSQL partition clause and `CREATE INDEX`/unique form after safe policy checks | Unsupported `clustering`, opaque predicate semantics, path/collation/statistics behavior remain reported. |
 
+### Relationship column policy
+
+The relationship-capable PostgreSQL policy MUST provide one layout entry keyed
+by exact `{module,id}` for each supported `foreign_key`, `junction` or `edge`
+choice in the versioned `umf.binding` ID-based profile. The layout MUST name
+the carrier table, ordered source and target column maps with SQL type and
+nullability for every referenced Key component, and explicit constraint names.
+A junction or shared edge carrier also requires the exact stable source Key
+ID. The target Key ID comes from
+`relationship.target[].key` and MUST match the target column map. No primary,
+first, or same-named native key may be substituted. Every mapped target Key
+field MUST resolve to a bound column with a comparator and type compatible
+with its referencing column; SQL collation and NULL behavior remain qualified
+under CONTRACT-040. Missing, extra, duplicate or mismatched map entries block
+before DDL emission. The policy is target layout, never logical relationship
+meaning or an authored key.
+
+For `foreign_key`, the carrier table MUST be the single source Record's bound
+table, and ordered referencing columns MUST align one-to-one with the single
+target Record's named Key components. For `junction`, the policy MUST name a
+source Key ID, both ordered endpoint column maps and both FK constraint names.
+If `associationRecord` exists, its bound table is the carrier and its own
+key/fields are emitted there; reducing it to an anonymous pair table is a
+loss, not an implementation shortcut. For `edge`, the policy MUST additionally
+name a discriminator column/value and the shared adjacency table. A
+heterogeneous endpoint set cannot be asserted type-checked merely because the
+discriminator is present. `inline` has no PostgreSQL 17 carrier in the initial
+profile and remains an explicit residual. These layout entries are versioned
+with the policy and retained in projection receipts.
+
 Every emitted statement maps back to exact logical/binding source paths.
 Generated source order is deterministic: dependencies before FKs, tables before
 indexes, then constraints requiring prior tables. Cyclic FKs require an explicit
@@ -108,6 +140,9 @@ logical document. Source and binding package versions are pinned in every
 result. A new generator version cannot reinterpret an old result without an
 explicit migration; rollback retains both inputs and the original native DDL
 archive. The operation never changes `element.references` resolution.
+Name-based `umf-binding-1` relationship entries MUST migrate under CONTRACT-042
+before relationship DDL can be emitted; the generator never resolves them by
+presentation name.
 
 ## Error Semantics
 

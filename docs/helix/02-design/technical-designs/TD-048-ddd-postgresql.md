@@ -41,6 +41,11 @@ tables and indexes. Reject unsafe SQL fragments before any candidate is
 published. Import emitted SQL through the existing PostgreSQL adapter and
 retain its archive; check the same statements with the isolated PostgreSQL 17
 oracle. Treat adapter agreement and native acceptance as separate evidence.
+For relationship layouts, validate the CONTRACT-043 ordered endpoint column
+maps against stable Key IDs and bound Field columns before planning any FK.
+Require an explicit source Key for junction/edge carriers and preserve a keyed
+association Record's own table and attributes. The renderer cannot choose a
+primary key, invent referencing columns or treat a native FK as authorship.
 
 ## Component Changes
 
@@ -117,8 +122,11 @@ binding documents and native archive; it never drops an unexpressed assertion.
 ## Implementation Sequence
 
 1. Complete TD-045–047 prerequisites and target policy fixtures.
-2. Implement validation/planning/rendering with failing tests.
-3. Verify through adapter, native PostgreSQL and browser; publish evidence.
+2. Freeze and validate the relationship layout policy against stable Key IDs;
+   include alternate-key, nullable composite, junction and association-Record
+   fixtures before rendering.
+3. Implement validation/planning/rendering with failing tests.
+4. Verify through adapter, native PostgreSQL and browser; publish evidence.
 
 ## Risks
 
