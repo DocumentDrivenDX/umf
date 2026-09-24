@@ -1,0 +1,305 @@
+{
+  "scope": "PostgreSQL 17.4 DDD table and supported index DDL; unsupported access methods, partitioned uniqueness, clustering and relationships stay residual",
+  "image": "postgres@sha256:304ab813518754228f9f792f79d6da36359b82d8ecf418096c636725f8c930ad",
+  "serverVersion": 170004,
+  "adapter": "@libpg-query/parser@17.6.10",
+  "observed": {
+    "indexes": [
+      {
+        "name": "orders_btree",
+        "method": "btree",
+        "unique": false,
+        "definition": "CREATE INDEX orders_btree ON ONLY sales.orders USING btree (status)",
+        "predicate": null
+      },
+      {
+        "name": "orders_expression",
+        "method": "btree",
+        "unique": false,
+        "definition": "CREATE INDEX orders_expression ON ONLY sales.orders USING btree (((payload #>> ARRAY['customer'::text, 'region'::text])))",
+        "predicate": null
+      },
+      {
+        "name": "orders_hash",
+        "method": "hash",
+        "unique": false,
+        "definition": "CREATE INDEX orders_hash ON ONLY sales.orders USING hash (\"customerId\")",
+        "predicate": null
+      },
+      {
+        "name": "orders_partial",
+        "method": "btree",
+        "unique": false,
+        "definition": "CREATE INDEX orders_partial ON ONLY sales.orders USING btree (status) WHERE (status = 'paid'::text)",
+        "predicate": "(status = 'paid'::text)"
+      }
+    ]
+  },
+  "residuals": [
+    {
+      "path": "/extensions/umf.binding/fields/0",
+      "reason": "PostgreSQL finite integer domain narrows unbounded DDD integer",
+      "choice": {
+        "module": "sales",
+        "element": "Order",
+        "field": "id",
+        "storage": "column",
+        "column": "id"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/1",
+      "reason": "PostgreSQL text/varchar storage and collation do not establish unrestricted DDD string semantics",
+      "choice": {
+        "module": "sales",
+        "element": "Order",
+        "field": "tenant",
+        "storage": "column",
+        "column": "tenant"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/2",
+      "reason": "PostgreSQL finite integer domain narrows unbounded DDD integer",
+      "choice": {
+        "module": "sales",
+        "element": "Order",
+        "field": "customerId",
+        "storage": "column",
+        "column": "customerId"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/3",
+      "reason": "PostgreSQL text/varchar storage and collation do not establish unrestricted DDD string semantics",
+      "choice": {
+        "module": "sales",
+        "element": "Order",
+        "field": "status",
+        "storage": "column",
+        "column": "status"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/4",
+      "reason": "JSONB normalizes document representation and does not enforce embedded path presence or value type",
+      "choice": {
+        "module": "sales",
+        "element": "Order",
+        "field": "details",
+        "storage": "embedded",
+        "documentColumn": "payload",
+        "path": [
+          "customer",
+          "region"
+        ]
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/elements/0",
+      "reason": "DDD identity is retained; this table slice does not emit a primary or unique key",
+      "choice": {
+        "fields": [
+          "id"
+        ],
+        "scope": "context"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/5",
+      "reason": "PostgreSQL finite integer domain narrows unbounded DDD integer",
+      "choice": {
+        "module": "sales",
+        "element": "Customer",
+        "field": "id",
+        "storage": "column",
+        "column": "id"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/6",
+      "reason": "PostgreSQL text/varchar storage and collation do not establish unrestricted DDD string semantics",
+      "choice": {
+        "module": "sales",
+        "element": "Customer",
+        "field": "name",
+        "storage": "column",
+        "column": "name"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/elements/1",
+      "reason": "DDD identity is retained; this table slice does not emit a primary or unique key",
+      "choice": {
+        "fields": [
+          "id"
+        ],
+        "scope": "context"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/7",
+      "reason": "PostgreSQL finite integer domain narrows unbounded DDD integer",
+      "choice": {
+        "module": "sales",
+        "element": "Product",
+        "field": "id",
+        "storage": "column",
+        "column": "id"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/8",
+      "reason": "PostgreSQL text/varchar storage and collation do not establish unrestricted DDD string semantics",
+      "choice": {
+        "module": "sales",
+        "element": "Product",
+        "field": "sku",
+        "storage": "column",
+        "column": "sku"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/elements/2",
+      "reason": "DDD identity is retained; this table slice does not emit a primary or unique key",
+      "choice": {
+        "fields": [
+          "id"
+        ],
+        "scope": "context"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/9",
+      "reason": "PostgreSQL finite integer domain narrows unbounded DDD integer",
+      "choice": {
+        "module": "sales",
+        "element": "OrderProduct",
+        "field": "id",
+        "storage": "column",
+        "column": "id"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/10",
+      "reason": "PostgreSQL finite integer domain narrows unbounded DDD integer",
+      "choice": {
+        "module": "sales",
+        "element": "OrderProduct",
+        "field": "orderId",
+        "storage": "column",
+        "column": "orderId"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/11",
+      "reason": "PostgreSQL finite integer domain narrows unbounded DDD integer",
+      "choice": {
+        "module": "sales",
+        "element": "OrderProduct",
+        "field": "productId",
+        "storage": "column",
+        "column": "productId"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/12",
+      "reason": "PostgreSQL numeric precision and scale narrow unqualified DDD decimal",
+      "choice": {
+        "module": "sales",
+        "element": "OrderProduct",
+        "field": "quantity",
+        "storage": "column",
+        "column": "quantity"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/elements/3",
+      "reason": "DDD identity is retained; this table slice does not emit a primary or unique key",
+      "choice": {
+        "fields": [
+          "id"
+        ],
+        "scope": "context"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/indexes/2",
+      "reason": "No verified default operator class for this index method and column type",
+      "choice": {
+        "name": "orders_gin",
+        "kind": "gin",
+        "on": [
+          {
+            "field": {
+              "module": "sales",
+              "element": "Order",
+              "field": "status"
+            }
+          }
+        ],
+        "unique": false
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/indexes/3",
+      "reason": "No verified default operator class for this index method and column type",
+      "choice": {
+        "name": "orders_gist",
+        "kind": "gist",
+        "on": [
+          {
+            "field": {
+              "module": "sales",
+              "element": "Order",
+              "field": "status"
+            }
+          }
+        ],
+        "unique": false
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/indexes/6",
+      "reason": "Unique index on a partitioned table must include every partition key",
+      "choice": {
+        "name": "orders_unique",
+        "kind": "unique",
+        "on": [
+          {
+            "field": {
+              "module": "sales",
+              "element": "Order",
+              "field": "id"
+            }
+          }
+        ],
+        "unique": true
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/indexes/7",
+      "reason": "PostgreSQL physical clustering is not this declared index kind",
+      "choice": {
+        "name": "orders_clustering",
+        "kind": "clustering",
+        "on": [
+          {
+            "field": {
+              "module": "sales",
+              "element": "Order",
+              "field": "tenant"
+            }
+          }
+        ],
+        "unique": false
+      }
+    }
+  ],
+  "sha256": {
+    "fixtures/projections/ddd-postgresql-tables/case.json": "85cb016cc8a179d822381717f7d73bf1545ebab0dd15ef5b9b61e32fe432f39b",
+    "fixtures/projections/ddd-postgresql-tables-indexes/generated.sql": "65e28bfeabe135f54e46df67d35313366489fa283fd98b72673f43bf48b3a2e1",
+    "src/projections/ddd-postgresql/tables-indexes.ts": "3724ac5ca90bd89d5ace4035fed2cb8602af8687e5d001bc4a97f01f2c78b1fe",
+    "src/projections/binding-postgresql/indexes.ts": "7255b8cf425ecbdfd2a826f8c27b89136b5d2b871022dc5dfd014cde6b9c1eb9"
+  }
+}

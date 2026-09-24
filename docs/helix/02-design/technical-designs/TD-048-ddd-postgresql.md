@@ -97,6 +97,18 @@ DDL passes `umf.postgresql` parse/deparse/codec, executes in isolated PostgreSQL
 limits and optional-to-NULL choice are reported; this evidence does not close
 the full DDD-to-PostgreSQL generator.
 
+The next relationship-independent stage composes those tables with the physical
+index binding (`projectDddTablesAndIndexesToPostgresql`). Its qualified-table
+lookup preserves the earlier unqualified index profile. The corpus emits four
+indexes accepted by isolated PostgreSQL 17.4: btree, hash, JSONB-path
+expression and partial. GIN/GiST on text have no verified default operator
+class, the partitioned unique index omits the partition key, and clustering
+has no index carrier; all four remain source-qualified residuals. The combined
+DDL passes `umf.postgresql` parse/deparse/codec and Chromium parity, with the
+native catalog and reports pinned under
+`fixtures/projections/ddd-postgresql-tables-indexes/`. Strict mode returns no
+candidate. Relationship storage and key constraints remain outside this stage.
+
 ## Migration & Rollback
 
 Version generator policy and reports. Rollback retains authored logical and

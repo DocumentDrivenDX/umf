@@ -27,17 +27,19 @@ export async function projectBindingIndexesToPostgresql(logical:Document,binding
   if(payload.target.system!=='postgresql'||!/^17(?:\.|$)/.test(payload.target.version))throw new UmfError('BINDING_TARGET','Expected pinned PostgreSQL 17 binding');
   const declarations=getPostgresqlDdlDeclarations(nativeArchive);
   if(declarations.status==='blocked')throw new UmfError('POSTGRESQL_INDEX_SOURCE','Native CREATE TABLE declarations unavailable');
-  const tables=new Map<string,Map<string,string>>();
+  const tables=new Map<string,{columns:Map<string,string>;partitionKeys:string[]}>();
   for(const row of declarations.declarations.filter(d=>d.kind==='create-table')){
     const relation=JSON.parse(renderTree(row.relation)) as {relname?:string;schemaname?:string};
-    if(!relation.relname||relation.schemaname)continue;
+    if(!relation.relname)continue;
+    const statement=JSON.parse(renderTree(row.nativeStatement)) as {partspec?:{partParams?:{PartitionElem?:{name?:string}}[]}};
     const columns=new Map<string,string>();
     for(const col of row.columns){
       const value=JSON.parse(renderTree(col.nativeColumn)) as {colname:string;typeName?:{names?:{String?:{sval:string}}[]}};
       const type=value.typeName?.names?.map(n=>n.String?.sval).filter(Boolean).join('.');
       if(type)columns.set(value.colname,type);
     }
-    tables.set(relation.relname,columns);
+    const table=relation.schemaname?relation.schemaname+'.'+relation.relname:relation.relname;
+    tables.set(table,{columns,partitionKeys:(statement.partspec?.partParams??[]).map(p=>p.PartitionElem?.name).filter((name):name is string=>!!name)});
   }
   const residuals:PostgresqlBindingResidual[]=[];
   const add=(path:string,reason:string,choice:unknown)=>residuals.push({path,reason,choice:copyJson(choice)});
@@ -52,8 +54,8 @@ export async function projectBindingIndexesToPostgresql(logical:Document,binding
     const owner=refs[0]!;
     const element=payload.elements.find(e=>e.module===owner.module&&e.element===owner.element);
     const table=element?.table;
-    if(!table||!tables.has(table)){add(path,'Index owner needs an exact unqualified table override in native source',item);continue;}
-    const columns=tables.get(table)!;
+    if(!table||!tables.has(table)){add(path,'Index owner needs an exact table override in native source',item);continue;}
+    const {columns,partitionKeys}=tables.get(table)!;
     let valid=true;
     const terms=item.on.map(target=>{
       const ref='field'in target?target.field:target.documentPath.field;
@@ -73,10 +75,26 @@ export async function projectBindingIndexesToPostgresql(logical:Document,binding
       return quote(field.column);
     });
     if(!valid){add(path,'Index field or JSONB document column is absent from native table',item);continue;}
+    const indexedColumns=item.on.flatMap(target=>{
+      if(!('field'in target))return [];
+      const field=payload.fields.find(row=>same(row,target.field));
+      return field?.column?[field.column]:[];
+    });
+    if(item.unique&&partitionKeys.some(column=>!indexedColumns.includes(column))){add(path,'Unique index on a partitioned table must include every partition key',item);continue;}
+    if(['gin','gist'].includes(item.kind)){
+      const supported=item.on.every(target=>{
+        if(!('field'in target))return false;
+        const field=payload.fields.find(row=>same(row,target.field));
+        const type=field?.column&&columns.get(field.column)?.split('.').at(-1);
+        return item.kind==='gin'?type==='jsonb':type==='point';
+      });
+      if(!supported){add(path,'No verified default operator class for this index method and column type',item);continue;}
+    }
     const method=['btree','hash','gin','gist'].includes(item.kind)?item.kind:'btree';
     const predicate=item.predicate?.expression;
     if(predicate&&(/;|--|\/\*/.test(predicate)||predicate.trim()==='')){add(path,'Predicate is outside the single-expression SQL subset',item);continue;}
-    const sql=`CREATE ${item.unique?'UNIQUE ':''}INDEX ${quote(item.name)} ON ${quote(table)} USING ${method} (${terms.join(', ')})${includes.length?' INCLUDE ('+includes.join(', ')+')':''}${predicate?' WHERE ('+predicate+')':''};`;
+    const targetTable=table.split('.').map(quote).join('.');
+    const sql=`CREATE ${item.unique?'UNIQUE ':''}INDEX ${quote(item.name)} ON ${targetTable} USING ${method} (${terms.join(', ')})${includes.length?' INCLUDE ('+includes.join(', ')+')':''}${predicate?' WHERE ('+predicate+')':''};`;
     try{
       const tree=await backend.parse(sql) as {stmts?:{stmt?:Record<string,unknown>}[]};
       if(tree.stmts?.length!==1||!tree.stmts[0]?.stmt||!Object.hasOwn(tree.stmts[0].stmt,'IndexStmt'))throw Error('Not one CREATE INDEX statement');
