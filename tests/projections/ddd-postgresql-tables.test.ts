@@ -9,7 +9,7 @@ test('@covers US-048-AC1 @covers US-048-AC3 @covers US-048-AC5: order graph tabl
   const strict=await project(fixture.binding,fixture.policy,'strict');
   expect(strict.status).toBe('blocked');expect(strict.candidate).toBeUndefined();
   const report=await project();
-  expect(report.status).toBe('reported');expect(report.residuals).toHaveLength(25);
+  expect(report.status).toBe('reported');expect(report.residuals).toHaveLength(26);
   expect(report.residuals.filter(x=>x.path.startsWith('/extensions/umf.binding/indexes/'))).toHaveLength(8);
   expect(report.candidate?.match(/CREATE TABLE/g)).toHaveLength(5);
   expect(report.candidate).toContain('PARTITION BY LIST ("tenant")');

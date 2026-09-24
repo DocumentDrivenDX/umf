@@ -118,6 +118,13 @@
                       "name": "string"
                     },
                     "cardinality": "one"
+                  },
+                  "tags": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "many"
                   }
                 },
                 "identity": {
@@ -288,6 +295,16 @@
             "field": "sku",
             "storage": "column",
             "column": "sku"
+          },
+          {
+            "module": "sales",
+            "element": "Product",
+            "field": "tags",
+            "storage": "embedded",
+            "documentColumn": "payload",
+            "path": [
+              "tags"
+            ]
           },
           {
             "module": "sales",

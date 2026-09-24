@@ -5,7 +5,7 @@ import {exportPostgresqlSql,getPostgresqlSource,projectDddTablesToPostgresql,typ
 
 const fixture=await Bun.file('fixtures/projections/ddd-postgresql-tables/case.json').json();
 const report=await projectDddTablesToPostgresql(fixture.logical as Document,fixture.binding as Document,backend,fixture.policy,'report');
-assert.equal(report.status,'reported');assert.equal(report.residuals.length,25);
+assert.equal(report.status,'reported');assert.equal(report.residuals.length,26);
 assert.equal(getPostgresqlSource(report.targetArchive!),report.candidate);
 assert.ok((await exportPostgresqlSql(report.targetArchive!,backend)).includes('CREATE TABLE'));
 await Bun.write('fixtures/projections/ddd-postgresql-tables/generated.sql',report.candidate!);
@@ -30,7 +30,11 @@ try{
   assert.deepEqual(columns.map((x:any)=>[x.name,x.type,x.required]),[['customerId','bigint',true],['id','bigint',true],['payload','jsonb',false],['status','text',true],['tenant','text',true]]);
   const checks=JSON.parse((await sql("SELECT COALESCE(json_agg(row_to_json(x) ORDER BY x.name),'[]'::json) FROM (SELECT conname AS name,convalidated AS validated,pg_get_constraintdef(oid) AS definition FROM pg_constraint WHERE conrelid='sales.orders'::regclass AND contype='c') x")).trim());
   assert.equal(checks.some((x:any)=>x.name==='ck_orders_payload_object'&&x.validated&&x.definition.includes('jsonb_typeof')),true);
-  observed={tables,columns,checks};
+  const productColumns=JSON.parse((await sql("SELECT COALESCE(json_agg(row_to_json(x) ORDER BY x.name),'[]'::json) FROM (SELECT a.attname AS name,format_type(a.atttypid,a.atttypmod) AS type,a.attnotnull AS required FROM pg_attribute a WHERE a.attrelid='sales.products'::regclass AND a.attnum>0 AND NOT a.attisdropped) x")).trim());
+  assert.deepEqual(productColumns.map((x:any)=>[x.name,x.type,x.required]),[['id','bigint',true],['payload','jsonb',false],['sku','text',true]]);
+  const productChecks=JSON.parse((await sql("SELECT COALESCE(json_agg(row_to_json(x) ORDER BY x.name),'[]'::json) FROM (SELECT conname AS name,convalidated AS validated,pg_get_constraintdef(oid) AS definition FROM pg_constraint WHERE conrelid='sales.products'::regclass AND contype='c') x")).trim());
+  assert.equal(productChecks.some((x:any)=>x.name==='ck_products_payload_object'&&x.validated&&x.definition.includes('jsonb_typeof')),true);
+  observed={tables,columns,checks,productColumns,productChecks};
 }finally{if(created)await run(['docker','rm','-f',name]);}
 const files=['fixtures/projections/ddd-postgresql-tables/case.json','fixtures/projections/ddd-postgresql-tables/generated.sql','src/projections/ddd-postgresql/tables.ts'];
 const sha256=Object.fromEntries(await Promise.all(files.map(async file=>[file,createHash('sha256').update(new Uint8Array(await Bun.file(file).arrayBuffer())).digest('hex')])));

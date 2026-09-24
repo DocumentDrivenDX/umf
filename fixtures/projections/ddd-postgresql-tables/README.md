@@ -3,6 +3,10 @@
 `case.json` contains one authored Order/Customer/Product model with a
 DDD-identified OrderProduct association entity and a separate PostgreSQL 17.4
 `umf.binding` document. The binding declares all eight index kinds.
+The authored DDD entity payloads match the core-backed GraphQL fixture at
+`../ddd-graphql-core-fields/case.json`; `Product.tags` is an ordered DDD-many
+value bound to the PostgreSQL `products.payload` JSONB path, with its path and
+item semantics reported as residuals.
 `generated.sql` is the table-stage candidate; all indexes are residuals at
 that stage. The subsequent table-plus-index candidate, browser result and
 PostgreSQL oracle are under `../ddd-postgresql-tables-indexes/`. Four index

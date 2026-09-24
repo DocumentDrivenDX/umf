@@ -160,6 +160,20 @@
       }
     },
     {
+      "path": "/extensions/umf.binding/fields/9",
+      "reason": "JSONB normalizes document representation and does not enforce embedded path presence or value type",
+      "choice": {
+        "module": "sales",
+        "element": "Product",
+        "field": "tags",
+        "storage": "embedded",
+        "documentColumn": "payload",
+        "path": [
+          "tags"
+        ]
+      }
+    },
+    {
       "path": "/extensions/umf.binding/elements/2",
       "reason": "DDD identity is retained; this table slice does not emit a primary or unique key",
       "choice": {
@@ -170,7 +184,7 @@
       }
     },
     {
-      "path": "/extensions/umf.binding/fields/9",
+      "path": "/extensions/umf.binding/fields/10",
       "reason": "PostgreSQL finite integer domain narrows unbounded DDD integer",
       "choice": {
         "module": "sales",
@@ -181,7 +195,7 @@
       }
     },
     {
-      "path": "/extensions/umf.binding/fields/10",
+      "path": "/extensions/umf.binding/fields/11",
       "reason": "PostgreSQL finite integer domain narrows unbounded DDD integer",
       "choice": {
         "module": "sales",
@@ -192,7 +206,7 @@
       }
     },
     {
-      "path": "/extensions/umf.binding/fields/11",
+      "path": "/extensions/umf.binding/fields/12",
       "reason": "PostgreSQL finite integer domain narrows unbounded DDD integer",
       "choice": {
         "module": "sales",
@@ -203,7 +217,7 @@
       }
     },
     {
-      "path": "/extensions/umf.binding/fields/12",
+      "path": "/extensions/umf.binding/fields/13",
       "reason": "PostgreSQL numeric precision and scale narrow unqualified DDD decimal",
       "choice": {
         "module": "sales",
@@ -297,8 +311,8 @@
     }
   ],
   "sha256": {
-    "fixtures/projections/ddd-postgresql-tables/case.json": "85cb016cc8a179d822381717f7d73bf1545ebab0dd15ef5b9b61e32fe432f39b",
-    "fixtures/projections/ddd-postgresql-tables-indexes/generated.sql": "65e28bfeabe135f54e46df67d35313366489fa283fd98b72673f43bf48b3a2e1",
+    "fixtures/projections/ddd-postgresql-tables/case.json": "6314d0cd46511a2a323a347b4b28a04745100f342a300c392398cce789944f91",
+    "fixtures/projections/ddd-postgresql-tables-indexes/generated.sql": "9abdc04373e03831abc1b47d7d3e27c9be2bc46654f744f52cab07f1d0f70921",
     "src/projections/ddd-postgresql/tables-indexes.ts": "3724ac5ca90bd89d5ace4035fed2cb8602af8687e5d001bc4a97f01f2c78b1fe",
     "src/projections/binding-postgresql/indexes.ts": "7255b8cf425ecbdfd2a826f8c27b89136b5d2b871022dc5dfd014cde6b9c1eb9"
   }

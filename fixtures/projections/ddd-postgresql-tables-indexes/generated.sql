@@ -14,7 +14,9 @@ CREATE TABLE "sales"."customers" (
 );
 CREATE TABLE "sales"."products" (
   "id" bigint NOT NULL,
-  "sku" text NOT NULL
+  "sku" text NOT NULL,
+  "payload" jsonb,
+  CONSTRAINT "ck_products_payload_object" CHECK ("payload" IS NULL OR jsonb_typeof("payload") = 'object')
 );
 CREATE TABLE "sales"."order_products" (
   "id" bigint NOT NULL,
