@@ -1,0 +1,29 @@
+{
+  "native": {
+    "rdflib": "7.1.4",
+    "linkmlRuntime": "1.11.0rc2"
+  },
+  "sourceSha256": {
+    "rdf": "0ad6fc995227d53f5a76d06c5993e732c2ff697c81afebb6c20247a7502fd914",
+    "linkml": "97a0cd81bd98f0e6154c765b9e0c87358a75909c4ff5285ec4cd6d6b7405128f"
+  },
+  "rdf": {
+    "quadCount": 3,
+    "predicate": "https://example.org/rel/customer",
+    "domain": "https://example.org/type/Order",
+    "range": "https://example.org/type/Customer"
+  },
+  "linkml": {
+    "class": "Order",
+    "slot": "customer",
+    "range": "Customer",
+    "multivalued": false,
+    "required": true,
+    "targetIdentifier": true
+  },
+  "classification": "native-observation-only",
+  "limits": [
+    "RDF domain/range entail types, not reference enforcement or participation cardinality",
+    "LinkML slot range and multivalued do not select a target Key or establish source-end multiplicity"
+  ]
+}
