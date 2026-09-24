@@ -103,8 +103,13 @@ The TableSpec Key binding now passes qualified acceptance for native declaration
 classification, explicit authored projection and retained recovery, with 226 scoped
 compatibility tests and pinned native/Chromium evidence. See the
 [TableSpec Key acceptance](04-build/evidence/tablespec-key-acceptance.md).
-PostgreSQL, SQL Server, Avro and Parquet Key bindings and the separate Key
-ideal-admission gate remain unfinished. No native equivalence is claimed.
+The PostgreSQL Key binding also passes qualified acceptance: correlated native
+classification, explicit authored constraints and retained recovery, with 260 scoped
+compatibility tests, 137 generated-DDL insertion probes and current Chromium evidence.
+Unknown selected key/member/facet qualifiers remain unknown equality. See the
+[PostgreSQL Key acceptance](04-build/evidence/postgresql-key-acceptance.md).
+SQL Server, Avro and Parquet Key bindings and the separate Key ideal-admission
+gate remain unfinished. No native equivalence is claimed.
 
 The [SQL Server facet evidence](04-build/evidence/sqlserver-facet-discovery.md)
 records discovery, classification, authored projection and composed recovery,

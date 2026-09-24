@@ -148,7 +148,7 @@
       }
     }
   },
-  "semantics": "CONTRACT-040 and TD-044; this payload retains correlated native observations. Authored projection uses the separate key-postgresql-projection operation schema, explicit native constraints and retained residuals. Complete binding acceptance and ideal admission remain unfinished.",
+  "semantics": "CONTRACT-040 and TD-044; this payload retains correlated native observations. Authored projection uses the separate key-postgresql-projection operation schema, explicit native constraints and retained residuals. Qualified PostgreSQL 17.4 binding only; retained source and explicit residuals remain required. Key ideal admission, all-five delivery and native equivalence are separate gates.",
   "scopes": [
     "document"
   ],

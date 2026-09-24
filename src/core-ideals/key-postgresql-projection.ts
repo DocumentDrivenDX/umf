@@ -17,7 +17,7 @@ const binding=schema.properties.binding.const;
 const recovery='Recover authored source from retained receipt; native import alone does not recover authored identity' as const;
 export interface KeyPostgresqlProjection {
  operation:'project-keys-postgresql';version:'1.0.0';status:'projected'|'blocked';source:Document;authors:CoreKeyDeclaration[];request:KeyPostgresqlRequest;binding:typeof binding;target?:Document;nativeSql?:string;
- mappings:{keyId:string;keyName:string;idealPath:string;nativePath:string;columns:string[];primary:boolean;constraintName:string;origin:'authored';enforcement:'primary-key-not-null'|'unique-not-null';equality:'exact-on-representable-values';outcome:'not-expressible'}[];
+ mappings:{keyId:string;keyName:string;idealPath:string;nativePath:string;columns:string[];primary:boolean;constraintName:string;origin:'authored';enforcement:'primary-key-not-null'|'unique-not-null';equality:'exact-on-representable-values'|'unknown';outcome:'not-expressible'}[];
  residuals:{path:string;value:Json;reason:string;outcome:'unknown'|'not-expressible';recovery:typeof recovery}[];diagnostics:Diagnostic[];
 }
 const validator=createValidator(false);for(const s of [legacy,fields,nullability,cardinality,facets,keys,keyOperation])validator.addSchema(s);
@@ -30,7 +30,8 @@ function locate(source:Document,ref:CoreRecordIdentity){const mi=source.modules.
 export async function projectKeysToPostgresql(input:Document,authorInput:CoreKeyDeclaration[],options:KeyPostgresqlRequest,backend:PostgresqlBackend):Promise<KeyPostgresqlProjection> {
  const source=copyJson(input) as unknown as Document,authors=copyJson(authorInput) as unknown as CoreKeyDeclaration[],request=copyJson(options) as unknown as KeyPostgresqlRequest;
  if(!requestCheck(request))throw new UmfError('KEY_POSTGRESQL_REQUEST',JSON.stringify(requestCheck.errors));
- if(source.umf!=='0.6.0'||!validateDocument(source).valid)throw new UmfError('KEY_POSTGRESQL_SOURCE','Valid explicit core 0.6.0 required');
+ const validation=validateDocument(source);
+ if(source.umf!=='0.6.0'||!validation.valid)throw new UmfError('KEY_POSTGRESQL_SOURCE','Valid explicit core 0.6.0 required');
  const record=locate(source,request.record),declared=record.element.keys as CoreKeyDefinition[]|undefined,members=record.element.members as CoreKeyFieldReference[]|undefined;
  if(record.element.kind!=='record'||!declared?.length||!members?.length)throw new UmfError('KEY_POSTGRESQL_RECORD','Selected Record must have authored keys and explicit membership');
  if(!Array.isArray(authors)||authors.length!==declared.length)throw new UmfError('KEY_POSTGRESQL_AUTHORS','Exactly one verified declaration for every current key is required');
@@ -87,9 +88,12 @@ export async function projectKeysToPostgresql(input:Document,authorInput:CoreKey
  for(const key of declared){
   const current=lookupCoreKey(source,{...request.record,key:key.id}),columns=key.fields.map(ref=>mapped.get(identity(ref))!.name),primary=key.primary===true,constraintName=nativeNames.get(key.id)!;
   if(columns.length>32){impossible=true;loss(current.path,key,'Pinned PostgreSQL index keys support at most 32 columns');}
+  const relevant=[current.path,...key.fields.flatMap(ref=>[locate(source,ref).path+'/facets',record.path+'/members/'+members.findIndex(m=>identity(m)===identity(ref))])];
+  const unknownEquality=validation.diagnostics.filter(d=>['UNKNOWN_KEY_QUALIFIER','UNKNOWN_FACET','UNKNOWN_FACET_UNIT'].includes(d.code)&&relevant.some(p=>d.path===p||d.path.startsWith(p+'/')));
   const nativePath='/stmts/0/stmt/CreateStmt/tableElts/'+definitions.length+'/Constraint';
   definitions.push(`CONSTRAINT ${identifier(constraintName)} ${primary?'PRIMARY KEY':'UNIQUE'} (${columns.map(identifier).join(', ')}) NOT DEFERRABLE`);
-  result.mappings.push({keyId:key.id,keyName:key.name,idealPath:current.path,nativePath,columns,primary,constraintName,origin:'authored',enforcement:primary?'primary-key-not-null':'unique-not-null',equality:'exact-on-representable-values',outcome:'not-expressible'});
+  result.mappings.push({keyId:key.id,keyName:key.name,idealPath:current.path,nativePath,columns,primary,constraintName,origin:'authored',enforcement:primary?'primary-key-not-null':'unique-not-null',equality:unknownEquality.length?'unknown':'exact-on-representable-values',outcome:'not-expressible'});
+  if(unknownEquality.length)loss(current.path,key,'Selected key, component, membership or facet qualifiers leave equality unknown; native constraints express only the known assertions','unknown');
   loss(current.path,key,'Native constraint names do not encode stable key IDs/names or author intent. Enforced uniqueness applies only to representable stored tuples in the created table; B-tree tuple limits may reject otherwise valid column values; descendants, later DDL and arbitrary input conversion are outside this guarantee');
  }
  if(impossible||request.mode==='strict')result.status='blocked';

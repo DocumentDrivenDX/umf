@@ -5,7 +5,7 @@ import {backend} from '../../native/postgresql/runtime';
 import {getPostgresqlSource,importPostgresqlSql} from '../../src/adapters/postgresql';
 import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
 for(const row of postgresqlKeyProjectionCases())test('PostgreSQL authored keys: '+row.name,async()=>{
- const before=JSON.stringify(row),r=await projectKeysToPostgresql(row.source,row.authors,row.request,backend);expect(JSON.stringify(row)).toBe(before);expect(r.status).toBe(row.expected);expect(r.mappings.length).toBe(row.authors.length);expect(r.residuals.filter(x=>/\/keys\//.test(x.path)).length).toBe(row.authors.length);
+ const before=JSON.stringify(row),r=await projectKeysToPostgresql(row.source,row.authors,row.request,backend);expect(JSON.stringify(row)).toBe(before);expect(r.status).toBe(row.expected);expect(r.mappings.length).toBe(row.authors.length);expect(r.residuals.filter(x=>/\/keys\//.test(x.path)).length).toBeGreaterThanOrEqual(row.authors.length);if(row.expectedEquality)expect(r.mappings[0]!.equality).toBe(row.expectedEquality);
  if(r.status==='blocked'){expect(r.nativeSql).toBeUndefined();expect(r.target).toBeUndefined();return;}
  expect(getPostgresqlSource(r.target!)).toBe(r.nativeSql!);expect(r.nativeSql).toContain('NOT DEFERRABLE');
  const imported=await importPostgresqlSql(r.nativeSql!,backend,{id:row.request.id});
@@ -39,6 +39,7 @@ test('unknown key, membership and component qualifiers recover without becoming 
  const {declareCoreKey}=await import('../../src/model/keys'),{keyRecord,keyId,keyCode}=await import('../../scripts/core-ideals/key-tablespec-projection-cases');
  const c=postgresqlKeyAuthors(),d=structuredClone(c.source),record=d.modules[0]!.elements[0]!;(record.members as any[])[0].future={owner:'opaque'};(record.keys as any[])[0].future={meaning:'not interpreted'};(record.keys as any[])[0].fields[0].future={component:'retained'};
  const a=declareCoreKey(d,keyRecord,{id:'stable-id',name:'Order identity',fields:[keyId]}),b=declareCoreKey(a.target,keyRecord,{id:'stable-code',name:'External code',fields:[keyCode]}),r=await projectKeysToPostgresql(b.target,[a,b],c.request,backend);
+ expect(r.mappings[0]!.equality).toBe('unknown');expect(r.mappings[1]!.equality).toBe('exact-on-representable-values');
  expect((b.target.modules[0]!.elements[0]!.keys as any[])[0].future).toEqual({meaning:'not interpreted'});
  for(const format of ['json','yaml'] as const){const stored=readJsonValue(writeJsonValue(r,format),format) as unknown as typeof r;expect(await recoverKeysPostgresqlIdeal(stored,stored.target!,backend)).toEqual(b.target);}
 });

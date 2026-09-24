@@ -4613,3 +4613,19 @@ and native equivalence remain unclaimed. See the
 PostgreSQL, SQL Server, Avro and Parquet Key binding tasks remain open, followed
 by the separate Key ideal-admission/all-five delivery gate. Historical earlier
 concept gates retain their own execution scope; this task does not refresh them.
+
+
+PostgreSQL Key binding acceptance now passes for PostgreSQL 17.4 catalog/DDL
+profiles: correlated index observations never invent authored identity; explicit
+primary/alternate constraints retain stable-ID and domain residuals. Unknown
+selected key/member/facet qualifiers cannot claim exact equality. The scoped
+PostgreSQL/core compatibility run passes 260 tests / 8,972 assertions across
+57 files. Twenty projection cases include seventeen native tables, 137 insertion
+probes and Chromium parity with 34 ideal and 34 native SQL recoveries. All 53
+native/browser source fingerprints match; typechecking, browser/WASM builds and
+297 schemas / 50 packages pass. See the
+[PostgreSQL Key acceptance](evidence/postgresql-key-acceptance.md).
+This closes only the PostgreSQL binding task. SQL Server, Avro and Parquet Key
+bindings and the separate Key admission/all-five delivery gate remain open.
+Historical conformance gates retain their original scope; native equivalence
+and arbitrary SQL input conversion are not claimed.

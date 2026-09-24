@@ -246,7 +246,10 @@
             ]
           },
           "equality": {
-            "const": "exact-on-representable-values"
+            "enum": [
+              "exact-on-representable-values",
+              "unknown"
+            ]
           },
           "outcome": {
             "const": "not-expressible"
