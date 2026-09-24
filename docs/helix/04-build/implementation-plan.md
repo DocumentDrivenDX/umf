@@ -5069,3 +5069,32 @@ getter executions or external requests. Typechecking passes. See the
 and [browser record](../../../fixtures/validation/relationship-avro-carrier-browser.json).
 Authored Record/Key binding validation, complete projection receipts, individual
 obligation residuals, ideal recovery and full binding acceptance remain required.
+
+### Avro authored relationship projection checkpoint
+
+The `target-key-record` projection and complete receipt schema are implemented.
+A verified author receipt and unchanged endpoint/Key components precede native
+emission. Each authored relationship obligation and unknown qualifier remains in
+a source-qualified residual. Strict mode blocks; report emits only a complete
+carrier. Recovery recomputes the operation and accepts matching fresh native
+imports without inferring authored intent from them.
+
+The 36-case matrix has twelve projections and 24 blocks. Cases cover one-to-one,
+many-to-one, many-to-many, required bounds, ownership, undirected and self links,
+alternate/composite Keys, unknown qualifiers, nullable wire shape and facets.
+Heterogeneous endpoints and keyed association Records refuse this profile;
+malformed names, incorrect component mappings and type conflicts also block.
+Stale components, forged authors/receipts and getters reject. Floating-point Key
+equality remains invalid under the core contract.
+
+All 81 Avro relationship tests across four files pass 1,518 assertions. Both
+pinned codecs accept the twelve emitted schemas: 24 writer runs and 48 cross-codec
+reads pass. Chromium verifies 24 ideal recoveries, 24 emitted-native recoveries,
+24 classification recoveries, 24 blocks and twelve forged-receipt refusals, with
+zero getter executions or external requests. Typechecking and the browser build
+pass. See the [native evidence](../../../fixtures/validation/relationship-avro-projection-native.json)
+and [browser composition](../../../fixtures/validation/relationship-avro-projection-browser.json).
+
+`umf-c81cfc9c` remains in progress. Broader compatibility, final coverage audit
+and qualified binding acceptance remain required. These scoped results do not
+claim relationship ideal admission, all-five delivery or native equivalence.

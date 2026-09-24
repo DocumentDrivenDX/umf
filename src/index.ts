@@ -363,3 +363,4 @@ export {default as coreRelationshipMetadataSelectionSchema} from '../spec/core/r
 export * from './core-ideals/relationship-tablespec';
 export * from './core-ideals/relationship-tablespec-projection';
 export * from './core-ideals/relationship-avro';
+export * from './core-ideals/relationship-avro-projection';

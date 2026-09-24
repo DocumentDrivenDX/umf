@@ -387,3 +387,24 @@ logical binding validation, complete projection receipt schema, per-obligation
 residuals and recomputed recovery. Finish with authored scenario and Chromium
 composition tests. A builder or codec success alone is not authored projection
 acceptance or a useful relationship-ideal admission result.
+
+### Avro authored projection implementation checkpoint
+
+`projectRelationshipToAvro` implements the `target-key-record` profile with a
+complete versioned receipt schema, verified declaration and endpoint/component
+checks, ordered Key mapping and per-obligation residuals. Verification recomputes
+the receipt and compares the emitted native representation, including fresh
+imports. Separate recovery returns the exact logical source or emitted archive;
+native-only classification remains an unverified structural observation.
+
+The 36-case strict/report matrix emits twelve native-accepted carriers and blocks
+24 cases. Heterogeneous endpoints, keyed association layouts and invalid mappings
+remain explicit refusals. Author-stated facets have separate residuals. Core Key
+validation still rejects floating-point equality; the native float-narrowing probe
+is a counterexample, not permission to introduce floating-point Keys.
+
+Bun and Chromium compose projection, fresh import, classification and retained
+recovery. Native probes use Apache Avro 1.12.0 and fastavro 1.12.2. Exact counts
+and source fingerprints are in the implementation plan and projection evidence.
+This checkpoint does not establish full binding acceptance, broader compatibility,
+relationship ideal admission or native equivalence.
