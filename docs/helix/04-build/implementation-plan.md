@@ -5098,3 +5098,25 @@ and [browser composition](../../../fixtures/validation/relationship-avro-project
 `umf-c81cfc9c` remains in progress. Broader compatibility, final coverage audit
 and qualified binding acceptance remain required. These scoped results do not
 claim relationship ideal admission, all-five delivery or native equivalence.
+
+### Avro acceptance coverage audit and replay preparation
+
+The authored matrix now explicitly exercises `1..*`, boolean/binary/int32 Key
+carriers, duplicate components and reserved native names. It has 48 cases:
+sixteen projections and 32 blocks. All 93 Avro relationship tests pass 1,822
+assertions. Both pinned codecs pass 32 writer runs and 64 cross-codec reads.
+Chromium verifies 32 recoveries in each composed direction, 32 blocks, sixteen
+forged-receipt refusals and sixteen stale-target refusals. No getters execute;
+no external browser requests occur. Typechecking and browser build pass.
+
+The extension manifest now points to the authored-projection evidence while
+retaining the distinction between classified payloads and authored receipts.
+The bead's acceptance commands now name the implemented native Python probes
+and composed browser harness rather than a nonexistent generic oracle command.
+
+An isolated `avro` profile in the compatibility replay includes the prior 118
+core/TableSpec commands plus two Avro corpus generators, three native probes
+and three browser checks. Its 126 commands record current outcomes and input
+fingerprints separately from earlier acceptance records. Full regression and
+existing conformance gates must follow a successful replay; the binding remains
+in progress until that evidence and the final acceptance audit pass.

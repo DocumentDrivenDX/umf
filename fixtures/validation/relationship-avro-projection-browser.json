@@ -2,12 +2,13 @@
   "scope": "Authored target-key-record projection and composed retained recovery; broader compatibility and full binding acceptance remain unfinished",
   "browser": "148.0.7778.0",
   "checks": {
-    "cases": 36,
-    "idealRecoveries": 24,
-    "nativeRecoveries": 24,
-    "classificationRecoveries": 24,
-    "blocked": 24,
-    "refusals": 12,
+    "cases": 48,
+    "idealRecoveries": 32,
+    "nativeRecoveries": 32,
+    "classificationRecoveries": 32,
+    "blocked": 32,
+    "refusals": 16,
+    "staleRefusals": 16,
     "getterReads": 0
   },
   "externalRequests": [],
@@ -15,14 +16,14 @@
     "src/core-ideals/relationship-avro-projection.ts": "4e7e9773271f3e460e3a105ff802b9e9b89f50ca123bd956e2d71dc337456e7a",
     "spec/core/relationship-avro-projection.schema.json": "f90741b434a672f63ea8a1c395a2904f217cf193ec714f5000a74fb97fe5b61a",
     "src/index.ts": "c851ce77dc9227ccc4766300463902bc3184d9b8b16ef8f8ce6949ce7e64bdf4",
-    "scripts/core-ideals/relationship-avro-projection-cases.ts": "200f551fc594b3ec50cc8e15261a9268cf91fddfef297123e21af95a6cd98b28",
-    "scripts/core-ideals/relationship-avro-projection-browser.ts": "fdf1282aec76674a5fad363421bc323f4a1e4f96f2ab05c2183c52f6aa618731",
-    "tests/core-ideals/relationship-avro-projection.test.ts": "3317827082a35fccab68cd8e7cbd0c872f860a211aa46163f0eb645b3f0088a4",
-    "fixtures/avro/relationship-projection-cases.json": "66ac6aad5e6eaeca5d822943febba0b40ce1ddd5bfd40339e0fc3442c148efa0",
+    "scripts/core-ideals/relationship-avro-projection-cases.ts": "91188079d3f39a4eb211fa90a3dd33171ca141c07b8c5eefd536af846ef78562",
+    "scripts/core-ideals/relationship-avro-projection-browser.ts": "b2b26dbd792ff4896413c6e5a290649758ae8615ea38f68cffd79b05c6487c2d",
+    "tests/core-ideals/relationship-avro-projection.test.ts": "32940d95c0087c8bae364503cee00759256a9c41c7c0d3424dce6cd54d051f6a",
+    "fixtures/avro/relationship-projection-cases.json": "5f8966994fb100a6e6d3a7bd0e6f1c6091db3a3961d2faf82ff249a28ccde5fb",
     "src/core-ideals/relationship-avro-carrier.ts": "41738f5b72691cf734b595d5372a1aa939e9adc804545ffb8c035a5eb1627444",
     "src/core-ideals/relationship-avro.ts": "d17af31ed97f1b824c91407f1e26a930b7f102d1fc53b367bd537bd4ad76d5b5",
     "scripts/core-ideals/relationship-avro-projection-schema.ts": "0a1d8046a09a88721752fac600470f5fa46e6ef790c33ca44311ae87360a933c",
-    "fixtures/validation/relationship-avro-projection-native.json": "86437317df2a480fc0f7d4e22d5d18c754d1157b652ba13e1bd4bccb50943ea0",
-    "dist/umf.js": "08bfd3c6d53a18cccb82c376138efd9993387d7adc8854d59eb06604260639f0"
+    "fixtures/validation/relationship-avro-projection-native.json": "15127d3df3c7dd53653a1c5883c5979471227170fefd6158826c39d8bfdf6cf3",
+    "dist/umf.js": "2edabcbe5499aa921e414a00fb7eb388ab85a8c127b9e2cc5083625cc9bd32b0"
   }
 }

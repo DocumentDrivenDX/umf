@@ -213,7 +213,7 @@
       }
     }
   },
-  "semantics": "CONTRACT-041 and TD-045. Classification retains native schema structure without inferring authored associations. Authored projection and full binding acceptance remain unfinished.",
+  "semantics": "CONTRACT-041 and TD-045. Classification retains native schema structure without inferring authored associations. The separate target-key-record projection receipt retains authored meaning and reports unmet obligations. Full binding acceptance remains unfinished.",
   "scopes": [
     "document"
   ],
@@ -230,7 +230,10 @@
     },
     "evidence": [
       "tests/core-ideals/relationship-avro.test.ts",
-      "fixtures/validation/relationship-avro-discovery-native.json"
+      "fixtures/validation/relationship-avro-discovery-native.json",
+      "tests/core-ideals/relationship-avro-projection.test.ts",
+      "fixtures/validation/relationship-avro-projection-native.json",
+      "fixtures/validation/relationship-avro-projection-browser.json"
     ]
   }
 }

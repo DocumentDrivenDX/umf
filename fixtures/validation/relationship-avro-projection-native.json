@@ -6,6 +6,262 @@
   },
   "cases": [
     {
+      "case": "one-or-more-report",
+      "writer": "apache",
+      "hex": "0004222200",
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "reference": []
+            },
+            {
+              "reference": [
+                {
+                  "key_0": 17
+                },
+                {
+                  "key_0": 17
+                }
+              ]
+            }
+          ],
+          "bytesConsumed": 5
+        },
+        "fastavro": {
+          "values": [
+            {
+              "reference": []
+            },
+            {
+              "reference": [
+                {
+                  "key_0": 17
+                },
+                {
+                  "key_0": 17
+                }
+              ]
+            }
+          ],
+          "bytesConsumed": 5
+        }
+      }
+    },
+    {
+      "case": "one-or-more-report",
+      "writer": "fastavro",
+      "hex": "0004222200",
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "reference": []
+            },
+            {
+              "reference": [
+                {
+                  "key_0": 17
+                },
+                {
+                  "key_0": 17
+                }
+              ]
+            }
+          ],
+          "bytesConsumed": 5
+        },
+        "fastavro": {
+          "values": [
+            {
+              "reference": []
+            },
+            {
+              "reference": [
+                {
+                  "key_0": 17
+                },
+                {
+                  "key_0": 17
+                }
+              ]
+            }
+          ],
+          "bytesConsumed": 5
+        }
+      }
+    },
+    {
+      "case": "boolean-report",
+      "writer": "apache",
+      "hex": "01",
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "reference": {
+                "key_0": true
+              }
+            }
+          ],
+          "bytesConsumed": 1
+        },
+        "fastavro": {
+          "values": [
+            {
+              "reference": {
+                "key_0": true
+              }
+            }
+          ],
+          "bytesConsumed": 1
+        }
+      }
+    },
+    {
+      "case": "boolean-report",
+      "writer": "fastavro",
+      "hex": "01",
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "reference": {
+                "key_0": true
+              }
+            }
+          ],
+          "bytesConsumed": 1
+        },
+        "fastavro": {
+          "values": [
+            {
+              "reference": {
+                "key_0": true
+              }
+            }
+          ],
+          "bytesConsumed": 1
+        }
+      }
+    },
+    {
+      "case": "binary-report",
+      "writer": "apache",
+      "hex": "0400ff",
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "reference": {
+                "key_0": {
+                  "$bytes": "00ff"
+                }
+              }
+            }
+          ],
+          "bytesConsumed": 3
+        },
+        "fastavro": {
+          "values": [
+            {
+              "reference": {
+                "key_0": {
+                  "$bytes": "00ff"
+                }
+              }
+            }
+          ],
+          "bytesConsumed": 3
+        }
+      }
+    },
+    {
+      "case": "binary-report",
+      "writer": "fastavro",
+      "hex": "0400ff",
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "reference": {
+                "key_0": {
+                  "$bytes": "00ff"
+                }
+              }
+            }
+          ],
+          "bytesConsumed": 3
+        },
+        "fastavro": {
+          "values": [
+            {
+              "reference": {
+                "key_0": {
+                  "$bytes": "00ff"
+                }
+              }
+            }
+          ],
+          "bytesConsumed": 3
+        }
+      }
+    },
+    {
+      "case": "int32-report",
+      "writer": "apache",
+      "hex": "22",
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "reference": {
+                "key_0": 17
+              }
+            }
+          ],
+          "bytesConsumed": 1
+        },
+        "fastavro": {
+          "values": [
+            {
+              "reference": {
+                "key_0": 17
+              }
+            }
+          ],
+          "bytesConsumed": 1
+        }
+      }
+    },
+    {
+      "case": "int32-report",
+      "writer": "fastavro",
+      "hex": "22",
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "reference": {
+                "key_0": 17
+              }
+            }
+          ],
+          "bytesConsumed": 1
+        },
+        "fastavro": {
+          "values": [
+            {
+              "reference": {
+                "key_0": 17
+              }
+            }
+          ],
+          "bytesConsumed": 1
+        }
+      }
+    },
+    {
       "case": "many-to-one-report",
       "writer": "apache",
       "hex": "22",
@@ -735,9 +991,9 @@
     }
   ],
   "sha256": {
-    "fixtures/avro/relationship-projection-cases.json": "66ac6aad5e6eaeca5d822943febba0b40ce1ddd5bfd40339e0fc3442c148efa0",
-    "scripts/core-ideals/relationship-avro-projection-native.py": "e0cd55f2d0f12bde5ba642d918b60aa201254d38e0fc5f680d85a7f41124a738",
-    "scripts/core-ideals/relationship-avro-projection-cases.ts": "200f551fc594b3ec50cc8e15261a9268cf91fddfef297123e21af95a6cd98b28",
+    "fixtures/avro/relationship-projection-cases.json": "5f8966994fb100a6e6d3a7bd0e6f1c6091db3a3961d2faf82ff249a28ccde5fb",
+    "scripts/core-ideals/relationship-avro-projection-native.py": "7976347c219c3ba70886bf7c8d02679a3e0a43c550d4d9dab285d6faa830d2dc",
+    "scripts/core-ideals/relationship-avro-projection-cases.ts": "91188079d3f39a4eb211fa90a3dd33171ca141c07b8c5eefd536af846ef78562",
     "src/core-ideals/relationship-avro-projection.ts": "4e7e9773271f3e460e3a105ff802b9e9b89f50ca123bd956e2d71dc337456e7a",
     "src/core-ideals/relationship-avro-carrier.ts": "41738f5b72691cf734b595d5372a1aa939e9adc804545ffb8c035a5eb1627444",
     "spec/core/relationship-avro-projection.schema.json": "f90741b434a672f63ea8a1c395a2904f217cf193ec714f5000a74fb97fe5b61a"

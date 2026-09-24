@@ -2,6 +2,58 @@
   "scope": "Generated authored relationship projections; strict/refusal outcomes retained, no native equivalence",
   "cases": [
     {
+      "name": "one-or-more-strict",
+      "status": "blocked"
+    },
+    {
+      "name": "one-or-more-report",
+      "status": "projected",
+      "schemaText": "{\"type\":\"record\",\"name\":\"Source\",\"namespace\":\"example\",\"fields\":[{\"name\":\"reference\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"TargetKey\",\"fields\":[{\"name\":\"key_0\",\"type\":\"long\"}]}}}]}\n"
+    },
+    {
+      "name": "boolean-strict",
+      "status": "blocked"
+    },
+    {
+      "name": "boolean-report",
+      "status": "projected",
+      "schemaText": "{\"type\":\"record\",\"name\":\"Source\",\"namespace\":\"example\",\"fields\":[{\"name\":\"reference\",\"type\":{\"type\":\"record\",\"name\":\"TargetKey\",\"fields\":[{\"name\":\"key_0\",\"type\":\"boolean\"}]}}]}\n"
+    },
+    {
+      "name": "binary-strict",
+      "status": "blocked"
+    },
+    {
+      "name": "binary-report",
+      "status": "projected",
+      "schemaText": "{\"type\":\"record\",\"name\":\"Source\",\"namespace\":\"example\",\"fields\":[{\"name\":\"reference\",\"type\":{\"type\":\"record\",\"name\":\"TargetKey\",\"fields\":[{\"name\":\"key_0\",\"type\":\"bytes\"}]}}]}\n"
+    },
+    {
+      "name": "int32-strict",
+      "status": "blocked"
+    },
+    {
+      "name": "int32-report",
+      "status": "projected",
+      "schemaText": "{\"type\":\"record\",\"name\":\"Source\",\"namespace\":\"example\",\"fields\":[{\"name\":\"reference\",\"type\":{\"type\":\"record\",\"name\":\"TargetKey\",\"fields\":[{\"name\":\"key_0\",\"type\":\"int\"}]}}]}\n"
+    },
+    {
+      "name": "duplicate-components-strict",
+      "status": "blocked"
+    },
+    {
+      "name": "duplicate-components-report",
+      "status": "blocked"
+    },
+    {
+      "name": "reserved-name-strict",
+      "status": "blocked"
+    },
+    {
+      "name": "reserved-name-report",
+      "status": "blocked"
+    },
+    {
       "name": "many-to-one-strict",
       "status": "blocked"
     },

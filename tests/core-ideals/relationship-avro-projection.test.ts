@@ -28,7 +28,7 @@ test('float Key equality remains invalid instead of being legitimized by an Avro
 });
 test('generated authored carriers match the pinned native validation evidence',async()=>{
  const {createHash}=await import('node:crypto'),corpus=await Bun.file('fixtures/avro/relationship-projection-cases.json').json(),proof=await Bun.file('fixtures/validation/relationship-avro-projection-native.json').json();
- expect(corpus.cases.length).toBe(36);expect(proof.versions).toEqual({apache:'1.12.0',fastavro:'1.12.2'});expect(proof.cases.length).toBe(24);
+ expect(corpus.cases.length).toBe(48);expect(proof.versions).toEqual({apache:'1.12.0',fastavro:'1.12.2'});expect(proof.cases.length).toBe(32);
  for(const c of relationshipAvroProjectionCases()){const row=corpus.cases.find((v:any)=>v.name===c.name),r=projectRelationshipToAvro(c.source,c.author,c.request);expect(row.status).toBe(r.status);expect(row.schemaText).toBe(r.nativeArchive?.schema);}
  for(const row of proof.cases){expect(corpus.cases.find((c:any)=>c.name===row.case).status).toBe('projected');for(const reader of ['apache','fastavro'])expect(row.reads[reader].bytesConsumed).toBe(row.hex.length/2);expect(row.reads.apache.values).toEqual(row.reads.fastavro.values);}
  for(const [p,h] of Object.entries(proof.sha256))expect(createHash('sha256').update(new Uint8Array(await Bun.file(p).arrayBuffer())).digest('hex')).toBe(h as string);
