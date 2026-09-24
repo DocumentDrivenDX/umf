@@ -1,0 +1,63 @@
+{
+  "scope": "Internal explicit candidate Key envelope migration/rollback and complete receipt schema; public activation and native qualification remain pending",
+  "bead": "umf-97221618-bbefbb0a",
+  "coreTaskAccepted": false,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "results": {
+    "regressionTests": 16,
+    "assertions": 1747,
+    "failures": 0,
+    "typecheck": "passed",
+    "schemas": 281,
+    "packages": 48,
+    "browser": "148.0.7778.0",
+    "checks": {
+      "collisionCases": 10,
+      "archivedMembers": 90,
+      "upgradeRecoveries": 20,
+      "rollbackRecoveries": 20,
+      "laterAssertionRecoveries": 2,
+      "forgedRefusals": 5,
+      "wrongVersionRefusals": 5,
+      "wrongIdentityRefused": true,
+      "getterCalls": 0
+    },
+    "externalRequests": []
+  },
+  "limits": [
+    "Migration requires valid 0.5.0; older profiles must use their explicit transitions first",
+    "Rollback requires valid current 0.6.0 and unchanged document identity, while later contents remain separately retained",
+    "Receipt verification proves consistency, not source authentication or native enforcement",
+    "No public profile activation or Key admission is claimed"
+  ],
+  "sha256": {
+    "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md": "4cfa2f205db045550aaf8d5dfc240843bab57023f89f9e8dfb1b90d466b1f761",
+    "docs/helix/02-design/technical-designs/TD-044-core-key.md": "76c5b1ce4cee601e3f3d0dc118b1481180d7647e343329518ae05786126e9843",
+    "docs/helix/04-build/evidence/key-core-implementation.md": "9f796bc4e7a8f1cf8db0cabe47726dfaf54f646c16402fadee1170f92c306903",
+    "docs/helix/04-build/implementation-plan.md": "1a2ad8a7656aa594238524e54a6c9fafb2e88fd1f0ecd171050c595f5a61ab71",
+    "fixtures/json-schema-audit.json": "dab02edc9363c97ec282dd47d8d357b6e37b86531a5e24b25ce916df95671715",
+    "fixtures/validation/core-key-transition-browser.json": "041d75c11b4224ea02695c0576a61ef738dcdb79ea0d8174d04dde8e77e78dd1",
+    "fixtures/validation/core-key-transition-browser.log": "133e5d055c3825955a707c40d96fae3bda2cde61e23da93194ed74a7f0760d24",
+    "fixtures/validation/core-key-transition-regression.log": "c183c5b44909cb3143839f1224a2d51f7dd6058023868864a7bdac214245febd",
+    "fixtures/validation/core-key-transition-schemas.log": "f263d3ba1531a8d67d9c4f9c332c86dcae721c6fff9da8e5cd82d58292b44f7c",
+    "fixtures/validation/core-key-transition-typecheck.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "scripts/core-key-transition-browser.ts": "3bc3d4fb06de1e34f04edfbb6baedc6e7e9cd2ae744c435e5ed0ca820c7b7a5f",
+    "scripts/core-key-transition-cases.ts": "c01109abb6f6caa9ef6e9e84f7bf9583568ea6813d7ea51780d0e717e0ac5f39",
+    "scripts/core-key-transition-schema.ts": "801a207087e41bb3bc421cc8a80f886795e9bf1b1faf6c074b29bd13a13a7f66",
+    "spec/core/facet-document.schema.json": "7ef36fb7461411dad2f7354b7eb50a760d397d3b67cc500eddf2a806a80820cb",
+    "spec/core/key-document.schema.json": "2664daedf3d9e116a3c6d82cd55c1dfd25b1001652855abc2cf72f0445020d9f",
+    "spec/core/key-transition.schema.json": "d4138209dd97af29b09dd383300ce3a62795ba67d2e36cc788ce4b966326d6d2",
+    "spec/core/key-tuple-operation.schema.json": "1bbe9cece10ca98e602917b119df5198a9bfde11366f9a26dfab43878f2ee1ab",
+    "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
+    "src/model/key-transition.ts": "7917c9b192fbac000d23206391b11a113007ad905992210819cf514208091172",
+    "src/model/key-tuple.ts": "48606350149da3cc40c4606b35d11d11eef558efb6df7313404a40a2a636329d",
+    "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
+    "src/model/types.ts": "2a3b01a878bd247a6fb8618487164241dda88eb4de03204dbf02b55a833ba64a",
+    "src/validation/document.ts": "d8b7867b1ef321b9324f8d61f2f3f2f901e40d14eef01f54384d658d6701aed4",
+    "src/validation/facets.ts": "ae4a21f5f6378bb4c3bd82866dad662dd594543d6addb96d510c70321093f98b",
+    "src/validation/keys.ts": "4e8e211305e288ff8dc8e262c8e94fa7eecbd54f65bb43aef103e173ecdc0016",
+    "src/validation/schema.ts": "89a3a613cf5ba6ed2ced1dc242fc9d947ac8c373b7bef7dfcba72336570ffc08",
+    "tests/core/key-transition.test.ts": "a00f8fd648e6d4668873f9ebdd169031e0270732246352bf970284f82c977a57"
+  }
+}

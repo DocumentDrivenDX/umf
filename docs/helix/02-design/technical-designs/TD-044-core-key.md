@@ -216,3 +216,12 @@ sequences before UTF-8 encoding. Receipt verification recomputes canonical frami
 and current source context before bytes are read. Test the normative vectors,
 explicit boundaries/refusals, stable IDs after renaming/reordering, forged frames,
 unknown qualifiers, no-getter behavior and Bun/Chromium parity.
+
+### Candidate transition checkpoint
+
+Internal `upgradeKeyEnvelope` and `rollbackKeyEnvelope` now implement the chosen
+0.5.0/0.6.0 collision boundary with complete operation schemas and Bun/Chromium
+evidence. Receipts are checked by recomputation; the original and later envelopes
+remain separately recoverable. See the [implementation evidence](../../04-build/evidence/key-core-implementation.md#explicit-key-migration-and-rollback-candidate).
+Public activation and versioned operations remain pending; this checkpoint does
+not substitute for their compatibility refresh or native Key bindings.

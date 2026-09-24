@@ -4568,3 +4568,11 @@ regression passes 12 tests / 1,478 assertions. See the
 [tuple checkpoint](evidence/key-core-implementation.md#exact-tuple-encoding-candidate).
 Public version activation, authoring, migration, versioned existing APIs and native
 Key bindings remain required before core-task acceptance and admission.
+
+Core Key explicit migration/rollback now has internal Bun/Chromium evidence:
+90 archived element-member collisions and both serialization directions preserve
+original and later envelopes separately. The combined candidate regression passes
+16 tests / 1,747 assertions; typechecking and 281 schemas / 48 packages pass.
+See the [transition checkpoint](evidence/key-core-implementation.md#explicit-key-migration-and-rollback-candidate).
+Public activation, authoring and versioned operations are next; the Key core task
+and all five native bindings remain unfinished.

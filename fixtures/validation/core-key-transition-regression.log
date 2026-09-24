@@ -1,0 +1,30 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core/facet-ideals.test.ts:
+(pass) candidate facet semantics check families, roles, shape, pairs and qualified unknowns [60.07ms]
+(pass) candidate JSON Schema documents structural limits; semantic comparison remains explicit [4.90ms]
+(pass) facet tokens are checked before conversion; unsafe numbers and accessors refuse atomically [2.26ms]
+
+tests/core/key-ideals.test.ts:
+(pass) candidate Key checks membership, primary/alternate identities and component equality [97.62ms]
+(pass) key schema leaves cross-reference semantics to validator; old profiles stay opaque [21.21ms]
+(pass) key candidate never invokes getters and retains path-qualified unknowns [0.57ms]
+
+tests/core/key-tuple.test.ts:
+(pass) key tuple vectors and domain boundaries produce exact frames or atomic refusals [73.01ms]
+(pass) stable key ID survives name/list changes while retained receipts detect stale context [1.10ms]
+(pass) tuple verification rejects forged and nonminimal frames and altered retained inputs [1.62ms]
+(pass) unknown relevant qualifiers block and unrelated native extension content survives [0.93ms]
+(pass) shortest length/count framing and no getter evaluation [14.21ms]
+(pass) resource bounds and a bad later component refuse the whole tuple [6.61ms]
+
+tests/core/key-transition.test.ts:
+(pass) explicit Key migration archives all element collisions without adopting author intent [113.70ms]
+(pass) rollback restores exact old content and separately retains later key assertions and native edits [8.49ms]
+(pass) forged receipts, wrong identities/versions and invalid current key meaning reject atomically [12.98ms]
+(pass) no-collision migration and copy discipline preserve opaque scopes without getters [1.12ms]
+
+ 16 pass
+ 0 fail
+ 1747 expect() calls
+Ran 16 tests across 4 files. [654.00ms]

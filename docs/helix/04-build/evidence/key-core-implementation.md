@@ -72,3 +72,31 @@ can encode an exactly compensating exponent without expansion. Receipt
 serialization retains its existing independent limit. Tuple bytes are scoped by
 caller-supplied document/Record/Key identity; they prove neither author provenance
 nor native uniqueness. No native Key binding or ideal admission is claimed here.
+
+## Explicit Key migration and rollback candidate
+
+`upgradeKeyEnvelope` accepts a valid 0.5.0 source and archives every element-level
+`key`, `keys` and `members` collision before producing a 0.6.0 candidate. It does
+not adopt valid-looking old declarations. Root/module lookalikes, generic
+references and native extension payloads remain unchanged. The complete receipt
+schema is `spec/core/key-transition.schema.json`.
+
+`rollbackKeyEnvelope` recomputes the original upgrade, rejects altered receipts,
+checks the current candidate's semantic validity and document identity, restores
+the exact original envelope and retains the whole later envelope separately.
+Later explicit keys and changed native payloads are not applied to the old model
+or discarded. Invalid inputs, accessors and wrong profile versions fail atomically.
+
+The combined Key/tuple/transition/Facet candidate regression passes 16 tests /
+1,747 assertions. Chromium 148 covers ten collision shapes, 90 archived members,
+20 upgrade-receipt recoveries, 20 rollback-receipt recoveries and two recoveries
+retaining later assertions. It rejects five forged receipt variants, five wrong
+source versions and a wrong document identity, with no getter execution, host
+globals or external requests. Typechecking and 281 schemas / 48 packages pass.
+See the [browser proof](../../../../fixtures/validation/core-key-transition-browser.json)
+and [checkpoint record](../../../../fixtures/validation/key-transition-candidate.json).
+
+These are internal candidate APIs. Public 0.6.0 document support, membership/key
+authoring, versioned prior operations and selection, compatibility refresh and
+all five native Key bindings remain required. This checkpoint does not close the
+core task or admit the Key ideal.
