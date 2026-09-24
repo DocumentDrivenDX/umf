@@ -1,0 +1,27 @@
+{
+  "scope": "Candidate 0.6.0 key/membership structural and semantic validation with JSON/YAML metadata recovery; public version support, authoring, tuple encoding, migration and native bindings remain pending",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 54,
+    "accepted": 15,
+    "rejected": 39,
+    "recoveries": 108,
+    "getterCalls": 0
+  },
+  "externalRequests": [],
+  "bundleSha256": "776d2124278d187b2ffa5303f5c52b85e57567fae553499621d915ccea99d859",
+  "sha256": {
+    "scripts/core-key-browser.ts": "1b9dddaef46f6a354f7ed9f646e1309f0c60f865638a023721fccb998afac865",
+    "scripts/core-key-cases.ts": "83c1391c09e3a6aa7c56c2242de213ee199c4a0019a4d10703a861bd283e4461",
+    "scripts/core-key-schema.ts": "88c547e101b4a65147439adf1d494b2156242077a1dcb90337f2f408d87eef48",
+    "src/validation/keys.ts": "4e8e211305e288ff8dc8e262c8e94fa7eecbd54f65bb43aef103e173ecdc0016",
+    "src/validation/document.ts": "d8b7867b1ef321b9324f8d61f2f3f2f901e40d14eef01f54384d658d6701aed4",
+    "src/validation/schema.ts": "89a3a613cf5ba6ed2ced1dc242fc9d947ac8c373b7bef7dfcba72336570ffc08",
+    "src/validation/facets.ts": "ae4a21f5f6378bb4c3bd82866dad662dd594543d6addb96d510c70321093f98b",
+    "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
+    "src/model/types.ts": "2a3b01a878bd247a6fb8618487164241dda88eb4de03204dbf02b55a833ba64a",
+    "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
+    "spec/core/key-document.schema.json": "2664daedf3d9e116a3c6d82cd55c1dfd25b1001652855abc2cf72f0445020d9f",
+    "tests/core/key-ideals.test.ts": "8e52404f4547631e4dfb591fc07a4bda2cd85cdf96f3b3ff09dcdb1439cb8518"
+  }
+}

@@ -23,9 +23,10 @@ Implement US-044 under CONTRACT-040. Architecture is the direct parent; no
 separate solution design exists for this core slice. Experimental core 0.5.0
 includes Field, Nullability, Cardinality and author-stated facets alongside
 scalar-family metadata. Field, Nullability and Cardinality have passed their
-qualified five-system gates; the facet delivery gate remains pending. Key starts
-only after that gate passes, with an explicit representation/version decision
-before reserving new members. This Key design is planned, not executed evidence.
+qualified five-system gates, including the completed facet delivery gate. Key
+implementation now begins with the explicit 0.6.0 representation decision below.
+Candidate schema/validation has bounded evidence; public operations, migration,
+tuple encoding, native bindings and core-task acceptance remain pending.
 
 ## Technical Approach
 
@@ -180,3 +181,26 @@ and follow-up bindings; report mode must never imply execution enforcement.
 - [x] All story ACs have implementation/test responsibilities.
 - [x] Governing meaning stays in CONTRACT-040; native refinements are retained.
 - [ ] Schema/version transition, five bindings and regression evidence implemented.
+
+## Experimental 0.6.0 implementation decision
+
+CONTRACT-040 now reserves plural keys and explicit Record membership in 0.6.0.
+Use `spec/core/key-document.schema.json` for the candidate and
+`src/validation/keys.ts` for portable whole-document semantic validation. Begin
+with a candidate validator; keep public `validateDocument` and authoring on the
+existing versions until versioned operation schemas and migration are integrated.
+
+Add explicit `Record.members` to supply the ownership check required by Key.
+Generic reference roles remain uninterpreted. Validate identity resolution, unique
+ownership, per-record key IDs/names, duplicate component sets, optional primary,
+required singular components and exact scalar domains. Preserve unknown qualifiers
+and diagnose them separately from invalid declarations. Exercise these checks in
+Bun and Chromium with copied input and both JSON/YAML recoveries.
+
+Then add key authoring/inspection and stable-ID lookup, exact tuple encoding,
+0.5.0-to-0.6.0 migration/rollback, versioned earlier operations and selection.
+Changing a key tuple under an existing ID is an explicit conflict; renaming a key
+or reordering the keys list preserves identity. Public candidate support is not
+admission. Refresh compatibility evidence after the integrated physical-binding
+work and Key implementation; earlier gate fingerprints identify their historical
+execution commits and must not be relabeled as current native runs.

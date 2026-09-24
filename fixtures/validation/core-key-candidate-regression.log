@@ -1,0 +1,16 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core/facet-ideals.test.ts:
+(pass) candidate facet semantics check families, roles, shape, pairs and qualified unknowns [50.80ms]
+(pass) candidate JSON Schema documents structural limits; semantic comparison remains explicit [4.65ms]
+(pass) facet tokens are checked before conversion; unsafe numbers and accessors refuse atomically [1.85ms]
+
+tests/core/key-ideals.test.ts:
+(pass) candidate Key checks membership, primary/alternate identities and component equality [80.24ms]
+(pass) key schema leaves cross-reference semantics to validator; old profiles stay opaque [16.42ms]
+(pass) key candidate never invokes getters and retains path-qualified unknowns [0.46ms]
+
+ 6 pass
+ 0 fail
+ 1262 expect() calls
+Ran 6 tests across 2 files. [309.00ms]

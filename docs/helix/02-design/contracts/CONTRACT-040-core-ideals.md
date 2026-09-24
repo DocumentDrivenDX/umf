@@ -915,3 +915,39 @@ Facets now pass the separate ideal-admission and qualified five-system delivery 
 records useful mappings, both retained recovery directions, permanent float
 counterexamples and the PostgreSQL aggregate receipt limit. This qualification
 does not alter the normative facet meaning or any native replacement gate.
+
+### Key representation and version decision
+
+Reserve `Element.keys` and `Element.members` in experimental core 0.6.0 only.
+`members` is an ordered list of `{module, element}` references on a Record; it
+explicitly declares the Record's direct Field slots. An empty Record may have an
+empty list. A Record with keys must supply membership. Each reference resolves to
+an explicit Field, occurs once in the Record, and has at most one owning Record
+in the supplied document. Same-named Fields in different records remain distinct
+by identity. Nested values use a separate Field's record-type reference; membership
+does not recursively include that record's Fields. Generic reference roles,
+physical columns and DDD properties do not implicitly declare membership.
+
+Every key component must occur in its owning Record's `members`, explicitly state
+`nullability: required` and `cardinality: one`, and have the defined scalar equality
+above. Missing or unspecified availability/cardinality does not qualify. A decimal
+component also requires valid explicit precision and scale. Duplicate keys compare
+component identity sets independently of component order; accepted key order is
+retained for encoding. IDs and names are unique within their owning Record, not
+across unrelated Records. Unknown key/member qualifiers are retained with warnings;
+operations must block before interpreting an unknown qualifier as exact equality.
+
+The membership member closes the ownership prerequisite for Key validation; it is
+not a relationship, foreign key, physical layout or DDD aggregate assertion. JSON
+Schema describes local shapes; portable semantic validation checks resolution,
+ownership, duplicate identities/sets, primary count and component domains.
+
+Migration from 0.5.0 archives every element's existing `key`, `keys` and `members`
+values, including valid-looking objects, before removing them from the 0.6.0
+candidate. The old singular `key` remains unreserved in 0.6.0 and is never adopted
+as author intent. The receipt retains the complete old envelope. Rollback restores
+it exactly and separately retains the complete later envelope. Neither migration
+nor schema validation infers a key from a native index. Older schemas and receipts
+remain immutable. Candidate validation does not activate public 0.6.0 authoring;
+public APIs, operation schemas, migration and browser evidence are required before
+core-task acceptance, followed by all five separate native bindings.

@@ -1,0 +1,11 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core/key-ideals.test.ts:
+(pass) candidate Key checks membership, primary/alternate identities and component equality [106.65ms]
+(pass) key schema leaves cross-reference semantics to validator; old profiles stay opaque [21.35ms]
+(pass) key candidate never invokes getters and retains path-qualified unknowns [0.48ms]
+
+ 3 pass
+ 0 fail
+ 375 expect() calls
+Ran 3 tests across 1 file. [265.00ms]

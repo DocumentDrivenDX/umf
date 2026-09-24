@@ -4549,3 +4549,14 @@ these intermediate results alone do not close the binding.
 Facets now pass the separate ideal-admission and qualified five-system delivery gate. Native equivalence remains unclaimed; native payloads and unknown extension content remain attached. Key is the next ordered concept. See the
 [admission evidence](evidence/facet-gate-admission.md) for exact counts, qualified versions, retained
 failures and scope limits. Earlier pending checkpoints above remain historical.
+
+## Core Key candidate checkpoint
+
+Facet admission/delivery has passed. The integrated plural-key plan now governs
+Key. Experimental 0.6.0 candidate schema and portable validation define explicit
+Record membership, primary/alternate key identity and required singular equality
+components. Bun and Chromium cover 54 candidate cases and metadata recovery;
+public APIs, tuple encoding, migration and native bindings remain pending. See the
+[implementation evidence](evidence/key-core-implementation.md). Earlier native
+qualification remains historical until the integrated library's compatibility
+refresh; the Key core bead stays in progress.

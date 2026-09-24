@@ -105,3 +105,12 @@ US-043 must complete its five-system gate before this concept implementation.
 
 Automatic native replacement, DDD lifecycle, OWL, physical encodings and default
 execution. No completion claim is made by authoring this story.
+
+### Ownership prerequisite for AC1/11
+
+Core 0.6.0 uses explicit Record `members` to validate key ownership. A key's
+component must resolve to a required singular Field in that Record; unresolved,
+shared-owner, cross-record and duplicate membership references reject with paths.
+Native columns, DDD properties and generic reference roles cannot supply implicit
+ownership. Legacy `key`, `keys` and `members` collisions survive migration and
+rollback without being adopted as author assertions.

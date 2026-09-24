@@ -1,0 +1,107 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/projections/ddd-json-schema.test.ts:
+(pass) US-006-AC1: explicit document binding emits useful nested schema with separate source recovery [257.86ms]
+(pass) US-006-AC2: independent JSON Schema validation enforces shape but not domain consistency [160.40ms]
+(pass) US-006-AC3: missing, unused, invalid identity, strict and non-data bindings block explicitly [365.56ms]
+(pass) US-006-AC4: changing only embedding policy changes document representation, not domain intent [146.72ms]
+
+tests/projections/ddd-authored-graph-fixture.test.ts:
+(pass) FEAT-006: staged DDL and SDL fixtures share the same authored DDD graph [4.14ms]
+
+tests/projections/ddd-graphql-core-fields.test.ts:
+(pass) @covers US-049-AC3 @covers US-049-AC5 @covers US-049-AC6: core Field availability controls SDL wrappers [249.41ms]
+(pass) @covers US-049-AC3 @covers US-049-AC4: absent item availability remains a nullable item and a residual [87.63ms]
+(pass) @covers US-049-AC3: an unspecified core availability cannot borrow DDD one as SDL non-null [91.23ms]
+(pass) @covers US-049-AC4: missing, conflicting and duplicate core pairings block before SDL [103.18ms]
+(pass) @covers US-049-AC3: the DDD-only profile cannot silently ignore a core pairing [11.64ms]
+
+tests/projections/ddd-graphql-entities.test.ts:
+(pass) @covers US-049-AC3 @covers US-049-AC5 @covers US-049-AC6: entity SDL, scalar wrappers and schema-mode import [230.06ms]
+(pass) @covers US-049-AC5 @covers US-049-AC9: residuals retain root, identity, cardinality and scalar limits [85.11ms]
+(pass) @covers US-049-AC4: malformed names, unknown relationships and collisions block atomically [76.48ms]
+(pass) @covers US-049-AC5: a DDD concept field never becomes a relationship [92.56ms]
+(pass) @covers US-049-AC9: opaque DDD invariant is retained without execution [89.98ms]
+
+tests/projections/ddd-postgresql-tables-indexes.test.ts:
+(pass) @covers US-048-AC1 @covers US-048-AC3 @covers US-047-AC3: qualified DDD tables carry only native-valid bound indexes [830.61ms]
+(pass) @covers US-048-AC3 @covers US-047-AC9: unknown binding and invalid index evidence never produce DDL [40.52ms]
+
+tests/projections/ddd-postgresql-tables.test.ts:
+(pass) @covers US-048-AC1 @covers US-048-AC3 @covers US-048-AC5: order graph tables, JSONB and LIST partition pass the adapter [179.28ms]
+(pass) @covers US-048-AC3 @covers US-048-AC4: stale and unknown bindings block; unqualified type cannot inject SQL [131.73ms]
+(pass) @covers US-048-AC3 @covers US-048-AC4: partition and embedded path losses are named [75.33ms]
+
+tests/binding/delta.test.ts:
+(pass) @covers US-046-AC6 @covers US-046-AC7 @covers US-047-AC6 @covers US-047-AC7: clustering action uses exact physical columns and preserves native source [62.08ms]
+(pass) @covers US-046-AC4 @covers US-046-AC5 @covers US-047-AC4 @covers US-047-AC5: strict blocks unsupported index and report retains it as residual [126.42ms]
+(pass) @covers US-046-AC3 @covers US-047-AC8: native partitioning and absent columns cannot silently become clustering [78.93ms]
+
+tests/binding/iceberg.test.ts:
+(pass) @covers US-046-AC4 @covers US-046-AC5 @covers US-046-AC7 @covers US-047-AC4 @covers US-047-AC5 @covers US-047-AC7: sort order is an explicit approximation and native source recovers [378.23ms]
+(pass) @covers US-046-AC3 @covers US-047-AC8: unsupported index and missing storage column remain residuals [260.36ms]
+
+tests/binding/indexes.test.ts:
+(pass) @covers US-047-AC1 @covers US-047-AC2: ordered index capability lives only in binding [28.02ms]
+(pass) @covers US-047-AC4 @covers US-047-AC5: strict blocks and report residualizes clustering [33.81ms]
+(pass) @covers US-047-AC9: invalid index kind combinations and paths fail [24.48ms]
+(pass) @covers US-047-AC8: target outcomes are qualified and never infer author intent [63.74ms]
+(pass) @covers US-047-AC5: unknown index refinements survive but block unsafe projection [16.55ms]
+(pass) @covers US-046-AC3 @covers US-047-AC9: storage alternatives and expression paths cannot be mixed [23.30ms]
+
+tests/binding/package.test.ts:
+(pass) @covers US-046-AC1 @covers US-046-AC2: separate binding preserves logical identity and copied choices [33.59ms]
+(pass) @covers US-046-AC7: independent document round-trips in both UMF formats [33.26ms]
+(pass) @covers US-046-AC3: stale model and duplicate or missing bindings fail with paths [30.85ms]
+(pass) @covers US-046-AC7: unknown binding content survives but remains incomplete [23.91ms]
+(pass) @covers US-046-AC2: nested DDD field resolves by owner ID and exact field key [14.86ms]
+
+tests/binding/parquet.test.ts:
+(pass) @covers US-046-AC4 @covers US-047-AC4: strict Parquet projection blocks every unsupported physical obligation [27.68ms]
+(pass) @covers US-046-AC5 @covers US-047-AC5: report retains every target-specific loss and source [21.28ms]
+(pass) @covers US-046-AC6 @covers US-046-AC7 @covers US-047-AC6 @covers US-047-AC7: both retained recovery directions [60.57ms]
+(pass) @covers US-046-AC8 @covers US-047-AC8: Parquet version is qualified and index intent is never invented from native file [36.34ms]
+(pass) @covers US-046-AC5: unknown physical refinement remains in source and blocks unsafe lowering [8.00ms]
+
+tests/binding/postgresql-indexes.test.ts:
+(pass) @covers US-047-AC3 @covers US-047-AC4 @covers US-047-AC5: PostgreSQL kinds, document path and clustering residual [353.44ms]
+(pass) @covers US-046-AC3 @covers US-047-AC9: absent native column and unsafe predicate are not emitted [282.69ms]
+(pass) @covers US-047-AC9: identifiers that PostgreSQL would truncate are refused [34.46ms]
+
+tests/binding/sqlserver-indexes.test.ts:
+(pass) @covers US-047-AC4 @covers US-047-AC5 @covers US-047-AC8: rowstore, unique and filtered candidates have residuals for other kinds [185.44ms]
+(pass) @covers US-046-AC3 @covers US-047-AC9: unsafe filtered predicate and unknown catalog column are residuals [142.91ms]
+(pass) @covers US-047-AC9: a filtered predicate must name an observed column [70.24ms]
+
+tests/binding/sqlserver-tables-indexes.test.ts:
+(pass) @covers US-046-AC2 @covers US-047-AC4: authored inputs alone generate the same native-valid DDL [364.04ms]
+(pass) @covers US-046-AC3 @covers US-047-AC9: planned columns and predicates must be safe before index emission [173.19ms]
+(pass) @covers US-046-AC2 @covers US-047-AC4: generated tables and indexes compose with explicit catalog evidence [267.96ms]
+(pass) @covers US-046-AC3 @covers US-047-AC9: stale column evidence and unknown binding block [117.22ms]
+
+tests/binding/sqlserver-tables.test.ts:
+(pass) @covers US-046-AC2 @covers US-046-AC4 @covers US-046-AC5: explicit tables, partition family and embedded residual [60.99ms]
+(pass) @covers US-046-AC3: stale model, unknown binding content and unsafe type policy block [76.51ms]
+(pass) @covers US-046-AC4 @covers US-046-AC5: missing partition policy and DDD identity remain residuals [52.42ms]
+(pass) @covers US-046-AC3: document-column type and path conflicts block before native DDL [50.95ms]
+(pass) @covers US-046-AC6 @covers US-046-AC7: authored and native archives remain separate [76.42ms]
+
+tests/relationship-native/observations.test.ts:
+(pass) CONTRACT-041: native observations retain browser recovery evidence [0.17ms]
+(pass) CONTRACT-041: RDF union-class domain is retained without authored inference [54.93ms]
+(pass) CONTRACT-041: RDF domain and range remain native observations [49.45ms]
+(pass) CONTRACT-041: TableSpec foreign-key metadata stays a native observation [32.63ms]
+(pass) CONTRACT-041: LinkML slot and range remain native observations [146.51ms]
+
+tests/relationship/graphql-native.test.ts:
+(pass) @covers US-045-AC5 @covers US-045-AC7: object-returning SDL fields stay native observations [186.65ms]
+(pass) @covers US-045-AC5: two native object fields with the same type do not prove association intent [0.03ms]
+
+tests/relationship/postgresql-native.test.ts:
+(pass) @covers US-045-AC5 @covers US-045-AC7: native FK refinements remain observations with exact source recovery [107.39ms]
+(pass) @covers US-045-AC5: pinned catalog distinguishes validation, MATCH SIMPLE and alternate UNIQUE target [0.06ms]
+
+ 65 pass
+ 0 fail
+ 358 expect() calls
+Ran 65 tests across 18 files. [10.60s]
