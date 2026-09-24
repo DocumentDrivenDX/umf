@@ -17,7 +17,7 @@ export function relationshipAvroCase(name='many-to-one'){
  const record=logical.modules[0].elements.find((e:any)=>e.id==='Customer'),key=record.keys.find((k:any)=>k.id===r.target[0].key),field=logical.modules[0].elements.find((e:any)=>e.id===key.fields[0].element);
  if(name==='composite')key.fields.push({module:'m',element:'Customer.code'});
  if(name==='facet')field.facets={integerWidth:{bits:16,signed:true}};
- 
+
  logical.vocabularies.future={version:'1.0.0'};logical.extensions={future:{nativeText:'opaque 9007199254740993 1.2300\n'}};
  const author=declareCoreRelationship(logical,{module:'m'},Object.fromEntries(Object.entries(r).filter(([k])=>k!=='a/b~c')) as any),source=author.target;
  const request:RelationshipAvroRequest={id:'avro-'+name,profile:'target-key-record',relationship:{module:'m',id:r.id},mode:'report',recordName:'Source',namespace:'example',fieldName:'reference',keyRecordName:'TargetKey',shape:name==='many-to-many'||name==='bounded-required'?'array':name==='nullable'?'nullable-one':'one',components:key.fields.map((f:any,i:number)=>({targetField:f,name:'key_'+i,type:logical.modules[0].elements.find((e:any)=>e.id===f.element).scalarType==='string'?'string':'long'}))};
