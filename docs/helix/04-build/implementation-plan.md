@@ -4970,3 +4970,29 @@ and 130 forged/stale refusals; classification parity is also refreshed.
 Typechecking and build pass. The projection checkpoint retains previous
 execution history. Broader compatibility and the final binding acceptance audit
 remain required before closing `umf-95881098`.
+
+### TableSpec relationship binding acceptance
+
+`umf-95881098` passes qualified acceptance for declared-metadata classification
+and authored outgoing-metadata projection under TD-045. Native observations
+remain separate from author intent; strict mode blocks unfulfilled obligations
+and report mode retains each loss alongside the complete native carrier.
+The 172-case matrix includes 65 native-accepted carriers and 107 explicit blocks.
+Chromium verifies 130 recoveries in each composed direction and 130 forged/stale
+refusals. All 221 relationship tests pass within the full regression.
+
+The fresh compatibility replay passes all 118 commands. Regression passes 1,702
+tests / 118,418 assertions across 348 files; five concept gates and seven separate
+conformance/evidence test files also pass. Combined verification is 1,715 tests /
+118,604 assertions across all 355 test files, with zero failures. Typechecking,
+browser builds, 321 schemas and 54 extension packages pass. Source, test and log
+fingerprints were verified before acceptance. See the
+[acceptance record](../../../fixtures/validation/relationship-tablespec-acceptance-evidence.json).
+
+This acceptance covers metadata carriers and retained recovery, not referential
+enforcement, join execution or relationship ideal admission. Heterogeneous
+endpoints and keyed association Records remain explicit profile refusals.
+PostgreSQL, SQL Server, Avro and Parquet relationship bindings and the separate
+relationship admission/delivery gates remain open. Earlier checkpoint counts
+and acceptance records retain their historical scope; the new replay and gate
+logs record the current execution.

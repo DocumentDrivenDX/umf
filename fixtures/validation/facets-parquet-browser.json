@@ -37,7 +37,7 @@
   "sha256": {
     "dist/parquet-facet-carrier.js": "b6bb90a54583dcfcc512e4acf65a2a81ab74e434690ade27d8eb3f82bd02fd57",
     "dist/parquet-facet-type.js": "253d38b194f449f66063c89c18f893d1d6a12c7ccead03cc6ce1438860624609",
-    "dist/umf.js": "70179b918eed48f12f61647a0e013327ad4ae741fe253bc56ebfe9e3c6241417",
+    "dist/umf.js": "c8ef1361a55f26716ec40a423b33979e674b09df65231a1b2c2011068a136f24",
     "fixtures/parquet/facets/../cardinality/array-duplicates-0.parquet": "18c983c91d68561c14812ed8214c150f47da25920da18969e1d4d960e078af7f",
     "fixtures/parquet/facets/carrier-0-0.parquet": "2ab9844a2fcaf56a36638facea12aff16005a78443a3e33eb109ab901b488db1",
     "fixtures/parquet/facets/carrier-0-1.parquet": "7dca9ced67fe2f40608336705dc1f3c4b1a96897aadb883197384741ee8ee51b",
@@ -108,11 +108,11 @@
     "fixtures/parquet/facets/uint8-min-plain.parquet": "bb2944bfcdfc5ee9d6924e6ce1bfabaa5866fdeb952c5f1ef9c04d31bc7b823f",
     "fixtures/validation/facets-parquet-carrier-browser.json": "3373fa28a08316c7251bdb81b20a997bce5452f3d36638c2a91141ba514c74a0",
     "fixtures/validation/facets-parquet-carrier-corpus.json": "4ec421cbbc5f0fd77e9dc5282972d7c70866d28fbcf5c9e4c80a474f1e1eab41",
-    "fixtures/validation/facets-parquet-classification-browser.json": "6749fae466dc91cbe54c3c04691cc90fefed1fd09daaf9805c23c54fd20aa571",
-    "fixtures/validation/facets-parquet-discovery.json": "4bc1c64d120c1bd44d15281e7928a56afc6672a483a6957595a83c08de28c56b",
-    "fixtures/validation/facets-parquet-projection-browser.json": "f7879c1a212709dc67b530f98848323340559e6fd0723187bacf18b48e66d256",
+    "fixtures/validation/facets-parquet-classification-browser.json": "fd9af83fd537dfc07acf8969d884179dc4fda6eac222df1ab20f45dc9c7f9bda",
+    "fixtures/validation/facets-parquet-discovery.json": "45d5368f55364a6c538ea16bf151d8985ea253a786dcc4c98657ae6ceb68b0dc",
+    "fixtures/validation/facets-parquet-projection-browser.json": "d79b6b6920aa20c6090d6b59c486069e26c5a91c93261b184803da2c429c113c",
     "fixtures/validation/facets-parquet-projection-corpus.json": "aeab87ea63915fbd0e302a37ec3f126224b8276127914fb8f6fdbf030dd6421a",
-    "fixtures/validation/facets-parquet-type-browser.json": "6145042be68f0d191a5c803c12f5ea599c893fe8f2d797d79ca4018f1fc5b0a6",
+    "fixtures/validation/facets-parquet-type-browser.json": "7bba427fce13b4f129728a5a298af53de89afc0329ce8d76e6f65a246a7c7508",
     "scripts/core-ideals/facets-parquet-browser.ts": "31a5a7d0574e8c27d4ef757a92c8c1d045d7e4037d54b3592e7d7d25608d69ed",
     "scripts/core-ideals/facets-parquet-carrier-browser.ts": "41fbc6e468b18f9502043a4c3d94888dbb700a48a93f7107a78527ee1853483b",
     "scripts/core-ideals/facets-parquet-classification-browser.ts": "6c6fad4dc2bc459646eebfdb19c1237bf960f02b196508369d9dd3bead875edf",
@@ -130,7 +130,7 @@
     "src/core-ideals/parquet-cardinality-shape.ts": "e994e00accfca053db67747213858140aad3da538ad90057f72cdd5c6eeeac5b",
     "src/core-ideals/parquet-carriers.ts": "3e9450439bbe649f1902e7a8d2ec3e8fa479385986d3b9f7b3cf3b48927b7aca",
     "src/core-ideals/parquet-facet-carrier.ts": "c152e4490ab96c26e14ead9ebb041af0f03581322983394c2cf0a18d789503d1",
-    "src/index.ts": "bc3dd937cb8dc7e3c6e6f9b29cfcd556876a3370c8f6f3c5635257338f3c9f7e",
+    "src/index.ts": "9e9454769f562ac198cf198e864f82615e52f2240047fb2d05d40264cd036b15",
     "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
     "src/model/types.ts": "9ccea0814e6e52e3d2992ba8afcb9fad15fd362d00fad24bdd5a47a150784add"
   }

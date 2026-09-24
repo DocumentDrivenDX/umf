@@ -1,0 +1,150 @@
+{
+  "complete": true,
+  "coreTaskAccepted": false,
+  "bindingAccepted": false,
+  "runs": [
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-conformance.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-tablespec-refresh/field-conformance.log",
+      "logSha256": "71c1f7718cfa790b35c9df7dbd394beae536b86a67ad3a3b4794fecd48cc54c8"
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/field-conformance.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-tablespec-refresh/field-tests.log",
+      "logSha256": "e86b5d8a185fedcd85461df54ab4ff95c0762b0c04dd2bd595cd7bd01118deac",
+      "tests": 3,
+      "failures": 0,
+      "assertions": 25,
+      "files": null
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-conformance.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-tablespec-refresh/nullability-conformance.log",
+      "logSha256": "87d9eb7741ccc38dca0fa9c787e78a25bd12ec941d98814f176b6db0bda60efd"
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/nullability-conformance.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-tablespec-refresh/nullability-tests.log",
+      "logSha256": "019381dbc8122a7a702218a0dd6569992c20e278121adde41667372710425571",
+      "tests": 2,
+      "failures": 0,
+      "assertions": 17,
+      "files": null
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-conformance.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-tablespec-refresh/cardinality-conformance.log",
+      "logSha256": "347056927f360f3fbc5f23b45277f07ff887f6dc1781fecd9b11f69276f1db32"
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/cardinality-conformance.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-tablespec-refresh/cardinality-tests.log",
+      "logSha256": "0e49ae76bc435f5cfa806815b59f05800bf7b2fd23c6c099fc663ab62beda064",
+      "tests": 2,
+      "failures": 0,
+      "assertions": 57,
+      "files": null
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-conformance.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-tablespec-refresh/facets-conformance.log",
+      "logSha256": "7d8657b8a7b1df029a83e08791294226d00eebe941ed4d1c47d57e65830530e0"
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/facets-conformance.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-tablespec-refresh/facets-tests.log",
+      "logSha256": "5b7f2241e190561cbc34b59ca5e408065949cc180703ae6b5cd979a2c2f13056",
+      "tests": 1,
+      "failures": 0,
+      "assertions": 42,
+      "files": null
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/facets-evidence.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-tablespec-refresh/facets-evidence-tests.log",
+      "logSha256": "8de67d77f3c309173f6033b09d20a48a9e0d8710a46e8a3d3d68070080224ab0",
+      "tests": 2,
+      "failures": 0,
+      "assertions": 18,
+      "files": null
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/key-conformance.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-tablespec-refresh/key-conformance.log",
+      "logSha256": "4aadbdc14c4231a8038dce2410cc2a47b76286da37a93da15fd02fe6a45d5eed"
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/key-conformance.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-tablespec-refresh/key-tests.log",
+      "logSha256": "64d0ea57a3418e8b5c4ba17686dabd98310cb4d0238c05a403c8d6ca80cdefed",
+      "tests": 1,
+      "failures": 0,
+      "assertions": 5,
+      "files": null
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "./tests/core-ideals/key-evidence.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/relationship-tablespec-refresh/key-evidence-tests.log",
+      "logSha256": "d996c97707f93c7acb24d759ac22ad4aa1b721bab119653a2a252bbaa0624544",
+      "tests": 2,
+      "failures": 0,
+      "assertions": 22,
+      "files": null
+    }
+  ]
+}

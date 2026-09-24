@@ -1,5 +1,5 @@
 {
-  "scope": "Fresh 114-command native/browser compatibility replay and full non-gate repository regression after experimental Relationship 0.7.0 integration and module-scoped forward-name correction. Existing bindings retain their qualified profiles; no Relationship native binding or native equivalence is admitted.",
+  "scope": "Fresh 118-command native/browser compatibility replay and full non-gate repository regression after TableSpec relationship classification and outgoing-metadata projection, including pinned native runtime and domain validation. Existing bindings retain their qualified profiles; TableSpec relationship binding acceptance remains separate and no native equivalence is admitted.",
   "complete": true,
   "idealAdmitted": false,
   "nativeEquivalence": false,
@@ -11,7 +11,7 @@
         "typecheck"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-refresh/001.log",
+      "log": "fixtures/validation/relationship-tablespec-refresh/001.log",
       "logSha256": "b1a6cc0f4b7ea761f9223617aa029a27603b7b5f88c2452991d75c362d4f39b9"
     },
     {
@@ -21,8 +21,8 @@
         "build"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-refresh/003.log",
-      "logSha256": "bbd50a561618c3944f565d9969099f51aad00aae004ec373ed80c9ea1a5fe738"
+      "log": "fixtures/validation/relationship-tablespec-refresh/003.log",
+      "logSha256": "8bf3011cc773d4006d3fade524d3441474b8464d7616bdb87eba956579ea2a08"
     },
     {
       "command": [
@@ -31,7 +31,7 @@
         "build:postgresql"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-refresh/004.log",
+      "log": "fixtures/validation/relationship-tablespec-refresh/004.log",
       "logSha256": "2d3bb8aed105c807a7fe4f8a349a2c869c3013610095a265d145235a7354b789"
     },
     {
@@ -41,8 +41,8 @@
         "test:schemas"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-refresh/002.log",
-      "logSha256": "a345d3344c6d76503dd1848e938e0330c1726f6e49fcc6cf69f0ee56e554d15c"
+      "log": "fixtures/validation/relationship-tablespec-refresh/002.log",
+      "logSha256": "c876c398a03f2e264bb80e68480f60b6b6c869bd2e9b09fed93fd11470bf34e2"
     },
     {
       "command": [
@@ -50,8 +50,8 @@
         "scripts/core-ideals/key-tablespec-oracle.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-refresh/093.log",
-      "logSha256": "b653f8dfafc2a6a33e3b449d02b5cbb573fe7e33b341d90c74b2cfd4e4c3014c"
+      "log": "fixtures/validation/relationship-tablespec-refresh/093.log",
+      "logSha256": "c44dee8dcc7c38ff66d209e3d3ba7bcc0d47de5ff1d5b8c80a17113835c7c740"
     },
     {
       "command": [
@@ -59,8 +59,8 @@
         "scripts/core-ideals/key-postgresql-discovery.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-refresh/094.log",
-      "logSha256": "15cb56af1180f536cfedfe5460dc616eff4ade0bf7b3c054b879c83661b6e0c6"
+      "log": "fixtures/validation/relationship-tablespec-refresh/094.log",
+      "logSha256": "e9e255eee32c7109d4032a339242343db24b63efe464ae3cf603d39a74f16f79"
     },
     {
       "command": [
@@ -68,8 +68,8 @@
         "scripts/core-ideals/key-postgresql-oracle.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-refresh/095.log",
-      "logSha256": "19e22c2273e82fd32766235d184ff9e4db3fd5c13c3a6954e43508bd7605fe2a"
+      "log": "fixtures/validation/relationship-tablespec-refresh/095.log",
+      "logSha256": "3197f535bbd9fb9b49c983972cc4c394d932e8097d881151fcf42944578c014e"
     },
     {
       "command": [
@@ -77,8 +77,8 @@
         "scripts/core-ideals/key-sqlserver-discovery.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-refresh/096.log",
-      "logSha256": "583364836ac3425aa1b7204aff6ed262f62cb15459e1eb9567fda6075dd7d754"
+      "log": "fixtures/validation/relationship-tablespec-refresh/096.log",
+      "logSha256": "7ebcd31d4304ac3c72587d50fffa333748462d5cd56afba8fd06bf6dc14d8035"
     },
     {
       "command": [
@@ -86,8 +86,8 @@
         "scripts/core-ideals/key-sqlserver-encoding-discovery.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-refresh/097.log",
-      "logSha256": "66c3dbbab03490c71ef7a417882a3afcddc15d8d7ff1f51d8052d6d8426778dd"
+      "log": "fixtures/validation/relationship-tablespec-refresh/097.log",
+      "logSha256": "4cc7798be632dfc541ea97c04e6974b1534c6c1318e47cdb2290d3e9ab4fdc56"
     },
     {
       "command": [
@@ -95,8 +95,8 @@
         "scripts/core-ideals/key-sqlserver-oracle.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-refresh/098.log",
-      "logSha256": "76702c6f637ff21af4e793bc41fe667fddcd001cb69cd5f5f6e9b2aacc2fb75b"
+      "log": "fixtures/validation/relationship-tablespec-refresh/098.log",
+      "logSha256": "82322fd59e5ab3ecae9a7e03116e8b6b0e2b53a3b3be19fc134b2de3d2f29186"
     },
     {
       "command": [
@@ -104,8 +104,8 @@
         "scripts/core-ideals/key-avro-oracle.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-refresh/099.log",
-      "logSha256": "e7ff0c3c1a895b47927354531b18f8b84a323f94e72e175eaa3f92dc29633d5a"
+      "log": "fixtures/validation/relationship-tablespec-refresh/099.log",
+      "logSha256": "8af4bbf6811ffbc96bbb4b3ada1832928de048e9063ca507db9e00de3bcf7520"
     },
     {
       "command": [
@@ -113,8 +113,8 @@
         "scripts/core-ideals/key-parquet-oracle.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-refresh/100.log",
-      "logSha256": "00ebf13d9e003b64d5d62af884f6e35d3851dd950d1ea86ee186e87353151e86"
+      "log": "fixtures/validation/relationship-tablespec-refresh/100.log",
+      "logSha256": "7af9bcf511861dcbacd1a43c2809c1bdaa92e05b7a19cc738ca42315464f77fc"
     },
     {
       "command": [
@@ -122,8 +122,8 @@
         "scripts/core-ideals/key-tablespec-browser.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-refresh/101.log",
-      "logSha256": "3b7490d101360fc0b4a972cc2e48eabe4075285fe3d68cb7cfbf929daa024b8f"
+      "log": "fixtures/validation/relationship-tablespec-refresh/101.log",
+      "logSha256": "3386057b1cfe442d4af41ec383d0b5aa1ddfa83da108278260acb088a33394a4"
     },
     {
       "command": [
@@ -131,8 +131,8 @@
         "scripts/core-ideals/key-postgresql-catalog-browser.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-refresh/102.log",
-      "logSha256": "e7673a91e71724fe1382cf437edd49af57a0def3b55c6c45cb86856484e12ade"
+      "log": "fixtures/validation/relationship-tablespec-refresh/102.log",
+      "logSha256": "6183d10e90bd6fa46ce803ad651920d4af9a5d878a22d27baacd25bbb4141101"
     },
     {
       "command": [
@@ -140,8 +140,8 @@
         "scripts/core-ideals/key-postgresql-browser.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-refresh/103.log",
-      "logSha256": "82294d2d7c8bc49e852e618731f52bbc86c52f1c7c81f9ffe79fa81a6723a239"
+      "log": "fixtures/validation/relationship-tablespec-refresh/103.log",
+      "logSha256": "f3a787de485215d3d952a63ba0ca5220fcb0bec5a0c93c1b7a714cd242364759"
     },
     {
       "command": [
@@ -149,8 +149,8 @@
         "scripts/core-ideals/key-sqlserver-browser.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-refresh/104.log",
-      "logSha256": "d09f3820304da16d72321a0d2df9baa2f6fe6c0dfd68c9b8c7a9bda597dc1ae7"
+      "log": "fixtures/validation/relationship-tablespec-refresh/104.log",
+      "logSha256": "9336ec06681818e0d461da29a77a81de63ea3634578e39f6ab86c4b32329d64b"
     },
     {
       "command": [
@@ -158,8 +158,8 @@
         "scripts/core-ideals/key-sqlserver-encoding-browser.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-refresh/105.log",
-      "logSha256": "9da0695ac6d0817c79b7c5d536279453f82543bda563dcf0bdf9cdd7ed54f41e"
+      "log": "fixtures/validation/relationship-tablespec-refresh/105.log",
+      "logSha256": "3915957c5c8a7f867286199d7c983d91d6168acea330fef53833c957fd3d3bd9"
     },
     {
       "command": [
@@ -167,8 +167,8 @@
         "scripts/core-ideals/key-sqlserver-projection-browser.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-refresh/106.log",
-      "logSha256": "202b6705b4bacb053566b278fa8ab509e4b798fcad5957aaba93547bf68a54a9"
+      "log": "fixtures/validation/relationship-tablespec-refresh/106.log",
+      "logSha256": "6fa3c82c67c7479d75aaaf5ef9519599210f321aaa210fe09edad5d5b278df92"
     },
     {
       "command": [
@@ -176,8 +176,8 @@
         "scripts/core-ideals/key-avro-browser.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-refresh/107.log",
-      "logSha256": "811d9467bdcc9d18a84a7fe2866ae081bc543a44cd20ac76e806f5e2917080ef"
+      "log": "fixtures/validation/relationship-tablespec-refresh/107.log",
+      "logSha256": "cfd487c0304037c3bac2f842114be33845d0706c82ccfa538295c54d1745e3da"
     },
     {
       "command": [
@@ -185,8 +185,8 @@
         "scripts/core-ideals/key-avro-projection-browser.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-refresh/108.log",
-      "logSha256": "b4192fff6733e0dd0c409b4b29ac7dbafc0259151e6eb285387ca3875e5c007b"
+      "log": "fixtures/validation/relationship-tablespec-refresh/108.log",
+      "logSha256": "8817d499eb5c7735dde79cbaabe15fcb815267572a4b2380a8ae28d9d168241d"
     },
     {
       "command": [
@@ -194,8 +194,8 @@
         "scripts/core-ideals/key-parquet-browser.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-refresh/109.log",
-      "logSha256": "738cebad422a031c3c9f1a6a41f7f4697e3168e76c01bcbe338d3afad8f73b31"
+      "log": "fixtures/validation/relationship-tablespec-refresh/109.log",
+      "logSha256": "30dfc0c001f094966974db1aa622a938dd8b843421f8b237b15366e84e77e8a5"
     },
     {
       "command": [
@@ -203,14 +203,14 @@
         "scripts/core-ideals/key-parquet-projection-browser.ts"
       ],
       "exitCode": 0,
-      "log": "fixtures/validation/relationship-refresh/110.log",
-      "logSha256": "12b92c8738349bec137e44f9c76ace8c6f82cf43fa583de93a54f98ab4bd26a8"
+      "log": "fixtures/validation/relationship-tablespec-refresh/110.log",
+      "logSha256": "9d3610668d8b9d1d3ad3cfbbc47d7b378fda62ebd218db4076fea144e0418b39"
     }
   ],
   "sha256": {
     "dist/postgresql/libpg-query.wasm": "21c450200169e2e884a9bcc40122f682304e83b14a4e677fc767b8e53c2f93c1",
     "dist/postgresql/runtime.js": "1590765e0f0e81d7eacf11d400042c89073ea62e96e759f9df3b40c4d66b9683",
-    "dist/umf.js": "70179b918eed48f12f61647a0e013327ad4ae741fe253bc56ebfe9e3c6241417",
+    "dist/umf.js": "c8ef1361a55f26716ec40a423b33979e674b09df65231a1b2c2011068a136f24",
     "fixtures/avro/key-discovery-cases.json": "97ee172c126aa946de0331566a71dcf04b1487468e6995b9aee004d7a2be4aa7",
     "fixtures/avro/key-projection-generated.json": "7d9c881ded77d46ce4fce77ea92719a58a9f6fc13ff21720e452114c62c9fe95",
     "fixtures/parquet/keys/binary-metadata.parquet": "695d17f5b8bbc8d94ad622c8e964b3b16388754e3d7549c16ac210dc8891c62b",
@@ -245,27 +245,27 @@
     "fixtures/postgresql/keys.sql": "e18dad5cf600c550db4c1749b6c3cfb81ef9a673b3237ed4765775fa13510310",
     "fixtures/sqlserver/key-encodings.sql": "e2d4f081e94c38dd0dcf4c763302b81d7faec728017488f0cd1204696b9d6308",
     "fixtures/sqlserver/keys.sql": "ea5234b7f9a5b1d8193302ca6c3272f70244b7742a298e533b5610f1b660c229",
-    "fixtures/validation/key-avro-browser.json": "19c143404b67693f14b262284257bc28ebbcbba716f2c10866ca051b24067e3f",
+    "fixtures/validation/key-avro-browser.json": "439244d4a086ea963d20fea8df6010b65eea26637a85a20c1bbbacc81fa064fc",
     "fixtures/validation/key-avro-discovery-native.json": "1d46bfb059fe862c364080417a7650671cc218109601351fb86320ba7830d7d1",
-    "fixtures/validation/key-avro-projection-browser.json": "bdaacc7af07204a63fe3c12c7ec3256a188f7668c41a2df3621d6f961e217d59",
+    "fixtures/validation/key-avro-projection-browser.json": "788215aed326c6a016966185db0662075d6d32dd6a637c62b613c4b7c140fced",
     "fixtures/validation/key-avro-projection-native.json": "e71e9dfa1f51c214a1d7146bb2f5dc67a06d0b132b571db4214a4caf1094d7a4",
-    "fixtures/validation/key-parquet-browser.json": "01997a48b7b5487fa670fb0d879ba20d3754bd10cef5eb7dda8eb02dbcb76728",
+    "fixtures/validation/key-parquet-browser.json": "306d7fd747b6c99851648fd5a5cca43ea1e4742f4e09f33f551f07e3e1b6f2d1",
     "fixtures/validation/key-parquet-discovery-native.json": "2326e341fd1042851a6d701cff1909009359d75ffbf1fb46c3b76c7e08891ee8",
-    "fixtures/validation/key-parquet-projection-browser.json": "d9b28a907052998d40ecafe426bc2a9b3e2ff9af1940124a9fbf4ea0b8375420",
+    "fixtures/validation/key-parquet-projection-browser.json": "4d2087722dfaefe92348a90e5eef339b139d3b2e3fed32bae0f151304e4765fd",
     "fixtures/validation/key-parquet-projection-corpus.json": "8e814387d737f0085747ebed675de660f707cb5ad11c3001ff2698ef453621ff",
     "fixtures/validation/key-parquet-projection-native.json": "091aecb76d66327fa7ab15066c226379ccb2b5308108615b46b6ae116905412f",
-    "fixtures/validation/key-postgresql-browser.json": "497a1b712f276aa0552ceb2d478756efe51d2bab0e51dad207e5ade44b5c3531",
-    "fixtures/validation/key-postgresql-catalog-browser.json": "f4cdbecd838eb22eea62e6dc29c57d301fd8bd164c93c5729b1f5a1d921d78d2",
+    "fixtures/validation/key-postgresql-browser.json": "b3a9cbf0b4c6637f489e156ac554530a68e2781045e8750036dba7e511524b7b",
+    "fixtures/validation/key-postgresql-catalog-browser.json": "e271ce37e12fb990f915e651d269a0add5c470f51cfa9d7ed62f48f6526f192f",
     "fixtures/validation/key-postgresql-catalog-capture.json": "bb0a16aabaa67ba463a4f334e13de206e833c19d0220766375f1a6c5da2e4b50",
     "fixtures/validation/key-postgresql-discovery-native.json": "edef1894645cd877076d39a1b17497b9d80e614c75c01693e3fc70b83ca9dee9",
     "fixtures/validation/key-postgresql-projection-native.json": "4869a6eb986f8283cd96c138893127846d89cc72ea1986fab66f6ed7018ed20d",
-    "fixtures/validation/key-sqlserver-browser.json": "b7ad453ae49b6439df4d4cafb1d8ef84fdc8547a219340fc7457cbe6cdbeb8fa",
+    "fixtures/validation/key-sqlserver-browser.json": "a58754406f12fa2a254593c50f1c1e32ad6eb6e1c9182dc1300c9997b6fda4f1",
     "fixtures/validation/key-sqlserver-discovery-native.json": "0b4862aa6e5e491348027638d070dee02551084783c41acea75c3ed62302dd41",
-    "fixtures/validation/key-sqlserver-encoding-browser.json": "2b3732fdbcfb7c0c9a66e7eb69416472e5ba142a483b87934107c770b6d67961",
+    "fixtures/validation/key-sqlserver-encoding-browser.json": "50f7dce1fdece74807d32a7256efcda377a0833978a90764aaaba48eaea6435e",
     "fixtures/validation/key-sqlserver-encoding-native.json": "b8a0d5df49b023caf87b08889a3ff501dd9b05ebbde7bc85e03b4334e174c650",
-    "fixtures/validation/key-sqlserver-projection-browser.json": "3e9d56585d46c9191a650e5a7743c221ced937f352f42fe93ddf47c56273a0e8",
+    "fixtures/validation/key-sqlserver-projection-browser.json": "70f62df652594828497d7320fed7dde3f08836f3fcc7c6b2b53c052d3828f0ef",
     "fixtures/validation/key-sqlserver-projection-native.json": "90b9c918ea9aee84d50640be2356985b683366e38b27190e566f46009cd12bcd",
-    "fixtures/validation/key-tablespec-classification-browser.json": "b55e68841fe5aaa2dac315d862e5a494deba01eb14d310b86d74a421e1b3bada",
+    "fixtures/validation/key-tablespec-classification-browser.json": "8a953dde9d5af1b1e74d12ae7da9475ec71ef9266cfa8ec1500befdfa0953ff6",
     "fixtures/validation/key-tablespec-discovery-native.json": "a45a803944fe29da218ceffb2ab62fc67382e66ff321f7b5fcbcadac7bfd749f",
     "fixtures/validation/key-tablespec-projected-schemas.json": "29094378176b6a2e1f5bef8695e9f27c06a31fdb7c8853ed839dbc5c62a89f1c",
     "fixtures/validation/key-tablespec-projection-native.json": "4e8ae230528352d78363d09f5667333fb1396ad5fb5931d09191957437816c7c",
@@ -292,6 +292,29 @@
     "fixtures/validation/relationship-refresh/108.log": "b4192fff6733e0dd0c409b4b29ac7dbafc0259151e6eb285387ca3875e5c007b",
     "fixtures/validation/relationship-refresh/109.log": "738cebad422a031c3c9f1a6a41f7f4697e3168e76c01bcbe338d3afad8f73b31",
     "fixtures/validation/relationship-refresh/110.log": "12b92c8738349bec137e44f9c76ace8c6f82cf43fa583de93a54f98ab4bd26a8",
+    "fixtures/validation/relationship-tablespec-compatibility-refresh.json": "c18833cea3c66c68c60c05abbae329af650f86291345e2d86879eb5bbc492ab9",
+    "fixtures/validation/relationship-tablespec-refresh/001.log": "b1a6cc0f4b7ea761f9223617aa029a27603b7b5f88c2452991d75c362d4f39b9",
+    "fixtures/validation/relationship-tablespec-refresh/002.log": "c876c398a03f2e264bb80e68480f60b6b6c869bd2e9b09fed93fd11470bf34e2",
+    "fixtures/validation/relationship-tablespec-refresh/003.log": "8bf3011cc773d4006d3fade524d3441474b8464d7616bdb87eba956579ea2a08",
+    "fixtures/validation/relationship-tablespec-refresh/004.log": "2d3bb8aed105c807a7fe4f8a349a2c869c3013610095a265d145235a7354b789",
+    "fixtures/validation/relationship-tablespec-refresh/093.log": "c44dee8dcc7c38ff66d209e3d3ba7bcc0d47de5ff1d5b8c80a17113835c7c740",
+    "fixtures/validation/relationship-tablespec-refresh/094.log": "e9e255eee32c7109d4032a339242343db24b63efe464ae3cf603d39a74f16f79",
+    "fixtures/validation/relationship-tablespec-refresh/095.log": "3197f535bbd9fb9b49c983972cc4c394d932e8097d881151fcf42944578c014e",
+    "fixtures/validation/relationship-tablespec-refresh/096.log": "7ebcd31d4304ac3c72587d50fffa333748462d5cd56afba8fd06bf6dc14d8035",
+    "fixtures/validation/relationship-tablespec-refresh/097.log": "4cc7798be632dfc541ea97c04e6974b1534c6c1318e47cdb2290d3e9ab4fdc56",
+    "fixtures/validation/relationship-tablespec-refresh/098.log": "82322fd59e5ab3ecae9a7e03116e8b6b0e2b53a3b3be19fc134b2de3d2f29186",
+    "fixtures/validation/relationship-tablespec-refresh/099.log": "8af4bbf6811ffbc96bbb4b3ada1832928de048e9063ca507db9e00de3bcf7520",
+    "fixtures/validation/relationship-tablespec-refresh/100.log": "7af9bcf511861dcbacd1a43c2809c1bdaa92e05b7a19cc738ca42315464f77fc",
+    "fixtures/validation/relationship-tablespec-refresh/101.log": "3386057b1cfe442d4af41ec383d0b5aa1ddfa83da108278260acb088a33394a4",
+    "fixtures/validation/relationship-tablespec-refresh/102.log": "6183d10e90bd6fa46ce803ad651920d4af9a5d878a22d27baacd25bbb4141101",
+    "fixtures/validation/relationship-tablespec-refresh/103.log": "f3a787de485215d3d952a63ba0ca5220fcb0bec5a0c93c1b7a714cd242364759",
+    "fixtures/validation/relationship-tablespec-refresh/104.log": "9336ec06681818e0d461da29a77a81de63ea3634578e39f6ab86c4b32329d64b",
+    "fixtures/validation/relationship-tablespec-refresh/105.log": "3915957c5c8a7f867286199d7c983d91d6168acea330fef53833c957fd3d3bd9",
+    "fixtures/validation/relationship-tablespec-refresh/106.log": "6fa3c82c67c7479d75aaaf5ef9519599210f321aaa210fe09edad5d5b278df92",
+    "fixtures/validation/relationship-tablespec-refresh/107.log": "cfd487c0304037c3bac2f842114be33845d0706c82ccfa538295c54d1745e3da",
+    "fixtures/validation/relationship-tablespec-refresh/108.log": "8817d499eb5c7735dde79cbaabe15fcb815267572a4b2380a8ae28d9d168241d",
+    "fixtures/validation/relationship-tablespec-refresh/109.log": "30dfc0c001f094966974db1aa622a938dd8b843421f8b237b15366e84e77e8a5",
+    "fixtures/validation/relationship-tablespec-refresh/110.log": "9d3610668d8b9d1d3ad3cfbbc47d7b378fda62ebd218db4076fea144e0418b39",
     "native/parquet/sources/Encodings.md": "b6b980c67acc14d3e9e4b592c582523b5dc2cc09ad9f90bc2b1912df461e5c88",
     "native/parquet/sources/Encryption.md": "acba860c24ea5049b1123890b6e6e81fb44ed258a84fe042f808d32d1f642764",
     "native/parquet/sources/LICENSE": "8c6db340475136df3c1201d458fa5755698eace76e510471ecc9d857d6083dac",
@@ -404,7 +427,7 @@
     "src/core-ideals/key-tablespec.ts": "df58e0e2420f28174ca8b83ba551ff3c44ce37af83ffa7fbacbb707d737c7d7b",
     "src/core-ideals/parquet-facet-carrier.ts": "c152e4490ab96c26e14ead9ebb041af0f03581322983394c2cf0a18d789503d1",
     "src/core-ideals/parquet-key-carrier.ts": "04b3bae964ebcd32a376cbec7bbda955a21b7579be386d62b7811b4062f0685e",
-    "src/index.ts": "bc3dd937cb8dc7e3c6e6f9b29cfcd556876a3370c8f6f3c5635257338f3c9f7e",
+    "src/index.ts": "9e9454769f562ac198cf198e864f82615e52f2240047fb2d05d40264cd036b15",
     "src/model/key-tuple.ts": "cc394192441c55844de777413adb2dfdf5dac84b0c6a90e520fb713dc2673d4b",
     "src/validation/schema.ts": "64b9324a8171f92b898565f0359d5f5f5a52efbf57babca8dc6015d12e38c0f0",
     "tests/core-ideals/key-avro.test.ts": "c3daaea09eabd4dbdd9cbd9d4f48ade341c23ced3cbec4025f096f89ed7389db",
@@ -418,7 +441,7 @@
     "tests/core-ideals/key-tablespec.test.ts": "c3392e220dd46b5d097272d0ea1dd799e2bba6e218a158f98d59828e6281e342",
     "tests/core/deep-json-equality.test.ts": "dc728f41eb281c755c3cdf285f7e3f3cad48bee989137b742d32dc091a75ebe4"
   },
-  "previousEvidenceSha256": "dc0d4ef9551b24749874ca40656f9fae5b2b68a8ae91ca6d1559837da6dab380",
-  "executionOrderSource": "fixtures/validation/relationship-compatibility-refresh.json",
+  "previousEvidenceSha256": "014d052116b265345a5d03cf4938fbd92894678c563b53fcc2acc460fc1ea192",
+  "executionOrderSource": "fixtures/validation/relationship-tablespec-compatibility-refresh.json",
   "runOrdering": "Required Key verification matrix order; chronological execution is retained in executionOrderSource"
 }

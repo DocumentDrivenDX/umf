@@ -290,3 +290,19 @@ enforcement or join execution. See the
 [projection evidence](../../../../fixtures/validation/relationship-tablespec-projection-native.json)
 and [browser composition](../../../../fixtures/validation/relationship-tablespec-projection-browser.json).
 Full binding acceptance and wider compatibility verification remain separate.
+
+### Qualified TableSpec binding acceptance
+
+The declared-metadata and outgoing-metadata profiles now pass the TableSpec
+binding task. The final matrix has 172 strict/report cases, 65 native-accepted
+carriers and 107 blocks; 15 native schema/runtime disagreements constrain
+supplied-table validation. The pinned domain registry covers 42 domains.
+All 221 TableSpec relationship tests, fresh Chromium composition, the 118-command
+compatibility replay, full regression and all five existing concept gates pass.
+See the [acceptance record](../../../../fixtures/validation/relationship-tablespec-acceptance-evidence.json)
+for source fingerprints, exact counts and limitations.
+
+This qualifies metadata projection and retained recovery only. Heterogeneous
+endpoints and keyed association Record layouts refuse explicitly. Native
+execution/enforcement, other system bindings, relationship ideal admission and
+native equivalence remain unclaimed.

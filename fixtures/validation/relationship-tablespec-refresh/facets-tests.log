@@ -1,0 +1,56 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/facets-conformance.test.ts:
+facets tablespec 0
+facets tablespec 40
+facets tablespec 80
+facets tablespec 120
+facets tablespec 160
+facets tablespec 200
+facets tablespec 240
+facets tablespec 280
+facets tablespec 320
+facets tablespec 360
+facets tablespec 400
+facets tablespec 440
+facets tablespec 480
+facets tablespec 520
+facets postgresql 0
+facets postgresql 40
+facets postgresql 80
+facets postgresql 120
+facets postgresql 160
+facets postgresql 200
+facets sqlserver 0
+facets sqlserver 40
+facets sqlserver 80
+facets sqlserver 120
+facets sqlserver 160
+facets sqlserver 200
+facets avro 0
+facets avro 40
+facets avro 80
+facets avro 120
+facets avro 160
+facets avro 200
+facets avro 240
+facets avro 280
+facets avro 320
+facets avro 360
+facets avro 400
+facets avro 440
+facets avro 480
+facets avro 520
+facets avro 560
+facets parquet 0
+facets parquet 40
+facets parquet 80
+facets parquet 120
+facets parquet 160
+facets parquet 200
+(pass) all five facet bindings preserve authored ideals, native refinements and explicit losses [1089872.73ms]
+
+ 1 pass
+ 0 fail
+ 42 expect() calls
+Ran 1 test across 1 file. [1093.65s]

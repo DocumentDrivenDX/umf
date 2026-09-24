@@ -6,6 +6,15 @@ scalar type field. This supersedes older next-step notes below. RDF/OWL/RDF/XML
 work is deferred. See the current-priority section of the
 [implementation plan](04-build/implementation-plan.md).
 
+The TableSpec relationship binding now passes qualified acceptance for native
+metadata classification, authored outgoing-metadata projection and retained
+ideal/native recovery. All 118 compatibility commands and 1,715 tests across
+355 files pass, including the existing five concept gates. Metadata carriers
+do not establish referential enforcement; heterogeneous and keyed association
+layouts refuse explicitly. Other relationship bindings and relationship ideal
+admission remain open. See the
+[TableSpec relationship acceptance](../../fixtures/validation/relationship-tablespec-acceptance-evidence.json).
+
 **Latest core scope amendment:** UMF-defined ideals and native-equivalence
 graduation now have separate gates. The next ordered concepts are field,
 nullability, cardinality, author-stated facets and key. See
