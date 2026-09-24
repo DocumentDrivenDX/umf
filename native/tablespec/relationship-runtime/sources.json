@@ -1,0 +1,17 @@
+{
+  "commit": "647e8e566ad78b864282ec65c0b0b2237aa63084",
+  "scope": "Domain registry code/data for pinned relationship projection model validation; native domain annotations retain their own meaning",
+  "license": "native/tablespec/sources/LICENSE",
+  "files": [
+    {
+      "path": "native/tablespec/relationship-runtime/domain_types.py",
+      "upstreamPath": "src/tablespec/inference/domain_types.py",
+      "sha256": "ea0c4136faa3f1169edece8000ae090a8c09f7dbf0d70e05a4572c692102efa9"
+    },
+    {
+      "path": "native/tablespec/relationship-runtime/domain_types.yaml",
+      "upstreamPath": "src/tablespec/domain_types.yaml",
+      "sha256": "cec28143ecc02f80e68dd4896ca0f6d706b0d4565b77f76afafe59d5d48ac7c9"
+    }
+  ]
+}

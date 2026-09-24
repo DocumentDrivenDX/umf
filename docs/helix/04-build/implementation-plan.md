@@ -4945,3 +4945,28 @@ Typecheck and build pass. The checkpoint retains prior execution history.
 Domain-type compatibility still depends on the native registry, whose source
 and expected-type mapping must be pinned before that remaining validator can
 be qualified. Full binding acceptance and broader compatibility remain open.
+
+### Pinned TableSpec domain-type compatibility
+
+The remaining domain registry dependency is pinned to the same TableSpec commit
+as the model. `native/tablespec/relationship-runtime/sources.json` records the
+registry Python source and YAML catalog hashes. A native oracle verifies the
+installed registry matches those files and derives the portable expected-type
+mapping. All 42 registered domains are covered: six have DATE, TIMESTAMP or
+INTEGER constraints; the others impose no base-type requirement. An unknown
+domain control is retained without invented semantics.
+
+The projection applies the native model's compatibility rules, including its
+formatted-string exception, to supplied source and target columns. Domain names
+and formats remain native metadata; this does not promote domain semantics,
+validate data values or execute conversions. Six incompatible-domain cases join
+the earlier nine schema/runtime disagreement probes.
+
+The expanded matrix has 172 cases: 65 emitted carriers and 107 explicit blocks.
+All 65 pass the pinned native model/schema. The three TableSpec test files pass
+221 tests and 1,790 assertions. Chromium verifies 130 ideal recoveries, 130
+original-native source-pair recoveries, 130 fresh-import/classification recoveries
+and 130 forged/stale refusals; classification parity is also refreshed.
+Typechecking and build pass. The projection checkpoint retains previous
+execution history. Broader compatibility and the final binding acceptance audit
+remain required before closing `umf-95881098`.

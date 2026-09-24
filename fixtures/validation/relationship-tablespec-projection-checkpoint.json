@@ -4,9 +4,9 @@
   "idealAdmitted": false,
   "nativeEquivalence": false,
   "tests": {
-    "passed": 111,
+    "passed": 221,
     "failed": 0,
-    "assertions": 799,
+    "assertions": 1790,
     "files": 3,
     "log": "fixtures/validation/relationship-tablespec-projection-tests.log"
   },
@@ -24,36 +24,39 @@
       "getterCalls": 0
     },
     "relationship-tablespec-projection-browser": {
-      "cases": 62,
-      "projected": 16,
-      "blocked": 46,
-      "idealRecoveries": 32,
-      "nativeSourcePairRecoveries": 32,
-      "classifiedNativeRecoveries": 32,
-      "refusals": 32,
+      "cases": 172,
+      "projected": 65,
+      "blocked": 107,
+      "idealRecoveries": 130,
+      "nativeSourcePairRecoveries": 130,
+      "classifiedNativeRecoveries": 130,
+      "refusals": 130,
       "getterCalls": 0
     },
     "relationship-tablespec-projection-native": {
-      "acceptedRows": 16,
-      "nativeSchemaRuntimeDisagreements": 9
+      "acceptedRows": 65,
+      "nativeSchemaRuntimeDisagreements": 15
     }
   },
   "limits": [
     "Metadata model/schema acceptance does not prove row enforcement or join execution.",
     "Heterogeneous endpoint sets and keyed association Records are explicit profile refusals.",
-    "Wider compatibility and full binding acceptance remain required.",
-    "Domain-type compatibility remains dependent on an unpinned native registry; qualify that validator before arbitrary supplied-table runtime acceptance."
+    "Wider compatibility and full binding acceptance remain required."
   ],
   "sha256": {
-    "/home/erik/Projects/umf/scripts/core-ideals/relationship-tablespec-projection-oracle.py": "50b190de5b4b547b7af29c46be414986fac0b0d77e277882eb99b519647dffb8",
-    "dist/umf.js": "6e147da079d495371ff776b36aff0661989e391e5f77ecc24bdcdcd3fa785649",
-    "fixtures/validation/relationship-tablespec-classification-browser.json": "0673da7aef3c1542c4fa63175a0d7ac32c27e62d8eb2c5155c89193d8c3005b3",
+    "/home/erik/Projects/umf/scripts/core-ideals/relationship-tablespec-projection-oracle.py": "5d3dd72a5c87f0d0abe9729bfa3fdfcddcebd48b8ad96a595bbb740a900b1221",
+    "dist/umf.js": "c8ef1361a55f26716ec40a423b33979e674b09df65231a1b2c2011068a136f24",
+    "fixtures/validation/relationship-tablespec-classification-browser.json": "f8ab6d55987448d7eb370cd9619c81483e30f0b49caa41d0f5184fbfd968716b",
     "fixtures/validation/relationship-tablespec-discovery-native.json": "9141882534bc53fb991a18e92747fa0ad4cdfa07bd9511c8428b3cd3dbd73a73",
-    "fixtures/validation/relationship-tablespec-native-refusals.json": "311f50ef40737772dd4e851b0a77b56c51daba59f8a5ade2e4c90b4692131255",
-    "fixtures/validation/relationship-tablespec-projected-schemas.json": "7372ac8129340ad7e7280bc3dcd0f77a7bdaa43c35269aa697ffb83d2878b1ff",
-    "fixtures/validation/relationship-tablespec-projection-browser.json": "b40e7899882166b903687939d6db8f9e5e91fe4770cceb9584edeacba3d122a1",
-    "fixtures/validation/relationship-tablespec-projection-native.json": "e52eb8c2d96a667c1f68edb238b87f6c597805ea980457b2d7656d4bdc4314cf",
-    "fixtures/validation/relationship-tablespec-projection-tests.log": "4fe5b988e4366926f8daa7393afba31505431a90eeaccf0b5e492eabd7bc3abd",
+    "fixtures/validation/relationship-tablespec-native-refusals.json": "2dd0c5afbd5885fb50fee2a9f0a5e7dc3a4b840161ba55c1c08ae3d6f9015751",
+    "fixtures/validation/relationship-tablespec-projected-schemas.json": "2a7e72197ce1edc83e91bfe157c9cc25086b3bff36da470133b6f0f2b346dda2",
+    "fixtures/validation/relationship-tablespec-projection-browser.json": "490ce9d6f610faca56e0685e7d7e4ea6c3c50e551fe58933001b17a014fbc98b",
+    "fixtures/validation/relationship-tablespec-projection-native.json": "8432fa92dfd347d80ef188d20f2248b4d14fd338adcaed953d04f18dabb6fa04",
+    "fixtures/validation/relationship-tablespec-projection-tests.log": "46de9e2a705791a2c64ac513c66d078d8c914f7d90d3af2762841702e2dcc3e3",
+    "native/tablespec/relationship-runtime/domain-base-types.json": "2aaac792b86ea9892b209ff7a63bab394f9ce6f562fe191661fe9dff641ea789",
+    "native/tablespec/relationship-runtime/domain_types.py": "ea0c4136faa3f1169edece8000ae090a8c09f7dbf0d70e05a4572c692102efa9",
+    "native/tablespec/relationship-runtime/domain_types.yaml": "cec28143ecc02f80e68dd4896ca0f6d706b0d4565b77f76afafe59d5d48ac7c9",
+    "native/tablespec/relationship-runtime/sources.json": "09bd83d8d385d71650c818c97802e0884d19452cffea5216cc1ef3772de0db19",
     "native/tablespec/sources.json": "be76ee57d9c1a2bd69a14d4a6ffea250509904d7187a19c6f20d4f3741cabd64",
     "native/tablespec/sources/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
     "native/tablespec/sources/examples/providers.yaml": "d88a5076031afd12a1d953c0107dac339859c8e88d66de53d4dd7f34f5cdb3f8",
@@ -73,16 +76,17 @@
     "native/tablespec/sources/tests/unit/test_umf_models.py": "80b4587721c060c913a1a073f705a7c9ed742351a3384b8223c2ec5c1c48b6ca",
     "native/tablespec/sources/tests/unit/test_umf_validator.py": "c6cf51ae211d723d4c1d3178820da30ff0001c3c4aac2ffc8e63dd84b6bf716a",
     "scripts/core-ideals/relationship-tablespec-browser.ts": "777ebc4ce5c7d132da9be5edf9002f1ce6e2d17569fce58ed1c43ea1659d5a33",
-    "scripts/core-ideals/relationship-tablespec-oracle.ts": "b0171420a50bb71997f910008670cfdd236d5d9d7e142b11ad8dbf9955e56066",
-    "scripts/core-ideals/relationship-tablespec-projection-browser.ts": "a96ef3cea6c9617a07e4122d3b31e5e7ea21b8b9f31f07d87e3f4346b8022982",
-    "scripts/core-ideals/relationship-tablespec-projection-cases.ts": "939c20e615f30cdbe1f708848da11828cc517e167a712455123afcd454c8c036",
+    "scripts/core-ideals/relationship-tablespec-domain-oracle.py": "c76d261c05a438f8829a89ecd66dc8fc320a97af3dee62a6e05b96bbca43a8b1",
+    "scripts/core-ideals/relationship-tablespec-oracle.ts": "ca3defebb2673ed393df257c60b4efaf443586b1a1461b12784f68b761f18db5",
+    "scripts/core-ideals/relationship-tablespec-projection-browser.ts": "b22eb940d8cd249df7ce0593b2f07914e4a3d7b112675935f9ee26678261545c",
+    "scripts/core-ideals/relationship-tablespec-projection-cases.ts": "e6fd8c217d303112b48911be675c703f7cdf7e9fa5c0293bff0b431eb7cfe2f2",
     "scripts/core-ideals/relationship-tablespec-projection-schema.ts": "5a2fde800375077b54d410d78e7bf31e04e81b53650fdcc937253b3c56e97d24",
     "scripts/core-ideals/relationship-tablespec-schema.ts": "8a8ec9767c1a824fdfece16f22ea67ccd0f723f6170cfd856b311996e3ac83c3",
     "spec/core/relationship-tablespec-projection.schema.json": "a65c41f20c9972102ca442c66a38d3139b9c8f112f1f4452884796989185d774",
     "spec/core/tablespec-relationship-classification.schema.json": "d9b2250b5fd2348fbca245482b55d63cb623d650455ff4a9a765ac1a47d513a1",
     "spec/extensions/tablespec-relationships/package.json": "c1c0920214779c8d49ae8d63fa0de044d2c2bb247af836f059360405d4addae2",
     "spec/extensions/tablespec-relationships/schema.json": "0c0cceddf5033bfe8d42e2811b64a0511677d8ba2f197ed062471edd618f0681",
-    "src/core-ideals/relationship-tablespec-projection.ts": "0cfab8907ae273b42f1a8dd1cdbf2ffcbc1394b2c83a81efbb9ecbb16ff14995",
+    "src/core-ideals/relationship-tablespec-projection.ts": "22eb2a8b12704f87ebb5e37f947a82725b5c22e4f849bfd080749ced2035d243",
     "src/core-ideals/relationship-tablespec.ts": "0f14cfa43cfe85fe5b0b921860b0042f22b69d4fe707b5ca95f87a6e80e07d3f",
     "src/index.ts": "9e9454769f562ac198cf198e864f82615e52f2240047fb2d05d40264cd036b15",
     "tests/core-ideals/relationship-tablespec-discovery.test.ts": "761b816363c17e06087a70235c5df1c7cf241ec0ab8eac83ef77f46123c8f582",
@@ -160,6 +164,42 @@
         }
       },
       "note": "Prior native boundary checkpoint; fresh source-configuration verification follows."
+    },
+    {
+      "commit": "4131b9a1",
+      "recordSha256": "e24060401fa1b3bb77bb9255666b780672898279a44e20552625b40b82a40bda",
+      "tests": {
+        "passed": 111,
+        "failed": 0,
+        "assertions": 799,
+        "files": 3,
+        "log": "fixtures/validation/relationship-tablespec-projection-tests.log"
+      },
+      "proofs": {
+        "relationship-tablespec-classification-browser": {
+          "cases": 22,
+          "recoveries": 44,
+          "strictBlocks": 19,
+          "forgedRefusals": 22,
+          "staleRefusals": 22,
+          "getterCalls": 0
+        },
+        "relationship-tablespec-projection-browser": {
+          "cases": 62,
+          "projected": 16,
+          "blocked": 46,
+          "idealRecoveries": 32,
+          "nativeSourcePairRecoveries": 32,
+          "classifiedNativeRecoveries": 32,
+          "refusals": 32,
+          "getterCalls": 0
+        },
+        "relationship-tablespec-projection-native": {
+          "acceptedRows": 16,
+          "nativeSchemaRuntimeDisagreements": 9
+        }
+      },
+      "note": "Prior source-configuration checkpoint; current execution adds all pinned registry domains."
     }
   ]
 }

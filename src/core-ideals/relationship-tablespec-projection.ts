@@ -8,6 +8,7 @@ import {getTableSpecTable,exportTableSpec,exportTableSpecBundle,editTableSpecTab
 import {parseNativeJson,renderTree,type NativeJson} from '../model/native-json';
 import {createValidator} from '../validation/schema';
 import legacy from '../../spec/core/schema.json';import fields from '../../spec/core/field-document.schema.json';import nullability from '../../spec/core/nullability-document.schema.json';import cardinality from '../../spec/core/cardinality-document.schema.json';import facets from '../../spec/core/facet-document.schema.json';import keys from '../../spec/core/key-document.schema.json';import relationships from '../../spec/core/relationship-document.schema.json';import authorSchema from '../../spec/core/relationship-operation.schema.json';
+import domainRegistry from '../../native/tablespec/relationship-runtime/domain-base-types.json';
 import nativeSchema from '../../native/tablespec/sources/src/tablespec/schemas/umf.schema.json';
 import schema from '../../spec/core/relationship-tablespec-projection.schema.json';
 export {default as relationshipTableSpecProjectionSchema} from '../../spec/core/relationship-tablespec-projection.schema.json';
@@ -70,6 +71,13 @@ export function projectRelationshipToTableSpec(input:Document,authorInput:CoreRe
   const context=node.members.context_column;
   if(context?.kind==='string'&&!columnNames.has(context.value))block('/'+label+'/context_column',context,'Pinned native model requires context_column to resolve locally');
   for(const [i,c] of nativeColumns.entries())if(c.kind==='object'){
+   const domain=text(c.members.domain_type),type=text(c.members.data_type)?.toUpperCase(),format=c.members.format;
+   const expected=domain!==null&&Object.hasOwn(domainRegistry.expectedBaseTypes,domain)?(domainRegistry.expectedBaseTypes as Record<string,string|null>)[domain]:null;
+   if(expected){
+    const stringType=type!==undefined&&['VARCHAR','TEXT','CHAR'].includes(type),formatted=stringType&&format!==undefined&&format.kind!=='null';
+    const compatible=formatted||(expected==='DATE'?type==='DATE'||type==='DATETIME':expected==='TIMESTAMP'?type==='DATETIME':expected==='STRING'?stringType:type===expected);
+    if(!compatible)block('/'+label+'/columns/'+i+'/domain_type',c.members.domain_type!,'Pinned native domain registry expects '+expected+'-compatible data_type; annotation and original source remain retained');
+   }
    const embedding=text(c.members.data_type)?.toUpperCase()==='EMBEDDING',dimension=c.members.dimension;
    if(embedding?dimension===undefined||dimension.kind==='null':dimension!==undefined&&dimension.kind!=='null')block('/'+label+'/columns/'+i,c,'Pinned native model requires dimension for EMBEDDING and forbids it on other native types');
   }

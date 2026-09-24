@@ -1,6 +1,7 @@
 import {relationshipCandidate} from '../core-relationship-cases';
 import {declareCoreRelationship} from '../../src/model/relationships';
-import {importTableSpec,importTableSpecBundle} from '../../src/adapters/tablespec';
+import registry from '../../native/tablespec/relationship-runtime/domain-base-types.json';
+import {importTableSpec,importTableSpecBundle,exportTableSpec} from '../../src/adapters/tablespec';
 import type {Document} from '../../src/model/types';
 import type {RelationshipTableSpecRequest} from '../../src/core-ideals/relationship-tablespec-projection';
 export function relationshipTableSpecCase(name='many-to-one'){
@@ -49,5 +50,16 @@ export function relationshipTableSpecCase(name='many-to-one'){
 }
 export function relationshipTableSpecProjectionCases(){
  const blocked=new Set(['heterogeneous','association','missing-column','wrong-key-field','type-conflict','existing-conflict','invalid-native-primary','invalid-native-context','invalid-native-dimension','invalid-native-jdbc-both','invalid-native-jdbc-neither','invalid-native-json-coverage','invalid-native-json-duplicate','invalid-native-json-path','invalid-native-derivation']);
- return ['many-to-one','one-to-one','many-to-many','bounded-required','owned','undirected','heterogeneous','association','self','alternate','composite','unknown','missing-column','wrong-key-field','type-conflict','existing-conflict','existing-unrelated','split','invalid-native-primary','invalid-native-context','invalid-native-dimension','invalid-native-jdbc-both','invalid-native-jdbc-neither','valid-jdbc-table','valid-jdbc-query','invalid-native-json-coverage','invalid-native-json-duplicate','invalid-native-json-path','valid-json-source','invalid-native-derivation','valid-derivation'].flatMap(name=>(['strict','report'] as const).map(mode=>{const c=relationshipTableSpecCase(name);c.request.mode=mode;return {...c,name:name+'-'+mode,expected:mode==='strict'||blocked.has(name)?'blocked' as const:'projected' as const};}));
+ const ordinary=['many-to-one','one-to-one','many-to-many','bounded-required','owned','undirected','heterogeneous','association','self','alternate','composite','unknown','missing-column','wrong-key-field','type-conflict','existing-conflict','existing-unrelated','split','invalid-native-primary','invalid-native-context','invalid-native-dimension','invalid-native-jdbc-both','invalid-native-jdbc-neither','valid-jdbc-table','valid-jdbc-query','invalid-native-json-coverage','invalid-native-json-duplicate','invalid-native-json-path','valid-json-source','invalid-native-derivation','valid-derivation'].flatMap(name=>(['strict','report'] as const).map(mode=>{const c=relationshipTableSpecCase(name);c.request.mode=mode;return {...c,name:name+'-'+mode,expected:mode==='strict'||blocked.has(name)?'blocked' as const:'projected' as const};}));
+ const domains=Object.entries({...registry.expectedBaseTypes,'__unknown_domain__':null}).flatMap(([domain,expected])=>{
+  const choices=expected?['valid','invalid','formatted']:['unconstrained'];
+  return choices.flatMap(choice=>(['strict','report'] as const).map(mode=>{
+   const c=relationshipTableSpecCase(),native=JSON.parse(exportTableSpec(c.nativeSource));
+   const data_type=choice==='formatted'?'TEXT':choice==='invalid'?(expected==='INTEGER'?'DATE':'INTEGER'):expected==='DATE'?'DATE':expected==='TIMESTAMP'?'DATETIME':'INTEGER';
+   native.columns.push({name:'domain_value',data_type,domain_type:domain,...(choice==='formatted'?{format:'native-format-metadata'}:{})});
+   c.nativeSource=importTableSpec(JSON.stringify(native),{id:'source-table',format:'json'});c.request.mode=mode;
+   return {...c,name:'domain-'+domain+'-'+choice+'-'+mode,expected:mode==='strict'||choice==='invalid'?'blocked' as const:'projected' as const};
+  }));
+ });
+ return [...ordinary,...domains];
 }

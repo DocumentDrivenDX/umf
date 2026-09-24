@@ -34,5 +34,29 @@
   {
     "name": "invalid-native-derivation-report",
     "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\",\"derivation\":{\"candidates\":[{\"table\":\"upstream\",\"priority\":1}]}},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\",\"derivation\":{\"candidates\":[{\"table\":\"upstream\",\"priority\":1}]}}]}"
+  },
+  {
+    "name": "domain-birth_date-invalid-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"},{\"name\":\"domain_value\",\"data_type\":\"INTEGER\",\"domain_type\":\"birth_date\"}]}"
+  },
+  {
+    "name": "domain-calendar_year-invalid-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"},{\"name\":\"domain_value\",\"data_type\":\"DATE\",\"domain_type\":\"calendar_year\"}]}"
+  },
+  {
+    "name": "domain-project_number-invalid-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"},{\"name\":\"domain_value\",\"data_type\":\"DATE\",\"domain_type\":\"project_number\"}]}"
+  },
+  {
+    "name": "domain-service_date-invalid-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"},{\"name\":\"domain_value\",\"data_type\":\"INTEGER\",\"domain_type\":\"service_date\"}]}"
+  },
+  {
+    "name": "domain-timestamp-invalid-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"},{\"name\":\"domain_value\",\"data_type\":\"INTEGER\",\"domain_type\":\"timestamp\"}]}"
+  },
+  {
+    "name": "domain-visit_count-invalid-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"},{\"name\":\"domain_value\",\"data_type\":\"DATE\",\"domain_type\":\"visit_count\"}]}"
   }
 ]
