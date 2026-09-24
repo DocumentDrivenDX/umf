@@ -42,5 +42,5 @@ test('rollback retains later assertions separately and refuses forged receipts o
  const forged=structuredClone(receipt);forged.residuals=[];expect(()=>rollbackCardinalityEnvelope(forged,current)).toThrow();
  expect(()=>rollbackCardinalityEnvelope(receipt,{...current,id:'other'})).toThrow();expect(()=>upgradeCardinalityEnvelope(model('0.2.0',{}))).toThrow();
  let calls=0;const unsafe=model('0.4.0',{});Object.defineProperty(unsafe.modules[0]!.elements[0]!,'itemType',{enumerable:true,get(){calls++;return {module:'m',element:'item'};}});expect(validateDocument(unsafe).valid).toBe(false);expect(calls).toBe(0);
- expect(validateDocument({...model('0.4.0',{}),umf:'0.7.0'}).valid).toBe(false);
+ expect(validateDocument({...model('0.4.0',{}),umf:'0.8.0'}).valid).toBe(false);
 });

@@ -1,5 +1,6 @@
+import {validateRelationshipCandidate} from './relationships';
 import {validateKeyCandidate} from './keys';
-import { checkCore, checkCoreFields, checkCoreNullability, checkCoreCardinality, checkCoreFacets, checkCoreKeys } from './schema';
+import { checkCore, checkCoreFields, checkCoreNullability, checkCoreCardinality, checkCoreFacets, checkCoreKeys, checkCoreRelationships } from './schema';
 import {validateFacetElement} from './facets';
 import { Registry } from '../registry/registry';
 import { copyJson } from '../model/json';
@@ -15,13 +16,13 @@ export function validateDocument(input: unknown, registry = new Registry()): Val
     return {valid: false, complete: false, diagnostics};
   }
   const version=(value as {umf?:unknown}|null)?.umf;
-  const check=version==='0.6.0'?checkCoreKeys:version==='0.5.0'?checkCoreFacets:version==='0.4.0'?checkCoreCardinality:version==='0.3.0'?checkCoreNullability:version==='0.2.0'?checkCoreFields:checkCore;
+  const check=version==='0.7.0'?checkCoreRelationships:version==='0.6.0'?checkCoreKeys:version==='0.5.0'?checkCoreFacets:version==='0.4.0'?checkCoreCardinality:version==='0.3.0'?checkCoreNullability:version==='0.2.0'?checkCoreFields:checkCore;
   if (!check(value)) {
     for (const error of check.errors || []) add('STRUCTURE', error.instancePath, error.message || 'Invalid structure');
     return {valid: false, complete: false, diagnostics};
   }
   const doc = value as Document;
-  const keyProfile=doc.umf==='0.6.0',facets=doc.umf==='0.5.0'||keyProfile,containers=doc.umf==='0.4.0'||facets;
+  const relationshipProfile=doc.umf==='0.7.0',keyProfile=doc.umf==='0.6.0'||relationshipProfile,facets=doc.umf==='0.5.0'||keyProfile,containers=doc.umf==='0.4.0'||facets;
   const availability=doc.umf==='0.3.0'||containers;
   if(doc.umf==='0.2.0')add('EXPERIMENTAL_CORE_FIELDS','/umf','Field envelope is experimental; kind labels alone establish neither author provenance nor native equivalence','warning');
   if(availability)add('EXPERIMENTAL_CORE_NULLABILITY','/umf','Nullability envelope is experimental; no native absence encoding or default execution is implied','warning');
@@ -60,7 +61,7 @@ export function validateDocument(input: unknown, registry = new Registry()): Val
   const definitions = new Map<string, Map<string,Element>>();
   doc.modules.forEach((module, mi) => {
     const path = `/modules/${mi}`;
-    unknown(module, ['id','namespace','elements','extensions'], path);
+    unknown(module, ['id','namespace','elements','extensions',...(relationshipProfile?['relationships']:[])], path);
     if (modules.has(module.id)) add('DUPLICATE_MODULE', path + '/id', 'Module id is not unique');
     const ids = new Set<string>();
     modules.set(module.id, ids);
@@ -90,6 +91,7 @@ export function validateDocument(input: unknown, registry = new Registry()): Val
     if(!target)add('UNRESOLVED_ITEM_TYPE',path,'Item/value Field does not exist in supplied document');
     else if(target.kind!=='field')add('ITEM_TYPE_ROLE',path,'Item/value definition must be an explicit Field');
   }));
-  if(keyProfile)diagnostics.push(...validateKeyCandidate(doc,false).diagnostics);
+  if(relationshipProfile)diagnostics.push(...validateRelationshipCandidate(doc,false).diagnostics);
+  else if(keyProfile)diagnostics.push(...validateKeyCandidate(doc,false).diagnostics);
   return {valid: !diagnostics.some(d => d.severity === 'error'), complete: diagnostics.length === 0, diagnostics};
 }

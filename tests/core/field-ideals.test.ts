@@ -33,7 +33,7 @@ test('unknown future kind and other open metadata survive without semantic compl
  for(const format of ['json','yaml'] as const)expect(readDocument(writeDocument(doc,format),format)).toEqual(doc);
 });
 test('future envelope versions and unsafe getter inputs cannot be interpreted',()=>{
- const doc=document('0.2.0',{});expect(validateDocument({...doc,umf:'0.7.0'}).valid).toBe(false);
+ const doc=document('0.2.0',{});expect(validateDocument({...doc,umf:'0.8.0'}).valid).toBe(false);
  let calls=0;Object.defineProperty(doc.modules[0]!.elements[0]!,'kind',{enumerable:true,get(){calls++;return 'field';}});
  expect(validateDocument(doc).valid).toBe(false);expect(calls).toBe(0);
 });

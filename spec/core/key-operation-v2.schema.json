@@ -1,0 +1,517 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:key-operation:2.0.0",
+  "title": "Core Key and Record membership authoring and inspection receipts (Relationship envelope)",
+  "$defs": {
+    "identity": {
+      "type": "object",
+      "required": [
+        "module",
+        "element"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "keyIdentity": {
+      "type": "object",
+      "required": [
+        "module",
+        "element",
+        "key"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        },
+        "key": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "keyRequest": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "fields"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fields": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "required": [
+              "module",
+              "element"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "element": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "minItems": 1
+        },
+        "primary": {
+          "type": "boolean"
+        }
+      }
+    },
+    "memberRequest": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "required": [
+          "module",
+          "element"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "module": {
+            "type": "string",
+            "minLength": 1
+          },
+          "element": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "declaration": {
+      "type": "object",
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "target",
+        "identity",
+        "request",
+        "provenance"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "operation": {
+          "const": "declare-core-key"
+        },
+        "version": {
+          "const": "2.0.0"
+        },
+        "source": {
+          "$ref": "urn:umf:core:0.7.0"
+        },
+        "target": {
+          "$ref": "urn:umf:core:0.7.0"
+        },
+        "identity": {
+          "type": "object",
+          "required": [
+            "module",
+            "element"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "module": {
+              "type": "string",
+              "minLength": 1
+            },
+            "element": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "request": {
+          "$ref": "#/$defs/keyRequest"
+        },
+        "provenance": {
+          "type": "object",
+          "required": [
+            "origin",
+            "idealPath",
+            "basis",
+            "nativePath",
+            "binding"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "origin": {
+              "const": "authored"
+            },
+            "idealPath": {
+              "type": "string"
+            },
+            "basis": {
+              "const": "explicit-author-declaration"
+            },
+            "nativePath": {
+              "type": "null"
+            },
+            "binding": {
+              "type": "object",
+              "required": [
+                "id",
+                "version"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "const": "umf.core.key.authoring"
+                },
+                "version": {
+                  "const": "2.0.0"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "membership": {
+      "type": "object",
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "target",
+        "identity",
+        "request",
+        "provenance"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "operation": {
+          "const": "declare-core-record-members"
+        },
+        "version": {
+          "const": "2.0.0"
+        },
+        "source": {
+          "$ref": "urn:umf:core:0.7.0"
+        },
+        "target": {
+          "$ref": "urn:umf:core:0.7.0"
+        },
+        "identity": {
+          "type": "object",
+          "required": [
+            "module",
+            "element"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "module": {
+              "type": "string",
+              "minLength": 1
+            },
+            "element": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "request": {
+          "$ref": "#/$defs/memberRequest"
+        },
+        "provenance": {
+          "type": "object",
+          "required": [
+            "origin",
+            "idealPath",
+            "basis",
+            "nativePath",
+            "binding"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "origin": {
+              "const": "authored"
+            },
+            "idealPath": {
+              "type": "string"
+            },
+            "basis": {
+              "const": "explicit-author-declaration"
+            },
+            "nativePath": {
+              "type": "null"
+            },
+            "binding": {
+              "type": "object",
+              "required": [
+                "id",
+                "version"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "const": "umf.core.members.authoring"
+                },
+                "version": {
+                  "const": "2.0.0"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "inspection": {
+      "type": "object",
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "identity",
+        "path",
+        "meaning",
+        "provenance"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "operation": {
+          "const": "inspect-core-keys"
+        },
+        "version": {
+          "const": "2.0.0"
+        },
+        "source": {
+          "$ref": "urn:umf:core:0.7.0"
+        },
+        "identity": {
+          "type": "object",
+          "required": [
+            "module",
+            "element"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "module": {
+              "type": "string",
+              "minLength": 1
+            },
+            "element": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "path": {
+          "type": "string"
+        },
+        "provenance": {
+          "const": "unverified"
+        },
+        "meaning": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": [
+                "state"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "state": {
+                  "const": "missing"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "state"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "state": {
+                  "const": "inapplicable"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "state",
+                "value"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "state": {
+                  "const": "legacy"
+                },
+                "value": {}
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "state",
+                "keys",
+                "uninterpretedPaths"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "state": {
+                  "const": "known"
+                },
+                "keys": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "$ref": "urn:umf:core:0.7.0#/$defs/key"
+                  }
+                },
+                "uninterpretedPaths": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "maxItems": 0
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "state",
+                "keys",
+                "uninterpretedPaths"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "state": {
+                  "const": "partial"
+                },
+                "keys": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "$ref": "urn:umf:core:0.7.0#/$defs/key"
+                  }
+                },
+                "uninterpretedPaths": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "lookup": {
+      "type": "object",
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "identity",
+        "path",
+        "key",
+        "uninterpretedPaths",
+        "provenance"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "operation": {
+          "const": "lookup-core-key"
+        },
+        "version": {
+          "const": "2.0.0"
+        },
+        "source": {
+          "$ref": "urn:umf:core:0.7.0"
+        },
+        "identity": {
+          "type": "object",
+          "required": [
+            "module",
+            "element",
+            "key"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "module": {
+              "type": "string",
+              "minLength": 1
+            },
+            "element": {
+              "type": "string",
+              "minLength": 1
+            },
+            "key": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "path": {
+          "type": "string"
+        },
+        "key": {
+          "$ref": "urn:umf:core:0.7.0#/$defs/key"
+        },
+        "uninterpretedPaths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "provenance": {
+          "const": "unverified"
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/declaration"
+    },
+    {
+      "$ref": "#/$defs/membership"
+    },
+    {
+      "$ref": "#/$defs/inspection"
+    },
+    {
+      "$ref": "#/$defs/lookup"
+    }
+  ],
+  "description": "Structural validation does not prove author intent or native enforcement. Recompute receipts and validate their current source/target context before trusting operation results."
+}

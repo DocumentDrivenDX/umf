@@ -1,3 +1,4 @@
+import relationships from '../../spec/core/relationship-document.schema.json';
 import keys from '../../spec/core/key-document.schema.json';
 import Ajv2020 from 'ajv/dist/2020';
 import core from '../../spec/core/schema.json';
@@ -32,3 +33,5 @@ export const checkCoreFacets = ajv.compile(facets);
 export const checkPackage = ajv.compile(manifest);
 
 export const checkCoreKeys = ajv.compile(keys);
+
+export const checkCoreRelationships = ajv.compile(relationships);

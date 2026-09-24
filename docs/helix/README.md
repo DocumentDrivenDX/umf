@@ -991,7 +991,8 @@ the separate facet admission/delivery gate and Key remain required.
 
 
 Relationship implementation has begun with an explicit experimental 0.7.0
-candidate schema and semantic validator under TD-045. Bun and Chromium agree
-on 35 authored/invalid cases and 70 serialization recoveries. Public operations,
-collision-preserving migration/rollback and native binding admission remain
-pending. See the [candidate browser evidence](../../fixtures/validation/core-relationship-candidate-browser.json).
+schema and semantic validator under TD-045. Public 0.7.0 validation,
+serialization, authoring/inspection, migration/rollback and versioned earlier
+operations now pass 114 core tests and Chromium integration checks. Broader
+compatibility, relationship selection/navigation and native binding admission
+remain pending. See the [candidate browser evidence](../../fixtures/validation/core-relationship-candidate-browser.json).

@@ -169,3 +169,12 @@ it does not merge new assertions into the old interpreter. Receipt verification
 recomputes the operation. Bun and Chromium evidence is recorded in the
 [implementation plan](../../04-build/implementation-plan.md). Public operations
 and full core-task acceptance remain separate from this candidate checkpoint.
+
+
+### Public 0.7.0 integration
+
+The staged public integration is now implemented: Document validation and
+serialization accept 0.7.0, relationship operations are exported, and earlier
+core operations use separate 0.7.0 receipt schemas. Older versions remain
+unchanged. The public integration checkpoint is recorded in the implementation
+plan; broad compatibility and complete core-task acceptance remain pending.

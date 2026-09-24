@@ -1,0 +1,41 @@
+{
+  "scope": "Public 0.7.0 relationship operations, serialization and versioned earlier operations; full compatibility and native admission remain separate",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 13,
+    "recoveries": 78,
+    "refusals": 43,
+    "getterCalls": 0
+  },
+  "externalRequests": [],
+  "bundleSha256": "e61e7a34016ab957ae863d3a425f753e2e482f71508173b207544a0451241b02",
+  "sha256": {
+    "scripts/core-relationship-public-browser.ts": "199c54ca5a85f358d84474769bdf6df36b1118a7c4807bb083fe2875a6f26eea",
+    "src/index.ts": "c8c901db35f4cce9ad50d5cc0c7ec1bb9e4ba23173e6220df29d3f75e855a4cf",
+    "src/model/types.ts": "9ccea0814e6e52e3d2992ba8afcb9fad15fd362d00fad24bdd5a47a150784add",
+    "src/model/field-kind.ts": "7a86790113fb834d68b223906fcbad549603c34dfcfc82797eb9e6944c40191b",
+    "src/model/record-type.ts": "f414e2f30c864c740322493e3c7a108fb2fcddacf4b49980a90d9d863fff6b08",
+    "src/model/nullability.ts": "32c862d926df9e05ace077b9310a5152c7ef3f251e27c56a8f14a7fc396724eb",
+    "src/model/cardinality.ts": "018ec22d88de99ed75bab562985ae7c586aa0de3a141a9e55d93f58b8d84f65e",
+    "src/model/facets.ts": "3f9afedb45ffa4c1ba1bce26f9f94a37346b607f52b2d20088d3f29c50ab98e5",
+    "src/model/keys.ts": "083c779dc5b22415c85075b46132604b312243eeae818a48b9c89c5486c2183b",
+    "src/model/key-tuple.ts": "cc394192441c55844de777413adb2dfdf5dac84b0c6a90e520fb713dc2673d4b",
+    "src/model/selection.ts": "45ad31f1805bf5287880beec63bb7f419c8aac6848ca93a7c077fced4972a1ae",
+    "src/model/selection-verification.ts": "6b582a843164284356631262cc3851aed60faca4bf7f6ae9ee90e3dd679d2b64",
+    "tests/core/relationship-public.test.ts": "996ff5450b1978942164f5b456747b0e3f28d76ec4e083c8e1930ca636e45eb5",
+    "scripts/core-relationship-versioned-schemas.ts": "133f24ae549cf639711aed2c23600931ac118ba458ed1df9458a64217139a823",
+    "dist/umf.js": "e61e7a34016ab957ae863d3a425f753e2e482f71508173b207544a0451241b02",
+    "scripts/core-relationship-operation-cases.ts": "fbc86d5abc4616dcd6a5c91144458719fdf2881fa57ba94ec0c1a7c91db44b28",
+    "scripts/core-relationship-operation-schema.ts": "cc24cfa07df23a7567a1bf4964a822efb94ff1526471e28c0f9acd6fffa7cb88",
+    "scripts/core-relationship-cases.ts": "72ec7b69f274be86907ba43a3304f36af8a40cbcc2549b4ab2c3e4d0a5541a2c",
+    "src/model/relationships.ts": "d1f9e30202a7c8af1a8b7fc47d113f933775df25596f69a84d1f6a69947081eb",
+    "src/validation/relationships.ts": "c78e4d6c849c6381f0897ed40504a7cc264d6539a33dcbae4220e9a448003c05",
+    "src/validation/keys.ts": "00650bc3e645c2d36e01f423b0a5eb85dba8b38c102697b0e62e3030a4be7886",
+    "src/validation/document.ts": "2f734ff8f2ed60a5e5054a1b11678b07908398a9f078c3182b2cd25a4af9a4f0",
+    "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
+    "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
+    "spec/core/relationship-document.schema.json": "a95512729481417f1a3a094cc337d7264a575bd6b54046b05c037db6c33b4813",
+    "spec/core/relationship-operation.schema.json": "2d1607e70f0cc0fd5ddc618e9fe2753863bb2bccecbe70b49c6fa8b075bb43c3",
+    "tests/core/relationship-operations.test.ts": "a186664ac51d0f6091232b09aad6fcdcb48b2dbdaddd9bcd26cd47fcd68adcc0"
+  }
+}

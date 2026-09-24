@@ -1,3 +1,6 @@
+import relationships from '../../spec/core/relationship-document.schema.json';
+import schemaV4 from '../../spec/core/cardinality-operation-v4.schema.json';
+export {default as coreCardinalityOperationV4Schema} from '../../spec/core/cardinality-operation-v4.schema.json';
 import keys from '../../spec/core/key-document.schema.json';
 import schemaV3 from '../../spec/core/cardinality-operation-v3.schema.json';
 export {default as coreCardinalityOperationV3Schema} from '../../spec/core/cardinality-operation-v3.schema.json';
@@ -16,10 +19,10 @@ import schema from '../../spec/core/cardinality-operation.schema.json';
 export {default as coreCardinalityOperationSchema} from '../../spec/core/cardinality-operation.schema.json';
 export interface CoreCardinalityIdentity {module:string;element:string}
 export type CoreCardinalityMeaning={state:'known';cardinality:Cardinality;itemType?:CoreItemTypeReference}|{state:'missing'}|{state:'inapplicable'}|{state:'legacy';value:Json}|{state:'unknown';value:string};
-export interface CoreCardinalityInspection {operation:'inspect-core-cardinality';version:'1.0.0'|'2.0.0'|'3.0.0';source:Document;identity:CoreCardinalityIdentity;path:string;meaning:CoreCardinalityMeaning;provenance:'unverified'}
+export interface CoreCardinalityInspection {operation:'inspect-core-cardinality';version:'1.0.0'|'2.0.0'|'3.0.0'|'4.0.0';source:Document;identity:CoreCardinalityIdentity;path:string;meaning:CoreCardinalityMeaning;provenance:'unverified'}
 export interface CoreCardinalityRequest {cardinality:Cardinality;itemType?:CoreItemTypeReference|null}
-export interface CoreCardinalityDeclaration {operation:'declare-core-cardinality';version:'1.0.0'|'2.0.0'|'3.0.0';source:Document;target:Document;identity:CoreCardinalityIdentity;request:CoreCardinalityRequest;provenance:{origin:'authored';idealPath:string;cardinality:Cardinality;binding:{id:'umf.core.cardinality.authoring';version:'1.0.0'|'2.0.0'|'3.0.0'};basis:'explicit-author-declaration';nativePath:null}}
-const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(availability);validator.addSchema(containers);validator.addSchema(facets);validator.addSchema(keys);const checkV1=validator.compile(schema),checkV2=validator.compile(schemaV2),checkV3=validator.compile(schemaV3);const checker=(version:unknown)=>version==='3.0.0'?checkV3:version==='2.0.0'?checkV2:checkV1;const checkRequest=validator.compile({$defs:schema.$defs,$ref:"#/$defs/request"});
+export interface CoreCardinalityDeclaration {operation:'declare-core-cardinality';version:'1.0.0'|'2.0.0'|'3.0.0'|'4.0.0';source:Document;target:Document;identity:CoreCardinalityIdentity;request:CoreCardinalityRequest;provenance:{origin:'authored';idealPath:string;cardinality:Cardinality;binding:{id:'umf.core.cardinality.authoring';version:'1.0.0'|'2.0.0'|'3.0.0'|'4.0.0'};basis:'explicit-author-declaration';nativePath:null}}
+const validator=createValidator();validator.addSchema(legacy);validator.addSchema(fields);validator.addSchema(availability);validator.addSchema(containers);validator.addSchema(facets);validator.addSchema(keys);validator.addSchema(relationships);const checkV1=validator.compile(schema),checkV2=validator.compile(schemaV2),checkV3=validator.compile(schemaV3),checkV4=validator.compile(schemaV4);const checker=(version:unknown)=>version==='4.0.0'?checkV4:version==='3.0.0'?checkV3:version==='2.0.0'?checkV2:checkV1;const checkRequest=validator.compile({$defs:schema.$defs,$ref:"#/$defs/request"});
 function finish<T extends {version:string}>(value:T):T {const result=copyJson(value),check=checker(value.version);if(!check(result))throw new UmfError('CORE_CARDINALITY_RESULT',JSON.stringify(check.errors));return result as T;}
 function locate(input:Document,identityInput:CoreCardinalityIdentity){
  const source=copyJson(input) as unknown as Document,identity=copyJson(identityInput) as unknown as CoreCardinalityIdentity;
@@ -34,11 +37,11 @@ export function inspectCoreCardinality(input:Document,identity:CoreCardinalityId
  const located=locate(input,identity);const {source,element,path}=located;
  let meaning:CoreCardinalityMeaning={state:'missing'};
  if(Object.hasOwn(element,'cardinality')){
-  if(source.umf!=='0.4.0'&&source.umf!=='0.5.0'&&source.umf!=='0.6.0')meaning={state:'legacy',value:copyJson(element.cardinality)};
+  if(source.umf!=='0.4.0'&&source.umf!=='0.5.0'&&source.umf!=='0.6.0'&&source.umf!=='0.7.0')meaning={state:'legacy',value:copyJson(element.cardinality)};
   else if((CARDINALITIES as readonly unknown[]).includes(element.cardinality))meaning={state:'known',cardinality:element.cardinality as Cardinality,...(Object.hasOwn(element,'itemType')?{itemType:copyJson(element.itemType) as unknown as CoreItemTypeReference}:{})};
   else meaning={state:'unknown',value:element.cardinality as string};
- }else if((source.umf==='0.4.0'||(source.umf==='0.5.0'||source.umf==='0.6.0'))&&element.kind!=='field')meaning={state:'inapplicable'};
- return finish({operation:'inspect-core-cardinality',version:source.umf==='0.6.0'?'3.0.0':source.umf==='0.5.0'?'2.0.0':'1.0.0',source,identity:located.identity,path,meaning,provenance:'unverified'});
+ }else if((source.umf==='0.4.0'||(source.umf==='0.5.0'||(source.umf==='0.6.0'||source.umf==='0.7.0')))&&element.kind!=='field')meaning={state:'inapplicable'};
+ return finish({operation:'inspect-core-cardinality',version:source.umf==='0.7.0'?'4.0.0':source.umf==='0.6.0'?'3.0.0':source.umf==='0.5.0'?'2.0.0':'1.0.0',source,identity:located.identity,path,meaning,provenance:'unverified'});
 }
 /** Explicit author action; archives previous meaning and makes no native classification claim. */
 export function declareCoreCardinality(input:Document,identity:CoreCardinalityIdentity,options:CoreCardinalityRequest):CoreCardinalityDeclaration {
@@ -46,7 +49,7 @@ export function declareCoreCardinality(input:Document,identity:CoreCardinalityId
  if(!checkRequest(request))throw new UmfError("CORE_CARDINALITY_REQUEST",JSON.stringify(checkRequest.errors));
  const cardinality=request.cardinality;
  const located=locate(input,identity);const {source,element,mi,ei,path}=located;
- if(source.umf!=='0.4.0'&&source.umf!=='0.5.0'&&source.umf!=='0.6.0')throw new UmfError('CORE_CARDINALITY_VERSION','Explicit envelope migration is required before authoring cardinality');
+ if(source.umf!=='0.4.0'&&source.umf!=='0.5.0'&&source.umf!=='0.6.0'&&source.umf!=='0.7.0')throw new UmfError('CORE_CARDINALITY_VERSION','Explicit envelope migration is required before authoring cardinality');
  if(element.kind!=='field')throw new UmfError('CORE_CARDINALITY_ROLE','Cardinality applies only to an explicit Field',path);
  if(!(CARDINALITIES as readonly unknown[]).includes(cardinality))throw new UmfError('CORE_CARDINALITY_VALUE','Expected one, array, map or unspecified',path);
  if(Object.hasOwn(element,'cardinality')&&!(CARDINALITIES as readonly unknown[]).includes(element.cardinality))throw new UmfError('CORE_CARDINALITY_UNKNOWN','Unknown cardinality cannot be overwritten by this operation',path);
@@ -56,7 +59,7 @@ export function declareCoreCardinality(input:Document,identity:CoreCardinalityId
   else target.modules[mi]!.elements[ei]!.itemType=copyJson(request.itemType);
  }
  const validation=validateDocument(target);if(!validation.valid)throw new UmfError('CORE_CARDINALITY_CONFLICT',JSON.stringify(validation.diagnostics),path);
- return finish({operation:'declare-core-cardinality',version:source.umf==='0.6.0'?'3.0.0':source.umf==='0.5.0'?'2.0.0':'1.0.0',source,target,identity:located.identity,request,provenance:{origin:'authored',idealPath:path,cardinality,binding:{id:'umf.core.cardinality.authoring',version:source.umf==='0.6.0'?'3.0.0':source.umf==='0.5.0'?'2.0.0':'1.0.0'},basis:'explicit-author-declaration',nativePath:null}});
+ return finish({operation:'declare-core-cardinality',version:source.umf==='0.7.0'?'4.0.0':source.umf==='0.6.0'?'3.0.0':source.umf==='0.5.0'?'2.0.0':'1.0.0',source,target,identity:located.identity,request,provenance:{origin:'authored',idealPath:path,cardinality,binding:{id:'umf.core.cardinality.authoring',version:source.umf==='0.7.0'?'4.0.0':source.umf==='0.6.0'?'3.0.0':source.umf==='0.5.0'?'2.0.0':'1.0.0'},basis:'explicit-author-declaration',nativePath:null}});
 }
 /** Revalidate a retained declaration before relying on its provenance. Any model change requires a new declaration. */
 export function verifyCoreCardinalityDeclaration(input:CoreCardinalityDeclaration,current:Document):CoreCardinalityDeclaration {

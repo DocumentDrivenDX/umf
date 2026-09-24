@@ -4744,3 +4744,23 @@ See the [operations browser record](../../fixtures/validation/core-relationship-
 Typechecking, build and 309-schema / 53-package audits pass. Public 0.7.0
 validation/serialization, earlier versioned operations, selection and complete
 core-task acceptance remain before the first native relationship binding.
+
+
+### Public relationship 0.7.0 integration checkpoint
+
+Public Document validation/serialization and relationship exports now support
+0.7.0. Extension validators receive the complete relationship-bearing document.
+Kind, record-type, availability, cardinality, facets, Key/member and tuple
+operations have new receipt versions; older schemas and interpretation remain
+unchanged. Edits that invalidate keyed endpoints reject atomically. Element
+selection retains the full relationship context and its explicitly stated
+element-dependency traversal scope; it does not infer relationship navigation.
+
+All 114 core tests pass across 24 files (3,978 assertions), including updated
+unsupported-version probes at 0.8.0. Public Chromium checks pass thirteen
+relationship cases, 78 receipt recoveries and 43 refusal checks, plus versioned
+operations and public serialization. Candidate, transition and operation browser
+evidence is refreshed. Typechecking, build and 317 schemas / 53 packages pass.
+See the [public integration record](../../fixtures/validation/relationship-public-integration.json).
+Relationship selection/navigation and broad native/adapter compatibility refresh
+remain before core-task acceptance; no relationship binding admission is claimed.

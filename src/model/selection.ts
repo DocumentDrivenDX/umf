@@ -13,8 +13,8 @@ export function selectCoreElements(input:Document,queryInput:CoreElementQuery,re
  const filters=['modules','namespaces','names','scalarTypes','cardinalities'] as const;
  if(!object(query)||!['none','transitive'].includes(query.references)||Object.keys(query).some(k=>!['references',...filters,'identities'].includes(k))||filters.some(k=>query[k]!==undefined&&(!Array.isArray(query[k])||query[k]!.some(v=>typeof v!=='string'||(k==='scalarTypes'||k==='cardinalities')&&!v)))||query.identities!==undefined&&(!Array.isArray(query.identities)||query.identities.some(v=>!object(v)||typeof v.module!=='string'||!v.module||typeof v.element!=='string'||!v.element||Object.keys(v).some(k=>!['module','element'].includes(k)))))throw new UmfError('CORE_SELECTION_QUERY','Expected exact core filters and explicit reference traversal policy');
  const sourceValidation=validateDocument(source,registry);if(!sourceValidation.valid)throw new UmfError('CORE_SELECTION_SOURCE',JSON.stringify(sourceValidation.diagnostics));
- const keyProfile=source.umf==='0.6.0',cardinalityProfile=source.umf==='0.4.0'||source.umf==='0.5.0'||keyProfile;
- if(query.cardinalities!==undefined&&!cardinalityProfile)throw new UmfError('CORE_SELECTION_PROFILE','Cardinality filtering requires an explicit 0.4.0, 0.5.0 or 0.6.0 envelope; older lookalike members are opaque');
+ const keyProfile=source.umf==='0.6.0'||source.umf==='0.7.0',cardinalityProfile=source.umf==='0.4.0'||source.umf==='0.5.0'||keyProfile;
+ if(query.cardinalities!==undefined&&!cardinalityProfile)throw new UmfError('CORE_SELECTION_PROFILE','Cardinality filtering requires an explicit 0.4.0, 0.5.0, 0.6.0 or 0.7.0 envelope; older lookalike members are opaque');
  const key=(module:string,element:string)=>JSON.stringify([module,element]),entries:CoreElementSelectionEntry[]=[],index=new Map<string,CoreElementSelectionEntry>(),matched=new Set<string>();
  const identities=query.identities===undefined?undefined:new Set(query.identities.map(v=>key(v.module,v.element)));
  const sets=Object.fromEntries(filters.map(k=>[k,query[k]===undefined?undefined:new Set(query[k])])) as Record<typeof filters[number],Set<string>|undefined>;

@@ -13,14 +13,14 @@ const check=createValidator().compile(schema);
 const identity=(ref:RelationshipEndpoint)=>JSON.stringify([ref.module,ref.element]);
 
 /** Explicit candidate validator; never reinterprets an older envelope. */
-export function validateRelationshipCandidate(input:unknown):Validation {
+export function validateRelationshipCandidate(input:unknown,validateBase=true):Validation {
  const diagnostics:Diagnostic[]=[];
  const add=(code:string,path:string,message:string,severity:'error'|'warning'='error')=>diagnostics.push({code,path,message,severity});
  let document:RelationshipCandidate;
  try{document=copyJson(input) as unknown as RelationshipCandidate;}catch(error){if(!(error instanceof UmfError))throw error;add(error.code,error.path,error.message);return {valid:false,complete:false,diagnostics};}
  if(!check(document)){for(const e of check.errors??[])add('RELATIONSHIP_STRUCTURE',e.instancePath,e.message??'Invalid relationship envelope');return {valid:false,complete:false,diagnostics};}
  const base=copyJson(document) as unknown as Document;base.umf='0.6.0';for(const m of base.modules)delete m.relationships;
- diagnostics.push(...validateKeyCandidate(base).diagnostics);
+ diagnostics.push(...validateKeyCandidate(base,validateBase).diagnostics);
  add('EXPERIMENTAL_CORE_RELATIONSHIPS','/umf','Candidate authored relationship profile; native enforcement and storage are not inferred','warning');
  const unknown=(value:object,known:string[],path:string)=>{for(const key of Object.keys(value))if(!known.includes(key))add('UNKNOWN_RELATIONSHIP_QUALIFIER',path+'/'+pointer(key),'Qualifier retained without interpretation','warning');};
  const elements=new Map<string,Element>();for(const m of document.modules)for(const e of m.elements)elements.set(identity({module:m.id,element:e.id}),e);

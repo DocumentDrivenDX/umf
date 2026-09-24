@@ -1,7 +1,7 @@
 {
   "scope": "Published JSON Schema metaschema/compilation and reference closure, not native semantics",
-  "schemas": 309,
-  "passed": 309,
+  "schemas": 317,
+  "passed": 317,
   "results": [
     {
       "path": "spec/core/avro-cardinality-classification.schema.json",
@@ -81,6 +81,13 @@
       "failures": []
     },
     {
+      "path": "spec/core/cardinality-operation-v4.schema.json",
+      "id": "urn:umf:core:cardinality-operation:4.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
       "path": "spec/core/cardinality-operation.schema.json",
       "id": "urn:umf:core:cardinality-operation:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
@@ -153,6 +160,13 @@
     {
       "path": "spec/core/facet-operation-v2.schema.json",
       "id": "urn:umf:core:facet-operation:2.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/facet-operation-v3.schema.json",
+      "id": "urn:umf:core:facet-operation:3.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -298,6 +312,13 @@
       "failures": []
     },
     {
+      "path": "spec/core/key-operation-v2.schema.json",
+      "id": "urn:umf:core:key-operation:2.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
       "path": "spec/core/key-operation.schema.json",
       "id": "urn:umf:core:key-operation:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
@@ -347,6 +368,13 @@
       "failures": []
     },
     {
+      "path": "spec/core/key-tuple-operation-v2.schema.json",
+      "id": "urn:umf:core:key-tuple-operation:2.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
       "path": "spec/core/key-tuple-operation.schema.json",
       "id": "urn:umf:core:key-tuple-operation:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
@@ -377,6 +405,13 @@
     {
       "path": "spec/core/kind-operation-v5.schema.json",
       "id": "urn:umf:core:kind-operation:5.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/kind-operation-v6.schema.json",
+      "id": "urn:umf:core:kind-operation:6.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -426,6 +461,13 @@
     {
       "path": "spec/core/nullability-operation-v4.schema.json",
       "id": "urn:umf:core:nullability-operation:4.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/nullability-operation-v5.schema.json",
+      "id": "urn:umf:core:nullability-operation:5.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []
@@ -669,6 +711,13 @@
       "failures": []
     },
     {
+      "path": "spec/core/record-type-operation-v6.schema.json",
+      "id": "urn:umf:core:record-type-operation:6.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
       "path": "spec/core/record-type-operation.schema.json",
       "id": "urn:umf:core:record-type-operation:1.0.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
@@ -685,6 +734,13 @@
     {
       "path": "spec/core/relationship-operation.schema.json",
       "id": "urn:umf:core:relationship-operation:1.0.0",
+      "dialect": "https://json-schema.org/draft/2020-12/schema",
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/core/relationship-selection.schema.json",
+      "id": "urn:umf:core:element-selection:0.7.0",
       "dialect": "https://json-schema.org/draft/2020-12/schema",
       "passed": true,
       "failures": []

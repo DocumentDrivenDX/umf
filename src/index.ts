@@ -345,3 +345,15 @@ export * from './core-ideals/key-avro';
 export * from './core-ideals/key-avro-projection';
 export * from './core-ideals/key-parquet';
 export * from './core-ideals/key-parquet-projection';
+
+export {validateRelationshipCandidate} from './validation/relationships';
+export type {RelationshipCandidate,CoreRelationship,RelationshipEndpoint,RelationshipTarget,RelationshipMultiplicity} from './validation/relationships';
+export {declareCoreRelationship,inspectCoreRelationships,lookupCoreRelationship,verifyCoreRelationshipOperation} from './model/relationships';
+export type {CoreRelationshipRequest,CoreRelationshipIdentity,RelationshipModuleIdentity,CoreRelationshipOperation,CoreRelationshipDeclaration,CoreRelationshipInspection,CoreRelationshipLookup,CoreRelationshipMeaning} from './model/relationships';
+export {upgradeRelationshipEnvelope,rollbackRelationshipEnvelope,verifyRelationshipTransition} from './model/relationship-transition';
+export type {RelationshipUpgradeReceipt,RelationshipRollbackReceipt} from './model/relationship-transition';
+export {default as coreRelationshipDocumentSchema} from '../spec/core/relationship-document.schema.json';
+export {default as coreRelationshipOperationSchema} from '../spec/core/relationship-operation.schema.json';
+export {default as coreRelationshipTransitionSchema} from '../spec/core/relationship-transition.schema.json';
+export {default as coreKeyOperationV2Schema} from '../spec/core/key-operation-v2.schema.json';
+export {default as coreKeyTupleOperationV2Schema} from '../spec/core/key-tuple-operation-v2.schema.json';

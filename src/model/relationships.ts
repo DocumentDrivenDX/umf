@@ -48,7 +48,7 @@ export function lookupCoreRelationship(input:Source,identityInput:CoreRelationsh
  const l=locate(input,{module:identity.module});if(l.source.umf!=='0.7.0')throw new UmfError('RELATIONSHIP_VERSION','Explicit relationship migration required');
  const values=(l.module.relationships??[]) as CoreRelationship[],index=values.findIndex(r=>r.id===identity.id);if(index<0)throw new UmfError('RELATIONSHIP_MISSING','Stable relationship ID does not resolve');
  const path=l.path+'/'+index;
- return finish({operation:'lookup-core-relationship',version:'1.0.0',source:l.source,identity,path,relationship:values[index]!,uninterpretedPaths:unknown(l,path),provenance:'unverified'});
+ return finish({operation:'lookup-core-relationship',version:'1.0.0',source:l.source as RelationshipCandidate,identity,path,relationship:values[index]!,uninterpretedPaths:unknown(l,path),provenance:'unverified'});
 }
 export function declareCoreRelationship(input:Source,identity:RelationshipModuleIdentity,requestInput:CoreRelationshipRequest):CoreRelationshipDeclaration {
  const request=copyJson(requestInput) as unknown as CoreRelationshipRequest;if(!requestCheck(request))throw new UmfError('RELATIONSHIP_REQUEST','Expected complete known authored relationship');
@@ -65,7 +65,7 @@ export function declareCoreRelationship(input:Source,identity:RelationshipModule
  const target=copyJson(l.source) as unknown as RelationshipCandidate,updated=copyJson(values) as unknown as CoreRelationship[];
  if(index<0)updated.push(next);else updated[index]=next;target.modules[l.index]!.relationships=updated;
  const validation=validateRelationshipCandidate(target);if(!validation.valid)throw new UmfError('RELATIONSHIP_CONFLICT',JSON.stringify(validation.diagnostics));
- return finish({operation:'declare-core-relationship',version:'1.0.0',source:l.source,target,identity:l.identity,request,provenance:{origin:'authored',idealPath:l.path+'/'+(index<0?values.length:index),basis:'explicit-author-declaration',nativePath:null}});
+ return finish({operation:'declare-core-relationship',version:'1.0.0',source:l.source as RelationshipCandidate,target,identity:l.identity,request,provenance:{origin:'authored',idealPath:l.path+'/'+(index<0?values.length:index),basis:'explicit-author-declaration',nativePath:null}});
 }
 export function verifyCoreRelationshipOperation(input:CoreRelationshipOperation,current:Source):CoreRelationshipOperation {
  const receipt=copyJson(input) as unknown as CoreRelationshipOperation;if(!check(receipt))throw new UmfError('RELATIONSHIP_RECEIPT','Malformed relationship operation');
