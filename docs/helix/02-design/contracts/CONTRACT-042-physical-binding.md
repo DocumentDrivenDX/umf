@@ -143,7 +143,8 @@ and Chromium evidence for rowstore/unique/filtered index DDL and for ordinary
 tables, explicit scalar columns, `nvarchar(max)` JSON object carriers and one
 declared partition-scheme placement. The table projection reports every
 unbounded DDD scalar narrowed by a SQL type, optional-to-NULL choice, DDD
-identity, and unenforced embedded path. Neither partial SQL Server direction
+identity, and unenforced embedded path. It rejects stale type and partition
+policy entries before DDL emission. Neither partial SQL Server direction
 includes relationship lowering; the full DDL bead remains open. The support
 table above is not a blanket delivered claim for every kind or target.
 

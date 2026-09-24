@@ -33,6 +33,18 @@ test('@covers US-046-AC3: stale model, unknown binding content and unsafe type p
   expect(()=>project(collision)).toThrow();
 });
 
+test('@covers US-046-AC3: stale SQL Server table policies block before DDL emission',()=>{
+  const missing=structuredClone(fixture.policy);
+  missing.fieldTypes.push({module:'sales',element:'Item',field:'removed',sqlType:'nvarchar(80)'});
+  expect(()=>project(fixture.binding,missing)).toThrow('Field type policy has no table-bound DDD column');
+  const embedded=structuredClone(fixture.policy);
+  embedded.fieldTypes.push({module:'sales',element:'Item',field:'details',sqlType:'nvarchar(max)'});
+  expect(()=>project(fixture.binding,embedded)).toThrow('Field type policy has no table-bound DDD column');
+  const unused=structuredClone(fixture.policy);
+  unused.partitionFamilies.push({name:'unused',scheme:'ps_unused',column:'id'});
+  expect(()=>project(fixture.binding,unused)).toThrow('Partition family is not selected');
+});
+
 test('@covers US-046-AC4 @covers US-046-AC5: missing partition policy and DDD identity remain residuals',()=>{
   const missing=structuredClone(fixture.policy);missing.partitionFamilies=[];
   const report=project(fixture.binding,missing);

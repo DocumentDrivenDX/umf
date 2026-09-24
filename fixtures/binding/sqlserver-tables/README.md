@@ -7,6 +7,8 @@ is the report-mode candidate. `catalog.json` retains the exact native capture.
 catalog-v2 structural adapter recovery plus exact retained source text, table/column and
 partition observations, residuals and source fingerprints. `browser.json`
 records Chromium parity and strict-mode refusal.
+Both native and browser paths reject stale scalar type policies and unused
+partition families before emitting DDL.
 
 The generated `nvarchar(max)` column is checked with `ISJSON(..., OBJECT)`, but
 the declared embedded path and value type are not enforced. The report also

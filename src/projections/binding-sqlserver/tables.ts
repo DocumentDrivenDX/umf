@@ -54,6 +54,15 @@ export function projectBindingTablesToSqlServer(logical:Document,binding:Documen
     if(!row||typeof row.name!=='string'||typeof row.scheme!=='string'||typeof row.column!=='string'||Object.keys(row).some(k=>!['name','scheme','column'].includes(k))||families.has(row.name))throw new UmfError('SQLSERVER_TABLE_POLICY','Invalid or duplicate partition family');
     quote(row.scheme);quote(row.column);families.set(row.name,row);
   }
+  for(const row of policy.fieldTypes){
+    const field=payload.fields.find(bound=>bound.module===row.module&&bound.element===row.element&&bound.field===row.field);
+    if(!field||field.storage!=='column'||!payload.elements.some(owner=>owner.module===row.module&&owner.element===row.element))
+      throw new UmfError('SQLSERVER_TABLE_POLICY','Field type policy has no table-bound DDD column: '+key(row));
+  }
+  for(const family of policy.partitionFamilies){
+    if(!payload.elements.some(element=>element.partition===family.name))
+      throw new UmfError('SQLSERVER_TABLE_POLICY','Partition family is not selected by a bound element: '+family.name);
+  }
   const residuals:SqlServerTableResidual[]=[],mappings:SqlServerTableMapping[]=[],statements:string[]=[],schemas=new Set<string>(),tables=new Set<string>();
   const add=(path:string,reason:string,choice:unknown)=>residuals.push({path,reason,choice:copyJson(choice)});
   for(const [ei,element] of payload.elements.entries()){
