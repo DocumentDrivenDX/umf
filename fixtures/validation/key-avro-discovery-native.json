@@ -1,0 +1,1010 @@
+{
+  "scope": "Native schema acceptance, sequential encoding, object-container duplicate retention and reader-default counterexamples; no ideal Key binding acceptance",
+  "versions": {
+    "apache": "1.12.0",
+    "fastavro": "1.12.2"
+  },
+  "references": [
+    "https://avro.apache.org/docs/1.12.0/specification/"
+  ],
+  "cases": [
+    {
+      "id": "repeated-record",
+      "writer": "apache",
+      "expectedWrite": true,
+      "write": {
+        "ok": true,
+        "hex": "020261020261"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "id": 1,
+              "code": "a"
+            },
+            {
+              "id": 1,
+              "code": "a"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        },
+        "fastavro": {
+          "values": [
+            {
+              "id": 1,
+              "code": "a"
+            },
+            {
+              "id": 1,
+              "code": "a"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        }
+      }
+    },
+    {
+      "id": "repeated-record",
+      "writer": "fastavro",
+      "expectedWrite": true,
+      "write": {
+        "ok": true,
+        "hex": "020261020261"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "id": 1,
+              "code": "a"
+            },
+            {
+              "id": 1,
+              "code": "a"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        },
+        "fastavro": {
+          "values": [
+            {
+              "id": 1,
+              "code": "a"
+            },
+            {
+              "id": 1,
+              "code": "a"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        }
+      }
+    },
+    {
+      "id": "repeated-primary-candidate",
+      "writer": "apache",
+      "expectedWrite": true,
+      "write": {
+        "ok": true,
+        "hex": "020261020262"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "id": 1,
+              "code": "a"
+            },
+            {
+              "id": 1,
+              "code": "b"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        },
+        "fastavro": {
+          "values": [
+            {
+              "id": 1,
+              "code": "a"
+            },
+            {
+              "id": 1,
+              "code": "b"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        }
+      }
+    },
+    {
+      "id": "repeated-primary-candidate",
+      "writer": "fastavro",
+      "expectedWrite": true,
+      "write": {
+        "ok": true,
+        "hex": "020261020262"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "id": 1,
+              "code": "a"
+            },
+            {
+              "id": 1,
+              "code": "b"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        },
+        "fastavro": {
+          "values": [
+            {
+              "id": 1,
+              "code": "a"
+            },
+            {
+              "id": 1,
+              "code": "b"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        }
+      }
+    },
+    {
+      "id": "repeated-alternate-candidate",
+      "writer": "apache",
+      "expectedWrite": true,
+      "write": {
+        "ok": true,
+        "hex": "020261040261"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "id": 1,
+              "code": "a"
+            },
+            {
+              "id": 2,
+              "code": "a"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        },
+        "fastavro": {
+          "values": [
+            {
+              "id": 1,
+              "code": "a"
+            },
+            {
+              "id": 2,
+              "code": "a"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        }
+      }
+    },
+    {
+      "id": "repeated-alternate-candidate",
+      "writer": "fastavro",
+      "expectedWrite": true,
+      "write": {
+        "ok": true,
+        "hex": "020261040261"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "id": 1,
+              "code": "a"
+            },
+            {
+              "id": 2,
+              "code": "a"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        },
+        "fastavro": {
+          "values": [
+            {
+              "id": 1,
+              "code": "a"
+            },
+            {
+              "id": 2,
+              "code": "a"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        }
+      }
+    },
+    {
+      "id": "uninterpreted-key-metadata",
+      "writer": "apache",
+      "expectedWrite": true,
+      "write": {
+        "ok": true,
+        "hex": "020261020261"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "id": 1,
+              "code": "a"
+            },
+            {
+              "id": 1,
+              "code": "a"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        },
+        "fastavro": {
+          "values": [
+            {
+              "id": 1,
+              "code": "a"
+            },
+            {
+              "id": 1,
+              "code": "a"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        }
+      }
+    },
+    {
+      "id": "uninterpreted-key-metadata",
+      "writer": "fastavro",
+      "expectedWrite": true,
+      "write": {
+        "ok": true,
+        "hex": "020261020261"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "id": 1,
+              "code": "a"
+            },
+            {
+              "id": 1,
+              "code": "a"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        },
+        "fastavro": {
+          "values": [
+            {
+              "id": 1,
+              "code": "a"
+            },
+            {
+              "id": 1,
+              "code": "a"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        }
+      }
+    },
+    {
+      "id": "sort-order-not-identity",
+      "writer": "apache",
+      "expectedWrite": true,
+      "write": {
+        "ok": true,
+        "hex": "020261040261"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "id": 1,
+              "code": "a"
+            },
+            {
+              "id": 2,
+              "code": "a"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        },
+        "fastavro": {
+          "values": [
+            {
+              "id": 1,
+              "code": "a"
+            },
+            {
+              "id": 2,
+              "code": "a"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        }
+      }
+    },
+    {
+      "id": "sort-order-not-identity",
+      "writer": "fastavro",
+      "expectedWrite": true,
+      "write": {
+        "ok": true,
+        "hex": "020261040261"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "id": 1,
+              "code": "a"
+            },
+            {
+              "id": 2,
+              "code": "a"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        },
+        "fastavro": {
+          "values": [
+            {
+              "id": 1,
+              "code": "a"
+            },
+            {
+              "id": 2,
+              "code": "a"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        }
+      }
+    },
+    {
+      "id": "nullable-union",
+      "writer": "apache",
+      "expectedWrite": true,
+      "write": {
+        "ok": true,
+        "hex": "000261000261"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "id": null,
+              "code": "a"
+            },
+            {
+              "id": null,
+              "code": "a"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        },
+        "fastavro": {
+          "values": [
+            {
+              "id": null,
+              "code": "a"
+            },
+            {
+              "id": null,
+              "code": "a"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        }
+      }
+    },
+    {
+      "id": "nullable-union",
+      "writer": "fastavro",
+      "expectedWrite": true,
+      "write": {
+        "ok": true,
+        "hex": "000261000261"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "id": null,
+              "code": "a"
+            },
+            {
+              "id": null,
+              "code": "a"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        },
+        "fastavro": {
+          "values": [
+            {
+              "id": null,
+              "code": "a"
+            },
+            {
+              "id": null,
+              "code": "a"
+            }
+          ],
+          "bytesConsumed": 6,
+          "count": 2
+        }
+      }
+    },
+    {
+      "id": "missing-defaulted-field",
+      "writer": "apache",
+      "expectedWrite": false,
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"None\" provided for \"id\" is not an example of the schema \"long\""
+      }
+    },
+    {
+      "id": "missing-defaulted-field",
+      "writer": "fastavro",
+      "expectedWrite": false,
+      "write": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "Field id is specified in the schema but missing from the record"
+      }
+    },
+    {
+      "id": "null-required-field",
+      "writer": "apache",
+      "expectedWrite": false,
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"None\" provided for \"id\" is not an example of the schema \"long\""
+      }
+    },
+    {
+      "id": "null-required-field",
+      "writer": "fastavro",
+      "expectedWrite": false,
+      "write": {
+        "ok": false,
+        "error": "TypeError",
+        "message": "an integer is required on field id"
+      }
+    },
+    {
+      "id": "named-reference",
+      "writer": "apache",
+      "expectedWrite": true,
+      "write": {
+        "ok": true,
+        "hex": "02020202"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "left": {
+                "id": 1
+              },
+              "right": {
+                "id": 1
+              }
+            },
+            {
+              "left": {
+                "id": 1
+              },
+              "right": {
+                "id": 1
+              }
+            }
+          ],
+          "bytesConsumed": 4,
+          "count": 2
+        },
+        "fastavro": {
+          "values": [
+            {
+              "left": {
+                "id": 1
+              },
+              "right": {
+                "id": 1
+              }
+            },
+            {
+              "left": {
+                "id": 1
+              },
+              "right": {
+                "id": 1
+              }
+            }
+          ],
+          "bytesConsumed": 4,
+          "count": 2
+        }
+      }
+    },
+    {
+      "id": "named-reference",
+      "writer": "fastavro",
+      "expectedWrite": true,
+      "write": {
+        "ok": true,
+        "hex": "02020202"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "left": {
+                "id": 1
+              },
+              "right": {
+                "id": 1
+              }
+            },
+            {
+              "left": {
+                "id": 1
+              },
+              "right": {
+                "id": 1
+              }
+            }
+          ],
+          "bytesConsumed": 4,
+          "count": 2
+        },
+        "fastavro": {
+          "values": [
+            {
+              "left": {
+                "id": 1
+              },
+              "right": {
+                "id": 1
+              }
+            },
+            {
+              "left": {
+                "id": 1
+              },
+              "right": {
+                "id": 1
+              }
+            }
+          ],
+          "bytesConsumed": 4,
+          "count": 2
+        }
+      }
+    },
+    {
+      "id": "array-unique-hint",
+      "writer": "apache",
+      "expectedWrite": true,
+      "write": {
+        "ok": true,
+        "hex": "0402026102026100"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            [
+              {
+                "id": 1,
+                "code": "a"
+              },
+              {
+                "id": 1,
+                "code": "a"
+              }
+            ]
+          ],
+          "bytesConsumed": 8,
+          "count": 1
+        },
+        "fastavro": {
+          "values": [
+            [
+              {
+                "id": 1,
+                "code": "a"
+              },
+              {
+                "id": 1,
+                "code": "a"
+              }
+            ]
+          ],
+          "bytesConsumed": 8,
+          "count": 1
+        }
+      }
+    },
+    {
+      "id": "array-unique-hint",
+      "writer": "fastavro",
+      "expectedWrite": true,
+      "write": {
+        "ok": true,
+        "hex": "0402026102026100"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            [
+              {
+                "id": 1,
+                "code": "a"
+              },
+              {
+                "id": 1,
+                "code": "a"
+              }
+            ]
+          ],
+          "bytesConsumed": 8,
+          "count": 1
+        },
+        "fastavro": {
+          "values": [
+            [
+              {
+                "id": 1,
+                "code": "a"
+              },
+              {
+                "id": 1,
+                "code": "a"
+              }
+            ]
+          ],
+          "bytesConsumed": 8,
+          "count": 1
+        }
+      }
+    },
+    {
+      "id": "float-narrowing",
+      "writer": "apache",
+      "expectedWrite": true,
+      "write": {
+        "ok": true,
+        "hex": "0000803f0000803f"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "value": 1.0
+            },
+            {
+              "value": 1.0
+            }
+          ],
+          "bytesConsumed": 8,
+          "count": 2
+        },
+        "fastavro": {
+          "values": [
+            {
+              "value": 1.0
+            },
+            {
+              "value": 1.0
+            }
+          ],
+          "bytesConsumed": 8,
+          "count": 2
+        }
+      }
+    },
+    {
+      "id": "float-narrowing",
+      "writer": "fastavro",
+      "expectedWrite": true,
+      "write": {
+        "ok": true,
+        "hex": "0000803f0000803f"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "value": 1.0
+            },
+            {
+              "value": 1.0
+            }
+          ],
+          "bytesConsumed": 8,
+          "count": 2
+        },
+        "fastavro": {
+          "values": [
+            {
+              "value": 1.0
+            },
+            {
+              "value": 1.0
+            }
+          ],
+          "bytesConsumed": 8,
+          "count": 2
+        }
+      }
+    },
+    {
+      "id": "unicode-distinct",
+      "writer": "apache",
+      "expectedWrite": true,
+      "write": {
+        "ok": true,
+        "hex": "04c3a90665cc81026104612000"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "value": "é"
+            },
+            {
+              "value": "é"
+            },
+            {
+              "value": "a"
+            },
+            {
+              "value": "a "
+            },
+            {
+              "value": ""
+            }
+          ],
+          "bytesConsumed": 13,
+          "count": 5
+        },
+        "fastavro": {
+          "values": [
+            {
+              "value": "é"
+            },
+            {
+              "value": "é"
+            },
+            {
+              "value": "a"
+            },
+            {
+              "value": "a "
+            },
+            {
+              "value": ""
+            }
+          ],
+          "bytesConsumed": 13,
+          "count": 5
+        }
+      }
+    },
+    {
+      "id": "unicode-distinct",
+      "writer": "fastavro",
+      "expectedWrite": true,
+      "write": {
+        "ok": true,
+        "hex": "04c3a90665cc81026104612000"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "value": "é"
+            },
+            {
+              "value": "é"
+            },
+            {
+              "value": "a"
+            },
+            {
+              "value": "a "
+            },
+            {
+              "value": ""
+            }
+          ],
+          "bytesConsumed": 13,
+          "count": 5
+        },
+        "fastavro": {
+          "values": [
+            {
+              "value": "é"
+            },
+            {
+              "value": "é"
+            },
+            {
+              "value": "a"
+            },
+            {
+              "value": "a "
+            },
+            {
+              "value": ""
+            }
+          ],
+          "bytesConsumed": 13,
+          "count": 5
+        }
+      }
+    }
+  ],
+  "containers": [
+    {
+      "writer": "apache",
+      "count": 2,
+      "bytes": 213,
+      "reads": {
+        "apache": [
+          {
+            "id": 1,
+            "code": "a"
+          },
+          {
+            "id": 1,
+            "code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "id": 1,
+            "code": "a"
+          },
+          {
+            "id": 1,
+            "code": "a"
+          }
+        ]
+      }
+    },
+    {
+      "writer": "fastavro",
+      "count": 2,
+      "bytes": 197,
+      "reads": {
+        "apache": [
+          {
+            "id": 1,
+            "code": "a"
+          },
+          {
+            "id": 1,
+            "code": "a"
+          }
+        ],
+        "fastavro": [
+          {
+            "id": 1,
+            "code": "a"
+          },
+          {
+            "id": 1,
+            "code": "a"
+          }
+        ]
+      }
+    }
+  ],
+  "resolution": [
+    {
+      "writer": "apache",
+      "reader": "apache",
+      "values": [
+        {
+          "id": 1,
+          "code": "same"
+        },
+        {
+          "id": 2,
+          "code": "same"
+        }
+      ]
+    },
+    {
+      "writer": "apache",
+      "reader": "fastavro",
+      "values": [
+        {
+          "id": 1,
+          "code": "same"
+        },
+        {
+          "id": 2,
+          "code": "same"
+        }
+      ]
+    },
+    {
+      "writer": "fastavro",
+      "reader": "apache",
+      "values": [
+        {
+          "id": 1,
+          "code": "same"
+        },
+        {
+          "id": 2,
+          "code": "same"
+        }
+      ]
+    },
+    {
+      "writer": "fastavro",
+      "reader": "fastavro",
+      "values": [
+        {
+          "id": 1,
+          "code": "same"
+        },
+        {
+          "id": 2,
+          "code": "same"
+        }
+      ]
+    }
+  ],
+  "sha256": {
+    "fixtures/avro/key-discovery-cases.json": "97ee172c126aa946de0331566a71dcf04b1487468e6995b9aee004d7a2be4aa7",
+    "scripts/core-ideals/key-avro-discovery-native.py": "8efa0c5af1f6c5e1cb1bdddaddaa589f9e27181f927b32298997b10fabbe937b"
+  }
+}

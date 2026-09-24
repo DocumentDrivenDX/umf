@@ -1,0 +1,191 @@
+{
+  "scope": "Native key enforcement counterexamples; key-like metadata is uninterpreted",
+  "cases": [
+    {
+      "id": "repeated-record",
+      "schemaText": "{\n  \"type\": \"record\",\n  \"name\": \"Order\",\n  \"namespace\": \"sales\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"long\"\n    },\n    {\n      \"name\": \"code\",\n      \"type\": \"string\"\n    }\n  ]\n}\n",
+      "values": [
+        {
+          "id": 1,
+          "code": "a"
+        },
+        {
+          "id": 1,
+          "code": "a"
+        }
+      ],
+      "expectedWrite": true
+    },
+    {
+      "id": "repeated-primary-candidate",
+      "schemaText": "{\n  \"type\": \"record\",\n  \"name\": \"Order\",\n  \"namespace\": \"sales\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"long\"\n    },\n    {\n      \"name\": \"code\",\n      \"type\": \"string\"\n    }\n  ]\n}\n",
+      "values": [
+        {
+          "id": 1,
+          "code": "a"
+        },
+        {
+          "id": 1,
+          "code": "b"
+        }
+      ],
+      "expectedWrite": true
+    },
+    {
+      "id": "repeated-alternate-candidate",
+      "schemaText": "{\n  \"type\": \"record\",\n  \"name\": \"Order\",\n  \"namespace\": \"sales\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"long\"\n    },\n    {\n      \"name\": \"code\",\n      \"type\": \"string\"\n    }\n  ]\n}\n",
+      "values": [
+        {
+          "id": 1,
+          "code": "a"
+        },
+        {
+          "id": 2,
+          "code": "a"
+        }
+      ],
+      "expectedWrite": true
+    },
+    {
+      "id": "uninterpreted-key-metadata",
+      "schemaText": "{\n  \"type\": \"record\",\n  \"name\": \"Order\",\n  \"namespace\": \"sales\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"long\"\n    },\n    {\n      \"name\": \"code\",\n      \"type\": \"string\",\n      \"unique\": true\n    }\n  ],\n  \"primary_key\": [\n    \"id\"\n  ],\n  \"keys\": [\n    {\n      \"id\": \"identity\",\n      \"fields\": [\n        \"id\"\n      ],\n      \"primary\": true\n    }\n  ],\n  \"future\": {\n    \"numeric\": 9007199254740993\n  }\n}\n",
+      "values": [
+        {
+          "id": 1,
+          "code": "a"
+        },
+        {
+          "id": 1,
+          "code": "a"
+        }
+      ],
+      "expectedWrite": true
+    },
+    {
+      "id": "sort-order-not-identity",
+      "schemaText": "{\n  \"type\": \"record\",\n  \"name\": \"Order\",\n  \"namespace\": \"sales\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"long\",\n      \"order\": \"ignore\"\n    },\n    {\n      \"name\": \"code\",\n      \"type\": \"string\",\n      \"order\": \"descending\"\n    }\n  ]\n}\n",
+      "values": [
+        {
+          "id": 1,
+          "code": "a"
+        },
+        {
+          "id": 2,
+          "code": "a"
+        }
+      ],
+      "expectedWrite": true
+    },
+    {
+      "id": "nullable-union",
+      "schemaText": "{\n  \"type\": \"record\",\n  \"name\": \"Order\",\n  \"namespace\": \"sales\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": [\n        \"null\",\n        \"long\"\n      ],\n      \"default\": null\n    },\n    {\n      \"name\": \"code\",\n      \"type\": \"string\"\n    }\n  ]\n}\n",
+      "values": [
+        {
+          "id": null,
+          "code": "a"
+        },
+        {
+          "id": null,
+          "code": "a"
+        }
+      ],
+      "expectedWrite": true
+    },
+    {
+      "id": "missing-defaulted-field",
+      "schemaText": "{\n  \"type\": \"record\",\n  \"name\": \"Order\",\n  \"namespace\": \"sales\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"long\",\n      \"default\": 1\n    },\n    {\n      \"name\": \"code\",\n      \"type\": \"string\"\n    }\n  ]\n}\n",
+      "values": [
+        {
+          "code": "a"
+        }
+      ],
+      "expectedWrite": false
+    },
+    {
+      "id": "null-required-field",
+      "schemaText": "{\n  \"type\": \"record\",\n  \"name\": \"Order\",\n  \"namespace\": \"sales\",\n  \"fields\": [\n    {\n      \"name\": \"id\",\n      \"type\": \"long\"\n    },\n    {\n      \"name\": \"code\",\n      \"type\": \"string\"\n    }\n  ]\n}\n",
+      "values": [
+        {
+          "id": null,
+          "code": "a"
+        }
+      ],
+      "expectedWrite": false
+    },
+    {
+      "id": "named-reference",
+      "schemaText": "{\n  \"type\": \"record\",\n  \"name\": \"NamedPairs\",\n  \"fields\": [\n    {\n      \"name\": \"left\",\n      \"type\": {\n        \"type\": \"record\",\n        \"name\": \"Identity\",\n        \"fields\": [\n          {\n            \"name\": \"id\",\n            \"type\": \"long\"\n          }\n        ]\n      }\n    },\n    {\n      \"name\": \"right\",\n      \"type\": \"Identity\"\n    }\n  ]\n}\n",
+      "values": [
+        {
+          "left": {
+            "id": 1
+          },
+          "right": {
+            "id": 1
+          }
+        },
+        {
+          "left": {
+            "id": 1
+          },
+          "right": {
+            "id": 1
+          }
+        }
+      ],
+      "expectedWrite": true
+    },
+    {
+      "id": "array-unique-hint",
+      "schemaText": "{\n  \"type\": \"array\",\n  \"items\": {\n    \"type\": \"record\",\n    \"name\": \"Order\",\n    \"namespace\": \"sales\",\n    \"fields\": [\n      {\n        \"name\": \"id\",\n        \"type\": \"long\"\n      },\n      {\n        \"name\": \"code\",\n        \"type\": \"string\"\n      }\n    ]\n  },\n  \"uniqueItems\": true\n}\n",
+      "values": [
+        [
+          {
+            "id": 1,
+            "code": "a"
+          },
+          {
+            "id": 1,
+            "code": "a"
+          }
+        ]
+      ],
+      "expectedWrite": true
+    },
+    {
+      "id": "float-narrowing",
+      "schemaText": "{\n  \"type\": \"record\",\n  \"name\": \"FloatRecord\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": \"float\"\n    }\n  ]\n}\n",
+      "values": [
+        {
+          "value": 1.0000000000000002
+        },
+        {
+          "value": 1.0
+        }
+      ],
+      "expectedWrite": true
+    },
+    {
+      "id": "unicode-distinct",
+      "schemaText": "{\n  \"type\": \"record\",\n  \"name\": \"TextRecord\",\n  \"fields\": [\n    {\n      \"name\": \"value\",\n      \"type\": \"string\"\n    }\n  ]\n}\n",
+      "values": [
+        {
+          "value": "é"
+        },
+        {
+          "value": "é"
+        },
+        {
+          "value": "a"
+        },
+        {
+          "value": "a "
+        },
+        {
+          "value": ""
+        }
+      ],
+      "expectedWrite": true
+    }
+  ]
+}

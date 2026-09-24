@@ -1,0 +1,147 @@
+{
+  "id": "umf.avro.keys",
+  "version": "1.0.0",
+  "coreVersion": "0.1.0",
+  "description": "Experimental Avro Key observations with exact native archives and explicit enforcement losses",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:avro:key-binding:1.0.0",
+    "title": "Avro record observations without authored identity",
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+      "origin",
+      "binding",
+      "nativeSource",
+      "observations"
+    ],
+    "properties": {
+      "origin": {
+        "const": "classified"
+      },
+      "binding": {
+        "const": {
+          "id": "umf.avro.keys",
+          "version": "1.0.0",
+          "nativeVersion": "1.12.0",
+          "subset": "Schema declarations observed with Apache Avro 1.12.0 and fastavro 1.12.2; no collection uniqueness, authored identity inference or native equivalence"
+        }
+      },
+      "nativeSource": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema",
+          "dependencies"
+        ],
+        "properties": {
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dependencies": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "schema"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      },
+      "observations": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "nativePath",
+            "name",
+            "fields",
+            "enforcement",
+            "authorIntent",
+            "provenance",
+            "scope"
+          ],
+          "properties": {
+            "nativePath": {
+              "type": "string",
+              "minLength": 1
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "fields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name",
+                  "nativePath"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "nativePath": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "enforcement": {
+              "const": "not-expressible"
+            },
+            "authorIntent": {
+              "const": "unknown"
+            },
+            "provenance": {
+              "const": "inferred"
+            },
+            "scope": {
+              "const": "schema-declaration"
+            }
+          }
+        }
+      }
+    }
+  },
+  "semantics": "CONTRACT-040 and TD-044. Classification only; authored projection, binding acceptance and Key admission remain unfinished.",
+  "scopes": [
+    "document"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "Apache Avro",
+      "version": "1.12.0",
+      "subset": "Schema declarations observed with Apache Avro 1.12.0 and fastavro 1.12.2; no collection uniqueness, authored identity inference or native equivalence"
+    },
+    "evidence": [
+      "tests/core-ideals/key-avro.test.ts",
+      "fixtures/validation/key-avro-discovery-native.json",
+      "fixtures/validation/key-avro-browser.json"
+    ]
+  }
+}
