@@ -1,0 +1,17 @@
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/09/24 10:01:12 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+{"declarations": 28, "profileDisagreements": 5, "rawGeneratorControls": 4, "valueCases": 13, "valueDisagreements": 6, "floatNarrowings": 1}
+{"scope":"TableSpec Cardinality native discovery only","declarations":28,"valueCases":13,"checkedFingerprints":7,"bindingImplemented":false}
+{"cases":336,"recoveries":452}
+{"cases": 336, "declared": 116, "nativeRecoveries": 452}
+{"cases":78,"projected":44,"recoveries":88}
+WARNING: Using incubator modules: jdk.incubator.vector
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/09/24 10:01:45 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+{"cases": 78, "emitted": 44, "idealRecoveries": 88, "vectorValueChecks": 105, "floatNarrowings": 15}
+{"nativeCommands":5,"proofs":3}

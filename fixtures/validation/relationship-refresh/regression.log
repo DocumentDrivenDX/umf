@@ -1,0 +1,2177 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/arrow/capture.test.ts:
+(pass) US-016-AC5: every native IPC fixture survives both serializations, including unsupported types [737.68ms]
+(pass) US-016-AC5: invalid input and trailing bytes survive without a native-validity claim [93.80ms]
+(pass) US-016-AC5: input, output and backend mutations cannot alter authoritative captured bytes [27.94ms]
+(pass) US-016-AC5: invalid envelopes and unknown representation content cannot silently export [24.46ms]
+
+tests/arrow/flatbuffer-decode.test.ts:
+(pass) US-016-AC7: all real metadata roots decode with exact source retention [4305.95ms]
+(pass) US-016-AC7: unknown table slots survive in source and produce explicit diagnostics [55.65ms]
+(pass) US-016-AC7: unknown enums, invalid offsets, malformed vtables and truncated bytes expose no partial model [34.42ms]
+(pass) US-016-AC7: length and forward-pointer corruption fail without unbounded traversal [334.52ms]
+(pass) US-016-AC7: corrupt vector count is bounded before allocation [9.74ms]
+
+tests/arrow/flatbuffer-encode.test.ts:
+(pass) US-016-AC8: every decoded native metadata model re-encodes with exact logical content [13961.96ms]
+(pass) US-016-AC8: explicit zero defaults, empty vectors and absent fields remain distinct [146.42ms]
+(pass) US-016-AC8: edits propagate and semantic drift or unknown fields block encoding [539.73ms]
+
+tests/arrow/flatbuffer-schema.test.ts:
+(pass) Arrow FlatBuffer vocabulary: all native definitions and fields are described [38.38ms]
+(pass) Arrow FlatBuffer vocabulary: exact signed int64 bounds and spelling [0.98ms]
+(pass) Arrow FlatBuffer vocabulary: required fields, union tags and precise IDs [4.48ms]
+(pass) Arrow FlatBuffer vocabulary: logical models round-trip without native wire claims [534.63ms]
+
+tests/arrow/ipc-consistency.test.ts:
+(pass) US-016-AC10: all native corpus footers agree with their streams [2263.12ms]
+(pass) US-016-AC10: validly framed native footer edits expose schema, version and block contradictions [2391.77ms]
+(pass) US-016-AC10: reordered blocks are an explicit recommendation mismatch, not a validity error [529.18ms]
+
+tests/arrow/ipc-layout.test.ts:
+(pass) US-016-AC9: IPC file/stream boundaries agree with native PyArrow for all corpus inputs [2314.12ms]
+(pass) US-016-AC9: optional EOS, trailing content, concatenated streams and truncation are distinct [427.45ms]
+(pass) US-016-AC9: corrupt file footer offsets and magic cannot count as complete framing [24.36ms]
+
+tests/arrow/ipc-rename.test.ts:
+(pass) US-016-AC11: complete dataset rename preserves source and records while moving footer offsets [1726.12ms]
+(pass) US-016-AC11: nested names, missing EOS and invalid paths have explicit outcomes [752.76ms]
+
+tests/arrow/ipc.test.ts:
+(pass) US-016-AC4: guarded native schema IPC preserves known fields and blocks known native losses [1351.11ms]
+(pass) US-016-AC4: native edits propagate and defaults normalize without mutating source [73.53ms]
+(pass) US-016-AC4: unknown content, unsafe IDs and backend semantic drift cannot leak through IPC [58.34ms]
+
+tests/arrow/schema.test.ts:
+(pass) US-016-AC1: every authored Arrow schema survives exact UMF JSON/YAML round trips [3284.50ms]
+(pass) US-016-AC2: duplicates, unknown fields/types and exact dictionary IDs stay authoritative [114.55ms]
+(pass) US-016-AC3: known inconsistent shape parameters reject without claiming full native validation [25.43ms]
+(pass) US-016-AC3: maps and run-end child layouts retain their native distinctions [34.09ms]
+(pass) US-016-AC3: dictionary IDs validate exact tokens rather than rounded host numbers [42.64ms]
+
+tests/arrow/upstream.test.ts:
+(pass) US-016-AC12: readable historical metadata-version discrepancies are preserved and block unqualified rewrite [754.12ms]
+
+tests/avro/bundle.test.ts:
+(pass) US-007-AC7: explicit ordered dependencies resolve native names and survive intact [289.18ms]
+(pass) US-007-AC8: duplicate declarations and unknown dependency representation cannot imply complete support [93.34ms]
+
+tests/avro/candidate-edit.test.ts:
+(pass) US-007-AC9 explicit Avro candidates preserve logical annotations, unknown metadata and exact defaults [729.48ms]
+(pass) US-007-AC9 candidates cannot erase representation content or attached field identity [228.64ms]
+
+tests/avro/corpus.test.ts:
+(pass) US-007-AC6: pinned Apache schema corpus survives with per-file interpretation status [2015.80ms]
+
+tests/avro/integer-metadata.test.ts:
+(pass) CONTRACT-007 decimal metadata never promotes rounded precision, scale or fixed size [2025.28ms]
+
+tests/avro/metadata.test.ts:
+(pass) CONTRACT-007 core scalar metadata retains Avro field semantics [239.49ms]
+(pass) CONTRACT-007 nested records, namespaces and dependency fields retain source paths [38.03ms]
+(pass) CONTRACT-007 edits cannot silently reassociate attached field metadata [61.63ms]
+
+tests/avro/native-schema.test.ts:
+(pass) CONTRACT-007 native syntax schema describes every schema constructor while retaining annotation limits [2645.70ms]
+
+tests/avro/native.test.ts:
+(pass) US-007-AC1: native Avro structure, metadata and logical types survive core serializations [145.09ms]
+(pass) US-007-AC2: precise long defaults and newer union defaults remain explicit incomplete profiles [82.53ms]
+(pass) US-007-AC3: edits are atomic, copies isolated, and unknown representation fields never discarded [139.40ms]
+
+tests/avro/projection.test.ts:
+(pass) US-008-AC1: Avro shapes project with explicit losses and independently validated instances [186.03ms]
+(pass) US-008-AC2: strict policy and unresolved interpretation block, dependencies and recursion stay qualified [157.45ms]
+(pass) US-008-AC5: official corpus projections retain sources and validate native targets [1656.19ms]
+
+tests/avro/tablespec-projection.test.ts:
+(pass) CONTRACT-038 Avro record projections retain defaults, named dependencies and unknown metadata in source [539.89ms]
+(pass) CONTRACT-038 carrier families round trip through TableSpec with independent loss reports [114.22ms]
+(pass) CONTRACT-038 unsupported logical types, numeric widths, names and nullability cannot be guessed [452.19ms]
+
+tests/avro/temporal-metadata.test.ts:
+(pass) CONTRACT-007 temporal core classification requires exact annotation and carrier [5008.94ms]
+
+tests/binding/delta.test.ts:
+(pass) @covers US-046-AC6 @covers US-046-AC7 @covers US-047-AC6 @covers US-047-AC7: clustering action uses exact physical columns and preserves native source [79.43ms]
+(pass) @covers US-046-AC4 @covers US-046-AC5 @covers US-047-AC4 @covers US-047-AC5: strict blocks unsupported index and report retains it as residual [133.00ms]
+(pass) @covers US-046-AC3 @covers US-047-AC8: native partitioning and absent columns cannot silently become clustering [84.16ms]
+
+tests/binding/iceberg.test.ts:
+(pass) @covers US-046-AC4 @covers US-046-AC5 @covers US-046-AC7 @covers US-047-AC4 @covers US-047-AC5 @covers US-047-AC7: sort order is an explicit approximation and native source recovers [421.77ms]
+(pass) @covers US-046-AC3 @covers US-047-AC8: unsupported index and missing storage column remain residuals [226.11ms]
+
+tests/binding/indexes.test.ts:
+(pass) @covers US-047-AC1 @covers US-047-AC2: ordered index capability lives only in binding [29.33ms]
+(pass) @covers US-047-AC4 @covers US-047-AC5: strict blocks and report residualizes clustering [33.92ms]
+(pass) @covers US-047-AC9: invalid index kind combinations and paths fail [24.98ms]
+(pass) @covers US-047-AC8: target outcomes are qualified and never infer author intent [74.01ms]
+(pass) @covers US-047-AC5: unknown index refinements survive but block unsafe projection [17.60ms]
+(pass) @covers US-046-AC3 @covers US-047-AC9: storage alternatives and expression paths cannot be mixed [24.07ms]
+
+tests/binding/package.test.ts:
+(pass) @covers US-046-AC1 @covers US-046-AC2: separate binding preserves logical identity and copied choices [36.26ms]
+(pass) @covers US-046-AC7: independent document round-trips in both UMF formats [32.60ms]
+(pass) @covers US-046-AC3: stale model and duplicate or missing bindings fail with paths [34.01ms]
+(pass) @covers US-046-AC7: unknown binding content survives but remains incomplete [25.84ms]
+(pass) @covers US-046-AC2: nested DDD field resolves by owner ID and exact field key [20.78ms]
+
+tests/binding/parquet.test.ts:
+(pass) @covers US-046-AC4 @covers US-047-AC4: strict Parquet projection blocks every unsupported physical obligation [27.96ms]
+(pass) @covers US-046-AC5 @covers US-047-AC5: report retains every target-specific loss and source [23.68ms]
+(pass) @covers US-046-AC6 @covers US-046-AC7 @covers US-047-AC6 @covers US-047-AC7: both retained recovery directions [63.46ms]
+(pass) @covers US-046-AC8 @covers US-047-AC8: Parquet version is qualified and index intent is never invented from native file [46.39ms]
+(pass) @covers US-046-AC5: unknown physical refinement remains in source and blocks unsafe lowering [8.62ms]
+
+tests/binding/postgresql-indexes.test.ts:
+(pass) @covers US-047-AC3 @covers US-047-AC4 @covers US-047-AC5: PostgreSQL kinds, document path and clustering residual [687.13ms]
+(pass) @covers US-046-AC3 @covers US-047-AC9: absent native column and unsafe predicate are not emitted [313.73ms]
+(pass) @covers US-047-AC9: identifiers that PostgreSQL would truncate are refused [37.70ms]
+
+tests/binding/sqlserver-indexes.test.ts:
+(pass) @covers US-047-AC4 @covers US-047-AC5 @covers US-047-AC8: rowstore, unique and filtered candidates have residuals for other kinds [182.50ms]
+(pass) @covers US-046-AC3 @covers US-047-AC9: unsafe filtered predicate and unknown catalog column are residuals [141.26ms]
+(pass) @covers US-047-AC9: a filtered predicate must name an observed column [71.50ms]
+
+tests/binding/sqlserver-tables-indexes.test.ts:
+(pass) @covers US-046-AC2 @covers US-047-AC4: authored inputs alone generate the same native-valid DDL [409.18ms]
+(pass) @covers US-046-AC3 @covers US-047-AC9: planned columns and predicates must be safe before index emission [172.93ms]
+(pass) @covers US-046-AC2 @covers US-047-AC4: generated tables and indexes compose with explicit catalog evidence [236.45ms]
+(pass) @covers US-046-AC3 @covers US-047-AC9: stale column evidence and unknown binding block [114.47ms]
+
+tests/binding/sqlserver-tables.test.ts:
+(pass) @covers US-046-AC2 @covers US-046-AC4 @covers US-046-AC5: explicit tables, partition family and embedded residual [63.56ms]
+(pass) @covers US-046-AC3: stale model, unknown binding content and unsafe type policy block [88.27ms]
+(pass) @covers US-046-AC4 @covers US-046-AC5: missing partition policy and DDD identity remain residuals [55.86ms]
+(pass) @covers US-046-AC3: document-column type and path conflicts block before native DDL [54.12ms]
+(pass) @covers US-046-AC6 @covers US-046-AC7: authored and native archives remain separate [76.04ms]
+
+tests/consumers/orders.test.ts:
+(pass) CONTRACT-036 seven authored consumers retain mixed native context across both UMF formats [2192.03ms]
+(pass) CONTRACT-036 executable row transform rejects loss, coercion and overflow; snapshots remain isolated [243.78ms]
+(pass) CONTRACT-036 safe native metadata edits propagate while inconsistent sources fail [742.31ms]
+
+tests/consumers/projection-boundaries.test.ts:
+(pass) Priority projection identifier policies require absolute end in runtime and published schemas [69.78ms]
+(pass) CONTRACT-038 missing decimal scale is distinct from null and logical annotations require exact strings [848.08ms]
+
+tests/consumers/tablespec-chain.test.ts:
+(pass) CONTRACT-039 priority-system chains retain native source, every stage and qualified diagnostics [2466.37ms]
+(pass) CONTRACT-039 blocked stages retain evidence without exposing a partial final target [1386.65ms]
+
+tests/core-ideals/avro-cardinality-type.test.ts:
+(pass) native discovery types retain outer shape, branch order and item paths without claiming item or availability equivalence [5.34ms]
+(pass) qualified dependency and recursive references retain separate definition locations [0.67ms]
+(pass) ambiguous, missing and invalid structural type syntax refuses rather than defaulting to one [2.02ms]
+(pass) nested item/value traversal uses registered type locations and keeps container/member availability separate [1.15ms]
+
+tests/core-ideals/avro-namespace.test.ts:
+(pass) Avro namespace changes report loss for both Field and record projections [284.09ms]
+
+tests/core-ideals/avro-record-type.test.ts:
+(pass) Avro direct/qualified/recursive record links preserve bundle text; containers and unions block [9013.38ms]
+(pass) author conflicts, existing type assertions and stale sources cannot be overwritten [1209.94ms]
+
+tests/core-ideals/cardinality-avro-projection.test.ts:
+(pass) explicit native shape mismatches and absent item meaning are residuals with exact ideal recovery [2317.80ms]
+(pass) nested item and value types map recursively with independent availability and qualified scalar families [162.73ms]
+(pass) cycles, unknown metadata, native diagnostics and target edits remain explicit and recoverable [242.01ms]
+(pass) dependency changes and large uninterpreted native tokens cannot be hidden by ideal recovery [339.82ms]
+(pass) fresh native ingestion composes with retained ideal recovery without inventing original author intent [25024.71ms]
+
+tests/core-ideals/cardinality-avro.test.ts:
+(pass) schema shape classification publishes nested logical Fields and preserves exact native text through both receipt formats [13339.04ms]
+(pass) unknown profiles, unknown item shapes and existing identities never silently acquire meaning [717.40ms]
+(pass) named dependencies retain exact text and qualified scalar item meaning without losing unknown metadata [426.78ms]
+
+tests/core-ideals/cardinality-field-operations.test.ts:
+(pass) versioned kind and record receipts retain old profiles and preserve 0.4 Cardinality [493.67ms]
+(pass) Nullability authoring and inspection use v2 on containers without changing item meaning [42.82ms]
+(pass) container record meaning belongs on its item Field and dependent kind edits refuse [7.81ms]
+(pass) cross-version, stale and forged receipts refuse without changing original profiles [9.17ms]
+
+tests/core-ideals/cardinality-parquet-projection.test.ts:
+(pass) Parquet projection reports shape mismatch and unasserted item meaning, recovering every emitted ideal [10639.61ms]
+(pass) nested item Fields retain independent availability; MAP uniqueness and exactness block strict lowering [633.80ms]
+(pass) cycles, metadata, unknown native carrier content and altered receipts cannot be silently normalized [344.95ms]
+
+tests/core-ideals/cardinality-parquet.test.ts:
+(pass) Parquet logical classification preserves nested Fields, map residuals and exact native bytes [15632.86ms]
+(pass) unresolved profiles, wrappers and key-only maps retain residuals rather than invented meaning [587.43ms]
+(pass) conflicts, forged receipts, stale targets and invalid input refuse without erasing unknown content [841.09ms]
+
+tests/core-ideals/cardinality-postgresql-catalog.test.ts:
+(pass) resolves observed arrays, domain wrappers and domain members without category guessing [20.32ms]
+(pass) rejects ambiguity, broken edges, impossible observations and domain cycles [16.87ms]
+(pass) preserves exact unknown tokens and source text; unknown versions are unqualified [5.94ms]
+(pass) does not return rounded unknown metadata in interpreted views [2.13ms]
+(pass) correlates capture observations and refuses mismatches without asserting transaction provenance [662.09ms]
+
+tests/core-ideals/cardinality-postgresql-projection.test.ts:
+(pass) explicit carriers block losses in strict mode and retain ideal recovery in report mode [313.20ms]
+(pass) exact-value requests, tampering, SQL injection and forged receipts are refused [21.38ms]
+(pass) nested and cyclic items retain independent availability and unknown extensions [329.76ms]
+
+tests/core-ideals/cardinality-postgresql.test.ts:
+(pass) all observed native shapes retain paired archives through report classification and serialized recovery [19953.41ms]
+(pass) author conflict and forged or stale recovery receipts are refused [717.31ms]
+(pass) a matched basic scalar declaration classifies exactly without asserting item or availability meaning [361.88ms]
+(pass) classification retains authored cyclic item references, independent availability and unknown native tokens [1187.55ms]
+
+tests/core-ideals/cardinality-selection.test.ts:
+(pass) selection keeps shape and item identity distinct through mixed cycles, boundaries and filters [65.16ms]
+(pass) forged item paths, missing boundaries, metadata, filters and traversal scope cannot verify [4.15ms]
+(pass) older item/cardinality members remain opaque and do not add traversal edges [9.10ms]
+(pass) malformed filters, unresolved item targets and getters refuse before traversal [0.57ms]
+
+tests/core-ideals/cardinality-sqlserver-projection.test.ts:
+(pass) scalar/JSON carriers retain nested/cyclic items, availability and unknown metadata through both formats [251.69ms]
+(pass) unsafe types, malformed identifiers, exact-value demands and changed receipts refuse [10.86ms]
+
+tests/core-ideals/cardinality-sqlserver.test.ts:
+(pass) logical representations retain physical scalar metadata and exact native text [13490.83ms]
+(pass) existing logical and physical identities, altered receipts and stale models cannot be overwritten [309.97ms]
+(pass) unknown native numeric tokens survive separate logical representation [202.30ms]
+(pass) constraint association, replication exemptions and unrecognized expressions cannot prove JSON shape [575.59ms]
+
+tests/core-ideals/cardinality-tablespec-projection.test.ts:
+(pass) authored shapes and item obligations project or explicitly residualize, with both retained recovery formats [2661.18ms]
+(pass) invalid native carriers, dimensions, names, getters and forged receipts cannot publish meaning [41.92ms]
+
+tests/core-ideals/cardinality-tablespec.test.ts:
+(pass) native declaration profiles classify shape with explicit refusals and retain source text through both formats [13893.41ms]
+(pass) authored intent, item references and opaque assertions cannot be overwritten by native observations [114.42ms]
+(pass) tampered and stale receipts, malformed requests and legacy source versions refuse [72.98ms]
+(pass) unsafe numeric coercion stays residual while exact large integer tokens remain native [419.36ms]
+(pass) split archives preserve comments, unknown siblings and opaque files after classification [74.83ms]
+
+tests/core-ideals/classification-policy.test.ts:
+(pass) tablespec-field-classification rejects inconsistent success and blocked metadata [2.43ms]
+(pass) tablespec-record-classification rejects inconsistent success and blocked metadata [2.53ms]
+(pass) postgresql-field-classification rejects inconsistent success and blocked metadata [5.14ms]
+(pass) postgresql-record-classification rejects inconsistent success and blocked metadata [6.81ms]
+(pass) postgresql-composite-classification rejects inconsistent success and blocked metadata [4.83ms]
+(pass) postgresql-ddl-kinds rejects inconsistent success and blocked metadata [5.88ms]
+
+tests/core-ideals/classification-report.test.ts:
+(pass) five native classifiers retain classified provenance, exact fragments and conflict residuals [3797.92ms]
+(pass) dependency identity and tampered fragments/origin/bindings cannot change unnoticed [980.93ms]
+
+tests/core-ideals/facet-operations.test.ts:
+(pass) versioned existing author APIs preserve facets and both receipt serializations [27.11ms]
+(pass) record-type v4 respects faceted-value conflicts and preserves unrelated facet metadata [12.65ms]
+(pass) older native Cardinality bindings explicitly refuse facet-envelope declarations [74.09ms]
+
+tests/core-ideals/facets-avro-projection.test.ts:
+(pass) authored domains distinguish exact carriers from unenforced approximations [27.49ms]
+(pass) fixed bounds preserve lower-bound losses and refuse impossible or oversized carriers [9.12ms]
+(pass) all profile, encoding and mode combinations recover authored ideals with explicit losses [290.06ms]
+(pass) receipt integrity, unknown metadata, invalid names and exact-input counterexamples remain explicit [2.54ms]
+
+tests/core-ideals/facets-avro-selection.test.ts:
+(pass) facet selection retains named declarations, branch order, containers and null context [3.50ms]
+(pass) reference use and dependency definition retain distinct identities and unknown tokens [0.84ms]
+(pass) union widths remain distinct; array/map items are never promoted onto containers [0.27ms]
+(pass) facet zero-size profile does not widen previously qualified Cardinality resolution [0.36ms]
+(pass) selection cannot interpret defaults, metadata, missing dependencies or duplicate names as types [0.53ms]
+
+tests/core-ideals/facets-avro-type.test.ts:
+(pass) Avro declaration facts never claim codec enforcement or input exactness [0.27ms]
+(pass) fixed exact size includes zero without relabeling a nonzero exact size as a maximum [0.96ms]
+(pass) decimal coefficient domains require exact pairs and bounded signed carrier capacity [5.14ms]
+(pass) unknown and invalid logical meaning stays native instead of becoming a physical scalar facet [0.33ms]
+(pass) custom constraints and exact tokens remain unclaimed and copied [0.10ms]
+(pass) malformed or future tagged representation refuses interpretation and does not execute getters [0.18ms]
+(pass) every native discovery schema remains available with explicit declaration or refusal [3.07ms]
+
+tests/core-ideals/facets-avro.test.ts:
+(pass) declaration and writer profiles separate native domain from enforcement counterexamples [545.94ms]
+(pass) fixed, union and explicit item selection retain native refinements [315.65ms]
+(pass) original source texts, dependency order, unknown numeric tokens and defaults recover exactly [270.41ms]
+(pass) authored bounds require fresh provenance and cannot be silently overwritten [250.96ms]
+(pass) shape conflicts, archive changes, invalid profiles and unsafe inputs refuse [179.18ms]
+(pass) closed operation and extension schemas constrain real classification output [53.07ms]
+(pass) unannotated precision metadata stays unknown and authored losses point back to the ideal [141.40ms]
+
+tests/core-ideals/facets-parquet-projection.test.ts:
+(pass) integer widths and decimal carriers project only matched declared domains [1190.89ms]
+(pass) native validity, reader limitations and non-enforcing length metadata stay separate [336.31ms]
+(pass) profile/mode/encoding matrix recovers full authored ideals in both serializations [5902.08ms]
+(pass) unknown content, false authorship, changed bytes and unsafe inputs cannot pass recovery [178.46ms]
+
+tests/core-ideals/facets-parquet.test.ts:
+(pass) classifies declaration widths while retaining explicit input-conversion limits [2729.74ms]
+(pass) unknown embedded metadata remains residual with exact native byte recovery [705.32ms]
+(pass) fixed lengths and author provenance do not invent or overwrite assertions [713.64ms]
+(pass) closed schemas, source identity and profile refusals remain explicit [431.62ms]
+(pass) decimal declarations and explicit array member selection preserve context [676.78ms]
+
+tests/core-ideals/facets-postgresql-catalog.test.ts:
+(pass) complete catalog correspondence preserves sources and verifies overlapping CHECKs [747.28ms]
+(pass) omitted, extra, duplicate and inconsistent native observations cannot qualify [1936.24ms]
+(pass) unknown source content and unsafe unknown numbers remain exact while owned integers reject rounding [344.45ms]
+
+tests/core-ideals/facets-postgresql-composition.test.ts:
+(pass) native emitted schemas recover authored facets or explicit residuals and retain native refinements [4.42ms]
+
+tests/core-ideals/facets-postgresql-constraints.test.ts:
+(pass) native supplement is pinned, fingerprinted and preserves resolved identities separately from syntax [1.07ms]
+(pass) native deparsed checks replay as candidates or explicit refusals with complete retained trees [8.84ms]
+
+tests/core-ideals/facets-postgresql-discovery.test.ts:
+(pass) native evidence is pinned and preserves counterexamples to direct core promotion [2.61ms]
+(pass) signed numeric modifiers are decoded without importing misleading information_schema scale [3.20ms]
+(pass) unknown qualifiers survive and unsafe or reserved modifier layouts cannot become native facts [0.85ms]
+(pass) catalog observations and native refinements survive both envelope forms without core facet assertions [371.76ms]
+
+tests/core-ideals/facets-postgresql-predicate.test.ts:
+(pass) closed predicate syntax retains exact bounds without claiming resolved enforcement [1.33ms]
+(pass) lookalikes and extra syntax stay native; conjuncts never produce partial claims [2.73ms]
+(pass) unknown AST content, forged versions and unsafe objects are never interpreted [0.41ms]
+
+tests/core-ideals/facets-postgresql-projection-native.test.ts:
+(pass) emitted PostgreSQL DDL and independent values have current pinned evidence [5.30ms]
+
+tests/core-ideals/facets-postgresql-projection.test.ts:
+(pass) authored facet matrix preserves every ideal and reports unsupported native representations [6118.14ms]
+(pass) finite decimal checks, exact width bounds, length units and input losses are explicit [50.17ms]
+(pass) unknown meaning, unsafe identifiers and changed receipts cannot be silently normalized [49.01ms]
+(pass) unrepresentable comments produce retained report losses instead of losing metadata [24.47ms]
+
+tests/core-ideals/facets-postgresql-resolved.test.ts:
+(pass) complete resolved expressions yield exact predicates and explicit value scope [1.69ms]
+(pass) unknown nodes, forged resolution, context changes and hidden conjuncts refuse atomically [1.58ms]
+(pass) bounded node reader rejects duplicate fields, malformed structure and resource abuse [0.43ms]
+(pass) Datum64 integers remain exact beyond JavaScript precision [1.59ms]
+(pass) independent native Datum corpus replays exactly and fingerprints are current [3.25ms]
+(pass) emitted bigint bounds resolve mixed-width and full-width native operators [5.05ms]
+
+tests/core-ideals/facets-postgresql.test.ts:
+(pass) native carriers and qualified predicates classify width, decimal and length separately from input conversion [5535.36ms]
+(pass) both receipt serializations recover exact native source and supplement; edits invalidate recovery [12373.89ms]
+(pass) authorship, profile uncertainty, shape conflicts and unknown metadata remain explicit [2350.08ms]
+(pass) published package validates emitted bindings and rejects a forged profile [307.72ms]
+
+tests/core-ideals/facets-sqlserver-association.test.ts:
+(pass) independent table declaration probes establish catalog association and counterexamples [592.40ms]
+
+tests/core-ideals/facets-sqlserver-composition.test.ts:
+(pass) native projected schemas recover authored facets or explicit residuals without inventing authorship [3.04ms]
+
+tests/core-ideals/facets-sqlserver-constraints.test.ts:
+(pass) captured CHECKs yield scoped native facts without changing source or asserting core facets [4230.42ms]
+(pass) disabled, untrusted and replication checks cannot become unconditional guarantees [733.31ms]
+(pass) missing inventory, column association, type and version are explicit [1333.61ms]
+(pass) exact native numeric tokens and future fields survive; unsafe IDs and getters refuse [227.74ms]
+(pass) scope boundaries agree with pinned independent native value probes [0.25ms]
+(pass) empty-string inference requires zero bytes, variable storage and scoped enforcement [683.45ms]
+
+tests/core-ideals/facets-sqlserver-discovery.test.ts:
+(pass) pinned native discovery preserves exact outputs and current inputs [6.08ms]
+(pass) native type observations distinguish unsigned integers, decimal scale and storage units [2.48ms]
+(pass) inconsistent and inexact native metadata refuses without normalization; unknown detail stays attached [1.16ms]
+
+tests/core-ideals/facets-sqlserver-predicate.test.ts:
+(pass) bounded expressions retain exact literals and delimit identifiers [1.02ms]
+(pass) unsupported syntax and resource limits refuse the entire expression [1.12ms]
+(pass) captured native CHECK syntax is distinct from enabled, trusted enforcement [0.86ms]
+(pass) non-string native JSON stays intact and accessors cannot execute [0.13ms]
+
+tests/core-ideals/facets-sqlserver-projection-native.test.ts:
+(pass) pinned native execution matches current authored DDL and keeps exact value counterexamples [126.64ms]
+
+tests/core-ideals/facets-sqlserver-projection.test.ts:
+(pass) all authored cases block explicitly or recover the ideal through both receipt formats [474.77ms]
+(pass) range, coefficient and byte checks honor declared facets; string and conversion losses remain explicit [5.27ms]
+(pass) unknown meaning, forged receipts, invalid identifiers and unsafe comments never disappear [4.39ms]
+
+tests/core-ideals/facets-sqlserver.test.ts:
+(pass) width, decimal coefficient and byte bounds classify under explicit non-null scopes [843.82ms]
+(pass) native counterexamples remain explicit and strict/report results differ [1388.52ms]
+(pass) JSON and YAML receipts recover original native text for every discovery column [9059.40ms]
+(pass) authored facets need fresh receipts and conflict without overwriting [485.16ms]
+(pass) unknown exact tokens survive; malformed requests, getters and changed archives refuse [232.23ms]
+(pass) extension schema validates real outputs and rejects forged profile [89.12ms]
+(pass) computed columns, unresolved table associations and noncanonical ranges retain residuals [316.54ms]
+
+tests/core-ideals/facets-tablespec-discovery.test.ts:
+(pass) TableSpec native facet evidence is pinned and separates generator and execution profiles [3.41ms]
+(pass) all discovery inputs retain exact native text through both envelope serializations and explicit migrations [842.16ms]
+(pass) unsafe native integer metadata and unknown width stay native instead of becoming core assertions [48.26ms]
+
+tests/core-ideals/facets-tablespec-projection.test.ts:
+(pass) authored facet matrix projects or explicitly residualizes with exact retained ideal recovery [30669.61ms]
+(pass) positive projections are required, including zero length and narrow signed/unsigned widths [62.78ms]
+(pass) unknown source and facet refinements survive receipts; Field-kind receipts cannot establish facet authorship [43.91ms]
+(pass) forged receipts, stale native text, accessors and invalid native requests refuse [36.94ms]
+(pass) unsupported widths and carriers cannot pass strict mode; float exactness has a permanent counterexample [127.90ms]
+
+tests/core-ideals/facets-tablespec-suite.test.ts:
+(pass) explicit native suites recover zero length, widths and decimal ranges independently of baseline rules [2225.61ms]
+(pass) conditional, tolerant and unknown suite rules retain residuals and block strict interpretation [891.42ms]
+(pass) suite output domains do not assert exact conversion or nullability [820.75ms]
+
+tests/core-ideals/facets-tablespec.test.ts:
+(pass) profile-qualified classification keeps exact source and native tokens through both receipt formats [45634.51ms]
+(pass) length meaning depends on raw/normalized input and consumer, with ignored conflicts retained [348.08ms]
+(pass) decimal declarations, enforced domains, defaults and exact conversion are independent [402.23ms]
+(pass) authored facets, unknown qualifiers and shape conflicts cannot be overwritten [202.07ms]
+(pass) forged/stale receipts, invalid requests and accessors refuse; independent reads do not mutate source [98.49ms]
+(pass) published facet extension validates its profile and preserves unknown future payload members [54.87ms]
+(pass) exact lexical checks and split archives retain unclaimed content [277.49ms]
+
+tests/core-ideals/field-avro-projection.test.ts:
+(pass) explicit Avro carriers preserve field docs and recover ideal through serialized reports [1435.43ms]
+(pass) strict/report loss, invalid names, structured-kind refusals and stale schemas fail explicitly [178.25ms]
+
+tests/core-ideals/field-avro.test.ts:
+(pass) Avro nested, recursive, union and dependency fields retain source-qualified roles and exact bundles [3255.49ms]
+(pass) missing/reordered dependency archives, authored conflicts and stale receipts are refused [403.03ms]
+
+tests/core-ideals/field-parquet-projection.test.ts:
+(pass) explicit Parquet carrier/repetition schemas recover authored meaning through both formats [5304.63ms]
+(pass) unsupported meaning is explicit and malformed names or wrong roles never project [184.54ms]
+
+tests/core-ideals/field-parquet.test.ts:
+(pass) Parquet leaves retain repetition and exact native bytes; groups cannot become primitive Fields [18657.38ms]
+(pass) Parquet rejects unknown indices, invalid topology, conflicts and stale recovery [1438.69ms]
+
+tests/core-ideals/field-postgresql-projection.test.ts:
+(pass) explicit pg_catalog carriers compile and preserve authored meaning through both receipt formats [1068.97ms]
+(pass) unsafe or truncating identifiers are rejected before parser invocation [11.76ms]
+(pass) strict refuses unprojected constraints, while report retains them with explicit diagnostics [22.96ms]
+(pass) edited SQL or tampered receipt cannot claim recovery; record/group cannot become a column [22.57ms]
+
+tests/core-ideals/field-postgresql.test.ts:
+(pass) catalog fields include native domains, arrays and unknown scalar refinements without erasure [6957.48ms]
+(pass) native text formatting and unknown numeric metadata survive both receipt formats [989.89ms]
+(pass) verified authored conflict blocks both modes without a partial target [530.95ms]
+(pass) stale core metadata, mismatched archives, future servers and edited receipts fail [709.73ms]
+
+tests/core-ideals/field-report.test.ts:
+(pass) five-system common metadata retains checked receipts, versioned basis and recoverable residuals [765.65ms]
+(pass) tampered summaries, original receipts and missing PostgreSQL backend are refused [197.79ms]
+
+tests/core-ideals/field-selection.test.ts:
+(pass) 0.2 selection schema and report verifier cover qualified cycles and reference boundaries [26.70ms]
+(pass) report structure and recomputation reject forged selections and preserve legacy interpretation [5.09ms]
+(pass) selection verification uses the same caller registry as source validation [8.33ms]
+
+tests/core-ideals/field-sqlserver-projection.test.ts:
+(pass) explicit carriers emit complete SQL artifacts and retained receipts recover authored fields [32.74ms]
+(pass) strict/report loss, structured-kind refusal, Unicode guards and stale artifacts remain explicit [5.17ms]
+
+tests/core-ideals/field-sqlserver.test.ts:
+(pass) SQL Server captured members classify independently of scalar/alias/index semantics [7670.36ms]
+(pass) authored conflicts block both policies, while matching authored fields remain explicit [500.09ms]
+(pass) capture formatting, unknown numeric detail and index constraints survive without identity promotion [189.80ms]
+(pass) stale metadata, archives, author receipts and unsupported versions cannot claim recovery [312.76ms]
+
+tests/core-ideals/field-tablespec-projection.test.ts:
+(pass) authored field projects to a complete native table and recovers author meaning with retained receipt [605.61ms]
+(pass) strict blocks omitted meaning while report retains every residual and source assertion [33.79ms]
+(pass) record/group cannot lower to a single column and name changes are explicit loss [35.55ms]
+(pass) receipt tampering, stale native text, malformed policy and metadata omission cannot pass silently [41.48ms]
+(pass) diagnostics mirror disclosed loss and legacy receipts still recover without weakening checks [68.73ms]
+(pass) empty namespace permits strict projection but discarded namespace receipts cannot claim exactness [29.81ms]
+
+tests/core-ideals/field-tablespec.test.ts:
+(pass) classifies an unknown native column type without inventing scalar family and recovers exact text [69.31ms]
+(pass) verified authored field agrees; authored record/group and unknown or unverified labels block atomically [162.24ms]
+(pass) stale author receipts and metadata cannot be used as a native classification basis [58.93ms]
+(pass) split sources retain sidecars and shadowed metadata after classification [38.81ms]
+(pass) native classification receipts reject tampering and subsequent native changes [57.21ms]
+(pass) new results always diagnose conflicts while historical receipts remain verifiable [82.47ms]
+
+tests/core-ideals/key-authored-roundtrips.test.ts:
+(pass) Key shared authored contract preserves plural identity and rejects forged receipts across five systems [14379.86ms]
+(pass) all Key bindings reject conflicting tuples, changed stable IDs and missing or cross-record ownership [15.50ms]
+
+tests/core-ideals/key-avro-projection.test.ts:
+(pass) Avro authored Key: primary-strict [3.30ms]
+(pass) Avro authored Key: primary-report [149.25ms]
+(pass) Avro authored Key: no-primary-strict [3.10ms]
+(pass) Avro authored Key: no-primary-report [138.68ms]
+(pass) Avro authored Key: rename-and-reorder [143.80ms]
+(pass) Avro authored Key: boolean [135.05ms]
+(pass) Avro authored Key: decimal [141.47ms]
+(pass) Avro authored Key: binary [150.47ms]
+(pass) Avro authored Key: integer-width [142.55ms]
+(pass) Avro authored Key: unsigned [138.09ms]
+(pass) Avro authored Key: string-length [139.01ms]
+(pass) Avro authored Key: binary-length [134.57ms]
+(pass) Avro authored Key: compound-ordered [152.86ms]
+(pass) Avro authored Key: multiple-alternates [143.09ms]
+(pass) Avro authored Key: unknown-extension [143.52ms]
+(pass) Avro authored Key: unknown-key-qualifier [139.22ms]
+(pass) Avro authored Key: unknown-member-qualifier [143.65ms]
+(pass) Avro authored Key: unknown-facet-qualifier [156.00ms]
+(pass) Avro authored Key: family-conflict [3.46ms]
+(pass) Avro authored Key: quoted-identifiers [3.19ms]
+(pass) stable key identities, explicit physical order and alternate residuals remain separate [56.53ms]
+(pass) missing authors, stale tuples, absent membership, invalid names and mismatched fields refuse [55.33ms]
+(pass) forged per-key reports, edited native schemas and getters refuse [96.24ms]
+(pass) generated native proof preserves duplicates and the boolean null coercion counterexample [1096.20ms]
+(pass) reimport without retained authors cannot reconstruct core identity [200.43ms]
+(pass) cross-record ownership, changed stable key IDs and duplicate physical mappings refuse [6.09ms]
+
+tests/core-ideals/key-avro.test.ts:
+(pass) Avro Key classification: repeated-record [434.78ms]
+(pass) Avro Key classification: repeated-primary-candidate [438.69ms]
+(pass) Avro Key classification: repeated-alternate-candidate [403.54ms]
+(pass) Avro Key classification: uninterpreted-key-metadata [433.33ms]
+(pass) Avro Key classification: sort-order-not-identity [410.88ms]
+(pass) Avro Key classification: nullable-union [445.03ms]
+(pass) Avro Key classification: missing-defaulted-field [417.64ms]
+(pass) Avro Key classification: null-required-field [422.73ms]
+(pass) Avro Key classification: named-reference [416.32ms]
+(pass) Avro Key classification: array-unique-hint [437.69ms]
+(pass) Avro Key classification: float-narrowing [420.51ms]
+(pass) Avro Key classification: unicode-distinct [436.67ms]
+(pass) named dependency archives and unknown document content recover without key inference [253.66ms]
+(pass) mismatched archive, unsupported profile, existing extension, forged and stale receipts refuse [319.91ms]
+(pass) two pinned codecs preserve duplicates and expose narrowing instead of proving uniqueness [16.64ms]
+
+tests/core-ideals/key-native-roundtrips.test.ts:
+(pass) five-system native Key observations preserve unknown meanings and exact archives without author inference [29385.24ms]
+
+tests/core-ideals/key-parquet-projection.test.ts:
+(pass) Parquet authored Key: primary-strict [67.69ms]
+(pass) Parquet authored Key: primary-report [277.64ms]
+(pass) Parquet authored Key: no-primary-strict [61.05ms]
+(pass) Parquet authored Key: no-primary-report [273.66ms]
+(pass) Parquet authored Key: rename-and-reorder [293.72ms]
+(pass) Parquet authored Key: boolean [270.71ms]
+(pass) Parquet authored Key: decimal [281.32ms]
+(pass) Parquet authored Key: binary [274.58ms]
+(pass) Parquet authored Key: integer-width [270.46ms]
+(pass) Parquet authored Key: unsigned [273.94ms]
+(pass) Parquet authored Key: string-length [264.07ms]
+(pass) Parquet authored Key: binary-length [271.31ms]
+(pass) Parquet authored Key: compound-ordered [285.91ms]
+(pass) Parquet authored Key: multiple-alternates [285.62ms]
+(pass) Parquet authored Key: unknown-extension [280.24ms]
+(pass) Parquet authored Key: unknown-key-qualifier [277.36ms]
+(pass) Parquet authored Key: unknown-member-qualifier [271.66ms]
+(pass) Parquet authored Key: unknown-facet-qualifier [287.00ms]
+(pass) Parquet authored Key: family-conflict [59.55ms]
+(pass) Parquet authored Key: quoted-identifiers [272.14ms]
+(pass) Parquet authored Key: fixed-binary [266.32ms]
+(pass) Parquet authored Key: decimal-int32 [277.84ms]
+(pass) Parquet authored Key: decimal-bytes [264.15ms]
+(pass) Parquet authored Key: decimal-fixed [282.65ms]
+(pass) stable IDs and compound field ordering remain distinct from native field IDs [157.60ms]
+(pass) missing or stale authors, changed tuples, ownership conflicts and malformed physical mappings refuse [73.94ms]
+(pass) forged residuals, edited original bytes and getters cannot recover authorship [204.87ms]
+(pass) native-only reimport cannot reconstruct authored keys [220.92ms]
+(pass) native generated-schema proof verifies actual types, duplicate writing and retained file bytes [2363.11ms]
+
+tests/core-ideals/key-parquet.test.ts:
+(pass) Parquet Key observation: required-embedded [269.93ms]
+(pass) Parquet Key observation: required-no-arrow [258.12ms]
+(pass) Parquet Key observation: sorting-not-enforced [266.41ms]
+(pass) Parquet Key observation: nullable [256.64ms]
+(pass) Parquet Key observation: repeated-list [295.81ms]
+(pass) Parquet Key observation: float-narrowing [259.49ms]
+(pass) Parquet Key observation: integer-input-truncation [263.94ms]
+(pass) Parquet Key observation: binary-metadata [69.72ms]
+(pass) opaque UMF content, metadata and malformed bytes remain separate from identity [126.38ms]
+(pass) existing observations, unknown profiles, forged identity, stale bytes and getters refuse [126.20ms]
+(pass) pinned native counterexamples and source fingerprints match [8.33ms]
+
+tests/core-ideals/key-postgresql-catalog.test.ts:
+(pass) all native observations retain enforcement, scope, null and comparator refinements [6.48ms]
+(pass) unknown numbers and content stay exact in source and tagged tree, not rounded into interpreted view [4.72ms]
+(pass) rejects unsafe declared integers, missing fields, invalid positions and mismatched constraints [28.26ms]
+
+tests/core-ideals/key-postgresql-correlation.test.ts:
+(pass) all pinned indexes correlate with retained catalog without claiming authentication or ideal equality [593.43ms]
+(pass) correlation refuses missing index [139.23ms]
+(pass) correlation refuses extra index [133.80ms]
+(pass) correlation refuses wrong readiness [138.49ms]
+(pass) correlation refuses wrong validity [152.53ms]
+(pass) correlation refuses omitted partial predicate [137.60ms]
+(pass) correlation refuses changed partial predicate [135.49ms]
+(pass) correlation refuses wrong unique flag [149.96ms]
+(pass) correlation refuses wrong null treatment [140.24ms]
+(pass) correlation refuses wrong column nullability [140.03ms]
+(pass) correlation refuses wrong column type [138.65ms]
+(pass) correlation refuses wrong compound order [163.77ms]
+(pass) correlation refuses omitted inherited child [181.56ms]
+(pass) correlation refuses wrong expression [151.93ms]
+(pass) correlation refuses included column treated as key [158.91ms]
+(pass) correlation refuses wrong constraint timing [163.21ms]
+(pass) correlation refuses wrong captured collation determinism [148.75ms]
+(pass) correlation refuses wrong default collation identity [148.17ms]
+(pass) correlation refuses omitted constraint [146.13ms]
+(pass) unknown supplement metadata and numeric tokens survive correlation unchanged [155.25ms]
+
+tests/core-ideals/key-postgresql-projection.test.ts:
+(pass) PostgreSQL authored keys: primary-strict [4.52ms]
+(pass) PostgreSQL authored keys: primary-report [84.36ms]
+(pass) PostgreSQL authored keys: no-primary-strict [3.01ms]
+(pass) PostgreSQL authored keys: no-primary-report [80.04ms]
+(pass) PostgreSQL authored keys: rename-and-reorder [76.44ms]
+(pass) PostgreSQL authored keys: boolean [75.31ms]
+(pass) PostgreSQL authored keys: decimal [100.26ms]
+(pass) PostgreSQL authored keys: binary [78.85ms]
+(pass) PostgreSQL authored keys: integer-width [120.08ms]
+(pass) PostgreSQL authored keys: unsigned [108.30ms]
+(pass) PostgreSQL authored keys: string-length [90.55ms]
+(pass) PostgreSQL authored keys: binary-length [85.88ms]
+(pass) PostgreSQL authored keys: compound-ordered [79.96ms]
+(pass) PostgreSQL authored keys: multiple-alternates [82.82ms]
+(pass) PostgreSQL authored keys: unknown-extension [79.08ms]
+(pass) PostgreSQL authored keys: unknown-key-qualifier [93.28ms]
+(pass) PostgreSQL authored keys: unknown-member-qualifier [79.94ms]
+(pass) PostgreSQL authored keys: unknown-facet-qualifier [79.84ms]
+(pass) PostgreSQL authored keys: family-conflict [2.74ms]
+(pass) PostgreSQL authored keys: quoted-identifiers [76.80ms]
+(pass) stable identity, compound ordering and explicit native names remain independent [42.28ms]
+(pass) missing, forged, stale and cross-record authors and column bindings refuse [30.52ms]
+(pass) unsafe names, getters and native constraint namespace collisions refuse [21.34ms]
+(pass) forged receipts, edited SQL and omitted per-key residuals cannot recover [49.27ms]
+(pass) unknown key, membership and component qualifiers recover without becoming native semantics [56.23ms]
+(pass) oversized key tuple blocks atomically and preserves all components as residual [34.16ms]
+
+tests/core-ideals/key-postgresql.test.ts:
+(pass) native enforcement and equality remain separate from authored identity [257.49ms]
+(pass) strict blocks atomically; report receipts recover both native archives in JSON and YAML [1263.89ms]
+(pass) unknown native content and exact numeric tokens remain attached without interpretation [512.71ms]
+(pass) forged conclusions, stale targets and duplicate classification cannot claim recovery [947.66ms]
+(pass) different archives, mismatched observations and unsupported requests refuse [365.68ms]
+
+tests/core-ideals/key-sqlserver-encoding.test.ts:
+(pass) native encoding evidence asserts actual values, failures and pinned source fingerprints [1.45ms]
+(pass) stored byte vectors preserve the distinct core tuple values in the qualified examples [8.03ms]
+(pass) computed native keys remain observations and all encoding metadata recovers [309.57ms]
+
+tests/core-ideals/key-sqlserver-projection.test.ts:
+(pass) SQL Server authored keys: primary-strict [4.65ms]
+(pass) SQL Server authored keys: primary-report [17.96ms]
+(pass) SQL Server authored keys: no-primary-strict [3.14ms]
+(pass) SQL Server authored keys: no-primary-report [16.33ms]
+(pass) SQL Server authored keys: rename-and-reorder [16.28ms]
+(pass) SQL Server authored keys: boolean [15.64ms]
+(pass) SQL Server authored keys: decimal [18.52ms]
+(pass) SQL Server authored keys: binary [16.26ms]
+(pass) SQL Server authored keys: integer-width [18.94ms]
+(pass) SQL Server authored keys: unsigned [18.13ms]
+(pass) SQL Server authored keys: string-length [19.09ms]
+(pass) SQL Server authored keys: binary-length [19.46ms]
+(pass) SQL Server authored keys: compound-ordered [16.77ms]
+(pass) SQL Server authored keys: multiple-alternates [23.55ms]
+(pass) SQL Server authored keys: unknown-extension [17.83ms]
+(pass) SQL Server authored keys: unknown-key-qualifier [18.89ms]
+(pass) SQL Server authored keys: unknown-member-qualifier [18.48ms]
+(pass) SQL Server authored keys: unknown-facet-qualifier [17.88ms]
+(pass) SQL Server authored keys: family-conflict [2.87ms]
+(pass) SQL Server authored keys: quoted-identifiers [15.25ms]
+(pass) SQL Server authored keys: missing-encoding [2.75ms]
+(pass) SQL Server authored keys: alternate-byte-budget [2.72ms]
+(pass) SQL Server authored keys: primary-byte-budget [2.67ms]
+(pass) SQL Server authored keys: primary-byte-boundary [15.47ms]
+(pass) SQL Server authored keys: alternate-byte-boundary [15.28ms]
+(pass) SQL Server authored keys: alternate-byte-overflow [3.06ms]
+(pass) stable identity and ordered expanded physical components remain distinct [35.37ms]
+(pass) missing, duplicated and stale author declarations refuse [32.90ms]
+(pass) physical name collisions, malformed binding and getters refuse atomically [23.66ms]
+(pass) forged receipts, altered SQL, session settings and missing residuals refuse recovery [18.50ms]
+(pass) generated native evidence records actual enforcement and source fingerprints [25.25ms]
+(pass) expanded key column limit includes encoding helpers and preserves blocked source [59.62ms]
+(pass) missing and cross-record membership never establishes key ownership [3.52ms]
+(pass) unknown component qualifiers block an exact equality claim independently of other keys [8.40ms]
+
+tests/core-ideals/key-sqlserver.test.ts:
+(pass) captured enforcement never invents identity; native padding prevents exact byte/string claims [119.41ms]
+(pass) strict blocks atomically and report recovers original catalog text through both serializations [646.41ms]
+(pass) unknown native numeric lexemes and core extensions remain untouched [225.91ms]
+(pass) forged exactness, stale targets, conflicting extension and accessors refuse [552.80ms]
+(pass) SQL Server key refuses disabled disagreement [98.34ms]
+(pass) SQL Server key refuses constraint kind disagreement [97.18ms]
+(pass) SQL Server key refuses tuple disagreement [95.84ms]
+(pass) SQL Server key refuses omitted constraint [109.39ms]
+(pass) SQL Server key refuses missing component [97.63ms]
+(pass) SQL Server key refuses ordinal gap [94.21ms]
+(pass) SQL Server key refuses included key [97.28ms]
+(pass) SQL Server key refuses wrong version [99.76ms]
+(pass) SQL Server key refuses modified snapshot [107.86ms]
+
+tests/core-ideals/key-tablespec-projection.test.ts:
+(pass) authored TableSpec projection: primary-strict [4.46ms]
+(pass) authored TableSpec projection: primary-report [120.25ms]
+(pass) authored TableSpec projection: no-primary-strict [3.55ms]
+(pass) authored TableSpec projection: no-primary-report [113.12ms]
+(pass) authored TableSpec projection: rename-and-reorder [113.16ms]
+(pass) authored TableSpec projection: unknown-key-field-content [123.26ms]
+(pass) authored TableSpec projection: family-boolean [124.96ms]
+(pass) authored TableSpec projection: family-decimal [140.57ms]
+(pass) authored TableSpec projection: family-binary [3.98ms]
+(pass) authored TableSpec projection: compound-ordered [120.76ms]
+(pass) authored TableSpec projection: native-name-table-max-length [115.14ms]
+(pass) authored TableSpec projection: native-name-column-max-length [116.21ms]
+(pass) authored TableSpec projection: native-name-table-over-length [3.66ms]
+(pass) authored TableSpec projection: native-name-column-over-length [3.22ms]
+(pass) authored TableSpec projection: native-name-table-unicode [3.49ms]
+(pass) authored TableSpec projection: native-name-column-unicode [3.02ms]
+(pass) authored TableSpec projection: native-name-table-leading-digit [2.65ms]
+(pass) authored TableSpec projection: native-name-column-leading-digit [2.91ms]
+(pass) authored TableSpec projection: native-name-table-trailing-newline [2.77ms]
+(pass) authored TableSpec projection: native-name-column-trailing-newline [2.73ms]
+(pass) authored TableSpec projection: native-name-table-quoted [2.63ms]
+(pass) authored TableSpec projection: native-name-column-quoted [2.87ms]
+(pass) authored TableSpec projection: native-name-table-underscore [3.32ms]
+(pass) authored TableSpec projection: native-name-column-underscore [3.00ms]
+(pass) authored TableSpec projection: native-name-table-valid-underscore [124.20ms]
+(pass) authored TableSpec projection: native-name-column-valid-underscore [115.12ms]
+(pass) authored TableSpec projection: multiple-alternates-report [140.34ms]
+(pass) authored TableSpec projection: multiple-alternates-strict [4.97ms]
+(pass) stable IDs, primary marker and names survive rename and reordered key list [36.80ms]
+(pass) rejects missing, duplicate, forged, mismatched and stale authors [8.75ms]
+(pass) rejects incomplete column bindings, unknown ownership, native family mismatch and getters [8.23ms]
+(pass) forged residuals, omitted per-key losses and stale native documents cannot recover ideal [41.68ms]
+(pass) compound key order is explicit and changing it invalidates retained authorship [45.71ms]
+(pass) missing or shared Record ownership cannot be projected in report mode [1.42ms]
+(pass) unknown ownership, key reference and native extension content survives both formats [43.63ms]
+
+tests/core-ideals/key-tablespec.test.ts:
+(pass) TableSpec Key native declarations > missing retains native declaration without author intent [83.46ms]
+(pass) TableSpec Key native declarations > null retains native declaration without author intent [78.86ms]
+(pass) TableSpec Key native declarations > empty retains native declaration without author intent [78.84ms]
+(pass) TableSpec Key native declarations > primary retains native declaration without author intent [77.73ms]
+(pass) TableSpec Key native declarations > compound retains native declaration without author intent [79.12ms]
+(pass) TableSpec Key native declarations > duplicate-component retains native declaration without author intent [78.96ms]
+(pass) TableSpec Key native declarations > missing-column retains native declaration without author intent [74.90ms]
+(pass) TableSpec Key native declarations > implicit-meta-column retains native declaration without author intent [73.55ms]
+(pass) TableSpec Key native declarations > wrong-primary-type retains native declaration without author intent [77.18ms]
+(pass) TableSpec Key native declarations > alternate retains native declaration without author intent [76.97ms]
+(pass) TableSpec Key native declarations > primary-and-alternate retains native declaration without author intent [90.98ms]
+(pass) TableSpec Key native declarations > empty-alternate retains native declaration without author intent [78.34ms]
+(pass) TableSpec Key native declarations > missing-alternate-column retains native declaration without author intent [80.57ms]
+(pass) TableSpec Key native declarations > duplicate-alternate-component retains native declaration without author intent [78.23ms]
+(pass) TableSpec Key native declarations > duplicate-alternate retains native declaration without author intent [75.14ms]
+(pass) TableSpec Key native declarations > unknown-stable-id retains native declaration without author intent [79.48ms]
+(pass) TableSpec Key native declarations > resolves native ordered tuples without declaring core ownership or keys [18.66ms]
+(pass) TableSpec Key native declarations > malformed alternate tuples and unresolved implicit columns remain residual [104.96ms]
+(pass) TableSpec Key native declarations > unknown text, exact numeric lexemes and split sidecars recover unchanged [81.19ms]
+(pass) TableSpec Key native declarations > authored keys and unknown qualifiers in core 0.6 stay untouched [39.98ms]
+(pass) TableSpec Key native declarations > forged and stale receipts fail; observations cannot overwrite existing content [73.84ms]
+(pass) TableSpec Key native declarations > rejects unsupported requests and accessors without executing code [12.82ms]
+
+tests/core-ideals/nullability-avro-projection.test.ts:
+(pass) authored Avro availability projects null carriers and recovers every ideal and residual [7849.85ms]
+(pass) null-only required, unbound absence and unprojected exactness cannot pass strict mode [87.38ms]
+(pass) native changes, forged source/meaning and invalid Avro names refuse [118.45ms]
+(pass) unmapped document, module, relationship and extension meaning remains recoverable [87.61ms]
+
+tests/core-ideals/nullability-avro.test.ts:
+(pass) Avro underlying-value availability matrix preserves exact source, scope and both formats [25800.47ms]
+(pass) author conflicts, stale/forged receipts and malformed requests refuse without losing unknown content [575.38ms]
+(pass) native names, dependencies and recursive fields resolve without claiming parent availability [501.44ms]
+(pass) invalid structural types and unresolved names stay native with explicit report residuals [1044.25ms]
+
+tests/core-ideals/nullability-field-operations.test.ts:
+(pass) versioned kind and record type receipts preserve availability, recursion and native content [210.35ms]
+(pass) availability prevents role erasure and receipts refuse changed versions, sources and provenance [88.97ms]
+(pass) new roles allow availability authoring, with whole-document receipt freshness [3.34ms]
+
+tests/core-ideals/nullability-parquet-projection.test.ts:
+(pass) authored Parquet availability emits explicit leaf repetition and recovers all ideals/residuals [11569.09ms]
+(pass) scope, cardinality, defaults and precision obligations remain explicit losses [786.72ms]
+(pass) changed bytes, forged receipts, stale authors and invalid native names refuse [244.07ms]
+(pass) document/module metadata and relationships survive report-mode ideal recovery [136.84ms]
+
+tests/core-ideals/nullability-parquet.test.ts:
+(pass) native-backed row/entry context matrix preserves exact bytes, metadata and both serializations [172826.67ms]
+(pass) optional ancestors contribute absence while repeated paths require an explicit entry context [539.96ms]
+(pass) author conflicts, altered scope/ancestry, changed targets and unsafe requests refuse [1669.68ms]
+(pass) legacy repeated primitive entries remain required within the selected entry, with exact byte recovery [905.03ms]
+
+tests/core-ideals/nullability-postgresql-projection.test.ts:
+(pass) authored availability projects with explicit scope and recovers every residual through both formats [2702.55ms]
+(pass) stale SQL, forged receipts and source changes cannot recover author meaning [89.52ms]
+(pass) identifiers cannot be truncated and strict loss does not invoke the parser [11.88ms]
+(pass) programmatic metadata and unknown extension obligations survive report recovery [29.20ms]
+
+tests/core-ideals/nullability-postgresql.test.ts:
+(pass) native catalog availability matrix retains source and scope through both serializations [50973.72ms]
+(pass) domain NOT NULL, CHECK UNKNOWN, NOT VALID and generated expressions do not become column permission [1282.76ms]
+(pass) author conflicts, stale and forged receipts, unknown extensions and altered archives [1476.37ms]
+(pass) unknown exact native content remains recoverable while uncertain permission is withheld [632.64ms]
+(pass) missing flags, triggers, unsupported profiles and source state remain explicit [923.59ms]
+
+tests/core-ideals/nullability-selection.test.ts:
+(pass) 0.3 reports retain availability distinctions, namespaces, recursive boundaries and native refinements [50.83ms]
+(pass) forged availability, erased native refinements, changed query, diagnostics and boundaries cannot verify [3.98ms]
+(pass) 0.2 availability remains opaque through the old selection schema [1.56ms]
+
+tests/core-ideals/nullability-sqlserver-projection.test.ts:
+(pass) authored availability projects with explicit scope and recovers every residual through both formats [187.42ms]
+(pass) stale SQL, forged receipts and source changes cannot recover author meaning [7.56ms]
+(pass) invalid permanent identifiers refuse and native nullability is always explicit [35.69ms]
+(pass) programmatic metadata and unknown extension obligations survive report recovery [7.41ms]
+
+tests/core-ideals/nullability-sqlserver.test.ts:
+(pass) native catalog availability matrix retains source and scope through both serializations [61344.92ms]
+(pass) CHECK UNKNOWN and untrusted constraints do not become unconditional permission [544.91ms]
+(pass) author conflicts, stale and forged receipts, unknown extensions and altered archives [1064.07ms]
+(pass) unknown native fields, legacy evidence and rules retain residuals with exact source recovery [2688.88ms]
+(pass) modified captures, incorrect envelope versions and unsafe numeric refinements refuse interpretation [596.54ms]
+
+tests/core-ideals/nullability-tablespec-projection.test.ts:
+(pass) authored availability projects under explicit profiles with atomic strict/report loss and exact ideal recovery [11422.47ms]
+(pass) names, unknown obligations, scalar mismatches and unsafe or forged inputs cannot silently succeed [76.22ms]
+(pass) context keys are exact data and other elements/modules remain explicit residuals [127.21ms]
+
+tests/core-ideals/nullability-tablespec.test.ts:
+(pass) selected profile/context classification separates exact declarations, coercions and unknowns [26837.52ms]
+(pass) unresolved carrier blocks strict mode and retains explicit residuals in report mode [67.43ms]
+(pass) author provenance, role conflicts, stale models and forged binding metadata refuse [194.53ms]
+(pass) unknown native precision, escaped context keys and split sidecars remain exact [128.82ms]
+
+tests/core-ideals/parquet-cardinality-carrier.test.ts:
+(pass) native nested schema carriers preserve exact bytes and match checked logical roles [3748.55ms]
+(pass) carrier writer refuses malformed, cyclic, oversized and unknown inputs instead of dropping content [139.21ms]
+
+tests/core-ideals/parquet-cardinality-shape.test.ts:
+(pass) Parquet Cardinality shape keeps nested roles, member meaning and native bytes separate [1135.91ms]
+(pass) legacy container layouts retain wrappers and key-only uncertainty; malformed structures refuse [744.53ms]
+(pass) invalid indexes refuse and returned shape metadata cannot mutate the native source [83.31ms]
+(pass) legacy unannotated repeated values remain unresolved without an explicit interpretation [67.48ms]
+
+tests/core-ideals/parquet-facet-carrier.test.ts:
+(pass) emitted native corpus is deterministic and retains field identity and opaque metadata [3979.17ms]
+(pass) invalid capacities, ambiguous members and unsupported exact values refuse before emission [0.55ms]
+(pass) large valid decimal declaration is distinct from reader representability [31.60ms]
+
+tests/core-ideals/parquet-facet-type.test.ts:
+(pass) interprets all independently emitted native scalar declarations without consuming refinements [0.98ms]
+(pass) validates logical/converted integer carriers and refuses disagreements [0.27ms]
+(pass) decimal capacity, exact token and annotation conflict checks retain native input [0.19ms]
+(pass) fixed is exact length; floats and unknown declarations do not imply facets or enforcement [0.16ms]
+
+tests/core-ideals/parquet-record-type.test.ts:
+(pass) interpreted LIST struct values link to separate records without changing repetition or bytes [2044.99ms]
+(pass) wrappers, primitives, root selection, author conflicts and tampered receipts refuse [1632.56ms]
+
+tests/core-ideals/postgresql-composite.test.ts:
+(pass) catalog composites expose ordered fields without formatted-type guessing and recover exact source [3419.76ms]
+(pass) collisions, duplicate names/order, ambiguity and stale archives cannot publish false roles [1132.17ms]
+(pass) unknown composite refinements remain recoverable and future server versions are refused [210.65ms]
+
+tests/core-ideals/postgresql-ddl-kinds.test.ts:
+(pass) declared records retain source SQL and distinguish unresolved namespace from catalog facts [3594.83ms]
+(pass) collisions, edited AST archives and stale receipts cannot silently publish new roles [234.97ms]
+(pass) composite attributes preserve collations and unresolved nested types without scalar flattening [448.92ms]
+
+tests/core-ideals/projection-policy.test.ts:
+(pass) field-tablespec schema enforces strict/report loss and atomic candidate rules [9.44ms]
+(pass) record-tablespec schema enforces strict/report loss and atomic candidate rules [9.90ms]
+(pass) field-postgresql schema enforces strict/report loss and atomic candidate rules [3.87ms]
+(pass) record-postgresql schema enforces strict/report loss and atomic candidate rules [9.99ms]
+
+tests/core-ideals/record-avro-projection.test.ts:
+(pass) ordered and empty authored records emit complete Avro schemas with recoverable loss reports [676.91ms]
+(pass) duplicate/colliding members, stale authors, invalid native names and edited targets fail safely [151.43ms]
+
+tests/core-ideals/record-avro.test.ts:
+(pass) declared empty, nested, recursive and dependency records retain ordered direct members [3701.06ms]
+(pass) one conflicting member, stale provenance, collisions or a non-declaration selection cannot publish a record [2040.33ms]
+
+tests/core-ideals/record-parquet-projection.test.ts:
+(pass) Parquet records preserve member order, explicit native repetition and authored recovery [1729.59ms]
+(pass) collisions, duplicate bindings, stale authors and report tampering cannot yield partial records [173.48ms]
+
+tests/core-ideals/record-parquet.test.ts:
+(pass) Parquet root records keep ordered value slots separate from container and struct definitions [4533.01ms]
+(pass) Parquet LIST wrappers block; interpreted two-level struct elements supply records [878.20ms]
+(pass) Parquet record conflicts, collisions and receipt edits block atomically [808.28ms]
+
+tests/core-ideals/record-postgresql-projection.test.ts:
+(pass) record members compile in ideal order and recover source through both receipt formats [191.99ms]
+(pass) strict losses and missing bindings expose no partial SQL or target [113.94ms]
+(pass) name collisions, unknown bindings and unsafe identifiers fail without partial output [10.13ms]
+(pass) stale author declarations, native edits and changed receipts fail recovery [33.92ms]
+
+tests/core-ideals/record-postgresql.test.ts:
+(pass) qualified relations remain distinct records and only selected members receive kinds [971.92ms]
+(pass) one member conflict blocks the whole record in both policies [474.12ms]
+(pass) ambiguous relations, unsupported kinds, collisions and stale receipts cannot imply record equivalence [1065.93ms]
+(pass) duplicate native member names and inconsistent ordinal order block whole-record publication [838.40ms]
+
+tests/core-ideals/record-report.test.ts:
+(pass) common record reports retain ordered membership, member carriers and all blocked residuals [2970.45ms]
+(pass) member basis and source receipt tampering are rejected, and backend remains explicit [741.95ms]
+
+tests/core-ideals/record-sqlserver-projection.test.ts:
+(pass) record member order and strict/report policies produce atomic SQL with exact ideal recovery [70.18ms]
+(pass) empty records, collisions, stale provenance and altered SQL cannot publish or recover false meaning [17.76ms]
+
+tests/core-ideals/record-sqlserver.test.ts:
+(pass) whole captured tables become ordered records with exact source recovery [11646.72ms]
+(pass) one member conflict blocks the whole record and provenance cannot be silently replaced [8678.21ms]
+(pass) collisions, missing identities, non-increasing ordinals and stale receipts fail safely [8173.13ms]
+
+tests/core-ideals/record-tablespec-projection.test.ts:
+(pass) record projection orders columns by declared membership and recovers the complete ideal [174.06ms]
+(pass) missing, duplicate, non-member and name-colliding bindings block atomically under either policy [20.21ms]
+(pass) scalar mismatch and renamed columns are reportable but strict refuses them [39.12ms]
+(pass) unknown metadata and relationship refinements survive as residuals [33.00ms]
+(pass) stale member provenance and edited native/receipt data cannot claim ideal recovery [40.34ms]
+(pass) an empty-namespace record can project strictly without erasing namespaced inputs [32.93ms]
+
+tests/core-ideals/record-tablespec.test.ts:
+(pass) whole native table becomes a record with ordered explicit member references and unknown type preservation [98.67ms]
+(pass) one conflicting member blocks the whole table in both modes without partial candidate [173.76ms]
+(pass) verified member authors are retained; stale, duplicate and unrelated receipts block [216.68ms]
+(pass) record classification retains split files and empty tables without inventing grouping semantics [66.75ms]
+(pass) changed member references, receipts and native content invalidate classification [129.56ms]
+
+tests/core-ideals/record-type.test.ts:
+(pass) record-valued slots preserve qualified identity, cycles and unknown native meaning [29.91ms]
+(pass) scalar/record conflicts, legacy roles and stale or forged receipt paths refuse [9.37ms]
+
+tests/core-ideals/sql-namespace.test.ts:
+(pass) PostgreSQL and SQL Server schema moves disclose every selected namespace [81.88ms]
+
+tests/core-ideals/structured-report.test.ts:
+(pass) record, composite, type-link and raw DDL reports retain scoped ordered native evidence [13383.64ms]
+(pass) declared-only context and record mappings cannot be forged or silently resolved [3468.12ms]
+
+tests/core/cardinality-ideals.test.ts:
+(pass) Cardinality is explicit Field meaning with independent item/value references and availability [6.09ms]
+(pass) containers cannot acquire scalar labels; invalid roles, labels and item links refuse atomically [1.99ms]
+(pass) unknown cardinality and recursive/cross-module item definitions remain copied and recoverable [1.69ms]
+(pass) legacy cardinality and itemType stay opaque; transition archives both even when they look valid [32.61ms]
+(pass) rollback retains later assertions separately and refuses forged receipts or changed identities [1.71ms]
+
+tests/core/cardinality-operations.test.ts:
+(pass) authored Cardinality and item meaning survive serialized verified receipts without source mutation [12.70ms]
+(pass) item omission preserves meaning; explicit set or clear retains previous meaning in archived source [1.00ms]
+(pass) legacy, missing, unknown and inapplicable Cardinality inspections never infer native meaning [2.09ms]
+(pass) invalid requests and item/scalar conflicts fail atomically; no getters execute [0.62ms]
+(pass) forged or stale author receipts cannot confer provenance [1.92ms]
+
+tests/core/core.test.ts:
+(pass) US-001-AC1: JSON and YAML retain unknown extension and core fields without claiming understanding [1.06ms]
+(pass) US-001-AC2: names in independent contexts coexist; identity and references are checked [27.54ms]
+(pass) US-001-AC2: native semantics are not inferred by extension structural validation [8.52ms]
+(pass) US-001-AC2: undeclared versions, duplicate registration, invalid schema and scope fail explicitly [14.80ms]
+(pass) US-001-AC3: safe edits are atomic, checked and reflected in both serializations [10.09ms]
+(pass) US-001-AC3: unknown dependencies block edits even if the edited extension is known [5.71ms]
+(pass) US-001-AC2: validator exceptions never become successful validation [4.83ms]
+(pass) US-001-AC4: duplicate keys and non-JSON YAML are rejected [2.23ms]
+(pass) US-001-AC4: numeric boundaries fail instead of rounding and interoperable decimals survive [0.46ms]
+(pass) US-001-AC4: non-JSON programmatic values cannot disappear during serialization [0.32ms]
+(pass) US-001-AC4: dangerous property names are retained as data, never inherited behavior [0.10ms]
+(pass) US-001-AC4: document depth and size limits fail explicitly [0.99ms]
+(pass) US-001-AC1: generated unknown content survives repeated portable serialization [51.47ms]
+(pass) registry captures a frozen copy, independent of subsequent package edits [6.09ms]
+(pass) published minimal document fixture validates with independent namespaces and references [15.36ms]
+(pass) US-001-AC1: YAML preserves long leading-indented multiline native comments [0.60ms]
+(pass) US-001-AC2: JSON equality handles reference objects and method-like data keys safely [7.75ms]
+
+tests/core/deep-json-equality.test.ts:
+(pass) deep JSON const/enum/unique comparisons avoid exponential string escaping [6.81ms]
+(pass) deep unknown native content survives TableSpec receipt verification [85.89ms]
+(pass) deep unrelated metadata survives authored TableSpec projection and exact ideal recovery [46.28ms]
+
+tests/core/facet-authoring.test.ts:
+(pass) authored facet groups have copied provenance, exact declared bounds and verifiable JSON/YAML receipts [18.42ms]
+(pass) facet updates retain unknown groups and nested qualifiers; unknown units stay uninterpreted [1.63ms]
+(pass) invalid facet patches, conflicts, legacy authoring and hostile inputs refuse without mutation [1.88ms]
+(pass) stale, forged and cross-document facet receipts cannot confer author provenance [1.35ms]
+
+tests/core/facet-ideals.test.ts:
+(pass) candidate facet semantics check families, roles, shape, pairs and qualified unknowns [16.00ms]
+(pass) candidate JSON Schema documents structural limits; semantic comparison remains explicit [2.46ms]
+(pass) facet tokens are checked before conversion; unsafe numbers and accessors refuse atomically [1.30ms]
+
+tests/core/facet-transition.test.ts:
+(pass) explicit facet migration archives every legacy collision and recovers it through both serializations [31.93ms]
+(pass) rollback restores the original without reinterpreting later bounds; forged receipts and wrong versions refuse [5.26ms]
+(pass) 0.5.0 document validation and selection preserve item facets, availability, unknowns and boundaries [11.42ms]
+
+tests/core/field-ideals.test.ts:
+(pass) field kinds are explicit; missing kind is never inferred from scalar family [2.01ms]
+(pass) legacy collisions stay opaque, including names that are now known [3.06ms]
+(pass) new profile refuses malformed kinds and structured scalar claims atomically [1.02ms]
+(pass) unknown future kind and other open metadata survive without semantic completion [0.56ms]
+(pass) future envelope versions and unsafe getter inputs cannot be interpreted [0.11ms]
+
+tests/core/field-kind.test.ts:
+(pass) kind lookup separates legacy, unknown, missing and defined roles without inventing provenance [7.36ms]
+(pass) author provenance survives serialization, verification and rollback without claiming native meaning [7.31ms]
+(pass) authoring blocks unknown meaning, legacy versions and structured/scalar conflicts atomically [0.54ms]
+(pass) provenance verification rejects forged paths, altered assertions and stale native or unrelated content [1.41ms]
+
+tests/core/field-transition.test.ts:
+(pass) upgrade explicitly archives every legacy collision and preserves all other metadata [0.59ms]
+(pass) serialized receipts support exact model rollback while retaining later assertions and native edits [3.80ms]
+(pass) tampered or stale receipts fail without overwriting source or edited model [2.16ms]
+(pass) null, method-like names, unknown content, and malformed inputs retain copy safety [2.53ms]
+
+tests/core/key-ideals.test.ts:
+(pass) candidate Key checks membership, primary/alternate identities and component equality [56.30ms]
+(pass) key schema leaves cross-reference semantics to validator; old profiles stay opaque [17.05ms]
+(pass) key candidate never invokes getters and retains path-qualified unknowns [0.44ms]
+
+tests/core/key-operations.test.ts:
+(pass) public Key authoring, inspection and stable lookup preserve copied source and both serializations [30.65ms]
+(pass) key updates retain identity and unknowns, reject tuple changes and implicit primary demotion [9.97ms]
+(pass) operation verification rejects forged/stale context and old profiles remain opaque [6.89ms]
+(pass) 0.6.0 core operations use new receipts and refuse changes invalidating keys [49.31ms]
+(pass) Key selection reports explicit member/component boundaries and traverses by identity [15.12ms]
+(pass) 0.6.0 extension validators receive the actual key-bearing document and can reject it [14.33ms]
+(pass) member traversal terminates on cycles and component order cannot change under a stable key ID [5.19ms]
+
+tests/core/key-transition.test.ts:
+(pass) explicit Key migration archives all element collisions without adopting author intent [62.99ms]
+(pass) rollback restores exact old content and separately retains later key assertions and native edits [8.11ms]
+(pass) forged receipts, wrong identities/versions and invalid current key meaning reject atomically [9.54ms]
+(pass) no-collision migration and copy discipline preserve opaque scopes without getters [1.32ms]
+
+tests/core/key-tuple.test.ts:
+(pass) key tuple vectors and domain boundaries produce exact frames or atomic refusals [57.44ms]
+(pass) stable key ID survives name/list changes while retained receipts detect stale context [0.99ms]
+(pass) tuple verification rejects forged and nonminimal frames and altered retained inputs [1.43ms]
+(pass) unknown relevant qualifiers block and unrelated native extension content survives [0.78ms]
+(pass) shortest length/count framing and no getter evaluation [5.44ms]
+(pass) resource bounds and a bad later component refuse the whole tuple [6.19ms]
+
+tests/core/native-json.test.ts:
+(pass) CONTRACT-001: shared exact JSON tree is representation-identical across three extensions [8.42ms]
+(pass) US-024-AC4: explicit YAML 1.1 preserves underscored boundaries without changing the default profile [0.94ms]
+(pass) US-024-AC4: date-only string projection is explicit and does not admit general timestamps [0.26ms]
+(pass) US-024-AC4: PyYAML boolean vocabulary leaves single-letter axis names unchanged [0.55ms]
+
+tests/core/nullability-authoring.test.ts:
+(pass) inspection distinguishes legacy, absent, inapplicable, known and unknown without inventing provenance [1.41ms]
+(pass) authored availability has exact identity/provenance and survives JSON/YAML without claiming native absence meaning [5.37ms]
+(pass) unknown assertions, non-fields, wrong versions and invalid identities refuse instead of overwriting intent [0.44ms]
+(pass) tampered and stale receipts refuse; migration rollback retains new authored assertions [2.66ms]
+
+tests/core/nullability-ideals.test.ts:
+(pass) explicit nullability requires a Field and survives both formats without native interpretation [1.65ms]
+(pass) missing availability does not inherit native nullable flags or defaults [0.44ms]
+(pass) older envelopes preserve all colliding nullability values as opaque content [6.88ms]
+(pass) unknown availability is retained, but malformed values and non-Field use fail atomically [1.19ms]
+(pass) unsafe getters and unsupported future versions cannot be interpreted [0.08ms]
+
+tests/core/nullability-transition.test.ts:
+(pass) explicit upgrade archives every old label and preserves roles, native refinements and references [0.89ms]
+(pass) both receipt formats roll back original model while retaining subsequent availability and native edits [5.55ms]
+(pass) null, empty, known, future and method-like collisions remain recoverable [4.48ms]
+(pass) forged receipts, wrong identity, wrong versions and malformed current states refuse atomically [2.93ms]
+(pass) 0.1.0 requires the Field transition first and the inverse chain preserves both collisions [1.92ms]
+(pass) getter inputs are refused without invoking artifact code [0.15ms]
+
+tests/core/relationship-ideal.test.ts:
+(pass) relationship candidate resolves keyed endpoints, participation, lifecycle and reified identity [186.74ms]
+(pass) old relationship-shaped unknown members remain opaque and candidate does not infer associations [1.83ms]
+(pass) candidate retains unknown meanings and rejects accessors and cyclic input without evaluation [2.37ms]
+
+tests/core/relationship-operations.test.ts:
+(pass) candidate authoring and stable lookup expose all authored shapes with verified serialized receipts [631.18ms]
+(pass) rename and endpoint set reorder preserve stable identity and every unknown qualifier [8.17ms]
+(pass) existing IDs cannot move to different endpoint keys, directions or association Records [6.26ms]
+(pass) legacy values remain inspectable without authoring and future lifecycle stays uninterpreted [5.32ms]
+(pass) receipt recomputation, current context and input copying reject forgeries and getters [11.18ms]
+
+tests/core/relationship-public.test.ts:
+(pass) public 0.7.0 validation and document serialization retain authored relationships and reject broken targets [12.24ms]
+(pass) earlier core operations use 0.7.0 receipts and refuse edits invalidating keyed endpoints [167.68ms]
+(pass) 0.7.0 element selection retains full relationship context and the explicitly declared element traversal scope [9.49ms]
+(pass) extension semantic validators receive the actual relationship-bearing 0.7.0 document [1.64ms]
+
+tests/core/relationship-selection.test.ts:
+(pass) authored relationship selection resolves exact endpoint and alternate-key metadata with full source recovery [155.42ms]
+(pass) filters use exact stable identities, set intersection and empty-filter semantics [13.17ms]
+(pass) navigation is presentation metadata and retains undirected, inverse and association distinctions [3.78ms]
+(pass) selection refuses legacy inputs, invalid filters and forged paths without executing getters [3.91ms]
+
+tests/core/relationship-transition.test.ts:
+(pass) explicit 0.6 to 0.7 transition archives every module collision without interpreting it [180.44ms]
+(pass) rollback restores original envelope and retains new assertions and native edits in its source [28.95ms]
+(pass) forged receipts, invalid current meaning and mismatched document identities reject [40.51ms]
+(pass) transition functions reject accessors without evaluating them [2.30ms]
+
+tests/core/scalar.test.ts:
+(pass) CONTRACT-001 scalar families are interpreted core metadata and survive both formats [1.59ms]
+(pass) CONTRACT-001 unknown scalar families remain recoverable and explicitly incomplete [0.52ms]
+
+tests/core/selection.test.ts:
+(pass) CONTRACT-001 selection preserves distinct contexts, core reference boundaries, cycles and unknown meaning [4.28ms]
+(pass) CONTRACT-001 malformed queries and unresolved core sources fail without invoking accessors [152.78ms]
+(pass) CONTRACT-001 callers can supply semantic validation without confusing selection with native dependency discovery [10.57ms]
+(pass) CONTRACT-001 shared scalar selection keeps native recoveries intact across the five priority systems [1120.94ms]
+
+tests/dbt/artifact.test.ts:
+(pass) US-022-AC7: native run results/catalog preserve complete content through both formats and edits [682.39ms]
+(pass) US-022-AC7: observed catalog types remain separate from declarations and pinned source schemas [10.31ms]
+(pass) US-022-AC7: future numbers, invalid native shapes and representation boundaries remain explicit [90.36ms]
+
+tests/dbt/failure.test.ts:
+(pass) US-022-AC9: native errors, failed tests and skipped dependents retain distinct meanings [150.74ms]
+
+tests/dbt/freshness.test.ts:
+(pass) US-022-AC8: emitted and runner artifacts retain distinct outcomes and native diagnostic edits [266.14ms]
+(pass) US-022-AC8: native emitter omission cannot be mistaken for a successful source [10.13ms]
+
+tests/dbt/graph.test.ts:
+(pass) US-022-AC5: explicit edges agree with native map builders and remain copied [3842.99ms]
+(pass) US-022-AC5: dangling, wrong-kind and stale redundant maps are explicit without losing source [3659.77ms]
+(pass) US-022-AC5: repeated macro references and recursion are retained without a cycle-legality claim [518.10ms]
+
+tests/dbt/manifest.test.ts:
+(pass) US-022-AC1/3: native-generated manifest round trips and description edits preserve resources [2052.49ms]
+(pass) US-022-AC2: exact future content, invalid native shapes and atomic edit boundaries [831.29ms]
+(pass) US-022-AC3: native schema and build evidence remain bound to captured inputs [26.35ms]
+
+tests/dbt/rich.test.ts:
+(pass) US-022-AC4: richer native build retains resource collections and distinguishes no-op outcomes [3.67ms]
+(pass) US-022-AC4: 13 resource edits match independently checked outputs through both formats [14310.38ms]
+
+tests/dbt/selection.test.ts:
+(pass) US-022-AC6: bounded context matches independent reachability with full source recovery [1812.18ms]
+(pass) US-022-AC6: roots, zero depth, limits and cycles do not silently omit context [928.63ms]
+
+tests/dbt/semantic-fields.test.ts:
+(pass) US-022-AC12: every native field boundary agrees with independent serialized-shape evidence [72.02ms]
+
+tests/dbt/semantic-metrics.test.ts:
+(pass) US-022-AC11: all pinned native metric types and parameter candidates retain source meaning [1020.71ms]
+(pass) US-022-AC11: shape acceptance does not mask native semantic rejection [17.57ms]
+
+tests/dbt/semantic.test.ts:
+(pass) US-022-AC10: semantic manifest source and independent edits match native parser evidence [429.39ms]
+(pass) US-022-AC10: schema derivation and native-null discrepancy are explicit and hash-bound [6.92ms]
+(pass) US-022-AC10: unknown native content survives where the native parser discards it [137.66ms]
+
+tests/ddd/profile.test.ts:
+(pass) US-005-AC1: complete DDD profile survives JSON/YAML with distinct contexts and opaque invariants [176.97ms]
+(pass) US-005-AC2: semantic boundary corruptions fail independently of structural validity [377.06ms]
+(pass) US-005-AC3: unknown content and unproven equivalence survive but block conservative edits [108.40ms]
+(pass) US-005-AC4: fully understood semantic edits are atomic and do not change physical meaning [75.76ms]
+
+tests/delta/actions.test.ts:
+(pass) US-018-AC10: known action shapes and exact integer boundaries retain source [123.48ms]
+(pass) US-018-AC10: arbitrary commit provenance and opaque future content remain incomplete [53.65ms]
+
+tests/delta/checkpoint-parquet-trial.test.ts:
+(pass) US-018-AC14: Parquet decoder trial agrees with typed native values and exact decimal boundaries [103.18ms]
+
+tests/delta/checkpoint.test.ts:
+(pass) US-018-AC13: checkpoint and following commits reproduce native-backed states without earlier history [53.13ms]
+(pass) US-018-AC13: checkpoint invariants and missing sidecars block without partial state [95.72ms]
+(pass) US-018-AC13: both pinned upstream JSON checkpoints retain source and report unresolved Parquet sidecars [53.77ms]
+
+tests/delta/column-mapping.test.ts:
+(pass) US-018-AC6: mapped nested field IDs and physical paths are checked independently [169.26ms]
+(pass) US-018-AC6: missing mapping context and exact out-of-range IDs are diagnosed without source loss [151.12ms]
+(pass) US-018-AC6: feature-era mapping requires both feature lists; none mode stays separate [110.33ms]
+
+tests/delta/history-upstream.test.ts:
+(pass) US-018-AC12: all pinned ordinary-commit prefixes preserve sources and reproduce state or explicit blocks [12232.61ms]
+
+tests/delta/log.test.ts:
+(pass) US-018-AC9: full log text preserves line endings, exact numbers, future actions and invalid lines [25.73ms]
+(pass) US-018-AC9: empty and duplicate-key input stay captured; representation additions block export [26.88ms]
+(pass) US-018-AC9: inspection bounds leave uninspected source intact [31.57ms]
+
+tests/delta/mapped-nested.test.ts:
+(pass) US-018-AC7: array and map-value field renames preserve mapping across both protocol families [4716.77ms]
+
+tests/delta/multipart.test.ts:
+(pass) US-018-AC19: Spark hash vectors include signed UTF-8 tails and explicit seeds [0.60ms]
+(pass) US-018-AC19: native multipart recovery preserves all parts and row origins [1850.47ms]
+(pass) US-018-AC19: missing/duplicate parts, mismatched identities and hash-clustering violations block [292.16ms]
+(pass) US-018-AC19: V2 features and repeated actions cannot be assembled as a multipart snapshot [607.03ms]
+(pass) US-018-AC19: invalid finite part counts retain schema-valid blocked evidence [0.16ms]
+
+tests/delta/parquet-actions.test.ts:
+(pass) US-018-AC15: native checkpoint corpus projects exact actions or blocks with source intact [5754.87ms]
+(pass) US-018-AC15: ambiguous maps, typed values, missing required fields and action conflicts cannot silently lower [1143.40ms]
+(pass) US-018-AC17: annotated statistics dates and timestamp fractions have explicit bounds [0.47ms]
+
+tests/delta/parquet-checkpoint.test.ts:
+(pass) US-018-AC18: explicit V1/V2 Parquet checkpoint recovery agrees with nine native snapshots [2416.65ms]
+(pass) US-018-AC18: wrong checkpoint specs, missing sidecars and missing successors cannot produce state [555.45ms]
+(pass) US-018-AC18: pinned single-file checkpoints preserve bounded recovery outcomes [5178.67ms]
+
+tests/delta/reconcile.test.ts:
+(pass) US-018-AC11: native six-version history matches action state and preserves every source [115.96ms]
+(pass) US-018-AC11: gaps, duplicates, missing initial context, checkpoints and ambiguous file changes block [81.47ms]
+(pass) US-018-AC11: DV changes are set-based; domains and unknown actions remain preserved [67.04ms]
+
+tests/delta/rename.test.ts:
+(pass) US-018-AC7: mapped rename preserves physical meaning and updates top-level partition references [983.06ms]
+(pass) US-018-AC7: collisions, expressions, unknown features and non-field pointers block [883.96ms]
+(pass) US-018-AC7: expressions elsewhere in the schema and unknown storage providers block [304.51ms]
+
+tests/delta/schema.test.ts:
+(pass) US-018-AC1: Delta source cases preserve exact schema through JSON/YAML [1631.31ms]
+(pass) US-018-AC2: unknown metadata and representation fields never disappear silently [59.51ms]
+(pass) US-018-AC3: edits are atomic and keep source; shape failure rejects candidate [69.16ms]
+
+tests/delta/sidecars.test.ts:
+(pass) US-018-AC16: native sidecar checkpoints recover states and retain origin/source evidence [890.22ms]
+(pass) US-018-AC16: missing, duplicate, extra, mismatched and mixed sidecars block atomically [773.65ms]
+(pass) US-018-AC16: nonfile sidecar actions and malformed bytes cannot seed state [184.58ms]
+(pass) US-018-AC16: supplied upstream sidecars retain typed-statistics blockers and all bytes [279.44ms]
+
+tests/delta/table.test.ts:
+(pass) US-018-AC4: context preserves embedded spelling, exact integers and future declarations [204.22ms]
+(pass) US-018-AC4: feature/partition inconsistencies and malformed schema remain visible and preserved [70.38ms]
+(pass) US-018-AC5: generic context edits are atomic and do not imply safe table evolution [214.55ms]
+
+tests/delta/upstream.test.ts:
+(pass) US-018-AC8: pinned upstream schema/context corpus preserves source and known rejection [11559.08ms]
+
+tests/generalized-rdf/dataset.test.ts:
+(pass) US-027-AC1–3: generalized official cases preserve predicate identity, round trips and edits [1021.35ms]
+(pass) US-027-AC2: exact unknown source, scope, interpretation guards and atomic invalid edits [227.08ms]
+(pass) US-027-AC3: RDF JSON literals retain exact values and legacy typed lexical forms [94.19ms]
+
+tests/graphql/corpus.test.ts:
+(pass) US-009-AC7: pinned upstream full schema survives JSON/YAML and all declarations [4880.16ms]
+(pass) US-009-AC8: upstream grammar positives, negatives and incomplete schemas stay distinguished [4745.81ms]
+
+tests/graphql/native.test.ts:
+(pass) US-009-AC1: complete SDL declarations, extensions and original layout round-trip [401.93ms]
+(pass) US-009-AC2: editable AST stays isolated; current source replaces stale defaults with explicit layout loss [298.35ms]
+(pass) US-009-AC3: invalid native schemas and destructive AST edits fail [298.75ms]
+(pass) US-009-AC4: exact custom-scalar literals remain AST strings and block unsupported edits [160.67ms]
+
+tests/graphql/projection.test.ts:
+(pass) US-010-AC1: input nullability, defaults, recursive lists and OneOf remain explicit [200.30ms]
+(pass) US-010-AC2: fragments, output types, unbound scalars and strict policies block [393.99ms]
+(pass) US-010-AC5: pinned GitHub mutation input examples project without treating outputs as inputs [1919.11ms]
+
+tests/iceberg/promotion-data.test.ts:
+(pass) US-021-AC9: data evidence binds exact files and metadata to current public candidates [2351.37ms]
+
+tests/iceberg/schema.test.ts:
+(pass) US-020-AC1: recursive schema shapes and exact source tokens round trip in both UMF formats [1840.18ms]
+(pass) US-020-AC2: unknown representation fields remain in UMF and cannot silently export [31.94ms]
+(pass) US-020-AC3: copied access and atomic nested edits preserve IDs and reject invalid candidates [130.71ms]
+
+tests/iceberg/table-context.test.ts:
+(pass) US-021-AC4: upstream retained references resolve separately from native shape acceptance [1609.04ms]
+(pass) US-021-AC4: missing/duplicate current targets block context without destroying source [1591.37ms]
+(pass) US-021-AC4: exact snapshot links, expired parents and main branch coherence [1312.89ms]
+
+tests/iceberg/table-promotion.test.ts:
+(pass) US-021-AC8: six primitive widenings match independent native evolution and preserve history [3091.62ms]
+(pass) US-021-AC8: invalid promotions and unknown historical dependencies fail atomically [905.96ms]
+
+tests/iceberg/table-rename.test.ts:
+(pass) US-021-AC7: versioned rename retains histories and matches independent native evolution [2337.31ms]
+(pass) US-021-AC7: failed renames are atomic and native unknown content survives [898.95ms]
+
+tests/iceberg/table-transforms.test.ts:
+(pass) US-021-AC6: selected fields bind by ID, including nested structs and names containing dots [848.54ms]
+(pass) US-021-AC6: invalid current binding is diagnosed without interpreting historical specs [1623.34ms]
+(pass) US-021-AC6: v3 multi-source fields preserve both formats but remain unbound [224.28ms]
+(pass) US-021-AC6: struct fields within collections cannot act as scalar sources [214.96ms]
+(pass) US-021-AC6: native nested tables agree; v3 multi-source parser limitation remains explicit [223.70ms]
+
+tests/iceberg/table.test.ts:
+(pass) US-021-AC1: known table fields and embedded schemas survive JSON/YAML without native defaults [1791.42ms]
+(pass) US-021-AC2: exact int64 values, unknown versions/content and representation guards retain meaning [222.39ms]
+(pass) US-021-AC3: candidate failures are atomic and copy access cannot mutate original metadata [219.25ms]
+(pass) US-021-AC1: native parse and re-emission limits remain distinct [7.13ms]
+
+tests/iceberg/transforms.test.ts:
+(pass) US-021-AC5: native transform type matrix agrees for 136 source/transform combinations [0.99ms]
+(pass) US-021-AC5: unknown syntax stays uninterpreted and bounded parameters reject invalid widths [0.07ms]
+
+tests/iceberg/upstream.test.ts:
+(pass) US-020-AC4: pinned table/view resources retain exact standalone schema fragments [1991.05ms]
+(pass) US-020-AC4: Java and Python parser differences are recorded without default insertion [3.56ms]
+
+tests/json-schema/native.test.ts:
+(pass) US-002-AC1: full native schema survives editable UMF tree and YAML serialization [63.40ms]
+(pass) US-002-AC1: exact numbers and unknown native metadata survive without false semantic validation [19.27ms]
+(pass) US-002-AC2: supplied retrieval URI and reference bundle remain separate and usable [67.83ms]
+(pass) US-002-AC3: only actual applicator locations are exposed as schemas [11.56ms]
+(pass) US-002-AC4: dialect uncertainty, invalid schemas and duplicate keys are distinct [44.52ms]
+(pass) US-002-AC4: unknown representation content cannot silently disappear into native output [14.32ms]
+(pass) US-002-AC4: invalid edits and number injection cannot corrupt source [32.40ms]
+(pass) full export bundle retains unrelated UMF semantics and reports target-only limits [25.39ms]
+
+tests/json-schema/upstream.test.ts:
+(pass) upstream 2020-12: additionalProperties.json [463.78ms]
+(pass) upstream 2020-12: allOf.json [622.64ms]
+(pass) upstream 2020-12: anchor.json [216.86ms]
+(pass) upstream 2020-12: anyOf.json [429.58ms]
+(pass) upstream 2020-12: boolean_schema.json [38.71ms]
+(pass) upstream 2020-12: const.json [860.48ms]
+(pass) upstream 2020-12: contains.json [381.91ms]
+(pass) upstream 2020-12: content.json [218.43ms]
+(pass) upstream 2020-12: default.json [162.50ms]
+(pass) upstream 2020-12: defs.json [60.02ms]
+(pass) upstream 2020-12: dependentRequired.json [206.50ms]
+(pass) upstream 2020-12: dependentSchemas.json [209.49ms]
+(pass) upstream 2020-12: dynamicRef.json [1200.99ms]
+(pass) upstream 2020-12: enum.json [820.52ms]
+(pass) upstream 2020-12: exclusiveMaximum.json [54.18ms]
+(pass) upstream 2020-12: exclusiveMinimum.json [62.76ms]
+(pass) upstream 2020-12: format.json [948.68ms]
+(pass) upstream 2020-12: if-then-else.json [603.30ms]
+(pass) upstream 2020-12: infinite-loop-detection.json [99.84ms]
+(pass) upstream 2020-12: items.json [516.62ms]
+(pass) upstream 2020-12: maxContains.json [266.16ms]
+(pass) upstream 2020-12: maxItems.json [114.76ms]
+(pass) upstream 2020-12: maxLength.json [111.43ms]
+(pass) upstream 2020-12: maxProperties.json [157.60ms]
+(pass) upstream 2020-12: maximum.json [104.35ms]
+(pass) upstream 2020-12: minContains.json [422.65ms]
+(pass) upstream 2020-12: minItems.json [111.69ms]
+(pass) upstream 2020-12: minLength.json [116.30ms]
+(pass) upstream 2020-12: minProperties.json [102.91ms]
+(pass) upstream 2020-12: minimum.json [108.46ms]
+(pass) upstream 2020-12: multipleOf.json [256.29ms]
+(pass) upstream 2020-12: not.json [486.33ms]
+(pass) upstream 2020-12: oneOf.json [637.57ms]
+(pass) upstream 2020-12: pattern.json [162.24ms]
+(pass) upstream 2020-12: patternProperties.json [307.61ms]
+(pass) upstream 2020-12: prefixItems.json [199.60ms]
+(pass) upstream 2020-12: properties.json [313.39ms]
+(pass) upstream 2020-12: propertyNames.json [311.13ms]
+(pass) upstream 2020-12: ref.json [4270.95ms]
+(pass) upstream 2020-12: refRemote.json [818.40ms]
+(pass) upstream 2020-12: required.json [280.83ms]
+(pass) upstream 2020-12: type.json [495.96ms]
+(pass) upstream 2020-12: unevaluatedItems.json [1342.09ms]
+(pass) upstream 2020-12: unevaluatedProperties.json [1988.87ms]
+(pass) upstream 2020-12: uniqueItems.json [369.66ms]
+(pass) upstream 2020-12: vocabulary.json [77.31ms]
+
+tests/jsonld/compaction.test.ts:
+(pass) US-026-AC9: every pinned compact case, source preservation and explicit corpus discrepancies [32599.10ms]
+(pass) US-026-AC9: compact exact values, list/JSON ordering, target context, options and copied edits [2628.15ms]
+(pass) US-026-AC9: required context, explicit policies, unknown content and isolated target contexts [158.76ms]
+
+tests/jsonld/flatten.test.ts:
+(pass) US-026-AC8: full pinned flatten corpus, archives, report schema and qualified oracle [8550.20ms]
+(pass) US-026-AC8: precision, lists, graph merging, remote compaction, duplicates and copied edits [1789.53ms]
+(pass) US-026-AC8: explicit options, null context, unknown preservation and isolated contexts [209.51ms]
+
+tests/jsonld/framing.test.ts:
+(pass) US-026-AC10/11: complete pinned frame corpus, archives and native discrepancies [13077.20ms]
+(pass) US-026-AC10/11: exact values, views, edits, invalid unmatched frames and opaque controls [2821.72ms]
+(pass) US-026-AC10: framing option validation, unknown representation and context isolation [256.80ms]
+
+tests/jsonld/from-rdf.test.ts:
+(pass) US-026-AC12: complete fromRDF corpus, archives, exact official outputs and native differences [8786.43ms]
+(pass) US-026-AC12: exact literals, graph inventory, loss policies, compound literals and edits [2469.28ms]
+(pass) US-026-AC12: unknown RDF encoding blocks, options validate and normalized syntax preserves terms [75.84ms]
+
+tests/jsonld/jsonld.test.ts:
+(pass) US-026-AC1–3: complete pinned expansion corpus source preservation and qualified native comparisons [41453.71ms]
+(pass) US-026-AC4: loss policy, exact numbers, copies and explicit missing contexts [483.20ms]
+(pass) US-026-AC4: supplied contexts are isolated per operation and recover across formats [326.52ms]
+
+tests/jsonld/legacy.test.ts:
+(pass) US-026-AC6: legacy IRI mapping and prefixes respect the selected processing mode [1827.69ms]
+(pass) US-026-AC6: checked-in patch and installed sources match fresh-install evidence [2.59ms]
+
+tests/jsonld/nest.test.ts:
+(pass) US-026-AC5: scoped nesting uses its own context without changing siblings or JSON literals [803.07ms]
+
+tests/jsonld/numeric-rdf.test.ts:
+(pass) US-026-AC17: edited exact tokens remain archived while binary64 projections disclose rounding [226.75ms]
+(pass) US-026-AC17: independent native numeric outcomes are qualified rather than coerced into agreement [5.13ms]
+(pass) US-026-AC17: numeric lexical forms retain their intended RDF datatypes [914.03ms]
+
+tests/jsonld/numeric.test.ts:
+(pass) US-026-AC7: exact numbers retain numeric semantics through expansion and edits [1172.97ms]
+(pass) US-026-AC7: conformance comparison cannot conceal rounded decimals or opaque literal changes [0.43ms]
+
+tests/jsonld/rdf-terms.test.ts:
+(pass) US-026-AC15: RFC IRI components preserve valid spellings and reject malformed boundaries [0.74ms]
+(pass) US-026-AC15: BCP47 syntax handles private, grandfathered and duplicate subtags [0.19ms]
+
+tests/jsonld/to-rdf.test.ts:
+(pass) US-026-AC13: complete toRDF corpus retains sources, candidates and every gap [63492.18ms]
+(pass) US-026-AC13: loss guards, opaque JSON, known literal/list terms and copied edits [7918.56ms]
+(pass) US-026-AC13: native comparisons retain mismatches and non-comparable generalized datasets [6.39ms]
+
+tests/jsonld/unicode-iri.test.ts:
+(pass) US-026-AC16: Unicode IRIs retain their spelling across processing and selected framing [2324.45ms]
+(pass) US-026-AC16: independent parser limitations and escaped term evidence remain explicit [17.12ms]
+
+tests/linkml/class-slots.test.ts:
+(pass) US-024-AC6: all pinned example/metamodel local memberships match native evidence [25484.56ms]
+(pass) US-024-AC6: repeated declarations retain pointers; usage is not membership; cycles terminate [78.26ms]
+(pass) US-024-AC6: malformed structure, future semantics and missing classes never appear resolved [157.18ms]
+(pass) US-024-AC6: unknown metadata and escaped declaration names remain intact [36.04ms]
+
+tests/linkml/imports.test.ts:
+(pass) US-024-AC5: report schema, exact supplied sources and native reachable sets [904.79ms]
+(pass) US-024-AC5: source ordering, repeated edges, cycles and importer-scoped aliases [275.57ms]
+(pass) US-024-AC5: bad contexts cannot silently resolve; caller inputs remain isolated [302.19ms]
+
+tests/linkml/linkml.test.ts:
+(pass) US-024-AC1/3: all upstream contracts preserve original bytes and native candidate outcomes [1979.12ms]
+(pass) US-024-AC2: schema version is distinct from metamodel version and unknown content stays exact [170.52ms]
+
+tests/linkml/merge.test.ts:
+(pass) US-024-AC9: both explicit precedence policies preserve context and candidate round trips [2720.42ms]
+(pass) US-024-AC9: lookup and merge_imports differ on imported collisions; root and provenance survive [332.27ms]
+(pass) US-024-AC9: ambiguous policy and malformed dictionaries cannot produce a candidate [457.17ms]
+(pass) US-024-AC9: unknown imported metadata and overwritten provenance remain recoverable [180.02ms]
+
+tests/linkml/metamodel-merge.test.ts:
+(pass) US-024-AC10: every pinned metamodel entry merges under both policies with complete native comparison [7168.69ms]
+
+tests/linkml/metamodel.test.ts:
+(pass) US-024-AC4: every pinned metamodel source and metadata candidate retains native outcomes [2863.78ms]
+(pass) US-024-AC4: native singleton normalization never overwrites compact source [51.81ms]
+(pass) US-024-AC4: extended integer type boundaries stay numeric and exact [56.30ms]
+
+tests/linkml/slot-corpus.test.ts:
+(pass) US-024-AC8: pinned local scalar induction matches every comparable native query [45705.81ms]
+
+tests/linkml/slot-values.test.ts:
+(pass) US-024-AC7: scalar effective values match native induction across both UMF formats [2571.79ms]
+(pass) US-024-AC7: false/zero inheritance, usage, attributes, defaults and derived flags [213.71ms]
+(pass) US-024-AC7: malformed/coercing fields or missing slots block effective values [225.62ms]
+(pass) US-024-AC7: decimal comparisons retain source tokens at extreme exponents [184.32ms]
+(pass) US-024-AC7: integer exponent spellings stay exact without native coercion [108.99ms]
+
+tests/odcs/odcs.test.ts:
+(pass) US-023-AC1/3: all upstream contracts preserve original bytes and native candidate outcomes [9226.77ms]
+(pass) US-023-AC2: exact future values, invalid native shapes and representation boundaries remain explicit [180.96ms]
+
+tests/odcs/references.test.ts:
+(pass) US-023-AC4: specification-derived local reference vectors preserve source and explicit boundaries [1028.99ms]
+(pass) US-023-AC4: stable IDs survive rename/reordering; duplicates and unknown versions block [193.66ms]
+
+tests/odcs/relationships.test.ts:
+(pass) US-023-AC5: relationship reports preserve source, atomic pairings and native shape discrepancies [2017.57ms]
+(pass) US-023-AC5: bounded traversal and unknown relationship semantics keep full source [234.55ms]
+
+tests/odcs/rename.test.ts:
+(pass) US-023-AC6: renames preserve ordered endpoints and native evidence through both formats [3631.15ms]
+(pass) US-023-AC6: blocked rename is atomic and publishes neither candidate nor partial edits [765.36ms]
+
+tests/openapi/bundle.test.ts:
+(pass) US-011-AC8: external resources retain URI identity, source formats and edits in complete bundles [683.80ms]
+(pass) US-011-AC9: URI collisions, missing resources and unsupported anchor scopes fail explicitly [183.49ms]
+
+tests/openapi/corpus.test.ts:
+(pass) US-011-AC6: all pinned official examples retain content; fragments stay distinct from full descriptions [4218.70ms]
+(pass) US-011-AC7: legacy object validation catches version-specific shape errors without changing native semantics [152.28ms]
+
+tests/openapi/dynamic.test.ts:
+(pass) US-011-AC19: dynamic anchors choose outermost resource; ordinary targets remain static [1304.17ms]
+(pass) US-011-AC20: missing, invalid and mismatched evaluation contexts are rejected [622.56ms]
+
+tests/openapi/extraction.test.ts:
+(pass) US-011-AC15: extraction retains exact numbers, references and complete source context [109.69ms]
+(pass) US-011-AC16: dialect provenance and contextual extraction boundaries [180.38ms]
+
+tests/openapi/native.test.ts:
+(pass) US-011-AC1: OpenAPI JSON/YAML preserves native operations, schemas, extension content and source [168.74ms]
+(pass) US-011-AC2: candidate edits validate object structure and retain original archive [140.58ms]
+(pass) US-011-AC3: exact native YAML numbers and unsupported versions stay preserved without false interpretation [70.50ms]
+(pass) US-011-AC4: object validation profile rejects structural errors but discloses embedded-schema limits [137.23ms]
+
+tests/openapi/projection.test.ts:
+(pass) US-012-AC1: static schema projection retains recursive validation, annotations and source [393.64ms]
+(pass) US-012-AC2: strict losses and unsupported semantics block projection [506.10ms]
+(pass) US-012-AC3: all six pinned Tic Tac Toe schema components project [2709.88ms]
+(pass) US-012-AC2: unavailable target compilation blocks a support claim [126.24ms]
+
+tests/openapi/references.test.ts:
+(pass) US-011-AC12: typed reference chains retain source siblings and target origin [307.83ms]
+(pass) US-011-AC13: target mismatches, cycles and unsupported scope never masquerade as resolved references [493.81ms]
+(pass) US-011-AC14: each supported Reference Object target role validates its own shape [562.38ms]
+
+tests/openapi/schemas.test.ts:
+(pass) US-011-AC10: embedded dialect boundaries and literal examples remain distinct [144.29ms]
+(pass) US-011-AC11: schema positions cover 3.2 media item schemas and nested encoding headers [36.50ms]
+
+tests/openapi/scope.test.ts:
+(pass) US-011-AC17: nested IDs, anchors, pointer aliases and $self preserve source location [593.84ms]
+(pass) US-011-AC18: ambiguity, unknown dialect and non-schema targets fail explicitly [297.59ms]
+
+tests/owl/annotations.test.ts:
+(pass) US-029 nested axiom annotations preserve term identity and source edits [1209.83ms]
+(pass) US-029 nested annotations expose graph links in traversal order [87.81ms]
+(pass) US-029 annotation identity and malformed reifications agree with independent RDF parsing [4582.99ms]
+
+tests/owl/axioms.test.ts:
+(pass) US-029 special axioms preserve negative polarity, lists and source through recovery and edits [1146.96ms]
+(pass) US-029 malformed term roles reject; inverse object properties remain explicit [545.92ms]
+
+tests/owl/declarations.test.ts:
+(pass) US-029 explicit declarations preserve roles, occurrences and unknown source through both formats [2503.67ms]
+(pass) US-029 declaration corpus agrees with independent explicit RDF roles after recovery and edits [3576.22ms]
+
+tests/owl/expressions.test.ts:
+(pass) US-029 expression views retain constructor lists and exact restrictions [3887.78ms]
+(pass) US-029 ambiguous and malformed expression structure blocks without source mutation [879.21ms]
+
+tests/owl/list-axioms.test.ts:
+(pass) US-029 list axioms preserve ordering, duplicate occurrences, annotation anchors and malformed source [1161.60ms]
+(pass) US-029 list axiom recovery and edits match independent local-structure comparisons [3772.51ms]
+(pass) US-029 damaged nil and literal list tails cannot expose partial axioms [270.97ms]
+
+tests/owl/roundtrip.test.ts:
+(pass) US-029 OWL graph recovery, ontology headers and native graph oracle [1052.26ms]
+(pass) US-029 copied edits retain OWL terms and unknown envelope content atomically [480.69ms]
+(pass) US-029 unknown encoding is recoverable but cannot be interpreted or exported [180.98ms]
+(pass) US-029 headers remain multiple, explicit and source-scoped [179.58ms]
+
+tests/parquet/arrow-nested.test.ts:
+(pass) US-019-AC23 structural LIST/MAP correspondence retains distinct labels and inverse meaning [11091.72ms]
+
+tests/parquet/arrow-rename.test.ts:
+(pass) US-019-AC23 coordinated renames retain data, metadata and reversible field intent [51226.13ms]
+(pass) US-019-AC23 missing correspondence and invalid policies cannot produce partial files [1221.90ms]
+
+tests/parquet/arrow-schema.test.ts:
+(pass) CONTRACT-019 embedded Arrow schema preserves meanings absent from physical Parquet [488.36ms]
+(pass) CONTRACT-019 embedded schema rejects ambiguity and malformed framing without losing source [1063.76ms]
+(pass) CONTRACT-019 extracted Arrow messages re-encode and support detached schema transforms [811.69ms]
+
+tests/parquet/avro-arrow-loss.test.ts:
+(pass) CONTRACT-035 Arrow refinements require explicit losses even when physical Avro schemas agree [918.45ms]
+(pass) CONTRACT-035 malformed or ambiguous Arrow metadata blocks physical-only projection [507.09ms]
+
+tests/parquet/avro-projection.test.ts:
+(pass) CONTRACT-035 nested Parquet shapes preserve nullable lists, map entries and scalar precision in Avro [758.29ms]
+(pass) CONTRACT-035 logical and legacy container corpora lower or report blocked source shapes [2501.89ms]
+(pass) CONTRACT-035 unknown native fields on normalized-away LIST wrappers still block lowering [57.66ms]
+
+tests/parquet/bodies.test.ts:
+(pass) US-019-AC14: bounded physical page bodies and CRCs match independent native decompression [2852.80ms]
+(pass) US-019-AC14: Snappy copy/literal variants match native vectors and malformed blocks fail [17.24ms]
+(pass) US-019-AC14: actual corrupted bodies fail without publishing partial pages [99.86ms]
+
+tests/parquet/capture.test.ts:
+(pass) US-019-AC1: bounded binary source copies exact bytes including malformed input and preserves unknown representation [72.53ms]
+(pass) US-019-AC2: footer region checks do not imply metadata validity or plaintext columns [68.31ms]
+(pass) US-019-AC3: pinned Parquet source hashes survive both UMF serializations [1228.58ms]
+
+tests/parquet/containers.test.ts:
+(pass) US-019-AC9: container interpretations preserve source and match qualified native evidence [1970.64ms]
+(pass) US-019-AC9: preserve key-only map intent and diagnose repeated map values [68.41ms]
+
+tests/parquet/field-metadata.test.ts:
+(pass) CONTRACT-019 core field families respect native logical and physical meanings [2809.64ms]
+(pass) CONTRACT-019 native rename synchronizes materialized fields without losing attachments [318.26ms]
+
+tests/parquet/footer.test.ts:
+(pass) US-019-AC5: exact footer trees match independent Apache Thrift observations [1781.30ms]
+(pass) US-019-AC5: malformed and excessive wire values fail without partial interpretation [159.34ms]
+(pass) US-019-AC5: unknown UUID fields and trailing bytes remain distinct from native validity [30.67ms]
+
+tests/parquet/hybrid.test.ts:
+(pass) US-019-AC15: hybrid decoding matches independently read native dictionary pages [3.60ms]
+(pass) US-019-AC15: unsigned widths, final padding and strict bounds do not allocate from hostile run counts [0.43ms]
+
+tests/parquet/levels.test.ts:
+(pass) US-019-AC16: bounded page-level integration covers existing native files [3511.91ms]
+(pass) US-019-AC16: native-authored required/optional/repeated/list pages and malformed levels [847.07ms]
+
+tests/parquet/logical.test.ts:
+(pass) US-019-AC8: scalar annotations match native acceptance while preserving all sources [2164.24ms]
+(pass) US-019-AC8: local time meaning, legacy defaults/conflicts and incomplete containers remain explicit [89.64ms]
+
+tests/parquet/metadata.test.ts:
+(pass) US-019-AC6: named metadata matches native generated IDL classes for every fixture [1656.29ms]
+(pass) US-019-AC6: future enum codes and repeated unknown fields survive the named view [22.57ms]
+(pass) US-019-AC6: missing, duplicate or mistyped known fields block mapping while retaining wire/source [81.83ms]
+
+tests/parquet/offset-repair.test.ts:
+(pass) US-019-AC20: explicit legacy offset repair preserves source and every byte before footer [1246.81ms]
+(pass) US-019-AC20: already-correct files and damaged dictionaries do not produce repair candidates [404.72ms]
+
+tests/parquet/pages.test.ts:
+(pass) US-019-AC13: page headers and declared budgets match native corpus evidence [2098.47ms]
+(pass) US-019-AC13: malformed declarations block without decoding payloads; payload corruption remains explicit [675.18ms]
+
+tests/parquet/physical.test.ts:
+(pass) US-019-AC17: physical carrier decoding matches independent corpus results [6304.95ms]
+(pass) US-019-AC17: native physical boundaries preserve widths, bits, binary and dictionary carriers [1565.26ms]
+(pass) US-019-AC17: malformed PLAIN counts, lengths and fixed widths are rejected [0.27ms]
+(pass) US-019-AC17: dictionary range and expansion budgets block without partial values [229.15ms]
+
+tests/parquet/rename.test.ts:
+(pass) US-019-AC11: rename every field in nested native files with exact data-prefix preservation [7028.66ms]
+(pass) US-019-AC11: reject semantic wrapper changes, collisions, stale metadata and invalid requests [451.88ms]
+
+tests/parquet/rows.test.ts:
+(pass) US-019-AC18: assembled corpus rows match native-value evidence without source changes [6785.57ms]
+(pass) US-019-AC18: inconsistent shared columns and row-node expansion cannot publish partial rows [3543.61ms]
+
+tests/parquet/schema.test.ts:
+(pass) US-019-AC7: physical schema trees and levels match native columns [1590.85ms]
+(pass) US-019-AC7: inconsistent topology/links block; literal dots remain path components [338.30ms]
+
+tests/parquet/transform.test.ts:
+(pass) US-019-AC10: encoding preserves all native wire observations and guarded metadata transforms preserve data [5681.63ms]
+(pass) US-019-AC10: unsafe metadata edits fail without losing source or publishing output [304.37ms]
+(pass) US-019-AC10: encoder rejects lossy or oversized wire inputs and preserves UUID bits [16.26ms]
+
+tests/parquet/values-trial.test.ts:
+(pass) US-019-AC12 experiment: exact nested decimals, ordered maps, hostile names and temporal meaning match native values [111.21ms]
+
+tests/parquet/values.test.ts:
+(pass) US-019-AC19: bounded logical projections match native values and preserve sources [8502.97ms]
+(pass) US-019-AC19: logical value constraints block while exact/opaque carriers remain available [1305.63ms]
+(pass) US-019-AC19: bounded implementation agrees with the prior native nested-decimal/map experiment [564.70ms]
+(pass) US-019-AC19: logical floating views retain NaN payloads and signed zero exactly [258.66ms]
+(pass) US-019-AC19: JSON syntax validation preserves duplicates/exact text and bounds structure [21.61ms]
+
+tests/postgresql/avro-projection.test.ts:
+(pass) CONTRACT-034 PostgreSQL captured columns project with explicit restricted domains and native recovery [1088.10ms]
+(pass) CONTRACT-034 numeric typmods are decoded without truncation or inventing unconstrained precision [2061.44ms]
+(pass) CONTRACT-034 unsupported mappings, ambiguity, stale metadata and modified captures block [3111.36ms]
+
+tests/postgresql/catalog.test.ts:
+(pass) US-015-AC6: captured PostgreSQL metadata, exact unknowns and reconstruction archives survive both UMF formats [957.89ms]
+(pass) US-015-AC6: candidate edits cannot expose stale reconstruction SQL as synchronized [941.16ms]
+(pass) US-015-AC6: ambiguity and unknown representation data are preserved and reported [284.72ms]
+(pass) US-015-AC6: unsupported minor-version evidence and conflicting capture state cannot overclaim readiness [173.02ms]
+(pass) US-015-AC7: v1 captures remain readable while v2 requires its additional native object families [341.49ms]
+(pass) US-015-AC8: dependency identities distinguish native objects and preserve copied edges [213.55ms]
+
+tests/postgresql/ddl-edits.test.ts:
+(pass) US-015-AC12 edited native DDL evidence binds current proposals and fresh catalog recovery [532.31ms]
+
+tests/postgresql/declarations.test.ts:
+(pass) CONTRACT-015 raw DDL exposes copied declarations without resolving search_path, LIKE or ALTER state [471.54ms]
+(pass) CONTRACT-015 DDL type inventory respects native edits, unknown type syntax, foreign tables and version guards [219.39ms]
+
+tests/postgresql/edit-preservation.test.ts:
+(pass) CONTRACT-015 candidate edits cannot erase unknown tagged representation content [2643.00ms]
+
+tests/postgresql/integer-tokens.test.ts:
+(pass) CONTRACT-015 exact catalog integers prevent false scalar classification through rounding [4223.02ms]
+
+tests/postgresql/metadata.test.ts:
+(pass) CONTRACT-015 catalog identities drive core families without flattening native meaning [872.56ms]
+(pass) CONTRACT-015 legacy captures do not guess types and field metadata cannot be lost [717.81ms]
+
+tests/postgresql/native.test.ts:
+(pass) US-015-AC1: PostgreSQL DDL source and native AST survive UMF and native round trips [425.59ms]
+(pass) US-015-AC2: native candidate edits propagate without modifying the original source [72.00ms]
+(pass) US-015-AC3: unknown AST and representation fields cannot disappear through Protobuf or deparse [75.75ms]
+(pass) US-015-AC3: typed AST schema covers native samples, unions and known field types without stripping unknowns [36.40ms]
+(pass) US-015-AC3: typed Boolean construction repairs the wrapper without hiding raw codec loss [142.59ms]
+(pass) US-015-AC2: Boolean candidate edit uses the native false representation [66.36ms]
+
+tests/postgresql/projection.test.ts:
+(pass) US-015-AC9: explicit PostgreSQL row encodings produce a qualified JSON Schema and quoted query [106.42ms]
+(pass) US-015-AC9: strict policy, unsafe encodings and edited metadata block projection [551.75ms]
+(pass) US-015-AC9: generated SQL quotes identifiers and keys instead of interpolating executable fragments [239.20ms]
+(pass) US-015-AC9: projection result schema distinguishes blocked results from executable results [137.81ms]
+(pass) US-015-AC9: boolean, smallint and SQL/JSON null encodings retain their distinct contracts [76.33ms]
+
+tests/projections/ddd-authored-graph-fixture.test.ts:
+(pass) FEAT-006: staged DDL and SDL fixtures share the same authored DDD graph [3.69ms]
+
+tests/projections/ddd-graphql-core-fields.test.ts:
+(pass) @covers US-049-AC3 @covers US-049-AC5 @covers US-049-AC6: core Field availability controls SDL wrappers [256.20ms]
+(pass) @covers US-049-AC3 @covers US-049-AC4: absent item availability remains a nullable item and a residual [92.29ms]
+(pass) @covers US-049-AC3: an unspecified core availability cannot borrow DDD one as SDL non-null [91.87ms]
+(pass) @covers US-049-AC4: missing, conflicting and duplicate core pairings block before SDL [109.58ms]
+(pass) @covers US-049-AC3: the DDD-only profile cannot silently ignore a core pairing [13.51ms]
+
+tests/projections/ddd-graphql-entities.test.ts:
+(pass) @covers US-049-AC3 @covers US-049-AC5 @covers US-049-AC6: entity SDL, scalar wrappers and schema-mode import [254.84ms]
+(pass) @covers US-049-AC5 @covers US-049-AC9: residuals retain root, identity, cardinality and scalar limits [97.79ms]
+(pass) @covers US-049-AC4: malformed names, unknown relationships and collisions block atomically [80.18ms]
+(pass) @covers US-049-AC5: a DDD concept field never becomes a relationship [97.68ms]
+(pass) @covers US-049-AC9: opaque DDD invariant is retained without execution [101.11ms]
+
+tests/projections/ddd-json-schema.test.ts:
+(pass) US-006-AC1: explicit document binding emits useful nested schema with separate source recovery [227.55ms]
+(pass) US-006-AC2: independent JSON Schema validation enforces shape but not domain consistency [152.62ms]
+(pass) US-006-AC3: missing, unused, invalid identity, strict and non-data bindings block explicitly [386.90ms]
+(pass) US-006-AC4: changing only embedding policy changes document representation, not domain intent [156.35ms]
+
+tests/projections/ddd-postgresql-tables-indexes.test.ts:
+(pass) @covers US-048-AC1 @covers US-048-AC3 @covers US-047-AC3: qualified DDD tables carry only native-valid bound indexes [609.49ms]
+(pass) @covers US-048-AC3 @covers US-047-AC9: unknown binding and invalid index evidence never produce DDL [29.99ms]
+
+tests/projections/ddd-postgresql-tables.test.ts:
+(pass) @covers US-048-AC1 @covers US-048-AC3 @covers US-048-AC5: order graph tables, JSONB and LIST partition pass the adapter [187.40ms]
+(pass) @covers US-048-AC3 @covers US-048-AC4: stale and unknown bindings block; unqualified type cannot inject SQL [151.44ms]
+(pass) @covers US-048-AC3 @covers US-048-AC4: partition and embedded path losses are named [85.55ms]
+
+tests/projections/json-schema-protobuf.test.ts:
+(pass) US-004-AC1: explicit mapping reports every unsupported constraint and retains exact source [416.67ms]
+(pass) US-004-AC2: strict policy, missing/conflicting bindings and ambiguous shapes block explicitly [171.87ms]
+(pass) US-004-AC3: nested referenced objects compile without merging native identity [416.10ms]
+(pass) US-004-AC4: independent target compiler/runtime demonstrates reported source-to-target mismatches [402.86ms]
+(pass) US-004-AC2: unknown dialect and nested resource scope cannot be guessed away [42.92ms]
+
+tests/protobuf/behavior.test.ts:
+(pass) US-003-AC6: independent native runtime behavior survives and detects semantic mutations [490.87ms]
+
+tests/protobuf/descriptor.test.ts:
+(pass) US-003-AC1: descriptor presence, source metadata, options and exact defaults survive JSON/YAML [947.96ms]
+(pass) US-003-AC2: typed candidate edit changes independent native compiler output [767.18ms]
+(pass) US-003-AC3: invalid values and unknown representation fields fail without source mutation [341.64ms]
+(pass) US-003-AC1: unknown descriptor wire fields survive and explicit defaults retain presence [0.15ms]
+(pass) US-003-AC4: independent compiler decodes identical descriptors across authored and standard corpus [897.88ms]
+
+tests/protobuf/emission.test.ts:
+(pass) US-003-AC8: native source emission recompiles without semantic loss and reflects edits [1373.44ms]
+(pass) US-003-AC8: source emission refuses unknown semantics with no source representation [976.31ms]
+(pass) US-003-AC8: standard corpus emission reports each native root and unsupported Editions [4463.51ms]
+
+tests/protobuf/source.test.ts:
+(pass) US-003-AC7: native source bundle compiles into editable descriptors with source archive [870.27ms]
+
+tests/rdf/merge.test.ts:
+(pass) US-025-AC7: all positive RDF source datasets merge with independent blank scopes [81623.62ms]
+(pass) US-025-AC7: shared labels remain linked within each input, never across inputs [121.30ms]
+(pass) US-025-AC7: unknown encodings block atomically and other metadata remains in source reports [98.01ms]
+
+tests/rdf/rdf.test.ts:
+(pass) US-025-AC1/3: complete official syntax corpus, native graph evidence and candidate round trips [8573.87ms]
+(pass) US-025-AC2: blank scope, lexical numbers, duplicates, unknown encoding and atomic edits [110.85ms]
+(pass) US-025-AC2: invalid Unicode cannot silently change during UTF-8 export [23.63ms]
+
+tests/rdf/rename.test.ts:
+(pass) US-025-AC4: corpus IRI renames match native datasets through both UMF formats [9444.37ms]
+(pass) US-025-AC4: all term positions change while literal text, blank scope and source stay intact [86.01ms]
+(pass) US-025-AC4: collisions, absent terms, invalid IRIs and unknown encoding block atomically [242.43ms]
+
+tests/rdf/trig.test.ts:
+(pass) US-025-AC6: full official TriG corpus, expected graphs and candidate exports [34219.43ms]
+(pass) US-025-AC6: empty graph identity survives edits and guarded IRI renames [239.38ms]
+(pass) US-025-AC6: graph declarations include empty anonymous graphs and reject loss [111.16ms]
+
+tests/rdf/turtle.test.ts:
+(pass) US-025-AC5: full official Turtle corpus, expected graphs and candidate exports [28671.12ms]
+(pass) US-025-AC5: blank allocation, explicit labels, base resolution and literal lexemes are stable [142.30ms]
+(pass) US-025-AC5: named graph loss, missing base and RDF 1.2 syntax are explicit failures [58.26ms]
+
+tests/rdfxml/feasibility.test.ts:
+(pass) SPIKE-006: finalization rejects truncated XML without returning a partial graph [10.29ms]
+(pass) SPIKE-006: all pinned W3C sources and experimental outcomes remain reproducible [241.39ms]
+(pass) SPIKE-006: native evidence retains XML-literal discrepancies instead of claiming conformance [0.75ms]
+
+tests/rdfxml/literals.test.ts:
+(pass) SPIKE-006: literal repair preserves authored XML structure and every official graph outcome [47.02ms]
+
+tests/relationship-native/observations.test.ts:
+(pass) CONTRACT-041: native observations retain browser recovery evidence [0.33ms]
+(pass) CONTRACT-041: RDF union-class domain is retained without authored inference [100.51ms]
+(pass) CONTRACT-041: RDF domain and range remain native observations [65.88ms]
+(pass) CONTRACT-041: TableSpec foreign-key metadata stays a native observation [42.81ms]
+(pass) CONTRACT-041: LinkML slot and range remain native observations [67.88ms]
+
+tests/relationship/graphql-native.test.ts:
+(pass) @covers US-045-AC5 @covers US-045-AC7: object-returning SDL fields stay native observations [234.54ms]
+(pass) @covers US-045-AC5: two native object fields with the same type do not prove association intent [0.04ms]
+
+tests/relationship/postgresql-native.test.ts:
+(pass) @covers US-045-AC5 @covers US-045-AC7: native FK refinements remain observations with exact source recovery [122.27ms]
+(pass) @covers US-045-AC5: pinned catalog distinguishes validation, MATCH SIMPLE and alternate UNIQUE target [0.08ms]
+
+tests/shacl/engine.test.ts:
+(pass) US-028 experimental engine: all official Core booleans, qualified reports and retained inputs [32618.15ms]
+(pass) US-028 engine rejects recursive and unsupported processing without losing sources [950.36ms]
+(pass) US-028 engine cannot silently stop after fifty repeated shape checks [205.26ms]
+(pass) US-028 explicit blank-node policy controls shared graph identity [312.12ms]
+(pass) US-028 native integer-rounding false pass is corrected with exact source retained [191.98ms]
+
+tests/shacl/float.test.ts:
+(pass) US-028 mixed numeric promotions agree with direct native C conversions [36103.29ms]
+(pass) US-028 float lexical validation, signed zero, ties and bounded conversion [6.62ms]
+(pass) US-028 conversion limit blocks without a partial report or source loss [196.05ms]
+
+tests/shacl/lists.test.ts:
+(pass) US-028 malformed Core constraint lists never produce a conformance result [8107.08ms]
+(pass) US-028 empty, named, shared and duplicate-triple lists retain RDF set semantics [565.70ms]
+
+tests/shacl/metadata.test.ts:
+(pass) US-028 metadata supports consumers without collapsing native declarations [1622.50ms]
+(pass) US-028 invalid paths and literal property links remain explicit metadata [174.04ms]
+
+tests/shacl/numeric.test.ts:
+(pass) US-028 exact numeric bounds, property comparisons and datatype boundaries [29523.38ms]
+(pass) US-028 mixed float/decimal promotion follows the declared numeric profile [151.38ms]
+
+tests/shacl/paths.test.ts:
+(pass) US-028 graph preservation, all path operators and independent expected sets [9003.66ms]
+(pass) US-028 malformed paths remain recoverable but cannot be evaluated [2017.19ms]
+(pass) US-028 unknown encoding, scopes, copied values and atomic rejection [704.42ms]
+(pass) US-028 bounded recursive structure and expensive finite traversal fail without mutation [1051.26ms]
+(pass) US-028 pinned official graph inventory and independent corpus evidence [64.28ms]
+
+tests/shacl/strings.test.ts:
+(pass) US-028 string constraints preserve lexical values and Unicode semantics [24213.70ms]
+(pass) US-028 malformed string parameters block without source loss [589.07ms]
+
+tests/shacl/targets.test.ts:
+(pass) US-028 Core target sets match native SPARQL across official and authored graphs [6953.83ms]
+(pass) US-028 graph boundaries, exact literals, cycles, deactivation and atomic target edit [1327.86ms]
+(pass) US-028 malformed or unsupported target declarations cannot silently select a subset [1543.19ms]
+
+tests/smithy/assembly.test.ts:
+(pass) US-014-AC10: assembly contract retains exact model/source and isolates trusted backend input [108.88ms]
+(pass) US-014-AC11: native rejection, runtime errors and malformed output expose no assembled model [135.75ms]
+(pass) US-014-AC10: AST dependency IDs map to explicit supplied native files [33.39ms]
+
+tests/smithy/bundle.test.ts:
+(pass) US-014-AC5: supplied dependency models survive bundle and UMF round trips [185.26ms]
+(pass) US-014-AC6: duplicate IDs, malformed dependency AST and unknown representation are explicit [79.42ms]
+
+tests/smithy/native.test.ts:
+(pass) US-014-AC1: exact native metadata and recursive service shapes survive JSON/YAML [158.71ms]
+(pass) US-014-AC2: unknown native meaning survives; unknown representation blocks export [45.04ms]
+(pass) US-014-AC3: every pinned upstream valid-loader JSON fixture round-trips [2935.01ms]
+
+tests/smithy/projection.test.ts:
+(pass) US-014-AC16: explicit native projection retains source and blocks strict claims [131.33ms]
+(pass) US-014-AC16: dangling native references and failed emission cannot expose a target [152.79ms]
+(pass) US-014-AC17: explicit root-definition profile retains both outputs and refuses missing capability [162.42ms]
+(pass) US-014-AC18: service context is explicit, preserved and capability checked [130.33ms]
+
+tests/smithy/selection.test.ts:
+(pass) US-014-AC14: shape-set query preserves source and validates complete result schema [52.25ms]
+(pass) US-014-AC14: invalid responses, failed assembly and selector exceptions expose no shape set [129.98ms]
+(pass) US-014-AC15: cancellation between assembly and selection prevents query results [51.57ms]
+
+tests/smithy/sources.test.ts:
+(pass) US-014-AC7: IDL/JSON source bundles preserve exact text and candidate edits [134.10ms]
+(pass) US-014-AC8: source path constraints and unknown representation remain explicit [55.03ms]
+(pass) US-014-AC9: all pinned valid-loader IDL fixtures survive exact source round trips [2213.17ms]
+(pass) US-014-AC13: pinned invalid-loader inventory and every fixture hash remain intact [13.79ms]
+(pass) US-014-AC13: apply/apply-block-missing-closing.smithy retains exact source without claiming validity [30.60ms]
+(pass) US-014-AC13: apply/apply-missing-newline.smithy retains exact source without claiming validity [26.23ms]
+(pass) US-014-AC13: apply/apply-missing-space.smithy retains exact source without claiming validity [34.03ms]
+(pass) US-014-AC13: apply/apply-missing-trait-value.smithy retains exact source without claiming validity [32.07ms]
+(pass) US-014-AC13: control/control-colon-newline.smithy retains exact source without claiming validity [31.71ms]
+(pass) US-014-AC13: control/control-missing-value.smithy retains exact source without claiming validity [33.70ms]
+(pass) US-014-AC13: control/control-newline.smithy retains exact source without claiming validity [33.20ms]
+(pass) US-014-AC13: control/control-statement-before-others.smithy retains exact source without claiming validity [33.86ms]
+(pass) US-014-AC13: control/control-version-defined-twice.smithy retains exact source without claiming validity [26.32ms]
+(pass) US-014-AC13: control/control-with-invalid-key.smithy retains exact source without claiming validity [33.13ms]
+(pass) US-014-AC13: control/control-with-invalid-key2.smithy retains exact source without claiming validity [25.34ms]
+(pass) US-014-AC13: control/control-with-no-colon.smithy retains exact source without claiming validity [33.17ms]
+(pass) US-014-AC13: control/no-newline-after-control.smithy retains exact source without claiming validity [33.74ms]
+(pass) US-014-AC13: defaults/default-in-v1.smithy retains exact source without claiming validity [34.67ms]
+(pass) US-014-AC13: defaults/default-incomplete-node.smithy retains exact source without claiming validity [32.67ms]
+(pass) US-014-AC13: defaults/default-missing-structure-close.smithy retains exact source without claiming validity [26.68ms]
+(pass) US-014-AC13: defaults/default-missing-value.smithy retains exact source without claiming validity [29.69ms]
+(pass) US-014-AC13: defaults/default-with-newline-before-value.smithy retains exact source without claiming validity [33.65ms]
+(pass) US-014-AC13: defaults/missing-newline-after-assignment.smithy retains exact source without claiming validity [31.59ms]
+(pass) US-014-AC13: elision/elide-nonexistent-id.smithy retains exact source without claiming validity [33.99ms]
+(pass) US-014-AC13: elision/elided-property-type-conflicts.smithy retains exact source without claiming validity [36.48ms]
+(pass) US-014-AC13: elision/elided-type-conflicts.smithy retains exact source without claiming validity [35.70ms]
+(pass) US-014-AC13: elision/eliding-with-resources-in-v1.smithy retains exact source without claiming validity [36.02ms]
+(pass) US-014-AC13: elision/eliding-without-resources-v1.smithy retains exact source without claiming validity [35.29ms]
+(pass) US-014-AC13: elision/for-after-with.smithy retains exact source without claiming validity [32.86ms]
+(pass) US-014-AC13: elision/for-referencing-non-resource.smithy retains exact source without claiming validity [32.95ms]
+(pass) US-014-AC13: elision/list-member-elision-in-v1.smithy retains exact source without claiming validity [33.55ms]
+(pass) US-014-AC13: elision/structure-member-elision-in-v1.smithy retains exact source without claiming validity [34.36ms]
+(pass) US-014-AC13: enums/enum-with-bad-values.smithy retains exact source without claiming validity [34.62ms]
+(pass) US-014-AC13: enums/enum-with-duplicates.smithy retains exact source without claiming validity [31.34ms]
+(pass) US-014-AC13: enums/enum-with-newline-before-value.smithy retains exact source without claiming validity [36.43ms]
+(pass) US-014-AC13: enums/enum-without-member.smithy retains exact source without claiming validity [34.94ms]
+(pass) US-014-AC13: enums/idl-enums-in-v1.smithy retains exact source without claiming validity [33.58ms]
+(pass) US-014-AC13: enums/int-enum-without-member.smithy retains exact source without claiming validity [31.80ms]
+(pass) US-014-AC13: enums/intEnum-with-bad-value.smithy retains exact source without claiming validity [33.18ms]
+(pass) US-014-AC13: enums/intEnum-with-duplicates.smithy retains exact source without claiming validity [33.28ms]
+(pass) US-014-AC13: enums/intEnum-with-float.smithy retains exact source without claiming validity [34.39ms]
+(pass) US-014-AC13: enums/intEnum-with-long.smithy retains exact source without claiming validity [36.19ms]
+(pass) US-014-AC13: enums/missing-newline-after-assignment.smithy retains exact source without claiming validity [34.15ms]
+(pass) US-014-AC13: inline-io/inline-error.smithy retains exact source without claiming validity [26.78ms]
+(pass) US-014-AC13: inline-io/inline-io-in-explicit-1-0.smithy retains exact source without claiming validity [33.27ms]
+(pass) US-014-AC13: inline-io/inline-io-in-implicit-1-0.smithy retains exact source without claiming validity [34.91ms]
+(pass) US-014-AC13: inline-io/inline-name-override.smithy retains exact source without claiming validity [34.78ms]
+(pass) US-014-AC13: inline-io/inline-single-error.smithy retains exact source without claiming validity [32.37ms]
+(pass) US-014-AC13: inline-io/inline-structure-member.smithy retains exact source without claiming validity [36.37ms]
+(pass) US-014-AC13: inline-io/walrus-operator-in-node.smithy retains exact source without claiming validity [26.84ms]
+(pass) US-014-AC13: lists/list-empty-members.smithy retains exact source without claiming validity [35.12ms]
+(pass) US-014-AC13: lists/no-sets-in-v2.smithy retains exact source without claiming validity [34.53ms]
+(pass) US-014-AC13: lists/set-empty-members.smithy retains exact source without claiming validity [37.54ms]
+(pass) US-014-AC13: maps/map-empty-members.smithy retains exact source without claiming validity [34.25ms]
+(pass) US-014-AC13: maps/map-unclosed-parameters1.smithy retains exact source without claiming validity [35.22ms]
+(pass) US-014-AC13: maps/map-unclosed-parameters2.smithy retains exact source without claiming validity [33.95ms]
+(pass) US-014-AC13: maps/map-unclosed-parameters3.smithy retains exact source without claiming validity [34.35ms]
+(pass) US-014-AC13: maps/map-unclosed-parameters4.smithy retains exact source without claiming validity [35.35ms]
+(pass) US-014-AC13: metadata/invalid-object-shape-id-key.smithy retains exact source without claiming validity [34.42ms]
+(pass) US-014-AC13: metadata/invalid-object-text-block-key.smithy retains exact source without claiming validity [35.07ms]
+(pass) US-014-AC13: metadata/invalid-unquoted-shape-id.smithy retains exact source without claiming validity [33.67ms]
+(pass) US-014-AC13: metadata/metadata-multiple-lines.smithy retains exact source without claiming validity [34.90ms]
+(pass) US-014-AC13: metadata/metadata-must-come-before-namespace.smithy retains exact source without claiming validity [33.66ms]
+(pass) US-014-AC13: metadata/metadata-with-invalid-key.smithy retains exact source without claiming validity [33.40ms]
+(pass) US-014-AC13: metadata/no-newline-after-metadata.smithy retains exact source without claiming validity [36.07ms]
+(pass) US-014-AC13: metadata/not-newline-after-metadata.smithy retains exact source without claiming validity [33.44ms]
+(pass) US-014-AC13: metadata/space-after-metadata-quoted.smithy retains exact source without claiming validity [33.70ms]
+(pass) US-014-AC13: metadata/space-after-metadata-unquoted.smithy retains exact source without claiming validity [34.80ms]
+(pass) US-014-AC13: metadata/space-after-node-array-keyword.smithy retains exact source without claiming validity [33.66ms]
+(pass) US-014-AC13: mixins/dangling-with.smithy retains exact source without claiming validity [31.88ms]
+(pass) US-014-AC13: mixins/invalid-statement-after-structure-name.smithy retains exact source without claiming validity [35.47ms]
+(pass) US-014-AC13: mixins/member-mixin-conflict-1.smithy retains exact source without claiming validity [32.76ms]
+(pass) US-014-AC13: mixins/member-mixin-conflict-2.smithy retains exact source without claiming validity [31.70ms]
+(pass) US-014-AC13: mixins/missing-rest-of-with-word.smithy retains exact source without claiming validity [33.97ms]
+(pass) US-014-AC13: mixins/mix-types.smithy retains exact source without claiming validity [32.26ms]
+(pass) US-014-AC13: mixins/mixins-trait-in-explicit-1-0.smithy retains exact source without claiming validity [34.23ms]
+(pass) US-014-AC13: mixins/mixins-trait-in-implicit-1-0.smithy retains exact source without claiming validity [34.47ms]
+(pass) US-014-AC13: mixins/mixins-usage-in-explicit-1-0.smithy retains exact source without claiming validity [33.21ms]
+(pass) US-014-AC13: mixins/mixins-usage-in-implicit-1-0.smithy retains exact source without claiming validity [31.91ms]
+(pass) US-014-AC13: mixins/operation-mixin-with-io.smithy retains exact source without claiming validity [34.56ms]
+(pass) US-014-AC13: mixins/resource-mixin-with-properties.smithy retains exact source without claiming validity [32.85ms]
+(pass) US-014-AC13: mixins/with-but-no-ids.smithy retains exact source without claiming validity [34.22ms]
+(pass) US-014-AC13: mixins/with-on-next-line-bigDecimal.smithy retains exact source without claiming validity [34.72ms]
+(pass) US-014-AC13: mixins/with-on-next-line-bigInteger.smithy retains exact source without claiming validity [35.12ms]
+(pass) US-014-AC13: mixins/with-on-next-line-blob.smithy retains exact source without claiming validity [32.97ms]
+(pass) US-014-AC13: mixins/with-on-next-line-boolean.smithy retains exact source without claiming validity [34.40ms]
+(pass) US-014-AC13: mixins/with-on-next-line-byte.smithy retains exact source without claiming validity [33.31ms]
+(pass) US-014-AC13: mixins/with-on-next-line-document.smithy retains exact source without claiming validity [33.21ms]
+(pass) US-014-AC13: mixins/with-on-next-line-double.smithy retains exact source without claiming validity [32.15ms]
+(pass) US-014-AC13: mixins/with-on-next-line-float.smithy retains exact source without claiming validity [38.75ms]
+(pass) US-014-AC13: mixins/with-on-next-line-integer.smithy retains exact source without claiming validity [34.50ms]
+(pass) US-014-AC13: mixins/with-on-next-line-list.smithy retains exact source without claiming validity [35.37ms]
+(pass) US-014-AC13: mixins/with-on-next-line-long.smithy retains exact source without claiming validity [33.38ms]
+(pass) US-014-AC13: mixins/with-on-next-line-map.smithy retains exact source without claiming validity [34.28ms]
+(pass) US-014-AC13: mixins/with-on-next-line-resource.smithy retains exact source without claiming validity [33.60ms]
+(pass) US-014-AC13: mixins/with-on-next-line-service.smithy retains exact source without claiming validity [35.59ms]
+(pass) US-014-AC13: mixins/with-on-next-line-short.smithy retains exact source without claiming validity [34.58ms]
+(pass) US-014-AC13: mixins/with-on-next-line-string.smithy retains exact source without claiming validity [34.15ms]
+(pass) US-014-AC13: mixins/with-on-next-line-structure.smithy retains exact source without claiming validity [33.48ms]
+(pass) US-014-AC13: mixins/with-on-next-line-timestamp.smithy retains exact source without claiming validity [34.62ms]
+(pass) US-014-AC13: mixins/with-on-next-line-union.smithy retains exact source without claiming validity [37.18ms]
+(pass) US-014-AC13: namespace/namespace-before-shapes.smithy retains exact source without claiming validity [33.15ms]
+(pass) US-014-AC13: namespace/namespace-before-traits.smithy retains exact source without claiming validity [37.23ms]
+(pass) US-014-AC13: namespace/namespace-defined-twice.smithy retains exact source without claiming validity [35.65ms]
+(pass) US-014-AC13: namespace/namespace-multiple-lines.smithy retains exact source without claiming validity [33.68ms]
+(pass) US-014-AC13: namespace/namespace-no-newline.smithy retains exact source without claiming validity [33.21ms]
+(pass) US-014-AC13: namespace/namespace-syntax-error.smithy retains exact source without claiming validity [33.41ms]
+(pass) US-014-AC13: namespace/unclosed-string1.smithy retains exact source without claiming validity [32.58ms]
+(pass) US-014-AC13: namespace/unclosed-string2-invalid-single-quote.smithy retains exact source without claiming validity [35.01ms]
+(pass) US-014-AC13: namespace/unclosed-string3.smithy retains exact source without claiming validity [33.97ms]
+(pass) US-014-AC13: numbers/decimal-with-no-digit-after.smithy retains exact source without claiming validity [34.94ms]
+(pass) US-014-AC13: numbers/exponent-with-no-digit.smithy retains exact source without claiming validity [32.28ms]
+(pass) US-014-AC13: numbers/exponent-with-sign-then-no-digit.smithy retains exact source without claiming validity [33.68ms]
+(pass) US-014-AC13: numbers/leading-decimal.smithy retains exact source without claiming validity [33.45ms]
+(pass) US-014-AC13: numbers/negative-with-no-digit.smithy retains exact source without claiming validity [32.06ms]
+(pass) US-014-AC13: operations/input-defined-twice.smithy retains exact source without claiming validity [31.22ms]
+(pass) US-014-AC13: operations/invalid-operation-properties.smithy retains exact source without claiming validity [33.92ms]
+(pass) US-014-AC13: operations/missing-ws-after-input.smithy retains exact source without claiming validity [33.55ms]
+(pass) US-014-AC13: parse-errors/absolute-shape-name.smithy retains exact source without claiming validity [35.62ms]
+(pass) US-014-AC13: parse-errors/expected-shape-id-after-type.smithy retains exact source without claiming validity [34.34ms]
+(pass) US-014-AC13: parse-errors/expected-shape-name-but-eof.smithy retains exact source without claiming validity [34.40ms]
+(pass) US-014-AC13: parse-errors/invalid-newline-after-shape-type.smithy retains exact source without claiming validity [33.51ms]
+(pass) US-014-AC13: parse-errors/missing-space-after-string.smithy retains exact source without claiming validity [33.87ms]
+(pass) US-014-AC13: parse-errors/missing-space-after-structure.smithy retains exact source without claiming validity [33.54ms]
+(pass) US-014-AC13: parse-errors/shape-name-syntax.smithy retains exact source without claiming validity [35.23ms]
+(pass) US-014-AC13: parse-errors/shape-name-syntax2.smithy retains exact source without claiming validity [35.24ms]
+(pass) US-014-AC13: parse-errors/shape-name-syntax3.smithy retains exact source without claiming validity [35.00ms]
+(pass) US-014-AC13: parse-errors/statement-unknown.smithy retains exact source without claiming validity [25.61ms]
+(pass) US-014-AC13: parse-errors/syntax-error-token.smithy retains exact source without claiming validity [33.91ms]
+(pass) US-014-AC13: strings/invalid-escape-apostrophe.smithy retains exact source without claiming validity [33.76ms]
+(pass) US-014-AC13: strings/invalid-escape-space.smithy retains exact source without claiming validity [33.25ms]
+(pass) US-014-AC13: strings/invalid-unicode-escape.smithy retains exact source without claiming validity [33.57ms]
+(pass) US-014-AC13: strings/invalid-unicode-escape2.smithy retains exact source without claiming validity [32.69ms]
+(pass) US-014-AC13: strings/invalid-unicode-escape3.smithy retains exact source without claiming validity [36.07ms]
+(pass) US-014-AC13: strings/invalid-unicode-escape4.smithy retains exact source without claiming validity [32.96ms]
+(pass) US-014-AC13: strings/invalid-unicode-escape5.smithy retains exact source without claiming validity [27.58ms]
+(pass) US-014-AC13: strings/text-block-empty.smithy retains exact source without claiming validity [31.92ms]
+(pass) US-014-AC13: strings/text-block-invalid-unicode.smithy retains exact source without claiming validity [25.99ms]
+(pass) US-014-AC13: strings/text-block-missing-newline.smithy retains exact source without claiming validity [32.97ms]
+(pass) US-014-AC13: strings/unclosed-string.smithy retains exact source without claiming validity [31.69ms]
+(pass) US-014-AC13: strings/unclosed-string2.smithy retains exact source without claiming validity [33.53ms]
+(pass) US-014-AC13: strings/unclosed-string3.smithy retains exact source without claiming validity [35.35ms]
+(pass) US-014-AC13: strings/unclosed-text-block.smithy retains exact source without claiming validity [31.73ms]
+(pass) US-014-AC13: traits/annotation-invalid-object-key1.smithy retains exact source without claiming validity [26.40ms]
+(pass) US-014-AC13: traits/annotation-invalid-object-key2.smithy retains exact source without claiming validity [35.27ms]
+(pass) US-014-AC13: traits/annotation-invalid-object-key3.smithy retains exact source without claiming validity [33.95ms]
+(pass) US-014-AC13: traits/annotation-unclosed-list1.smithy retains exact source without claiming validity [33.00ms]
+(pass) US-014-AC13: traits/annotation-unclosed-list2.smithy retains exact source without claiming validity [34.82ms]
+(pass) US-014-AC13: traits/annotation-unclosed-list3.smithy retains exact source without claiming validity [33.88ms]
+(pass) US-014-AC13: traits/annotation-unclosed-list4.smithy retains exact source without claiming validity [32.54ms]
+(pass) US-014-AC13: traits/annotation-unclosed-object1.smithy retains exact source without claiming validity [36.61ms]
+(pass) US-014-AC13: traits/annotation-unclosed-object2.smithy retains exact source without claiming validity [34.72ms]
+(pass) US-014-AC13: traits/annotation-unclosed-object3.smithy retains exact source without claiming validity [35.80ms]
+(pass) US-014-AC13: traits/annotation-unclosed-object4.smithy retains exact source without claiming validity [34.34ms]
+(pass) US-014-AC13: traits/annotation-unclosed-object5.smithy retains exact source without claiming validity [33.86ms]
+(pass) US-014-AC13: traits/annotation-unclosed-object6.smithy retains exact source without claiming validity [34.94ms]
+(pass) US-014-AC13: traits/invalid-trait-shape-id-key.smithy retains exact source without claiming validity [35.21ms]
+(pass) US-014-AC13: traits/invalid-trait-textblock-key.smithy retains exact source without claiming validity [37.24ms]
+(pass) US-014-AC13: traits/trait-name-syntax.smithy retains exact source without claiming validity [36.07ms]
+(pass) US-014-AC13: traits/trait-on-eof.smithy retains exact source without claiming validity [36.96ms]
+(pass) US-014-AC13: traits/trait-trailing.smithy retains exact source without claiming validity [34.71ms]
+(pass) US-014-AC13: traits/traits-on-apply.smithy retains exact source without claiming validity [35.85ms]
+(pass) US-014-AC13: traits/traits-on-metadata.smithy retains exact source without claiming validity [33.92ms]
+(pass) US-014-AC13: traits/traits-on-namespace.smithy retains exact source without claiming validity [36.22ms]
+(pass) US-014-AC13: use/conflicting-shape-def.smithy retains exact source without claiming validity [33.86ms]
+(pass) US-014-AC13: use/conflicting-trait-def.smithy retains exact source without claiming validity [35.87ms]
+(pass) US-014-AC13: use/conflicting-use.smithy retains exact source without claiming validity [26.04ms]
+(pass) US-014-AC13: use/use-after-shape.smithy retains exact source without claiming validity [36.52ms]
+(pass) US-014-AC13: use/use-after-traitdef.smithy retains exact source without claiming validity [33.99ms]
+(pass) US-014-AC13: use/use-empty-namespace.smithy retains exact source without claiming validity [34.45ms]
+(pass) US-014-AC13: use/use-invalid-namespace.smithy retains exact source without claiming validity [35.47ms]
+(pass) US-014-AC13: use/use-missing-after-namespace.smithy retains exact source without claiming validity [34.94ms]
+(pass) US-014-AC13: use/use-missing-namespace.smithy retains exact source without claiming validity [33.45ms]
+(pass) US-014-AC13: use/use-missing-newline.smithy retains exact source without claiming validity [35.92ms]
+(pass) US-014-AC13: use/use-missing-space.smithy retains exact source without claiming validity [34.72ms]
+(pass) US-014-AC13: use/use-multiple-lines-comment.smithy retains exact source without claiming validity [35.78ms]
+(pass) US-014-AC13: use/use-multiple-lines.smithy retains exact source without claiming validity [33.23ms]
+(pass) US-014-AC13: use/use-must-come-after-namespace.smithy retains exact source without claiming validity [35.25ms]
+(pass) US-014-AC13: use/use-statement-invalid-id.smithy retains exact source without claiming validity [34.95ms]
+(pass) US-014-AC13: use/use-with-member.smithy retains exact source without claiming validity [27.63ms]
+(pass) US-014-AC13: version/idl-int-enums-in-v1.smithy retains exact source without claiming validity [36.39ms]
+(pass) US-014-AC13: version/invalid-version-type.smithy retains exact source without claiming validity [35.95ms]
+(pass) US-014-AC13: version/properties-v2-only.json retains exact source without claiming validity [36.59ms]
+(pass) US-014-AC13: version/properties-v2-only.smithy retains exact source without claiming validity [36.90ms]
+(pass) US-014-AC13: version/unsupported-version.smithy retains exact source without claiming validity [34.02ms]
+(pass) US-014-AC13: version/version-set-more-than-once.smithy retains exact source without claiming validity [35.85ms]
+
+tests/smithy/worker.test.ts:
+(pass) US-014-AC12: worker lifecycle terminates successful, cancelled, timed out and malformed jobs [227.09ms]
+(pass) US-014-AC12: worker options reject invalid deadlines and URLs [0.48ms]
+(pass) US-014-AC15: selection workers isolate payloads, cancel, time out and recover [23.78ms]
+
+tests/spark/arrow-origin.test.ts:
+(pass) US-017-AC7: Arrow-origin layouts match native recovery or block native incompatibility [3011.79ms]
+
+tests/spark/collations.test.ts:
+(pass) US-017-AC2: field-local collation warnings distinguish target, path, value and provider risks [384.12ms]
+
+tests/spark/metadata.test.ts:
+(pass) US-017-AC2: exact metadata warns about JVM numeric and array interpretation without normalizing [293.69ms]
+(pass) US-017-AC2: nested metadata paths are escaped and missing nullable is runtime-qualified [12.53ms]
+
+tests/spark/parameters.test.ts:
+(pass) US-017-AC2: parameter diagnostics preserve source and distinguish configuration constraints [472.18ms]
+
+tests/spark/projection.test.ts:
+(pass) US-017-AC6: projection retains source and reports loss; strict policy blocks loss [155.07ms]
+(pass) US-017-AC6: unknown source properties and opaque UDT block; context stays explicit [121.31ms]
+(pass) US-017-AC6: native reference models match across the complete authored matrix [17522.86ms]
+
+tests/spark/rename.test.ts:
+(pass) US-017-AC5: renames exact field-local collation paths through array/map types [274.06ms]
+(pass) US-017-AC5: nested structs own independent metadata and pointers select actual fields [138.15ms]
+(pass) US-017-AC5: unresolved collation paths block instead of dropping or guessing their meaning [186.99ms]
+(pass) US-017-AC5: empty collated names block observed native loss [59.86ms]
+
+tests/spark/reverse-projection.test.ts:
+(pass) US-017-AC7: reverse projection reports nullability/layout losses and retains exact source [231.61ms]
+(pass) US-017-AC7: unsigned integers, unknown table fields and malformed maps block [199.72ms]
+(pass) US-017-AC7: both timestamp recovery modes match all native reference recoveries [18550.69ms]
+(pass) US-017-AC7: variant recognition is explicit and cannot hide extra struct fields [171.47ms]
+
+tests/spark/schema.test.ts:
+(pass) US-017-AC1: native schema cases preserve exact source through both UMF serializations [3134.36ms]
+(pass) US-017-AC2: metadata integers, unknown semantics and UDT declarations remain data [78.81ms]
+(pass) US-017-AC3: candidate edits validate shape, preserve unknown content and leave source untouched [80.68ms]
+
+tests/spark/upstream-projection.test.ts:
+(pass) US-017-AC7: complete pinned upstream IPC schema recovery agrees with native outcomes [29853.72ms]
+(pass) US-017-AC7: extension semantic tags cannot be waived as generic metadata loss [202.63ms]
+
+tests/spark/upstream.test.ts:
+(pass) US-017-AC4: pinned upstream schema examples preserve native JSON and rejection boundaries [1457.64ms]
+
+tests/sqlserver/avro-projection.test.ts:
+(pass) CONTRACT-032 all captured SQL Server fixture columns project with explicit representations and fidelity issues [284.01ms]
+(pass) CONTRACT-032 authored precision and fixed-width boundaries are enforced before projection [364.97ms]
+(pass) CONTRACT-032 unsupported precision, source state and bindings cannot masquerade as value equivalence [969.88ms]
+
+tests/sqlserver/catalog.test.ts:
+(pass) CONTRACT-031 SQL Server catalog recovery retains exact native qualifiers and core families [204.95ms]
+(pass) CONTRACT-031 copied candidate edits synchronize metadata and cannot lose attachments [335.60ms]
+(pass) CONTRACT-031 malformed captures reject and future type identities remain unclassified [102.76ms]
+
+tests/sqlserver/constraint-projection.test.ts:
+(pass) CONTRACT-032 every captured SQL Server constraint has a source-addressable projection loss [606.88ms]
+(pass) CONTRACT-032 uncaptured v1 constraints never masquerade as an unconstrained table [100.59ms]
+
+tests/sqlserver/constraints.test.ts:
+(pass) CONTRACT-031 v2 constraints retain ordering, actions, trust, disabled state and exact unknown content [158.68ms]
+(pass) CONTRACT-031 old coverage, malformed sections, duplicate observations and edits remain explicit [290.13ms]
+
+tests/sqlserver/ddl.test.ts:
+(pass) CONTRACT-037 native captures lower deterministically with explicit source-addressable losses [678.70ms]
+(pass) CONTRACT-037 unsupported observations never produce partial DDL; candidate edits require explicit policy [660.10ms]
+(pass) CONTRACT-037 identifiers and unknown metadata retain their boundaries [42.43ms]
+(pass) CONTRACT-037 native evidence matches current generation and records declared physical losses [314.33ms]
+(pass) CONTRACT-037 copied edits survive native DDL execution without changing original captures [1671.01ms]
+
+tests/sqlserver/indexes.test.ts:
+(pass) CONTRACT-031 index observations preserve physical ordering, filter and enforcement state [221.64ms]
+(pass) CONTRACT-031 v3 requires observations; older, unavailable and unknown index semantics stay qualified [456.29ms]
+(pass) CONTRACT-032 index-specific losses accompany SQL Server to Avro projection [511.01ms]
+
+tests/sqlserver/integer-tokens.test.ts:
+(pass) CONTRACT-031 declared catalog integers cannot be rounded into valid native identities or qualifiers [2546.91ms]
+
+tests/tablespec/avro-integers.test.ts:
+(pass) CONTRACT-033 interpreted numeric qualifiers cannot round into supported decimal or vector shapes [1254.27ms]
+
+tests/tablespec/avro-projection.test.ts:
+(pass) CONTRACT-033 TableSpec primitive, temporal and vector bindings retain source and report constraints [472.18ms]
+(pass) CONTRACT-033 missing context, default precision and incompatible choices never get inferred [687.46ms]
+
+tests/tablespec/avro-table-loss.test.ts:
+(pass) CONTRACT-033 table keys, context dispatch and opaque metadata survive edits and report path-specific losses [383.90ms]
+
+tests/tablespec/boundaries.test.ts:
+(pass) CONTRACT-030 edit mappings reject non-JSON inputs without evaluating accessors or mutating source [280.20ms]
+(pass) CONTRACT-030 split column suffixes match native glob and preserve unmatched files [38.89ms]
+
+tests/tablespec/roundtrip.test.ts:
+(pass) CONTRACT-030 TableSpec ingestion exposes core scalars and preserves contextual and unknown native metadata [111.41ms]
+(pass) CONTRACT-030 copied native edits synchronize scalar metadata and retain unknown content [140.50ms]
+
+tests/tablespec/split.test.ts:
+(pass) CONTRACT-030 split bundle preserves every file and derives ordered columns [120.94ms]
+(pass) CONTRACT-030 split bundle rejects ambiguous or unmapped changes [41.80ms]
+(pass) CONTRACT-030 filenames follow native Unicode code-point order [14.08ms]
+
+tests/tablespec/table-edits.test.ts:
+(pass) CONTRACT-030 table edits repair native references and preserve monolithic/split sources [520.04ms]
+(pass) CONTRACT-030 table edits cannot replace column identities or bypass encoding guards [88.64ms]
+
+tests/tablespec/table-metadata.test.ts:
+(pass) CONTRACT-030 table metadata inspection is exact, isolated and distinct from split source recovery [150.60ms]
+
+tests/typespec/all-libraries.test.ts:
+(pass) US-013-AC11: all registered official libraries compile the upstream corpus with explicit remaining failures [3654.37ms]
+
+tests/typespec/corpus.test.ts:
+(pass) US-013-AC7: every pinned upstream sample is accounted for without hiding compiler limits [2557.76ms]
+(pass) US-013-AC8: upstream string templates expose compiled values after source round trip [71.06ms]
+
+tests/typespec/emission.test.ts:
+(pass) US-013-AC12: native emitter produces stable complete multi-file output after source round trip [82.08ms]
+(pass) US-013-AC13: emitter policy, invalid compilation and empty selections are explicit [69.22ms]
+(pass) US-013-AC14: numeric policy losses are explicit and edited constraints change native validators [229.83ms]
+
+tests/typespec/libraries.test.ts:
+(pass) US-013-AC9: exact library selections survive round trip and reject unavailable versions [165.69ms]
+(pass) US-013-AC10: library-enabled upstream corpus outcomes remain explicit [3130.76ms]
+
+tests/typespec/native.test.ts:
+(pass) US-013-AC1: source bundles retain exact files through JSON/YAML and compile [169.45ms]
+(pass) US-013-AC2: candidate source edits get fresh native semantic diagnostics [122.99ms]
+(pass) US-013-AC3: unknown representation remains in UMF and unsupported imports are explicit [67.98ms]
+
+tests/typespec/projection.test.ts:
+(pass) US-013-AC15: native TypeSpec projection preserves emitted reference resources and source [101.75ms]
+(pass) US-013-AC16: strict policy, absent roots and invalid retrieval/format choices block target use [56.06ms]
+
+tests/typespec/semantic.test.ts:
+(pass) US-013-AC5: compiled graph preserves recursion, inheritance, operations and exact literals [66.39ms]
+(pass) US-013-AC6: invalid compilation and unresolved selections cannot claim available graphs [68.18ms]
+
+ 1481 pass
+ 0 fail
+ 116628 expect() calls
+Ran 1481 tests across 345 files. [2088.12s]

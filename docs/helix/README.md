@@ -990,9 +990,11 @@ acceptance status are recorded in the
 the separate facet admission/delivery gate and Key remain required.
 
 
-Relationship implementation has begun with an explicit experimental 0.7.0
-schema and semantic validator under TD-045. Public 0.7.0 validation,
-serialization, authoring/inspection, migration/rollback and versioned earlier
-operations now pass 114 core tests and Chromium integration checks. Relationship metadata selection and presentation navigation also pass
-Bun/Chromium checks. Broader compatibility and native binding admission remain
-pending. See the [candidate browser evidence](../../fixtures/validation/core-relationship-candidate-browser.json).
+The experimental relationship core 0.7.0 implementation is accepted under
+TD-045: validation, serialization, authoring/inspection, metadata selection,
+migration/rollback and versioned earlier operations have Bun and Chromium
+evidence. The compatibility refresh passed 114 commands; all 352 test files
+passed 1,494 tests with zero failures. See the
+[core acceptance record](../../fixtures/validation/relationship-core-acceptance-evidence.json).
+Native relationship bindings and their separate admission/delivery gates remain
+unfinished. TableSpec is the next priority binding.

@@ -4796,3 +4796,33 @@ The incomplete compatibility run was deliberately cancelled after this source
 correction; a fresh 114-command replay is required before broad regression and
 the seven separate conformance/evidence test files. Core-task acceptance and
 relationship binding admission remain unclaimed.
+
+### Relationship core implementation acceptance
+
+The experimental 0.7.0 core implementation task `umf-a8beb12a` is accepted.
+The fresh compatibility replay passed all 114 commands, including typechecking,
+the browser build and the 318-schema / 53-package audit. The full regression
+passed 1,481 tests and 116,628 assertions across 345 files. All five existing
+concept conformance commands and seven separate gate/evidence test files also
+passed: 13 tests and 186 assertions. Together these cover all 352 test files,
+with 1,494 tests, 116,814 assertions and zero failures.
+
+Chromium 148 verifies 37 candidate cases, seven transition cases and fourteen
+operation/public cases, including 28 relationship-selection recoveries. Unknown
+qualifiers, old-member collisions, stable endpoint/Key identities, atomic
+refusals and module-scoped forward names retain their specified behavior.
+The acceptance audit verifies the recorded source, test-input and execution-log
+fingerprints. See the [core acceptance record](../../../fixtures/validation/relationship-core-acceptance-evidence.json)
+and [separate gate results](../../../fixtures/validation/relationship-refresh/conformance-runs.json).
+
+The replay preserves its initial TableSpec Spark failure under the default Java
+runtime. After source verification, the failed step and remaining commands passed
+with OpenJDK 21.0.2; successful earlier steps were retained. Historical acceptance
+counts remain historical, with explicit links to this fresh revalidation.
+
+This accepts core schema, public operations, metadata selection and migration
+work only. US-045 remains incomplete: TableSpec, PostgreSQL, SQL Server, Avro
+and Parquet relationship bindings, their recoveries/residuals and the separate
+two-system admission/all-five delivery gates remain queued. GraphQL/RDF/LinkML
+are additional profiles. No native-equivalence claim is made. TableSpec binding
+`umf-95881098` is the next priority relationship implementation.

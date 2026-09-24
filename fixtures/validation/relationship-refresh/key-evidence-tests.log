@@ -1,0 +1,10 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/key-evidence.test.ts:
+(pass) Key evidence requires complete current five-system qualifications without granting admission [96.22ms]
+(pass) Key evidence rejects missing, stale, failed, unsafe, incompatible and incomplete proofs [78.63ms]
+
+ 2 pass
+ 0 fail
+ 22 expect() calls
+Ran 2 tests across 1 file. [193.00ms]

@@ -1,0 +1,10 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core-ideals/cardinality-conformance.test.ts:
+(pass) five Cardinality bindings preserve ideals, native refinements and qualified strict/report outcomes [294711.91ms]
+(pass) Cardinality evidence gate rejects stale, missing, unsafe and failed proof [669.91ms]
+
+ 2 pass
+ 0 fail
+ 57 expect() calls
+Ran 2 tests across 1 file. [298.89s]

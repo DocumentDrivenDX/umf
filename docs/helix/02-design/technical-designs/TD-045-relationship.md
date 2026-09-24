@@ -178,3 +178,13 @@ serialization accept 0.7.0, relationship operations are exported, and earlier
 core operations use separate 0.7.0 receipt schemas. Older versions remain
 unchanged. The public integration checkpoint is recorded in the implementation
 plan; broad compatibility and complete core-task acceptance remain pending.
+
+### Core implementation acceptance
+
+The subsequent compatibility refresh and all required regression/conformance
+tests passed. The experimental core implementation task is accepted in
+[the acceptance record](../../../../fixtures/validation/relationship-core-acceptance-evidence.json):
+1,494 tests across 352 files, 114 compatibility commands, 318 schemas and
+53 extension packages. This supersedes the pending core-task status of the
+checkpoints above. Native relationship bindings and the separate ideal-admission
+and delivery gates remain required; US-045 is not complete.
