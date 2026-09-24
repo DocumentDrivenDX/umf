@@ -1,0 +1,3477 @@
+{
+  "scope": "Scalar Arrow construction and Parquet 2.6 writer/readback discovery; custom metadata is not enforcement; no malformed-footer or arbitrary reader conformance claim",
+  "runtime": "PyArrow 21.0.0",
+  "formatSpecificationCommit": "219e3f12a62f9476e830c21e26d030d231f7c017",
+  "bindingAccepted": false,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "counts": {
+    "cases": 77,
+    "arraysAccepted": 42,
+    "filesWritten": 80,
+    "changedTypedValues": 20
+  },
+  "cases": [
+    {
+      "id": "int8-below",
+      "arrowType": "int8",
+      "input": {
+        "kind": "integer",
+        "value": "-129"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowInvalid",
+        "error": "Value -129 too large to fit in C integer type"
+      },
+      "files": []
+    },
+    {
+      "id": "int8-min",
+      "arrowType": "int8",
+      "input": {
+        "kind": "integer",
+        "value": "-128"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "-128"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "-128"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/int8-min-plain.parquet",
+          "sha256": "0de48c9ab915898a4f26d0307dcc3fcdf0f4f66b80283a59897ec1b733f59067",
+          "bytes": 214,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 8,
+            "isSigned": true
+          },
+          "converted": "INT_8",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "-128"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/int8-min-embedded.parquet",
+          "sha256": "1498fe3755bf5ea11697245686b09cd1bbc670b484186a17f4e1abaaacee797d",
+          "bytes": 785,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 8,
+            "isSigned": true
+          },
+          "converted": "INT_8",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "int8-max",
+      "arrowType": "int8",
+      "input": {
+        "kind": "integer",
+        "value": "127"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "127"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "127"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/int8-max-plain.parquet",
+          "sha256": "f7ae88e8b86febc12c77aee211fc68c908295f7469058cb2cb73c2a16f54a9e0",
+          "bytes": 214,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 8,
+            "isSigned": true
+          },
+          "converted": "INT_8",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "127"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/int8-max-embedded.parquet",
+          "sha256": "753e4b03f6b3b1c13070c407c9fe2fded2ec788e102f3c5db3d7851968632e22",
+          "bytes": 785,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 8,
+            "isSigned": true
+          },
+          "converted": "INT_8",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "int8-above",
+      "arrowType": "int8",
+      "input": {
+        "kind": "integer",
+        "value": "128"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowInvalid",
+        "error": "Value 128 too large to fit in C integer type"
+      },
+      "files": []
+    },
+    {
+      "id": "int8-fraction",
+      "arrowType": "int8",
+      "input": {
+        "kind": "float",
+        "value": "1.5"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "1"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "1"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/int8-fraction-plain.parquet",
+          "sha256": "c9f1cf4f5a2fff4c80adb08566b9eba54a599989331cc8b4a2cd91ebb22a770f",
+          "bytes": 214,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 8,
+            "isSigned": true
+          },
+          "converted": "INT_8",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": false,
+          "sameRepresentation": false
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "1"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/int8-fraction-embedded.parquet",
+          "sha256": "b95d8c36104e9a985d425468f21a17eaaac9a85f047f69f693e72b5a4e066acf",
+          "bytes": 785,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 8,
+            "isSigned": true
+          },
+          "converted": "INT_8",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": false,
+          "sameRepresentation": false
+        }
+      ]
+    },
+    {
+      "id": "int8-bool",
+      "arrowType": "int8",
+      "input": {
+        "kind": "boolean",
+        "value": true
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowTypeError",
+        "error": "Expected integer, got bool"
+      },
+      "files": []
+    },
+    {
+      "id": "uint8-below",
+      "arrowType": "uint8",
+      "input": {
+        "kind": "integer",
+        "value": "-1"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "OverflowError",
+        "error": "can't convert negative value to unsigned int"
+      },
+      "files": []
+    },
+    {
+      "id": "uint8-min",
+      "arrowType": "uint8",
+      "input": {
+        "kind": "integer",
+        "value": "0"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "0"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "0"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/uint8-min-plain.parquet",
+          "sha256": "bb2944bfcdfc5ee9d6924e6ce1bfabaa5866fdeb952c5f1ef9c04d31bc7b823f",
+          "bytes": 190,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 8,
+            "isSigned": false
+          },
+          "converted": "UINT_8",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "0"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/uint8-min-embedded.parquet",
+          "sha256": "48bc5fdc8c5bcf6ce1a89d21ea000128744e351a1aa2b100a3b001eb1b4b4742",
+          "bytes": 749,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 8,
+            "isSigned": false
+          },
+          "converted": "UINT_8",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "uint8-max",
+      "arrowType": "uint8",
+      "input": {
+        "kind": "integer",
+        "value": "255"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "255"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "255"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/uint8-max-plain.parquet",
+          "sha256": "43a6e4064b60a1a958023f974933391f1125a71e8ef0968736627343a704aa82",
+          "bytes": 190,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 8,
+            "isSigned": false
+          },
+          "converted": "UINT_8",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "255"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/uint8-max-embedded.parquet",
+          "sha256": "5de8ba0302047f0afe789bf4fb4332180394e831b729f938951ce2e38e146169",
+          "bytes": 749,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 8,
+            "isSigned": false
+          },
+          "converted": "UINT_8",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "uint8-above",
+      "arrowType": "uint8",
+      "input": {
+        "kind": "integer",
+        "value": "256"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowInvalid",
+        "error": "Value 256 too large to fit in C integer type"
+      },
+      "files": []
+    },
+    {
+      "id": "uint8-fraction",
+      "arrowType": "uint8",
+      "input": {
+        "kind": "float",
+        "value": "1.5"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "1"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "1"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/uint8-fraction-plain.parquet",
+          "sha256": "a8d2c7e212ad18077adb417741bce63dd6cad25c8ec1f57b0464fcac0a0b612d",
+          "bytes": 190,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 8,
+            "isSigned": false
+          },
+          "converted": "UINT_8",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": false,
+          "sameRepresentation": false
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "1"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/uint8-fraction-embedded.parquet",
+          "sha256": "0a0afb5511ea0c1adf31e77d25754784f9f7d2ec3793ff45455f5d75e9d27144",
+          "bytes": 749,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 8,
+            "isSigned": false
+          },
+          "converted": "UINT_8",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": false,
+          "sameRepresentation": false
+        }
+      ]
+    },
+    {
+      "id": "uint8-bool",
+      "arrowType": "uint8",
+      "input": {
+        "kind": "boolean",
+        "value": true
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowTypeError",
+        "error": "Expected integer, got bool"
+      },
+      "files": []
+    },
+    {
+      "id": "int16-below",
+      "arrowType": "int16",
+      "input": {
+        "kind": "integer",
+        "value": "-32769"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowInvalid",
+        "error": "Value -32769 too large to fit in C integer type"
+      },
+      "files": []
+    },
+    {
+      "id": "int16-min",
+      "arrowType": "int16",
+      "input": {
+        "kind": "integer",
+        "value": "-32768"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "-32768"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "-32768"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/int16-min-plain.parquet",
+          "sha256": "669668fcb7e8416b94a76ce92cea1fe77524db35aa51b9b8d51c107d48482c19",
+          "bytes": 214,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 16,
+            "isSigned": true
+          },
+          "converted": "INT_16",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "-32768"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/int16-min-embedded.parquet",
+          "sha256": "61a2936bfe826c33ace90d539d8daa9b3adc9c006d1ed69bba0c8f26e0a01db3",
+          "bytes": 785,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 16,
+            "isSigned": true
+          },
+          "converted": "INT_16",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "int16-max",
+      "arrowType": "int16",
+      "input": {
+        "kind": "integer",
+        "value": "32767"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "32767"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "32767"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/int16-max-plain.parquet",
+          "sha256": "a227f06b68eb3237ea924e22433d6fff68b25f193bff10ce5fea7b17e4d885da",
+          "bytes": 214,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 16,
+            "isSigned": true
+          },
+          "converted": "INT_16",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "32767"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/int16-max-embedded.parquet",
+          "sha256": "2e5cb46bfbb359ce28a177c477850dd35b5a76810ba23d05943a556ced32735d",
+          "bytes": 785,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 16,
+            "isSigned": true
+          },
+          "converted": "INT_16",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "int16-above",
+      "arrowType": "int16",
+      "input": {
+        "kind": "integer",
+        "value": "32768"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowInvalid",
+        "error": "Value 32768 too large to fit in C integer type"
+      },
+      "files": []
+    },
+    {
+      "id": "int16-fraction",
+      "arrowType": "int16",
+      "input": {
+        "kind": "float",
+        "value": "1.5"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "1"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "1"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/int16-fraction-plain.parquet",
+          "sha256": "4197c07cf6b105db44e627fdaf183a94bb045999547aa4ba03184915b304c3f7",
+          "bytes": 214,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 16,
+            "isSigned": true
+          },
+          "converted": "INT_16",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": false,
+          "sameRepresentation": false
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "1"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/int16-fraction-embedded.parquet",
+          "sha256": "eabd043079689f8dde5fba145d26e8b6836403d2fbd8610c3142e44dbac8dc75",
+          "bytes": 785,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 16,
+            "isSigned": true
+          },
+          "converted": "INT_16",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": false,
+          "sameRepresentation": false
+        }
+      ]
+    },
+    {
+      "id": "int16-bool",
+      "arrowType": "int16",
+      "input": {
+        "kind": "boolean",
+        "value": true
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowTypeError",
+        "error": "Expected integer, got bool"
+      },
+      "files": []
+    },
+    {
+      "id": "uint16-below",
+      "arrowType": "uint16",
+      "input": {
+        "kind": "integer",
+        "value": "-1"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "OverflowError",
+        "error": "can't convert negative value to unsigned int"
+      },
+      "files": []
+    },
+    {
+      "id": "uint16-min",
+      "arrowType": "uint16",
+      "input": {
+        "kind": "integer",
+        "value": "0"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "0"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "0"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/uint16-min-plain.parquet",
+          "sha256": "4bfea2e5a33636386747e39dee4ab673ca7d338711363b2293a8b269c6fb0cb8",
+          "bytes": 190,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 16,
+            "isSigned": false
+          },
+          "converted": "UINT_16",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "0"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/uint16-min-embedded.parquet",
+          "sha256": "5ae7790bb91e33f3c73c4590cff2d52851e772db1ad344b518695ef5cf64ad12",
+          "bytes": 749,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 16,
+            "isSigned": false
+          },
+          "converted": "UINT_16",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "uint16-max",
+      "arrowType": "uint16",
+      "input": {
+        "kind": "integer",
+        "value": "65535"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "65535"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "65535"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/uint16-max-plain.parquet",
+          "sha256": "76caa32b6a129ac202b6514c380c12ae3f56779be60d545d65594fcbf589640c",
+          "bytes": 190,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 16,
+            "isSigned": false
+          },
+          "converted": "UINT_16",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "65535"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/uint16-max-embedded.parquet",
+          "sha256": "6efa84655b5cf6a7ae14574b96c0fce30e2d9847bbce4db1f8657605646b7737",
+          "bytes": 749,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 16,
+            "isSigned": false
+          },
+          "converted": "UINT_16",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "uint16-above",
+      "arrowType": "uint16",
+      "input": {
+        "kind": "integer",
+        "value": "65536"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowInvalid",
+        "error": "Value 65536 too large to fit in C integer type"
+      },
+      "files": []
+    },
+    {
+      "id": "uint16-fraction",
+      "arrowType": "uint16",
+      "input": {
+        "kind": "float",
+        "value": "1.5"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "1"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "1"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/uint16-fraction-plain.parquet",
+          "sha256": "deb944771855ea1cf0ba2197898525d156a8a657bb6d8b613ae11c65b48c763a",
+          "bytes": 190,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 16,
+            "isSigned": false
+          },
+          "converted": "UINT_16",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": false,
+          "sameRepresentation": false
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "1"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/uint16-fraction-embedded.parquet",
+          "sha256": "4f7859a5255966a123a438e8c1f14d5c65f16f06addcca96fe2b2bdc79351da9",
+          "bytes": 749,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 16,
+            "isSigned": false
+          },
+          "converted": "UINT_16",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": false,
+          "sameRepresentation": false
+        }
+      ]
+    },
+    {
+      "id": "uint16-bool",
+      "arrowType": "uint16",
+      "input": {
+        "kind": "boolean",
+        "value": true
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowTypeError",
+        "error": "Expected integer, got bool"
+      },
+      "files": []
+    },
+    {
+      "id": "int32-below",
+      "arrowType": "int32",
+      "input": {
+        "kind": "integer",
+        "value": "-2147483649"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowInvalid",
+        "error": "Value -2147483649 too large to fit in C integer type"
+      },
+      "files": []
+    },
+    {
+      "id": "int32-min",
+      "arrowType": "int32",
+      "input": {
+        "kind": "integer",
+        "value": "-2147483648"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "-2147483648"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "-2147483648"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/int32-min-plain.parquet",
+          "sha256": "807a2f62c6da5b4da0ed2b1df36f3e8d897fcc02e16127efd6a3addbae504df6",
+          "bytes": 205,
+          "physical": "INT32",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "-2147483648"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/int32-min-embedded.parquet",
+          "sha256": "8878cb674ad58369762d2095fd129488eb641f99b410e70eaa876e3e19745630",
+          "bytes": 776,
+          "physical": "INT32",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "int32-max",
+      "arrowType": "int32",
+      "input": {
+        "kind": "integer",
+        "value": "2147483647"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "2147483647"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "2147483647"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/int32-max-plain.parquet",
+          "sha256": "8f16228251bbb32b652f5a4095f22f7eaf213abb6575159c594f5b520648b81b",
+          "bytes": 205,
+          "physical": "INT32",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "2147483647"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/int32-max-embedded.parquet",
+          "sha256": "b1e9d5af7750bed01c85dd939fdb5ffa38701fa88c25cd709ad96782944604ea",
+          "bytes": 776,
+          "physical": "INT32",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "int32-above",
+      "arrowType": "int32",
+      "input": {
+        "kind": "integer",
+        "value": "2147483648"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowInvalid",
+        "error": "Value 2147483648 too large to fit in C integer type"
+      },
+      "files": []
+    },
+    {
+      "id": "int32-fraction",
+      "arrowType": "int32",
+      "input": {
+        "kind": "float",
+        "value": "1.5"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "1"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "1"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/int32-fraction-plain.parquet",
+          "sha256": "0bcea7d87fc997c8e676ebf389d2b46eafd00f46dd0f066ed92010690e4207ab",
+          "bytes": 205,
+          "physical": "INT32",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": false,
+          "sameRepresentation": false
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "1"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/int32-fraction-embedded.parquet",
+          "sha256": "64050e4d1341ee9279dc5b2e3c11de7c21bf1985e344262dd427365ac35a972b",
+          "bytes": 776,
+          "physical": "INT32",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": false,
+          "sameRepresentation": false
+        }
+      ]
+    },
+    {
+      "id": "int32-bool",
+      "arrowType": "int32",
+      "input": {
+        "kind": "boolean",
+        "value": true
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowTypeError",
+        "error": "Expected integer, got bool"
+      },
+      "files": []
+    },
+    {
+      "id": "uint32-below",
+      "arrowType": "uint32",
+      "input": {
+        "kind": "integer",
+        "value": "-1"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "OverflowError",
+        "error": "can't convert negative value to unsigned int"
+      },
+      "files": []
+    },
+    {
+      "id": "uint32-min",
+      "arrowType": "uint32",
+      "input": {
+        "kind": "integer",
+        "value": "0"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "0"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "0"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/uint32-min-plain.parquet",
+          "sha256": "04fcb314c1a07a60eab32c5d5c463d5975860920b181b6a8ab30fbbc5f9a7d62",
+          "bytes": 190,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 32,
+            "isSigned": false
+          },
+          "converted": "UINT_32",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "0"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/uint32-min-embedded.parquet",
+          "sha256": "e7b38f2d20c01d00ba124a2828376812c84328961e44becbfa496665b7611a1f",
+          "bytes": 749,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 32,
+            "isSigned": false
+          },
+          "converted": "UINT_32",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "uint32-max",
+      "arrowType": "uint32",
+      "input": {
+        "kind": "integer",
+        "value": "4294967295"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "4294967295"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "4294967295"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/uint32-max-plain.parquet",
+          "sha256": "15c880eb7e195efb2c4a90eef24ed5f8265c4ef38e638a326754e656a7d4b279",
+          "bytes": 190,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 32,
+            "isSigned": false
+          },
+          "converted": "UINT_32",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "4294967295"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/uint32-max-embedded.parquet",
+          "sha256": "a2abc58eef34a7e9dbdb4c3dec442f34287582373466640e7d6077cc91afe783",
+          "bytes": 749,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 32,
+            "isSigned": false
+          },
+          "converted": "UINT_32",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "uint32-above",
+      "arrowType": "uint32",
+      "input": {
+        "kind": "integer",
+        "value": "4294967296"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowInvalid",
+        "error": "Value 4294967296 too large to fit in C integer type"
+      },
+      "files": []
+    },
+    {
+      "id": "uint32-fraction",
+      "arrowType": "uint32",
+      "input": {
+        "kind": "float",
+        "value": "1.5"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "1"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "1"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/uint32-fraction-plain.parquet",
+          "sha256": "28b37b59dc03d1a65e5be763950fccac131541d1ee4ff838f4d041e4021a5953",
+          "bytes": 190,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 32,
+            "isSigned": false
+          },
+          "converted": "UINT_32",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": false,
+          "sameRepresentation": false
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "1"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/uint32-fraction-embedded.parquet",
+          "sha256": "16d2cfb3b175612d70d6144fc19cac398b1e674aa19279f180a87fec04b9137e",
+          "bytes": 749,
+          "physical": "INT32",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 32,
+            "isSigned": false
+          },
+          "converted": "UINT_32",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": false,
+          "sameRepresentation": false
+        }
+      ]
+    },
+    {
+      "id": "uint32-bool",
+      "arrowType": "uint32",
+      "input": {
+        "kind": "boolean",
+        "value": true
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowTypeError",
+        "error": "Expected integer, got bool"
+      },
+      "files": []
+    },
+    {
+      "id": "int64-below",
+      "arrowType": "int64",
+      "input": {
+        "kind": "integer",
+        "value": "-9223372036854775809"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "OverflowError",
+        "error": "Python int too large to convert to C long"
+      },
+      "files": []
+    },
+    {
+      "id": "int64-min",
+      "arrowType": "int64",
+      "input": {
+        "kind": "integer",
+        "value": "-9223372036854775808"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "-9223372036854775808"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "-9223372036854775808"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/int64-min-plain.parquet",
+          "sha256": "f8ccdce17b621b33be898bbf62da2cb056699fd336fcee781de25fc253a114f2",
+          "bytes": 245,
+          "physical": "INT64",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "-9223372036854775808"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/int64-min-embedded.parquet",
+          "sha256": "72e4b3d62b00235482de17643ff0731f180afae2b58c265a9880176677cc563a",
+          "bytes": 816,
+          "physical": "INT64",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "int64-max",
+      "arrowType": "int64",
+      "input": {
+        "kind": "integer",
+        "value": "9223372036854775807"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "9223372036854775807"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "9223372036854775807"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/int64-max-plain.parquet",
+          "sha256": "3b71446c9dfb3d1f680873e59379e3840b0a03d2eeb83062d69970cc7e0f2e43",
+          "bytes": 245,
+          "physical": "INT64",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "9223372036854775807"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/int64-max-embedded.parquet",
+          "sha256": "50086e1294034e0d09c77a9c621a11c775fb4b9d7debf3f71cacd4df66e3fd7e",
+          "bytes": 816,
+          "physical": "INT64",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "int64-above",
+      "arrowType": "int64",
+      "input": {
+        "kind": "integer",
+        "value": "9223372036854775808"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "OverflowError",
+        "error": "Python int too large to convert to C long"
+      },
+      "files": []
+    },
+    {
+      "id": "int64-fraction",
+      "arrowType": "int64",
+      "input": {
+        "kind": "float",
+        "value": "1.5"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "1"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "1"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/int64-fraction-plain.parquet",
+          "sha256": "da784e81317626e522a3ffa7db70ada93e9a714c6f59bbba8c3ae1952a2bb43e",
+          "bytes": 245,
+          "physical": "INT64",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": false,
+          "sameRepresentation": false
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "1"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/int64-fraction-embedded.parquet",
+          "sha256": "fe390dcdae5a03e7552a7a0fc5bf93926d2f2dec9dd74b62c6e71009ccfa7ae4",
+          "bytes": 816,
+          "physical": "INT64",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": false,
+          "sameRepresentation": false
+        }
+      ]
+    },
+    {
+      "id": "int64-bool",
+      "arrowType": "int64",
+      "input": {
+        "kind": "boolean",
+        "value": true
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowTypeError",
+        "error": "Expected integer, got bool"
+      },
+      "files": []
+    },
+    {
+      "id": "uint64-below",
+      "arrowType": "uint64",
+      "input": {
+        "kind": "integer",
+        "value": "-1"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "OverflowError",
+        "error": "can't convert negative value to unsigned int"
+      },
+      "files": []
+    },
+    {
+      "id": "uint64-min",
+      "arrowType": "uint64",
+      "input": {
+        "kind": "integer",
+        "value": "0"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "0"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "0"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/uint64-min-plain.parquet",
+          "sha256": "731d18b44080bd98b48ab885c105ff12bc792f2436e7a8ba61a10b902c85d594",
+          "bytes": 210,
+          "physical": "INT64",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 64,
+            "isSigned": false
+          },
+          "converted": "UINT_64",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "0"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/uint64-min-embedded.parquet",
+          "sha256": "da3d0341d34ac9270b742feeac5a69954583220402ae4a155e1a76a56b344157",
+          "bytes": 769,
+          "physical": "INT64",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 64,
+            "isSigned": false
+          },
+          "converted": "UINT_64",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "uint64-max",
+      "arrowType": "uint64",
+      "input": {
+        "kind": "integer",
+        "value": "18446744073709551615"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "18446744073709551615"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "18446744073709551615"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/uint64-max-plain.parquet",
+          "sha256": "25af01baeec5986b7823fddee9c61aff3610d6a09e9717365dbf8b51fd7e6131",
+          "bytes": 210,
+          "physical": "INT64",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 64,
+            "isSigned": false
+          },
+          "converted": "UINT_64",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "18446744073709551615"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/uint64-max-embedded.parquet",
+          "sha256": "083bd5ed11e20a3863294798a5b3fc587dadfe1558c3b919e5f4a50f6957d5b1",
+          "bytes": 769,
+          "physical": "INT64",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 64,
+            "isSigned": false
+          },
+          "converted": "UINT_64",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "uint64-above",
+      "arrowType": "uint64",
+      "input": {
+        "kind": "integer",
+        "value": "18446744073709551616"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "OverflowError",
+        "error": "Python int too large to convert to C unsigned long"
+      },
+      "files": []
+    },
+    {
+      "id": "uint64-fraction",
+      "arrowType": "uint64",
+      "input": {
+        "kind": "float",
+        "value": "1.5"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "1"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "1"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/uint64-fraction-plain.parquet",
+          "sha256": "bfb4e2de41fe01d59ea046df3b1a45ee81630aacf0b2305b8ea8c95e2e1c86db",
+          "bytes": 210,
+          "physical": "INT64",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 64,
+            "isSigned": false
+          },
+          "converted": "UINT_64",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": false,
+          "sameRepresentation": false
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "integer",
+            "value": "1"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/uint64-fraction-embedded.parquet",
+          "sha256": "bbe9ebfdade12baa6b90810c696691cf9de14be311fa11de2cf3bcd6df2486eb",
+          "bytes": 769,
+          "physical": "INT64",
+          "logical": {
+            "Type": "Int",
+            "bitWidth": 64,
+            "isSigned": false
+          },
+          "converted": "UINT_64",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": false,
+          "sameRepresentation": false
+        }
+      ]
+    },
+    {
+      "id": "uint64-bool",
+      "arrowType": "uint64",
+      "input": {
+        "kind": "boolean",
+        "value": true
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowTypeError",
+        "error": "Expected integer, got bool"
+      },
+      "files": []
+    },
+    {
+      "id": "float32-narrow",
+      "arrowType": "float",
+      "input": {
+        "kind": "float",
+        "value": "1.0000000000000002"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "float",
+          "value": "1.0"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "float",
+            "value": "1.0"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/float32-narrow-plain.parquet",
+          "sha256": "f4de1f1222de93f269db555818d43f1035a008d378c076661120bb9b28c14d4e",
+          "bytes": 205,
+          "physical": "FLOAT",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": false,
+          "sameRepresentation": false
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "float",
+            "value": "1.0"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/float32-narrow-embedded.parquet",
+          "sha256": "d55a5247ce9e18929f0e00471c0f221148371ab009d0e3436394b736283fa830",
+          "bytes": 764,
+          "physical": "FLOAT",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": false,
+          "sameRepresentation": false
+        }
+      ]
+    },
+    {
+      "id": "float32-overflow",
+      "arrowType": "float",
+      "input": {
+        "kind": "float",
+        "value": "1e40"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "float",
+          "value": "inf"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "float",
+            "value": "inf"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/float32-overflow-plain.parquet",
+          "sha256": "84710af3b7d6cd6fbb227efb95dc4b8cfa25a703e17f596c36d0a7cd55b052b1",
+          "bytes": 205,
+          "physical": "FLOAT",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": false,
+          "sameRepresentation": false
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "float",
+            "value": "inf"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/float32-overflow-embedded.parquet",
+          "sha256": "bc6655b61ce3c4f2ee45c4e1ed1089fa041ff524df992f8bebd58dd79505ff69",
+          "bytes": 764,
+          "physical": "FLOAT",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": false,
+          "sameRepresentation": false
+        }
+      ]
+    },
+    {
+      "id": "float64-exact",
+      "arrowType": "double",
+      "input": {
+        "kind": "float",
+        "value": "1.0000000000000002"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "float",
+          "value": "1.0000000000000002"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "float",
+            "value": "1.0000000000000002"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/float64-exact-plain.parquet",
+          "sha256": "1b4f42969524fc6ddb873aca3a2c2a3f3aaa07a95cb80d5ff29406ce0bdfb380",
+          "bytes": 245,
+          "physical": "DOUBLE",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "float",
+            "value": "1.0000000000000002"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/float64-exact-embedded.parquet",
+          "sha256": "5ccbee65bc2c586180272dca024961749ff66aaed2ac1aefb829a0c18a765054",
+          "bytes": 804,
+          "physical": "DOUBLE",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "fixed0-empty",
+      "arrowType": "fixed_size_binary[0]",
+      "input": {
+        "kind": "bytes",
+        "value": ""
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "bytes",
+          "value": ""
+        }
+      },
+      "files": [
+        {
+          "accepted": false,
+          "errorType": "OSError",
+          "error": "Invalid FIXED_LEN_BYTE_ARRAY length: 0",
+          "storeSchema": false
+        },
+        {
+          "accepted": false,
+          "errorType": "OSError",
+          "error": "Invalid FIXED_LEN_BYTE_ARRAY length: 0",
+          "storeSchema": true
+        }
+      ]
+    },
+    {
+      "id": "fixed0-61",
+      "arrowType": "fixed_size_binary[0]",
+      "input": {
+        "kind": "bytes",
+        "value": "61"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowInvalid",
+        "error": "Could not convert b'a' with type bytes: expected to be length 0 was 1"
+      },
+      "files": []
+    },
+    {
+      "id": "fixed0-6162",
+      "arrowType": "fixed_size_binary[0]",
+      "input": {
+        "kind": "bytes",
+        "value": "6162"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowInvalid",
+        "error": "Could not convert b'ab' with type bytes: expected to be length 0 was 2"
+      },
+      "files": []
+    },
+    {
+      "id": "fixed0-616263",
+      "arrowType": "fixed_size_binary[0]",
+      "input": {
+        "kind": "bytes",
+        "value": "616263"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowInvalid",
+        "error": "Could not convert b'abc' with type bytes: expected to be length 0 was 3"
+      },
+      "files": []
+    },
+    {
+      "id": "fixed2-empty",
+      "arrowType": "fixed_size_binary[2]",
+      "input": {
+        "kind": "bytes",
+        "value": ""
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowInvalid",
+        "error": "Could not convert b'' with type bytes: expected to be length 2 was 0"
+      },
+      "files": []
+    },
+    {
+      "id": "fixed2-61",
+      "arrowType": "fixed_size_binary[2]",
+      "input": {
+        "kind": "bytes",
+        "value": "61"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowInvalid",
+        "error": "Could not convert b'a' with type bytes: expected to be length 2 was 1"
+      },
+      "files": []
+    },
+    {
+      "id": "fixed2-6162",
+      "arrowType": "fixed_size_binary[2]",
+      "input": {
+        "kind": "bytes",
+        "value": "6162"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "bytes",
+          "value": "6162"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "bytes",
+            "value": "6162"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/fixed2-6162-plain.parquet",
+          "sha256": "65e9d052acd3285947099af117def2a555918da047935cf2f0b4a90a70bf387a",
+          "bytes": 173,
+          "physical": "FIXED_LEN_BYTE_ARRAY",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "bytes",
+            "value": "6162"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/fixed2-6162-embedded.parquet",
+          "sha256": "d14df9ff12ba20b0076808b91a64e3f074372fb0bd7cc616e65d92ee4b8fbe1e",
+          "bytes": 732,
+          "physical": "FIXED_LEN_BYTE_ARRAY",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "fixed2-616263",
+      "arrowType": "fixed_size_binary[2]",
+      "input": {
+        "kind": "bytes",
+        "value": "616263"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowInvalid",
+        "error": "Could not convert b'abc' with type bytes: expected to be length 2 was 3"
+      },
+      "files": []
+    },
+    {
+      "id": "decimal-3-2-59",
+      "arrowType": "decimal128(3, 2)",
+      "input": {
+        "kind": "decimal",
+        "value": "1.2"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "decimal",
+          "value": "1.20"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "decimal",
+            "value": "1.20"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/decimal-3-2-59-plain.parquet",
+          "sha256": "ad726cdd34b7c830f96e130de3df44b8f6d60defd80b19acaa4ab009ea1fdc23",
+          "bytes": 203,
+          "physical": "FIXED_LEN_BYTE_ARRAY",
+          "logical": {
+            "Type": "Decimal",
+            "precision": 3,
+            "scale": 2
+          },
+          "converted": "DECIMAL",
+          "precision": 3,
+          "scale": 2,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": false
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "decimal",
+            "value": "1.20"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/decimal-3-2-59-embedded.parquet",
+          "sha256": "5cf43ce6990bd5e0e449f43847b12c71f279f406020bf15a986f2984dc81b602",
+          "bytes": 762,
+          "physical": "FIXED_LEN_BYTE_ARRAY",
+          "logical": {
+            "Type": "Decimal",
+            "precision": 3,
+            "scale": 2
+          },
+          "converted": "DECIMAL",
+          "precision": 3,
+          "scale": 2,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": false
+        }
+      ]
+    },
+    {
+      "id": "decimal-3-2-60",
+      "arrowType": "decimal128(3, 2)",
+      "input": {
+        "kind": "decimal",
+        "value": "1.200"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "decimal",
+          "value": "1.20"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "decimal",
+            "value": "1.20"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/decimal-3-2-60-plain.parquet",
+          "sha256": "ad726cdd34b7c830f96e130de3df44b8f6d60defd80b19acaa4ab009ea1fdc23",
+          "bytes": 203,
+          "physical": "FIXED_LEN_BYTE_ARRAY",
+          "logical": {
+            "Type": "Decimal",
+            "precision": 3,
+            "scale": 2
+          },
+          "converted": "DECIMAL",
+          "precision": 3,
+          "scale": 2,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": false
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "decimal",
+            "value": "1.20"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/decimal-3-2-60-embedded.parquet",
+          "sha256": "5cf43ce6990bd5e0e449f43847b12c71f279f406020bf15a986f2984dc81b602",
+          "bytes": 762,
+          "physical": "FIXED_LEN_BYTE_ARRAY",
+          "logical": {
+            "Type": "Decimal",
+            "precision": 3,
+            "scale": 2
+          },
+          "converted": "DECIMAL",
+          "precision": 3,
+          "scale": 2,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": false
+        }
+      ]
+    },
+    {
+      "id": "decimal-3-2-61",
+      "arrowType": "decimal128(3, 2)",
+      "input": {
+        "kind": "decimal",
+        "value": "1.234"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowInvalid",
+        "error": "Rescaling Decimal value would cause data loss"
+      },
+      "files": []
+    },
+    {
+      "id": "decimal-3-2-62",
+      "arrowType": "decimal128(3, 2)",
+      "input": {
+        "kind": "decimal",
+        "value": "9.99"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "decimal",
+          "value": "9.99"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "decimal",
+            "value": "9.99"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/decimal-3-2-62-plain.parquet",
+          "sha256": "d439efa70c96ba478f8e9ac8dcfb9e7b270ff0cd3fa7505384f940f74ebde4d9",
+          "bytes": 203,
+          "physical": "FIXED_LEN_BYTE_ARRAY",
+          "logical": {
+            "Type": "Decimal",
+            "precision": 3,
+            "scale": 2
+          },
+          "converted": "DECIMAL",
+          "precision": 3,
+          "scale": 2,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "decimal",
+            "value": "9.99"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/decimal-3-2-62-embedded.parquet",
+          "sha256": "48061741057c4d835a2ef189dbfdc8404136efc1e4c0a5e96bbce2464f93568d",
+          "bytes": 762,
+          "physical": "FIXED_LEN_BYTE_ARRAY",
+          "logical": {
+            "Type": "Decimal",
+            "precision": 3,
+            "scale": 2
+          },
+          "converted": "DECIMAL",
+          "precision": 3,
+          "scale": 2,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "decimal-3-2-63",
+      "arrowType": "decimal128(3, 2)",
+      "input": {
+        "kind": "decimal",
+        "value": "10.00"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowInvalid",
+        "error": "Decimal type with precision 4 does not fit into precision inferred from first array element: 3"
+      },
+      "files": []
+    },
+    {
+      "id": "decimal-3-3-64",
+      "arrowType": "decimal128(3, 3)",
+      "input": {
+        "kind": "decimal",
+        "value": "0.999"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "decimal",
+          "value": "0.999"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "decimal",
+            "value": "0.999"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/decimal-3-3-64-plain.parquet",
+          "sha256": "7b28b48d69a50dfe48b2d65903b1772fc2ff1f7681590f476b468437a6b8dbed",
+          "bytes": 203,
+          "physical": "FIXED_LEN_BYTE_ARRAY",
+          "logical": {
+            "Type": "Decimal",
+            "precision": 3,
+            "scale": 3
+          },
+          "converted": "DECIMAL",
+          "precision": 3,
+          "scale": 3,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "decimal",
+            "value": "0.999"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/decimal-3-3-64-embedded.parquet",
+          "sha256": "fbe4a7816ab8822609c1d30ad759aea4ba3eb5dcd031a82dc3f83de55b766057",
+          "bytes": 762,
+          "physical": "FIXED_LEN_BYTE_ARRAY",
+          "logical": {
+            "Type": "Decimal",
+            "precision": 3,
+            "scale": 3
+          },
+          "converted": "DECIMAL",
+          "precision": 3,
+          "scale": 3,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "decimal-3-3-65",
+      "arrowType": "decimal128(3, 3)",
+      "input": {
+        "kind": "decimal",
+        "value": "1.000"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowInvalid",
+        "error": "Decimal type with precision 4 does not fit into precision inferred from first array element: 3"
+      },
+      "files": []
+    },
+    {
+      "id": "decimal-38-0-66",
+      "arrowType": "decimal128(38, 0)",
+      "input": {
+        "kind": "decimal",
+        "value": "999"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "decimal",
+          "value": "999"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "decimal",
+            "value": "999"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/decimal-38-0-66-plain.parquet",
+          "sha256": "ba8dbd744158655279f6e10f97d2d9680c9cd7ca780672f3f1f4596669cbc737",
+          "bytes": 333,
+          "physical": "FIXED_LEN_BYTE_ARRAY",
+          "logical": {
+            "Type": "Decimal",
+            "precision": 38,
+            "scale": 0
+          },
+          "converted": "DECIMAL",
+          "precision": 38,
+          "scale": 0,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "decimal",
+            "value": "999"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/decimal-38-0-66-embedded.parquet",
+          "sha256": "517e081a96c68db89fe879a6ef5870386730ecf8d4ba8b564e52284115474a51",
+          "bytes": 892,
+          "physical": "FIXED_LEN_BYTE_ARRAY",
+          "logical": {
+            "Type": "Decimal",
+            "precision": 38,
+            "scale": 0
+          },
+          "converted": "DECIMAL",
+          "precision": 38,
+          "scale": 0,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "decimal-38-0-67",
+      "arrowType": "decimal128(38, 0)",
+      "input": {
+        "kind": "decimal",
+        "value": "1.2"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowInvalid",
+        "error": "Rescaling Decimal value would cause data loss"
+      },
+      "files": []
+    },
+    {
+      "id": "decimal-3--1-68",
+      "arrowType": "decimal128(3, -1)",
+      "input": {
+        "kind": "decimal",
+        "value": "1000"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "decimal",
+          "value": "1.00E+3"
+        }
+      },
+      "files": [
+        {
+          "accepted": false,
+          "errorType": "OSError",
+          "error": "Scale must be a non-negative integer that does not exceed precision for Decimal logical type",
+          "storeSchema": false
+        },
+        {
+          "accepted": false,
+          "errorType": "OSError",
+          "error": "Scale must be a non-negative integer that does not exceed precision for Decimal logical type",
+          "storeSchema": true
+        }
+      ]
+    },
+    {
+      "id": "decimal-3--1-69",
+      "arrowType": "decimal128(3, -1)",
+      "input": {
+        "kind": "decimal",
+        "value": "999"
+      },
+      "array": {
+        "accepted": false,
+        "errorType": "ArrowInvalid",
+        "error": "Rescaling Decimal value would cause data loss"
+      },
+      "files": []
+    },
+    {
+      "id": "decimal-76-0-70",
+      "arrowType": "decimal256(76, 0)",
+      "input": {
+        "kind": "decimal",
+        "value": "9999999999999999999999999999999999999999999999999999999999999999999999999999"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "decimal",
+          "value": "9999999999999999999999999999999999999999999999999999999999999999999999999999"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "decimal",
+            "value": "9999999999999999999999999999999999999999999999999999999999999999999999999999"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/decimal-76-0-70-plain.parquet",
+          "sha256": "8d8eb1e50c905557aa5dea2095965c8a67d7d19b41d11c300b0f3eddaf5b8ab2",
+          "bytes": 479,
+          "physical": "FIXED_LEN_BYTE_ARRAY",
+          "logical": {
+            "Type": "Decimal",
+            "precision": 76,
+            "scale": 0
+          },
+          "converted": "DECIMAL",
+          "precision": 76,
+          "scale": 0,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "decimal",
+            "value": "9999999999999999999999999999999999999999999999999999999999999999999999999999"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/decimal-76-0-70-embedded.parquet",
+          "sha256": "034b35da8de684c847a939ac16e9300a9e1a787667b9560bd2e710d68e406689",
+          "bytes": 1050,
+          "physical": "FIXED_LEN_BYTE_ARRAY",
+          "logical": {
+            "Type": "Decimal",
+            "precision": 76,
+            "scale": 0
+          },
+          "converted": "DECIMAL",
+          "precision": 76,
+          "scale": 0,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "string-max1-0",
+      "arrowType": "string",
+      "input": {
+        "kind": "string",
+        "value": "a"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "string",
+          "value": "a"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "string",
+            "value": "a"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/string-max1-0-plain.parquet",
+          "sha256": "f82b6ce6a60f2df4a234625008d40bcc163c7908e8612b0622cf89755a17dd33",
+          "bytes": 184,
+          "physical": "BYTE_ARRAY",
+          "logical": {
+            "Type": "String"
+          },
+          "converted": "UTF8",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "string",
+            "value": "a"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/string-max1-0-embedded.parquet",
+          "sha256": "211c8ac32a5cccd5e3a82681f1415243d55ab0862c41a04613b8688dcb9d451d",
+          "bytes": 799,
+          "physical": "BYTE_ARRAY",
+          "logical": {
+            "Type": "String"
+          },
+          "converted": "UTF8",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque",
+            "umf.maxLength": "1"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "string-max1-1",
+      "arrowType": "string",
+      "input": {
+        "kind": "string",
+        "value": "ab"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "string",
+          "value": "ab"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "string",
+            "value": "ab"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/string-max1-1-plain.parquet",
+          "sha256": "cace23a650134ff4edab106c83fd683eecb49f8ae7bd22109a081d95cb9ae42a",
+          "bytes": 189,
+          "physical": "BYTE_ARRAY",
+          "logical": {
+            "Type": "String"
+          },
+          "converted": "UTF8",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "string",
+            "value": "ab"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/string-max1-1-embedded.parquet",
+          "sha256": "89fbff4a9d6762080d56c13e291bad4131b211d15e1ed7e6b1b7c624cc3f11dc",
+          "bytes": 804,
+          "physical": "BYTE_ARRAY",
+          "logical": {
+            "Type": "String"
+          },
+          "converted": "UTF8",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque",
+            "umf.maxLength": "1"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "string-max1-2",
+      "arrowType": "string",
+      "input": {
+        "kind": "string",
+        "value": "😀é"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "string",
+          "value": "😀é"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "string",
+            "value": "😀é"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/string-max1-2-plain.parquet",
+          "sha256": "27c994c858e331e91ed04338c823484ad96a469bc63f9e378f44d95268ecdeb7",
+          "bytes": 209,
+          "physical": "BYTE_ARRAY",
+          "logical": {
+            "Type": "String"
+          },
+          "converted": "UTF8",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "string",
+            "value": "😀é"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/string-max1-2-embedded.parquet",
+          "sha256": "d099d2d4c28e72eaeccc014b27b0ca741994c1cb6783ddb720192d2cf1e80410",
+          "bytes": 824,
+          "physical": "BYTE_ARRAY",
+          "logical": {
+            "Type": "String"
+          },
+          "converted": "UTF8",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque",
+            "umf.maxLength": "1"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "bytes-max1-0",
+      "arrowType": "binary",
+      "input": {
+        "kind": "bytes",
+        "value": ""
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "bytes",
+          "value": ""
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "bytes",
+            "value": ""
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/bytes-max1-0-plain.parquet",
+          "sha256": "2f51627b7030e833895a6a18ad45c6cebbf004e583dbc33831ef41eda2622b1f",
+          "bytes": 173,
+          "physical": "BYTE_ARRAY",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "bytes",
+            "value": ""
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/bytes-max1-0-embedded.parquet",
+          "sha256": "023586481a6dda093ed32b66d8c8ebd089e07d895754059284ee9bb81240ffc9",
+          "bytes": 788,
+          "physical": "BYTE_ARRAY",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque",
+            "umf.maxLength": "1"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "bytes-max1-1",
+      "arrowType": "binary",
+      "input": {
+        "kind": "bytes",
+        "value": "61"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "bytes",
+          "value": "61"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "bytes",
+            "value": "61"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/bytes-max1-1-plain.parquet",
+          "sha256": "0a4e8631e061c4f94650dddc67cb8778e686bd80309d2325be3eb4e4bf5e4fad",
+          "bytes": 178,
+          "physical": "BYTE_ARRAY",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "bytes",
+            "value": "61"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/bytes-max1-1-embedded.parquet",
+          "sha256": "94c2060375c9b9ce1038093141d882f5bc36a07ea4eea1b8c5b14f5b3e9e00de",
+          "bytes": 793,
+          "physical": "BYTE_ARRAY",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque",
+            "umf.maxLength": "1"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    },
+    {
+      "id": "bytes-max1-2",
+      "arrowType": "binary",
+      "input": {
+        "kind": "bytes",
+        "value": "6162"
+      },
+      "array": {
+        "accepted": true,
+        "output": {
+          "kind": "bytes",
+          "value": "6162"
+        }
+      },
+      "files": [
+        {
+          "accepted": true,
+          "output": {
+            "kind": "bytes",
+            "value": "6162"
+          },
+          "storeSchema": false,
+          "path": "fixtures/parquet/facets/bytes-max1-2-plain.parquet",
+          "sha256": "71874e0e24e863f3b29a1e272c52876980a00130340a41735d0ac8c3957c4811",
+          "bytes": 183,
+          "physical": "BYTE_ARRAY",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        },
+        {
+          "accepted": true,
+          "output": {
+            "kind": "bytes",
+            "value": "6162"
+          },
+          "storeSchema": true,
+          "path": "fixtures/parquet/facets/bytes-max1-2-embedded.parquet",
+          "sha256": "ae3fc36a1c503a47959b82fa9b47de6f6eb8c797c1199ca38bdf20b17276c6f9",
+          "bytes": 798,
+          "physical": "BYTE_ARRAY",
+          "logical": {
+            "Type": "None"
+          },
+          "converted": "NONE",
+          "precision": -1,
+          "scale": -1,
+          "definitionLevel": 0,
+          "repetitionLevel": 0,
+          "fieldMetadata": {
+            "PARQUET:field_id": "37",
+            "future.field": "opaque",
+            "umf.maxLength": "1"
+          },
+          "sameTypedValue": true,
+          "sameRepresentation": true
+        }
+      ]
+    }
+  ],
+  "sha256": {
+    "/home/erik/Projects/umf/scripts/core-ideals/facets-parquet-discovery-native.py": "8efbb98bf73588bd8e38918bf066c2e61bb26f4855e354cb2d20be53d6a44c2a",
+    "fixtures/parquet/facets/bytes-max1-0-embedded.parquet": "023586481a6dda093ed32b66d8c8ebd089e07d895754059284ee9bb81240ffc9",
+    "fixtures/parquet/facets/bytes-max1-0-plain.parquet": "2f51627b7030e833895a6a18ad45c6cebbf004e583dbc33831ef41eda2622b1f",
+    "fixtures/parquet/facets/bytes-max1-1-embedded.parquet": "94c2060375c9b9ce1038093141d882f5bc36a07ea4eea1b8c5b14f5b3e9e00de",
+    "fixtures/parquet/facets/bytes-max1-1-plain.parquet": "0a4e8631e061c4f94650dddc67cb8778e686bd80309d2325be3eb4e4bf5e4fad",
+    "fixtures/parquet/facets/bytes-max1-2-embedded.parquet": "ae3fc36a1c503a47959b82fa9b47de6f6eb8c797c1199ca38bdf20b17276c6f9",
+    "fixtures/parquet/facets/bytes-max1-2-plain.parquet": "71874e0e24e863f3b29a1e272c52876980a00130340a41735d0ac8c3957c4811",
+    "fixtures/parquet/facets/decimal-3-2-59-embedded.parquet": "5cf43ce6990bd5e0e449f43847b12c71f279f406020bf15a986f2984dc81b602",
+    "fixtures/parquet/facets/decimal-3-2-59-plain.parquet": "ad726cdd34b7c830f96e130de3df44b8f6d60defd80b19acaa4ab009ea1fdc23",
+    "fixtures/parquet/facets/decimal-3-2-60-embedded.parquet": "5cf43ce6990bd5e0e449f43847b12c71f279f406020bf15a986f2984dc81b602",
+    "fixtures/parquet/facets/decimal-3-2-60-plain.parquet": "ad726cdd34b7c830f96e130de3df44b8f6d60defd80b19acaa4ab009ea1fdc23",
+    "fixtures/parquet/facets/decimal-3-2-62-embedded.parquet": "48061741057c4d835a2ef189dbfdc8404136efc1e4c0a5e96bbce2464f93568d",
+    "fixtures/parquet/facets/decimal-3-2-62-plain.parquet": "d439efa70c96ba478f8e9ac8dcfb9e7b270ff0cd3fa7505384f940f74ebde4d9",
+    "fixtures/parquet/facets/decimal-3-3-64-embedded.parquet": "fbe4a7816ab8822609c1d30ad759aea4ba3eb5dcd031a82dc3f83de55b766057",
+    "fixtures/parquet/facets/decimal-3-3-64-plain.parquet": "7b28b48d69a50dfe48b2d65903b1772fc2ff1f7681590f476b468437a6b8dbed",
+    "fixtures/parquet/facets/decimal-38-0-66-embedded.parquet": "517e081a96c68db89fe879a6ef5870386730ecf8d4ba8b564e52284115474a51",
+    "fixtures/parquet/facets/decimal-38-0-66-plain.parquet": "ba8dbd744158655279f6e10f97d2d9680c9cd7ca780672f3f1f4596669cbc737",
+    "fixtures/parquet/facets/decimal-76-0-70-embedded.parquet": "034b35da8de684c847a939ac16e9300a9e1a787667b9560bd2e710d68e406689",
+    "fixtures/parquet/facets/decimal-76-0-70-plain.parquet": "8d8eb1e50c905557aa5dea2095965c8a67d7d19b41d11c300b0f3eddaf5b8ab2",
+    "fixtures/parquet/facets/discovery-cases.json": "6ff665256f1e9f86d987484046d7a1cf7f0b2700716798164fa0c281004015e5",
+    "fixtures/parquet/facets/fixed2-6162-embedded.parquet": "d14df9ff12ba20b0076808b91a64e3f074372fb0bd7cc616e65d92ee4b8fbe1e",
+    "fixtures/parquet/facets/fixed2-6162-plain.parquet": "65e9d052acd3285947099af117def2a555918da047935cf2f0b4a90a70bf387a",
+    "fixtures/parquet/facets/float32-narrow-embedded.parquet": "d55a5247ce9e18929f0e00471c0f221148371ab009d0e3436394b736283fa830",
+    "fixtures/parquet/facets/float32-narrow-plain.parquet": "f4de1f1222de93f269db555818d43f1035a008d378c076661120bb9b28c14d4e",
+    "fixtures/parquet/facets/float32-overflow-embedded.parquet": "bc6655b61ce3c4f2ee45c4e1ed1089fa041ff524df992f8bebd58dd79505ff69",
+    "fixtures/parquet/facets/float32-overflow-plain.parquet": "84710af3b7d6cd6fbb227efb95dc4b8cfa25a703e17f596c36d0a7cd55b052b1",
+    "fixtures/parquet/facets/float64-exact-embedded.parquet": "5ccbee65bc2c586180272dca024961749ff66aaed2ac1aefb829a0c18a765054",
+    "fixtures/parquet/facets/float64-exact-plain.parquet": "1b4f42969524fc6ddb873aca3a2c2a3f3aaa07a95cb80d5ff29406ce0bdfb380",
+    "fixtures/parquet/facets/int16-fraction-embedded.parquet": "eabd043079689f8dde5fba145d26e8b6836403d2fbd8610c3142e44dbac8dc75",
+    "fixtures/parquet/facets/int16-fraction-plain.parquet": "4197c07cf6b105db44e627fdaf183a94bb045999547aa4ba03184915b304c3f7",
+    "fixtures/parquet/facets/int16-max-embedded.parquet": "2e5cb46bfbb359ce28a177c477850dd35b5a76810ba23d05943a556ced32735d",
+    "fixtures/parquet/facets/int16-max-plain.parquet": "a227f06b68eb3237ea924e22433d6fff68b25f193bff10ce5fea7b17e4d885da",
+    "fixtures/parquet/facets/int16-min-embedded.parquet": "61a2936bfe826c33ace90d539d8daa9b3adc9c006d1ed69bba0c8f26e0a01db3",
+    "fixtures/parquet/facets/int16-min-plain.parquet": "669668fcb7e8416b94a76ce92cea1fe77524db35aa51b9b8d51c107d48482c19",
+    "fixtures/parquet/facets/int32-fraction-embedded.parquet": "64050e4d1341ee9279dc5b2e3c11de7c21bf1985e344262dd427365ac35a972b",
+    "fixtures/parquet/facets/int32-fraction-plain.parquet": "0bcea7d87fc997c8e676ebf389d2b46eafd00f46dd0f066ed92010690e4207ab",
+    "fixtures/parquet/facets/int32-max-embedded.parquet": "b1e9d5af7750bed01c85dd939fdb5ffa38701fa88c25cd709ad96782944604ea",
+    "fixtures/parquet/facets/int32-max-plain.parquet": "8f16228251bbb32b652f5a4095f22f7eaf213abb6575159c594f5b520648b81b",
+    "fixtures/parquet/facets/int32-min-embedded.parquet": "8878cb674ad58369762d2095fd129488eb641f99b410e70eaa876e3e19745630",
+    "fixtures/parquet/facets/int32-min-plain.parquet": "807a2f62c6da5b4da0ed2b1df36f3e8d897fcc02e16127efd6a3addbae504df6",
+    "fixtures/parquet/facets/int64-fraction-embedded.parquet": "fe390dcdae5a03e7552a7a0fc5bf93926d2f2dec9dd74b62c6e71009ccfa7ae4",
+    "fixtures/parquet/facets/int64-fraction-plain.parquet": "da784e81317626e522a3ffa7db70ada93e9a714c6f59bbba8c3ae1952a2bb43e",
+    "fixtures/parquet/facets/int64-max-embedded.parquet": "50086e1294034e0d09c77a9c621a11c775fb4b9d7debf3f71cacd4df66e3fd7e",
+    "fixtures/parquet/facets/int64-max-plain.parquet": "3b71446c9dfb3d1f680873e59379e3840b0a03d2eeb83062d69970cc7e0f2e43",
+    "fixtures/parquet/facets/int64-min-embedded.parquet": "72e4b3d62b00235482de17643ff0731f180afae2b58c265a9880176677cc563a",
+    "fixtures/parquet/facets/int64-min-plain.parquet": "f8ccdce17b621b33be898bbf62da2cb056699fd336fcee781de25fc253a114f2",
+    "fixtures/parquet/facets/int8-fraction-embedded.parquet": "b95d8c36104e9a985d425468f21a17eaaac9a85f047f69f693e72b5a4e066acf",
+    "fixtures/parquet/facets/int8-fraction-plain.parquet": "c9f1cf4f5a2fff4c80adb08566b9eba54a599989331cc8b4a2cd91ebb22a770f",
+    "fixtures/parquet/facets/int8-max-embedded.parquet": "753e4b03f6b3b1c13070c407c9fe2fded2ec788e102f3c5db3d7851968632e22",
+    "fixtures/parquet/facets/int8-max-plain.parquet": "f7ae88e8b86febc12c77aee211fc68c908295f7469058cb2cb73c2a16f54a9e0",
+    "fixtures/parquet/facets/int8-min-embedded.parquet": "1498fe3755bf5ea11697245686b09cd1bbc670b484186a17f4e1abaaacee797d",
+    "fixtures/parquet/facets/int8-min-plain.parquet": "0de48c9ab915898a4f26d0307dcc3fcdf0f4f66b80283a59897ec1b733f59067",
+    "fixtures/parquet/facets/string-max1-0-embedded.parquet": "211c8ac32a5cccd5e3a82681f1415243d55ab0862c41a04613b8688dcb9d451d",
+    "fixtures/parquet/facets/string-max1-0-plain.parquet": "f82b6ce6a60f2df4a234625008d40bcc163c7908e8612b0622cf89755a17dd33",
+    "fixtures/parquet/facets/string-max1-1-embedded.parquet": "89fbff4a9d6762080d56c13e291bad4131b211d15e1ed7e6b1b7c624cc3f11dc",
+    "fixtures/parquet/facets/string-max1-1-plain.parquet": "cace23a650134ff4edab106c83fd683eecb49f8ae7bd22109a081d95cb9ae42a",
+    "fixtures/parquet/facets/string-max1-2-embedded.parquet": "d099d2d4c28e72eaeccc014b27b0ca741994c1cb6783ddb720192d2cf1e80410",
+    "fixtures/parquet/facets/string-max1-2-plain.parquet": "27c994c858e331e91ed04338c823484ad96a469bc63f9e378f44d95268ecdeb7",
+    "fixtures/parquet/facets/uint16-fraction-embedded.parquet": "4f7859a5255966a123a438e8c1f14d5c65f16f06addcca96fe2b2bdc79351da9",
+    "fixtures/parquet/facets/uint16-fraction-plain.parquet": "deb944771855ea1cf0ba2197898525d156a8a657bb6d8b613ae11c65b48c763a",
+    "fixtures/parquet/facets/uint16-max-embedded.parquet": "6efa84655b5cf6a7ae14574b96c0fce30e2d9847bbce4db1f8657605646b7737",
+    "fixtures/parquet/facets/uint16-max-plain.parquet": "76caa32b6a129ac202b6514c380c12ae3f56779be60d545d65594fcbf589640c",
+    "fixtures/parquet/facets/uint16-min-embedded.parquet": "5ae7790bb91e33f3c73c4590cff2d52851e772db1ad344b518695ef5cf64ad12",
+    "fixtures/parquet/facets/uint16-min-plain.parquet": "4bfea2e5a33636386747e39dee4ab673ca7d338711363b2293a8b269c6fb0cb8",
+    "fixtures/parquet/facets/uint32-fraction-embedded.parquet": "16d2cfb3b175612d70d6144fc19cac398b1e674aa19279f180a87fec04b9137e",
+    "fixtures/parquet/facets/uint32-fraction-plain.parquet": "28b37b59dc03d1a65e5be763950fccac131541d1ee4ff838f4d041e4021a5953",
+    "fixtures/parquet/facets/uint32-max-embedded.parquet": "a2abc58eef34a7e9dbdb4c3dec442f34287582373466640e7d6077cc91afe783",
+    "fixtures/parquet/facets/uint32-max-plain.parquet": "15c880eb7e195efb2c4a90eef24ed5f8265c4ef38e638a326754e656a7d4b279",
+    "fixtures/parquet/facets/uint32-min-embedded.parquet": "e7b38f2d20c01d00ba124a2828376812c84328961e44becbfa496665b7611a1f",
+    "fixtures/parquet/facets/uint32-min-plain.parquet": "04fcb314c1a07a60eab32c5d5c463d5975860920b181b6a8ab30fbbc5f9a7d62",
+    "fixtures/parquet/facets/uint64-fraction-embedded.parquet": "bbe9ebfdade12baa6b90810c696691cf9de14be311fa11de2cf3bcd6df2486eb",
+    "fixtures/parquet/facets/uint64-fraction-plain.parquet": "bfb4e2de41fe01d59ea046df3b1a45ee81630aacf0b2305b8ea8c95e2e1c86db",
+    "fixtures/parquet/facets/uint64-max-embedded.parquet": "083bd5ed11e20a3863294798a5b3fc587dadfe1558c3b919e5f4a50f6957d5b1",
+    "fixtures/parquet/facets/uint64-max-plain.parquet": "25af01baeec5986b7823fddee9c61aff3610d6a09e9717365dbf8b51fd7e6131",
+    "fixtures/parquet/facets/uint64-min-embedded.parquet": "da3d0341d34ac9270b742feeac5a69954583220402ae4a155e1a76a56b344157",
+    "fixtures/parquet/facets/uint64-min-plain.parquet": "731d18b44080bd98b48ab885c105ff12bc792f2436e7a8ba61a10b902c85d594",
+    "fixtures/parquet/facets/uint8-fraction-embedded.parquet": "0a0afb5511ea0c1adf31e77d25754784f9f7d2ec3793ff45455f5d75e9d27144",
+    "fixtures/parquet/facets/uint8-fraction-plain.parquet": "a8d2c7e212ad18077adb417741bce63dd6cad25c8ec1f57b0464fcac0a0b612d",
+    "fixtures/parquet/facets/uint8-max-embedded.parquet": "5de8ba0302047f0afe789bf4fb4332180394e831b729f938951ce2e38e146169",
+    "fixtures/parquet/facets/uint8-max-plain.parquet": "43a6e4064b60a1a958023f974933391f1125a71e8ef0968736627343a704aa82",
+    "fixtures/parquet/facets/uint8-min-embedded.parquet": "48bc5fdc8c5bcf6ce1a89d21ea000128744e351a1aa2b100a3b001eb1b4b4742",
+    "fixtures/parquet/facets/uint8-min-plain.parquet": "bb2944bfcdfc5ee9d6924e6ce1bfabaa5866fdeb952c5f1ef9c04d31bc7b823f",
+    "native/parquet/sources/Encodings.md": "b6b980c67acc14d3e9e4b592c582523b5dc2cc09ad9f90bc2b1912df461e5c88",
+    "native/parquet/sources/Encryption.md": "acba860c24ea5049b1123890b6e6e81fb44ed258a84fe042f808d32d1f642764",
+    "native/parquet/sources/LICENSE": "8c6db340475136df3c1201d458fa5755698eace76e510471ecc9d857d6083dac",
+    "native/parquet/sources/LogicalTypes.md": "01ad5a573ec5b6c3f4c5bba07f3ef708acf1ecca48d09d6edd566df554eeb837",
+    "native/parquet/sources/NOTICE": "28768ced5daf23a48a7fa7da0a16846c8c254e0a065cf29d5b17ef7fbad2e5fd",
+    "native/parquet/sources/manifest.json": "ff7b49a02e8ec39a048fb5cdd151784ab7cc8c603165fa72d729c4391d4303d9",
+    "native/parquet/sources/parquet.thrift": "e77109d446f5c436cc272d38be2f34238529abf9a8bd0361bb684387bb8e8736"
+  }
+}

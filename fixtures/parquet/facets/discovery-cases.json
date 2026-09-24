@@ -1,0 +1,1317 @@
+{
+  "scope": "Authored scalar native discovery cases; expected outcomes pinned to PyArrow 21.0.0, not binding acceptance",
+  "cases": [
+    {
+      "id": "int8-below",
+      "type": {
+        "name": "int8"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "-129"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "int8-min",
+      "type": {
+        "name": "int8"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "-128"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "-128"
+        }
+      }
+    },
+    {
+      "id": "int8-max",
+      "type": {
+        "name": "int8"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "127"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "127"
+        }
+      }
+    },
+    {
+      "id": "int8-above",
+      "type": {
+        "name": "int8"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "128"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "int8-fraction",
+      "type": {
+        "name": "int8"
+      },
+      "datum": {
+        "kind": "float",
+        "value": "1.5"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "1"
+        }
+      },
+      "counterexample": "safe-array-construction-truncates-fraction"
+    },
+    {
+      "id": "int8-bool",
+      "type": {
+        "name": "int8"
+      },
+      "datum": {
+        "kind": "boolean",
+        "value": true
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "uint8-below",
+      "type": {
+        "name": "uint8"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "-1"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "uint8-min",
+      "type": {
+        "name": "uint8"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "0"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "0"
+        }
+      }
+    },
+    {
+      "id": "uint8-max",
+      "type": {
+        "name": "uint8"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "255"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "255"
+        }
+      }
+    },
+    {
+      "id": "uint8-above",
+      "type": {
+        "name": "uint8"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "256"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "uint8-fraction",
+      "type": {
+        "name": "uint8"
+      },
+      "datum": {
+        "kind": "float",
+        "value": "1.5"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "1"
+        }
+      },
+      "counterexample": "safe-array-construction-truncates-fraction"
+    },
+    {
+      "id": "uint8-bool",
+      "type": {
+        "name": "uint8"
+      },
+      "datum": {
+        "kind": "boolean",
+        "value": true
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "int16-below",
+      "type": {
+        "name": "int16"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "-32769"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "int16-min",
+      "type": {
+        "name": "int16"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "-32768"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "-32768"
+        }
+      }
+    },
+    {
+      "id": "int16-max",
+      "type": {
+        "name": "int16"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "32767"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "32767"
+        }
+      }
+    },
+    {
+      "id": "int16-above",
+      "type": {
+        "name": "int16"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "32768"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "int16-fraction",
+      "type": {
+        "name": "int16"
+      },
+      "datum": {
+        "kind": "float",
+        "value": "1.5"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "1"
+        }
+      },
+      "counterexample": "safe-array-construction-truncates-fraction"
+    },
+    {
+      "id": "int16-bool",
+      "type": {
+        "name": "int16"
+      },
+      "datum": {
+        "kind": "boolean",
+        "value": true
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "uint16-below",
+      "type": {
+        "name": "uint16"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "-1"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "uint16-min",
+      "type": {
+        "name": "uint16"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "0"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "0"
+        }
+      }
+    },
+    {
+      "id": "uint16-max",
+      "type": {
+        "name": "uint16"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "65535"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "65535"
+        }
+      }
+    },
+    {
+      "id": "uint16-above",
+      "type": {
+        "name": "uint16"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "65536"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "uint16-fraction",
+      "type": {
+        "name": "uint16"
+      },
+      "datum": {
+        "kind": "float",
+        "value": "1.5"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "1"
+        }
+      },
+      "counterexample": "safe-array-construction-truncates-fraction"
+    },
+    {
+      "id": "uint16-bool",
+      "type": {
+        "name": "uint16"
+      },
+      "datum": {
+        "kind": "boolean",
+        "value": true
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "int32-below",
+      "type": {
+        "name": "int32"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "-2147483649"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "int32-min",
+      "type": {
+        "name": "int32"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "-2147483648"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "-2147483648"
+        }
+      }
+    },
+    {
+      "id": "int32-max",
+      "type": {
+        "name": "int32"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "2147483647"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "2147483647"
+        }
+      }
+    },
+    {
+      "id": "int32-above",
+      "type": {
+        "name": "int32"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "2147483648"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "int32-fraction",
+      "type": {
+        "name": "int32"
+      },
+      "datum": {
+        "kind": "float",
+        "value": "1.5"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "1"
+        }
+      },
+      "counterexample": "safe-array-construction-truncates-fraction"
+    },
+    {
+      "id": "int32-bool",
+      "type": {
+        "name": "int32"
+      },
+      "datum": {
+        "kind": "boolean",
+        "value": true
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "uint32-below",
+      "type": {
+        "name": "uint32"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "-1"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "uint32-min",
+      "type": {
+        "name": "uint32"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "0"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "0"
+        }
+      }
+    },
+    {
+      "id": "uint32-max",
+      "type": {
+        "name": "uint32"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "4294967295"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "4294967295"
+        }
+      }
+    },
+    {
+      "id": "uint32-above",
+      "type": {
+        "name": "uint32"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "4294967296"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "uint32-fraction",
+      "type": {
+        "name": "uint32"
+      },
+      "datum": {
+        "kind": "float",
+        "value": "1.5"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "1"
+        }
+      },
+      "counterexample": "safe-array-construction-truncates-fraction"
+    },
+    {
+      "id": "uint32-bool",
+      "type": {
+        "name": "uint32"
+      },
+      "datum": {
+        "kind": "boolean",
+        "value": true
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "int64-below",
+      "type": {
+        "name": "int64"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "-9223372036854775809"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "int64-min",
+      "type": {
+        "name": "int64"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "-9223372036854775808"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "-9223372036854775808"
+        }
+      }
+    },
+    {
+      "id": "int64-max",
+      "type": {
+        "name": "int64"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "9223372036854775807"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "9223372036854775807"
+        }
+      }
+    },
+    {
+      "id": "int64-above",
+      "type": {
+        "name": "int64"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "9223372036854775808"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "int64-fraction",
+      "type": {
+        "name": "int64"
+      },
+      "datum": {
+        "kind": "float",
+        "value": "1.5"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "1"
+        }
+      },
+      "counterexample": "safe-array-construction-truncates-fraction"
+    },
+    {
+      "id": "int64-bool",
+      "type": {
+        "name": "int64"
+      },
+      "datum": {
+        "kind": "boolean",
+        "value": true
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "uint64-below",
+      "type": {
+        "name": "uint64"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "-1"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "uint64-min",
+      "type": {
+        "name": "uint64"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "0"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "0"
+        }
+      }
+    },
+    {
+      "id": "uint64-max",
+      "type": {
+        "name": "uint64"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "18446744073709551615"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "18446744073709551615"
+        }
+      }
+    },
+    {
+      "id": "uint64-above",
+      "type": {
+        "name": "uint64"
+      },
+      "datum": {
+        "kind": "integer",
+        "value": "18446744073709551616"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "uint64-fraction",
+      "type": {
+        "name": "uint64"
+      },
+      "datum": {
+        "kind": "float",
+        "value": "1.5"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "integer",
+          "value": "1"
+        }
+      },
+      "counterexample": "safe-array-construction-truncates-fraction"
+    },
+    {
+      "id": "uint64-bool",
+      "type": {
+        "name": "uint64"
+      },
+      "datum": {
+        "kind": "boolean",
+        "value": true
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "float32-narrow",
+      "type": {
+        "name": "float32"
+      },
+      "datum": {
+        "kind": "float",
+        "value": "1.0000000000000002"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "float",
+          "value": "1.0"
+        }
+      },
+      "counterexample": "binary32-input-not-exact"
+    },
+    {
+      "id": "float32-overflow",
+      "type": {
+        "name": "float32"
+      },
+      "datum": {
+        "kind": "float",
+        "value": "1e40"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "float",
+          "value": "inf"
+        }
+      },
+      "counterexample": "binary32-input-not-exact"
+    },
+    {
+      "id": "float64-exact",
+      "type": {
+        "name": "float64"
+      },
+      "datum": {
+        "kind": "float",
+        "value": "1.0000000000000002"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "float",
+          "value": "1.0000000000000002"
+        }
+      }
+    },
+    {
+      "id": "fixed0-empty",
+      "type": {
+        "name": "fixed",
+        "size": 0
+      },
+      "datum": {
+        "kind": "bytes",
+        "value": ""
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": false
+      },
+      "counterexample": "fixed-is-exact-length-not-maximum"
+    },
+    {
+      "id": "fixed0-61",
+      "type": {
+        "name": "fixed",
+        "size": 0
+      },
+      "datum": {
+        "kind": "bytes",
+        "value": "61"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      },
+      "counterexample": "fixed-is-exact-length-not-maximum"
+    },
+    {
+      "id": "fixed0-6162",
+      "type": {
+        "name": "fixed",
+        "size": 0
+      },
+      "datum": {
+        "kind": "bytes",
+        "value": "6162"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      },
+      "counterexample": "fixed-is-exact-length-not-maximum"
+    },
+    {
+      "id": "fixed0-616263",
+      "type": {
+        "name": "fixed",
+        "size": 0
+      },
+      "datum": {
+        "kind": "bytes",
+        "value": "616263"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      },
+      "counterexample": "fixed-is-exact-length-not-maximum"
+    },
+    {
+      "id": "fixed2-empty",
+      "type": {
+        "name": "fixed",
+        "size": 2
+      },
+      "datum": {
+        "kind": "bytes",
+        "value": ""
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      },
+      "counterexample": "fixed-is-exact-length-not-maximum"
+    },
+    {
+      "id": "fixed2-61",
+      "type": {
+        "name": "fixed",
+        "size": 2
+      },
+      "datum": {
+        "kind": "bytes",
+        "value": "61"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      },
+      "counterexample": "fixed-is-exact-length-not-maximum"
+    },
+    {
+      "id": "fixed2-6162",
+      "type": {
+        "name": "fixed",
+        "size": 2
+      },
+      "datum": {
+        "kind": "bytes",
+        "value": "6162"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "bytes",
+          "value": "6162"
+        }
+      },
+      "counterexample": "fixed-is-exact-length-not-maximum"
+    },
+    {
+      "id": "fixed2-616263",
+      "type": {
+        "name": "fixed",
+        "size": 2
+      },
+      "datum": {
+        "kind": "bytes",
+        "value": "616263"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      },
+      "counterexample": "fixed-is-exact-length-not-maximum"
+    },
+    {
+      "id": "decimal-3-2-59",
+      "type": {
+        "name": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "value": "1.2"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "decimal",
+          "value": "1.20"
+        }
+      }
+    },
+    {
+      "id": "decimal-3-2-60",
+      "type": {
+        "name": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "value": "1.200"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "decimal",
+          "value": "1.20"
+        }
+      }
+    },
+    {
+      "id": "decimal-3-2-61",
+      "type": {
+        "name": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "value": "1.234"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "decimal-3-2-62",
+      "type": {
+        "name": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "value": "9.99"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "decimal",
+          "value": "9.99"
+        }
+      }
+    },
+    {
+      "id": "decimal-3-2-63",
+      "type": {
+        "name": "decimal",
+        "precision": 3,
+        "scale": 2
+      },
+      "datum": {
+        "kind": "decimal",
+        "value": "10.00"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "decimal-3-3-64",
+      "type": {
+        "name": "decimal",
+        "precision": 3,
+        "scale": 3
+      },
+      "datum": {
+        "kind": "decimal",
+        "value": "0.999"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "decimal",
+          "value": "0.999"
+        }
+      }
+    },
+    {
+      "id": "decimal-3-3-65",
+      "type": {
+        "name": "decimal",
+        "precision": 3,
+        "scale": 3
+      },
+      "datum": {
+        "kind": "decimal",
+        "value": "1.000"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "decimal-38-0-66",
+      "type": {
+        "name": "decimal",
+        "precision": 38,
+        "scale": 0
+      },
+      "datum": {
+        "kind": "decimal",
+        "value": "999"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "decimal",
+          "value": "999"
+        }
+      }
+    },
+    {
+      "id": "decimal-38-0-67",
+      "type": {
+        "name": "decimal",
+        "precision": 38,
+        "scale": 0
+      },
+      "datum": {
+        "kind": "decimal",
+        "value": "1.2"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "decimal-3--1-68",
+      "type": {
+        "name": "decimal",
+        "precision": 3,
+        "scale": -1
+      },
+      "datum": {
+        "kind": "decimal",
+        "value": "1000"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "decimal-3--1-69",
+      "type": {
+        "name": "decimal",
+        "precision": 3,
+        "scale": -1
+      },
+      "datum": {
+        "kind": "decimal",
+        "value": "999"
+      },
+      "expect": {
+        "arrayAccepted": false,
+        "parquetAccepted": false
+      }
+    },
+    {
+      "id": "decimal-76-0-70",
+      "type": {
+        "name": "decimal",
+        "precision": 76,
+        "scale": 0
+      },
+      "datum": {
+        "kind": "decimal",
+        "value": "9999999999999999999999999999999999999999999999999999999999999999999999999999"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "decimal",
+          "value": "9999999999999999999999999999999999999999999999999999999999999999999999999999"
+        }
+      }
+    },
+    {
+      "id": "string-max1-0",
+      "type": {
+        "name": "string"
+      },
+      "datum": {
+        "kind": "string",
+        "value": "a"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "string",
+          "value": "a"
+        }
+      },
+      "metadata": {
+        "umf.maxLength": "1"
+      },
+      "counterexample": "custom-length-metadata-not-enforced"
+    },
+    {
+      "id": "string-max1-1",
+      "type": {
+        "name": "string"
+      },
+      "datum": {
+        "kind": "string",
+        "value": "ab"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "string",
+          "value": "ab"
+        }
+      },
+      "metadata": {
+        "umf.maxLength": "1"
+      },
+      "counterexample": "custom-length-metadata-not-enforced"
+    },
+    {
+      "id": "string-max1-2",
+      "type": {
+        "name": "string"
+      },
+      "datum": {
+        "kind": "string",
+        "value": "😀é"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "string",
+          "value": "😀é"
+        }
+      },
+      "metadata": {
+        "umf.maxLength": "1"
+      },
+      "counterexample": "custom-length-metadata-not-enforced"
+    },
+    {
+      "id": "bytes-max1-0",
+      "type": {
+        "name": "binary"
+      },
+      "datum": {
+        "kind": "bytes",
+        "value": ""
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "bytes",
+          "value": ""
+        }
+      },
+      "metadata": {
+        "umf.maxLength": "1"
+      },
+      "counterexample": "custom-length-metadata-not-enforced"
+    },
+    {
+      "id": "bytes-max1-1",
+      "type": {
+        "name": "binary"
+      },
+      "datum": {
+        "kind": "bytes",
+        "value": "61"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "bytes",
+          "value": "61"
+        }
+      },
+      "metadata": {
+        "umf.maxLength": "1"
+      },
+      "counterexample": "custom-length-metadata-not-enforced"
+    },
+    {
+      "id": "bytes-max1-2",
+      "type": {
+        "name": "binary"
+      },
+      "datum": {
+        "kind": "bytes",
+        "value": "6162"
+      },
+      "expect": {
+        "arrayAccepted": true,
+        "parquetAccepted": true,
+        "output": {
+          "kind": "bytes",
+          "value": "6162"
+        }
+      },
+      "metadata": {
+        "umf.maxLength": "1"
+      },
+      "counterexample": "custom-length-metadata-not-enforced"
+    }
+  ]
+}

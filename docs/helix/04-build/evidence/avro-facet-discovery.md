@@ -226,3 +226,42 @@ retains completed command results with `completed: false`. The separate refreshe
 Field, Nullability and Cardinality acceptance gates have not run, and no final
 Avro facet acceptance record has been published. Avro remains in progress; this
 commit checkpoints work and does not claim binding acceptance or native equivalence.
+
+
+## Qualified Avro facet binding (2026-09-24)
+
+The [acceptance record](../../../../fixtures/validation/avro-facets-acceptance-evidence.json)
+qualifies the experimental core 0.5.0 Avro facet binding for Apache Avro 1.12.0,
+fastavro 1.12.2 and Chromium 148 within the profiles and limits above. It
+supersedes earlier pending checkpoints without widening their native scope.
+
+The refresh passed 85 native/browser stages and 515 priority tests with
+52,275 assertions across 160 files. The original broad run passed 1,120 tests
+and failed three evidence gates; its log is retained unchanged. Those three
+failures were resolved by fresh Field, Nullability and Cardinality conformance
+commands and seven gate tests. This is not a claim that the original broad
+command passed.
+
+A package description was corrected after the priority regression. Its rebuilt
+bundle differs only in that text and Bun's generated debugId. The separate
+[metadata adjustment](../../../../fixtures/validation/avro-facets-metadata-adjustment.json)
+records 47 passing checks: regeneration, typecheck, schema audit, both builds,
+11 scoped tests and all 41 browser commands. Native aggregates were reused only
+after their fingerprints remained current; this wording correction did not
+rerun native engines or the full priority regression. The audit covers 274
+schemas and 46 extension packages.
+
+Native projection parses 388 emitted schemas with both pinned codecs, performs
+776 writes and 1,552 cross-codec reads. Composition and public Chromium retain
+776 ideal and 776 native recoveries, including 76 directly recovered nonempty
+authored facet sets, 162 facetless controls and 150 explicit residual cases.
+Writer conversions, unenforced metadata and unsupported native distinctions
+remain explicit. Strict/report behavior and retained native content satisfy
+the qualified binding contract without claiming native equivalence.
+
+This closes the Avro facet binding only. Parquet facets, the separate facet
+ideal admission/five-system delivery gate and Key remain required.
+
+The interrupted metadata run resumed from its last successful stage. A sandbox
+local-server failure was retained as a failed attempt; the authorized rerun passed.
+The interruption checkpoint above is historical and superseded by this acceptance.

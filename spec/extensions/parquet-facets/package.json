@@ -1,0 +1,163 @@
+{
+  "id": "umf.parquet.facets",
+  "version": "1.0.0",
+  "coreVersion": "0.1.0",
+  "description": "Experimental Parquet scalar facet classification and authored projection with retained native semantics",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:parquet:facet-binding:1.0.0",
+    "title": "Retained Parquet facet interpretation profile",
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+      "origin",
+      "location",
+      "binding",
+      "profile",
+      "obligation",
+      "outcome",
+      "observations"
+    ],
+    "properties": {
+      "origin": {
+        "const": "classified"
+      },
+      "location": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "index",
+          "scope"
+        ],
+        "properties": {
+          "index": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "scope": {
+            "const": "present-non-null-leaf"
+          }
+        }
+      },
+      "binding": {
+        "const": {
+          "id": "umf.parquet.facets",
+          "version": "1.0.0"
+        }
+      },
+      "profile": {
+        "enum": [
+          "declared-schema",
+          "pyarrow-safe-array-input",
+          "unresolved"
+        ]
+      },
+      "obligation": {
+        "enum": [
+          "value-domain",
+          "exact-input"
+        ]
+      },
+      "outcome": {
+        "enum": [
+          "exact",
+          "approximated",
+          "not-expressible",
+          "unknown"
+        ]
+      },
+      "observations": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "concept",
+            "idealPath",
+            "location",
+            "interpretation",
+            "outcome",
+            "basis"
+          ],
+          "properties": {
+            "concept": {
+              "enum": [
+                "length",
+                "decimal",
+                "integerWidth",
+                "conversion",
+                "native"
+              ]
+            },
+            "idealPath": {
+              "type": "string",
+              "minLength": 1
+            },
+            "location": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "index",
+                "scope"
+              ],
+              "properties": {
+                "index": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "scope": {
+                  "const": "present-non-null-leaf"
+                }
+              }
+            },
+            "interpretation": {
+              "enum": [
+                "declared",
+                "inferred",
+                "unknown",
+                "unsupported"
+              ]
+            },
+            "outcome": {
+              "enum": [
+                "exact",
+                "approximated",
+                "not-expressible",
+                "unknown"
+              ]
+            },
+            "basis": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  },
+  "semantics": "CONTRACT-040 and TD-043; core 0.5.0 profile-qualified facet classification; declaration meaning is separate from native enforcement; classification and authored projection are experimental; binding qualification is recorded separately in versioned acceptance evidence",
+  "scopes": [
+    "element"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "Parquet",
+      "version": "parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017 / PyArrow 21.0.0",
+      "subset": "Explicit present non-null physical leaf declarations; native bytes, container context and unknown metadata retained; input conversion and enforcement remain separate"
+    },
+    "evidence": [
+      "tests/core-ideals/facets-parquet.test.ts",
+      "fixtures/validation/facets-parquet-discovery-native.json",
+      "fixtures/validation/facets-parquet-type-browser.json",
+      "tests/core-ideals/facets-parquet-projection.test.ts",
+      "fixtures/validation/facets-parquet-projection-native.json"
+    ]
+  }
+}

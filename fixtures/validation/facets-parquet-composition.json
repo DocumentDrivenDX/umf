@@ -1,0 +1,3350 @@
+{
+  "scope": "Emitted Parquet scalar schema files re-imported and profile-classified; native observations do not acquire authored provenance",
+  "bindingAccepted": false,
+  "counts": {
+    "cases": 177,
+    "idealRecoveries": 354,
+    "nativeRecoveries": 354,
+    "exactFacetRecoveries": 165,
+    "explicitResiduals": 12
+  },
+  "results": [
+    {
+      "id": "0-declared-schema-native-type-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "0-declared-schema-native-type-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "0-declared-schema-metadata-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "0-declared-schema-metadata-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "0-declared-schema-carrier-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "0-declared-schema-carrier-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "0-pyarrow-21-native-type-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "0-pyarrow-21-native-type-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "0-pyarrow-21-metadata-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "0-pyarrow-21-metadata-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "0-pyarrow-21-carrier-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "0-pyarrow-21-carrier-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "1-declared-schema-native-type-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "1-declared-schema-native-type-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "1-declared-schema-metadata-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "1-declared-schema-metadata-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "1-declared-schema-carrier-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "1-declared-schema-carrier-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "1-pyarrow-21-native-type-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "1-pyarrow-21-native-type-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "1-pyarrow-21-metadata-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "1-pyarrow-21-metadata-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "1-pyarrow-21-carrier-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "1-pyarrow-21-carrier-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "2-declared-schema-native-type-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "2-declared-schema-native-type-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "2-declared-schema-metadata-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "2-declared-schema-metadata-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "2-declared-schema-carrier-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "2-declared-schema-carrier-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "2-pyarrow-21-native-type-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "2-pyarrow-21-native-type-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "2-pyarrow-21-metadata-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "2-pyarrow-21-metadata-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "2-pyarrow-21-carrier-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "2-pyarrow-21-carrier-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "3-declared-schema-native-type-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "3-declared-schema-native-type-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "3-declared-schema-metadata-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "3-declared-schema-metadata-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "3-declared-schema-carrier-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "3-declared-schema-carrier-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "3-pyarrow-21-native-type-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "3-pyarrow-21-native-type-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "3-pyarrow-21-metadata-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "3-pyarrow-21-metadata-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "3-pyarrow-21-carrier-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "3-pyarrow-21-carrier-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 16,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "4-declared-schema-native-type-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "4-declared-schema-native-type-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "4-declared-schema-metadata-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "4-declared-schema-metadata-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "4-declared-schema-carrier-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "4-declared-schema-carrier-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "4-pyarrow-21-native-type-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "4-pyarrow-21-native-type-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "4-pyarrow-21-metadata-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "4-pyarrow-21-metadata-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "4-pyarrow-21-carrier-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "4-pyarrow-21-carrier-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "5-declared-schema-native-type-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "5-declared-schema-native-type-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "5-declared-schema-metadata-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "5-declared-schema-metadata-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "5-declared-schema-carrier-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "5-declared-schema-carrier-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "5-pyarrow-21-native-type-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "5-pyarrow-21-native-type-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "5-pyarrow-21-metadata-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "5-pyarrow-21-metadata-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "5-pyarrow-21-carrier-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "5-pyarrow-21-carrier-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 32,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "6-declared-schema-native-type-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "6-declared-schema-native-type-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "6-declared-schema-metadata-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "6-declared-schema-metadata-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "6-declared-schema-carrier-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "6-declared-schema-carrier-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "6-pyarrow-21-native-type-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "6-pyarrow-21-native-type-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "6-pyarrow-21-metadata-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "6-pyarrow-21-metadata-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "6-pyarrow-21-carrier-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "6-pyarrow-21-carrier-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "7-declared-schema-native-type-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "7-declared-schema-native-type-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "7-declared-schema-metadata-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "7-declared-schema-metadata-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "7-declared-schema-carrier-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "7-declared-schema-carrier-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "7-pyarrow-21-native-type-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "7-pyarrow-21-native-type-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "7-pyarrow-21-metadata-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "7-pyarrow-21-metadata-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "7-pyarrow-21-carrier-only-strict",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "7-pyarrow-21-carrier-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 64,
+          "signed": false
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "8-declared-schema-native-type-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 7,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Explicit Parquet carrier does not declare the authored integer domain",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "id": "8-declared-schema-metadata-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 7,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Explicit Parquet carrier does not declare the authored integer domain",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "8-declared-schema-carrier-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 7,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Explicit Parquet carrier does not declare the authored integer domain",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "id": "8-pyarrow-21-native-type-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 7,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Explicit Parquet carrier does not declare the authored integer domain",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "id": "8-pyarrow-21-metadata-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 7,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Explicit Parquet carrier does not declare the authored integer domain",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "8-pyarrow-21-carrier-only-report",
+      "authored": {
+        "integerWidth": {
+          "bits": 7,
+          "signed": true
+        }
+      },
+      "classified": {
+        "integerWidth": {
+          "bits": 8,
+          "signed": true
+        }
+      },
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Explicit Parquet carrier does not declare the authored integer domain",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "id": "9-declared-schema-native-type-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "9-declared-schema-native-type-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "9-declared-schema-metadata-only-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "9-declared-schema-metadata-only-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "9-declared-schema-carrier-only-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "9-declared-schema-carrier-only-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "9-pyarrow-21-native-type-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "9-pyarrow-21-native-type-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "9-pyarrow-21-metadata-only-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "9-pyarrow-21-metadata-only-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "9-pyarrow-21-carrier-only-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "9-pyarrow-21-carrier-only-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "10-declared-schema-native-type-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "10-declared-schema-native-type-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "10-declared-schema-metadata-only-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "10-declared-schema-metadata-only-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "10-declared-schema-carrier-only-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "10-declared-schema-carrier-only-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "10-pyarrow-21-native-type-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "10-pyarrow-21-native-type-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "10-pyarrow-21-metadata-only-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "10-pyarrow-21-metadata-only-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "10-pyarrow-21-carrier-only-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "10-pyarrow-21-carrier-only-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "11-declared-schema-native-type-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "11-declared-schema-native-type-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "11-declared-schema-metadata-only-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "11-declared-schema-metadata-only-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "11-declared-schema-carrier-only-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "11-declared-schema-carrier-only-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "11-pyarrow-21-native-type-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "11-pyarrow-21-native-type-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "11-pyarrow-21-metadata-only-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "11-pyarrow-21-metadata-only-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "11-pyarrow-21-carrier-only-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "11-pyarrow-21-carrier-only-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "12-declared-schema-native-type-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "12-declared-schema-native-type-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "12-declared-schema-metadata-only-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "12-declared-schema-metadata-only-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "12-declared-schema-carrier-only-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "12-declared-schema-carrier-only-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "12-pyarrow-21-native-type-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "12-pyarrow-21-native-type-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "12-pyarrow-21-metadata-only-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "12-pyarrow-21-metadata-only-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "12-pyarrow-21-carrier-only-strict",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "12-pyarrow-21-carrier-only-report",
+      "authored": {
+        "precision": 4,
+        "scale": 2
+      },
+      "classified": {
+        "precision": 4,
+        "scale": 2
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "13-declared-schema-native-type-strict",
+      "authored": {
+        "precision": 77,
+        "scale": 0
+      },
+      "classified": {
+        "precision": 77,
+        "scale": 0
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "13-declared-schema-native-type-report",
+      "authored": {
+        "precision": 77,
+        "scale": 0
+      },
+      "classified": {
+        "precision": 77,
+        "scale": 0
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "13-declared-schema-metadata-only-strict",
+      "authored": {
+        "precision": 77,
+        "scale": 0
+      },
+      "classified": {
+        "precision": 77,
+        "scale": 0
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "13-declared-schema-metadata-only-report",
+      "authored": {
+        "precision": 77,
+        "scale": 0
+      },
+      "classified": {
+        "precision": 77,
+        "scale": 0
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "13-declared-schema-carrier-only-strict",
+      "authored": {
+        "precision": 77,
+        "scale": 0
+      },
+      "classified": {
+        "precision": 77,
+        "scale": 0
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "13-declared-schema-carrier-only-report",
+      "authored": {
+        "precision": 77,
+        "scale": 0
+      },
+      "classified": {
+        "precision": 77,
+        "scale": 0
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": []
+    },
+    {
+      "id": "13-pyarrow-21-native-type-report",
+      "authored": {
+        "precision": 77,
+        "scale": 0
+      },
+      "classified": {
+        "precision": 77,
+        "scale": 0
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "PyArrow 21.0.0 cannot represent decimal precision above 76 although Parquet BYTE_ARRAY declarations allow it",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "id": "13-pyarrow-21-metadata-only-report",
+      "authored": {
+        "precision": 77,
+        "scale": 0
+      },
+      "classified": {
+        "precision": 77,
+        "scale": 0
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "PyArrow 21.0.0 cannot represent decimal precision above 76 although Parquet BYTE_ARRAY declarations allow it",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "13-pyarrow-21-carrier-only-report",
+      "authored": {
+        "precision": 77,
+        "scale": 0
+      },
+      "classified": {
+        "precision": 77,
+        "scale": 0
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "PyArrow 21.0.0 cannot represent decimal precision above 76 although Parquet BYTE_ARRAY declarations allow it",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "id": "14-declared-schema-native-type-report",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "classified": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Exact fixed length rejects shorter values permitted by a maximum bound; no padding or truncation is implied",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed exact byte length includes a lower bound not represented by the maximum-length ideal",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "id": "14-declared-schema-metadata-only-report",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "classified": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Exact fixed length rejects shorter values permitted by a maximum bound; no padding or truncation is implied",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed exact byte length includes a lower bound not represented by the maximum-length ideal",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "14-declared-schema-carrier-only-report",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "classified": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Exact fixed length rejects shorter values permitted by a maximum bound; no padding or truncation is implied",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed exact byte length includes a lower bound not represented by the maximum-length ideal",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "id": "14-pyarrow-21-native-type-report",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "classified": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Exact fixed length rejects shorter values permitted by a maximum bound; no padding or truncation is implied",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed exact byte length includes a lower bound not represented by the maximum-length ideal",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "id": "14-pyarrow-21-metadata-only-report",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "classified": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Exact fixed length rejects shorter values permitted by a maximum bound; no padding or truncation is implied",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed exact byte length includes a lower bound not represented by the maximum-length ideal",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "14-pyarrow-21-carrier-only-report",
+      "authored": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "classified": {
+        "length": {
+          "max": 2,
+          "unit": "byte"
+        }
+      },
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Exact fixed length rejects shorter values permitted by a maximum bound; no padding or truncation is implied",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Fixed exact byte length includes a lower bound not represented by the maximum-length ideal",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "id": "16-declared-schema-native-type-report",
+      "authored": {
+        "length": {
+          "max": 1,
+          "unit": "unicode-scalar"
+        }
+      },
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Parquet variable string/binary metadata does not enforce a maximum bound; fixed count must match explicitly",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "id": "16-declared-schema-metadata-only-report",
+      "authored": {
+        "length": {
+          "max": 1,
+          "unit": "unicode-scalar"
+        }
+      },
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Parquet variable string/binary metadata does not enforce a maximum bound; fixed count must match explicitly",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "16-declared-schema-carrier-only-report",
+      "authored": {
+        "length": {
+          "max": 1,
+          "unit": "unicode-scalar"
+        }
+      },
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Parquet variable string/binary metadata does not enforce a maximum bound; fixed count must match explicitly",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "id": "16-pyarrow-21-native-type-report",
+      "authored": {
+        "length": {
+          "max": 1,
+          "unit": "unicode-scalar"
+        }
+      },
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Parquet variable string/binary metadata does not enforce a maximum bound; fixed count must match explicitly",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "id": "16-pyarrow-21-metadata-only-report",
+      "authored": {
+        "length": {
+          "max": 1,
+          "unit": "unicode-scalar"
+        }
+      },
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Parquet variable string/binary metadata does not enforce a maximum bound; fixed count must match explicitly",
+          "outcome": "not-expressible"
+        },
+        {
+          "reason": "Native key/value metadata remains attached without facet enforcement interpretation",
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "16-pyarrow-21-carrier-only-report",
+      "authored": {
+        "length": {
+          "max": 1,
+          "unit": "unicode-scalar"
+        }
+      },
+      "classified": {},
+      "recoversAuthoredFacets": false,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Parquet variable string/binary metadata does not enforce a maximum bound; fixed count must match explicitly",
+          "outcome": "not-expressible"
+        }
+      ]
+    },
+    {
+      "id": "17-declared-schema-native-type-report",
+      "authored": {},
+      "classified": {},
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Binary64 1.0000000000000002 narrows to binary32 1.0",
+          "outcome": "approximated"
+        },
+        {
+          "reason": "Binary64 1.0000000000000002 narrows to binary32 1.0",
+          "outcome": "approximated"
+        }
+      ]
+    },
+    {
+      "id": "17-declared-schema-metadata-only-report",
+      "authored": {},
+      "classified": {},
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Binary64 1.0000000000000002 narrows to binary32 1.0",
+          "outcome": "approximated"
+        },
+        {
+          "reason": "Binary64 1.0000000000000002 narrows to binary32 1.0",
+          "outcome": "approximated"
+        }
+      ]
+    },
+    {
+      "id": "17-declared-schema-carrier-only-report",
+      "authored": {},
+      "classified": {},
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Binary64 1.0000000000000002 narrows to binary32 1.0",
+          "outcome": "approximated"
+        },
+        {
+          "reason": "Binary64 1.0000000000000002 narrows to binary32 1.0",
+          "outcome": "approximated"
+        }
+      ]
+    },
+    {
+      "id": "17-pyarrow-21-native-type-report",
+      "authored": {},
+      "classified": {},
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Binary64 1.0000000000000002 narrows to binary32 1.0",
+          "outcome": "approximated"
+        },
+        {
+          "reason": "Binary64 1.0000000000000002 narrows to binary32 1.0",
+          "outcome": "approximated"
+        }
+      ]
+    },
+    {
+      "id": "17-pyarrow-21-metadata-only-report",
+      "authored": {},
+      "classified": {},
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Binary64 1.0000000000000002 narrows to binary32 1.0",
+          "outcome": "approximated"
+        },
+        {
+          "reason": "Binary64 1.0000000000000002 narrows to binary32 1.0",
+          "outcome": "approximated"
+        }
+      ]
+    },
+    {
+      "id": "17-pyarrow-21-carrier-only-report",
+      "authored": {},
+      "classified": {},
+      "recoversAuthoredFacets": true,
+      "nativeRefinements": {},
+      "residuals": [
+        {
+          "reason": "Binary64 1.0000000000000002 narrows to binary32 1.0",
+          "outcome": "approximated"
+        },
+        {
+          "reason": "Binary64 1.0000000000000002 narrows to binary32 1.0",
+          "outcome": "approximated"
+        }
+      ]
+    }
+  ],
+  "sha256": {
+    "scripts/core-ideals/facets-parquet-composition.ts": "22c6c956fe460f26191c100468b935fae0684b980289ab3a24950202b9b1fa0b",
+    "scripts/core-ideals/facets-parquet-projection-cases.ts": "646ac95a1b937dc3952b81ae66f8fe0dd47476f361d7a8d9f3f4e9ef931d3c6e",
+    "fixtures/validation/facets-parquet-projection-corpus.json": "aeab87ea63915fbd0e302a37ec3f126224b8276127914fb8f6fdbf030dd6421a",
+    "src/core-ideals/facets-parquet.ts": "68b0538bf077d339024f1cb10eb8a739643afdbbff44bf899bd95fdb21d35dcb",
+    "src/core-ideals/facets-parquet-projection.ts": "22b8a129ddb2df7d5bba0e331e7ad43ba1a9eba6e8dbbf06f0dcc24fb2ad2033",
+    "fixtures/validation/facets-parquet-projection-native.json": "bbaafa99a6fa5ec8bb206dc04cd9efd9035157c21d80c0e94d0b4e2687c1e155"
+  }
+}

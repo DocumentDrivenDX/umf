@@ -1,0 +1,21 @@
+{
+  "scope": "Internal isolated Parquet declaration interpretation; no public facet classification, projection or binding acceptance",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 90,
+    "declared": 80,
+    "unsupported": 10,
+    "unknownRecovery": true,
+    "getterCalls": 0
+  },
+  "externalRequests": [],
+  "bindingAccepted": false,
+  "sha256": {
+    "fixtures/validation/facets-parquet-discovery.json": "f084ae13fc121a4f32e7c306bc15c48d63ad3290de3fc964bfd4db00b338e3da",
+    "src/adapters/parquet/facet-type.ts": "b634636284065f305ba10f49de55be46c0d36deda6ffbfa9748274903fdf7ecd",
+    "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
+    "src/model/types.ts": "2a3b01a878bd247a6fb8618487164241dda88eb4de03204dbf02b55a833ba64a",
+    "scripts/core-ideals/facets-parquet-type-browser.ts": "6b4f0c9689deb88e4c071bfad081911691ad13a101608edc7e3d49a09af833f6",
+    "dist/parquet-facet-type.js": "253d38b194f449f66063c89c18f893d1d6a12c7ccead03cc6ce1438860624609"
+  }
+}

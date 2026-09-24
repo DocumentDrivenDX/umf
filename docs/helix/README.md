@@ -83,8 +83,14 @@ schemas have composed native/ideal recovery evidence. See the
 [PostgreSQL facet acceptance record](../../fixtures/validation/postgresql-facets-acceptance-evidence.json).
 SQL Server facets also pass qualified binding acceptance; see the
 [acceptance record](../../fixtures/validation/sqlserver-facets-acceptance-evidence.json).
-Avro and Parquet facet bindings remain required before the separate five-system
-facet admission/delivery gate. No native equivalence is claimed.
+Avro facets also pass qualified binding acceptance; see the
+[Avro acceptance record](../../fixtures/validation/avro-facets-acceptance-evidence.json).
+Parquet facet classification and authored projection are implemented, with
+aggregate qualification and refreshed prior concept gates pending. The
+[Parquet facet evidence](04-build/evidence/parquet-facet-discovery.md) records
+the current checkpoint and subsequent acceptance results. The separate
+five-system facet admission/delivery gate remains pending. No native equivalence
+is claimed.
 The [SQL Server facet evidence](04-build/evidence/sqlserver-facet-discovery.md)
 records discovery, classification, authored projection and composed recovery,
 including the native counterexamples that limit each qualified profile.
