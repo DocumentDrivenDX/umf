@@ -8,10 +8,21 @@ const oracle=await Bun.file(base+'oracle-results.json').json();
 
 test('CONTRACT-041: native observations retain browser recovery evidence',async()=>{
  const browser=await Bun.file(base+'browser-results.json').json();
- expect(browser.cases).toEqual(['rdf','linkml','tablespec']);
- expect(browser.recoveries).toBe(6);
+ expect(browser.cases).toEqual(['rdf','rdfUnion','linkml','tablespec']);
+ expect(browser.recoveries).toBe(8);
  expect(browser.nodeGlobalsAbsent).toBe(true);
  expect(browser.sourceSha256).toEqual(oracle.sourceSha256);
+});
+
+test('CONTRACT-041: RDF union-class domain is retained without authored inference',async()=>{
+ const raw=await Bun.file(base+'rdf-union-domain.nq').text();
+ expect(createHash('sha256').update(raw).digest('hex')).toBe(oracle.sourceSha256.rdfUnion);
+ const document=importRdfNQuads(raw,{id:'relationship-native-rdf-union'});
+ expect(getRdfQuads(document)).toHaveLength(oracle.rdfUnion.quadCount);
+ expect(oracle.rdfUnion.members).toEqual(['https://example.org/type/Order','https://example.org/type/Invoice']);
+ for(const format of ['json','yaml'] as const)
+  expect(exportRdfNQuads(readDocument(writeDocument(document,format),format))).toBe(raw);
+ expect('relationships' in document.modules[0]!).toBe(false);
 });
 
 test('CONTRACT-041: RDF domain and range remain native observations',async()=>{

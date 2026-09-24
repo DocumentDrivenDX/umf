@@ -23,6 +23,25 @@ range_ = rdflib.URIRef('https://example.org/type/Customer')
 assert (predicate, rdflib.RDFS.domain, domain) in dataset
 assert (predicate, rdflib.RDFS.range, range_) in dataset
 assert len(dataset) == 3
+union_source = (base / 'rdf-union-domain.nq').read_text()
+union_dataset = rdflib.Dataset()
+union_dataset.parse(data=union_source, format='nquads')
+union_predicate = rdflib.URIRef('https://example.org/rel/party')
+union_class = union_dataset.value(union_predicate, rdflib.RDFS.domain)
+assert isinstance(union_class, rdflib.BNode)
+union_head = union_dataset.value(union_class, rdflib.OWL.unionOf)
+assert isinstance(union_head, rdflib.BNode)
+members = []
+cursor = union_head
+while cursor != rdflib.RDF.nil:
+    member = union_dataset.value(cursor, rdflib.RDF.first)
+    assert isinstance(member, rdflib.URIRef)
+    members.append(str(member))
+    cursor = union_dataset.value(cursor, rdflib.RDF.rest)
+    assert cursor is not None and len(members) <= 2
+assert members == ['https://example.org/type/Order', 'https://example.org/type/Invoice']
+assert (union_predicate, rdflib.RDFS.range, range_) in union_dataset
+assert len(union_dataset) == 7
 linkml_source = (base / 'linkml-slot.yaml').read_text()
 schema = yaml_loader.loads(linkml_source, target_class=SchemaDefinition)
 assert schema.classes['Order'].slots == ['customer']
@@ -45,10 +64,13 @@ result = {
                'pydantic': pydantic.__version__},
     'sourceSha256': {
         'rdf': hashlib.sha256(rdf_source.encode()).hexdigest(),
+        'rdfUnion': hashlib.sha256(union_source.encode()).hexdigest(),
         'linkml': hashlib.sha256(linkml_source.encode()).hexdigest(),
         'tablespec': hashlib.sha256(tablespec_source.encode()).hexdigest(),
     },
     'rdf': {'quadCount': len(dataset), 'predicate': str(predicate), 'domain': str(domain), 'range': str(range_)},
+    'rdfUnion': {'quadCount': len(union_dataset), 'predicate': str(union_predicate),
+                 'members': members, 'range': str(range_)},
     'linkml': {'class': 'Order', 'slot': 'customer', 'range': schema.slots['customer'].range,
                'multivalued': schema.slots['customer'].multivalued, 'required': schema.slots['customer'].required,
                'targetIdentifier': schema.slots['id'].identifier},
@@ -56,6 +78,7 @@ result = {
                   'referencesColumn': foreign_key.references_column, 'confidence': foreign_key.confidence},
     'classification': 'native-observation-only',
     'limits': ['RDF domain/range entail types, not reference enforcement or participation cardinality',
+               'OWL union-class domain is an explicit native structure; no authored heterogeneous-source assertion is inferred',
                'LinkML slot range and multivalued do not select a target Key or establish source-end multiplicity',
                'TableSpec foreign-key metadata does not establish named target Key identity, lifecycle or enforcement'],
 }

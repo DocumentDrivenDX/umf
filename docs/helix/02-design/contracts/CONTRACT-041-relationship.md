@@ -134,10 +134,13 @@ The TableSpec 1.0 model
 accepts `relationships.foreign_keys` with source column, referenced table and
 column, and confidence; the current adapter archives it exactly. This proves a
 native carrier exists, but not an authored Relationship down-projection or Key
-resolution. RDF domain/range and LinkML slot/range/multivalued are likewise
-classified native observations. These fixtures do not count toward the
-two-priority-system admission gate until directed projection and recovery are
-tested.
+resolution. RDF domain/range, an explicit OWL union-class domain with two
+source classes, and LinkML slot/range/multivalued are likewise classified
+native observations. The union fixture preserves its RDF list and blank-node
+structure through native parsing and Chromium codec recovery; it does not
+establish an authored heterogeneous source set. These fixtures do not count
+toward the two-priority-system admission gate until directed projection and
+recovery are tested.
 
 The admission record MUST contain written meaning, counterexamples, at least
 two useful evidenced down-projections to distinct priority systems and

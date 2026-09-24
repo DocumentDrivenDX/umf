@@ -1,0 +1,7 @@
+<https://example.org/rel/party> <http://www.w3.org/2000/01/rdf-schema#domain> _:union .
+_:union <http://www.w3.org/2002/07/owl#unionOf> _:list1 .
+_:list1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <https://example.org/type/Order> .
+_:list1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:list2 .
+_:list2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <https://example.org/type/Invoice> .
+_:list2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+<https://example.org/rel/party> <http://www.w3.org/2000/01/rdf-schema#range> <https://example.org/type/Customer> .

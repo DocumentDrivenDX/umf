@@ -4,6 +4,7 @@ import {createHash} from 'node:crypto';
 const base='fixtures/relationship-native/';
 const sources={
  rdf:await Bun.file(base+'rdf-domain-range.nq').text(),
+ rdfUnion:await Bun.file(base+'rdf-union-domain.nq').text(),
  linkml:await Bun.file(base+'linkml-slot.yaml').text(),
  tablespec:await Bun.file(base+'tablespec-foreign-key.json').text()
 };
@@ -22,6 +23,7 @@ try{
   const path='/umf.js',umf=await import(path);
   const cases=[
    {name:'rdf',document:umf.importRdfNQuads(sources.rdf,{id:'native-rdf'}),exporter:umf.exportRdfNQuads,source:sources.rdf},
+   {name:'rdfUnion',document:umf.importRdfNQuads(sources.rdfUnion,{id:'native-rdf-union'}),exporter:umf.exportRdfNQuads,source:sources.rdfUnion},
    {name:'linkml',document:umf.importLinkmlDocument(sources.linkml,{id:'native-linkml',format:'yaml'}),exporter:umf.exportLinkmlDocument,source:sources.linkml},
    {name:'tablespec',document:umf.importTableSpec(sources.tablespec,{id:'native-tablespec',format:'json'}),exporter:umf.exportTableSpec,source:sources.tablespec}
   ];
@@ -36,7 +38,7 @@ try{
   }
   return {cases:cases.map(c=>c.name),recoveries,nodeGlobalsAbsent:!('process' in globalThis)&&!('Buffer' in globalThis)};
  },sources);
- if(result.recoveries!==6||!result.nodeGlobalsAbsent)throw Error('Browser baseline changed');
+ if(result.recoveries!==8||!result.nodeGlobalsAbsent)throw Error('Browser baseline changed');
  const output={...result,browser:browser.version(),sourceSha256:oracle.sourceSha256};
  await Bun.write(base+'browser-results.json',JSON.stringify(output,null,2)+'\n');
  console.log(output);
