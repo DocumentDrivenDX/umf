@@ -119,6 +119,28 @@ PostgreSQL catalog index captured by CONTRACT-015 is observed native evidence
 even when its spelling matches an authored declaration; classification retains
 its original source and never invents author intent.
 
+### Scoped implementation evidence (2026-09-24)
+
+The `umf.binding` 0.1.0 package and typed validator are published. The
+Parquet 2.9 file-schema profile reports every authored physical choice as a
+residual and recovers the original bytes, checked with PyArrow 21.0.0 and
+Chromium; it emits no Parquet layout candidate. The Delta 3.2 protocol subset
+emits only a `delta.clustering` domain-metadata action for up to four direct
+columns already present in an unpartitioned source table. The pinned
+`deltalake` 1.6.4 reader loads the proposed log version, and Chromium agrees
+with Bun. This proves metadata shape and archive recovery; it does not prove
+that a writer clusters any data files. Unsupported index and embedded-path
+choices are residuals. The Iceberg v3 table-metadata subset maps one authored
+clustering declaration to a default sort order, explicitly marked an
+approximation. PyIceberg 0.11.0 parses the proposed metadata and Chromium
+agrees with Bun; no catalog commit or sorted-file guarantee is claimed.
+
+The generated candidate, source archive and scoped oracle results are stored
+under `fixtures/binding/{delta,iceberg,parquet}/`. PostgreSQL and SQL Server
+DDL directions remain unproven until their native beads pass. The support
+table above describes required target profiles, not a blanket delivered
+status for all kinds.
+
 ## Precedence and Compatibility
 
 Core and `umf.ddd` govern logical identity/meaning; this extension governs
