@@ -28,5 +28,5 @@ FROM (
  ) AS entry
  FROM pg_index i JOIN pg_class t ON t.oid=i.indrelid JOIN pg_namespace n ON n.oid=t.relnamespace
  JOIN pg_class ic ON ic.oid=i.indexrelid JOIN pg_am am ON am.oid=ic.relam
- WHERE n.nspname='umf_key_probe'
+ WHERE n.nspname !~ '^pg_' AND n.nspname <> 'information_schema'
 ) rows;

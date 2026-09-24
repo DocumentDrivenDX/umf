@@ -4,7 +4,11 @@ import {catalogIntegerErrors} from '../../validation/catalog-integers';
 import {parseNativeJson,renderTree,type NativeJson} from '../../model/native-json';
 import {UmfError,type Json} from '../../model/types';
 export {default as postgresqlKeyObservationsSchema} from '../../../spec/extensions/postgresql-catalog/key-observations-v1.schema.json';
-const check=createValidator().compile(schema);
+import nativeSchema from '../../../spec/core/native-json.schema.json';
+import resultSchema from '../../../spec/core/postgresql-key-catalog-inspection.schema.json';
+export {default as postgresqlKeyCatalogInspectionSchema} from '../../../spec/core/postgresql-key-catalog-inspection.schema.json';
+const validator=createValidator();validator.addSchema(nativeSchema);
+const check=validator.compile(schema),checkResult=validator.compile(resultSchema);
 /** Only the typed convenience view omits unknown properties; source and tree retain them. */
 function known(node:NativeJson,rule:any):Json {
  if(rule.anyOf)return known(node,rule.anyOf.find((s:any)=>node.kind==='null'?s.type==='null':s.type!=='null'));
@@ -42,5 +46,6 @@ export function inspectPostgresqlKeyCatalog(text:string){
   if(index.primary&&!index.unique)fail('Primary index must be unique');
   if(index.constraint){if(!index.unique||index.primary!==(index.constraint.kind==='p'))fail('Constraint/index kind disagreement');if(index.constraint.deferred&&!index.constraint.deferrable)fail('Initially deferred constraint must be deferrable');}
  }
- return {root,nativeSource:text,serverVersion:view.serverVersion,encoding:view.encoding,query:view.query,indexes:view.indexes,provenance:'unverified' as const};
+ const result={root,nativeSource:text,serverVersion:view.serverVersion,encoding:view.encoding,query:view.query,indexes:view.indexes,provenance:'unverified' as const};
+ if(!checkResult(result))fail(JSON.stringify(checkResult.errors));return result;
 }
