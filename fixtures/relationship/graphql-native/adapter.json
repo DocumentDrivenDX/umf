@@ -1,0 +1,14 @@
+{
+  "scope": "GraphQL SDL object fields are native observations; association or computed behavior is not authored by import",
+  "graphqlJs": "17.0.2",
+  "sourceRecovery": {
+    "json": true,
+    "yaml": true,
+    "exact": true
+  },
+  "authoredRelationships": 0,
+  "sha256": {
+    "fixtures/relationship/graphql-native/schema.graphql": "83f2105086975d58ef96b0a44a254562e089529073889a8f086fc3b385935461",
+    "scripts/relationship/graphql-native-oracle.ts": "371f783eda662adabc42c4e7f0912fd8390deb93a50cb74cf44bce7728772ac9"
+  }
+}

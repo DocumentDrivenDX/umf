@@ -1,0 +1,22 @@
+schema { query: Query }
+
+type Query {
+  _umfSchema: Boolean
+}
+
+type Order {
+  id: ID!
+  customer: Customer
+  computedCustomer: Customer
+  lines: [Line!]!
+}
+
+type Customer {
+  id: ID!
+  orders: [Order!]!
+}
+
+type Line {
+  id: ID!
+  order: Order!
+}

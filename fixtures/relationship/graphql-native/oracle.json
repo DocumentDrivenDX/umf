@@ -1,0 +1,17 @@
+{
+  "scope": "Pinned GraphQL-core native SDL schema validation; object fields do not establish authored relationship or computed behavior",
+  "graphqlCore": "3.2.12",
+  "graphqlJs": "17.0.2",
+  "objectFields": [
+    "Order.customer",
+    "Order.computedCustomer",
+    "Customer.orders",
+    "Line.order"
+  ],
+  "authoredRelationships": 0,
+  "sha256": {
+    "fixtures/relationship/graphql-native/schema.graphql": "83f2105086975d58ef96b0a44a254562e089529073889a8f086fc3b385935461",
+    "fixtures/relationship/graphql-native/adapter.json": "d60619e2c2d8c76bb8fd7f481cf7aebb999c41f596a30bb6fc6232273a58c358",
+    "scripts/relationship/graphql-native-oracle.py": "7d5b69748434970fa5d42775393fed0704566adbbc62e5db228561fa5d4f315a"
+  }
+}

@@ -107,6 +107,13 @@ JSON/YAML recovery and Chromium. The existing
 untrusted FK state and UNIQUE target. These observations constrain future
 classification and loss reports. They do not count as useful authored
 down-projections or as proof that existing rows satisfy either FK.
+`fixtures/relationship/graphql-native/` similarly records that two
+object-returning SDL fields can share a target type while the schema alone
+cannot distinguish association from computation. The GraphQL adapter,
+GraphQL.js 17.0.2, GraphQL-core 3.2.12 and Chromium retain and validate the
+native SDL without creating authored relationship intent. This is additional
+up-classification evidence, not one of the two priority-system admission
+down-projections.
 
 ## Migration & Rollback
 
