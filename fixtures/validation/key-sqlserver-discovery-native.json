@@ -1,0 +1,467 @@
+{
+  "scope": "SQL Server 2022 16.0.4295.3 native Key enforcement/comparator discovery and catalog-tree recovery only; no complete Key binding, authored projection or ideal admission claim",
+  "image": "mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090",
+  "serverVersion": "16.0.4295.3",
+  "observational": false,
+  "references": [
+    "https://learn.microsoft.com/en-us/sql/relational-databases/indexes/create-unique-indexes?view=sql-server-ver16",
+    "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-index-transact-sql?view=sql-server-ver16"
+  ],
+  "cases": [
+    {
+      "id": "primary-duplicate",
+      "statement": "INSERT INTO umf_key.enforced VALUES(1,11); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 2627,
+      "value": null,
+      "actual": {
+        "error": 2627,
+        "value": null,
+        "message": "Violation of PRIMARY KEY constraint 'PK_enforced'. Cannot insert duplicate key in object 'umf_key.enforced'. The duplicate key value is (1)."
+      },
+      "messages": ""
+    },
+    {
+      "id": "alternate-duplicate",
+      "statement": "INSERT INTO umf_key.enforced VALUES(2,10); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 2627,
+      "value": null,
+      "actual": {
+        "error": 2627,
+        "value": null,
+        "message": "Violation of UNIQUE KEY constraint 'UQ_enforced_external'. Cannot insert duplicate key in object 'umf_key.enforced'. The duplicate key value is (10)."
+      },
+      "messages": ""
+    },
+    {
+      "id": "primary-null",
+      "statement": "INSERT INTO umf_key.enforced VALUES(NULL,11); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 515,
+      "value": null,
+      "actual": {
+        "error": 515,
+        "value": null,
+        "message": "Cannot insert the value NULL into column 'id', table 'umf_keys.umf_key.enforced'; column does not allow nulls. INSERT fails."
+      },
+      "messages": ""
+    },
+    {
+      "id": "alternate-null",
+      "statement": "INSERT INTO umf_key.enforced VALUES(2,NULL); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 515,
+      "value": null,
+      "actual": {
+        "error": 515,
+        "value": null,
+        "message": "Cannot insert the value NULL into column 'external_id', table 'umf_keys.umf_key.enforced'; column does not allow nulls. INSERT fails."
+      },
+      "messages": ""
+    },
+    {
+      "id": "independent-tuples",
+      "statement": "INSERT INTO umf_key.enforced VALUES(2,20); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 0,
+      "value": "1",
+      "actual": {
+        "error": 0,
+        "value": "1",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "partial-outside-first",
+      "statement": "INSERT INTO umf_key.partial VALUES(1,0); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 0,
+      "value": "1",
+      "actual": {
+        "error": 0,
+        "value": "1",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "partial-outside-second",
+      "statement": "INSERT INTO umf_key.partial VALUES(1,0); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 0,
+      "value": "1",
+      "actual": {
+        "error": 0,
+        "value": "1",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "partial-inside-duplicate",
+      "statement": "INSERT INTO umf_key.partial VALUES(1,1); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 2601,
+      "value": null,
+      "actual": {
+        "error": 2601,
+        "value": null,
+        "message": "Cannot insert duplicate key row in object 'umf_key.partial' with unique index 'UQ_partial'. The duplicate key value is (1)."
+      },
+      "messages": ""
+    },
+    {
+      "id": "disabled-accepts-duplicate",
+      "statement": "INSERT INTO umf_key.disabled VALUES(1); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 0,
+      "value": "1",
+      "actual": {
+        "error": 0,
+        "value": "1",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "disabled-duplicate-count",
+      "statement": "SELECT @out=COUNT(*) FROM umf_key.disabled WHERE value=1;",
+      "error": 0,
+      "value": "2",
+      "actual": {
+        "error": 0,
+        "value": "2",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "unique-second-null",
+      "statement": "INSERT INTO umf_key.nullable VALUES(NULL); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 2627,
+      "value": null,
+      "actual": {
+        "error": 2627,
+        "value": null,
+        "message": "Violation of UNIQUE KEY constraint 'UQ_nullable'. Cannot insert duplicate key in object 'umf_key.nullable'. The duplicate key value is (<NULL>)."
+      },
+      "messages": ""
+    },
+    {
+      "id": "unique-stores-one-null",
+      "statement": "SELECT @out=COUNT(*) FROM umf_key.nullable WHERE value IS NULL;",
+      "error": 0,
+      "value": "1",
+      "actual": {
+        "error": 0,
+        "value": "1",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "ignore-duplicate-skips-row",
+      "statement": "INSERT INTO umf_key.ignore_duplicates VALUES(1); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 0,
+      "value": "0",
+      "actual": {
+        "error": 0,
+        "value": "0",
+        "message": null
+      },
+      "messages": "Duplicate key was ignored.\n"
+    },
+    {
+      "id": "ignore-duplicate-count",
+      "statement": "SELECT @out=COUNT(*) FROM umf_key.ignore_duplicates;",
+      "error": 0,
+      "value": "1",
+      "actual": {
+        "error": 0,
+        "value": "1",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "binary-collation-trailing-space",
+      "statement": "INSERT INTO umf_key.binary_text VALUES(N'a '); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 2627,
+      "value": null,
+      "actual": {
+        "error": 2627,
+        "value": null,
+        "message": "Violation of UNIQUE KEY constraint 'UQ_binary_text'. Cannot insert duplicate key in object 'umf_key.binary_text'. The duplicate key value is (a )."
+      },
+      "messages": ""
+    },
+    {
+      "id": "binary-collation-case-distinct",
+      "statement": "INSERT INTO umf_key.binary_text VALUES(N'A'); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 0,
+      "value": "1",
+      "actual": {
+        "error": 0,
+        "value": "1",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "binary-collation-decomposed-distinct",
+      "statement": "INSERT INTO umf_key.binary_text VALUES(N'e'+NCHAR(769)); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 0,
+      "value": "1",
+      "actual": {
+        "error": 0,
+        "value": "1",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "folded-case",
+      "statement": "INSERT INTO umf_key.folded_text VALUES(N'A'); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 2627,
+      "value": null,
+      "actual": {
+        "error": 2627,
+        "value": null,
+        "message": "Violation of UNIQUE KEY constraint 'UQ_folded'. Cannot insert duplicate key in object 'umf_key.folded_text'. The duplicate key value is (A)."
+      },
+      "messages": ""
+    },
+    {
+      "id": "folded-accent",
+      "statement": "INSERT INTO umf_key.folded_text VALUES(N'á'); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 2627,
+      "value": null,
+      "actual": {
+        "error": 2627,
+        "value": null,
+        "message": "Violation of UNIQUE KEY constraint 'UQ_folded'. Cannot insert duplicate key in object 'umf_key.folded_text'. The duplicate key value is (á)."
+      },
+      "messages": ""
+    },
+    {
+      "id": "binary-exact-duplicate",
+      "statement": "INSERT INTO umf_key.binary_value VALUES(0x01); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 2627,
+      "value": null,
+      "actual": {
+        "error": 2627,
+        "value": null,
+        "message": "Violation of UNIQUE KEY constraint 'UQ_binary'. Cannot insert duplicate key in object 'umf_key.binary_value'. The duplicate key value is (0x01)."
+      },
+      "messages": ""
+    },
+    {
+      "id": "binary-trailing-zero",
+      "statement": "INSERT INTO umf_key.binary_value VALUES(0x0100); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 2627,
+      "value": null,
+      "actual": {
+        "error": 2627,
+        "value": null,
+        "message": "Violation of UNIQUE KEY constraint 'UQ_binary'. Cannot insert duplicate key in object 'umf_key.binary_value'. The duplicate key value is (0x0100)."
+      },
+      "messages": ""
+    },
+    {
+      "id": "binary-other-value",
+      "statement": "INSERT INTO umf_key.binary_value VALUES(0x02); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 0,
+      "value": "1",
+      "actual": {
+        "error": 0,
+        "value": "1",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "binary-comparison",
+      "statement": "SELECT @out=CASE WHEN CONVERT(varbinary(16),0x01)=CONVERT(varbinary(16),0x0100) THEN N'equal' ELSE N'distinct' END;",
+      "error": 0,
+      "value": "equal",
+      "actual": {
+        "error": 0,
+        "value": "equal",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "boolean-distinct",
+      "statement": "INSERT INTO umf_key.boolean_value VALUES(1); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 0,
+      "value": "1",
+      "actual": {
+        "error": 0,
+        "value": "1",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "boolean-coercion",
+      "statement": "INSERT INTO umf_key.boolean_value VALUES(2); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 2627,
+      "value": null,
+      "actual": {
+        "error": 2627,
+        "value": null,
+        "message": "Violation of UNIQUE KEY constraint 'UQ_boolean'. Cannot insert duplicate key in object 'umf_key.boolean_value'. The duplicate key value is (1)."
+      },
+      "messages": ""
+    },
+    {
+      "id": "decimal-rounding-collision",
+      "statement": "INSERT INTO umf_key.rounded VALUES(1.234); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 2627,
+      "value": null,
+      "actual": {
+        "error": 2627,
+        "value": null,
+        "message": "Violation of UNIQUE KEY constraint 'UQ_rounded'. Cannot insert duplicate key in object 'umf_key.rounded'. The duplicate key value is (1.23)."
+      },
+      "messages": ""
+    },
+    {
+      "id": "decimal-rounded-value",
+      "statement": "INSERT INTO umf_key.rounded VALUES(1.235); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 0,
+      "value": "1",
+      "actual": {
+        "error": 0,
+        "value": "1",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "decimal-stored-value",
+      "statement": "SELECT @out=CONVERT(nvarchar(20),value) FROM umf_key.rounded WHERE value>1.23;",
+      "error": 0,
+      "value": "1.24",
+      "actual": {
+        "error": 0,
+        "value": "1.24",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "decimal-overflow",
+      "statement": "INSERT INTO umf_key.rounded VALUES(1000); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 8115,
+      "value": null,
+      "actual": {
+        "error": 8115,
+        "value": null,
+        "message": "Arithmetic overflow error converting int to data type numeric."
+      },
+      "messages": ""
+    },
+    {
+      "id": "compound-duplicate",
+      "statement": "INSERT INTO umf_key.compound VALUES(1,1); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 2627,
+      "value": null,
+      "actual": {
+        "error": 2627,
+        "value": null,
+        "message": "Violation of PRIMARY KEY constraint 'PK_compound'. Cannot insert duplicate key in object 'umf_key.compound'. The duplicate key value is (1, 1)."
+      },
+      "messages": ""
+    },
+    {
+      "id": "compound-distinct",
+      "statement": "INSERT INTO umf_key.compound VALUES(1,2); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 0,
+      "value": "1",
+      "actual": {
+        "error": 0,
+        "value": "1",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "compound-null",
+      "statement": "INSERT INTO umf_key.compound VALUES(NULL,3); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 515,
+      "value": null,
+      "actual": {
+        "error": 515,
+        "value": null,
+        "message": "Cannot insert the value NULL into column 'tenant', table 'umf_keys.umf_key.compound'; column does not allow nulls. INSERT fails."
+      },
+      "messages": ""
+    },
+    {
+      "id": "included-not-key",
+      "statement": "INSERT INTO umf_key.included VALUES(2,N'same'); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 0,
+      "value": "1",
+      "actual": {
+        "error": 0,
+        "value": "1",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "included-key-duplicate",
+      "statement": "INSERT INTO umf_key.included VALUES(1,N'other'); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 2601,
+      "value": null,
+      "actual": {
+        "error": 2601,
+        "value": null,
+        "message": "Cannot insert duplicate key row in object 'umf_key.included' with unique index 'UQ_included'. The duplicate key value is (1)."
+      },
+      "messages": ""
+    },
+    {
+      "id": "encoded-trailing-space",
+      "statement": "INSERT INTO umf_key.encoded_text(value) VALUES(N'a '); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 0,
+      "value": "1",
+      "actual": {
+        "error": 0,
+        "value": "1",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "encoded-decomposed",
+      "statement": "INSERT INTO umf_key.encoded_text(value) VALUES(N'e'+NCHAR(769)); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 0,
+      "value": "1",
+      "actual": {
+        "error": 0,
+        "value": "1",
+        "message": null
+      },
+      "messages": ""
+    },
+    {
+      "id": "encoded-exact-duplicate",
+      "statement": "INSERT INTO umf_key.encoded_text(value) VALUES(N'a'); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",
+      "error": 2601,
+      "value": null,
+      "actual": {
+        "error": 2601,
+        "value": null,
+        "message": "Cannot insert duplicate key row in object 'umf_key.encoded_text' with unique index 'UQ_encoded'. The duplicate key value is (0x6100, 2)."
+      },
+      "messages": ""
+    }
+  ],
+  "sourceText": "{\n  \"profile\": \"sqlserver-catalog-v3\",\n  \"state\": \"captured\",\n  \"serverVersion\": \"16.0.4295.3\",\n  \"query\": \"SET NOCOUNT ON;\\nSELECT 'sqlserver-catalog-v3' AS profile, 'captured' AS state,\\n CONVERT(nvarchar(128),SERVERPROPERTY('ProductVersion')) AS serverVersion,\\n 'native/sqlserver/catalog-v3.sql' AS query,\\n JSON_QUERY(COALESCE((SELECT SCHEMA_NAME(t.schema_id) AS [schema],t.name,\\n  JSON_QUERY(COALESCE((SELECT c.name,c.column_id,c.system_type_id,c.user_type_id,\\n   SCHEMA_NAME(ty.schema_id) AS type_schema,ty.name AS type_name,bt.name AS base_type_name,\\n   ty.is_user_defined,ty.is_assembly_type,c.max_length,c.precision,c.scale,\\n   c.is_nullable,c.is_identity,c.is_computed,c.collation_name,\\n   OBJECT_DEFINITION(c.default_object_id) AS default_definition,cc.definition AS computed_definition,\\n   CONVERT(nvarchar(128),ic.seed_value) AS identity_seed,\\n   CONVERT(nvarchar(128),ic.increment_value) AS identity_increment,\\n   CONVERT(nvarchar(max),ep.value) AS description\\n   FROM sys.columns c JOIN sys.types ty ON ty.user_type_id=c.user_type_id\\n   LEFT JOIN sys.types bt ON bt.user_type_id=c.system_type_id AND bt.system_type_id=bt.user_type_id\\n   LEFT JOIN sys.computed_columns cc ON cc.object_id=c.object_id AND cc.column_id=c.column_id\\n   LEFT JOIN sys.identity_columns ic ON ic.object_id=c.object_id AND ic.column_id=c.column_id\\n   LEFT JOIN sys.extended_properties ep ON ep.class=1 AND ep.major_id=c.object_id AND ep.minor_id=c.column_id AND ep.name=N'MS_Description'\\n   WHERE c.object_id=t.object_id ORDER BY c.column_id FOR JSON PATH,INCLUDE_NULL_VALUES),N'[]')) AS columns\\n-- Append these expressions to the table-level SELECT in catalog.sql.\\n  ,JSON_QUERY(COALESCE((SELECT k.name,RTRIM(k.type) AS kind,k.is_system_named,\\n    i.type_desc AS index_type,i.is_disabled,i.ignore_dup_key,\\n    JSON_QUERY(COALESCE((SELECT ic.key_ordinal,c.column_id,c.name,ic.is_descending_key\\n      FROM sys.index_columns ic JOIN sys.columns c ON c.object_id=ic.object_id AND c.column_id=ic.column_id\\n      WHERE ic.object_id=k.parent_object_id AND ic.index_id=k.unique_index_id AND ic.key_ordinal>0\\n      ORDER BY ic.key_ordinal FOR JSON PATH,INCLUDE_NULL_VALUES),N'[]')) AS columns\\n    FROM sys.key_constraints k JOIN sys.indexes i ON i.object_id=k.parent_object_id AND i.index_id=k.unique_index_id\\n    WHERE k.parent_object_id=t.object_id ORDER BY k.name FOR JSON PATH,INCLUDE_NULL_VALUES),N'[]')) AS keys\\n  ,JSON_QUERY(COALESCE((SELECT f.name,f.is_system_named,f.is_disabled,f.is_not_trusted,f.is_not_for_replication,\\n    f.delete_referential_action_desc AS delete_action,f.update_referential_action_desc AS update_action,\\n    OBJECT_SCHEMA_NAME(f.referenced_object_id) AS referenced_schema,OBJECT_NAME(f.referenced_object_id) AS referenced_table,\\n    JSON_QUERY(COALESCE((SELECT fc.constraint_column_id AS ordinal,fc.parent_column_id AS column_id,\\n      COL_NAME(fc.parent_object_id,fc.parent_column_id) AS column_name,\\n      fc.referenced_column_id,COL_NAME(fc.referenced_object_id,fc.referenced_column_id) AS referenced_column_name\\n      FROM sys.foreign_key_columns fc WHERE fc.constraint_object_id=f.object_id\\n      ORDER BY fc.constraint_column_id FOR JSON PATH,INCLUDE_NULL_VALUES),N'[]')) AS columns\\n    FROM sys.foreign_keys f WHERE f.parent_object_id=t.object_id ORDER BY f.name\\n    FOR JSON PATH,INCLUDE_NULL_VALUES),N'[]')) AS foreign_keys\\n  ,JSON_QUERY(COALESCE((SELECT c.name,c.is_system_named,c.parent_column_id,c.definition,c.is_disabled,\\n    c.is_not_trusted,c.is_not_for_replication,c.uses_database_collation\\n    FROM sys.check_constraints c WHERE c.parent_object_id=t.object_id ORDER BY c.name\\n    FOR JSON PATH,INCLUDE_NULL_VALUES),N'[]')) AS checks\\n\\n-- Append these expressions to the table-level SELECT in catalog-v2.sql.\\n  ,JSON_QUERY(COALESCE((SELECT i.index_id,i.name,i.type,i.type_desc,i.is_unique,\\n    i.is_primary_key,i.is_unique_constraint,i.is_disabled,i.is_hypothetical,\\n    i.ignore_dup_key,i.fill_factor,i.is_padded,i.allow_row_locks,i.allow_page_locks,\\n    i.has_filter,i.filter_definition,i.compression_delay,i.optimize_for_sequential_key,\\n    i.data_space_id,ds.name AS data_space_name,ds.type_desc AS data_space_type,\\n    JSON_QUERY(COALESCE((SELECT ic.index_column_id,ic.column_id,c.name,\\n      ic.key_ordinal,ic.partition_ordinal,ic.is_descending_key,ic.is_included_column,\\n      ic.column_store_order_ordinal\\n      FROM sys.index_columns ic LEFT JOIN sys.columns c\\n        ON c.object_id=ic.object_id AND c.column_id=ic.column_id\\n      WHERE ic.object_id=i.object_id AND ic.index_id=i.index_id\\n      ORDER BY ic.index_column_id FOR JSON PATH,INCLUDE_NULL_VALUES),N'[]')) AS columns\\n    FROM sys.indexes i LEFT JOIN sys.data_spaces ds ON ds.data_space_id=i.data_space_id\\n    WHERE i.object_id=t.object_id ORDER BY i.index_id\\n    FOR JSON PATH,INCLUDE_NULL_VALUES),N'[]')) AS indexes\\n\\n  FROM sys.tables t WHERE t.is_ms_shipped=0 ORDER BY SCHEMA_NAME(t.schema_id),t.name\\n  FOR JSON PATH,INCLUDE_NULL_VALUES),N'[]')) AS tables\\nFOR JSON PATH,WITHOUT_ARRAY_WRAPPER,INCLUDE_NULL_VALUES;\\n\",\n  \"tables\": [\n    {\n      \"schema\": \"umf_key\",\n      \"name\": \"binary_text\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 231,\n          \"user_type_id\": 231,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"nvarchar\",\n          \"base_type_name\": \"nvarchar\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 40,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": false,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": \"Latin1_General_100_BIN2\",\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [\n        {\n          \"name\": \"UQ_binary_text\",\n          \"kind\": \"UQ\",\n          \"is_system_named\": false,\n          \"index_type\": \"NONCLUSTERED\",\n          \"is_disabled\": false,\n          \"ignore_dup_key\": false,\n          \"columns\": [\n            {\n              \"key_ordinal\": 1,\n              \"column_id\": 1,\n              \"name\": \"value\",\n              \"is_descending_key\": false\n            }\n          ]\n        }\n      ],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        },\n        {\n          \"index_id\": 2,\n          \"name\": \"UQ_binary_text\",\n          \"type\": 2,\n          \"type_desc\": \"NONCLUSTERED\",\n          \"is_unique\": true,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": true,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": [\n            {\n              \"index_column_id\": 1,\n              \"column_id\": 1,\n              \"name\": \"value\",\n              \"key_ordinal\": 1,\n              \"partition_ordinal\": 0,\n              \"is_descending_key\": false,\n              \"is_included_column\": false,\n              \"column_store_order_ordinal\": 0\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"schema\": \"umf_key\",\n      \"name\": \"binary_value\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 165,\n          \"user_type_id\": 165,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"varbinary\",\n          \"base_type_name\": \"varbinary\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 16,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": false,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [\n        {\n          \"name\": \"UQ_binary\",\n          \"kind\": \"UQ\",\n          \"is_system_named\": false,\n          \"index_type\": \"NONCLUSTERED\",\n          \"is_disabled\": false,\n          \"ignore_dup_key\": false,\n          \"columns\": [\n            {\n              \"key_ordinal\": 1,\n              \"column_id\": 1,\n              \"name\": \"value\",\n              \"is_descending_key\": false\n            }\n          ]\n        }\n      ],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        },\n        {\n          \"index_id\": 2,\n          \"name\": \"UQ_binary\",\n          \"type\": 2,\n          \"type_desc\": \"NONCLUSTERED\",\n          \"is_unique\": true,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": true,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": [\n            {\n              \"index_column_id\": 1,\n              \"column_id\": 1,\n              \"name\": \"value\",\n              \"key_ordinal\": 1,\n              \"partition_ordinal\": 0,\n              \"is_descending_key\": false,\n              \"is_included_column\": false,\n              \"column_store_order_ordinal\": 0\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"schema\": \"umf_key\",\n      \"name\": \"boolean_value\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 104,\n          \"user_type_id\": 104,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"bit\",\n          \"base_type_name\": \"bit\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 1,\n          \"precision\": 1,\n          \"scale\": 0,\n          \"is_nullable\": false,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [\n        {\n          \"name\": \"UQ_boolean\",\n          \"kind\": \"UQ\",\n          \"is_system_named\": false,\n          \"index_type\": \"NONCLUSTERED\",\n          \"is_disabled\": false,\n          \"ignore_dup_key\": false,\n          \"columns\": [\n            {\n              \"key_ordinal\": 1,\n              \"column_id\": 1,\n              \"name\": \"value\",\n              \"is_descending_key\": false\n            }\n          ]\n        }\n      ],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        },\n        {\n          \"index_id\": 2,\n          \"name\": \"UQ_boolean\",\n          \"type\": 2,\n          \"type_desc\": \"NONCLUSTERED\",\n          \"is_unique\": true,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": true,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": [\n            {\n              \"index_column_id\": 1,\n              \"column_id\": 1,\n              \"name\": \"value\",\n              \"key_ordinal\": 1,\n              \"partition_ordinal\": 0,\n              \"is_descending_key\": false,\n              \"is_included_column\": false,\n              \"column_store_order_ordinal\": 0\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"schema\": \"umf_key\",\n      \"name\": \"compound\",\n      \"columns\": [\n        {\n          \"name\": \"tenant\",\n          \"column_id\": 1,\n          \"system_type_id\": 56,\n          \"user_type_id\": 56,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"int\",\n          \"base_type_name\": \"int\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": false,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"id\",\n          \"column_id\": 2,\n          \"system_type_id\": 56,\n          \"user_type_id\": 56,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"int\",\n          \"base_type_name\": \"int\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": false,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [\n        {\n          \"name\": \"PK_compound\",\n          \"kind\": \"PK\",\n          \"is_system_named\": false,\n          \"index_type\": \"CLUSTERED\",\n          \"is_disabled\": false,\n          \"ignore_dup_key\": false,\n          \"columns\": [\n            {\n              \"key_ordinal\": 1,\n              \"column_id\": 1,\n              \"name\": \"tenant\",\n              \"is_descending_key\": false\n            },\n            {\n              \"key_ordinal\": 2,\n              \"column_id\": 2,\n              \"name\": \"id\",\n              \"is_descending_key\": false\n            }\n          ]\n        }\n      ],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 1,\n          \"name\": \"PK_compound\",\n          \"type\": 1,\n          \"type_desc\": \"CLUSTERED\",\n          \"is_unique\": true,\n          \"is_primary_key\": true,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": [\n            {\n              \"index_column_id\": 1,\n              \"column_id\": 1,\n              \"name\": \"tenant\",\n              \"key_ordinal\": 1,\n              \"partition_ordinal\": 0,\n              \"is_descending_key\": false,\n              \"is_included_column\": false,\n              \"column_store_order_ordinal\": 0\n            },\n            {\n              \"index_column_id\": 2,\n              \"column_id\": 2,\n              \"name\": \"id\",\n              \"key_ordinal\": 2,\n              \"partition_ordinal\": 0,\n              \"is_descending_key\": false,\n              \"is_included_column\": false,\n              \"column_store_order_ordinal\": 0\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"schema\": \"umf_key\",\n      \"name\": \"disabled\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 56,\n          \"user_type_id\": 56,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"int\",\n          \"base_type_name\": \"int\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": false,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        },\n        {\n          \"index_id\": 2,\n          \"name\": \"UQ_disabled\",\n          \"type\": 2,\n          \"type_desc\": \"NONCLUSTERED\",\n          \"is_unique\": true,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": true,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": [\n            {\n              \"index_column_id\": 1,\n              \"column_id\": 1,\n              \"name\": \"value\",\n              \"key_ordinal\": 1,\n              \"partition_ordinal\": 0,\n              \"is_descending_key\": false,\n              \"is_included_column\": false,\n              \"column_store_order_ordinal\": 0\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"schema\": \"umf_key\",\n      \"name\": \"encoded_text\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 231,\n          \"user_type_id\": 231,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"nvarchar\",\n          \"base_type_name\": \"nvarchar\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 40,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": false,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": \"SQL_Latin1_General_CP1_CI_AS\",\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"bytes\",\n          \"column_id\": 2,\n          \"system_type_id\": 165,\n          \"user_type_id\": 165,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"varbinary\",\n          \"base_type_name\": \"varbinary\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 80,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": true,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": \"(CONVERT([varbinary](80),[value]))\",\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"byte_count\",\n          \"column_id\": 3,\n          \"system_type_id\": 56,\n          \"user_type_id\": 56,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"int\",\n          \"base_type_name\": \"int\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": true,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": \"(datalength([value]))\",\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        },\n        {\n          \"index_id\": 2,\n          \"name\": \"UQ_encoded\",\n          \"type\": 2,\n          \"type_desc\": \"NONCLUSTERED\",\n          \"is_unique\": true,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": [\n            {\n              \"index_column_id\": 1,\n              \"column_id\": 2,\n              \"name\": \"bytes\",\n              \"key_ordinal\": 1,\n              \"partition_ordinal\": 0,\n              \"is_descending_key\": false,\n              \"is_included_column\": false,\n              \"column_store_order_ordinal\": 0\n            },\n            {\n              \"index_column_id\": 2,\n              \"column_id\": 3,\n              \"name\": \"byte_count\",\n              \"key_ordinal\": 2,\n              \"partition_ordinal\": 0,\n              \"is_descending_key\": false,\n              \"is_included_column\": false,\n              \"column_store_order_ordinal\": 0\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"schema\": \"umf_key\",\n      \"name\": \"enforced\",\n      \"columns\": [\n        {\n          \"name\": \"id\",\n          \"column_id\": 1,\n          \"system_type_id\": 56,\n          \"user_type_id\": 56,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"int\",\n          \"base_type_name\": \"int\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": false,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"external_id\",\n          \"column_id\": 2,\n          \"system_type_id\": 56,\n          \"user_type_id\": 56,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"int\",\n          \"base_type_name\": \"int\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": false,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [\n        {\n          \"name\": \"PK_enforced\",\n          \"kind\": \"PK\",\n          \"is_system_named\": false,\n          \"index_type\": \"CLUSTERED\",\n          \"is_disabled\": false,\n          \"ignore_dup_key\": false,\n          \"columns\": [\n            {\n              \"key_ordinal\": 1,\n              \"column_id\": 1,\n              \"name\": \"id\",\n              \"is_descending_key\": false\n            }\n          ]\n        },\n        {\n          \"name\": \"UQ_enforced_external\",\n          \"kind\": \"UQ\",\n          \"is_system_named\": false,\n          \"index_type\": \"NONCLUSTERED\",\n          \"is_disabled\": false,\n          \"ignore_dup_key\": false,\n          \"columns\": [\n            {\n              \"key_ordinal\": 1,\n              \"column_id\": 2,\n              \"name\": \"external_id\",\n              \"is_descending_key\": false\n            }\n          ]\n        }\n      ],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 1,\n          \"name\": \"PK_enforced\",\n          \"type\": 1,\n          \"type_desc\": \"CLUSTERED\",\n          \"is_unique\": true,\n          \"is_primary_key\": true,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": [\n            {\n              \"index_column_id\": 1,\n              \"column_id\": 1,\n              \"name\": \"id\",\n              \"key_ordinal\": 1,\n              \"partition_ordinal\": 0,\n              \"is_descending_key\": false,\n              \"is_included_column\": false,\n              \"column_store_order_ordinal\": 0\n            }\n          ]\n        },\n        {\n          \"index_id\": 2,\n          \"name\": \"UQ_enforced_external\",\n          \"type\": 2,\n          \"type_desc\": \"NONCLUSTERED\",\n          \"is_unique\": true,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": true,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": [\n            {\n              \"index_column_id\": 1,\n              \"column_id\": 2,\n              \"name\": \"external_id\",\n              \"key_ordinal\": 1,\n              \"partition_ordinal\": 0,\n              \"is_descending_key\": false,\n              \"is_included_column\": false,\n              \"column_store_order_ordinal\": 0\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"schema\": \"umf_key\",\n      \"name\": \"folded_text\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 231,\n          \"user_type_id\": 231,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"nvarchar\",\n          \"base_type_name\": \"nvarchar\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 40,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": false,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": \"Latin1_General_100_CI_AI\",\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [\n        {\n          \"name\": \"UQ_folded\",\n          \"kind\": \"UQ\",\n          \"is_system_named\": false,\n          \"index_type\": \"NONCLUSTERED\",\n          \"is_disabled\": false,\n          \"ignore_dup_key\": false,\n          \"columns\": [\n            {\n              \"key_ordinal\": 1,\n              \"column_id\": 1,\n              \"name\": \"value\",\n              \"is_descending_key\": false\n            }\n          ]\n        }\n      ],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        },\n        {\n          \"index_id\": 2,\n          \"name\": \"UQ_folded\",\n          \"type\": 2,\n          \"type_desc\": \"NONCLUSTERED\",\n          \"is_unique\": true,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": true,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": [\n            {\n              \"index_column_id\": 1,\n              \"column_id\": 1,\n              \"name\": \"value\",\n              \"key_ordinal\": 1,\n              \"partition_ordinal\": 0,\n              \"is_descending_key\": false,\n              \"is_included_column\": false,\n              \"column_store_order_ordinal\": 0\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"schema\": \"umf_key\",\n      \"name\": \"ignore_duplicates\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 56,\n          \"user_type_id\": 56,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"int\",\n          \"base_type_name\": \"int\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": false,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        },\n        {\n          \"index_id\": 2,\n          \"name\": \"UQ_ignore\",\n          \"type\": 2,\n          \"type_desc\": \"NONCLUSTERED\",\n          \"is_unique\": true,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": true,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": [\n            {\n              \"index_column_id\": 1,\n              \"column_id\": 1,\n              \"name\": \"value\",\n              \"key_ordinal\": 1,\n              \"partition_ordinal\": 0,\n              \"is_descending_key\": false,\n              \"is_included_column\": false,\n              \"column_store_order_ordinal\": 0\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"schema\": \"umf_key\",\n      \"name\": \"included\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 56,\n          \"user_type_id\": 56,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"int\",\n          \"base_type_name\": \"int\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": false,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"payload\",\n          \"column_id\": 2,\n          \"system_type_id\": 231,\n          \"user_type_id\": 231,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"nvarchar\",\n          \"base_type_name\": \"nvarchar\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 40,\n          \"precision\": 0,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": \"SQL_Latin1_General_CP1_CI_AS\",\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        },\n        {\n          \"index_id\": 2,\n          \"name\": \"UQ_included\",\n          \"type\": 2,\n          \"type_desc\": \"NONCLUSTERED\",\n          \"is_unique\": true,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": [\n            {\n              \"index_column_id\": 1,\n              \"column_id\": 1,\n              \"name\": \"value\",\n              \"key_ordinal\": 1,\n              \"partition_ordinal\": 0,\n              \"is_descending_key\": false,\n              \"is_included_column\": false,\n              \"column_store_order_ordinal\": 0\n            },\n            {\n              \"index_column_id\": 2,\n              \"column_id\": 2,\n              \"name\": \"payload\",\n              \"key_ordinal\": 0,\n              \"partition_ordinal\": 0,\n              \"is_descending_key\": false,\n              \"is_included_column\": true,\n              \"column_store_order_ordinal\": 0\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"schema\": \"umf_key\",\n      \"name\": \"nullable\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 56,\n          \"user_type_id\": 56,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"int\",\n          \"base_type_name\": \"int\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": true,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [\n        {\n          \"name\": \"UQ_nullable\",\n          \"kind\": \"UQ\",\n          \"is_system_named\": false,\n          \"index_type\": \"NONCLUSTERED\",\n          \"is_disabled\": false,\n          \"ignore_dup_key\": false,\n          \"columns\": [\n            {\n              \"key_ordinal\": 1,\n              \"column_id\": 1,\n              \"name\": \"value\",\n              \"is_descending_key\": false\n            }\n          ]\n        }\n      ],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        },\n        {\n          \"index_id\": 2,\n          \"name\": \"UQ_nullable\",\n          \"type\": 2,\n          \"type_desc\": \"NONCLUSTERED\",\n          \"is_unique\": true,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": true,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": [\n            {\n              \"index_column_id\": 1,\n              \"column_id\": 1,\n              \"name\": \"value\",\n              \"key_ordinal\": 1,\n              \"partition_ordinal\": 0,\n              \"is_descending_key\": false,\n              \"is_included_column\": false,\n              \"column_store_order_ordinal\": 0\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"schema\": \"umf_key\",\n      \"name\": \"partial\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 56,\n          \"user_type_id\": 56,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"int\",\n          \"base_type_name\": \"int\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 4,\n          \"precision\": 10,\n          \"scale\": 0,\n          \"is_nullable\": false,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        },\n        {\n          \"name\": \"active\",\n          \"column_id\": 2,\n          \"system_type_id\": 104,\n          \"user_type_id\": 104,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"bit\",\n          \"base_type_name\": \"bit\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 1,\n          \"precision\": 1,\n          \"scale\": 0,\n          \"is_nullable\": false,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        },\n        {\n          \"index_id\": 2,\n          \"name\": \"UQ_partial\",\n          \"type\": 2,\n          \"type_desc\": \"NONCLUSTERED\",\n          \"is_unique\": true,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": true,\n          \"filter_definition\": \"([active]=(1))\",\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": [\n            {\n              \"index_column_id\": 1,\n              \"column_id\": 1,\n              \"name\": \"value\",\n              \"key_ordinal\": 1,\n              \"partition_ordinal\": 0,\n              \"is_descending_key\": false,\n              \"is_included_column\": false,\n              \"column_store_order_ordinal\": 0\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"schema\": \"umf_key\",\n      \"name\": \"rounded\",\n      \"columns\": [\n        {\n          \"name\": \"value\",\n          \"column_id\": 1,\n          \"system_type_id\": 106,\n          \"user_type_id\": 106,\n          \"type_schema\": \"sys\",\n          \"type_name\": \"decimal\",\n          \"base_type_name\": \"decimal\",\n          \"is_user_defined\": false,\n          \"is_assembly_type\": false,\n          \"max_length\": 5,\n          \"precision\": 5,\n          \"scale\": 2,\n          \"is_nullable\": false,\n          \"is_identity\": false,\n          \"is_computed\": false,\n          \"collation_name\": null,\n          \"default_definition\": null,\n          \"computed_definition\": null,\n          \"identity_seed\": null,\n          \"identity_increment\": null,\n          \"description\": null\n        }\n      ],\n      \"keys\": [\n        {\n          \"name\": \"UQ_rounded\",\n          \"kind\": \"UQ\",\n          \"is_system_named\": false,\n          \"index_type\": \"NONCLUSTERED\",\n          \"is_disabled\": false,\n          \"ignore_dup_key\": false,\n          \"columns\": [\n            {\n              \"key_ordinal\": 1,\n              \"column_id\": 1,\n              \"name\": \"value\",\n              \"is_descending_key\": false\n            }\n          ]\n        }\n      ],\n      \"foreign_keys\": [],\n      \"checks\": [],\n      \"indexes\": [\n        {\n          \"index_id\": 0,\n          \"name\": null,\n          \"type\": 0,\n          \"type_desc\": \"HEAP\",\n          \"is_unique\": false,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": false,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": []\n        },\n        {\n          \"index_id\": 2,\n          \"name\": \"UQ_rounded\",\n          \"type\": 2,\n          \"type_desc\": \"NONCLUSTERED\",\n          \"is_unique\": true,\n          \"is_primary_key\": false,\n          \"is_unique_constraint\": true,\n          \"is_disabled\": false,\n          \"is_hypothetical\": false,\n          \"ignore_dup_key\": false,\n          \"fill_factor\": 0,\n          \"is_padded\": false,\n          \"allow_row_locks\": true,\n          \"allow_page_locks\": true,\n          \"has_filter\": false,\n          \"filter_definition\": null,\n          \"compression_delay\": null,\n          \"optimize_for_sequential_key\": false,\n          \"data_space_id\": 1,\n          \"data_space_name\": \"PRIMARY\",\n          \"data_space_type\": \"ROWS_FILEGROUP\",\n          \"columns\": [\n            {\n              \"index_column_id\": 1,\n              \"column_id\": 1,\n              \"name\": \"value\",\n              \"key_ordinal\": 1,\n              \"partition_ordinal\": 0,\n              \"is_descending_key\": false,\n              \"is_included_column\": false,\n              \"column_store_order_ordinal\": 0\n            }\n          ]\n        }\n      ]\n    }\n  ],\n  \"keyDiscovery\": {\n    \"sourceSql\": \"SET NOCOUNT ON;\\nSET ANSI_NULLS ON;\\nSET QUOTED_IDENTIFIER ON;\\nSET ANSI_PADDING ON;\\nSET ANSI_WARNINGS ON;\\nSET ARITHABORT ON;\\nSET CONCAT_NULL_YIELDS_NULL ON;\\nSET NUMERIC_ROUNDABORT OFF;\\nEXEC(N'CREATE SCHEMA umf_key');\\nCREATE TABLE umf_key.enforced (id int NOT NULL CONSTRAINT PK_enforced PRIMARY KEY, external_id int NOT NULL CONSTRAINT UQ_enforced_external UNIQUE);\\nINSERT INTO umf_key.enforced VALUES(1,10);\\nCREATE TABLE umf_key.partial (value int NOT NULL,active bit NOT NULL);\\nCREATE UNIQUE NONCLUSTERED INDEX UQ_partial ON umf_key.partial(value) WHERE active=1;\\nINSERT INTO umf_key.partial VALUES(1,1);\\nCREATE TABLE umf_key.disabled (value int NOT NULL);\\nCREATE UNIQUE NONCLUSTERED INDEX UQ_disabled ON umf_key.disabled(value);\\nINSERT INTO umf_key.disabled VALUES(1);\\nALTER INDEX UQ_disabled ON umf_key.disabled DISABLE;\\nCREATE TABLE umf_key.nullable (value int NULL CONSTRAINT UQ_nullable UNIQUE);\\nINSERT INTO umf_key.nullable VALUES(NULL);\\nCREATE TABLE umf_key.ignore_duplicates (value int NOT NULL);\\nCREATE UNIQUE NONCLUSTERED INDEX UQ_ignore ON umf_key.ignore_duplicates(value) WITH(IGNORE_DUP_KEY=ON);\\nINSERT INTO umf_key.ignore_duplicates VALUES(1);\\nCREATE TABLE umf_key.binary_text (value nvarchar(20) COLLATE Latin1_General_100_BIN2 NOT NULL CONSTRAINT UQ_binary_text UNIQUE);\\nINSERT INTO umf_key.binary_text VALUES(N'a'),(N'é');\\nCREATE TABLE umf_key.folded_text (value nvarchar(20) COLLATE Latin1_General_100_CI_AI NOT NULL CONSTRAINT UQ_folded UNIQUE);\\nINSERT INTO umf_key.folded_text VALUES(N'a');\\nCREATE TABLE umf_key.binary_value (value varbinary(16) NOT NULL CONSTRAINT UQ_binary UNIQUE);\\nINSERT INTO umf_key.binary_value VALUES(0x01);\\nCREATE TABLE umf_key.boolean_value (value bit NOT NULL CONSTRAINT UQ_boolean UNIQUE);\\nINSERT INTO umf_key.boolean_value VALUES(0);\\nCREATE TABLE umf_key.rounded (value decimal(5,2) NOT NULL CONSTRAINT UQ_rounded UNIQUE);\\nINSERT INTO umf_key.rounded VALUES(1.23);\\nCREATE TABLE umf_key.compound (tenant int NOT NULL,id int NOT NULL,CONSTRAINT PK_compound PRIMARY KEY(tenant,id));\\nINSERT INTO umf_key.compound VALUES(1,1);\\nCREATE TABLE umf_key.included (value int NOT NULL,payload nvarchar(20) NULL);\\nCREATE UNIQUE NONCLUSTERED INDEX UQ_included ON umf_key.included(value) INCLUDE(payload);\\nINSERT INTO umf_key.included VALUES(1,N'same');\\nCREATE TABLE umf_key.encoded_text (value nvarchar(20) NOT NULL, bytes AS CONVERT(varbinary(80),value) PERSISTED, byte_count AS DATALENGTH(value) PERSISTED);\\nCREATE UNIQUE NONCLUSTERED INDEX UQ_encoded ON umf_key.encoded_text(bytes,byte_count);\\nINSERT INTO umf_key.encoded_text(value) VALUES(N'a'),(N'é');\\n\",\n    \"context\": {\n      \"compatibility_level\": 160,\n      \"collation_name\": \"SQL_Latin1_General_CP1_CI_AS\"\n    }\n  }\n}\n",
+  "columns": 19,
+  "tables": 13,
+  "indexes": 25,
+  "serializationRecoveries": 2,
+  "sha256": {
+    "scripts/core-ideals/key-sqlserver-discovery.ts": "3bbc7002a84daf46a876f0d8cd2d7da7fd7fd40b5609dee1185f7f62262962fd",
+    "scripts/core-ideals/key-sqlserver-discovery-cases.ts": "bc247d9f1cbf2905bd731b5eb02674f631a7a257189a714c41025072d7d61edc",
+    "fixtures/sqlserver/keys.sql": "ea5234b7f9a5b1d8193302ca6c3272f70244b7742a298e533b5610f1b660c229",
+    "native/sqlserver/catalog-v3.sql": "b3ca9cb2c83de28ae69efeb6eaf27a25bac50caf9a654e2af04157e089028b33"
+  }
+}

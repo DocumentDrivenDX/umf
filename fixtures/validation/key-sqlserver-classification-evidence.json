@@ -1,0 +1,84 @@
+{
+  "scope": "SQL Server Key native discovery and classification only. Authored projection, full binding acceptance and ideal admission remain unfinished.",
+  "command": [
+    "bun",
+    "test",
+    "./tests/core/cardinality-ideals.test.ts",
+    "./tests/core/cardinality-operations.test.ts",
+    "./tests/core/core.test.ts",
+    "./tests/core/deep-json-equality.test.ts",
+    "./tests/core/facet-authoring.test.ts",
+    "./tests/core/facet-ideals.test.ts",
+    "./tests/core/facet-transition.test.ts",
+    "./tests/core/field-ideals.test.ts",
+    "./tests/core/field-kind.test.ts",
+    "./tests/core/field-transition.test.ts",
+    "./tests/core/key-ideals.test.ts",
+    "./tests/core/key-operations.test.ts",
+    "./tests/core/key-transition.test.ts",
+    "./tests/core/key-tuple.test.ts",
+    "./tests/core/native-json.test.ts",
+    "./tests/core/nullability-authoring.test.ts",
+    "./tests/core/nullability-ideals.test.ts",
+    "./tests/core/nullability-transition.test.ts",
+    "./tests/core/scalar.test.ts",
+    "./tests/core/selection.test.ts",
+    "./tests/sqlserver/avro-projection.test.ts",
+    "./tests/sqlserver/catalog.test.ts",
+    "./tests/sqlserver/constraint-projection.test.ts",
+    "./tests/sqlserver/constraints.test.ts",
+    "./tests/sqlserver/ddl.test.ts",
+    "./tests/sqlserver/indexes.test.ts",
+    "./tests/sqlserver/integer-tokens.test.ts",
+    "./tests/core-ideals/key-sqlserver.test.ts"
+  ],
+  "result": {
+    "tests": 130,
+    "assertions": 3916,
+    "files": 28,
+    "failures": 0
+  },
+  "native": {
+    "serverVersion": "16.0.4295.3",
+    "cases": 37,
+    "refusals": 18,
+    "capturedIndexes": 25
+  },
+  "browser": {
+    "observations": 25,
+    "recoveries": 2,
+    "refusals": 8,
+    "strictBlocked": true,
+    "unknownTokensPreserved": true,
+    "accessorReads": 0
+  },
+  "schemas": 299,
+  "extensionPackages": 51,
+  "checks": [
+    "bun scripts/core-ideals/key-sqlserver-discovery.ts",
+    "bun run typecheck",
+    "bun run test:schemas",
+    "bun run build",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/key-sqlserver-browser.ts"
+  ],
+  "limitations": [
+    "Capture correlation is structural consistency, not authentication or proof of deployed state.",
+    "Observed native indexes do not supply authored identity; no core keys are inferred.",
+    "String trailing-space and binary trailing-zero comparison remain incompatible with exact UMF equality. Computed binary-plus-length observations do not automatically define a core key.",
+    "IGNORE_DUP_KEY may skip incoming duplicates without admitting duplicate stored rows; write behavior remains native.",
+    "Scoped core/SQL Server adapter regression only; no full repository, five-system gate or full binding qualification."
+  ],
+  "sha256": {
+    "src/core-ideals/key-sqlserver.ts": "c4e3d91a05dac781f7b41b1ec1d86cfd6c13a2fd86f9cf3c35b4f7ef9a34fcc5",
+    "tests/core-ideals/key-sqlserver.test.ts": "df4a9f1823565f696b33b72befa4c7bf89118c96a0fcb2a0032c5b6c53a50616",
+    "scripts/core-ideals/key-sqlserver-schema.ts": "b5cdd64bb64edacd9da539bf0893b6a86460d4bfec627f65f50fef68e7f2ba6a",
+    "spec/core/sqlserver-key-classification.schema.json": "427aebea35e781a2b90c91c95704bffb68ff3c87230e6841fdbf3c4cb32fb097",
+    "spec/extensions/sqlserver-keys/schema.json": "c3bd5ee83850740d56858620eb3411023c23f62d6b52d965fec2059c98d30f19",
+    "spec/extensions/sqlserver-keys/package.json": "0c6bf244e6ab93ca8a186209b0822d118d7be3b1df9f137c0563a993a48f1bab",
+    "fixtures/validation/key-sqlserver-discovery-native.json": "0b4862aa6e5e491348027638d070dee02551084783c41acea75c3ed62302dd41",
+    "fixtures/validation/key-sqlserver-browser.json": "6f7fb9ec8353e5079946ea989b80560a01c8c652380b3d172e5d87f9fd97b1f4",
+    "fixtures/extension-package-audit.json": "4fdbea9f98ea0335b68cb9d376aa215e5282a5d969cd69bf683644f147ae780a",
+    "fixtures/json-schema-audit.json": "f5a68e6eec386807ed1b3458d8b3a7eb60a59a7ec0f4d74b10c5ccc5a1c386ec",
+    "src/index.ts": "e45e0fadd248faf388a6984aafb67e359efa3892833f671f86ade3e281d39c39"
+  }
+}

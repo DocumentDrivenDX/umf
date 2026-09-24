@@ -339,3 +339,4 @@ export * from './adapters/postgresql/key-correlation';
 
 export * from './core-ideals/key-postgresql';
 export * from './core-ideals/key-postgresql-projection';
+export * from './core-ideals/key-sqlserver';

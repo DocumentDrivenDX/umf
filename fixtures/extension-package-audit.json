@@ -1,7 +1,7 @@
 {
   "scope": "Manifest validation, joint registry registration, standalone schema equality and local evidence existence only; no native conformance or inventory completeness claim",
-  "packages": 50,
-  "passed": 50,
+  "packages": 51,
+  "passed": 51,
   "results": [
     {
       "path": "spec/extensions/arrow-flatbuffer/package.json",
@@ -542,6 +542,19 @@
         "subset": "Scalar catalog-column facets with explicit stored/ordinary-checked-write non-null value scope, bounded catalog CHECKs and retained native refinements; no native equivalence"
       },
       "evidenceCount": 9,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/sqlserver-keys/package.json",
+      "id": "umf.sqlserver.keys",
+      "version": "1.0.0",
+      "native": {
+        "system": "SQL Server",
+        "version": "16.0.4295.3",
+        "subset": "Captured SQL Server 2022 v3 rowstore index observations, native equality and enforcement only; no authored identity, source authentication or native equivalence"
+      },
+      "evidenceCount": 3,
       "passed": true,
       "failures": []
     },
