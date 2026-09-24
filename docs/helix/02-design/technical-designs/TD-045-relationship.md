@@ -98,6 +98,16 @@ an empty-but-required association set, non-Record endpoints, composite nullable
 FKs, untrusted FKs and foreign keys to UNIQUE rather than PK. Record
 two useful priority mappings separately from all-five delivery and FR-28.
 
+The native counterexample corpus is pinned independently of authored ideal
+projection. `fixtures/relationship/postgresql-native/` records PostgreSQL
+17.4 catalog state for a `NOT VALID` FK to an alternate UNIQUE key and a
+composite `MATCH SIMPLE` FK; its SQL source survives the PostgreSQL adapter,
+JSON/YAML recovery and Chromium. The existing
+`fixtures/sqlserver/constraints-oracle.json` records SQL Server 2022's
+untrusted FK state and UNIQUE target. These observations constrain future
+classification and loss reports. They do not count as useful authored
+down-projections or as proof that existing rows satisfy either FK.
+
 ## Migration & Rollback
 
 Migration records original envelope and any old colliding unknown member.

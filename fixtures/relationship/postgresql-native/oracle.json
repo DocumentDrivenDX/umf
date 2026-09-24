@@ -1,0 +1,45 @@
+{
+  "scope": "PostgreSQL 17.4 native FK observations only: NOT VALID, MATCH SIMPLE and referenced UNIQUE; no authored relationship or data-query claim",
+  "image": "postgres@sha256:304ab813518754228f9f792f79d6da36359b82d8ecf418096c636725f8c930ad",
+  "serverVersion": 170004,
+  "adapter": "@libpg-query/parser@17.6.10",
+  "foreignKeys": [
+    {
+      "name": "fk_alt",
+      "validated": false,
+      "match_type": "s",
+      "referenced_index": "rel.parent_alt_key",
+      "definition": "FOREIGN KEY (parent_alt) REFERENCES rel.parent(alt) NOT VALID",
+      "source_columns": [
+        "parent_alt"
+      ],
+      "target_columns": [
+        "alt"
+      ]
+    },
+    {
+      "name": "fk_pair",
+      "validated": true,
+      "match_type": "s",
+      "referenced_index": "rel.uq_parent_pair",
+      "definition": "FOREIGN KEY (parent_a, parent_b) REFERENCES rel.parent(part_a, part_b)",
+      "source_columns": [
+        "parent_a",
+        "parent_b"
+      ],
+      "target_columns": [
+        "part_a",
+        "part_b"
+      ]
+    }
+  ],
+  "sourceRecovery": {
+    "json": true,
+    "yaml": true,
+    "unclaimedSourceExact": true
+  },
+  "sha256": {
+    "fixtures/relationship/postgresql-native/constraints.sql": "5b37e2e9b78ab910ed46a5cec04610ab4aa9bbec3005928b49aea8f68b96f754",
+    "scripts/relationship/postgresql-native-oracle.ts": "08feb859d5a9d0eea92ea7ee20b35adbed6f2ab93b411b2548e01848e80369f5"
+  }
+}
