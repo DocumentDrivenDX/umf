@@ -132,3 +132,20 @@ qualification remain pending. Earlier gate records describe their historical
 execution commits; they are not refreshed by copying current hashes. This
 checkpoint does not close the core task, admit the Key ideal, establish native
 equivalence or implement any of the five native Key bindings.
+
+## Native/browser compatibility refresh checkpoint
+
+All 92 native/browser refresh commands pass against the public Key integration.
+The run covers the existing five-system Field, Nullability, Cardinality and Facet
+profiles, public and focused Key browser checks, and Avro exact-input float
+narrowing. Typechecking, 288 schemas / 48 packages and the public build pass;
+all 1,938 snapshotted verification inputs remained unchanged.
+See the [native refresh record](../../../../fixtures/validation/key-native-refresh.json)
+for completed commands, retained logs, source fingerprints and explicit limits.
+
+The diagnostic pre-refresh run finished with 416 passes and nine failures: three
+unsupported-future probes already corrected and six stale-evidence failures.
+That failed run is retained separately. A fresh full repository regression across
+324 test files is now required alongside the four separate conformance gates and
+facet evidence-negative tests. The refresh checkpoint does not close the Key core
+task, widen older native profiles to Key semantics or admit the Key ideal.

@@ -1,0 +1,933 @@
+{
+  "scope": "Fresh native/browser compatibility checks of existing Field, Nullability, Cardinality and Facet profiles plus experimental public Key 0.6.0; full regression and conformance gates are not yet accepted",
+  "bead": "umf-97221618-bbefbb0a",
+  "baseCommit": "703cb5ba5c6a238a6c63782be260114dfcb5a3c6",
+  "coreTaskAccepted": false,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "results": {
+    "commands": 92,
+    "failures": 0,
+    "sourceInputsUnchanged": true,
+    "sourceInputCount": 1938,
+    "typecheck": "passed",
+    "schemas": 288,
+    "packages": 48
+  },
+  "runs": [
+    {
+      "command": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/001.log"
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "test:schemas"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/002.log"
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/003.log"
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "build:postgresql"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/004.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-field-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/005.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-tablespec-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/006.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-tablespec-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/007.log"
+    },
+    {
+      "command": [
+        "/home/erik/Projects/tablespec/.venv/bin/python",
+        "scripts/core-ideals/field-tablespec-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/008.log"
+    },
+    {
+      "command": [
+        "/home/erik/Projects/tablespec/.venv/bin/python",
+        "scripts/core-ideals/field-tablespec-projection-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/009.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-avro-corpus.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/010.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-avro-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/011.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-avro-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/012.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-avro-projection-corpus.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/013.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-avro-projection-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/014.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-avro-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/015.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/avro-record-type-corpus.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/016.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/avro-record-type-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/017.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/avro-record-type-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/018.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-parquet-corpus.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/019.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-parquet-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/020.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-parquet-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/021.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-parquet-projection-corpus.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/022.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-parquet-projection-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/023.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-parquet-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/024.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "scripts/core-ideals/field-avro-fastavro-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/025.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-postgresql-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/026.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-postgresql-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/027.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-postgresql-projection-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/028.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-postgresql-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/029.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/postgresql-ddl-kinds-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/030.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/postgresql-ddl-kinds-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/031.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-sqlserver-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/032.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-sqlserver-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/033.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-sqlserver-projection-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/034.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/field-sqlserver-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/035.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-nullability-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/036.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-selection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/037.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-field-operations-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/038.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-tablespec-corpus.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/039.log"
+    },
+    {
+      "command": [
+        "/home/erik/Projects/tablespec/.venv/bin/python",
+        "scripts/core-ideals/nullability-tablespec-classification-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/040.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-tablespec-classification-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/041.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-tablespec-projection-corpus.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/042.log"
+    },
+    {
+      "command": [
+        "/home/erik/Projects/tablespec/.venv/bin/python",
+        "scripts/core-ideals/nullability-tablespec-projection-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/043.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-tablespec-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/044.log"
+    },
+    {
+      "command": [
+        "/home/erik/Projects/tablespec/.venv/bin/python",
+        "scripts/core-ideals/nullability-tablespec-execution-oracle.py"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/045.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-postgresql-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/046.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-postgresql-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/047.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-postgresql-projection-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/048.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-postgresql-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/049.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-sqlserver-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/050.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-sqlserver-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/051.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-sqlserver-projection-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/052.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-sqlserver-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/053.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-avro-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/054.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-avro-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/055.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-avro-projection-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/056.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-avro-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/057.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-parquet-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/058.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-parquet-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/059.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-parquet-projection-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/060.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/nullability-parquet-projection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/061.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-cardinality-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/062.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-cardinality-operations-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/063.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-field-operations-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/064.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-selection-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/065.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-tablespec-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/066.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-tablespec-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/067.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-postgresql-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/068.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-postgresql-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/069.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-sqlserver-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/070.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-sqlserver-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/071.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-avro-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/072.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-avro-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/073.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-parquet-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/074.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/cardinality-parquet-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/075.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-facet-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/076.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-facet-operations-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/077.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-tablespec-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/078.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-tablespec-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/079.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-postgresql-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/080.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-postgresql-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/081.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-sqlserver-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/082.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-sqlserver-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/083.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-avro-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/084.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-avro-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/085.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-parquet-oracle.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/086.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-parquet-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/087.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-key-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/088.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-key-tuple-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/089.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-key-transition-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/090.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-key-public-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/091.log"
+    },
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-avro-exact-input-browser.ts"
+      ],
+      "exitCode": 0,
+      "log": "fixtures/validation/core-key-refresh/092.log"
+    }
+  ],
+  "sourceSnapshot": "fixtures/validation/core-key-refresh/inputs.json",
+  "limits": [
+    "Existing native bindings retain their qualified older core profiles; no native Key binding is implemented by this refresh",
+    "Full 324-file regression and separate conformance gates are still required",
+    "Diagnostic pre-refresh regression retains nine known failures and is not passing qualification",
+    "Historical acceptance records have not yet been revalidated"
+  ],
+  "sha256": {
+    "fixtures/validation/cardinality-avro-browser.json": "cff649571dad9666bb24c635cb11eee6322e7d139dbe504ca89155406ac6f359",
+    "fixtures/validation/cardinality-avro-classification-browser.json": "d954440ef47e0ff5b63e2e452c066694c03a2934aef2c2b24b5dec757d2f565f",
+    "fixtures/validation/cardinality-avro-projection-browser.json": "a9aec56125ea5d9ea1dd28ca3f775a650846ab2f7241e4d66bd9f2b43275c152",
+    "fixtures/validation/cardinality-field-operations-browser.json": "e15aa8ed594e571348455105e9b17a035f8a2d1339075950ebdad87fb0e0c196",
+    "fixtures/validation/cardinality-parquet-browser.json": "d0e7152787dee0742ddc9468c6eb72284bf9c4ebc7176a8af1ea3b90dd435094",
+    "fixtures/validation/cardinality-parquet-carrier-browser.json": "f7336805c84e21beaa6918136de6082bdd2a9ed7f96c654c608d607c0a4af819",
+    "fixtures/validation/cardinality-parquet-classification-browser.json": "c4a204543fb8e51287070dae6ba58995b3e9eb7a1b0793234935d2d81cf63e9e",
+    "fixtures/validation/cardinality-parquet-profile-browser.json": "ec0a34473f9faa5dd84f73fa6e65e82afc6ea708d7f465db6e6557716c84503e",
+    "fixtures/validation/cardinality-parquet-projection-browser.json": "cafc298f860fec78d7e03a731d539916819ae25da183d8f28c278b4b37812774",
+    "fixtures/validation/cardinality-postgresql-browser.json": "d6a06a05eebdb042da98338c9fa3c4038fff2485d1cd9c9ad86e450b97dc119f",
+    "fixtures/validation/cardinality-postgresql-catalog-browser.json": "3443defbf7a33e4e2217e848567578de6188d9d0b4d72627fc30a5943f4cae28",
+    "fixtures/validation/cardinality-postgresql-projection-browser.json": "354fde8f1fe8d19bf113207b82068193f797b0a2b42d03d60bb771279c209ce8",
+    "fixtures/validation/cardinality-selection-browser.json": "8f0d6b5c9911769e8aecacecdd1b9f0bbc969edf8ea009bdebe49a2c5bd8d634",
+    "fixtures/validation/cardinality-sqlserver-browser.json": "c024017d4087152b57762571162965417e49e02527ab58f542e9c7a57c0bf1ea",
+    "fixtures/validation/cardinality-sqlserver-classification-browser.json": "0d27a93dad843f3b88f61b8d71a60ce6b4a5657072b94ecef42de0f7a8e24223",
+    "fixtures/validation/cardinality-sqlserver-projection-browser.json": "19c205542c0c04cb4321a691781cb2e27d2f3b6ba0c0b5b04506320d54b6d01b",
+    "fixtures/validation/cardinality-tablespec-browser.json": "9e5367b47d8d38c6bc2fe82f3c2a2b9b144c096bc94122b368be08c09ae6d2d3",
+    "fixtures/validation/core-cardinality-browser.json": "98a98f8dbedf555e7c20b5048cfe56eefadfe616a3e9e309a75ef9e6d4c37c51",
+    "fixtures/validation/core-cardinality-operations-browser.json": "b1315eb3ef37a8e5ed8d9aa76d81511235599a06e938a92449ee31308bd51596",
+    "fixtures/validation/core-facet-candidate-browser.json": "006919991aa0a3bae8ca8dddb8224057daab5ebca477740f5856c3ea7d8aabaf",
+    "fixtures/validation/core-facet-operations-browser.json": "a99e1488d63104a200fc52eb73e99c862fb6c74cc15ebfea179e7f41b31332ec",
+    "fixtures/validation/core-key-candidate-browser.json": "0935679a306222ed10122767ece262398130eab9572192f94bc9b24ec111de6e",
+    "fixtures/validation/core-key-refresh/001.log": "79026c23638c604d4c76d405715bad40f28a56044d20bc97ba3114137511fcbd",
+    "fixtures/validation/core-key-refresh/002.log": "0b8133bb4c259d0e9489ca1881c62c21cdae040f14743a16a7571272314fca9b",
+    "fixtures/validation/core-key-refresh/003.log": "63fd93b2e963bf344f49ee2308ce390e5f3785219197a3aac016d032dcd943b9",
+    "fixtures/validation/core-key-refresh/004.log": "ff57f00c9aaa6dae62bec8a6c1326f5b3a8716f4dcadfea7b58c615635dac7b7",
+    "fixtures/validation/core-key-refresh/005.log": "4f0a3cd46c8e380e2a61b85de524b6413a2b6506db9684ccb1daf4ebb2c37923",
+    "fixtures/validation/core-key-refresh/006.log": "192ea0b54757843204723e063c2bd8e301c8905fd0250ca77cd54a4120543765",
+    "fixtures/validation/core-key-refresh/007.log": "1efb81546670fe1a4a6caf28c4afbcae7a9695f4dcaf3d9cf8cdc15334780388",
+    "fixtures/validation/core-key-refresh/008.log": "a28b3f8f6d00bafb538256a39f6f07a3b3008e860c6f57976d29d96c9101746b",
+    "fixtures/validation/core-key-refresh/009.log": "69e0eb28861ee8c274fc908fd1742ff877118bdf6ae56d538b6b6fb73f7fdabf",
+    "fixtures/validation/core-key-refresh/010.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixtures/validation/core-key-refresh/011.log": "df853624004f80a400b4d39ac2e52d2f4891d49900224feb8ad6c5c8ecb556b6",
+    "fixtures/validation/core-key-refresh/012.log": "bd9410dcba8bfe764908332fe53743555263161ff6ef416255c608bec5b86b91",
+    "fixtures/validation/core-key-refresh/013.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixtures/validation/core-key-refresh/014.log": "fd720afa7a74085a59d2987c134f053a0e833f2629b7c2b7dae22c0f173ec4b9",
+    "fixtures/validation/core-key-refresh/015.log": "559e663ac97f66e2fd8c99a0c570d4b57ece550058785fcda3bacefddc8939a2",
+    "fixtures/validation/core-key-refresh/016.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixtures/validation/core-key-refresh/017.log": "724efbdb143d89f2fadce6f5835c17933586efa454aaf8dc2d0c4e177c4dae1d",
+    "fixtures/validation/core-key-refresh/018.log": "73253e04a05378e48fc419e4aa6cee285c233c1f61985d4f4e0995916cdf7689",
+    "fixtures/validation/core-key-refresh/019.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixtures/validation/core-key-refresh/020.log": "af0c206c31464fa5283e676400b6c722ac159e2bd6d073921ad28f1d0a90d852",
+    "fixtures/validation/core-key-refresh/021.log": "d6dd423dfe5adecfa7fd9ee334f2b3fb44d7ee235a96a6501888239ad7552d64",
+    "fixtures/validation/core-key-refresh/022.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixtures/validation/core-key-refresh/023.log": "4f3898221fb25032c5cec53901f318265978b10f5b089f65e3f36d195b335ca9",
+    "fixtures/validation/core-key-refresh/024.log": "c33074d65808dbbd7973336b82cb57d7599e35eeb0af6acca054ac3df2d3ffab",
+    "fixtures/validation/core-key-refresh/025.log": "275096de413b9956b4cbada5aae4388e70ca6c039e0b8f57adcdadd12b3c76db",
+    "fixtures/validation/core-key-refresh/026.log": "3538d7d217b72292455fb17d112ec9e1680add01b7598272312571791c32871a",
+    "fixtures/validation/core-key-refresh/027.log": "8f363edaa382d07546881cacb1d3cadc8b8d22dc12ea8495d3aaac5cf0e0e663",
+    "fixtures/validation/core-key-refresh/028.log": "789a7ff5f6c56b63fe21b8639a35e5c3aa14cb9c5881712dbccc838afffbc2ed",
+    "fixtures/validation/core-key-refresh/029.log": "765018140e459164e4ffe0039c9d6309071ebcd1812f03441484e7a20694be19",
+    "fixtures/validation/core-key-refresh/030.log": "7b6cefb73610f479b4f692b3eb168fcbaec9c6a4b4c9ef36d1abf9bc62f03e61",
+    "fixtures/validation/core-key-refresh/031.log": "1ca62b997bb283e3b0d1e8a1e09c32b9346386f8a74aff67fde313ddedda9a7d",
+    "fixtures/validation/core-key-refresh/032.log": "8d5413cdf6fc8e12dbe636637424898cc33fd7c2283486344b7294a216bd00d1",
+    "fixtures/validation/core-key-refresh/033.log": "a7350da58c7ed81da7ecb60300b5b45becfc167eba9c3f357dca357a4891a2c8",
+    "fixtures/validation/core-key-refresh/034.log": "8b81241379ac1002c5f738e62680b4fd9cccba4d8727e7f61cf2f452b3b9c8f5",
+    "fixtures/validation/core-key-refresh/035.log": "cc38717e004c11639255c337a2da11cf971dab49fe08e03dd4ac1c1de35d2ebf",
+    "fixtures/validation/core-key-refresh/036.log": "63bc52499d5b9f4de0c35e47b103797cc597721d04da37e52f2bab930cefd77c",
+    "fixtures/validation/core-key-refresh/037.log": "d7d2fbb709916ae6b07b17073fe1c98699a89c86a57f64883aedb5072130c5cd",
+    "fixtures/validation/core-key-refresh/038.log": "16c2c916688618bbd1bfd6a002b820638b14837f7d885d2f9c77e8a310c7b55a",
+    "fixtures/validation/core-key-refresh/039.log": "fe4b2f6707c95b53ff151322bb94dfb121b2d6c9811f8d8d70ed4701d9fd40d6",
+    "fixtures/validation/core-key-refresh/040.log": "773fcdd2b798df44e1292ae7f816e826498d6321593c3fa07bc87b9bb00e8cdc",
+    "fixtures/validation/core-key-refresh/041.log": "e3aa9452e9de6909006c38e5dfca02da1b5c768f18f4c65c31bbb335f14b16c3",
+    "fixtures/validation/core-key-refresh/042.log": "8fee1d3512e364a757af43935b6d679b411a4770d6ba0d000706debcca02d458",
+    "fixtures/validation/core-key-refresh/043.log": "1b0ba034b4aff7c5e124754853e3ddd7e40767f5f77d4ff2284ac4e117dfd266",
+    "fixtures/validation/core-key-refresh/044.log": "f62e6ab8b88573ce9460463d40b52254eb88f6d802c39208a368cb36447e125a",
+    "fixtures/validation/core-key-refresh/045.log": "e56f17c22752e33314ebf2796759bccb2733dafb3132f5ab85f1203e5fa598cc",
+    "fixtures/validation/core-key-refresh/046.log": "b86a2c64a767a0ce837f20269f0834f96387ab9b45b012e3675142e804fddf06",
+    "fixtures/validation/core-key-refresh/047.log": "4da43b825b78513e839e5c8e3f99d36ec594507c80f4a807ef98814fb84f3279",
+    "fixtures/validation/core-key-refresh/048.log": "3d3d3936caf33ef01a360e9a43e03250042595f754b922675967ce9c48d81a98",
+    "fixtures/validation/core-key-refresh/049.log": "5c5d8d1e419d350931e3aab07e2aa79be55436cd42cfae4295024cea70247108",
+    "fixtures/validation/core-key-refresh/050.log": "e98e9031bcbb71654d4b411552c0220a752661c1b9c8a46250baecf6a6edf91b",
+    "fixtures/validation/core-key-refresh/051.log": "ad751c45ad4cbacab3ef88c0ad7784a697d0aaed3dd067db740e6cf97b414450",
+    "fixtures/validation/core-key-refresh/052.log": "5154165df0602420b3257de17fb26ca8caec725e8787c6ae777fd91d99eb8529",
+    "fixtures/validation/core-key-refresh/053.log": "50b65f82222deda59a496917a9689eea4b5accd1f81077a67e6b37e34b39ee05",
+    "fixtures/validation/core-key-refresh/054.log": "4f9ac24900c96655a8aa81a0612376d2ca63fa1597f119e43a9b5ee9f43d1507",
+    "fixtures/validation/core-key-refresh/055.log": "f0611b03aabcadd6cc97163ec083d4595d463b7868f044bcbbfa1731341c170b",
+    "fixtures/validation/core-key-refresh/056.log": "53b46f9eec3b3f998050e1225025b9506840b94a847ff9220cfe9f77f01e53fa",
+    "fixtures/validation/core-key-refresh/057.log": "4189a9b1446d57bbaa550a7b9af12666f5531dd56b59a76b6e3371dd4ef14cdd",
+    "fixtures/validation/core-key-refresh/058.log": "1deaaf5b6c61c7dbd5e8b71b6766638e9ca0242058f503506d981c28f0656796",
+    "fixtures/validation/core-key-refresh/059.log": "f35579318611621d2398eb9433d94a29fcdf8b16bdb39ae6faa6c871742802da",
+    "fixtures/validation/core-key-refresh/060.log": "644a2489bb8adf1441b8b2fb65d69dd0be6cc1fe9a64b7a1d90a8f2a389a5e70",
+    "fixtures/validation/core-key-refresh/061.log": "b8c2c2d5e55865a8635353fc1789aeafd6376bda0763b056f9f923eb154e0692",
+    "fixtures/validation/core-key-refresh/062.log": "eb38eab70d60cb8c2bcb22ad2a95fc177b82bc032b8745720c06e3546110d896",
+    "fixtures/validation/core-key-refresh/063.log": "84570ccad783f3faf6308d9423fe87eb09f8fa53c4e57255561928d431b3ee24",
+    "fixtures/validation/core-key-refresh/064.log": "3982b2b247a3031418556e509ba8b88f9715cf7bfd81a4f77ceb1badc46e5eb3",
+    "fixtures/validation/core-key-refresh/065.log": "ff9bb5ce38771a376ede32323afc0b2ebf8b0d5e7e2b69bf9b0a65e7bc6a04cd",
+    "fixtures/validation/core-key-refresh/066.log": "1fe057a6b8b02d4a6aef827a0c8df66cdc5db4b205ab644466d6a5fae07c5a85",
+    "fixtures/validation/core-key-refresh/067.log": "9a53a3785796ec687b8de0988bea300e3dce6212dc0060b03367e976bb3cbaf9",
+    "fixtures/validation/core-key-refresh/068.log": "47108b6da1704749f485e4b4143bc7727871ee8840ced8a64f310909c08a45f7",
+    "fixtures/validation/core-key-refresh/069.log": "2f68e95b228da8c022394bdc1db1fc117802ae50e0fe87a8b33a6197ff20fcb7",
+    "fixtures/validation/core-key-refresh/070.log": "3845a97a248f9fa628ef04d449bb409c4049c1707ae3761d84129d9112627cef",
+    "fixtures/validation/core-key-refresh/071.log": "d1a2038b77124921d364744f33f0563ac9f42ca24ba8e6bdd5508f731bc17c1e",
+    "fixtures/validation/core-key-refresh/072.log": "d9bb420ed7ea86889373e30d2757332ac55ccf10327a410f4312c610d689478f",
+    "fixtures/validation/core-key-refresh/073.log": "f26a528508bb56c6afdef1f3f91c38a7844fbc0d7141890f3243c4269476e7f7",
+    "fixtures/validation/core-key-refresh/074.log": "b2f5d233689fb6718ea6f0dcddfd109f289d4cc11937a8b7890842af3ce5a116",
+    "fixtures/validation/core-key-refresh/075.log": "1ddb0566072341b09423fdaf0875c83e41598385dd91d2618c37eedad706a26f",
+    "fixtures/validation/core-key-refresh/076.log": "2110d166cd2e15d5ca95edad78725ebc1ae9c0f6a40c1d93fbcd88c856284e57",
+    "fixtures/validation/core-key-refresh/077.log": "b6e15d455730f0ea86101e3639f3d25265c7c81d7609564e6c8a83532ca7b3d8",
+    "fixtures/validation/core-key-refresh/078.log": "c39bdf53525c821f8e3a93b59dbf41148643dffadc586f507bf1991224629517",
+    "fixtures/validation/core-key-refresh/079.log": "3ec8b94badaa230bd39813ce697d56739395114d5cd5599226c6d1728163242a",
+    "fixtures/validation/core-key-refresh/080.log": "ab76468861d40e91d01142bc08bc1cd0b587dd9dcd2e9d3e4407e69e4c201f7b",
+    "fixtures/validation/core-key-refresh/081.log": "3020d97b9f8ea211b3a38f9c011cc5189dfd4c3d0e3c3d5a3b22773f727490b4",
+    "fixtures/validation/core-key-refresh/082.log": "3776e37ef38a8a53eb1855d0835cfa9933128cb53c199651f5124ccaff2905af",
+    "fixtures/validation/core-key-refresh/083.log": "bb1d382af37b2cc859280f5917c02919e98a0193ebf715fda95aff4f2afb3f85",
+    "fixtures/validation/core-key-refresh/084.log": "abec90784d72c71c2eb3137877807054269225a5f1e725444735c6f16c678de6",
+    "fixtures/validation/core-key-refresh/085.log": "cef0a84a8c8fd739d9031fa728e7c894cfeb1a342a6ea0a6baf1942ee5cd92bd",
+    "fixtures/validation/core-key-refresh/086.log": "eddafff233b8ed6b8553a771ea2e5260ffb326a58f3fff868b77c944a5efcb90",
+    "fixtures/validation/core-key-refresh/087.log": "688bdbe0383afaeb0e5a7dc6462b737eeb004c7711c86d74a8b7000bcc49336d",
+    "fixtures/validation/core-key-refresh/088.log": "c0ea76d89835d014fbd70c07c063a5bf7b37f9774f9dbbec596c812150d17a17",
+    "fixtures/validation/core-key-refresh/089.log": "c823977bf3f5e10aab5558281e7f288243e70c10cad7c63439a133e86171060e",
+    "fixtures/validation/core-key-refresh/090.log": "133e5d055c3825955a707c40d96fae3bda2cde61e23da93194ed74a7f0760d24",
+    "fixtures/validation/core-key-refresh/091.log": "0dc20ebf8c50ea7b12c3857f2ae646c72c77426f45b5c2d95aaac5c615ce9635",
+    "fixtures/validation/core-key-refresh/092.log": "ccd89917d20127051990345450411bf7f0c4dbfaa16a6df0586b1d4c4af14bdb",
+    "fixtures/validation/core-key-refresh/commands.json": "a019a2702eedce55c8ae168ba917cda14a53c027827faad43fcb3ff0a938a288",
+    "fixtures/validation/core-key-refresh/core-key-refresh.py": "965985175e82ab4b29f5b0445ddf30f6023af7b72ea48b423c81d34eeb694ad0",
+    "fixtures/validation/core-key-refresh/diagnostic-failures.json": "bfc4cd0054a83fd0f5aca7b526efed5d5de42907043eaa3a8ad8472ac9d3f3e8",
+    "fixtures/validation/core-key-refresh/diagnostic-regression.log": "cb805a705c201376e7241e11648f891cd5ab3b497cc6e503b93f55fc171cc1c2",
+    "fixtures/validation/core-key-refresh/inputs.json": "152139355b11e3f92c8e843baf59637b6c8e41bf632d646920f0293d242be41b",
+    "fixtures/validation/core-key-refresh/native-stages-complete.json": "b22ec6569b02560502cb06eed300a9a3a4aa016ea1d3e2b5f985a05beb667ca9",
+    "fixtures/validation/core-key-refresh/runs.json": "693b07150053f66a9310f60be150f049c65db921681789be8609d3c66fa9e82e",
+    "fixtures/validation/core-key-transition-browser.json": "58bbe51e85edba21f388c788e56f56bbf5b493940afb2a681e2825b8c950b987",
+    "fixtures/validation/core-key-tuple-browser.json": "aaae188066d3ffecff94801a02e611d3185950b0960faed1f4a8233c9ad4f027",
+    "fixtures/validation/facets-avro-browser.json": "b0393d52a084712ea3d510864fbefeb8b1366f32098f1710115acc5517802608",
+    "fixtures/validation/facets-avro-classification-browser.json": "5cdfc33511d745c7874d268cfb572e1acf9cd83c35138f6e3a07684d8e4428dd",
+    "fixtures/validation/facets-avro-composition.json": "62ad442ef29feb85a241ee616edb20fa08c73edc4889612172004cb7bdbabd75",
+    "fixtures/validation/facets-avro-discovery.json": "0db4fd4b2438b62f4f0b15c3fe1fe5bfdbb3b5f8838662e31bf923359309bdd3",
+    "fixtures/validation/facets-avro-exact-input-browser.json": "1b2d790f6073ba55695c07fdaf28c4b67e66df97a798ff6c39908104941734d7",
+    "fixtures/validation/facets-avro-native.json": "a94dd1d075c066526c5f358d62780b7000b2e0532088c13429b5b6c1aa6c582b",
+    "fixtures/validation/facets-avro-projection-browser.json": "83d04112af0b1d1393a288a1303e7527587ade31f07c0797a503dbcfbb81834d",
+    "fixtures/validation/facets-avro-projection-native.json": "245109a419733d8609d7414ca283e366bb06f0e1f72eb17f66b211bb8ae696df",
+    "fixtures/validation/facets-avro-selection-browser.json": "54ed795bb57549d569441ad147414e337084907e5b7bd07cdf1f745ef62c6d91",
+    "fixtures/validation/facets-avro-selection-oracle.json": "c4466caf2f3de4fb3cab89d8e5b8f1e8f05251e0168499613d0beb5f4c271ef1",
+    "fixtures/validation/facets-avro-type-browser.json": "1db4fdfc11cf2025a761c83d31fb0cbf76a3d5cd0e71fc766f39ff13fccee154",
+    "fixtures/validation/facets-parquet-browser.json": "e90542d0d42a1fb087364d1ac922dabe1fab4e3a82767c278caf06f01e55b701",
+    "fixtures/validation/facets-parquet-classification-browser.json": "ea493b54e77b67158e9e15aea40b75fc772ca79e9598b793b3d45dd1227dc5b0",
+    "fixtures/validation/facets-parquet-discovery.json": "3895c1a62f570fcbf663606f6d50e4d1e9dcc25f5adc502a73b551332470a259",
+    "fixtures/validation/facets-parquet-native.json": "4b84eb94ef30ed6e2ca9c38e2f786d86ea4f8ab21fe103f48024fadd2c217e4d",
+    "fixtures/validation/facets-parquet-projection-browser.json": "da25c007e95cf103ec2c3372c7a1f39c4052b1e05e206ae602e83ee12d4ee408",
+    "fixtures/validation/facets-parquet-type-browser.json": "cc457d4f955948f80c3ef3cc80ad130334a8eb980210a1022b6b0be331fd3b12",
+    "fixtures/validation/facets-postgresql-browser.json": "c6afa0590974d14efc5a11852491aecb2129782539396656cc2eaa68dd32a357",
+    "fixtures/validation/facets-postgresql-catalog-browser.json": "76ad4b49526c4a725291d9a14522187cc44981d693092b91cc8feb4bb2b0b7a8",
+    "fixtures/validation/facets-postgresql-classification-browser.json": "440bf5c55b8bfcd441e781395c974c3295d4c6879c250da286dfa777a4090fb0",
+    "fixtures/validation/facets-postgresql-discovery-browser.json": "caff27ed6314d966d58c5ff658c6d07727ca8ac1fb20f3130c9e0f238f17bfd6",
+    "fixtures/validation/facets-postgresql-projection-browser.json": "afb125d02a78e9f60f5dd9ca6da10cda211f5f72861eb387303edb6d9f67ce81",
+    "fixtures/validation/facets-sqlserver-browser.json": "74f32d5ac77e042c34147c50062bf7df5988633b558e935c6feccfe3e5b89cf6",
+    "fixtures/validation/facets-sqlserver-classification-browser.json": "735ce198fb04ebfbce6fed3eca558de113f481a683db994d7bf4cc0738ddb1a3",
+    "fixtures/validation/facets-sqlserver-composition-browser.json": "8c12406f4247c6ba319a258877b0a96cee66ddd2186eee970f0a8457b8c440a8",
+    "fixtures/validation/facets-sqlserver-constraints-browser.json": "ef66e44e891bf31f9c501298c79fbb788322b4554ca3b2de225ac1597f070435",
+    "fixtures/validation/facets-sqlserver-discovery-browser.json": "db78a77bdb7fa62199ac4fa0a85ca8b7d857795c4fb9b1e3090448ffd6fec73a",
+    "fixtures/validation/facets-sqlserver-projection-browser.json": "fdcbc0ceb8e72d88294d838e04e0930336f7b61fcc92973077a9b81d0c01ff62",
+    "fixtures/validation/facets-tablespec-browser.json": "e7228b22f40885b539622cd4f94ff10e6ab96fc49f7bc1c5200aedf9a61260de",
+    "fixtures/validation/facets-tablespec-classification-browser.json": "3309740670ec8bc8b09974e5895ba65e16292fafc21bc50a57587bcb39939492",
+    "fixtures/validation/facets-tablespec-projection-browser.json": "88c61f709e146419c883ca75a396ff850d2d34b916e5d3a04a8dda8854b466d4",
+    "fixtures/validation/facets-tablespec-suite-browser.json": "e862b5e78834172abb3878241f0838a519bb931508d89034460771b2d55aca0d",
+    "fixtures/validation/nullability-avro-browser.json": "433506c60b153b0c110cfd86cc5904b67712b97c800e4ffc31f1acec024956b2",
+    "fixtures/validation/nullability-avro-projection-browser.json": "dc373b1f8cf72ef7a5ec6806cadcff28537c2893e1f958d176068460e8ba82d9",
+    "fixtures/validation/nullability-avro-projection-native.json": "e9d1bc4195b92bf65bff026d1d2360eab37be538c42a971fd82df477e8225bc8",
+    "fixtures/validation/nullability-parquet-browser.json": "575352623dfd5b543b996639171cfc3c5f8163b55dbed8b869d9f3a09f4aee55",
+    "fixtures/validation/nullability-parquet-projection-browser.json": "8a034c2685c0c267b0d6fe787ca27eb21bfee3776396415c76b7d54d991b4ec2",
+    "fixtures/validation/nullability-postgresql-browser.json": "24245962b029ad46cf4d7d3ba26fb1ac459370f33d28b3a704a08518ba9f27d2",
+    "fixtures/validation/nullability-postgresql-projection-browser.json": "b33780ce919f7b998d13b34dbf7bd3d5f8a84f004c2dd8bfa26579c38b749f2a",
+    "fixtures/validation/nullability-sqlserver-browser.json": "83b81dbfcdce40ff0305a134e396bb13a7599fb2324351b0ee61d395acdeaeaa",
+    "fixtures/validation/nullability-sqlserver-native.json": "843754167ca5cfc553d571434f43faafb82de3e7964d5bdf980ead0451e5e40c",
+    "fixtures/validation/nullability-sqlserver-projection-browser.json": "9b6ce30a781314032f94b3ced7cb3f311a9e3c36287db90e8e91bf34f8fa6340"
+  }
+}

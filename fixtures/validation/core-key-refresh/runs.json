@@ -1,0 +1,742 @@
+[
+  {
+    "command": [
+      "bun",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/001.log"
+  },
+  {
+    "command": [
+      "bun",
+      "run",
+      "test:schemas"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/002.log"
+  },
+  {
+    "command": [
+      "bun",
+      "run",
+      "build"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/003.log"
+  },
+  {
+    "command": [
+      "bun",
+      "run",
+      "build:postgresql"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/004.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-field-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/005.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-tablespec-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/006.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-tablespec-projection-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/007.log"
+  },
+  {
+    "command": [
+      "/home/erik/Projects/tablespec/.venv/bin/python",
+      "scripts/core-ideals/field-tablespec-oracle.py"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/008.log"
+  },
+  {
+    "command": [
+      "/home/erik/Projects/tablespec/.venv/bin/python",
+      "scripts/core-ideals/field-tablespec-projection-oracle.py"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/009.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-avro-corpus.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/010.log"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/core-ideals/field-avro-oracle.py"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/011.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-avro-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/012.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-avro-projection-corpus.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/013.log"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/core-ideals/field-avro-projection-oracle.py"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/014.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-avro-projection-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/015.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/avro-record-type-corpus.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/016.log"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/core-ideals/avro-record-type-oracle.py"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/017.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/avro-record-type-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/018.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-parquet-corpus.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/019.log"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/core-ideals/field-parquet-oracle.py"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/020.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-parquet-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/021.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-parquet-projection-corpus.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/022.log"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/core-ideals/field-parquet-projection-oracle.py"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/023.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-parquet-projection-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/024.log"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "scripts/core-ideals/field-avro-fastavro-oracle.py"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/025.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-postgresql-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/026.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-postgresql-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/027.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-postgresql-projection-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/028.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-postgresql-projection-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/029.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/postgresql-ddl-kinds-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/030.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/postgresql-ddl-kinds-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/031.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-sqlserver-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/032.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-sqlserver-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/033.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-sqlserver-projection-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/034.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/field-sqlserver-projection-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/035.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-nullability-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/036.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-selection-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/037.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-field-operations-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/038.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-tablespec-corpus.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/039.log"
+  },
+  {
+    "command": [
+      "/home/erik/Projects/tablespec/.venv/bin/python",
+      "scripts/core-ideals/nullability-tablespec-classification-oracle.py"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/040.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-tablespec-classification-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/041.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-tablespec-projection-corpus.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/042.log"
+  },
+  {
+    "command": [
+      "/home/erik/Projects/tablespec/.venv/bin/python",
+      "scripts/core-ideals/nullability-tablespec-projection-oracle.py"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/043.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-tablespec-projection-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/044.log"
+  },
+  {
+    "command": [
+      "/home/erik/Projects/tablespec/.venv/bin/python",
+      "scripts/core-ideals/nullability-tablespec-execution-oracle.py"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/045.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-postgresql-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/046.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-postgresql-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/047.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-postgresql-projection-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/048.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-postgresql-projection-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/049.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-sqlserver-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/050.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-sqlserver-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/051.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-sqlserver-projection-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/052.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-sqlserver-projection-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/053.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-avro-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/054.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-avro-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/055.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-avro-projection-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/056.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-avro-projection-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/057.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-parquet-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/058.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-parquet-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/059.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-parquet-projection-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/060.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/nullability-parquet-projection-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/061.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-cardinality-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/062.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-cardinality-operations-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/063.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-field-operations-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/064.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-selection-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/065.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-tablespec-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/066.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-tablespec-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/067.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-postgresql-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/068.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-postgresql-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/069.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-sqlserver-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/070.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-sqlserver-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/071.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-avro-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/072.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-avro-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/073.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-parquet-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/074.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/cardinality-parquet-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/075.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-facet-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/076.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-facet-operations-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/077.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/facets-tablespec-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/078.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/facets-tablespec-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/079.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/facets-postgresql-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/080.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/facets-postgresql-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/081.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/facets-sqlserver-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/082.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/facets-sqlserver-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/083.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/facets-avro-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/084.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/facets-avro-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/085.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/facets-parquet-oracle.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/086.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/facets-parquet-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/087.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-key-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/088.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-key-tuple-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/089.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-key-transition-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/090.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-key-public-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/091.log"
+  },
+  {
+    "command": [
+      "bun",
+      "scripts/core-ideals/facets-avro-exact-input-browser.ts"
+    ],
+    "exitCode": 0,
+    "log": ".cache/core-key-refresh/092.log"
+  }
+]

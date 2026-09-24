@@ -1,0 +1,817 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core/core.test.ts:
+(pass) US-001-AC1: JSON and YAML retain unknown extension and core fields without claiming understanding [16.08ms]
+(pass) US-001-AC2: names in independent contexts coexist; identity and references are checked [28.18ms]
+(pass) US-001-AC2: native semantics are not inferred by extension structural validation [8.38ms]
+(pass) US-001-AC2: undeclared versions, duplicate registration, invalid schema and scope fail explicitly [15.22ms]
+(pass) US-001-AC3: safe edits are atomic, checked and reflected in both serializations [12.36ms]
+(pass) US-001-AC3: unknown dependencies block edits even if the edited extension is known [6.50ms]
+(pass) US-001-AC2: validator exceptions never become successful validation [4.96ms]
+(pass) US-001-AC4: duplicate keys and non-JSON YAML are rejected [2.17ms]
+(pass) US-001-AC4: numeric boundaries fail instead of rounding and interoperable decimals survive [1.48ms]
+(pass) US-001-AC4: non-JSON programmatic values cannot disappear during serialization [0.14ms]
+(pass) US-001-AC4: dangerous property names are retained as data, never inherited behavior [0.23ms]
+(pass) US-001-AC4: document depth and size limits fail explicitly [1.25ms]
+(pass) US-001-AC1: generated unknown content survives repeated portable serialization [107.56ms]
+(pass) registry captures a frozen copy, independent of subsequent package edits [7.60ms]
+(pass) published minimal document fixture validates with independent namespaces and references [2.97ms]
+(pass) US-001-AC1: YAML preserves long leading-indented multiline native comments [0.58ms]
+(pass) US-001-AC2: JSON equality handles reference objects and method-like data keys safely [6.62ms]
+
+tests/core/native-json.test.ts:
+(pass) CONTRACT-001: shared exact JSON tree is representation-identical across three extensions [12.71ms]
+(pass) US-024-AC4: explicit YAML 1.1 preserves underscored boundaries without changing the default profile [0.60ms]
+(pass) US-024-AC4: date-only string projection is explicit and does not admit general timestamps [0.21ms]
+(pass) US-024-AC4: PyYAML boolean vocabulary leaves single-letter axis names unchanged [0.34ms]
+
+tests/core/scalar.test.ts:
+(pass) CONTRACT-001 scalar families are interpreted core metadata and survive both formats [1.45ms]
+(pass) CONTRACT-001 unknown scalar families remain recoverable and explicitly incomplete [5.99ms]
+
+tests/core/selection.test.ts:
+(pass) CONTRACT-001 selection preserves distinct contexts, core reference boundaries, cycles and unknown meaning [5.51ms]
+(pass) CONTRACT-001 malformed queries and unresolved core sources fail without invoking accessors [134.62ms]
+(pass) CONTRACT-001 callers can supply semantic validation without confusing selection with native dependency discovery [15.77ms]
+(pass) CONTRACT-001 shared scalar selection keeps native recoveries intact across the five priority systems [1173.43ms]
+
+tests/core/field-ideals.test.ts:
+(pass) field kinds are explicit; missing kind is never inferred from scalar family [3.49ms]
+(pass) legacy collisions stay opaque, including names that are now known [4.00ms]
+(pass) new profile refuses malformed kinds and structured scalar claims atomically [1.57ms]
+(pass) unknown future kind and other open metadata survive without semantic completion [0.72ms]
+31 |  const result=validateDocument(doc);expect(result.valid).toBe(true);expect(result.complete).toBe(false);
+32 |  expect(result.diagnostics.some(d=>d.code==='UNKNOWN_ELEMENT_KIND'&&d.path==='/modules/0/elements/0/kind')).toBe(true);
+33 |  for(const format of ['json','yaml'] as const)expect(readDocument(writeDocument(doc,format),format)).toEqual(doc);
+34 | });
+35 | test('future envelope versions and unsafe getter inputs cannot be interpreted',()=>{
+36 |  const doc=document('0.2.0',{});expect(validateDocument({...doc,umf:'0.6.0'}).valid).toBe(false);
+                                                                                          ^
+error: expect(received).toBe(expected)
+
+Expected: false
+Received: true
+
+      at <anonymous> (/home/erik/Projects/umf/tests/core/field-ideals.test.ts:36:86)
+(fail) future envelope versions and unsafe getter inputs cannot be interpreted [4.38ms]
+
+tests/core/field-transition.test.ts:
+(pass) upgrade explicitly archives every legacy collision and preserves all other metadata [20.53ms]
+(pass) serialized receipts support exact model rollback while retaining later assertions and native edits [4.60ms]
+(pass) tampered or stale receipts fail without overwriting source or edited model [2.99ms]
+(pass) null, method-like names, unknown content, and malformed inputs retain copy safety [2.64ms]
+
+tests/core/field-kind.test.ts:
+(pass) kind lookup separates legacy, unknown, missing and defined roles without inventing provenance [10.30ms]
+(pass) author provenance survives serialization, verification and rollback without claiming native meaning [6.76ms]
+(pass) authoring blocks unknown meaning, legacy versions and structured/scalar conflicts atomically [0.51ms]
+(pass) provenance verification rejects forged paths, altered assertions and stale native or unrelated content [2.02ms]
+
+tests/core/nullability-ideals.test.ts:
+(pass) explicit nullability requires a Field and survives both formats without native interpretation [2.22ms]
+(pass) missing availability does not inherit native nullable flags or defaults [0.53ms]
+(pass) older envelopes preserve all colliding nullability values as opaque content [6.32ms]
+(pass) unknown availability is retained, but malformed values and non-Field use fail atomically [1.24ms]
+28 |  for(const kind of ['record','group','future-kind',undefined])for(const nullability of NULLABILITIES){const doc=model('0.3.0',{...(kind===undefined?{}:{kind}),nullability}),before=structuredClone(doc);expect(validateDocument(doc).valid).toBe(false);expect(()=>writeDocument(doc)).toThrow();expect(doc).toEqual(before);}
+29 |  for(const nullability of [null,42,[],{},''])expect(validateDocument(model('0.3.0',{kind:'field',nullability})).valid).toBe(false);
+30 | });
+31 | test('unsafe getters and unsupported future versions cannot be interpreted',()=>{
+32 |  const doc=model('0.3.0',{kind:'field'});let calls=0;Object.defineProperty(doc.modules[0]!.elements[0]!,'nullability',{enumerable:true,get(){calls++;return 'required';}});
+33 |  expect(validateDocument(doc).valid).toBe(false);expect(calls).toBe(0);expect(validateDocument({...model('0.3.0',{}),umf:'0.6.0'}).valid).toBe(false);
+                                                                                                                                               ^
+error: expect(received).toBe(expected)
+
+Expected: false
+Received: true
+
+      at <anonymous> (/home/erik/Projects/umf/tests/core/nullability-ideals.test.ts:33:139)
+(fail) unsafe getters and unsupported future versions cannot be interpreted [0.26ms]
+
+tests/core/nullability-transition.test.ts:
+(pass) explicit upgrade archives every old label and preserves roles, native refinements and references [2.23ms]
+(pass) both receipt formats roll back original model while retaining subsequent availability and native edits [5.46ms]
+(pass) null, empty, known, future and method-like collisions remain recoverable [5.05ms]
+(pass) forged receipts, wrong identity, wrong versions and malformed current states refuse atomically [2.94ms]
+(pass) 0.1.0 requires the Field transition first and the inverse chain preserves both collisions [1.27ms]
+(pass) getter inputs are refused without invoking artifact code [0.05ms]
+
+tests/core/nullability-authoring.test.ts:
+(pass) inspection distinguishes legacy, absent, inapplicable, known and unknown without inventing provenance [2.81ms]
+(pass) authored availability has exact identity/provenance and survives JSON/YAML without claiming native absence meaning [5.99ms]
+(pass) unknown assertions, non-fields, wrong versions and invalid identities refuse instead of overwriting intent [0.35ms]
+(pass) tampered and stale receipts refuse; migration rollback retains new authored assertions [2.14ms]
+
+tests/core/cardinality-ideals.test.ts:
+(pass) Cardinality is explicit Field meaning with independent item/value references and availability [7.28ms]
+(pass) containers cannot acquire scalar labels; invalid roles, labels and item links refuse atomically [1.86ms]
+(pass) unknown cardinality and recursive/cross-module item definitions remain copied and recoverable [1.61ms]
+(pass) legacy cardinality and itemType stay opaque; transition archives both even when they look valid [34.22ms]
+40 |  current.modules[0]!.elements[0]!.cardinality='map';current.modules[0]!.elements[0]!.itemType={module:'m',element:'item'};
+41 |  const result=rollbackCardinalityEnvelope(receipt,current);expect(result.target).toEqual(source);expect(result.source).toEqual(current);expect(receipt.target.modules[0]!.elements[0]!.cardinality).toBeUndefined();
+42 |  const forged=structuredClone(receipt);forged.residuals=[];expect(()=>rollbackCardinalityEnvelope(forged,current)).toThrow();
+43 |  expect(()=>rollbackCardinalityEnvelope(receipt,{...current,id:'other'})).toThrow();expect(()=>upgradeCardinalityEnvelope(model('0.2.0',{}))).toThrow();
+44 |  let calls=0;const unsafe=model('0.4.0',{});Object.defineProperty(unsafe.modules[0]!.elements[0]!,'itemType',{enumerable:true,get(){calls++;return {module:'m',element:'item'};}});expect(validateDocument(unsafe).valid).toBe(false);expect(calls).toBe(0);
+45 |  expect(validateDocument({...model('0.4.0',{}),umf:'0.6.0'}).valid).toBe(false);
+                                                                         ^
+error: expect(received).toBe(expected)
+
+Expected: false
+Received: true
+
+      at <anonymous> (/home/erik/Projects/umf/tests/core/cardinality-ideals.test.ts:45:69)
+(fail) rollback retains later assertions separately and refuses forged receipts or changed identities [1.45ms]
+
+tests/core/cardinality-operations.test.ts:
+(pass) authored Cardinality and item meaning survive serialized verified receipts without source mutation [21.91ms]
+(pass) item omission preserves meaning; explicit set or clear retains previous meaning in archived source [0.93ms]
+(pass) legacy, missing, unknown and inapplicable Cardinality inspections never infer native meaning [2.54ms]
+(pass) invalid requests and item/scalar conflicts fail atomically; no getters execute [0.68ms]
+(pass) forged or stale author receipts cannot confer provenance [2.53ms]
+
+tests/core/facet-ideals.test.ts:
+(pass) candidate facet semantics check families, roles, shape, pairs and qualified unknowns [17.96ms]
+(pass) candidate JSON Schema documents structural limits; semantic comparison remains explicit [3.49ms]
+(pass) facet tokens are checked before conversion; unsafe numbers and accessors refuse atomically [1.08ms]
+
+tests/core/facet-transition.test.ts:
+(pass) explicit facet migration archives every legacy collision and recovers it through both serializations [32.58ms]
+(pass) rollback restores the original without reinterpreting later bounds; forged receipts and wrong versions refuse [4.70ms]
+(pass) 0.5.0 document validation and selection preserve item facets, availability, unknowns and boundaries [10.59ms]
+
+tests/core/facet-authoring.test.ts:
+(pass) authored facet groups have copied provenance, exact declared bounds and verifiable JSON/YAML receipts [22.04ms]
+(pass) facet updates retain unknown groups and nested qualifiers; unknown units stay uninterpreted [0.84ms]
+(pass) invalid facet patches, conflicts, legacy authoring and hostile inputs refuse without mutation [1.57ms]
+(pass) stale, forged and cross-document facet receipts cannot confer author provenance [1.40ms]
+
+tests/core/key-ideals.test.ts:
+(pass) candidate Key checks membership, primary/alternate identities and component equality [54.30ms]
+(pass) key schema leaves cross-reference semantics to validator; old profiles stay opaque [16.64ms]
+(pass) key candidate never invokes getters and retains path-qualified unknowns [0.44ms]
+
+tests/core/key-tuple.test.ts:
+(pass) key tuple vectors and domain boundaries produce exact frames or atomic refusals [55.85ms]
+(pass) stable key ID survives name/list changes while retained receipts detect stale context [1.00ms]
+(pass) tuple verification rejects forged and nonminimal frames and altered retained inputs [1.43ms]
+(pass) unknown relevant qualifiers block and unrelated native extension content survives [0.89ms]
+(pass) shortest length/count framing and no getter evaluation [5.75ms]
+(pass) resource bounds and a bad later component refuse the whole tuple [4.51ms]
+
+tests/core/key-transition.test.ts:
+(pass) explicit Key migration archives all element collisions without adopting author intent [61.29ms]
+(pass) rollback restores exact old content and separately retains later key assertions and native edits [7.33ms]
+(pass) forged receipts, wrong identities/versions and invalid current key meaning reject atomically [8.73ms]
+(pass) no-collision migration and copy discipline preserve opaque scopes without getters [1.13ms]
+
+tests/core/key-operations.test.ts:
+(pass) public Key authoring, inspection and stable lookup preserve copied source and both serializations [35.71ms]
+(pass) key updates retain identity and unknowns, reject tuple changes and implicit primary demotion [11.59ms]
+(pass) operation verification rejects forged/stale context and old profiles remain opaque [9.46ms]
+(pass) 0.6.0 core operations use new receipts and refuse changes invalidating keys [53.54ms]
+(pass) Key selection reports explicit member/component boundaries and traverses by identity [15.21ms]
+(pass) 0.6.0 extension validators receive the actual key-bearing document and can reject it [13.40ms]
+(pass) member traversal terminates on cycles and component order cannot change under a stable key ID [5.27ms]
+
+tests/core-ideals/field-tablespec.test.ts:
+(pass) classifies an unknown native column type without inventing scalar family and recovers exact text [70.05ms]
+(pass) verified authored field agrees; authored record/group and unknown or unverified labels block atomically [165.15ms]
+(pass) stale author receipts and metadata cannot be used as a native classification basis [64.70ms]
+(pass) split sources retain sidecars and shadowed metadata after classification [41.40ms]
+(pass) native classification receipts reject tampering and subsequent native changes [58.71ms]
+(pass) new results always diagnose conflicts while historical receipts remain verifiable [76.02ms]
+
+tests/core-ideals/field-tablespec-projection.test.ts:
+(pass) authored field projects to a complete native table and recovers author meaning with retained receipt [564.39ms]
+(pass) strict blocks omitted meaning while report retains every residual and source assertion [29.26ms]
+(pass) record/group cannot lower to a single column and name changes are explicit loss [29.11ms]
+(pass) receipt tampering, stale native text, malformed policy and metadata omission cannot pass silently [44.63ms]
+(pass) diagnostics mirror disclosed loss and legacy receipts still recover without weakening checks [60.77ms]
+(pass) empty namespace permits strict projection but discarded namespace receipts cannot claim exactness [22.79ms]
+
+tests/core-ideals/record-tablespec.test.ts:
+(pass) whole native table becomes a record with ordered explicit member references and unknown type preservation [94.16ms]
+(pass) one conflicting member blocks the whole table in both modes without partial candidate [171.67ms]
+(pass) verified member authors are retained; stale, duplicate and unrelated receipts block [199.64ms]
+(pass) record classification retains split files and empty tables without inventing grouping semantics [57.74ms]
+(pass) changed member references, receipts and native content invalidate classification [109.54ms]
+
+tests/core-ideals/record-tablespec-projection.test.ts:
+(pass) record projection orders columns by declared membership and recovers the complete ideal [126.08ms]
+(pass) missing, duplicate, non-member and name-colliding bindings block atomically under either policy [25.20ms]
+(pass) scalar mismatch and renamed columns are reportable but strict refuses them [39.68ms]
+(pass) unknown metadata and relationship refinements survive as residuals [40.17ms]
+(pass) stale member provenance and edited native/receipt data cannot claim ideal recovery [43.11ms]
+(pass) an empty-namespace record can project strictly without erasing namespaced inputs [29.92ms]
+
+tests/core-ideals/field-postgresql.test.ts:
+(pass) catalog fields include native domains, arrays and unknown scalar refinements without erasure [7373.46ms]
+(pass) native text formatting and unknown numeric metadata survive both receipt formats [1100.56ms]
+(pass) verified authored conflict blocks both modes without a partial target [509.80ms]
+(pass) stale core metadata, mismatched archives, future servers and edited receipts fail [681.33ms]
+
+tests/core-ideals/record-postgresql.test.ts:
+(pass) qualified relations remain distinct records and only selected members receive kinds [855.94ms]
+(pass) one member conflict blocks the whole record in both policies [457.11ms]
+(pass) ambiguous relations, unsupported kinds, collisions and stale receipts cannot imply record equivalence [992.88ms]
+(pass) duplicate native member names and inconsistent ordinal order block whole-record publication [767.70ms]
+
+tests/core-ideals/field-postgresql-projection.test.ts:
+(pass) explicit pg_catalog carriers compile and preserve authored meaning through both receipt formats [1059.97ms]
+(pass) unsafe or truncating identifiers are rejected before parser invocation [9.38ms]
+(pass) strict refuses unprojected constraints, while report retains them with explicit diagnostics [20.33ms]
+(pass) edited SQL or tampered receipt cannot claim recovery; record/group cannot become a column [20.13ms]
+
+tests/core-ideals/record-postgresql-projection.test.ts:
+(pass) record members compile in ideal order and recover source through both receipt formats [157.18ms]
+(pass) strict losses and missing bindings expose no partial SQL or target [99.21ms]
+(pass) name collisions, unknown bindings and unsafe identifiers fail without partial output [8.20ms]
+(pass) stale author declarations, native edits and changed receipts fail recovery [27.01ms]
+
+tests/core-ideals/postgresql-ddl-kinds.test.ts:
+(pass) declared records retain source SQL and distinguish unresolved namespace from catalog facts [3114.98ms]
+(pass) collisions, edited AST archives and stale receipts cannot silently publish new roles [206.64ms]
+(pass) composite attributes preserve collations and unresolved nested types without scalar flattening [412.38ms]
+
+tests/core-ideals/postgresql-composite.test.ts:
+(pass) catalog composites expose ordered fields without formatted-type guessing and recover exact source [3171.73ms]
+(pass) collisions, duplicate names/order, ambiguity and stale archives cannot publish false roles [1040.52ms]
+(pass) unknown composite refinements remain recoverable and future server versions are refused [193.94ms]
+
+tests/core-ideals/projection-policy.test.ts:
+(pass) field-tablespec schema enforces strict/report loss and atomic candidate rules [6.89ms]
+(pass) record-tablespec schema enforces strict/report loss and atomic candidate rules [7.68ms]
+(pass) field-postgresql schema enforces strict/report loss and atomic candidate rules [4.27ms]
+(pass) record-postgresql schema enforces strict/report loss and atomic candidate rules [5.63ms]
+
+tests/core-ideals/classification-policy.test.ts:
+(pass) tablespec-field-classification rejects inconsistent success and blocked metadata [2.36ms]
+(pass) tablespec-record-classification rejects inconsistent success and blocked metadata [2.53ms]
+(pass) postgresql-field-classification rejects inconsistent success and blocked metadata [4.87ms]
+(pass) postgresql-record-classification rejects inconsistent success and blocked metadata [6.88ms]
+(pass) postgresql-composite-classification rejects inconsistent success and blocked metadata [4.57ms]
+(pass) postgresql-ddl-kinds rejects inconsistent success and blocked metadata [5.39ms]
+
+tests/core-ideals/field-sqlserver.test.ts:
+(pass) SQL Server captured members classify independently of scalar/alias/index semantics [7626.61ms]
+(pass) authored conflicts block both policies, while matching authored fields remain explicit [497.21ms]
+(pass) capture formatting, unknown numeric detail and index constraints survive without identity promotion [141.14ms]
+(pass) stale metadata, archives, author receipts and unsupported versions cannot claim recovery [317.47ms]
+
+tests/core-ideals/record-sqlserver.test.ts:
+(pass) whole captured tables become ordered records with exact source recovery [10907.05ms]
+(pass) one member conflict blocks the whole record and provenance cannot be silently replaced [8199.38ms]
+(pass) collisions, missing identities, non-increasing ordinals and stale receipts fail safely [8100.25ms]
+
+tests/core-ideals/field-sqlserver-projection.test.ts:
+(pass) explicit carriers emit complete SQL artifacts and retained receipts recover authored fields [33.78ms]
+(pass) strict/report loss, structured-kind refusal, Unicode guards and stale artifacts remain explicit [5.05ms]
+
+tests/core-ideals/record-sqlserver-projection.test.ts:
+(pass) record member order and strict/report policies produce atomic SQL with exact ideal recovery [74.83ms]
+(pass) empty records, collisions, stale provenance and altered SQL cannot publish or recover false meaning [18.72ms]
+
+tests/core-ideals/field-avro.test.ts:
+(pass) Avro nested, recursive, union and dependency fields retain source-qualified roles and exact bundles [3288.76ms]
+(pass) missing/reordered dependency archives, authored conflicts and stale receipts are refused [381.19ms]
+
+tests/core-ideals/record-avro.test.ts:
+(pass) declared empty, nested, recursive and dependency records retain ordered direct members [3561.98ms]
+(pass) one conflicting member, stale provenance, collisions or a non-declaration selection cannot publish a record [2013.52ms]
+
+tests/core-ideals/field-avro-projection.test.ts:
+(pass) explicit Avro carriers preserve field docs and recover ideal through serialized reports [1466.17ms]
+(pass) strict/report loss, invalid names, structured-kind refusals and stale schemas fail explicitly [179.14ms]
+
+tests/core-ideals/record-avro-projection.test.ts:
+(pass) ordered and empty authored records emit complete Avro schemas with recoverable loss reports [633.27ms]
+(pass) duplicate/colliding members, stale authors, invalid native names and edited targets fail safely [150.95ms]
+
+tests/core-ideals/field-parquet.test.ts:
+(pass) Parquet leaves retain repetition and exact native bytes; groups cannot become primitive Fields [18749.61ms]
+(pass) Parquet rejects unknown indices, invalid topology, conflicts and stale recovery [1351.54ms]
+
+tests/core-ideals/record-parquet.test.ts:
+(pass) Parquet root records keep ordered value slots separate from container and struct definitions [4094.38ms]
+(pass) Parquet LIST wrappers block; interpreted two-level struct elements supply records [844.32ms]
+(pass) Parquet record conflicts, collisions and receipt edits block atomically [735.52ms]
+
+tests/core-ideals/field-parquet-projection.test.ts:
+(pass) explicit Parquet carrier/repetition schemas recover authored meaning through both formats [5262.18ms]
+(pass) unsupported meaning is explicit and malformed names or wrong roles never project [175.84ms]
+
+tests/core-ideals/record-parquet-projection.test.ts:
+(pass) Parquet records preserve member order, explicit native repetition and authored recovery [1624.10ms]
+(pass) collisions, duplicate bindings, stale authors and report tampering cannot yield partial records [152.32ms]
+
+tests/core-ideals/record-type.test.ts:
+(pass) record-valued slots preserve qualified identity, cycles and unknown native meaning [29.92ms]
+(pass) scalar/record conflicts, legacy roles and stale or forged receipt paths refuse [9.92ms]
+
+tests/core-ideals/field-selection.test.ts:
+(pass) 0.2 selection schema and report verifier cover qualified cycles and reference boundaries [29.27ms]
+(pass) report structure and recomputation reject forged selections and preserve legacy interpretation [6.11ms]
+(pass) selection verification uses the same caller registry as source validation [8.14ms]
+
+tests/core-ideals/avro-record-type.test.ts:
+(pass) Avro direct/qualified/recursive record links preserve bundle text; containers and unions block [8563.36ms]
+(pass) author conflicts, existing type assertions and stale sources cannot be overwritten [1195.77ms]
+
+tests/core-ideals/parquet-record-type.test.ts:
+(pass) interpreted LIST struct values link to separate records without changing repetition or bytes [1904.92ms]
+(pass) wrappers, primitives, root selection, author conflicts and tampered receipts refuse [1521.93ms]
+
+tests/core-ideals/avro-namespace.test.ts:
+(pass) Avro namespace changes report loss for both Field and record projections [268.47ms]
+
+tests/core-ideals/sql-namespace.test.ts:
+(pass) PostgreSQL and SQL Server schema moves disclose every selected namespace [77.78ms]
+
+tests/core-ideals/field-report.test.ts:
+(pass) five-system common metadata retains checked receipts, versioned basis and recoverable residuals [742.59ms]
+(pass) tampered summaries, original receipts and missing PostgreSQL backend are refused [175.11ms]
+
+tests/core-ideals/record-report.test.ts:
+(pass) common record reports retain ordered membership, member carriers and all blocked residuals [2942.40ms]
+(pass) member basis and source receipt tampering are rejected, and backend remains explicit [704.31ms]
+
+tests/core-ideals/classification-report.test.ts:
+(pass) five native classifiers retain classified provenance, exact fragments and conflict residuals [3924.93ms]
+(pass) dependency identity and tampered fragments/origin/bindings cannot change unnoticed [1044.57ms]
+
+tests/core-ideals/structured-report.test.ts:
+(pass) record, composite, type-link and raw DDL reports retain scoped ordered native evidence [13345.38ms]
+(pass) declared-only context and record mappings cannot be forged or silently resolved [3459.64ms]
+
+tests/core-ideals/field-conformance.test.ts:
+(pass) all five binding contracts enforce policy and recover ideal/native representations [4184.46ms]
+26 |   ...['sqlserver','avro','parquet'].flatMap(s=>[`field-${s}-native`,`field-${s}-browser`,`field-${s}-projection-native`,`field-${s}-projection-browser`]),
+27 |   'avro-record-type-native','avro-record-type-browser','field-avro-fastavro-native',
+28 |  ].map(n=>`fixtures/validation/${n}.json`),
+29 | };
+30 | type Reader=(path:string)=>Promise<Uint8Array>;
+31 | const read:Reader=async path=>new Uint8Array(await Bun.file(path).arrayBuffer());
+                                                                       ^
+ENOENT: no such file or directory, open 'dist/avro-facet-selection.js'
+    path: "dist/avro-facet-selection.js",
+ syscall: "open",
+   errno: -2,
+    code: "ENOENT"
+
+      at async <anonymous> (/home/erik/Projects/umf/scripts/core-ideals/field-conformance.ts:31:67)
+      at async verifyFieldEvidence (/home/erik/Projects/umf/scripts/core-ideals/field-conformance.ts:44:51)
+      at async <anonymous> (/home/erik/Projects/umf/tests/core-ideals/field-conformance.test.ts:13:23)
+(fail) current native/browser evidence fingerprints pass; changed inputs and missing evidence fail [7.37ms]
+(pass) group names and opaque scalar-like metadata do not assert records; legacy collisions remain recoverable [2.41ms]
+
+tests/core-ideals/nullability-selection.test.ts:
+(pass) 0.3 reports retain availability distinctions, namespaces, recursive boundaries and native refinements [26.03ms]
+(pass) forged availability, erased native refinements, changed query, diagnostics and boundaries cannot verify [3.55ms]
+(pass) 0.2 availability remains opaque through the old selection schema [1.60ms]
+
+tests/core-ideals/nullability-field-operations.test.ts:
+(pass) versioned kind and record type receipts preserve availability, recursion and native content [192.87ms]
+(pass) availability prevents role erasure and receipts refuse changed versions, sources and provenance [96.33ms]
+(pass) new roles allow availability authoring, with whole-document receipt freshness [2.71ms]
+
+tests/core-ideals/nullability-tablespec.test.ts:
+(pass) selected profile/context classification separates exact declarations, coercions and unknowns [27126.82ms]
+(pass) unresolved carrier blocks strict mode and retains explicit residuals in report mode [61.54ms]
+(pass) author provenance, role conflicts, stale models and forged binding metadata refuse [204.51ms]
+(pass) unknown native precision, escaped context keys and split sidecars remain exact [140.42ms]
+
+tests/core-ideals/nullability-tablespec-projection.test.ts:
+(pass) authored availability projects under explicit profiles with atomic strict/report loss and exact ideal recovery [11375.02ms]
+(pass) names, unknown obligations, scalar mismatches and unsafe or forged inputs cannot silently succeed [75.58ms]
+(pass) context keys are exact data and other elements/modules remain explicit residuals [129.46ms]
+
+tests/core-ideals/nullability-postgresql.test.ts:
+(pass) native catalog availability matrix retains source and scope through both serializations [51088.33ms]
+(pass) domain NOT NULL, CHECK UNKNOWN, NOT VALID and generated expressions do not become column permission [1228.29ms]
+(pass) author conflicts, stale and forged receipts, unknown extensions and altered archives [1436.17ms]
+(pass) unknown exact native content remains recoverable while uncertain permission is withheld [609.17ms]
+(pass) missing flags, triggers, unsupported profiles and source state remain explicit [903.15ms]
+
+tests/core-ideals/nullability-postgresql-projection.test.ts:
+(pass) authored availability projects with explicit scope and recovers every residual through both formats [2639.76ms]
+(pass) stale SQL, forged receipts and source changes cannot recover author meaning [40.75ms]
+(pass) identifiers cannot be truncated and strict loss does not invoke the parser [10.80ms]
+(pass) programmatic metadata and unknown extension obligations survive report recovery [24.18ms]
+
+tests/core-ideals/nullability-sqlserver.test.ts:
+(pass) native catalog availability matrix retains source and scope through both serializations [59867.73ms]
+(pass) CHECK UNKNOWN and untrusted constraints do not become unconditional permission [496.52ms]
+(pass) author conflicts, stale and forged receipts, unknown extensions and altered archives [1011.00ms]
+(pass) unknown native fields, legacy evidence and rules retain residuals with exact source recovery [2597.98ms]
+(pass) modified captures, incorrect envelope versions and unsafe numeric refinements refuse interpretation [551.86ms]
+
+tests/core-ideals/nullability-sqlserver-projection.test.ts:
+(pass) authored availability projects with explicit scope and recovers every residual through both formats [192.74ms]
+(pass) stale SQL, forged receipts and source changes cannot recover author meaning [7.22ms]
+(pass) invalid permanent identifiers refuse and native nullability is always explicit [31.61ms]
+(pass) programmatic metadata and unknown extension obligations survive report recovery [7.78ms]
+
+tests/core-ideals/nullability-avro.test.ts:
+(pass) Avro underlying-value availability matrix preserves exact source, scope and both formats [24503.24ms]
+(pass) author conflicts, stale/forged receipts and malformed requests refuse without losing unknown content [587.35ms]
+(pass) native names, dependencies and recursive fields resolve without claiming parent availability [485.95ms]
+(pass) invalid structural types and unresolved names stay native with explicit report residuals [942.95ms]
+
+tests/core-ideals/nullability-avro-projection.test.ts:
+(pass) authored Avro availability projects null carriers and recovers every ideal and residual [7287.85ms]
+(pass) null-only required, unbound absence and unprojected exactness cannot pass strict mode [84.91ms]
+(pass) native changes, forged source/meaning and invalid Avro names refuse [120.61ms]
+(pass) unmapped document, module, relationship and extension meaning remains recoverable [84.83ms]
+
+tests/core-ideals/nullability-parquet.test.ts:
+(pass) native-backed row/entry context matrix preserves exact bytes, metadata and both serializations [148116.55ms]
+(pass) optional ancestors contribute absence while repeated paths require an explicit entry context [456.62ms]
+(pass) author conflicts, altered scope/ancestry, changed targets and unsafe requests refuse [1448.96ms]
+(pass) legacy repeated primitive entries remain required within the selected entry, with exact byte recovery [732.76ms]
+
+tests/core-ideals/nullability-parquet-projection.test.ts:
+(pass) authored Parquet availability emits explicit leaf repetition and recovers all ideals/residuals [10249.79ms]
+(pass) scope, cardinality, defaults and precision obligations remain explicit losses [714.66ms]
+(pass) changed bytes, forged receipts, stale authors and invalid native names refuse [214.22ms]
+(pass) document/module metadata and relationships survive report-mode ideal recovery [118.47ms]
+
+tests/core-ideals/nullability-conformance.test.ts:
+(pass) five Nullability bindings preserve ideals, native payloads and explicit loss policy [13119.48ms]
+10 | import {parquetAvailabilitySource} from './nullability-parquet-cases';
+11 | import type {Document,CoreNullabilityDeclaration,Nullability} from '../../src';
+12 | export const nullabilitySystems=['tablespec','postgresql','sqlserver','avro','parquet'] as const;
+13 | type System=typeof nullabilitySystems[number];
+14 | type Reader=(path:string)=>Promise<Uint8Array>;
+15 | const read:Reader=async p=>new Uint8Array(await Bun.file(p).arrayBuffer());
+                                                                 ^
+ENOENT: no such file or directory, open 'dist/avro-facet-selection.js'
+    path: "dist/avro-facet-selection.js",
+ syscall: "open",
+   errno: -2,
+    code: "ENOENT"
+
+      at async <anonymous> (/home/erik/Projects/umf/scripts/core-ideals/nullability-conformance.ts:15:61)
+      at async hash (/home/erik/Projects/umf/scripts/core-ideals/nullability-conformance.ts:21:85)
+      at async verify (/home/erik/Projects/umf/scripts/core-ideals/nullability-conformance.ts:29:23)
+      at async verifyNullabilityEvidence (/home/erik/Projects/umf/scripts/core-ideals/nullability-conformance.ts:44:9)
+      at async <anonymous> (/home/erik/Projects/umf/tests/core-ideals/nullability-conformance.test.ts:8:23)
+(fail) Nullability gate requires current core and five native/browser evidence records [8.07ms]
+
+tests/core-ideals/cardinality-field-operations.test.ts:
+(pass) versioned kind and record receipts retain old profiles and preserve 0.4 Cardinality [463.02ms]
+(pass) Nullability authoring and inspection use v2 on containers without changing item meaning [36.74ms]
+(pass) container record meaning belongs on its item Field and dependent kind edits refuse [8.75ms]
+(pass) cross-version, stale and forged receipts refuse without changing original profiles [7.92ms]
+
+tests/core-ideals/cardinality-selection.test.ts:
+(pass) selection keeps shape and item identity distinct through mixed cycles, boundaries and filters [61.75ms]
+(pass) forged item paths, missing boundaries, metadata, filters and traversal scope cannot verify [4.01ms]
+(pass) older item/cardinality members remain opaque and do not add traversal edges [4.00ms]
+(pass) malformed filters, unresolved item targets and getters refuse before traversal [0.51ms]
+
+tests/core-ideals/cardinality-tablespec.test.ts:
+(pass) native declaration profiles classify shape with explicit refusals and retain source text through both formats [12972.11ms]
+(pass) authored intent, item references and opaque assertions cannot be overwritten by native observations [105.65ms]
+(pass) tampered and stale receipts, malformed requests and legacy source versions refuse [67.73ms]
+(pass) unsafe numeric coercion stays residual while exact large integer tokens remain native [376.77ms]
+(pass) split archives preserve comments, unknown siblings and opaque files after classification [78.59ms]
+
+tests/core-ideals/cardinality-tablespec-projection.test.ts:
+(pass) authored shapes and item obligations project or explicitly residualize, with both retained recovery formats [2423.88ms]
+(pass) invalid native carriers, dimensions, names, getters and forged receipts cannot publish meaning [38.15ms]
+
+tests/core-ideals/cardinality-postgresql-catalog.test.ts:
+(pass) resolves observed arrays, domain wrappers and domain members without category guessing [15.13ms]
+(pass) rejects ambiguity, broken edges, impossible observations and domain cycles [13.40ms]
+(pass) preserves exact unknown tokens and source text; unknown versions are unqualified [4.54ms]
+(pass) does not return rounded unknown metadata in interpreted views [1.71ms]
+(pass) correlates capture observations and refuses mismatches without asserting transaction provenance [575.51ms]
+
+tests/core-ideals/cardinality-postgresql.test.ts:
+(pass) all observed native shapes retain paired archives through report classification and serialized recovery [19528.52ms]
+(pass) author conflict and forged or stale recovery receipts are refused [680.70ms]
+(pass) a matched basic scalar declaration classifies exactly without asserting item or availability meaning [336.20ms]
+(pass) classification retains authored cyclic item references, independent availability and unknown native tokens [1115.46ms]
+
+tests/core-ideals/cardinality-postgresql-projection.test.ts:
+(pass) explicit carriers block losses in strict mode and retain ideal recovery in report mode [339.50ms]
+(pass) exact-value requests, tampering, SQL injection and forged receipts are refused [22.49ms]
+(pass) nested and cyclic items retain independent availability and unknown extensions [351.73ms]
+
+tests/core-ideals/cardinality-sqlserver.test.ts:
+(pass) logical representations retain physical scalar metadata and exact native text [12942.74ms]
+(pass) existing logical and physical identities, altered receipts and stale models cannot be overwritten [272.21ms]
+(pass) unknown native numeric tokens survive separate logical representation [207.14ms]
+(pass) constraint association, replication exemptions and unrecognized expressions cannot prove JSON shape [543.68ms]
+
+tests/core-ideals/cardinality-sqlserver-projection.test.ts:
+(pass) scalar/JSON carriers retain nested/cyclic items, availability and unknown metadata through both formats [237.67ms]
+(pass) unsafe types, malformed identifiers, exact-value demands and changed receipts refuse [9.31ms]
+
+tests/core-ideals/avro-cardinality-type.test.ts:
+(pass) native discovery types retain outer shape, branch order and item paths without claiming item or availability equivalence [5.39ms]
+(pass) qualified dependency and recursive references retain separate definition locations [0.74ms]
+(pass) ambiguous, missing and invalid structural type syntax refuses rather than defaulting to one [1.54ms]
+(pass) nested item/value traversal uses registered type locations and keeps container/member availability separate [2.17ms]
+
+tests/core-ideals/cardinality-avro.test.ts:
+(pass) schema shape classification publishes nested logical Fields and preserves exact native text through both receipt formats [11846.29ms]
+(pass) unknown profiles, unknown item shapes and existing identities never silently acquire meaning [628.76ms]
+(pass) named dependencies retain exact text and qualified scalar item meaning without losing unknown metadata [371.63ms]
+
+tests/core-ideals/cardinality-avro-projection.test.ts:
+(pass) explicit native shape mismatches and absent item meaning are residuals with exact ideal recovery [1956.11ms]
+(pass) nested item and value types map recursively with independent availability and qualified scalar families [157.75ms]
+(pass) cycles, unknown metadata, native diagnostics and target edits remain explicit and recoverable [221.03ms]
+(pass) dependency changes and large uninterpreted native tokens cannot be hidden by ideal recovery [294.14ms]
+(pass) fresh native ingestion composes with retained ideal recovery without inventing original author intent [22408.06ms]
+
+tests/core-ideals/parquet-cardinality-shape.test.ts:
+(pass) Parquet Cardinality shape keeps nested roles, member meaning and native bytes separate [1042.09ms]
+(pass) legacy container layouts retain wrappers and key-only uncertainty; malformed structures refuse [715.12ms]
+(pass) invalid indexes refuse and returned shape metadata cannot mutate the native source [78.32ms]
+(pass) legacy unannotated repeated values remain unresolved without an explicit interpretation [64.45ms]
+
+tests/core-ideals/cardinality-parquet.test.ts:
+(pass) Parquet logical classification preserves nested Fields, map residuals and exact native bytes [14495.92ms]
+(pass) unresolved profiles, wrappers and key-only maps retain residuals rather than invented meaning [503.54ms]
+(pass) conflicts, forged receipts, stale targets and invalid input refuse without erasing unknown content [706.19ms]
+
+tests/core-ideals/parquet-cardinality-carrier.test.ts:
+(pass) native nested schema carriers preserve exact bytes and match checked logical roles [3192.61ms]
+(pass) carrier writer refuses malformed, cyclic, oversized and unknown inputs instead of dropping content [128.28ms]
+
+tests/core-ideals/cardinality-parquet-projection.test.ts:
+(pass) Parquet projection reports shape mismatch and unasserted item meaning, recovering every emitted ideal [9623.12ms]
+(pass) nested item Fields retain independent availability; MAP uniqueness and exactness block strict lowering [550.11ms]
+(pass) cycles, metadata, unknown native carrier content and altered receipts cannot be silently normalized [345.32ms]
+
+tests/core-ideals/cardinality-conformance.test.ts:
+(pass) five Cardinality bindings preserve ideals, native refinements and qualified strict/report outcomes [258335.60ms]
+26 |  async function verify(record:any,label:string){
+27 |   assert.ok(record.sha256&&Object.keys(record.sha256).length,`${label}: missing fingerprints`);
+28 |   for(const [path,expected] of Object.entries(record.sha256)){
+29 |    const local=relative(process.cwd(),resolve(path));
+30 |    assert.ok(!isAbsolute(local)&&!local.split('/').includes('..')&&!path.split('/').includes('..'),`${label}: unsafe evidence path`);
+31 |    assert.match(String(expected),/^[0-9a-f]{64}$/);assert.equal(await hash(path),expected,`${label}: stale ${path}`);fingerprints++;
+                                                               ^
+AssertionError: fixtures/validation/cardinality-tablespec-browser.json: stale dist/umf.js
++ actual - expected
+
++ '0b9b05450396a7f5bd425a7f555dbccab80087ed35fff93407b019d8bd44015c'
+- '1dabf3f4b3d81ee1cea1b8cf12f960d03be53ae9e68ec1ac29bf99dcc0657229'
+
+ generatedMessage: false,
+     actual: "0b9b05450396a7f5bd425a7f555dbccab80087ed35fff93407b019d8bd44015c",
+   expected: "1dabf3f4b3d81ee1cea1b8cf12f960d03be53ae9e68ec1ac29bf99dcc0657229",
+   operator: "strictEqual",
+       code: "ERR_ASSERTION"
+
+      at verify (/home/erik/Projects/umf/scripts/core-ideals/cardinality-conformance.ts:31:59)
+      at verifyCardinalityEvidence (/home/erik/Projects/umf/scripts/core-ideals/cardinality-conformance.ts:56:3)
+      at /home/erik/Projects/umf/tests/core-ideals/cardinality-conformance.test.ts:9:12
+      at processTicksAndRejections (native:7:39)
+(fail) Cardinality evidence gate rejects stale, missing, unsafe and failed proof [63.67ms]
+
+tests/core-ideals/facet-operations.test.ts:
+(pass) versioned existing author APIs preserve facets and both receipt serializations [17.84ms]
+(pass) record-type v4 respects faceted-value conflicts and preserves unrelated facet metadata [12.19ms]
+(pass) older native Cardinality bindings explicitly refuse facet-envelope declarations [57.68ms]
+
+tests/core-ideals/facets-tablespec-discovery.test.ts:
+(pass) TableSpec native facet evidence is pinned and separates generator and execution profiles [1.90ms]
+(pass) all discovery inputs retain exact native text through both envelope serializations and explicit migrations [814.97ms]
+(pass) unsafe native integer metadata and unknown width stay native instead of becoming core assertions [43.31ms]
+
+tests/core-ideals/facets-tablespec.test.ts:
+(pass) profile-qualified classification keeps exact source and native tokens through both receipt formats [41592.02ms]
+(pass) length meaning depends on raw/normalized input and consumer, with ignored conflicts retained [316.85ms]
+(pass) decimal declarations, enforced domains, defaults and exact conversion are independent [375.13ms]
+(pass) authored facets, unknown qualifiers and shape conflicts cannot be overwritten [196.99ms]
+(pass) forged/stale receipts, invalid requests and accessors refuse; independent reads do not mutate source [116.36ms]
+(pass) published facet extension validates its profile and preserves unknown future payload members [59.25ms]
+(pass) exact lexical checks and split archives retain unclaimed content [256.48ms]
+
+tests/core-ideals/facets-tablespec-suite.test.ts:
+(pass) explicit native suites recover zero length, widths and decimal ranges independently of baseline rules [2076.12ms]
+(pass) conditional, tolerant and unknown suite rules retain residuals and block strict interpretation [838.33ms]
+(pass) suite output domains do not assert exact conversion or nullability [786.99ms]
+
+tests/core-ideals/facets-tablespec-projection.test.ts:
+(pass) authored facet matrix projects or explicitly residualizes with exact retained ideal recovery [28634.64ms]
+(pass) positive projections are required, including zero length and narrow signed/unsigned widths [53.92ms]
+(pass) unknown source and facet refinements survive receipts; Field-kind receipts cannot establish facet authorship [37.54ms]
+(pass) forged receipts, stale native text, accessors and invalid native requests refuse [31.81ms]
+(pass) unsupported widths and carriers cannot pass strict mode; float exactness has a permanent counterexample [118.35ms]
+
+tests/core-ideals/facets-postgresql-discovery.test.ts:
+(pass) native evidence is pinned and preserves counterexamples to direct core promotion [7.66ms]
+(pass) signed numeric modifiers are decoded without importing misleading information_schema scale [3.40ms]
+(pass) unknown qualifiers survive and unsafe or reserved modifier layouts cannot become native facts [18.09ms]
+(pass) catalog observations and native refinements survive both envelope forms without core facet assertions [365.31ms]
+
+tests/core-ideals/facets-postgresql-predicate.test.ts:
+(pass) closed predicate syntax retains exact bounds without claiming resolved enforcement [4.02ms]
+(pass) lookalikes and extra syntax stay native; conjuncts never produce partial claims [1.54ms]
+(pass) unknown AST content, forged versions and unsafe objects are never interpreted [0.32ms]
+
+tests/core-ideals/facets-postgresql-constraints.test.ts:
+(pass) native supplement is pinned, fingerprinted and preserves resolved identities separately from syntax [2.16ms]
+(pass) native deparsed checks replay as candidates or explicit refusals with complete retained trees [8.86ms]
+
+tests/core-ideals/facets-postgresql-resolved.test.ts:
+(pass) complete resolved expressions yield exact predicates and explicit value scope [2.35ms]
+(pass) unknown nodes, forged resolution, context changes and hidden conjuncts refuse atomically [1.60ms]
+(pass) bounded node reader rejects duplicate fields, malformed structure and resource abuse [0.34ms]
+(pass) Datum64 integers remain exact beyond JavaScript precision [0.21ms]
+(pass) independent native Datum corpus replays exactly and fingerprints are current [2.37ms]
+(pass) emitted bigint bounds resolve mixed-width and full-width native operators [4.49ms]
+
+tests/core-ideals/facets-postgresql-catalog.test.ts:
+(pass) complete catalog correspondence preserves sources and verifies overlapping CHECKs [639.62ms]
+(pass) omitted, extra, duplicate and inconsistent native observations cannot qualify [1848.24ms]
+(pass) unknown source content and unsafe unknown numbers remain exact while owned integers reject rounding [334.15ms]
+
+tests/core-ideals/facets-postgresql.test.ts:
+(pass) native carriers and qualified predicates classify width, decimal and length separately from input conversion [5203.08ms]
+(pass) both receipt serializations recover exact native source and supplement; edits invalidate recovery [12041.56ms]
+(pass) authorship, profile uncertainty, shape conflicts and unknown metadata remain explicit [2264.67ms]
+(pass) published package validates emitted bindings and rejects a forged profile [309.63ms]
+
+tests/core-ideals/facets-postgresql-projection.test.ts:
+(pass) authored facet matrix preserves every ideal and reports unsupported native representations [5553.81ms]
+(pass) finite decimal checks, exact width bounds, length units and input losses are explicit [45.59ms]
+(pass) unknown meaning, unsafe identifiers and changed receipts cannot be silently normalized [92.31ms]
+(pass) unrepresentable comments produce retained report losses instead of losing metadata [24.32ms]
+
+tests/core-ideals/facets-postgresql-projection-native.test.ts:
+(pass) emitted PostgreSQL DDL and independent values have current pinned evidence [5.29ms]
+
+tests/core-ideals/facets-postgresql-composition.test.ts:
+(pass) native emitted schemas recover authored facets or explicit residuals and retain native refinements [2.10ms]
+
+tests/core-ideals/facets-sqlserver-discovery.test.ts:
+(pass) pinned native discovery preserves exact outputs and current inputs [3.59ms]
+(pass) native type observations distinguish unsigned integers, decimal scale and storage units [2.94ms]
+(pass) inconsistent and inexact native metadata refuses without normalization; unknown detail stays attached [1.08ms]
+
+tests/core-ideals/facets-sqlserver-predicate.test.ts:
+(pass) bounded expressions retain exact literals and delimit identifiers [0.59ms]
+(pass) unsupported syntax and resource limits refuse the entire expression [1.23ms]
+(pass) captured native CHECK syntax is distinct from enabled, trusted enforcement [0.74ms]
+(pass) non-string native JSON stays intact and accessors cannot execute [0.10ms]
+
+tests/core-ideals/facets-sqlserver-constraints.test.ts:
+(pass) captured CHECKs yield scoped native facts without changing source or asserting core facets [4089.61ms]
+(pass) disabled, untrusted and replication checks cannot become unconditional guarantees [695.69ms]
+(pass) missing inventory, column association, type and version are explicit [1241.10ms]
+(pass) exact native numeric tokens and future fields survive; unsafe IDs and getters refuse [224.27ms]
+(pass) scope boundaries agree with pinned independent native value probes [0.24ms]
+(pass) empty-string inference requires zero bytes, variable storage and scoped enforcement [687.52ms]
+
+tests/core-ideals/facets-sqlserver.test.ts:
+(pass) width, decimal coefficient and byte bounds classify under explicit non-null scopes [755.02ms]
+(pass) native counterexamples remain explicit and strict/report results differ [1246.34ms]
+(pass) JSON and YAML receipts recover original native text for every discovery column [8357.15ms]
+(pass) authored facets need fresh receipts and conflict without overwriting [474.52ms]
+(pass) unknown exact tokens survive; malformed requests, getters and changed archives refuse [201.71ms]
+(pass) extension schema validates real outputs and rejects forged profile [70.11ms]
+(pass) computed columns, unresolved table associations and noncanonical ranges retain residuals [283.42ms]
+
+tests/core-ideals/facets-sqlserver-projection.test.ts:
+(pass) all authored cases block explicitly or recover the ideal through both receipt formats [496.74ms]
+(pass) range, coefficient and byte checks honor declared facets; string and conversion losses remain explicit [5.43ms]
+(pass) unknown meaning, forged receipts, invalid identifiers and unsafe comments never disappear [5.61ms]
+
+tests/core-ideals/facets-sqlserver-projection-native.test.ts:
+(pass) pinned native execution matches current authored DDL and keeps exact value counterexamples [154.00ms]
+
+tests/core-ideals/facets-sqlserver-composition.test.ts:
+(pass) native projected schemas recover authored facets or explicit residuals without inventing authorship [3.57ms]
+
+tests/core-ideals/facets-sqlserver-association.test.ts:
+(pass) independent table declaration probes establish catalog association and counterexamples [537.35ms]
+
+tests/core-ideals/facets-avro-type.test.ts:
+(pass) Avro declaration facts never claim codec enforcement or input exactness [0.62ms]
+(pass) fixed exact size includes zero without relabeling a nonzero exact size as a maximum [1.22ms]
+(pass) decimal coefficient domains require exact pairs and bounded signed carrier capacity [5.22ms]
+(pass) unknown and invalid logical meaning stays native instead of becoming a physical scalar facet [0.30ms]
+(pass) custom constraints and exact tokens remain unclaimed and copied [0.11ms]
+(pass) malformed or future tagged representation refuses interpretation and does not execute getters [0.19ms]
+(pass) every native discovery schema remains available with explicit declaration or refusal [2.94ms]
+
+tests/core-ideals/facets-avro-selection.test.ts:
+(pass) facet selection retains named declarations, branch order, containers and null context [3.05ms]
+(pass) reference use and dependency definition retain distinct identities and unknown tokens [0.75ms]
+(pass) union widths remain distinct; array/map items are never promoted onto containers [0.33ms]
+(pass) facet zero-size profile does not widen previously qualified Cardinality resolution [0.30ms]
+(pass) selection cannot interpret defaults, metadata, missing dependencies or duplicate names as types [0.52ms]
+
+tests/core-ideals/facets-avro.test.ts:
+(pass) declaration and writer profiles separate native domain from enforcement counterexamples [483.23ms]
+(pass) fixed, union and explicit item selection retain native refinements [290.34ms]
+(pass) original source texts, dependency order, unknown numeric tokens and defaults recover exactly [264.08ms]
+(pass) authored bounds require fresh provenance and cannot be silently overwritten [231.77ms]
+(pass) shape conflicts, archive changes, invalid profiles and unsafe inputs refuse [150.83ms]
+(pass) closed operation and extension schemas constrain real classification output [46.56ms]
+(pass) unannotated precision metadata stays unknown and authored losses point back to the ideal [140.51ms]
+
+tests/core-ideals/facets-avro-projection.test.ts:
+(pass) authored domains distinguish exact carriers from unenforced approximations [14.90ms]
+(pass) fixed bounds preserve lower-bound losses and refuse impossible or oversized carriers [7.50ms]
+(pass) all profile, encoding and mode combinations recover authored ideals with explicit losses [259.41ms]
+(pass) receipt integrity, unknown metadata, invalid names and exact-input counterexamples remain explicit [2.70ms]
+
+tests/core-ideals/parquet-facet-type.test.ts:
+(pass) interprets all independently emitted native scalar declarations without consuming refinements [1.33ms]
+(pass) validates logical/converted integer carriers and refuses disagreements [0.30ms]
+(pass) decimal capacity, exact token and annotation conflict checks retain native input [0.20ms]
+(pass) fixed is exact length; floats and unknown declarations do not imply facets or enforcement [0.15ms]
+
+tests/core-ideals/facets-parquet.test.ts:
+(pass) classifies declaration widths while retaining explicit input-conversion limits [2541.99ms]
+(pass) unknown embedded metadata remains residual with exact native byte recovery [722.77ms]
+(pass) fixed lengths and author provenance do not invent or overwrite assertions [652.96ms]
+(pass) closed schemas, source identity and profile refusals remain explicit [412.65ms]
+(pass) decimal declarations and explicit array member selection preserve context [600.30ms]
+
+tests/core-ideals/parquet-facet-carrier.test.ts:
+(pass) emitted native corpus is deterministic and retains field identity and opaque metadata [3451.97ms]
+(pass) invalid capacities, ambiguous members and unsupported exact values refuse before emission [0.60ms]
+(pass) large valid decimal declaration is distinct from reader representability [28.10ms]
+
+tests/core-ideals/facets-parquet-projection.test.ts:
+(pass) integer widths and decimal carriers project only matched declared domains [1197.60ms]
+(pass) native validity, reader limitations and non-enforcing length metadata stay separate [295.98ms]
+(pass) profile/mode/encoding matrix recovers full authored ideals in both serializations [5279.37ms]
+(pass) unknown content, false authorship, changed bytes and unsafe inputs cannot pass recovery [169.64ms]
+
+tests/core-ideals/facets-evidence.test.ts:
+3 | import {isAbsolute, relative, resolve} from 'node:path';
+4 | 
+5 | export const facetSystems = ['tablespec', 'postgresql', 'sqlserver', 'avro', 'parquet'] as const;
+6 | export type FacetSystem = typeof facetSystems[number];
+7 | export type FacetEvidenceReader = (path: string) => Promise<Uint8Array>;
+8 | const read: FacetEvidenceReader = async path => new Uint8Array(await Bun.file(path).arrayBuffer());
+                                                                                        ^
+ENOENT: no such file or directory, open 'dist/avro-facet-selection.js'
+    path: "dist/avro-facet-selection.js",
+ syscall: "open",
+   errno: -2,
+    code: "ENOENT"
+
+      at async <anonymous> (/home/erik/Projects/umf/scripts/core-ideals/facets-evidence.ts:8:85)
+      at async content (/home/erik/Projects/umf/scripts/core-ideals/facets-evidence.ts:28:41)
+      at async verifyFacetEvidence (/home/erik/Projects/umf/scripts/core-ideals/facets-evidence.ts:110:29)
+      at async <anonymous> (/home/erik/Projects/umf/tests/core-ideals/facets-evidence.test.ts:5:23)
+(fail) facet evidence requires all five accepted bindings without granting ideal admission [66.54ms]
+23 |  for (const [name, change, message] of cases) {
+24 |   const path = `fixtures/validation/${name}.json`;
+25 |   const value = JSON.parse(new TextDecoder().decode(await read(path))); change(value);
+26 |   await expect(verifyFacetEvidence(p => p === path ? Promise.resolve(new TextEncoder().encode(JSON.stringify(value))) : read(p))).rejects.toThrow(message);
+27 |  }
+28 |  await expect(verifyFacetEvidence(p => p === 'src/model/facets.ts' ? Promise.resolve(new TextEncoder().encode('changed')) : read(p))).rejects.toThrow('stale');
+                                                                                                                                                   ^
+error: expect(received).toThrow(expected)
+
+Expected substring: "stale"
+Received message: "ENOENT: no such file or directory, open 'dist/avro-facet-selection.js'"
+
+      at <anonymous> (/home/erik/Projects/umf/tests/core-ideals/facets-evidence.test.ts:28:143)
+(fail) facet evidence refuses missing, stale, failed, unsafe and incompatible proofs [214.99ms]
+
+tests/core-ideals/facets-conformance.test.ts:
+3 | import {isAbsolute, relative, resolve} from 'node:path';
+4 | 
+5 | export const facetSystems = ['tablespec', 'postgresql', 'sqlserver', 'avro', 'parquet'] as const;
+6 | export type FacetSystem = typeof facetSystems[number];
+7 | export type FacetEvidenceReader = (path: string) => Promise<Uint8Array>;
+8 | const read: FacetEvidenceReader = async path => new Uint8Array(await Bun.file(path).arrayBuffer());
+                                                                                        ^
+ENOENT: no such file or directory, open 'dist/avro-facet-selection.js'
+    path: "dist/avro-facet-selection.js",
+ syscall: "open",
+   errno: -2,
+    code: "ENOENT"
+
+      at async <anonymous> (/home/erik/Projects/umf/scripts/core-ideals/facets-evidence.ts:8:85)
+      at async content (/home/erik/Projects/umf/scripts/core-ideals/facets-evidence.ts:28:41)
+      at async verifyFacetEvidence (/home/erik/Projects/umf/scripts/core-ideals/facets-evidence.ts:110:29)
+      at async <anonymous> (/home/erik/Projects/umf/tests/core-ideals/facets-conformance.test.ts:8:8)
+(fail) all five facet bindings preserve authored ideals, native refinements and explicit losses [30.71ms]
+
+9 tests failed:
+(fail) future envelope versions and unsafe getter inputs cannot be interpreted [4.38ms]
+(fail) unsafe getters and unsupported future versions cannot be interpreted [0.26ms]
+(fail) rollback retains later assertions separately and refuses forged receipts or changed identities [1.45ms]
+(fail) current native/browser evidence fingerprints pass; changed inputs and missing evidence fail [7.37ms]
+(fail) Nullability gate requires current core and five native/browser evidence records [8.07ms]
+(fail) Cardinality evidence gate rejects stale, missing, unsafe and failed proof [63.67ms]
+(fail) facet evidence requires all five accepted bindings without granting ideal admission [66.54ms]
+(fail) facet evidence refuses missing, stale, failed, unsafe and incompatible proofs [214.99ms]
+(fail) all five facet bindings preserve authored ideals, native refinements and explicit losses [30.71ms]
+
+ 416 pass
+ 9 fail
+ 46894 expect() calls
+Ran 425 tests across 116 files. [1052.59s]

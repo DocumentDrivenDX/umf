@@ -1,0 +1,15 @@
+{
+  "failures": [
+    "future envelope versions and unsafe getter inputs cannot be interpreted",
+    "unsafe getters and unsupported future versions cannot be interpreted",
+    "rollback retains later assertions separately and refuses forged receipts or changed identities",
+    "current native/browser evidence fingerprints pass; changed inputs and missing evidence fail",
+    "Nullability gate requires current core and five native/browser evidence records",
+    "Cardinality evidence gate rejects stale, missing, unsafe and failed proof",
+    "facet evidence requires all five accepted bindings without granting ideal admission",
+    "facet evidence refuses missing, stale, failed, unsafe and incompatible proofs",
+    "all five facet bindings preserve authored ideals, native refinements and explicit losses"
+  ],
+  "meaning": "Diagnostic pre-refresh run; future-version probes were fixed while this run was active. This is not passing qualification.",
+  "failureCount": 9
+}
