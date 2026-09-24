@@ -31,6 +31,7 @@ export * from './projections/binding-iceberg';
 export * from './projections/binding-postgresql/indexes';
 export * from './projections/binding-sqlserver/indexes';
 export * from './projections/binding-sqlserver/tables';
+export * from './projections/binding-sqlserver/tables-indexes';
 export * from './projections/ddd-postgresql/tables';
 export * from './projections/ddd-postgresql/tables-indexes';
 export * from './projections/ddd-graphql/entities';

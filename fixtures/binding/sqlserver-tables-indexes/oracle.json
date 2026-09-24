@@ -1,0 +1,214 @@
+{
+  "scope": "Isolated SQL Server 2022 execution of DDD-derived tables plus three physical rowstore indexes; other index kinds and relationships remain residual",
+  "image": "mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090",
+  "serverVersion": "16.0.4295.3",
+  "observed": {
+    "indexes": [
+      {
+        "name": "IX_Items_Id",
+        "unique": false,
+        "filtered": false,
+        "predicate": null
+      },
+      {
+        "name": "IX_Items_Positive",
+        "unique": false,
+        "filtered": true,
+        "predicate": "([id]>(0))"
+      },
+      {
+        "name": "UX_Items_Email",
+        "unique": true,
+        "filtered": false,
+        "predicate": null
+      }
+    ]
+  },
+  "nativeRecovery": {
+    "inputCatalogRetained": true,
+    "outputCatalogRetained": true,
+    "adapterExport": "structurally equal JSON; escaped slash spelling may normalize"
+  },
+  "residuals": [
+    {
+      "path": "/extensions/umf.binding/fields/0",
+      "reason": "SQL Server finite integer domain does not represent an unbounded DDD integer",
+      "choice": {
+        "module": "sales",
+        "element": "Item",
+        "field": "id",
+        "storage": "column",
+        "column": "id"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/1",
+      "reason": "SQL Server nvarchar has finite UTF-16 storage, collation and trailing-space behavior outside DDD string meaning",
+      "choice": {
+        "module": "sales",
+        "element": "Item",
+        "field": "email",
+        "storage": "column",
+        "column": "email"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/1",
+      "reason": "SQL NULL is the selected absence carrier; DDD optionality alone does not define native NULL behavior",
+      "choice": {
+        "module": "sales",
+        "element": "Item",
+        "field": "email",
+        "storage": "column",
+        "column": "email"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/2",
+      "reason": "SQL Server stores the declared path in text JSON; path presence and value type are not enforced by this table DDL",
+      "choice": {
+        "module": "sales",
+        "element": "Item",
+        "field": "details",
+        "storage": "embedded",
+        "documentColumn": "payload",
+        "path": [
+          "customer",
+          "region"
+        ]
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/elements/0",
+      "reason": "DDD identity is retained; this table slice does not emit a primary or unique key",
+      "choice": {
+        "fields": [
+          "id"
+        ],
+        "scope": "context"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/3",
+      "reason": "SQL Server finite integer domain does not represent an unbounded DDD integer",
+      "choice": {
+        "module": "sales",
+        "element": "Shipment",
+        "field": "id",
+        "storage": "column",
+        "column": "id"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/4",
+      "reason": "SQL Server finite integer domain does not represent an unbounded DDD integer",
+      "choice": {
+        "module": "sales",
+        "element": "Shipment",
+        "field": "part",
+        "storage": "column",
+        "column": "part"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/5",
+      "reason": "SQL Server nvarchar has finite UTF-16 storage, collation and trailing-space behavior outside DDD string meaning",
+      "choice": {
+        "module": "sales",
+        "element": "Shipment",
+        "field": "label",
+        "storage": "column",
+        "column": "label"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/5",
+      "reason": "SQL NULL is the selected absence carrier; DDD optionality alone does not define native NULL behavior",
+      "choice": {
+        "module": "sales",
+        "element": "Shipment",
+        "field": "label",
+        "storage": "column",
+        "column": "label"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/elements/1",
+      "reason": "DDD identity is retained; this table slice does not emit a primary or unique key",
+      "choice": {
+        "fields": [
+          "id"
+        ],
+        "scope": "context"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/indexes/3",
+      "reason": "No verified disk-rowstore carrier for this index kind",
+      "choice": {
+        "name": "IX_Items_Hash",
+        "kind": "hash",
+        "on": [
+          {
+            "field": {
+              "module": "sales",
+              "element": "Item",
+              "field": "id"
+            }
+          }
+        ],
+        "unique": false
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/indexes/4",
+      "reason": "No verified disk-rowstore carrier for this index kind",
+      "choice": {
+        "name": "IX_Items_Detail",
+        "kind": "expression",
+        "on": [
+          {
+            "documentPath": {
+              "field": {
+                "module": "sales",
+                "element": "Item",
+                "field": "details"
+              },
+              "path": [
+                "customer",
+                "region"
+              ]
+            }
+          }
+        ],
+        "unique": false
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/indexes/5",
+      "reason": "No verified disk-rowstore carrier for this index kind",
+      "choice": {
+        "name": "IX_Items_Cluster",
+        "kind": "clustering",
+        "on": [
+          {
+            "field": {
+              "module": "sales",
+              "element": "Item",
+              "field": "id"
+            }
+          }
+        ],
+        "unique": false
+      }
+    }
+  ],
+  "sha256": {
+    "fixtures/binding/sqlserver-tables-indexes/case.json": "cdd36f030ad1c61848cbbd48d94df277caf28acc0825bdca5e659930f6e7151f",
+    "fixtures/binding/sqlserver-tables-indexes/generated.sql": "3e9b785aac76cddc02294c8628b3a6f78e8c3f9b37b4eef148e5b2659ce96f48",
+    "fixtures/binding/sqlserver-tables-indexes/catalog.json": "8a5ab38b5eab6cdda13370c4bc9b679c2b4ba1b69ace9571a8c42013e1b7beb1",
+    "fixtures/binding/sqlserver-tables/catalog.json": "8a5ab38b5eab6cdda13370c4bc9b679c2b4ba1b69ace9571a8c42013e1b7beb1",
+    "src/projections/binding-sqlserver/tables-indexes.ts": "800b53fb5923db16e7b46694e0cfa4537eaa62b1d89ea09cb2786bc49f956283",
+    "native/sqlserver/catalog-v2.sql": "c8e71f1bb434bc996e2e6650a341e4cb853947d6ad6434c4d35b237fc7bc18ca"
+  }
+}

@@ -34,7 +34,8 @@ export function projectBindingIndexesToSqlServer(logical:Document,binding:Docume
     const parts=element?.table?.split('.');
     if(!parts||parts.length!==2||parts.some(x=>!x)){add(path,'An exact schema.table override is required',item);continue;}
     const [schema,table]=parts as [string,string];
-    const available=new Set(nativeColumns.filter(c=>c.table.schema===schema&&c.table.name===table).map(c=>c.element.name));
+    const tableColumns=nativeColumns.filter(c=>c.table.schema===schema&&c.table.name===table);
+    const available=new Set(tableColumns.map(c=>c.element.name));
     if(!available.size){add(path,'Native catalog has no matching table columns',item);continue;}
     let valid=true;
     const terms=item.on.map(target=>{
@@ -49,8 +50,17 @@ export function projectBindingIndexesToSqlServer(logical:Document,binding:Docume
       return quote(field.column);
     });
     if(!valid){add(path,'Index column or include is absent from native catalog',item);continue;}
+    const unboundedKey=item.on.some(target=>{
+      if(!('field'in target))return false;
+      const field=payload.fields.find(row=>same(row,target.field));
+      const column=tableColumns.find(row=>row.element.name===field?.column);
+      return column?JSON.parse(renderTree(column.nativeColumn)).max_length===-1:false;
+    });
+    if(unboundedKey){add(path,'Unbounded native column cannot be a key in this disk-rowstore profile',item);continue;}
     const predicate=item.predicate?.expression;
-    if(predicate&&!/^\[[A-Za-z_][A-Za-z0-9_]*\]\s*(?:=|<>|<=|>=|<|>)\s*(?:-?\d+|N?'(?:[^']|'')*')$/i.test(predicate.trim())){add(path,'Filtered predicate is outside the verified simple comparison subset',item);continue;}
+    const predicateMatch=predicate&&/^\[([A-Za-z_][A-Za-z0-9_]*)\]\s*(?:=|<>|<=|>=|<|>)\s*(?:-?\d+|N?'(?:[^']|'')*')$/i.exec(predicate.trim());
+    if(predicate&&!predicateMatch){add(path,'Filtered predicate is outside the verified simple comparison subset',item);continue;}
+    if(predicateMatch&&!available.has(predicateMatch[1]!)){add(path,'Filtered predicate column is absent from native catalog',item);continue;}
     const sql=`CREATE ${item.unique?'UNIQUE ':''}NONCLUSTERED INDEX ${quote(item.name)} ON ${quote(schema)}.${quote(table)} (${terms.join(', ')})${includes.length?' INCLUDE ('+includes.join(', ')+')':''}${predicate?' WHERE '+predicate.trim():''};`;
     statements.push(sql);
   }

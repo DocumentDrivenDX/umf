@@ -74,6 +74,16 @@ Map US-047-AC1–10 to cited tests. Include all PostgreSQL kinds, clustering
 residual, SQL Server filtered/disabled counterexamples, strict/report pairs,
 both recoveries, invalid target paths, copied binding isolation and Chromium.
 
+The relationship-independent SQL Server composition stage combines the
+TD-046 table candidate with supported rowstore indexes against an explicitly
+retained catalog capture. It checks indexed columns against the generated
+table plan and observed types before returning DDL. The pinned SQL Server
+2022 oracle accepts two tables and three indexes (btree, unique and filtered);
+hash, document-path expression and clustering remain residuals. Native catalog
+recovery, strict blocking and Chromium parity are recorded under
+`fixtures/binding/sqlserver-tables-indexes/`. This stage still requires
+catalog evidence and does not cover relationship storage.
+
 ## Migration & Rollback
 
 Rollback restores original physical choices and retains new unknown kinds as

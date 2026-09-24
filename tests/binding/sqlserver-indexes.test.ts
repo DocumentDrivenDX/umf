@@ -26,3 +26,11 @@ test('@covers US-046-AC3 @covers US-047-AC9: unsafe filtered predicate and unkno
   expect(report.residuals.some(x=>x.path.endsWith('/indexes/2'))).toBe(true);
   expect(project(binding,'strict').candidate).toBeUndefined();
 });
+
+test('@covers US-047-AC9: a filtered predicate must name an observed column',()=>{
+  const binding=structuredClone(fixture.binding);
+  binding.extensions['umf.binding'].indexes[2].predicate.expression='[missing] = 1';
+  const report=project(binding);
+  expect(report.residuals.some(x=>x.path.endsWith('/indexes/2')&&x.reason.includes('predicate column'))).toBe(true);
+  expect(report.candidate).not.toContain('[missing]');
+});
