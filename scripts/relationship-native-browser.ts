@@ -18,6 +18,8 @@ let browser;
 try{
  browser=await chromium.launch({headless:true,...(process.env.UMF_CHROMIUM_PATH?{executablePath:process.env.UMF_CHROMIUM_PATH}:{})});
  const page=await browser.newPage();
+ const externalRequests:string[]=[];
+ page.on('request',request=>{if(!request.url().startsWith('http://127.0.0.1:'+server.port+'/'))externalRequests.push(request.url());});
  await page.goto('http://127.0.0.1:'+server.port);
  const result=await page.evaluate(async(sources)=>{
   const path='/umf.js',umf=await import(path);
@@ -38,8 +40,8 @@ try{
   }
   return {cases:cases.map(c=>c.name),recoveries,nodeGlobalsAbsent:!('process' in globalThis)&&!('Buffer' in globalThis)};
  },sources);
- if(result.recoveries!==8||!result.nodeGlobalsAbsent)throw Error('Browser baseline changed');
- const output={...result,browser:browser.version(),sourceSha256:oracle.sourceSha256};
+ if(result.recoveries!==8||!result.nodeGlobalsAbsent||externalRequests.length)throw Error('Browser baseline changed or external request observed');
+ const output={...result,browser:browser.version(),externalRequests,sourceSha256:oracle.sourceSha256};
  await Bun.write(base+'browser-results.json',JSON.stringify(output,null,2)+'\n');
  console.log(output);
 }finally{await browser?.close();server.stop(true);}

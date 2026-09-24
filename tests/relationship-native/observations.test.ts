@@ -11,6 +11,7 @@ test('CONTRACT-041: native observations retain browser recovery evidence',async(
  expect(browser.cases).toEqual(['rdf','rdfUnion','linkml','tablespec']);
  expect(browser.recoveries).toBe(8);
  expect(browser.nodeGlobalsAbsent).toBe(true);
+ expect(browser.externalRequests).toEqual([]);
  expect(browser.sourceSha256).toEqual(oracle.sourceSha256);
 });
 
