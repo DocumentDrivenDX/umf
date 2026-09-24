@@ -988,3 +988,10 @@ with retained ideal/native recovery. Versioned scope, counterexamples and curren
 acceptance status are recorded in the
 [Avro facet evidence](04-build/evidence/avro-facet-discovery.md). Parquet facets,
 the separate facet admission/delivery gate and Key remain required.
+
+
+Relationship implementation has begun with an explicit experimental 0.7.0
+candidate schema and semantic validator under TD-045. Bun and Chromium agree
+on 35 authored/invalid cases and 70 serialization recoveries. Public operations,
+collision-preserving migration/rollback and native binding admission remain
+pending. See the [candidate browser evidence](../../fixtures/validation/core-relationship-candidate-browser.json).

@@ -24,8 +24,9 @@ ddx:
 # CONTRACT-041: Authored relationship ideal
 
 **Type:** core schema/library. **Status:** draft semantic authority before a
-core schema change. **Version:** the first experimental envelope after key's
-versioned implementation; the final number is assigned before publication.
+core schema change. **Version:** experimental 0.7.0, following the accepted 0.6.0 Key envelope.
+Schema/validator staging does not itself establish public operation support or
+relationship ideal admission.
 
 ## Purpose
 

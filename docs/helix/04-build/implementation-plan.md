@@ -4685,3 +4685,23 @@ Fresh native/browser qualification, negative evidence checks, core tests,
 typechecking and schema/package audits pass. Native equivalence remains
 unclaimed; source payloads and unknown semantics remain attached. See the
 [Key gate admission record](evidence/key-gate-admission.md) for commands, versions, profiles and limits.
+
+
+## Relationship 0.7.0 candidate validation checkpoint
+
+Following the accepted Key gate, TD-045 now stages the 0.7.0 relationship
+envelope. `spec/core/relationship-document.schema.json` and
+`validateRelationshipCandidate` validate exact keyed endpoints, stable target
+Key IDs, endpoint/name uniqueness, inverse presentation collisions, independent
+participation bounds, directed ownership and keyed association Records.
+Future qualifiers and lifecycle values remain uninterpreted; older envelopes
+retain relationship-shaped unknown content without adopting it.
+
+The authored corpus includes the six original shapes plus alternate keys,
+bounded participation and Enrollment with its own key and grade Field. Bun
+passes three tests / 242 assertions. Chromium matches all 35 cases (15 accepted,
+20 rejected), completes 70 JSON/YAML recoveries and invokes no getters. See
+[the candidate browser record](../../fixtures/validation/core-relationship-candidate-browser.json).
+Typechecking, the browser build and 307-schema / 53-package audits pass. This
+checkpoint does not qualify public 0.7.0 integration, migration/rollback,
+authoring operations, native bindings or relationship ideal admission.

@@ -145,3 +145,15 @@ Require residuals and native counterexamples. Before core publication, resolve
 the final Key-ID serialization, relationship lineage across revisions, and how a
 binding connects an association Record to endpoint-key columns. These are
 design decisions, not authorization to infer semantics from storage.
+
+
+## Experimental 0.7.0 implementation decision
+
+The Key five-system gate is accepted in e3230451. Reserve
+`module.relationships` only in the experimental 0.7.0 candidate schema. First
+implement complete structural and semantic validation against unchanged keyed
+Record semantics. Then integrate collision-preserving migration/rollback, typed
+authoring/inspection and browser operations before core-task acceptance. Until
+that integration, public `Document` support remains through 0.6.0; candidate
+validation is explicit and older unknown module members remain uninterpreted.
+Native binding admission and all-five delivery remain later separate gates.
