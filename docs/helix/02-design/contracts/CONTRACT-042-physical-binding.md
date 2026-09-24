@@ -147,6 +147,14 @@ identity, and unenforced embedded path. Neither partial SQL Server direction
 includes relationship lowering; the full DDL bead remains open. The support
 table above is not a blanket delivered claim for every kind or target.
 
+`fixtures/projections/ddd-postgresql-tables/` also binds the same authored
+Order graph independently to PostgreSQL and Delta. Its Delta candidate contains
+only the `Order.tenant` liquid-clustering metadata for one existing table log.
+The pinned `deltalake` 1.6.4 reader accepts the source and proposed log versions,
+their bytes remain recoverable, and Chromium 148 reproduces the projection and
+strict/report behavior for an unsupported GIN index. This evidence does not
+claim clustered data files, writer enforcement or multi-table Delta generation.
+
 ## Precedence and Compatibility
 
 Before any relationship storage projection is delivered, publish a new binding
