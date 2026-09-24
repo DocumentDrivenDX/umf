@@ -1,0 +1,97 @@
+{
+  "profile": "facet-worktree-gate-replay-1",
+  "historicalAdmission": {
+    "commit": "9f6db7c5283ef98f04d93af965d6f34e9e44f5f1",
+    "bead": "umf-97221618-21f0a415",
+    "nativeEquivalence": false
+  },
+  "currentTree": {
+    "idealAdmitted": true,
+    "priorityDelivery": true,
+    "nativeEquivalence": false,
+    "usefulSystems": [
+      "tablespec",
+      "postgresql",
+      "sqlserver",
+      "avro",
+      "parquet"
+    ],
+    "revalidatedPaths": [
+      "dist/postgresql/runtime.js",
+      "dist/umf.js",
+      "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md",
+      "docs/helix/03-test/test-plan.md",
+      "docs/helix/04-build/implementation-plan.md",
+      "docs/helix/README.md",
+      "fixtures/validation/facets-postgresql-catalog-browser.json",
+      "fixtures/validation/facets-postgresql-discovery-browser.json",
+      "fixtures/validation/facets-sqlserver-discovery-browser.json",
+      "src/index.ts"
+    ],
+    "fingerprintsChecked": 17468
+  },
+  "executedChecks": [
+    {
+      "command": [
+        "bun",
+        "scripts/core-ideals/facets-conformance.ts"
+      ],
+      "exitCode": 0,
+      "artifact": "fixtures/validation/facets-conformance.json"
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "tests/core-ideals/facets-conformance.test.ts"
+      ],
+      "exitCode": 0,
+      "tests": 1,
+      "assertions": 42
+    },
+    {
+      "command": [
+        "bun",
+        "test",
+        "tests/core-ideals/facets-evidence.test.ts"
+      ],
+      "exitCode": 0,
+      "tests": 2,
+      "assertions": 24
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "bun",
+        "run",
+        "test:schemas"
+      ],
+      "exitCode": 0,
+      "schemas": 278,
+      "packages": 48
+    }
+  ],
+  "limits": [
+    "This replay checks current-tree UMF behavior against retained native/browser evidence; it does not rerun native engines.",
+    "No native equivalence is claimed.",
+    "The historical gate record remains unchanged and is linked by SHA-256."
+  ],
+  "sha256": {
+    "fixtures/validation/facets-gate-acceptance-evidence.json": "fa0c10a0ed805416fe6da803aac2abec3d23b21fae63d72862b08176f53cb46b",
+    "fixtures/validation/facets-worktree-revalidation.json": "3f7bd97451ae18bcb6e5838bc30c64821dc0ff5ea511f98f91b978bbcc1e608f",
+    "fixtures/validation/facets-conformance.json": "eee39d774043c7d87d1ba9b5c4ff2d2b4cefd072b6ecbfb315086e947c542eb4",
+    "scripts/core-ideals/facets-evidence.ts": "6fd3dda475ea08e27bfe68500770193d5280d3d888c5ca63f5226a7af35db189",
+    "scripts/core-ideals/facets-conformance.ts": "2493daf433d6fcb92e504968a0d96b3c88d8df9348ab1aafb1314cb07799c162",
+    "tests/core-ideals/facets-evidence.test.ts": "790960a760270bd5f43c9061c9790e105d889908f1b47ee175f2e7ffc3dc9662",
+    "tests/core-ideals/facets-conformance.test.ts": "db9bfedd836aac9ffee9a851185da361d0ff10e9af0fd8d7e63decd09200fb3c",
+    "src/index.ts": "0aa877f67f9cd1c06aeaca47fabb153de65e0521db9776e52b818b076666966a",
+    "src/model/facets.ts": "173c51307b3117919a765f724ca3901db2bd3f6f884864e081819469acd5ed84"
+  }
+}
