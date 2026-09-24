@@ -120,7 +120,11 @@ The Parquet Key binding passes qualified acceptance: 253 scoped compatibility
 tests, 21 generated schemas checked with PyArrow, exact native byte recovery
 and Chromium recovery checks. Collection identity remains an explicit per-key
 residual. See [Parquet Key acceptance](04-build/evidence/parquet-key-acceptance.md).
-The separate Key ideal-admission/all-five gate remains unfinished. No native equivalence is claimed.
+Key now passes the separate ideal-admission and qualified five-system delivery
+gate: 85 projections, 170 ideal recoveries and 178 native recoveries. PostgreSQL
+and SQL Server provide useful stored-value enforcement witnesses; all native
+refinements remain retained. No native equivalence is claimed. See the
+[Key gate admission record](04-build/evidence/key-gate-admission.md).
 
 The [SQL Server facet evidence](04-build/evidence/sqlserver-facet-discovery.md)
 records discovery, classification, authored projection and composed recovery,

@@ -24,9 +24,9 @@ separate solution design exists for this core slice. Experimental core 0.5.0
 includes Field, Nullability, Cardinality and author-stated facets alongside
 scalar-family metadata. Field, Nullability and Cardinality have passed their
 qualified five-system gates, including the completed facet delivery gate. Key
-implementation now begins with the explicit 0.6.0 representation decision below.
-Candidate schema/validation has bounded evidence; public operations, migration,
-tuple encoding, native bindings and core-task acceptance remain pending.
+now passes core 0.6.0 implementation, qualified five-system delivery and separate
+ideal admission. The implementation decisions below retain their original
+sequence; current evidence and limitations are recorded at the end of this design.
 
 ## Technical Approach
 
@@ -180,7 +180,7 @@ and follow-up bindings; report mode must never imply execution enforcement.
 
 - [x] All story ACs have implementation/test responsibilities.
 - [x] Governing meaning stays in CONTRACT-040; native refinements are retained.
-- [ ] Schema/version transition, five bindings and regression evidence implemented.
+- [x] Schema/version transition, five bindings and qualified regression evidence implemented.
 
 ## Experimental 0.6.0 implementation decision
 
@@ -240,3 +240,16 @@ arrays. Export the key document, operation, transition, tuple and selection
 schemas/APIs through the public browser entry point. Verify new operations, older
 receipt compatibility and a real public browser build before reporting this
 integration; core-task acceptance still requires the compatibility/native refresh.
+
+
+## Key admission and qualified five-system delivery evidence
+
+Key ideal admission and five-system delivery now pass as separate results.
+PostgreSQL and SQL Server provide useful nonempty stored-value enforcement
+witnesses; TableSpec, Avro and Parquet retain explicit identity residuals.
+The gate covers 118 authored cases, 85 emitted targets, 170 ideal recoveries,
+178 native recoveries and twenty shared identity/ownership conflict refusals.
+Fresh native/browser qualification, negative evidence checks, core tests,
+typechecking and schema/package audits pass. Native equivalence remains
+unclaimed; source payloads and unknown semantics remain attached. See the
+[Key gate admission record](../../04-build/evidence/key-gate-admission.md) for commands, versions, profiles and limits.

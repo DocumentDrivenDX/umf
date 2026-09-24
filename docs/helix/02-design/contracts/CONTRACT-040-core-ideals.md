@@ -1015,3 +1015,16 @@ references in addition to generic references and item/value types. With traversa
 disabled it reports separate membership and key-component boundaries, including
 stable key IDs and source paths. Traversal is cycle-safe by element identity.
 These new edges do not change how older profiles interpret lookalike members.
+
+
+## Key admission and qualified five-system delivery evidence
+
+Key ideal admission and five-system delivery now pass as separate results.
+PostgreSQL and SQL Server provide useful nonempty stored-value enforcement
+witnesses; TableSpec, Avro and Parquet retain explicit identity residuals.
+The gate covers 118 authored cases, 85 emitted targets, 170 ideal recoveries,
+178 native recoveries and twenty shared identity/ownership conflict refusals.
+Fresh native/browser qualification, negative evidence checks, core tests,
+typechecking and schema/package audits pass. Native equivalence remains
+unclaimed; source payloads and unknown semantics remain attached. See the
+[Key gate admission record](../../04-build/evidence/key-gate-admission.md) for commands, versions, profiles and limits.

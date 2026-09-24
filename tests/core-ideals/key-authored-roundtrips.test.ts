@@ -1,5 +1,5 @@
 import {test, expect} from 'bun:test';
-import {verifyKeyAuthoredRoundTrips} from '../../scripts/core-ideals/key-roundtrips';
+import {verifyKeyAuthoredRoundTrips, verifyKeyIdentityConflicts} from '../../scripts/core-ideals/key-roundtrips';
 
 test('Key shared authored contract preserves plural identity and rejects forged receipts across five systems', async () => {
  const coverage = await verifyKeyAuthoredRoundTrips();
@@ -12,3 +12,7 @@ test('Key shared authored contract preserves plural identity and rejects forged 
   expect(result.strictBlocks).toBe(result.projected);
  }
 }, 120000);
+
+test('all Key bindings reject conflicting tuples, changed stable IDs and missing or cross-record ownership',async()=>{
+ expect(await verifyKeyIdentityConflicts()).toEqual({tablespec:4,postgresql:4,sqlserver:4,avro:4,parquet:4});
+});

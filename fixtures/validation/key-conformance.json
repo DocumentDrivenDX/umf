@@ -1,0 +1,223 @@
+{
+  "scope": "Named Key ideal admission and qualified five-system delivery; retained author identity and native representations remain separate",
+  "idealAdmitted": true,
+  "priorityDelivery": true,
+  "nativeEquivalence": false,
+  "usefulSystems": [
+    "postgresql",
+    "sqlserver"
+  ],
+  "evidence": {
+    "systems": [
+      "tablespec",
+      "postgresql",
+      "sqlserver",
+      "avro",
+      "parquet"
+    ],
+    "records": [
+      {
+        "path": "fixtures/validation/key-tablespec-discovery-native.json",
+        "sha256": "a45a803944fe29da218ceffb2ab62fc67382e66ff321f7b5fcbcadac7bfd749f"
+      },
+      {
+        "path": "fixtures/validation/key-tablespec-projection-native.json",
+        "sha256": "4e8ae230528352d78363d09f5667333fb1396ad5fb5931d09191957437816c7c"
+      },
+      {
+        "path": "fixtures/validation/key-postgresql-discovery-native.json",
+        "sha256": "edef1894645cd877076d39a1b17497b9d80e614c75c01693e3fc70b83ca9dee9"
+      },
+      {
+        "path": "fixtures/validation/key-postgresql-projection-native.json",
+        "sha256": "4869a6eb986f8283cd96c138893127846d89cc72ea1986fab66f6ed7018ed20d"
+      },
+      {
+        "path": "fixtures/validation/key-sqlserver-discovery-native.json",
+        "sha256": "0b4862aa6e5e491348027638d070dee02551084783c41acea75c3ed62302dd41"
+      },
+      {
+        "path": "fixtures/validation/key-sqlserver-projection-native.json",
+        "sha256": "90b9c918ea9aee84d50640be2356985b683366e38b27190e566f46009cd12bcd"
+      },
+      {
+        "path": "fixtures/validation/key-avro-discovery-native.json",
+        "sha256": "1d46bfb059fe862c364080417a7650671cc218109601351fb86320ba7830d7d1"
+      },
+      {
+        "path": "fixtures/validation/key-avro-projection-native.json",
+        "sha256": "e71e9dfa1f51c214a1d7146bb2f5dc67a06d0b132b571db4214a4caf1094d7a4"
+      },
+      {
+        "path": "fixtures/validation/key-parquet-discovery-native.json",
+        "sha256": "2326e341fd1042851a6d701cff1909009359d75ffbf1fb46c3b76c7e08891ee8"
+      },
+      {
+        "path": "fixtures/validation/key-parquet-projection-native.json",
+        "sha256": "091aecb76d66327fa7ab15066c226379ccb2b5308108615b46b6ae116905412f"
+      },
+      {
+        "path": "fixtures/validation/key-sqlserver-encoding-native.json",
+        "sha256": "b8a0d5df49b023caf87b08889a3ff501dd9b05ebbde7bc85e03b4334e174c650"
+      },
+      {
+        "path": "fixtures/validation/key-tablespec-classification-browser.json",
+        "sha256": "a52da2ae6b495b00f7c6f1d5c34da04b749ebb85120b68b24a0fb84c034c0a8f"
+      },
+      {
+        "path": "fixtures/validation/key-postgresql-catalog-browser.json",
+        "sha256": "a4744d021c2268b0947fad563c9adb005855abd5f94660c32dbf48316956e767"
+      },
+      {
+        "path": "fixtures/validation/key-postgresql-browser.json",
+        "sha256": "eeaa7c5378a12a9cdd6d4aa22fb191b4523789f0e48349a2b63eab6ea942eff1"
+      },
+      {
+        "path": "fixtures/validation/key-sqlserver-browser.json",
+        "sha256": "eb1296ac33df5d7e0d39bc09fc034dbf89b7246628f14b628cfc2dfb4d7a2792"
+      },
+      {
+        "path": "fixtures/validation/key-sqlserver-encoding-browser.json",
+        "sha256": "ca88a2d1fb52df5b4e191d85f7a6a75d5fca63602f474490e074f166d1d5e229"
+      },
+      {
+        "path": "fixtures/validation/key-sqlserver-projection-browser.json",
+        "sha256": "5ce9e7b461c2d6888c6905e3760cee98ea1f3b2f59be93cb060086c8d064b147"
+      },
+      {
+        "path": "fixtures/validation/key-avro-browser.json",
+        "sha256": "dc8c087eadf60602130038df6520ebd1efa5c8c8be1ddc48416ce6388f621d83"
+      },
+      {
+        "path": "fixtures/validation/key-avro-projection-browser.json",
+        "sha256": "77b5656d03f4333f5a3e85c3da424630d84dbf79b1e2d52950af777af1138f29"
+      },
+      {
+        "path": "fixtures/validation/key-parquet-browser.json",
+        "sha256": "df6ef11d2d755e5e4969abd867d0ed7ce2259a18ceaccb027a4ca91683f3cef8"
+      },
+      {
+        "path": "fixtures/validation/key-parquet-projection-browser.json",
+        "sha256": "f761364311c4c9a316b8f31dba01c8075807dc4acbfc093e1a72f7e9d33663b2"
+      }
+    ],
+    "fingerprints": 427,
+    "refreshSha256": "dc0d4ef9551b24749874ca40656f9fae5b2b68a8ae91ca6d1559837da6dab380",
+    "idealAdmitted": false,
+    "nativeEquivalence": false
+  },
+  "authored": {
+    "tablespec": {
+      "cases": 28,
+      "projected": 12,
+      "blocked": 16,
+      "recoveries": 24,
+      "forgedRefusals": 24,
+      "strictBlocks": 12,
+      "usefulStoredValueMappings": 0
+    },
+    "postgresql": {
+      "cases": 20,
+      "projected": 17,
+      "blocked": 3,
+      "recoveries": 34,
+      "forgedRefusals": 34,
+      "strictBlocks": 17,
+      "usefulStoredValueMappings": 14
+    },
+    "sqlserver": {
+      "cases": 26,
+      "projected": 19,
+      "blocked": 7,
+      "recoveries": 38,
+      "forgedRefusals": 38,
+      "strictBlocks": 19,
+      "usefulStoredValueMappings": 16
+    },
+    "avro": {
+      "cases": 20,
+      "projected": 16,
+      "blocked": 4,
+      "recoveries": 32,
+      "forgedRefusals": 32,
+      "strictBlocks": 16,
+      "usefulStoredValueMappings": 0
+    },
+    "parquet": {
+      "cases": 24,
+      "projected": 21,
+      "blocked": 3,
+      "recoveries": 42,
+      "forgedRefusals": 42,
+      "strictBlocks": 21,
+      "usefulStoredValueMappings": 0
+    }
+  },
+  "native": {
+    "tablespec": {
+      "cases": 28,
+      "classified": 28,
+      "blocked": 0,
+      "recoveries": 56,
+      "refusals": 112,
+      "strictBlocks": 26
+    },
+    "postgresql": {
+      "cases": 1,
+      "classified": 1,
+      "blocked": 0,
+      "recoveries": 2,
+      "refusals": 4,
+      "strictBlocks": 1
+    },
+    "sqlserver": {
+      "cases": 3,
+      "classified": 3,
+      "blocked": 0,
+      "recoveries": 6,
+      "refusals": 12,
+      "strictBlocks": 3
+    },
+    "avro": {
+      "cases": 28,
+      "classified": 28,
+      "blocked": 0,
+      "recoveries": 56,
+      "refusals": 112,
+      "strictBlocks": 28
+    },
+    "parquet": {
+      "cases": 29,
+      "classified": 28,
+      "blocked": 1,
+      "recoveries": 58,
+      "refusals": 112,
+      "strictBlocks": 29
+    }
+  },
+  "conflicts": {
+    "tablespec": 4,
+    "postgresql": 4,
+    "sqlserver": 4,
+    "avro": 4,
+    "parquet": 4
+  },
+  "limits": [
+    "SQL enforcement applies to the qualified required stored-value domains; conversion, session, index-size and scope restrictions remain residuals.",
+    "TableSpec declarations and Avro/Parquet encodings do not enforce collection identity.",
+    "SQL Server authored recovery retains explicit DDL; classification uses independent engine catalogs, not a DDL parser.",
+    "PostgreSQL native classification uses independent discovery catalogs; generated DDL enforcement is verified by separate native insertion controls.",
+    "Native-only imports cannot infer authored stable key IDs, names, primary intent or unknown qualifiers. Receipts establish consistency, not authentication."
+  ],
+  "sha256": {
+    "scripts/core-ideals/key-conformance.ts": "b9195431d28b63c6df101ccd90db53a71f5835894f4d12e6ae03c2bd078e56ab",
+    "scripts/core-ideals/key-evidence.ts": "8235a48cf64b0d2632f11794830b6d6e6a12f65d4de687b43c521289bd961da4",
+    "scripts/core-ideals/key-roundtrips.ts": "fe9e0a146396b6905f102291b9129861ff95e6cf7945a78b7adb301557374e39",
+    "scripts/core-ideals/key-native-roundtrips.ts": "651b2dcfd2f3f78cd5821645293643743ff80a902909e6bff407b92274fa9ce4",
+    "tests/core-ideals/key-conformance.test.ts": "5bebfaa83af7f6f02bf843b3fe02c28a24c24bce6f3065b576994aa58fffc46f",
+    "tests/core-ideals/key-evidence.test.ts": "4bcd562cd5269d29c425931eb6680a1d67c33c9490b21574176d03dc6efca0f7",
+    "tests/core-ideals/key-authored-roundtrips.test.ts": "284cbc3514bc78b57ac59f6cc5325498e1259c4be1feb0713fafa5eb771356bc",
+    "tests/core-ideals/key-native-roundtrips.test.ts": "1d292d7cd9f9f9716b12851b4bfaecd55bda0414350d5e57ed35fb858962499a",
+    "fixtures/validation/key-gate-refresh-evidence.json": "dc0d4ef9551b24749874ca40656f9fae5b2b68a8ae91ca6d1559837da6dab380"
+  }
+}

@@ -94,7 +94,8 @@ Each scenario includes strict/report pairs, both UMF serializations, source-copy
 isolation, native recovery and browser diagnostics. Existing negative oracles are
 regressions to preserve, not new passing ideal-admission evidence.
 The design vectors in `fixtures/key/tuple-encoding-v1.json` pin the exact encoding
-and refusal cases; execution evidence remains pending until TD-044 implementation.
+and refusal cases; core execution evidence is recorded in the Key core acceptance record;
+current binding and conformance evidence is linked below.
 
 ## Dependencies
 
@@ -114,3 +115,16 @@ shared-owner, cross-record and duplicate membership references reject with paths
 Native columns, DDD properties and generic reference roles cannot supply implicit
 ownership. Legacy `key`, `keys` and `members` collisions survive migration and
 rollback without being adopted as author assertions.
+
+
+## Key admission and qualified five-system delivery evidence
+
+Key ideal admission and five-system delivery now pass as separate results.
+PostgreSQL and SQL Server provide useful nonempty stored-value enforcement
+witnesses; TableSpec, Avro and Parquet retain explicit identity residuals.
+The gate covers 118 authored cases, 85 emitted targets, 170 ideal recoveries,
+178 native recoveries and twenty shared identity/ownership conflict refusals.
+Fresh native/browser qualification, negative evidence checks, core tests,
+typechecking and schema/package audits pass. Native equivalence remains
+unclaimed; source payloads and unknown semantics remain attached. See the
+[Key gate admission record](../../04-build/evidence/key-gate-admission.md) for commands, versions, profiles and limits.

@@ -3016,3 +3016,16 @@ is unclaimed; native payloads and unknown content remain recoverable.
 Facets now pass the separate ideal-admission and qualified five-system delivery gate. Native equivalence remains unclaimed; native payloads and unknown extension content remain attached. Key is the next ordered concept. See the
 [admission evidence](../04-build/evidence/facet-gate-admission.md) for exact counts, qualified versions, retained
 failures and scope limits. Earlier pending checkpoints above remain historical.
+
+
+## Key admission and qualified five-system delivery evidence
+
+Key ideal admission and five-system delivery now pass as separate results.
+PostgreSQL and SQL Server provide useful nonempty stored-value enforcement
+witnesses; TableSpec, Avro and Parquet retain explicit identity residuals.
+The gate covers 118 authored cases, 85 emitted targets, 170 ideal recoveries,
+178 native recoveries and twenty shared identity/ownership conflict refusals.
+Fresh native/browser qualification, negative evidence checks, core tests,
+typechecking and schema/package audits pass. Native equivalence remains
+unclaimed; source payloads and unknown semantics remain attached. See the
+[Key gate admission record](../04-build/evidence/key-gate-admission.md) for commands, versions, profiles and limits.
