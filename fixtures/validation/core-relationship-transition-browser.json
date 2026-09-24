@@ -1,0 +1,27 @@
+{
+  "scope": "Experimental 0.6.0 to 0.7.0 relationship upgrade, rollback and receipt verification only; public integration and native admission remain separate",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 7,
+    "recoveries": 14,
+    "refusals": 22,
+    "getterCalls": 0
+  },
+  "externalRequests": [],
+  "bundleSha256": "55cbcf8d7793698be1129bf8ac0ba18e1a74866889e6bbe524b458008e4b4b8f",
+  "sha256": {
+    "scripts/core-relationship-transition-browser.ts": "787faaccf1ebd0aec25e711b5147f5e90df2d849417d7cd20408788bed9feb25",
+    "scripts/core-relationship-transition-cases.ts": "4eab41c4c42620bf50f39ae838404c89a957b407e7060d76f0cb9406714ff90a",
+    "scripts/core-relationship-cases.ts": "72ec7b69f274be86907ba43a3304f36af8a40cbcc2549b4ab2c3e4d0a5541a2c",
+    "scripts/core-relationship-transition-schema.ts": "9d5f942aa2c6b541e9e9986e599dafdbae939e2b4e1523702222e2987841f615",
+    "src/model/relationship-transition.ts": "9891f28b7fd0d0a1ff1fbafdd18b700c42e5682a44b41c63bc4ec0eb42ecbc36",
+    "src/validation/relationships.ts": "e37ef7c318caaf683144e266b5bd09d494156249d240271f9f2ed0e63c8e6117",
+    "src/validation/keys.ts": "00650bc3e645c2d36e01f423b0a5eb85dba8b38c102697b0e62e3030a4be7886",
+    "src/validation/document.ts": "711c8241449590556fd130644b201055c25b7aaad2a1629794aa6bb9069eed59",
+    "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
+    "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
+    "spec/core/relationship-document.schema.json": "a95512729481417f1a3a094cc337d7264a575bd6b54046b05c037db6c33b4813",
+    "spec/core/relationship-transition.schema.json": "04f3a9f22f29058a150288ec678eb22a127879302f2e38783c0824a4479042d0",
+    "tests/core/relationship-transition.test.ts": "4425c8304e253ce5ab7efa7225195246ddb05653ed285f2026d2dc0a57243720"
+  }
+}

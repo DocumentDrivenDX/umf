@@ -4705,3 +4705,22 @@ passes three tests / 242 assertions. Chromium matches all 35 cases (15 accepted,
 Typechecking, the browser build and 307-schema / 53-package audits pass. This
 checkpoint does not qualify public 0.7.0 integration, migration/rollback,
 authoring operations, native bindings or relationship ideal admission.
+
+
+### Relationship candidate migration and rollback checkpoint
+
+The explicit 0.6.0-to-0.7.0 transition now archives every module-level
+`relationships` collision, including valid-looking legacy values. Unrelated
+document/element members, references and native extension content remain intact.
+Rollback recomputes the upgrade receipt, validates current semantics/identity,
+restores the exact original envelope and retains the entire current candidate
+separately, including later relationship assertions and native edits. Transition
+verification rejects changed receipts without claiming authentication.
+
+Candidate and transition tests pass seven tests / 349 assertions. Chromium
+verifies seven transition cases, fourteen serialized rollback recoveries and
+22 refusals; the 35-case candidate browser matrix also passes again. See the
+[transition browser record](../../fixtures/validation/core-relationship-transition-browser.json).
+Typechecking, build and 308-schema / 53-package audits pass. Public authoring,
+inspection, selection/versioned operation integration and core-task acceptance
+remain unfinished; this checkpoint does not claim native relationship admission.

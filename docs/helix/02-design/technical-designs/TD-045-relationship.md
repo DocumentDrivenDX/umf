@@ -157,3 +157,15 @@ authoring/inspection and browser operations before core-task acceptance. Until
 that integration, public `Document` support remains through 0.6.0; candidate
 validation is explicit and older unknown module members remain uninterpreted.
 Native binding admission and all-five delivery remain later separate gates.
+
+
+### Transition implementation evidence
+
+The candidate transition is implemented in `src/model/relationship-transition.ts`
+with `spec/core/relationship-transition.schema.json`. Upgrade preserves every
+legacy module collision in a source-qualified residual. Rollback restores the
+original 0.6.0 document and retains all subsequent 0.7.0 content in its source;
+it does not merge new assertions into the old interpreter. Receipt verification
+recomputes the operation. Bun and Chromium evidence is recorded in the
+[implementation plan](../../04-build/implementation-plan.md). Public operations
+and full core-task acceptance remain separate from this candidate checkpoint.

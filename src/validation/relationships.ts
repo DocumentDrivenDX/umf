@@ -2,13 +2,13 @@ import schema from '../../spec/core/relationship-document.schema.json';
 import {createValidator} from './schema';
 import {validateKeyCandidate} from './keys';
 import {copyJson} from '../model/json';
-import {UmfError,pointer,type Document,type Element,type Diagnostic,type Validation} from '../model/types';
+import {UmfError,pointer,type Document,type Element,type Diagnostic,type Validation,type Module,type Json} from '../model/types';
 
 export interface RelationshipEndpoint {module:string;element:string;[key:string]:unknown}
 export interface RelationshipTarget extends RelationshipEndpoint {key:string}
 export interface RelationshipMultiplicity {min:number;max:number|'*';[key:string]:unknown}
 export interface CoreRelationship {id:string;name:string;source:RelationshipEndpoint[];target:RelationshipTarget[];sourceMultiplicity:RelationshipMultiplicity;targetMultiplicity:RelationshipMultiplicity;targetLifecycle:'owned'|'independent'|'unspecified'|(string&{});directed:boolean;inverse?:string;associationRecord?:RelationshipEndpoint;[key:string]:unknown}
-export type RelationshipCandidate = Omit<Document,'umf'|'modules'> & {umf:'0.7.0';modules:(Document['modules'][number]&{relationships?:CoreRelationship[]})[]};
+export interface RelationshipCandidate {umf:'0.7.0';id:string;vocabularies:Document['vocabularies'];modules:(Module&{relationships?:CoreRelationship[]})[];extensions?:Record<string,Json>;[key:string]:unknown}
 const check=createValidator().compile(schema);
 const identity=(ref:RelationshipEndpoint)=>JSON.stringify([ref.module,ref.element]);
 

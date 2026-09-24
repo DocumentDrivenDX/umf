@@ -1,0 +1,9 @@
+export {};
+const reason='Legacy module relationships are opaque; no association inferred';
+const schema={$schema:'https://json-schema.org/draft/2020-12/schema',$id:'urn:umf:core:relationship-transition:1.0.0',title:'Explicit experimental relationship envelope transition receipts',
+ $defs:{
+  residual:{type:'object',required:['path','value','reason'],additionalProperties:false,properties:{path:{type:'string',pattern:'^/modules/[0-9]+/relationships$'},value:{},reason:{const:reason}}},
+  upgrade:{type:'object',required:['operation','version','source','target','residuals'],additionalProperties:false,properties:{operation:{const:'upgrade-relationship-envelope'},version:{const:'1.0.0'},source:{$ref:'urn:umf:core:0.6.0'},target:{$ref:'urn:umf:core:0.7.0'},residuals:{type:'array',items:{$ref:'#/$defs/residual'}}}},
+  rollback:{type:'object',required:['operation','version','source','target','receipt','reason'],additionalProperties:false,properties:{operation:{const:'rollback-relationship-envelope'},version:{const:'1.0.0'},source:{$ref:'urn:umf:core:0.7.0'},target:{$ref:'urn:umf:core:0.6.0'},receipt:{$ref:'#/$defs/upgrade'},reason:{const:'Original envelope restored; all subsequent content retained in source, not applied to legacy target'}}},
+ },oneOf:[{$ref:'#/$defs/upgrade'},{$ref:'#/$defs/rollback'}],description:'Receipt structure only. Verification recomputes the transition, validates current semantics and document identity, and retains the complete current document separately from the restored original.'};
+await Bun.write('spec/core/relationship-transition.schema.json',JSON.stringify(schema,null,2)+'\n');
