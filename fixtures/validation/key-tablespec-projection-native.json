@@ -115,11 +115,95 @@
       "duplicateRowsIndividuallyAccepted": true,
       "invalidScalarRejected": true,
       "enforcementEstablished": false
+    },
+    {
+      "case": "native-name-table-max-length",
+      "modelAccepted": true,
+      "schemaAccepted": true,
+      "primaryTuple": [
+        "order_id"
+      ],
+      "alternateTuples": [
+        [
+          "external_code"
+        ]
+      ],
+      "duplicateRowsIndividuallyAccepted": true,
+      "invalidScalarRejected": true,
+      "enforcementEstablished": false
+    },
+    {
+      "case": "native-name-column-max-length",
+      "modelAccepted": true,
+      "schemaAccepted": true,
+      "primaryTuple": [
+        "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      ],
+      "alternateTuples": [
+        [
+          "external_code"
+        ]
+      ],
+      "duplicateRowsIndividuallyAccepted": true,
+      "invalidScalarRejected": true,
+      "enforcementEstablished": false
+    },
+    {
+      "case": "native-name-table-valid-underscore",
+      "modelAccepted": true,
+      "schemaAccepted": true,
+      "primaryTuple": [
+        "order_id"
+      ],
+      "alternateTuples": [
+        [
+          "external_code"
+        ]
+      ],
+      "duplicateRowsIndividuallyAccepted": true,
+      "invalidScalarRejected": true,
+      "enforcementEstablished": false
+    },
+    {
+      "case": "native-name-column-valid-underscore",
+      "modelAccepted": true,
+      "schemaAccepted": true,
+      "primaryTuple": [
+        "Order_1"
+      ],
+      "alternateTuples": [
+        [
+          "external_code"
+        ]
+      ],
+      "duplicateRowsIndividuallyAccepted": true,
+      "invalidScalarRejected": true,
+      "enforcementEstablished": false
+    },
+    {
+      "case": "multiple-alternates-report",
+      "modelAccepted": true,
+      "schemaAccepted": true,
+      "primaryTuple": [
+        "order_id"
+      ],
+      "alternateTuples": [
+        [
+          "external_code"
+        ],
+        [
+          "order_id",
+          "external_code"
+        ]
+      ],
+      "duplicateRowsIndividuallyAccepted": true,
+      "invalidScalarRejected": true,
+      "enforcementEstablished": false
     }
   ],
   "sha256": {
     "/home/erik/Projects/umf/scripts/core-ideals/key-tablespec-projection-oracle.py": "b4c47171e6297851e162c1cc72c8a03f0a187f36355511bb84af2a6080b3c917",
-    "fixtures/validation/key-tablespec-projected-schemas.json": "327b662a7bef32f76864a1db2bd39aebf7b6e98c102a7f2aaa9a1410a5b198b7",
+    "fixtures/validation/key-tablespec-projected-schemas.json": "29094378176b6a2e1f5bef8695e9f27c06a31fdb7c8853ed839dbc5c62a89f1c",
     "native/tablespec/cardinality-runtime/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
     "native/tablespec/cardinality-runtime/generators.py": "1b4e0686f2f08d8149f29368e7b40f5b073265204e893bf439ae345b309ff9bd",
     "native/tablespec/cardinality-runtime/sources.json": "66370e8d9a7f10a669ae34bfce1f6d2c757bb422285dcc78f1d415880852cda0",

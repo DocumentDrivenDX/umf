@@ -6,9 +6,9 @@ import {importTableSpec,exportTableSpec} from '../../src/adapters/tablespec';
 import {readJsonValue,writeJsonValue} from '../../src/model/serialization';
 import {declareCoreKey} from '../../src/model/keys';
 for(const row of tableSpecKeyProjectionCases())test('authored TableSpec projection: '+row.name,()=>{
- const before=JSON.stringify(row),r=projectKeysToTableSpec(row.source,row.authors,row.request);expect(JSON.stringify(row)).toBe(before);expect(r.status).toBe(row.expected);expect(r.mappings).toHaveLength(2);expect(r.residuals.filter(l=>l.path.includes('/keys/'))).toHaveLength(2);
+ const before=JSON.stringify(row),r=projectKeysToTableSpec(row.source,row.authors,row.request);expect(JSON.stringify(row)).toBe(before);expect(r.status).toBe(row.expected);const count=(row.source.modules[0]!.elements[0]!.keys as unknown[]).length;expect(r.mappings).toHaveLength(count);expect(r.residuals.filter(l=>l.path.includes('/keys/'))).toHaveLength(count);
  if(r.status==='blocked'){expect(r.target).toBeUndefined();expect(()=>verifyKeysTableSpecProjection(r,row.source)).toThrow();return;}
- const native=exportTableSpec(r.target!),parsed=JSON.parse(native);expect(parsed.unique_constraints.length).toBe(row.source.modules[0]!.elements[0]!.keys && r.mappings.some(m=>m.primary)?1:2);
+ const native=exportTableSpec(r.target!),parsed=JSON.parse(native);expect(parsed.unique_constraints.length).toBe(count-(r.mappings.some(m=>m.primary)?1:0));
  const imported=importTableSpec(native,{id:row.request.id,format:'json'});expect(imported.modules[0]!.elements.every(e=>!Object.hasOwn(e,'keys'))).toBe(true);
  for(const format of ['json','yaml'] as const){
   const saved=readJsonValue(writeJsonValue(r,format),format) as unknown as typeof r;expect(recoverKeysTableSpecIdeal(saved,imported)).toEqual(row.source);
@@ -42,4 +42,14 @@ test('compound key order is explicit and changing it invalidates retained author
  const c=tableSpecKeyProjectionCases().find(r=>r.name==='compound-ordered')!,r=projectKeysToTableSpec(c.source,c.authors,c.request);
  expect(JSON.parse(exportTableSpec(r.target!)).primary_key).toEqual(['external_code','order_id']);
  const changed=structuredClone(c.source);(changed.modules[0]!.elements[0]!.keys as any[])[0].fields.reverse();expect(()=>projectKeysToTableSpec(changed,c.authors,c.request)).toThrow('meaning changed');
+});
+test('missing or shared Record ownership cannot be projected in report mode',()=>{
+ const c=tableSpecKeyAuthors(),missing=structuredClone(c.source);delete missing.modules[0]!.elements[0]!.members;expect(()=>projectKeysToTableSpec(missing,c.authors,c.request)).toThrow('Valid explicit core');
+ const shared=structuredClone(c.source);shared.modules[0]!.elements.push({id:'other',kind:'record',members:[keyId],extensions:{}});expect(()=>projectKeysToTableSpec(shared,c.authors,c.request)).toThrow('Valid explicit core');
+});
+test('unknown ownership, key reference and native extension content survives both formats',()=>{
+ const c=tableSpecKeyAuthors(),d=structuredClone(c.source);d.vocabularies.future={version:'1.0.0'};d.extensions={future:{exact:'9007199254740993',bytes:'opaque'}};
+ const record=d.modules[0]!.elements[0]!;(record.members as any[])[0].future={owner:'retained'};(record.keys as any[])[0].fields[0].future={component:'retained'};
+ const first=declareCoreKey(d,keyRecord,{id:'stable-id',name:'Order identity',fields:[keyId]}),second=declareCoreKey(first.target,keyRecord,{id:'stable-code',name:'External code',fields:[keyCode]}),r=projectKeysToTableSpec(second.target,[first,second],c.request);
+ for(const format of ['json','yaml'] as const){const saved=readJsonValue(writeJsonValue(r,format),format) as unknown as typeof r;expect(recoverKeysTableSpecIdeal(saved,saved.target!)).toEqual(second.target);}
 });

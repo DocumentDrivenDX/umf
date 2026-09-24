@@ -8,29 +8,29 @@
     "forgedRefusals": 16,
     "staleRefusals": 16,
     "getterCalls": 0,
-    "projectionCases": 10,
-    "projected": 7,
-    "projectionBlocks": 3,
-    "idealRecoveries": 14,
-    "nativeRecoveries": 14
+    "projectionCases": 28,
+    "projected": 12,
+    "projectionBlocks": 16,
+    "idealRecoveries": 24,
+    "nativeRecoveries": 24
   },
   "externalRequests": [],
   "sha256": {
-    "src/core-ideals/key-tablespec-projection.ts": "15cfbcbb9ebe7082b11f82c82aa2fc88a247e0da2ab7007a216bbd172298694b",
-    "scripts/core-ideals/key-tablespec-projection-cases.ts": "8b02f5fd3c535715475ee7723ddb539348ecc21dd6e8dbdd37905741891bcc7d",
+    "src/core-ideals/key-tablespec-projection.ts": "63c2c98c75bbe6cde9c34ec4217b5b9b8497fb72d1d841ef175e58e3dbaa3597",
+    "scripts/core-ideals/key-tablespec-projection-cases.ts": "e5ee2a0bf222486801f248eb6c6969b4fae66b2849ad36fb1717aa0d122fe8cb",
     "scripts/core-ideals/key-tablespec-projection-schema.ts": "864f377cc33f1db84d47395be66e642d6bda9d789e700541c997e599190097fa",
-    "tests/core-ideals/key-tablespec-projection.test.ts": "5009ed2459ad4248350ac214bb6822bdba8478586f38c63a0fb127eb5fec3c9a",
+    "tests/core-ideals/key-tablespec-projection.test.ts": "bf22e88c32bc29c8c8937b3efce94234d566b1d1a1dba8ae3e59481e7f085996",
     "spec/core/key-tablespec-projection.schema.json": "019d38b819c9bc288f428e43e9974c71c6d0fb9033e69f1bc3d429a460c59d62",
-    "fixtures/validation/key-tablespec-projection-native.json": "1f04ac267f60ca9dbe23bdba1fc9982a38bb545af544eb61500384a23c2ff74d",
-    "scripts/core-ideals/key-tablespec-browser.ts": "05e9d7b99dba57cc2b1b1924357688745503810ec9067739cb5251fd34de35d4",
-    "scripts/core-ideals/key-tablespec-schema.ts": "125ab38f28b2531ea9f6933f62bfe1308723bfc19a5ea8977b1d0470e92742ac",
+    "fixtures/validation/key-tablespec-projection-native.json": "4e8ae230528352d78363d09f5667333fb1396ad5fb5931d09191957437816c7c",
+    "scripts/core-ideals/key-tablespec-browser.ts": "faf47556b85e7a653aca66ad9bd00940868bade92a52275fefe00cb75e52c484",
+    "scripts/core-ideals/key-tablespec-schema.ts": "4d356f4988dfe3411e16b241a02ad4d4be03d1965fefa5f33a243977ca936894",
     "src/core-ideals/key-tablespec.ts": "550657744948952638124d95a5ad4db878b25643591473e4826630c72218b17d",
     "src/index.ts": "63d4571776ce1870f2a3224f36d016f1a53b1155c5aa417772ca84cb68cc0e04",
     "tests/core-ideals/key-tablespec.test.ts": "c3392e220dd46b5d097272d0ea1dd799e2bba6e218a158f98d59828e6281e342",
     "spec/core/tablespec-key-classification.schema.json": "eb7c4968e1e62e6b95e136b774b21e177f8e968a3d627260f444cc7d74b9ef98",
     "spec/extensions/tablespec-keys/schema.json": "afdc2d48f8068953544717001c37c4ee916273cd6c953b8ca8388d038984cd3f",
-    "spec/extensions/tablespec-keys/package.json": "694040c1f6e74248b1d5d351f6404b049e5b95e14f113f44b026ae5fef9eacfb",
-    "fixtures/validation/key-tablespec-discovery-native.json": "d5665a3b20c63f644a1dcb957733866e188b708d00e5499eec3fd041a047040a",
-    "dist/umf.js": "02eee7efaa1b914fb4123e3d706a5453fb7263149238447b8d808cea1b36b106"
+    "spec/extensions/tablespec-keys/package.json": "67f6be76b9d484648cc80eb45c0c0901140607f1430f7ba3318a737a4ab428dd",
+    "fixtures/validation/key-tablespec-discovery-native.json": "a45a803944fe29da218ceffb2ab62fc67382e66ff321f7b5fcbcadac7bfd749f",
+    "dist/umf.js": "6c4f8f069723d0738858b78721c7762307bd61b75fd7f97da3d1dc4e46bfb9f8"
   }
 }

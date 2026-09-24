@@ -972,8 +972,122 @@
       "invalidScalarRejected": true
     }
   ],
+  "nameBoundaries": [
+    {
+      "case": "max-length",
+      "position": "table",
+      "name": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "case": "max-length",
+      "position": "column",
+      "name": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "case": "over-length",
+      "position": "table",
+      "name": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "case": "over-length",
+      "position": "column",
+      "name": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "case": "unicode",
+      "position": "table",
+      "name": "\u6ce8\u6587",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "case": "unicode",
+      "position": "column",
+      "name": "\u6ce8\u6587",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "case": "leading-digit",
+      "position": "table",
+      "name": "1Orders",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "case": "leading-digit",
+      "position": "column",
+      "name": "1Orders",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "case": "trailing-newline",
+      "position": "table",
+      "name": "Orders\n",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "case": "trailing-newline",
+      "position": "column",
+      "name": "Orders\n",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "case": "quoted",
+      "position": "table",
+      "name": "Order\"name",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "case": "quoted",
+      "position": "column",
+      "name": "Order\"name",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "case": "underscore",
+      "position": "table",
+      "name": "_Orders",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "case": "underscore",
+      "position": "column",
+      "name": "_Orders",
+      "runtimeAccepted": false,
+      "checkedSchemaAccepted": false
+    },
+    {
+      "case": "valid-underscore",
+      "position": "table",
+      "name": "Order_1",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    },
+    {
+      "case": "valid-underscore",
+      "position": "column",
+      "name": "Order_1",
+      "runtimeAccepted": true,
+      "checkedSchemaAccepted": true
+    }
+  ],
   "sha256": {
-    "/home/erik/Projects/umf/scripts/core-ideals/key-tablespec-discovery-oracle.py": "269397f2a50e61edb10aa6011bfef8ee57f7aeca1d77aec82c2aadc16aa743ab",
+    "/home/erik/Projects/umf/scripts/core-ideals/key-tablespec-discovery-oracle.py": "081e00fe2e4ff8a7fed4cd0cb6b0e91c85f048e77b2bcdc6ce0268246e8539b2",
     "native/tablespec/cardinality-runtime/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
     "native/tablespec/cardinality-runtime/generators.py": "1b4e0686f2f08d8149f29368e7b40f5b073265204e893bf439ae345b309ff9bd",
     "native/tablespec/cardinality-runtime/sources.json": "66370e8d9a7f10a669ae34bfce1f6d2c757bb422285dcc78f1d415880852cda0",

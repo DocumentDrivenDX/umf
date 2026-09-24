@@ -4601,3 +4601,15 @@ operations retain unknown content and browser parity. See the
 This closes only the core implementation task. The five native Key binding tasks
 and their separate admission/delivery gate remain open; native equivalence is
 unclaimed. Older native binding qualifications retain their published profiles.
+
+
+TableSpec Key binding acceptance now passes for pinned native declarations and
+explicit authored projection with per-key residuals. The scoped TableSpec/core
+compatibility run passes 226 tests / 21,024 assertions across 43 files; twelve
+emitted schemas pass pinned native model/schema checks, and Chromium verifies
+both retained recovery directions and strict/report refusals. Runtime uniqueness
+and native equivalence remain unclaimed. See the
+[TableSpec Key acceptance](evidence/tablespec-key-acceptance.md).
+PostgreSQL, SQL Server, Avro and Parquet Key binding tasks remain open, followed
+by the separate Key ideal-admission/all-five delivery gate. Historical earlier
+concept gates retain their own execution scope; this task does not refresh them.

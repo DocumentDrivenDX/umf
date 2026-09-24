@@ -72,8 +72,23 @@ by={row['case']:row for row in results}
 for name in ['missing','null','empty']:
     assert by[name]['effectivePrimaryKey']==['meta_checksum'], name
 assert by['compound']['normalizedDeclarations']['primary_key']==['tenant','id']
+name_boundaries=[]
+for name,value,expected_runtime,expected_schema in [
+    ('max-length','A'*128,True,True),('over-length','A'*129,False,False),
+    ('unicode','注文',False,False),('leading-digit','1Orders',False,False),
+    ('trailing-newline','Orders\n',False,True),('quoted','Order"name',False,False),
+    ('underscore','_Orders',False,False),('valid-underscore','Order_1',True,True)]:
+    for position in ['table','column']:
+        source=json.loads(json.dumps(base))
+        if position=='table':source['table_name']=value
+        else:source['columns'][0]['name']=value
+        try:UMF.model_validate(source);runtime_ok=True
+        except ValidationError:runtime_ok=False
+        schema_ok=validator.is_valid(source)
+        assert (runtime_ok,schema_ok)==(expected_runtime,expected_schema),(position,name,runtime_ok,schema_ok)
+        name_boundaries.append({'case':name,'position':position,'name':value,'runtimeAccepted':runtime_ok,'checkedSchemaAccepted':schema_ok})
 proof={'nativeVersion':PIN,'scope':'Pinned metadata model, checked schema and generated row JSON Schema/SQL only; no execution-wide enforcement claim',
     'bindingImplemented':False,'versions':{p:importlib.metadata.version(p) for p in ['pydantic','jsonschema']},
-    'cases':results,'sha256':{str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(set(paths))}}
+    'cases':results,'nameBoundaries':name_boundaries,'sha256':{str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(set(paths))}}
 Path('fixtures/validation/key-tablespec-discovery-native.json').write_text(json.dumps(proof,indent=2)+'\n')
 print(json.dumps({'cases':len(results),'bindingImplemented':False}))

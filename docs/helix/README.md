@@ -99,8 +99,12 @@ Core-task acceptance now passes after all 92 native/browser refresh commands,
 1,213 regression tests and ten separate conformance/evidence tests (1,223 tests
 across all 329 test files, 113,329 assertions, zero failures). See the
 [Key core acceptance record](../../fixtures/validation/key-core-acceptance-evidence.json).
-The five native Key bindings and separate Key ideal-admission gate remain
-unfinished. No native equivalence is claimed.
+The TableSpec Key binding now passes qualified acceptance for native declaration
+classification, explicit authored projection and retained recovery, with 226 scoped
+compatibility tests and pinned native/Chromium evidence. See the
+[TableSpec Key acceptance](04-build/evidence/tablespec-key-acceptance.md).
+PostgreSQL, SQL Server, Avro and Parquet Key bindings and the separate Key
+ideal-admission gate remain unfinished. No native equivalence is claimed.
 
 The [SQL Server facet evidence](04-build/evidence/sqlserver-facet-discovery.md)
 records discovery, classification, authored projection and composed recovery,

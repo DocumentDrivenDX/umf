@@ -26,5 +26,25 @@
   {
     "name": "compound-ordered",
     "nativeText": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"order_id\",\"data_type\":\"INTEGER\",\"nullable\":{\"default\":false}},{\"name\":\"external_code\",\"data_type\":\"TEXT\",\"nullable\":{\"default\":false}}],\"primary_key\":[\"external_code\",\"order_id\"],\"unique_constraints\":[[\"external_code\"]]}"
+  },
+  {
+    "name": "native-name-table-max-length",
+    "nativeText": "{\"version\":\"1.0\",\"table_name\":\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"columns\":[{\"name\":\"order_id\",\"data_type\":\"INTEGER\",\"nullable\":{\"default\":false}},{\"name\":\"external_code\",\"data_type\":\"TEXT\",\"nullable\":{\"default\":false}}],\"primary_key\":[\"order_id\"],\"unique_constraints\":[[\"external_code\"]]}"
+  },
+  {
+    "name": "native-name-column-max-length",
+    "nativeText": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"data_type\":\"INTEGER\",\"nullable\":{\"default\":false}},{\"name\":\"external_code\",\"data_type\":\"TEXT\",\"nullable\":{\"default\":false}}],\"primary_key\":[\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"],\"unique_constraints\":[[\"external_code\"]]}"
+  },
+  {
+    "name": "native-name-table-valid-underscore",
+    "nativeText": "{\"version\":\"1.0\",\"table_name\":\"Order_1\",\"columns\":[{\"name\":\"order_id\",\"data_type\":\"INTEGER\",\"nullable\":{\"default\":false}},{\"name\":\"external_code\",\"data_type\":\"TEXT\",\"nullable\":{\"default\":false}}],\"primary_key\":[\"order_id\"],\"unique_constraints\":[[\"external_code\"]]}"
+  },
+  {
+    "name": "native-name-column-valid-underscore",
+    "nativeText": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"Order_1\",\"data_type\":\"INTEGER\",\"nullable\":{\"default\":false}},{\"name\":\"external_code\",\"data_type\":\"TEXT\",\"nullable\":{\"default\":false}}],\"primary_key\":[\"Order_1\"],\"unique_constraints\":[[\"external_code\"]]}"
+  },
+  {
+    "name": "multiple-alternates-report",
+    "nativeText": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"order_id\",\"data_type\":\"INTEGER\",\"nullable\":{\"default\":false}},{\"name\":\"external_code\",\"data_type\":\"TEXT\",\"nullable\":{\"default\":false}}],\"primary_key\":[\"order_id\"],\"unique_constraints\":[[\"external_code\"],[\"order_id\",\"external_code\"]]}"
   }
 ]

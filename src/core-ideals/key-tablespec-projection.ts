@@ -53,8 +53,11 @@ export function projectKeysToTableSpec(input:Document,authorInput:CoreKeyDeclara
  // The receipt is the explicit residual for context outside this Key-only lowering.
  loss('/',source,'Only selected Record column carriers and key tuple declarations are emitted; all other metadata, native extensions, relationships and unknown content remain in this source residual');
  const native:Record<string,Json>={version:'1.0',table_name:request.tableName,columns:[]};let impossible=false;
+ const nativeName=(name:string)=>name.length<=128&&/^[A-Za-z][A-Za-z0-9_]*(?![\s\S])/.test(name);
+ if(!nativeName(request.tableName)){impossible=true;loss('/request/tableName',request.tableName,'Pinned TableSpec requires an ASCII letter followed by ASCII letters, digits or underscores, at most 128 characters; no name normalization is permitted');}
  const families:Record<string,string>={BOOLEAN:'boolean',INTEGER:'integer',DECIMAL:'decimal',TEXT:'string',VARCHAR:'string',CHAR:'string',FLOAT:'float',DATE:'date',DATETIME:'timestamp',TIMESTAMP:'timestamp'};
- for(const column of request.columns){
+ for(const [columnIndex,column] of request.columns.entries()){
+  if(!nativeName(column.name)){impossible=true;loss('/request/columns/'+columnIndex+'/name',column.name,'Native column name violates pinned TableSpec identifier syntax or 128-character bound; report cannot emit an invalid declaration');}
   const field=locate(source,column.field),e=field.element;
   if(e.scalarType!==families[column.nativeType]||e.kind!=='field'||e.cardinality!=='one'||e.itemType!==undefined||e.references?.some(r=>r.role==='record-type')){impossible=true;loss(field.path,e,'Selected native scalar carrier conflicts with Field shape or scalar family');continue;}
   const n:Record<string,Json>={name:column.name,data_type:column.nativeType};
