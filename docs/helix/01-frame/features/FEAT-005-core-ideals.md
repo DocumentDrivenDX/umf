@@ -71,3 +71,28 @@ remain failing exact projections. Native support versions and evidence are publi
 
 OWL, DDD lifecycle, physical encoding and default execution stay in extensions.
 This authoring change does not modify the current envelope or claim implementation.
+
+## Unplaced temporal-facet proposal
+
+[US-052](../user-stories/US-052-temporal-facets.md) and
+[CONTRACT-047](../../02-design/contracts/CONTRACT-047-temporal-facets.md) frame
+author-stated instant/civil timestamp meaning, date-free time meaning,
+fractional-second precision and original-offset retention. This proposal is
+outside IDEAL-01's current ordered delivery gate until the owner places it.
+Its candidate core status requires FR-3 admission evidence from two priority
+systems; otherwise the semantics stay in a published extension with fidelity
+reports. Neither the existing facet implementation nor Key equality gains
+temporal meaning from this framing alone.
+
+## Unplaced constraint-ideal proposal
+
+[US-053](../user-stories/US-053-constraint-ideals.md) and
+[CONTRACT-048](../../02-design/contracts/CONTRACT-048-constraint-ideals.md)
+triage allowed-value sets, exact numeric ranges and minimum length as candidate
+core value assertions. Pattern and opaque record-level invariants are proposed
+for a separately published `umf.constraints` extension with interpretation
+status and fidelity reports. Temporal ranges wait for CONTRACT-047's temporal
+meaning and a separate ordering decision. None enters IDEAL-01's ordered
+delivery or `spec/core/` without owner placement, FR-3 evidence, a versioned
+migration and rollback; native CHECK or enum observations do not imply authored
+intent or enforcement of existing rows.

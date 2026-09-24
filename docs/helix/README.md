@@ -91,6 +91,15 @@ including the native counterexamples that limit each qualified profile.
 Key follows the five-system facet gate. See the
 [Field conformance evidence](../../fixtures/validation/field-conformance.json).
 
+Design proposals for the sister engine refine named Keys and relationship
+identity in [CONTRACT-040](02-design/contracts/CONTRACT-040-core-ideals.md) and
+[CONTRACT-041](02-design/contracts/CONTRACT-041-relationship.md). Offline
+revision-pinned references and schema comparison are framed in
+[FEAT-007](01-frame/features/FEAT-007-offline-composition.md). Temporal facets
+and additional value constraints are unplaced proposals in
+[FEAT-005](01-frame/features/FEAT-005-core-ideals.md); their admission and
+implementation remain separate from the delivered core status above.
+
 Full Bun regression baseline (2026-09-21): 718 tests across 176 files, 64,038
 assertions, zero failures. The [verification record](../../fixtures/validation/bun-full-suite.json)
 includes source/log fingerprints and limits. This does not complete the remaining

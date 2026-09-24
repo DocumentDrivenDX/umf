@@ -45,7 +45,7 @@ native SDL preservation; GraphQL schema validity is distinct from execution.
 - **US-049-AC3:** Given authored scalar and nullability ideals, when
   projected, then field wrappers reflect only supported mappings and all
   unsupported distinctions are reported.
-- **US-049-AC4:** Given source-end cardinality or heterogeneous endpoints,
+- **US-049-AC4:** Given source-end participation bounds or heterogeneous endpoints,
   when strict mode runs, then non-exact obligations block without partial SDL.
 - **US-049-AC5:** Given the same safe mapping in report mode, when projected,
   then every unexpressed obligation is residualized with source paths.

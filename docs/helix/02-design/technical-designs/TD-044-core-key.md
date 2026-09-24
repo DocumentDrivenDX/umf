@@ -37,38 +37,57 @@ necessary; a core label cannot reduce the native fidelity obligation.
 
 ### Identity and enforcement decisions
 
-Resolve each authored key reference against its owning record, then validate
-nonempty unique component list, singular availability and defined comparator domains.
-Treat field order as retained author metadata, not justification for a different
-uniqueness result. No native index classifier writes author key intent. Instead,
-attach a separate enforcement observation with scope, predicate, enabled/trust state,
-null treatment and comparator evidence; reconcile that observation with the assertion.
+Reserve `Record.keys` as a list of named key definitions, each with an opaque
+stable `id`, distinct `name`, ordered nonempty `fields` and optional `primary`.
+At most one key is primary; none is permitted. Reject duplicate IDs or names,
+duplicate field sets even in a different order, and missing/mismatched target-key
+IDs. Resolve each authored field reference against its owning record, then validate
+singular required availability and defined comparator domains. Field order is
+retained for tuple encoding and native column order, but does not justify a
+different uniqueness result. A key rename keeps its ID; changing its tuple under
+the same ID is a conflicting semantic edit. No native index classifier writes
+author key intent. Instead, attach a separate enforcement observation with scope,
+predicate, enabled/trust state, null treatment and comparator evidence; reconcile
+that observation with each authored key separately.
 
-For SQL targets choose primary key or unconditional enabled uniqueness plus NOT NULL
-only after comparator/domain compatibility checks. A filtered predicate is never an
+Implement `umf-key-tuple-v1` only over validated key definitions and exact lexical
+values. Its binary frame, tags and shortest length rules are normative in
+CONTRACT-040; `fixtures/key/tuple-encoding-v1.json` supplies golden vectors.
+Compute fixed-scale decimal coefficients exactly from raw tokens/string input,
+without JavaScript-number rounding. Validate Unicode scalar sequences and UTF-8
+without normalization. Return a single atomic error for missing/null, float,
+temporal or invalid components. Caller namespaces the bytes by document, record
+and stable key ID; the encoded tuple itself is revision-independent.
+
+For SQL targets choose at most one primary key and unconditional enabled UNIQUE
+constraints for alternates, each with NOT NULL components, only after
+comparator/domain compatibility checks. Native constraint names remain physical
+bindings, not authored key IDs. A filtered predicate is never an
 exact substitute even when a sample currently lies inside it. Disabled constraints
 cannot enforce the ideal; trusted/enforced status and existing-data validation require
 native evidence. SQL collation/padding cannot silently substitute for exact equality.
 
 TableSpec primary_key is a declaration until runtime enforcement is demonstrated;
-Avro and Parquet have no collection uniqueness enforcement and must preserve residuals.
+it cannot by itself carry alternate keys or stable key IDs. Avro and Parquet have
+no collection uniqueness enforcement and must preserve per-key residuals.
 The reverse path restores author intent from its retained report, not inference from
 native uniqueness. Execute duplicate insertion outside a filter and against disabled
 indexes alongside an actual unconditional-key rejection control to avoid vacuous gates.
 
 ## Component Changes
 
-- `spec/core/`: add this concept and complete result/provenance/residual schema
-  branches after the semantic contract; choose and document the version/profile
-  transition before reserving open members (US-044-AC1/10).
+- `spec/core/`: add the plural key shape and complete result/provenance/residual
+  schema branches after the semantic contract; choose and document the
+  version/profile transition before reserving open members (US-044-AC1/10/11).
 - `src/model/`, `src/validation/`: typed authoring, exact facet/reference checks,
   copied access and conflict detection (AC1/2/10); do not rewrite unrelated content.
 - `src/adapters/{tablespec,postgresql,sqlserver,avro,parquet}/`: source-qualified
   classifications retaining native payloads; no derived-authority guessing (AC2/6).
 - `src/projections/`: explicit strict/report native bindings, candidate atomicity
   and recoverable residuals (AC3–5).
-- `tests/core/key-ideals.test.ts` and five native fixture directories: acceptance and boundary matrix
-  (AC1–10). Use Bun host tooling in `scripts/`; portable `src/` cannot import it.
+- `tests/core/key-ideals.test.ts`, a key tuple encoding test and five native
+  fixture directories: acceptance and boundary matrix (AC1–13). Use Bun host
+  tooling in `scripts/`; portable `src/` cannot import it.
 
 ## API/Interface Design
 
@@ -109,6 +128,12 @@ are isolated test dependencies, never browser library dependencies.
 ## Testing
 
 Implement tests/core/key-ideals.test.ts for authoring, conflicts, unknowns and both recovery directions.
+Add normative key tuple vectors for scale-preserving decimal identity, Unicode
+normalization distinctions, empty versus absent, and float/temporal refusals.
+Run the same vectors in Bun and Chromium; do not claim native oracle agreement
+from these design fixtures alone. Test two named keys, an optional primary,
+name/order-preserving stable IDs, duplicate field-set refusal and explicit
+target-key lookup as a prerequisite for the relationship slice.
 Run the five binding matrices with native acceptance/value counterexamples and
 Chromium parity, both JSON/YAML recoveries, no external browser requests and no
 Node/Bun globals. AC7 retains fixtures/sqlserver/indexes-oracle.json,
@@ -122,18 +147,22 @@ admission, five-system delivery and (only if pursued) native-equivalence graduat
 
 ## Migration & Rollback
 
-Additive does not mean collision-free: check old unknown members before reserving
-names, record a version/profile transition, preserve originals and test inverse
-migration. Disable new classification/projection without dropping author data.
+Additive does not mean collision-free: check old unknown `key` and `keys`
+members before reserving the plural name, record a version/profile transition,
+preserve originals and test inverse migration. The earlier singular `Record.key`
+was proposed but never published as a schema member, so no document may be
+silently upgraded from it. Disable new classification/projection without dropping
+author data.
 Rollback restores the old envelope/archive plus explicit retained new assertions;
 it must not fabricate those assertions in an older interpreter. Native removal
 is not part of this slice and requires its own FR-28 migration/rollback decision.
 
 ## Implementation Sequence
 
-1. Confirm CONTRACT-040 surface and document version transition; implement core
-   schema/types/validators and AC1/10 before adapter changes.
-2. Add five independently scoped up/down bindings with AC2–7 and retained archives.
+1. Confirm CONTRACT-040 plural-key surface and document version transition;
+   implement core schema/types/validators, stable key-ID lookup, atomic tuple
+   encoder and AC1/10–12 before adapter changes.
+2. Add five independently scoped up/down bindings with AC2–7/13 and retained archives.
 3. Verify >=2-system admission evidence, then complete all-five AC8/9 gate before
    starting the next concept. Publish failures and residuals, not inferred support.
 4. Run Bun tests/typecheck, browser build/Chromium and relevant native oracles;

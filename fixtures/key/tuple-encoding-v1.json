@@ -1,0 +1,101 @@
+{
+  "profile": "umf-key-tuple-v1",
+  "status": "normative design vectors; implementation and oracle evidence pending",
+  "contract": "docs/helix/02-design/contracts/CONTRACT-040-core-ideals.md",
+  "scope": "bytes are scoped externally by document, record, and stable key ID",
+  "vectors": [
+    {
+      "id": "decimal-scale-2-short-lexical",
+      "fields": [{ "id": "amount", "scalarType": "decimal", "precision": 5, "scale": 2 }],
+      "values": [{ "decimalToken": "1.2" }],
+      "expectedHex": "554d464b3101030402313230"
+    },
+    {
+      "id": "decimal-scale-2-padded-lexical",
+      "fields": [{ "id": "amount", "scalarType": "decimal", "precision": 5, "scale": 2 }],
+      "values": [{ "decimalToken": "1.200" }],
+      "expectedHex": "554d464b3101030402313230",
+      "equalTo": "decimal-scale-2-short-lexical"
+    },
+    {
+      "id": "decimal-scale-2-negative",
+      "fields": [{ "id": "amount", "scalarType": "decimal", "precision": 5, "scale": 2 }],
+      "values": [{ "decimalToken": "-1.20" }],
+      "expectedHex": "554d464b31010305022d313230"
+    },
+    {
+      "id": "unicode-precomposed",
+      "fields": [{ "id": "name", "scalarType": "string" }],
+      "values": [{ "string": "\u00e9" }],
+      "expectedHex": "554d464b31010402c3a9"
+    },
+    {
+      "id": "unicode-decomposed",
+      "fields": [{ "id": "name", "scalarType": "string" }],
+      "values": [{ "string": "e\u0301" }],
+      "expectedHex": "554d464b3101040365cc81",
+      "notEqualTo": "unicode-precomposed"
+    },
+    {
+      "id": "empty-string-present",
+      "fields": [{ "id": "name", "scalarType": "string" }],
+      "values": [{ "string": "" }],
+      "expectedHex": "554d464b31010400"
+    },
+    {
+      "id": "negative-integer",
+      "fields": [{ "id": "id", "scalarType": "integer" }],
+      "values": [{ "integerToken": "-42" }],
+      "expectedHex": "554d464b310102032d3432"
+    },
+    {
+      "id": "binary-with-zero",
+      "fields": [{ "id": "id", "scalarType": "binary" }],
+      "values": [{ "binaryHex": "00ff" }],
+      "expectedHex": "554d464b3101050200ff"
+    },
+    {
+      "id": "boolean-true",
+      "fields": [{ "id": "id", "scalarType": "boolean" }],
+      "values": [{ "boolean": true }],
+      "expectedHex": "554d464b3101010101"
+    },
+    {
+      "id": "ordered-mixed-tuple",
+      "fields": [
+        { "id": "id", "scalarType": "integer" },
+        { "id": "name", "scalarType": "string" },
+        { "id": "amount", "scalarType": "decimal", "precision": 5, "scale": 2 }
+      ],
+      "values": [{ "integerToken": "7" }, { "string": "" }, { "decimalToken": "1.20" }],
+      "expectedHex": "554d464b31030201370400030402313230"
+    }
+  ],
+  "refusals": [
+    {
+      "id": "decimal-rounding-required",
+      "fields": [{ "id": "amount", "scalarType": "decimal", "precision": 5, "scale": 2 }],
+      "values": [{ "decimalToken": "1.201" }],
+      "reason": "not-representable-at-declared-scale"
+    },
+    {
+      "id": "empty-vs-absent",
+      "fields": [{ "id": "name", "scalarType": "string" }],
+      "values": [{ "absent": true }],
+      "reason": "key-component-absent",
+      "notEqualTo": "empty-string-present"
+    },
+    {
+      "id": "float-undefined-equality",
+      "fields": [{ "id": "reading", "scalarType": "float" }],
+      "values": [{ "floatToken": "1.5" }],
+      "reason": "undefined-key-equality"
+    },
+    {
+      "id": "temporal-undefined-equality",
+      "fields": [{ "id": "occurred", "scalarType": "timestamp" }],
+      "values": [{ "timestamp": "2026-09-24T12:00:00Z" }],
+      "reason": "undefined-key-equality"
+    }
+  ]
+}

@@ -43,8 +43,12 @@ residuals for meaning their targets cannot express.
 
 ## Problem Statement
 
-Core references name targets and opaque roles but do not assert association
-endpoints, multiplicity or direction. Native FK, GraphQL object fields and DDD
+Core references name schema elements and opaque roles but do not assert record
+associations. A record-valued Field is containment by value; field cardinality
+describes `one`/`array`/`map` container shape, not `min..max` relationship
+participation. The authored relationship must name a target Record key,
+including an alternate key, and may name a keyed association Record with fields.
+Native FK, GraphQL object fields and DDD
 concept references can suggest overlapping ideas without proving author intent.
 Storage placement and indexes are target-specific, and mixing them into logical
 fields would make one model's meaning vary by deployment. Existing adapters
@@ -53,8 +57,12 @@ preserve native sources; the authoring path also needs directed generation.
 ## Requirements
 
 - REL-01: Expose an authored relationship separately from generic references,
-  instance edges and native observations. Preserve DDD concept-reference meaning
-  as a qualified binding, not a replacement for either vocabulary.
+  instance edges and native observations. It connects independently keyed Record
+  types, names a stable target-key identity, and states per-end participation
+  bounds, target lifecycle, optional keyed association Record and inverse
+  navigation. Preserve DDD concept-reference meaning as a qualified binding,
+  not a replacement for either vocabulary. Native FK enforcement and DDD
+  aggregate membership remain separate claims.
 - REL-02: Publish independently versioned target bindings for storage choices
   and index capabilities. Preserve unrecognized choices; report absent target
   support. A logical field cannot imply filterability or sortability.
@@ -75,19 +83,24 @@ semantic contract and technical design, except US-046/047 share CONTRACT-042.
 
 ## Edge Cases and Error Handling
 
-Reject malformed or unresolved endpoint IDs without changing an input model.
-Keep undeclared native FKs and computed GraphQL object fields as observations,
-never invented author intent. Report heterogeneous endpoint and source-side
-cardinality losses. Unknown extensions and native bytes survive. A stale binding
+Reject malformed or unresolved endpoint/key IDs without changing an input
+model. Keep undeclared native FKs and computed GraphQL object fields as
+observations, never invented author intent. A PostgreSQL `NOT VALID` or SQL
+Server `NOCHECK` FK does not certify existing rows; PostgreSQL composite `MATCH
+SIMPLE` may skip null-component references. A FK to UNIQUE can be a scoped
+carrier for an authored alternate key, without inventing it. Report
+heterogeneous endpoint, `min..max`, lifecycle and association-Record losses.
+Unknown extensions and native bytes survive. A stale binding
 or unsupported path blocks unsafe generation; unsupported but safe target
 features can be emitted only with explicit report-mode residuals. Index
 predicates remain opaque declared expressions, not UMF-executed rules.
 
 ## Success Metrics
 
-The six relationship cases (one-to-one, many-to-one, many-to-many,
-heterogeneous source, self-reference, undirected) each have strict/report and
-both retained-recovery outcomes. Every declared binding/index choice in the
+The six original relationship cases (one-to-one, many-to-one, many-to-many,
+heterogeneous source, self-reference, undirected), plus alternate-key,
+`1..*` and reified-association cases, each have strict/report and both
+retained-recovery outcomes. Every declared binding/index choice in the
 authored graph corpus has a target outcome. Generated DDL/SDL pass the existing
 native adapters and pinned independent checks, with zero unreported known loss
 in the corpus. Claims name versions, subsets, evidence and remaining gaps.

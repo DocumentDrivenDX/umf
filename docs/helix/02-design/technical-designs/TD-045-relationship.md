@@ -30,8 +30,11 @@ design exists. This is an experimental ideal, not native replacement.
 ## Technical Approach
 
 Add relationship authoring/inspection to a new core envelope version, keeping
-old `references` untouched. Validate exact endpoint pairs, local names,
-inverse collisions and cardinality before publishing copied results. Separate
+old `references` untouched. Validate exact keyed-Record endpoint pairs,
+stable relationship and target-key IDs, unique local names, inverse collisions,
+`min..max` bounds, lifecycle/direction coherence and any keyed association
+Record before publishing copied results. Do not reuse field `cardinality`:
+it describes a container (`one`/`array`/`map`), not participation. Separate
 authored assertions from adapter classifications through CONTRACT-040 receipts;
 do not infer intent from DDD fields, FKs or GraphQL AST nodes. Build one
 priority binding at a time with source-linked outcomes, then run a separate
@@ -41,7 +44,7 @@ profiles retain their own versions and evidence.
 ## Component Changes
 
 - `spec/core/`, `src/model/`, `src/validation/`: publish the new schema/version,
-  typed access, exact-ID and collision checks, migration/rollback receipts
+  typed access, exact-ID/key and collision checks, migration/rollback receipts
   (US-045-AC1/2/10). The CONTRACT-041 semantic text is the prerequisite.
 - `src/adapters/{tablespec,postgresql,sqlserver,avro,parquet}/` and
   `src/projections/`: scoped native observations and explicit down-bindings;
@@ -53,10 +56,13 @@ profiles retain their own versions and evidence.
 ## API/Interface Design
 
 CONTRACT-041 owns the exact relationship shape and operation result;
-CONTRACT-001 owns IDs/unknown preservation and CONTRACT-040 owns provenance,
-strict/report and recovery. This TD wires those surfaces and does not add a
-second reference resolver. Consumers select by module/name and preserve the
-full source context.
+CONTRACT-001 owns IDs/unknown preservation and CONTRACT-040 owns stable named
+keys, provenance, strict/report and recovery. This TD wires those surfaces and
+does not add a second reference resolver. Consumers select by module/name and
+preserve full source context. The target-key reference uses the stable Key ID,
+not display name or native index name; the final serialized form follows
+TD-044 before schema publication. Cross-document identity/pinning is deferred
+to the CONTRACT-001 successor and must not be guessed here.
 
 ## Data Model Changes
 
@@ -67,9 +73,14 @@ acquires an association by default. Keep native refinements in extensions.
 ## Integration Points
 
 TableSpec may initially refuse with a retained residual, but its native model
-must be inspected. PostgreSQL/SQL Server need scoped FK/junction checks; Avro
-and Parquet need qualified carriers and preserved bytes. GraphQL/RDF/LinkML
-are additional profiles, never replacements for a priority target.
+must be inspected. PostgreSQL/SQL Server need scoped FK/junction checks,
+including alternate UNIQUE targets, `NOT VALID`/`NOCHECK`, composite `MATCH
+SIMPLE`, and native action/trust details. Native classification records these
+as observations, never authored identity, lifecycle or aggregate membership.
+Avro and Parquet need qualified carriers and preserved bytes; they cannot
+enforce references. GraphQL/RDF/LinkML are additional profiles, never
+replacements for a priority target. Association Records need a keyed row
+carrier and attribute preservation; a bare junction cannot satisfy them.
 
 ## Security and Performance
 
@@ -80,8 +91,11 @@ scripts; portable source must build for Chromium. No throughput claim.
 ## Testing
 
 Map US-045-AC1–10 to cited tests. Check JSON/YAML recovery, unknown content,
-strict/report pairs, ideal→native→ideal, native→ideal→native, six corpus shapes,
-old-member collisions, pinned native systems and real Chromium parity. Record
+strict/report pairs, ideal→native→ideal, native→ideal→native, original six
+corpus shapes plus alternate-key, bounded and keyed-Enrollment cases, old-member
+collisions, pinned native systems and real Chromium parity. Include `min:1,max:*`,
+an empty-but-required association set, non-Record endpoints, composite nullable
+FKs, untrusted FKs and foreign keys to UNIQUE rather than PK. Record
 two useful priority mappings separately from all-five delivery and FR-28.
 
 ## Migration & Rollback
@@ -100,5 +114,9 @@ an explicit receipt/residual. It never silently deletes native extensions.
 
 ## Risks
 
-Heterogeneous endpoint types and reverse cardinality can be overclaimed by a
-single FK or GraphQL field. Require residuals and native counterexamples.
+Heterogeneous endpoint types, both participation minima, lifecycle ownership
+and association identity can be overclaimed by a single FK or GraphQL field.
+Require residuals and native counterexamples. Before core publication, resolve
+the final Key-ID serialization, relationship lineage across revisions, and how a
+binding connects an association Record to endpoint-key columns. These are
+design decisions, not authorization to infer semantics from storage.

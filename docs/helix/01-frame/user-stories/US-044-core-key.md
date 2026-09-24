@@ -19,8 +19,10 @@ ddx:
 
 ## Story
 
-**As a** data platform engineer, **I want** to assert record identity separately from observed indexes,
-**So that** I can inspect what each target preserves before using its output.
+**As a** data platform engineer, **I want** to declare named primary and alternate
+keys with stable identities separately from observed indexes, **So that** records
+and future relationships can identify the intended tuple without treating a native
+constraint as author intent.
 
 ## Context
 
@@ -58,10 +60,30 @@ scalar classifications remain evidence inputs, not proof of this new ideal.
   status is published, then it does not claim all-five completion or native equivalence.
 - **US-044-AC10:** Given a legacy document or colliding unknown member, when
   migrated and rolled back, then no old assertion is silently reinterpreted or lost.
+- **US-044-AC11:** Given several named keys on one record, when validated and
+  selected, then each has a unique stable ID and name, no more than one is marked
+  primary, alternate keys retain their own uniqueness assertion, and references
+  can target a key by ID across name and key-list order changes. Missing or duplicate key IDs,
+  names, field sets, and an ambiguous default selection block with paths.
+- **US-044-AC12:** Given exact values for a validated key, when encoded using
+  `umf-key-tuple-v1`, then the normative fixture bytes match in Bun and Chromium:
+  scale-2 lexical `1.2` and `1.20` agree without rounding; U+00E9 differs from
+  U+0065 U+0301; empty string encodes while absence blocks; float and temporal
+  components block before any partial bytes escape.
+- **US-044-AC13:** Given one primary and multiple alternate keys, when projected
+  to PostgreSQL or SQL Server, then each key has a distinct outcome and native
+  constraint observation; when projected to TableSpec, Avro or Parquet, any
+  unexpressed alternate uniqueness or stable key ID is residualized in report
+  mode and blocks strict mode. Reimport without retained author provenance never
+  invents these key identities.
 
 ## Edge Cases
 
-Require singular present key components and compatible equality. Native primary-key observations cannot invent author identity intent; Avro/Parquet retain key residuals.
+Require singular present key components and compatible equality. The earlier
+singular `Record.key` proposal has no published schema surface; an opaque legacy
+`key` or `keys` member requires an explicit migration with rollback. Native
+primary/unique observations cannot invent author identity intent; Avro/Parquet
+retain a separate residual for every authored key.
 Conflicting authored/classified claims are diagnosed, not silently overwritten.
 Malformed ideals block; unknown versions remain recoverable without interpretation.
 
@@ -71,6 +93,8 @@ A SQL Server filtered unique index admits rows outside its predicate and a disab
 Each scenario includes strict/report pairs, both UMF serializations, source-copy
 isolation, native recovery and browser diagnostics. Existing negative oracles are
 regressions to preserve, not new passing ideal-admission evidence.
+The design vectors in `fixtures/key/tuple-encoding-v1.json` pin the exact encoding
+and refusal cases; execution evidence remains pending until TD-044 implementation.
 
 ## Dependencies
 

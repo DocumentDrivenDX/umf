@@ -107,7 +107,7 @@ authoring each artifact.
    many-to-many, heterogeneous source, self-reference and undirected fixtures.
    Resolve endpoint-set cardinality and heterogeneous relation lowering
    explicitly; a single FK column cannot claim to type-check several source
-   element kinds. GraphQL source-end cardinality and RDF union class behavior
+   element kinds. GraphQL source-end participation and RDF union class behavior
    need residuals. Native-only reimport never asserts the authored relationship.
 3. **Binding and index boundary.** CONTRACT-042 defines an independently
    versioned, target-qualified `umf.binding` artifact referencing a logical

@@ -78,7 +78,7 @@ this contract. Existing documents do not acquire these assertions by default.
 | Element.facets.precision | positive integer | Decimal coefficient digit bound for fixed-scale decimal. Requires scale. |
 | Element.facets.scale | integer >= 0 | Fixed decimal fractional digit count; requires precision, with scale <= precision. Value domain is integer coefficient times 10^-scale and absolute coefficient < 10^precision. No rounding permitted implicitly. |
 | Element.facets.integerWidth | `{bits: positive integer, signed: boolean}` | Signed domain [-2^(bits-1),2^(bits-1)-1] or unsigned [0,2^bits-1]. Mathematical value domain, not physical storage width. |
-| Record.key | `{fields: nonempty ordered list of element references}` | Author assertion that the tuple identifies a record within that record collection. No duplicate references, cross-record fields, absent fields, arrays or maps. Required singular fields and defined equality are necessary. |
+| Record.keys | Nonempty list of `{id, name, fields, primary?}` | Each authored key asserts that its ordered field tuple uniquely identifies a record within that record collection. `id` is stable key identity; `name` is a unique human-facing name within the record; `primary` is an optional boolean with at most one `true` per record. Each `fields` list is nonempty, has no duplicate references, and names only required singular fields owned by the record with defined equality. An absent `keys` member asserts no key. |
 
 Nullability/cardinality/facets apply to fields only. A record-valued field is
 still a field with one/container cardinality and a record reference; its record
@@ -95,6 +95,8 @@ cannot become a valid bound. Invalid combinations fail atomically. A missing
 facet imposes no such restriction and MUST NOT be populated from a target default.
 Unqualified float never guarantees exact binary64 transport or binary32 narrowing.
 An exactness request is a projection obligation, not a new float width inference.
+Temporal facets are only a proposal under CONTRACT-047; they do not change this
+surface or unblock temporal Key equality and tuple encoding.
 
 Ideal absence deliberately leaves its native encoding unspecified. A binding MUST
 say whether absence uses an omitted member, SQL NULL, an Avro null branch, or
@@ -107,14 +109,59 @@ TableSpec contextual rules cannot become unconditional claims; unresolved model
 versus JSON Schema disagreement MUST produce unspecified with diagnostics.
 
 Key is asserted identity, not an observed index, DDD lifecycle, foreign key or
-storage locality. For the initial portable key subset, equality is exact boolean,
-mathematical integer/fixed-scale decimal, Unicode scalar sequence, or byte sequence
-equality. Floating and temporal key equality remains unspecified and MUST block
-rather than borrow a native comparator. Case-insensitive collation, trailing-space
-comparison or padded types require explicit comparison evidence or residual loss.
-A native primary/unique key can supply an enforcement observation, but MUST NOT
-invent author identity intent. Existing authored identity may be recovered from
-retained provenance/residual; observation alone does not assert it.
+storage locality. Every key in one record has a distinct opaque `id` and `name`;
+neither list position nor name is its identity. The `id` MUST remain stable across
+renames and schema revisions for the same authored key. Reuse of an `id` for a
+different tuple is a conflicting change, not a rename. The optional `primary`
+marker selects a preferred key for consumers that need a default; it does not
+strengthen equality or imply native primary-key enforcement. Every unmarked key
+is an alternate candidate key, with the same uniqueness assertion. A future
+relationship can name a target record and this stable key `id`; it MUST NOT
+silently choose the primary or first key when the reference omits a key identity.
+Two keys with the same component field set, regardless of order, are a duplicate
+assertion and MUST be rejected; field order itself remains part of each accepted
+key definition and tuple encoding.
+
+For the initial portable key subset, equality is exact boolean, mathematical
+integer/fixed-scale decimal, Unicode scalar sequence, or byte sequence equality.
+Fixed-scale decimal equality compares exact integer coefficients at the declared
+scale: lexical `1.2`, `1.20` and `1.200` represent the same value at scale 2
+when conversion needs no rounding and the coefficient meets precision. `1.201`
+cannot be rounded to that value. String equality neither normalizes Unicode nor
+folds case; U+00E9 and U+0065 U+0301 are distinct. Empty string is a present
+value; absent is invalid as a key component. Floating and temporal key equality
+remains unspecified and MUST block rather than borrow a native comparator.
+Case-insensitive collation, trailing-space comparison or padded types require
+explicit comparison evidence or residual loss. A native primary/unique key can
+supply an enforcement observation, but MUST NOT invent author identity intent.
+Existing authored identity may be recovered from retained provenance/residual;
+observation alone does not assert it.
+
+### Portable key tuple encoding (`umf-key-tuple-v1`)
+
+Within one validated key definition, equal tuples MUST produce identical bytes
+and unequal tuples MUST produce different bytes. The byte string is scoped by the
+document/record/key identity supplied by the caller; it is not a globally unique
+record identifier and contains no schema revision. The encoder MUST reject a
+missing, null, container, float, temporal, invalid Unicode, out-of-domain or
+otherwise undefined component before emitting any bytes. Inputs requiring numeric
+rounding or already-rounded host-number reconstruction cannot be encoded exactly.
+
+Encode the ASCII magic `UMFK1`, then the number of components as shortest unsigned
+LEB128, then each component in declared field order as one tag byte, shortest
+unsigned LEB128 payload-byte length, and payload. Tags are `01` boolean (one byte
+`00` or `01`), `02` integer (minimal signed base-10 ASCII, zero `0`, no plus or
+leading zero), `03` fixed-scale decimal (shortest unsigned LEB128 declared scale
+followed by the minimal signed base-10 ASCII integer coefficient), `04` string
+(strict shortest-form UTF-8 of the exact Unicode scalar sequence, including a
+zero-length payload for empty string), and `05` binary (original bytes). A
+negative zero integer or decimal coefficient encodes as `0`. Lengths count payload
+bytes, not scalars; malformed or nonminimal framing is invalid. Exact decimal
+parsing MUST compute the coefficient before host-number conversion. The component
+tag and length make tuples unambiguous; field metadata and key identity remain in
+the separately validated schema context. Normative design vectors are in
+`fixtures/key/tuple-encoding-v1.json`; implementation and oracle evidence are
+pending.
 
 ### Binding and result obligations
 
@@ -163,7 +210,7 @@ All entries obey strict/report behavior and retain the original native payload.
 | Nullability | Explicit selected runtime/context binding only; disagreement → unspecified/residual | Required projection uses NOT NULL; NULL absence binding explicit; native nullable permits NULL, not omitted SQL members | Same explicit NULL carrier; defaults/generated values are separate | Required selects non-null branch; absent-allowed selects explicit null union binding; missing reader field/default rules stay native | Required/optional repetition needs checked ancestor levels; optional group absence differs from optional leaf; absent-allowed binding explicit |
 | Cardinality | Simple column → one where established; EMBEDDING/vector is not silently an array scalar; unsupported containers residual | Arrays can approximate ordered sequences only with rank/lower-bound/domain obligations; JSON/JSONB map binding must disclose shape/enforcement; no default native map | Singular columns → one; JSON/text or child-table containers require explicit layout and enforcement losses | Array maps to sequence with item schema; map to exact string-key mapping with value schema; unions retain branches | LIST/MAP only after structural/logical interpretation; legacy repeated field does not automatically mean non-null array; duplicate map keys/order distinctions residual |
 | Facets | length/precision/scale only under demonstrated runtime meaning; integer storage width not implied | integer widths map when exact domain matches; numeric(p,s) fixed-scale profile; varchar character bounds require Unicode/unit and padding evidence | integer types require signedness/domain checks; decimal(p,s); nvarchar length counts UTF-16 units, varchar length depends on encoding—no silent Unicode-scalar mapping | int/long only supported width/domain; decimal bytes/fixed precision/scale checked; string/bytes length is unenforced residual | signed/unsigned integer annotations and physical capacity both checked; decimal precision/scale interpreted; FIXED_LEN_BYTE_ARRAY is exact byte size, not merely maximum length |
-| Key | primary_key declaration retained, but native enforcement/identity intent cannot be assumed | Emit primary key or unconditional enforced uniqueness plus NOT NULL with compatible equality; filtered/partial indexes refuse exact key binding | Emit primary key or unconditional enabled enforced uniqueness plus NOT NULL and compatible equality; filtered or disabled unique indexes refuse exact key binding | No collection uniqueness/identity enforcement; preserve author assertion as residual, strict blocks | No collection key enforcement; sorting/statistics/field IDs are not keys; preserve residual, strict blocks |
+| Key | `primary_key` can carry at most one selected tuple; every alternate key and its stable identity is residual unless an explicit carrier proves it; native enforcement/identity intent cannot be assumed | Emit one selected primary key and unconditional enforced UNIQUE constraints for alternates, with NOT NULL and compatible equality; native constraint names are bindings, not stable authored key IDs; filtered/partial indexes refuse exact binding | Emit one selected primary key and unconditional enabled enforced UNIQUE constraints for alternates, with NOT NULL and compatible equality; filtered or disabled unique indexes refuse exact binding | No collection uniqueness/identity enforcement; preserve each authored key as a separate residual, strict blocks | No collection key enforcement; sorting/statistics/field IDs are not keys; preserve each authored key as a separate residual, strict blocks |
 
 For narrower integer widths, a wider SQL storage type plus explicit bounds may
 honor the ideal if the constraint is actually enforced. Avro/Parquet width claims
@@ -189,6 +236,12 @@ Unknown future labels/fields remain recoverable and block unsafe interpretation.
 Before reserving a previously open core member name, the implementation MUST test
 collisions with preexisting unknown content and define an explicit version/profile
 transition. It MUST NOT reinterpret old unknown data merely because its key matches.
+`Record.keys` is the new authored shape; the earlier singular `Record.key` proposal
+was never published as a core schema member. A legacy `key` or `keys` member is
+opaque until an explicit, source-retaining migration recognizes its source profile;
+no legacy singleton is silently converted into a named primary key. Rollback
+restores the exact older envelope and retains the entire later key assertion
+separately.
 The exact released envelope version is an implementation decision recorded before
 schema publication, with migration and rollback fixtures preserving original data.
 No runtime code or schema changes are part of this authoring evolution.
@@ -208,7 +261,9 @@ changed input/policy/binding, never implicit coercion.
 ## Examples
 
 An authored record Order has a field id with integer family, one cardinality,
-required availability, signed 64-bit width and a record key referencing id.
+required availability, signed 64-bit width and an authored key `order-id`
+referencing id, marked primary. A separate unique order number could be an
+alternate key with its own stable ID.
 PostgreSQL bigint PRIMARY KEY is a candidate exact binding within the declared
 integer equality/domain scope. Avro long carries the value domain but cannot
 constrain duplicate records: strict key projection blocks; report emits a schema

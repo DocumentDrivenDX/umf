@@ -29,11 +29,23 @@ versioned implementation; the final number is assigned before publication.
 
 ## Purpose
 
-Define a portable, authored schema-level association between element types.
-The assertion names allowed endpoint types and multiplicity; it does not
+Define a portable, authored schema-level association between independently
+identified record types. The assertion names allowed endpoint types, the
+target key used to resolve a record reference, and participation multiplicity; it does not
 create an instance edge, choose storage, assert a foreign key or prove target
 enforcement. Admission is governed by FR-3; FR-28 native replacement remains a
 separate gate.
+
+**Admission decision:** this is a core ideal, conditional on the Key ideal's
+named, stable key identities and two evidenced useful priority down-projections.
+Record identity, referential resolution and participation have meaning in both
+relational and graph models without importing physical FK or DDD aggregate rules.
+PostgreSQL and SQL Server offer qualified FK/junction down-projections, while
+Avro and Parquet retain the assertion as a reported residual. Native import
+classifies observed constraints separately and retains their refinements. This
+design decision does not claim the admission gate has passed or that the ideal
+is implemented. If useful two-system evidence fails, publish the shape as a
+`umf.*` extension with fidelity reports instead of reserving core syntax.
 
 ## Scope and Boundaries
 
@@ -42,31 +54,55 @@ without it assert no relationships. Existing `element.references` retain their
 opaque roles and exact-ID resolution and gain no relationship meaning. DDD
 concept references retain their own scoped semantics under CONTRACT-005; an
 explicitly authored relationship may bind to one without merging the vocabularies.
-Element identity remains the exact `(module.id, element.id)` pair.
+Element identity remains the exact `(module.id, element.id)` pair. A record-valued
+Field under CONTRACT-040 describes containment by value; it does not declare a
+relationship. The endpoint types below MUST be Records with authored Key ideals.
 
 ## Normative Surface
 
 | Member | Shape | Required | Rule |
 | --- | --- | --- | --- |
-| `name` | nonempty string | yes | Unique among relationships in its containing module by exact string equality. It is the relationship's local identity and discriminator, not an element ID. |
-| `source` | nonempty array of `{module,element}` | yes | Every pair resolves exactly to a core element; duplicates are invalid. |
-| `target` | nonempty array of `{module,element}` | yes | Same exact resolution and uniqueness rules. A self-reference is permitted. |
-| `sourceCardinality` | `one`, `array`, `map`, `unspecified` | yes | Existing CONTRACT-040 cardinality vocabulary describes source participation as an ideal value shape; `array` is the ordered many form, and `map` requires string keys. It does not assert actual instances exist. |
-| `targetCardinality` | same vocabulary | yes | Describes target participation from each source. A target-side `array` maps to a list-capable carrier only under an explicit binding. |
+| `id` | nonempty opaque string | yes | Stable relationship identity, unique within its containing module. `(module.id, id)` identifies the assertion across renames and revisions; it is distinct from an Element ID and from the presentation name. Reusing an ID for a different association is a conflicting change. |
+| `name` | nonempty string | yes | Unique among relationships in its containing module by exact string equality. It is the authored presentation name and may change while `id` remains stable. |
+| `source` | nonempty array of `{module,element}` | yes | Each pair resolves exactly to a keyed core Record; duplicates are invalid. A heterogeneous source set is allowed but may be residual on a native carrier. |
+| `target` | nonempty array of `{module,element,key}` | yes | Each pair resolves exactly to a keyed core Record. `key` is the stable ID of one authored named Key on that target Record, including an alternate key; duplicates are invalid. A self-reference is permitted. |
+| `sourceMultiplicity` | `{min,max}` | yes | For each target record, number of source records that may participate; `min` is a nonnegative integer and `max` is a positive integer or `*`, with `max >= min`. |
+| `targetMultiplicity` | `{min,max}` | yes | For each source record, number of target records that may participate, under the same bounds. `min: 1, max: *` means one or more. |
+| `targetLifecycle` | `owned`, `independent`, or `unspecified` | yes | `owned` asserts that the target record's lifecycle depends on its source record; `independent` asserts no such dependency. This is distinct from DDD aggregate membership and does not prescribe cascade actions. `owned` requires a directed relationship. |
+| `associationRecord` | `{module,element}` | no | A separately keyed Record that carries this association's attributes and identity; one association instance corresponds to one instance of that Record. It does not imply that endpoint-pair values are unique unless the association Record's key says so. |
 | `directed` | boolean | yes | `true` declares source→target presentation. `false` declares an undirected association with the given source/target labels retained for identity and serialization; a target may require a directed approximation. |
 | `inverse` | nonempty string | no | Optional reverse presentation name; it does not create a second relationship or prove bidirectional enforcement. It must not collide with another authored presentation name on the same target element. |
 
-The endpoint sets name allowed **types**, not a union of current instance IDs.
-Each endpoint reference MUST resolve by CONTRACT-001 exact IDs; names and
-namespaces cannot substitute. A relationship's stable identity is its containing
-module ID plus exact `name`. Rename or endpoint reassociation is an explicit
-operation with retained old source, never inferred from display-name changes.
-An array or map end is not a SQL array or native collection promise. Map-end
-string-key identity and ordering obligations are residual unless a target
-binding proves them. `unspecified` asserts no multiplicity. Two `one` ends
-describe one-to-one, one source to array target describes one-to-many, and
-array source to one target describes many-to-one under the declared end view.
-Neither cardinality proves uniqueness or FK enforcement.
+The endpoint sets name allowed **record types**, not a union of current instance
+IDs. Each reference MUST resolve by CONTRACT-001 exact IDs; names and namespaces
+cannot substitute. Target-key identity is resolved against the target Record's
+authored named keys under CONTRACT-040, not against a native UNIQUE index.
+Until Key's final named-key shape is settled, this table specifies the semantic
+reference, not its final serialized spelling. The stable Key ID survives a
+display-name edit; replacement or reassignment of the Key ID is an explicit
+identity migration. A relationship's stable local identity is its
+containing module ID plus exact `id`; cross-document stability and revision
+pinning await the separate CONTRACT-001 successor. The current resolver stays
+within one document.
+
+Multiplicity counts distinct associated record instances, not field values,
+container items or stored rows. It does not assert existing data satisfy a
+minimum, even when `min > 0`; that requires a separate data check. For `Order`
+→ `Line` with each Order having at least one Line and each Line having one
+Order, `targetMultiplicity={min:1,max:*}` and
+`sourceMultiplicity={min:1,max:1}`. An unbounded maximum says nothing about
+ordering or duplicate sequence entries. Neither end proves native uniqueness,
+referential enforcement or a physical join layout. An owned target is a logical
+lifecycle assertion only. A foreign key, including `ON DELETE CASCADE`, does
+not establish it, and a DDD aggregate remains governed by `umf.ddd`.
+
+An association Record such as `Enrollment` can have `grade` and its own named
+key, with `associationRecord` pointing to it while Student and Course remain
+the endpoint types. The association key identifies an Enrollment, not
+necessarily a unique Student/Course pair. Projection MUST report any inability
+to carry that identity or attributes; it may not reduce Enrollment to a bare
+junction row silently. A model may instead express two ordinary relationships
+from Enrollment to Student and Course; those are distinct authored assertions.
 
 Every operation MUST retain copied authored source, mapping/provenance,
 diagnostics, source-qualified residuals and an optional complete candidate,
@@ -84,13 +120,13 @@ source/version and refinements, never `authored` provenance.
 | Target | Initial down-projection | Up-classification and required loss |
 | --- | --- | --- |
 | TableSpec | Only an explicitly representable declared link may be emitted; otherwise report/refuse the relationship while retaining it. The pinned model must prove any useful carrier before an exact claim. | Native primary-key/context/column references alone do not assert authored association. Preserve original table bundle and unknown metadata. |
-| PostgreSQL 17 | For a single source and target with suitable keys, a many-to-one profile may use FK columns; many-to-many may use a junction relation under a declared physical binding. | Catalog/DDL FKs classify as native observations with action, deferrability, match, key and schema refinements. Multiple source types cannot be type-checked by one FK column; report this loss. |
-| SQL Server | Same scoped FK/junction profiles with explicit key and schema bindings. | Keep disabled/trust/actions/filtered and catalog-version distinctions native. A captured FK does not establish author intent. |
-| Avro | A named reference or nested record can carry a target shape in a declared record context. | No association enforcement, reverse participation or stable cross-record identity follows; residualize them and preserve full native schema/default/name-resolution refinements. |
-| Parquet | A checked reference column or nested record may carry selected target identity/shape. | Association enforcement, graph identity and reverse multiplicity remain residual; preserve repetition, field IDs and embedded Arrow/native bytes. |
-| GraphQL SDL | Field on a source object; list wrapper for `array` target; inverse target field only when `inverse` exists. | SDL lacks source-end cardinality and association enforcement. An object-returning field may be computed; classify without authored assertion. |
+| PostgreSQL 17 | For a single source and target with compatible named keys, a scoped FK may carry target-key columns, including a compatible UNIQUE alternate key; many-to-many needs a junction or association table under a declared physical binding. | Catalog/DDL FKs classify as native observations with action, deferrability, match, validation state, referenced key and schema refinements. `NOT VALID` does not vouch for old rows; default `MATCH SIMPLE` exempts a composite FK when any referencing component is NULL. Multiple source types cannot be type-checked by one FK column. A FK never proves `targetLifecycle: owned` or minimum participation. Report these losses. |
+| SQL Server | Same scoped FK/junction profiles with explicit named-key and schema bindings; an alternate UNIQUE constraint may be the target. | Keep `NOCHECK`/trust state, actions and catalog-version distinctions native. Disabled or untrusted constraints do not vouch for existing rows. A captured FK does not establish author intent, lifecycle ownership or minimum participation. |
+| Avro | A named reference or nested record can carry selected target shape only under an explicit qualified carrier. | Avro has no referential enforcement; nested records are by-value unless a binding says otherwise. Target-key resolution, opposite-end multiplicity and association identity/attributes are residual unless retained out of band. Preserve full native schema/default/name-resolution refinements. |
+| Parquet | A checked reference column or nested record may carry selected target identity/shape under an explicit qualified carrier. | Parquet has no referential enforcement; repetition does not establish participation, record identity or lifecycle. Preserve repetition, field IDs and embedded Arrow/native bytes; report all unsupported obligations. |
+| GraphQL SDL | Field on a source object; list wrapper for `targetMultiplicity.max > 1`; inverse target field only when `inverse` exists. | SDL cannot express target-key resolution, source-end multiplicity, lifecycle, association identity or referential enforcement. A list wrapper does not enforce `min > 0`; an object-returning field may be computed. Classify without authored assertion. |
 | RDF | Predicate with domain/range for single endpoint classes; multi-element source becomes a declared union-class approximation. | RDF domain/range inference is not cardinality enforcement. Retain predicate and native graph refinements; report union and multiplicity differences. |
-| LinkML | Slot with range and `multivalued` for an array target under explicit class/range binding. | Opposite-end cardinality, maps and unsupported unions remain residual; retain native slot facets. |
+| LinkML | Slot with range and `multivalued` for `targetMultiplicity.max > 1` under explicit class/range binding. | Opposite-end multiplicity, named target key, association identity and unsupported unions remain residual; retain native slot facets. |
 
 The admission record MUST contain written meaning, counterexamples, at least
 two useful evidenced down-projections to distinct priority systems and
@@ -116,20 +152,37 @@ unknown member. Older documents remain readable without gaining associations.
 
 | Condition | Outcome | Recovery |
 | --- | --- | --- |
-| Duplicate name, duplicate endpoint, missing endpoint or malformed cardinality | Invalid document with source path; no candidate | Correct authored model; original untouched |
+| Duplicate ID or name, duplicate endpoint, missing/non-Record endpoint, unresolved target key, invalid association Record, or malformed multiplicity | Invalid document with source path; no candidate | Correct authored model; original untouched |
 | Unknown relationship member or future enum | Preserve, mark interpretation incomplete; unsafe edit/projection blocks | Install supported version or use read/write recovery |
 | Conflicting authored and native observation | Report both and conflict, no implicit precedence | Explicit author decision; native archive remains |
-| Target cannot express requested end/direction | Strict block or report residual and complete candidate | Retain report and source; choose binding/policy |
+| Target cannot express requested key/end/lifecycle/association/direction | Strict block or report residual and complete candidate | Retain report and source; choose binding/policy |
 
 ## Examples
 
-An authored `Order.customer` relationship may use source `one`, target `one`
-and direction `true`; a PostgreSQL FK can represent one declared link under a
-compatible key binding, while its delete action stays native. An `Order.products`
-relationship with source `one` and target `array` can use a junction table;
-the target-only DDL cannot recover the author name without the retained report.
+An authored `Order.customer` relationship may use target multiplicity `{1,1}`
+and source multiplicity `{0,*}`, naming Customer's alternate `account_number`
+key; a PostgreSQL FK can represent selected target-key columns under a compatible
+binding, while its delete action stays native. An `Order.products` relationship
+with target multiplicity `{0,*}` can use a junction table; target-only DDL cannot
+recover the author name, opposite minimum or lifecycle without the retained
+report. `Enrollment` may be an association Record with `grade` and its own key.
 A DDD `Order.customer` concept field with cardinality many but no authored
 relationship remains a DDD field, not a relationship.
+
+## Open Decisions Before Core Publication
+
+- Reconcile the final serialized target-key reference with the named-key shape
+  selected in CONTRACT-040/TD-044; do not publish a second key namespace.
+- Reconcile `(module.id,id)` relationship lineage with the revision-qualified
+  identity proposed by CONTRACT-045 before cross-document references ship.
+- The current `umf.binding` profile keys physical relationship bindings by
+  `{module,name}`. A rename therefore requires an explicit binding edit and a
+  versioned future migration to `{module,id}` before stable-ID lookup is claimed.
+- Specify how a physical binding ties an `associationRecord` to endpoint-key
+  columns and whether its own key is surrogate or endpoint-derived. The core
+  assertion does not dictate that layout.
+- Determine exact versus residual SQL profiles for `min > 0`, ownership,
+  undirected links and heterogeneous endpoint sets using pinned native oracles.
 
 ## Validation Checklist
 

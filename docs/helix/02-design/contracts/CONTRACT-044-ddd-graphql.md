@@ -61,8 +61,8 @@ a successful complete schema.
 | Selected DDD entity | One GraphQL object type | Identity, lifecycle, aggregate ownership and equality are not enforced. |
 | Supported scalar Field | Explicit scalar mapping | Width, decimal/date-time encoding, coercion and facets not expressible in SDL remain residual. |
 | Field nullability | Supported non-null wrapper for required value; nullable form for allowed absence | Present-null versus omission, defaults and input/output distinction remain explicit. |
-| Relationship target cardinality `one`/`array` | Field on each selected source type, list wrapper for `array`; `unspecified` requires a declared fallback | Source-end cardinality is not in SDL; map-key semantics and graph enforcement are residual. |
-| Declared `inverse` | Reverse field on each selected target type under naming policy | No inverse field is inferred when absent; an emitted pair does not enforce inverse consistency. |
+| Relationship `targetMultiplicity` | Field on each selected source type; list wrapper when `max > 1` or `*`, singular otherwise | SDL cannot express the named target Key ID, source-end participation, `min > 0` list membership, lifecycle, association Record identity or referential enforcement. This is distinct from a Field's `one`/`array`/`map` container cardinality. |
+| Declared `inverse` | Reverse field on each selected target type; list wrapper follows `sourceMultiplicity.max` under naming policy | No inverse field is inferred when absent; an emitted pair does not enforce inverse consistency or `sourceMultiplicity.min`. |
 | Heterogeneous endpoint set | Explicit union/interface policy only when the GraphQL profile proves a valid output type | Otherwise report or refuse; never flatten to the first endpoint. |
 
 An undirected relationship requires an explicit orientation/display policy;
@@ -82,7 +82,7 @@ uses the same portable operation with no host APIs or network calls.
 Ideal→SDL→ideal with retained report recovers authored meaning or explicit
 non-recovery residual. Native SDL→UMF→native SDL recovers unclaimed original
 bytes and unknown content via the native archive. Target-only SDL reimport
-cannot reconstruct DDD intent, source-end cardinality or physical storage.
+cannot reconstruct DDD intent, source-end participation or physical storage.
 
 ## Precedence and Compatibility
 
@@ -105,9 +105,9 @@ older unknown declaration as an authored relationship.
 
 ## Examples
 
-With an authored `Order.customer` relationship and target cardinality one,
+With an authored `Order.customer` relationship whose target multiplicity is `1..1`,
 the Order type receives a Customer field. Declaring inverse `orders` adds a
-list-capable field to Customer only when the authored reverse cardinality and
+list-capable field to Customer only when the authored reverse multiplicity and
 policy support it. Without that inverse, no reverse field appears. An Order
 aggregate invariant remains visible in the report but is not enforced by SDL.
 

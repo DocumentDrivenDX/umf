@@ -59,11 +59,11 @@ are checked. Unsupported or unsafe syntax blocks in either loss mode.
 
 | Source declaration | Target candidate | Required report distinction |
 | --- | --- | --- |
-| Bound entity/association element | `CREATE TABLE` with mapped columns and key under the declared policy | DDD entity lifecycle, value equality, aggregate ownership and repository behavior remain in source; no implicit table semantics. |
+| Bound entity/association element | `CREATE TABLE` with mapped columns and each supported named key under the declared policy | Stable authored key IDs remain in the source/report; native constraint names do not replace them. DDD entity lifecycle, value equality, aggregate ownership and repository behavior remain in source. |
 | Bound `column` field | Typed SQL column with explicit nullability and facet lowering | Scalar width/coercion, default/absence and collation mismatches use CONTRACT-040 outcomes. |
 | Bound `embedded` field | JSONB document column and declared path in the supported profile | JSON shape and path constraint/enforcement are residual unless emitted and natively checked. |
-| Relationship `foreign_key` | FK column/constraint only for a single type-checkable source/target with compatible keys | Heterogeneous source, source-end cardinality, inverse and unenforced target multiplicity are residuals. |
-| Relationship `junction` | Junction table and checked FK columns for supported many-to-many | Ordering/map-key, inverse and association-instance distinctions are residual unless bound. |
+| Relationship `foreign_key` | FK column/constraint only for a single type-checkable source/target and the explicitly named target Key ID, including a compatible alternate key | Heterogeneous source, both-end `min..max` participation not enforced by the FK, inverse, target lifecycle and validation/trust state are residuals or native observations. `NOT VALID` and composite `MATCH SIMPLE` cannot certify existing referential integrity. |
+| Relationship `junction` | Junction or bound association-Record table with checked FK columns for supported many-to-many | Association Record key/fields must survive explicitly; absent native uniqueness, minimum participation, lifecycle and inverse are residuals. Field container ordering/map keys do not define relationship multiplicity. |
 | Relationship `edge` | Shared adjacency table with relationship-name discriminator and explicit endpoints | A discriminator alone does not enforce heterogeneous endpoint type; report unenforced constraints. |
 | Relationship `inline` | Only an explicit supported inline carrier | Unsupported layout blocks or residualizes; never guess storage. |
 | Bound partition/index | PostgreSQL partition clause and `CREATE INDEX`/unique form after safe policy checks | Unsupported `clustering`, opaque predicate semantics, path/collation/statistics behavior remain reported. |
