@@ -1,0 +1,24 @@
+bun test v1.3.14 (0d9b296a)
+
+tests/core/facet-ideals.test.ts:
+(pass) candidate facet semantics check families, roles, shape, pairs and qualified unknowns [54.33ms]
+(pass) candidate JSON Schema documents structural limits; semantic comparison remains explicit [4.59ms]
+(pass) facet tokens are checked before conversion; unsafe numbers and accessors refuse atomically [1.95ms]
+
+tests/core/key-ideals.test.ts:
+(pass) candidate Key checks membership, primary/alternate identities and component equality [80.96ms]
+(pass) key schema leaves cross-reference semantics to validator; old profiles stay opaque [16.42ms]
+(pass) key candidate never invokes getters and retains path-qualified unknowns [0.50ms]
+
+tests/core/key-tuple.test.ts:
+(pass) key tuple vectors and domain boundaries produce exact frames or atomic refusals [69.79ms]
+(pass) stable key ID survives name/list changes while retained receipts detect stale context [1.11ms]
+(pass) tuple verification rejects forged and nonminimal frames and altered retained inputs [1.48ms]
+(pass) unknown relevant qualifiers block and unrelated native extension content survives [0.88ms]
+(pass) shortest length/count framing and no getter evaluation [8.71ms]
+(pass) resource bounds and a bad later component refuse the whole tuple [5.25ms]
+
+ 12 pass
+ 0 fail
+ 1478 expect() calls
+Ran 12 tests across 3 files. [460.00ms]

@@ -1,0 +1,33 @@
+{
+  "scope": "Internal candidate exact Key tuple encoding and receipt verification; no native binding or author-provenance claim",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 58,
+    "encoded": 26,
+    "refused": 32,
+    "recoveries": 52,
+    "forgedFramesRefused": 2,
+    "staleContextRefused": true,
+    "framingChecks": 2,
+    "getterCalls": 0
+  },
+  "externalRequests": [],
+  "bundleSha256": "0c678980fc3029ff856d4ebe32902724f329873b511ff1274882b5520f004e63",
+  "sha256": {
+    "scripts/core-key-tuple-browser.ts": "a849dd02f9ccd6f4f2a72e598a5902952a06a537ea7dae9ddd7ca994bfed9230",
+    "scripts/core-key-tuple-cases.ts": "af9b6adce395673f00c868c94056feb50a4192012a4003bcdfee2ed23db87883",
+    "scripts/core-key-tuple-schema.ts": "906c2f7885bd2ca3ae89f3c988c867c3113bc1aec16775e00b2b75007c2b377c",
+    "src/model/key-tuple.ts": "48606350149da3cc40c4606b35d11d11eef558efb6df7313404a40a2a636329d",
+    "src/validation/keys.ts": "4e8e211305e288ff8dc8e262c8e94fa7eecbd54f65bb43aef103e173ecdc0016",
+    "src/validation/document.ts": "d8b7867b1ef321b9324f8d61f2f3f2f901e40d14eef01f54384d658d6701aed4",
+    "src/validation/schema.ts": "89a3a613cf5ba6ed2ced1dc242fc9d947ac8c373b7bef7dfcba72336570ffc08",
+    "src/validation/facets.ts": "ae4a21f5f6378bb4c3bd82866dad662dd594543d6addb96d510c70321093f98b",
+    "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
+    "src/model/types.ts": "2a3b01a878bd247a6fb8618487164241dda88eb4de03204dbf02b55a833ba64a",
+    "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
+    "spec/core/key-document.schema.json": "2664daedf3d9e116a3c6d82cd55c1dfd25b1001652855abc2cf72f0445020d9f",
+    "spec/core/key-tuple-operation.schema.json": "1bbe9cece10ca98e602917b119df5198a9bfde11366f9a26dfab43878f2ee1ab",
+    "tests/core/key-tuple.test.ts": "01da922c12d2281d49bf0f9bfd67ec8a51548949f1936c6093a6e8d86b570c7b",
+    "fixtures/key/tuple-encoding-v1.json": "160310faa99e5337157cab9f77afedfb3385c937f3f2683d8a15e2c5d906b80b"
+  }
+}

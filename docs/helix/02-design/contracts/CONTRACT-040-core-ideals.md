@@ -951,3 +951,36 @@ nor schema validation infers a key from a native index. Older schemas and receip
 remain immutable. Candidate validation does not activate public 0.6.0 authoring;
 public APIs, operation schemas, migration and browser evidence are required before
 core-task acceptance, followed by all five separate native bindings.
+
+### Key tuple operation boundary
+
+The candidate `encodeCoreKeyTuple` operation receives a validated 0.6.0 document,
+explicit `{module, element, key}` identity (the element is a Record), and one
+value per component in declared order. Values are JSON wrappers: `{boolean}`,
+`{integerToken}`, `{decimalToken}`, `{string}`, or `{binaryHex}`. Numeric tokens
+use exact JSON number syntax, including exponents, and are converted with integer
+coefficient arithmetic; no JavaScript number input is accepted for numeric keys.
+An integer token must represent an exact integer. Binary hex is case-insensitive
+input for original bytes; the result uses lowercase hex. No missing key identity
+selects a default implicitly.
+
+The result retains the copied source, explicit identity, original value wrappers,
+key path and `umf-key-tuple-v1` bytes as `bytesHex`. This is a deterministic
+encoding under the selected definition, not proof of author provenance or native
+uniqueness. Verification recomputes from retained inputs and checks the supplied
+current document; changing source context makes a receipt stale even if renaming
+alone would leave newly encoded tuple bytes unchanged. Reading receipt bytes
+requires this verification. Malformed/nonminimal or altered framing rejects.
+
+Unknown qualifiers on the selected key, its component references, selected
+membership references or component facets block encoding. Unrelated native
+extensions remain retained without being assigned core meaning. Component values
+must satisfy their stated width, precision/scale and length facets. Invalid
+Unicode scalars, rounding, absent/null, unsafe host-number inputs, and undefined
+comparison domains fail atomically; no partial tuple is returned.
+
+The operation bounds aggregate value text and encoded tuple bytes by the existing
+4,000,000 text limit, and checks expansion before allocating exponent padding.
+Very wide metadata does not allocate a mathematical domain. Existing JSON
+serialization limits still apply to a complete receipt; retaining a large source
+can make receipt serialization refuse even when its tuple alone fits the limit.

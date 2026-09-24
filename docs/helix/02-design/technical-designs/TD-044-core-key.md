@@ -204,3 +204,15 @@ or reordering the keys list preserves identity. Public candidate support is not
 admission. Refresh compatibility evidence after the integrated physical-binding
 work and Key implementation; earlier gate fingerprints identify their historical
 execution commits and must not be relabeled as current native runs.
+
+### Candidate tuple implementation
+
+Implement `src/model/key-tuple.ts` against the candidate validator and complete
+`spec/core/key-tuple-operation.schema.json` before public exports. Encode exact
+numeric coefficients without Number conversion; retain lexical inputs in the
+receipt. Bound exponent expansion and byte output, and never allocate a power
+based only on a potentially enormous integer-width facet. Validate Unicode scalar
+sequences before UTF-8 encoding. Receipt verification recomputes canonical framing
+and current source context before bytes are read. Test the normative vectors,
+explicit boundaries/refusals, stable IDs after renaming/reordering, forged frames,
+unknown qualifiers, no-getter behavior and Bun/Chromium parity.

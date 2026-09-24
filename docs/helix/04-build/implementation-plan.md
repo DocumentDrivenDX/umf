@@ -4560,3 +4560,11 @@ public APIs, tuple encoding, migration and native bindings remain pending. See t
 [implementation evidence](evidence/key-core-implementation.md). Earlier native
 qualification remains historical until the integrated library's compatibility
 refresh; the Key core bead stays in progress.
+
+Core Key exact tuple encoding now has internal Bun/Chromium evidence: 58 golden
+and boundary cases, 52 browser receipt recoveries, rejection of rounding and
+forged framing, and explicit resource limits. The full Key/tuple/Facet candidate
+regression passes 12 tests / 1,478 assertions. See the
+[tuple checkpoint](evidence/key-core-implementation.md#exact-tuple-encoding-candidate).
+Public version activation, authoring, migration, versioned existing APIs and native
+Key bindings remain required before core-task acceptance and admission.

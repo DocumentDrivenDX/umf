@@ -41,3 +41,34 @@ complete operation schemas, collision-preserving migration/rollback, versioned
 older operations and selection, then compatibility/native/browser qualification.
 The Key core bead remains in progress. None of the five native Key bindings or
 ideal-admission gates is claimed complete by this candidate checkpoint.
+
+## Exact tuple encoding candidate
+
+`src/model/key-tuple.ts` implements `encodeCoreKeyTuple`, receipt verification and
+verified byte reading under `umf-key-tuple-v1`. The complete operation schema is
+`spec/core/key-tuple-operation.schema.json`. These remain internal candidate APIs;
+public 0.6.0 activation, authoring and migration are still pending.
+
+The normative golden vectors and extended boundary matrix cover 58 cases: 26 exact
+encodings and 32 expected refusals. Exact decimal spellings and negative zero
+canonicalize without Number conversion; nonintegral/rounded inputs reject. Unicode
+normalization forms remain distinct; unpaired surrogates reject. Width, precision,
+scale and length bounds are enforced. Stable key-ID selection survives key rename
+and list reorder; source changes invalidate retained receipts. Unknown relevant
+qualifiers, missing identities and forged/nonminimal frames reject atomically.
+
+Bun's combined Key, tuple and Facet candidate regression passes 12 tests / 1,478
+assertions. Chromium 148 independently matches all golden/boundary outcomes and
+52 JSON/YAML receipt recoveries; it rejects two forged frames and stale source
+context, checks shortest count/length framing, and records no getters, host globals
+or external requests. See the [browser proof](../../../../fixtures/validation/core-key-tuple-browser.json)
+and [checkpoint record](../../../../fixtures/validation/key-tuple-candidate.json).
+Typechecking and the 280-schema / 48-package audit pass.
+
+Resource tests refuse aggregate value text and UTF-8 payloads beyond the existing
+4,000,000 limit and block huge nonzero exponent expansion before allocation.
+Huge width metadata does not allocate a power, and a scale of 9,007,199,254,740,991
+can encode an exactly compensating exponent without expansion. Receipt
+serialization retains its existing independent limit. Tuple bytes are scoped by
+caller-supplied document/Record/Key identity; they prove neither author provenance
+nor native uniqueness. No native Key binding or ideal admission is claimed here.
