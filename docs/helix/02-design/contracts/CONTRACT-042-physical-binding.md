@@ -135,11 +135,16 @@ clustering declaration to a default sort order, explicitly marked an
 approximation. PyIceberg 0.11.0 parses the proposed metadata and Chromium
 agrees with Bun; no catalog commit or sorted-file guarantee is claimed.
 
-The generated candidate, source archive and scoped oracle results are stored
-under `fixtures/binding/{delta,iceberg,parquet}/`. PostgreSQL and SQL Server
-DDL directions remain unproven until their native beads pass. The support
-table above describes required target profiles, not a blanket delivered
-status for all kinds.
+The generated candidates, source archives and scoped oracle results are stored
+under `fixtures/binding/`. PostgreSQL 17 index DDL has an isolated native
+oracle for its qualified access methods. SQL Server 2022 has separate native
+and Chromium evidence for rowstore/unique/filtered index DDL and for ordinary
+tables, explicit scalar columns, `nvarchar(max)` JSON object carriers and one
+declared partition-scheme placement. The table projection reports every
+unbounded DDD scalar narrowed by a SQL type, optional-to-NULL choice, DDD
+identity, and unenforced embedded path. Neither partial SQL Server direction
+includes relationship lowering; the full DDL bead remains open. The support
+table above is not a blanket delivered claim for every kind or target.
 
 ## Precedence and Compatibility
 

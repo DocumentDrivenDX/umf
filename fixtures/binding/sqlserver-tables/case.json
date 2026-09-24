@@ -1,0 +1,228 @@
+{
+  "logical": {
+    "umf": "0.1.0",
+    "id": "sqlserver-table-logical",
+    "vocabularies": {
+      "umf.ddd": {
+        "version": "0.1.0"
+      }
+    },
+    "modules": [
+      {
+        "id": "sales",
+        "namespace": "sales",
+        "extensions": {
+          "umf.ddd": {
+            "kind": "bounded-context",
+            "terms": []
+          }
+        },
+        "elements": [
+          {
+            "id": "Item",
+            "extensions": {
+              "umf.ddd": {
+                "kind": "entity",
+                "fields": {
+                  "id": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "integer"
+                    },
+                    "cardinality": "one"
+                  },
+                  "email": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "optional"
+                  },
+                  "details": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "optional"
+                  }
+                },
+                "identity": {
+                  "fields": [
+                    "id"
+                  ],
+                  "scope": "context"
+                }
+              }
+            }
+          },
+          {
+            "id": "Shipment",
+            "extensions": {
+              "umf.ddd": {
+                "kind": "entity",
+                "fields": {
+                  "id": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "integer"
+                    },
+                    "cardinality": "one"
+                  },
+                  "part": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "integer"
+                    },
+                    "cardinality": "one"
+                  },
+                  "label": {
+                    "type": {
+                      "kind": "scalar",
+                      "name": "string"
+                    },
+                    "cardinality": "optional"
+                  }
+                },
+                "identity": {
+                  "fields": [
+                    "id"
+                  ],
+                  "scope": "context"
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "binding": {
+    "umf": "0.1.0",
+    "id": "sqlserver-table-layout",
+    "vocabularies": {
+      "umf.binding": {
+        "version": "0.1.0"
+      }
+    },
+    "modules": [],
+    "extensions": {
+      "umf.binding": {
+        "profile": "umf-binding-1",
+        "logical": {
+          "documentId": "sqlserver-table-logical",
+          "coreVersion": "0.1.0"
+        },
+        "target": {
+          "system": "sqlserver",
+          "version": "2022",
+          "subset": "ordinary-tables-json-text-partition-scheme"
+        },
+        "elements": [
+          {
+            "module": "sales",
+            "element": "Item",
+            "table": "sales.Items"
+          },
+          {
+            "module": "sales",
+            "element": "Shipment",
+            "table": "sales.Shipments",
+            "partition": "shipping"
+          }
+        ],
+        "fields": [
+          {
+            "module": "sales",
+            "element": "Item",
+            "field": "id",
+            "storage": "column",
+            "column": "id"
+          },
+          {
+            "module": "sales",
+            "element": "Item",
+            "field": "email",
+            "storage": "column",
+            "column": "email"
+          },
+          {
+            "module": "sales",
+            "element": "Item",
+            "field": "details",
+            "storage": "embedded",
+            "documentColumn": "payload",
+            "path": [
+              "customer",
+              "region"
+            ]
+          },
+          {
+            "module": "sales",
+            "element": "Shipment",
+            "field": "id",
+            "storage": "column",
+            "column": "id"
+          },
+          {
+            "module": "sales",
+            "element": "Shipment",
+            "field": "part",
+            "storage": "column",
+            "column": "part"
+          },
+          {
+            "module": "sales",
+            "element": "Shipment",
+            "field": "label",
+            "storage": "column",
+            "column": "label"
+          }
+        ],
+        "relationships": [],
+        "indexes": []
+      }
+    }
+  },
+  "policy": {
+    "fieldTypes": [
+      {
+        "module": "sales",
+        "element": "Item",
+        "field": "id",
+        "sqlType": "int"
+      },
+      {
+        "module": "sales",
+        "element": "Item",
+        "field": "email",
+        "sqlType": "nvarchar(80)"
+      },
+      {
+        "module": "sales",
+        "element": "Shipment",
+        "field": "id",
+        "sqlType": "int"
+      },
+      {
+        "module": "sales",
+        "element": "Shipment",
+        "field": "part",
+        "sqlType": "int"
+      },
+      {
+        "module": "sales",
+        "element": "Shipment",
+        "field": "label",
+        "sqlType": "nvarchar(120)"
+      }
+    ],
+    "partitionFamilies": [
+      {
+        "name": "shipping",
+        "scheme": "ps_umf_ship",
+        "column": "part"
+      }
+    ]
+  },
+  "partitionSetup": "CREATE PARTITION FUNCTION [pf_umf_ship](int) AS RANGE RIGHT FOR VALUES (10,20);\nCREATE PARTITION SCHEME [ps_umf_ship] AS PARTITION [pf_umf_ship] ALL TO ([PRIMARY]);\n"
+}

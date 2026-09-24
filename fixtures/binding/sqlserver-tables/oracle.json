@@ -1,0 +1,144 @@
+{
+  "scope": "Isolated SQL Server 2022 execution of authored table, nullable columns, JSON text carrier and partition-scheme placement; document path semantics remain residual",
+  "image": "mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090",
+  "serverVersion": "16.0.4295.3",
+  "observed": [
+    {
+      "schema": "sales",
+      "name": "Items",
+      "partition_scheme": null,
+      "partition_column": null
+    },
+    {
+      "schema": "sales",
+      "name": "Shipments",
+      "partition_scheme": "ps_umf_ship",
+      "partition_column": "part"
+    }
+  ],
+  "nativeRecovery": {
+    "retainedCatalogBytes": true,
+    "adapterExport": "structurally equal JSON; escaped slash spelling is normalized"
+  },
+  "residuals": [
+    {
+      "path": "/extensions/umf.binding/fields/0",
+      "reason": "SQL Server finite integer domain does not represent an unbounded DDD integer",
+      "choice": {
+        "module": "sales",
+        "element": "Item",
+        "field": "id",
+        "storage": "column",
+        "column": "id"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/1",
+      "reason": "SQL Server nvarchar has finite UTF-16 storage, collation and trailing-space behavior outside DDD string meaning",
+      "choice": {
+        "module": "sales",
+        "element": "Item",
+        "field": "email",
+        "storage": "column",
+        "column": "email"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/1",
+      "reason": "SQL NULL is the selected absence carrier; DDD optionality alone does not define native NULL behavior",
+      "choice": {
+        "module": "sales",
+        "element": "Item",
+        "field": "email",
+        "storage": "column",
+        "column": "email"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/2",
+      "reason": "SQL Server stores the declared path in text JSON; path presence and value type are not enforced by this table DDL",
+      "choice": {
+        "module": "sales",
+        "element": "Item",
+        "field": "details",
+        "storage": "embedded",
+        "documentColumn": "payload",
+        "path": [
+          "customer",
+          "region"
+        ]
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/elements/0",
+      "reason": "DDD identity is retained; this table slice does not emit a primary or unique key",
+      "choice": {
+        "fields": [
+          "id"
+        ],
+        "scope": "context"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/3",
+      "reason": "SQL Server finite integer domain does not represent an unbounded DDD integer",
+      "choice": {
+        "module": "sales",
+        "element": "Shipment",
+        "field": "id",
+        "storage": "column",
+        "column": "id"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/4",
+      "reason": "SQL Server finite integer domain does not represent an unbounded DDD integer",
+      "choice": {
+        "module": "sales",
+        "element": "Shipment",
+        "field": "part",
+        "storage": "column",
+        "column": "part"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/5",
+      "reason": "SQL Server nvarchar has finite UTF-16 storage, collation and trailing-space behavior outside DDD string meaning",
+      "choice": {
+        "module": "sales",
+        "element": "Shipment",
+        "field": "label",
+        "storage": "column",
+        "column": "label"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/fields/5",
+      "reason": "SQL NULL is the selected absence carrier; DDD optionality alone does not define native NULL behavior",
+      "choice": {
+        "module": "sales",
+        "element": "Shipment",
+        "field": "label",
+        "storage": "column",
+        "column": "label"
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/elements/1",
+      "reason": "DDD identity is retained; this table slice does not emit a primary or unique key",
+      "choice": {
+        "fields": [
+          "id"
+        ],
+        "scope": "context"
+      }
+    }
+  ],
+  "sha256": {
+    "fixtures/binding/sqlserver-tables/case.json": "25a925097b4ff806b22393a73c5b836918db5e6ce80bcd99992b87cec7a183aa",
+    "fixtures/binding/sqlserver-tables/generated.sql": "cf277464e4ce5b9b4ba8ba015167eafa86ffe73a8a8832ff99ca4c0e303a2535",
+    "fixtures/binding/sqlserver-tables/catalog.json": "8a5ab38b5eab6cdda13370c4bc9b679c2b4ba1b69ace9571a8c42013e1b7beb1",
+    "src/projections/binding-sqlserver/tables.ts": "bc3d2bdbfeeff18abfbf447e32991976f3255c6fb95f3d1369dc5d83661288e7",
+    "native/sqlserver/catalog-v2.sql": "c8e71f1bb434bc996e2e6650a341e4cb853947d6ad6434c4d35b237fc7bc18ca"
+  }
+}

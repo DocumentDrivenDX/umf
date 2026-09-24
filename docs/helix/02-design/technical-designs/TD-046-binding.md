@@ -78,6 +78,15 @@ unknown fields, strict/report, both retained recoveries, migration/rollback,
 browser parity and per-target versions/subsets. Ensure consumer capability
 selection does not inspect logical field properties for index claims.
 
+The SQL Server 2022 table slice under this design has a bounded
+`ordinary-tables-json-text-partition-scheme` target profile. Its fixture
+executes generated DDL in an isolated server, recaptures catalog v2 through
+`umf.sqlserver`, and compares Bun with Chromium. It emits tables and a checked
+JSON object carrier; it reports SQL scalar-domain narrowing, DDD identity,
+optional NULL, and embedded path non-enforcement. Relationship storage remains
+behind TD-045 and the full SQL Server binding bead. Evidence is in
+`fixtures/binding/sqlserver-tables/{case.json,generated.sql,oracle.json,browser.json}`.
+
 ## Migration & Rollback
 
 Retain original binding payload and exact model identity in a receipt. Rollback
