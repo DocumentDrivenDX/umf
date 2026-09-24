@@ -1,0 +1,83 @@
+{
+  "scope": "PostgreSQL 17.4 isolated native execution of seven authored index forms; no production deployment, query-plan or performance claim",
+  "image": "postgres@sha256:304ab813518754228f9f792f79d6da36359b82d8ecf418096c636725f8c930ad",
+  "serverVersion": 170004,
+  "adapter": "@libpg-query/parser@17.6.10",
+  "residuals": [
+    {
+      "path": "/extensions/umf.binding/indexes/7",
+      "reason": "PostgreSQL physical clustering is not this declared index kind",
+      "choice": {
+        "name": "orders_cluster",
+        "kind": "clustering",
+        "on": [
+          {
+            "field": {
+              "module": "sales",
+              "element": "Order",
+              "field": "id"
+            }
+          }
+        ],
+        "unique": false
+      }
+    }
+  ],
+  "observed": [
+    {
+      "name": "orders_btree",
+      "method": "btree",
+      "unique_index": false,
+      "expression_index": false,
+      "partial_index": false
+    },
+    {
+      "name": "orders_expr",
+      "method": "btree",
+      "unique_index": false,
+      "expression_index": true,
+      "partial_index": false
+    },
+    {
+      "name": "orders_gin",
+      "method": "gin",
+      "unique_index": false,
+      "expression_index": false,
+      "partial_index": false
+    },
+    {
+      "name": "orders_gist",
+      "method": "gist",
+      "unique_index": false,
+      "expression_index": false,
+      "partial_index": false
+    },
+    {
+      "name": "orders_hash",
+      "method": "hash",
+      "unique_index": false,
+      "expression_index": false,
+      "partial_index": false
+    },
+    {
+      "name": "orders_partial",
+      "method": "btree",
+      "unique_index": false,
+      "expression_index": false,
+      "partial_index": true
+    },
+    {
+      "name": "orders_unique",
+      "method": "btree",
+      "unique_index": true,
+      "expression_index": false,
+      "partial_index": false
+    }
+  ],
+  "sha256": {
+    "fixtures/binding/postgresql-indexes/case.json": "3cd720e97aed62d243d87bdd018e4327ae6ece6465d0fbbefe6267a16671de1f",
+    "fixtures/binding/postgresql-indexes/table.sql": "a6118ece54a8175e73df6e2d56ec6a7ad617f5f2cc64980ff24d9d005645b332",
+    "fixtures/binding/postgresql-indexes/generated.sql": "5589b7467fbb8e179c58210c5dc0d908325ef1753f2d09b4f11d14c1bb3af46c",
+    "src/projections/binding-postgresql/indexes.ts": "30ce98a32b7b2f08c145ffbdc67e2780fe4c38b0c6544dcfc32dc4ba5b932ba3"
+  }
+}
