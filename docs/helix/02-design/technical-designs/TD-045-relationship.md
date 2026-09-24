@@ -40,6 +40,9 @@ do not infer intent from DDD fields, FKs or GraphQL AST nodes. Build one
 priority binding at a time with source-linked outcomes, then run a separate
 admission gate and all-five delivery gate. Additional GraphQL/RDF/LinkML
 profiles retain their own versions and evidence.
+The Key candidate's 0.6.0 `Record.members` list establishes exclusive Field
+ownership; the relationship validator resolves each target Key ID through
+that accepted ownership rule before considering any physical binding.
 
 ## Component Changes
 

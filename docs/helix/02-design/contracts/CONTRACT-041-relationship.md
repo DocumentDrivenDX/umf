@@ -84,6 +84,14 @@ containing module ID plus exact `id`; cross-document stability and revision
 pinning await the separate CONTRACT-001 successor. The current resolver stays
 within one document.
 
+The experimental Key 0.6.0 candidate makes `Record.members` the explicit
+ownership list for Key component Fields. Relationship publication waits for
+that candidate's acceptance. Endpoint validation MUST use the accepted
+authored membership and named Key, not a DDD field map, an unowned or shared
+Field, or native uniqueness evidence. The relationship envelope follows the
+accepted Key version; it does not reinterpret older documents lacking explicit
+membership as keyed Records.
+
 Multiplicity counts distinct associated record instances, not field values,
 container items or stored rows. It does not assert existing data satisfy a
 minimum, even when `min > 0`; that requires a separate data check. For `Order`
