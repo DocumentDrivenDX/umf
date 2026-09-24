@@ -55,7 +55,9 @@ function bindingSemantics(value:Json,context:{document:Document;path:string;scop
   payload.relationships.forEach((item,index)=>unknown(item as unknown as Record<string,unknown>,['module','name','storage'],`/relationships/${index}`));
   for(const[index,field]of payload.fields.entries()){
     if(field.storage==='column'&&!field.column)add('BINDING_COLUMN',`/fields/${index}/column`,'Column storage needs an explicit column name');
+    if(field.storage==='column'&&(field.documentColumn!==undefined||field.path!==undefined))add('BINDING_PATH',`/fields/${index}`,'Column storage cannot also declare an embedded path');
     if(field.storage==='embedded'&&(field.documentColumn===undefined||!field.path?.length))add('BINDING_PATH',`/fields/${index}`,'Embedded storage needs a document column and nonempty path');
+    if(field.storage==='embedded'&&field.column!==undefined)add('BINDING_COLUMN',`/fields/${index}/column`,'Embedded storage cannot also declare a standalone column');
   }
   const fields=new Map(payload.fields.map(field=>[fieldKey(field),field]));
   const names=new Set<string>();
@@ -67,6 +69,7 @@ function bindingSemantics(value:Json,context:{document:Document;path:string;scop
     if(item.kind==='clustering'&&item.unique)add('BINDING_INDEX',base+'/unique','Clustering cannot be unique');
     if(item.kind==='partial'&&!item.predicate)add('BINDING_INDEX',base+'/predicate','Partial kind requires a predicate');
     if(item.kind!=='partial'&&item.predicate)add('BINDING_INDEX',base+'/predicate','Predicate requires partial kind');
+    if(item.kind==='expression'&&!item.on.some(target=>'documentPath'in target))add('BINDING_INDEX',base+'/on','This expression profile needs a declared embedded document path');
     const owners=new Set<string>();
     const targets=new Set<string>();
     for(const[targetIndex,target]of item.on.entries()){

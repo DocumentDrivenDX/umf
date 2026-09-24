@@ -72,3 +72,15 @@ test('@covers US-047-AC5: unknown index refinements survive but block unsafe pro
   expect(()=>projectBindingIndexes(future,logical,'report')).toThrow('Unknown binding content');
   expect(payload(future).indexes[0].future).toEqual({operator:'unknown'});
 });
+
+test('@covers US-046-AC3 @covers US-047-AC9: storage alternatives and expression paths cannot be mixed',()=>{
+  const mixed=clone(),p=payload(mixed);
+  p.fields[0].path=['unexpected'];
+  expect(inspectBinding(mixed,logical).valid).toBe(false);
+  delete p.fields[0].path;
+  p.fields[1].column='shadow';
+  expect(inspectBinding(mixed,logical).valid).toBe(false);
+  delete p.fields[1].column;
+  p.indexes[1].on=[{field:field('id')}];
+  expect(inspectBinding(mixed,logical).diagnostics.some(d=>d.code==='BINDING_INDEX')).toBe(true);
+});

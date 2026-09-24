@@ -132,9 +132,12 @@
             "kind": "expression",
             "on": [
               {
-                "field": {
-                  "module": "data",
-                  "element": "id"
+                "documentPath": {
+                  "field": {
+                    "module": "data",
+                    "element": "payload"
+                  },
+                  "path": ["order", "payload"]
                 }
               }
             ],
