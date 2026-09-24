@@ -26,9 +26,12 @@ core-task acceptance. All five priority Cardinality bindings have qualified acce
 ideal admission and five-system delivery gate passes. See the Cardinality gate
 checkpoint below. Native equivalence remains unclaimed.
 Experimental facet core 0.5.0 has passed core-task acceptance. TableSpec,
-PostgreSQL and SQL Server facet bindings have qualified acceptance. Avro and
-Parquet facet bindings, facet admission/delivery, key and native-equivalence
-graduation remain pending.
+PostgreSQL, SQL Server and Avro facet bindings have qualified acceptance.
+Parquet facet classification and authored projection are implemented; aggregate
+qualification and refreshed prior concept gates remain pending. See the
+[Parquet facet evidence](../../04-build/evidence/parquet-facet-discovery.md)
+for subsequent acceptance checkpoints. Facet admission/delivery, key and
+native-equivalence graduation remain separate and pending.
 
 ## Purpose
 
