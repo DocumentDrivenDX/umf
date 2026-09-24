@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:parquet:key-binding:1.0.0",
+  "title": "Parquet schema observations without authored identity",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "origin",
+    "binding",
+    "observations"
+  ],
+  "properties": {
+    "origin": {
+      "const": "classified"
+    },
+    "binding": {
+      "const": {
+        "id": "umf.parquet.keys",
+        "version": "1.0.0",
+        "nativeVersion": "PyArrow 21.0.0 / parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017",
+        "subset": "Physical schema observations with original file bytes; no collection uniqueness, authored identity inference, page validation or native equivalence"
+      }
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "nativePath",
+          "index",
+          "path",
+          "kind",
+          "definitionLevel",
+          "repetitionLevel",
+          "nativeField",
+          "enforcement",
+          "authorIntent",
+          "provenance",
+          "scope"
+        ],
+        "properties": {
+          "nativePath": {
+            "type": "string",
+            "minLength": 1
+          },
+          "index": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "path": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "kind": {
+            "enum": [
+              "physical-leaf",
+              "physical-group"
+            ]
+          },
+          "definitionLevel": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "repetitionLevel": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "nativeField": {},
+          "enforcement": {
+            "const": "not-expressible"
+          },
+          "authorIntent": {
+            "const": "unknown"
+          },
+          "provenance": {
+            "const": "inferred"
+          },
+          "scope": {
+            "const": "file-schema"
+          }
+        }
+      }
+    }
+  }
+}

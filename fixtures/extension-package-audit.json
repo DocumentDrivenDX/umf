@@ -1,7 +1,7 @@
 {
   "scope": "Manifest validation, joint registry registration, standalone schema equality and local evidence existence only; no native conformance or inventory completeness claim",
-  "packages": 52,
-  "passed": 52,
+  "packages": 53,
+  "passed": 53,
   "results": [
     {
       "path": "spec/extensions/arrow-flatbuffer/package.json",
@@ -360,6 +360,19 @@
         "subset": "Explicit present non-null physical leaf declarations; native bytes, container context and unknown metadata retained; input conversion and enforcement remain separate"
       },
       "evidenceCount": 5,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "path": "spec/extensions/parquet-keys/package.json",
+      "id": "umf.parquet.keys",
+      "version": "1.0.0",
+      "native": {
+        "system": "Apache Parquet / PyArrow",
+        "version": "PyArrow 21.0.0 / parquet-format 219e3f12a62f9476e830c21e26d030d231f7c017",
+        "subset": "Physical schema observations with original file bytes; no collection uniqueness, authored identity inference, page validation or native equivalence"
+      },
+      "evidenceCount": 3,
       "passed": true,
       "failures": []
     },
