@@ -1,0 +1,5 @@
+{
+  "logical":{"umf":"0.1.0","id":"iceberg-logical","vocabularies":{},"modules":[{"id":"data","namespace":"data","elements":[{"id":"sort_key","kind":"field","extensions":{}}]}]},
+  "binding":{"umf":"0.1.0","id":"iceberg-layout","vocabularies":{"umf.binding":{"version":"0.1.0"}},"modules":[],"extensions":{"umf.binding":{"profile":"umf-binding-1","logical":{"documentId":"iceberg-logical","coreVersion":"0.1.0"},"target":{"system":"iceberg","version":"3.0","subset":"table-metadata-sort-order"},"elements":[],"fields":[{"module":"data","element":"sort_key","storage":"column","column":"y"}],"relationships":[],"indexes":[{"name":"sort_by_y","kind":"clustering","on":[{"field":{"module":"data","element":"sort_key"}}],"unique":false}]}}},
+  "native":"fixtures/iceberg/table/TableMetadataV3ValidMinimal.yaml.json"
+}

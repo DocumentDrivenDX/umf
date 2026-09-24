@@ -178,7 +178,12 @@ export function projectBindingIndexes(binding:Document,logical:Document,lossPoli
       if(item.on.length>4||item.include?.length||item.on.some(target=>'documentPath'in target))return {name:item.name,path,outcome:'not-expressible',reason:'Liquid clustering requires at most four direct columns and no included or document-path targets'};
       return {name:item.name,path,outcome:'exact'};
     }
-    if(system==='iceberg')return {name:item.name,path,outcome:item.kind==='clustering'?'approximated':'not-expressible',reason:item.kind==='clustering'?'Iceberg sort order is an analogue, not index enforcement':'No Iceberg index carrier for this kind'};
+    if(system==='iceberg'){
+      if(item.kind!=='clustering')return {name:item.name,path,outcome:'not-expressible',reason:'No Iceberg index carrier for this kind'};
+      if(!/^[23](?:\.|$)/.test(version))return {name:item.name,path,outcome:'unknown',reason:'Sort-order analogue requires a pinned Iceberg v2 or v3 metadata profile'};
+      if(item.include?.length||item.on.some(target=>'documentPath'in target))return {name:item.name,path,outcome:'not-expressible',reason:'This Iceberg profile maps direct columns only; includes and document paths are unsupported'};
+      return {name:item.name,path,outcome:'approximated',reason:'Default sort order is a writer hint, not an enforced index or clustering guarantee'};
+    }
     if(system==='parquet')return {name:item.name,path,outcome:'not-expressible',reason:'Parquet file schema does not enforce indexes'};
     return {name:item.name,path,outcome:'unknown',reason:'Target profile has no qualified index mapping'};
   });

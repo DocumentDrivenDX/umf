@@ -1,0 +1,37 @@
+{
+  "scope": "Iceberg v3 sort-order metadata analogue; native parser accepts generated metadata. No committed catalog update or sorted data-file claim.",
+  "adapter": "umf.iceberg.table 0.1.0",
+  "native": {
+    "runtime": "pyiceberg 0.11.0",
+    "sourceDefaultSortOrder": 3,
+    "candidateDefaultSortOrder": 4,
+    "sourceSchemaRecovered": true
+  },
+  "residuals": [
+    {
+      "path": "/extensions/umf.binding/indexes/0",
+      "reason": "Default sort order is a writer hint, not an enforced index or clustering guarantee",
+      "choice": {
+        "name": "sort_by_y",
+        "kind": "clustering",
+        "on": [
+          {
+            "field": {
+              "module": "data",
+              "element": "sort_key"
+            }
+          }
+        ],
+        "unique": false
+      }
+    }
+  ],
+  "officialSpec": "https://iceberg.apache.org/spec/#sort-orders",
+  "sha256": {
+    "fixtures/binding/iceberg/case.json": "e1b2927eb981ec338d219ada5f50515335ce19e4d69fbba1b03134a9f2f36d8c",
+    "fixtures/iceberg/table/TableMetadataV3ValidMinimal.yaml.json": "5c03ba46cf932eb0396c4de39da7ad5a73bf0c8a1655715bb669cee8bf6d2e34",
+    "fixtures/binding/iceberg/candidate.json": "57b6acf55b831699d8e305543c5491bd6c943317d4dbc5de32081723bdba0968",
+    "src/projections/binding-iceberg/index.ts": "b8c028166ebb4108d1bf56a08b04dd46474bae9a95cf0d0939473469dedd501d",
+    "scripts/binding/iceberg-native.py": "653ac5da33ce3f79dde553eebea3ea8724fefb31b3acf4d7881e95a42d496ec2"
+  }
+}

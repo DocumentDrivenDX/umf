@@ -1,0 +1,24 @@
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {existsSync} from 'node:fs';
+import {exportIcebergTable,importIcebergTable,inspectIcebergTableContext,projectBindingToIceberg,type Document} from '../../src';
+
+const fixture=await Bun.file('fixtures/binding/iceberg/case.json').json();
+const text=await Bun.file(fixture.native).text();
+const archive=importIcebergTable(text,{id:'iceberg-native'});
+const report=projectBindingToIceberg(fixture.logical as Document,fixture.binding as Document,archive,'report');
+assert.equal(report.status,'reported');
+assert.equal(report.residuals.length,1);
+assert.equal(exportIcebergTable(report.nativeArchive),text);
+assert.equal(inspectIcebergTableContext(importIcebergTable(report.candidate!,{id:'candidate'})).status,'checked');
+await Bun.write('fixtures/binding/iceberg/candidate.json',report.candidate!);
+const python=[process.env.UMF_PYTHON,'.venv/bin/python','../umf/.venv/bin/python'].filter((x):x is string=>!!x).find(existsSync);
+assert.ok(python,'Set UMF_PYTHON to a Python environment with PyIceberg 0.11.0');
+const child=Bun.spawn([python,'scripts/binding/iceberg-native.py'],{stdout:'pipe',stderr:'inherit'});
+const native=JSON.parse(await new Response(child.stdout).text());
+assert.equal(await child.exited,0);
+assert.equal(native.runtime,'pyiceberg 0.11.0');
+const sha256=Object.fromEntries(await Promise.all(['fixtures/binding/iceberg/case.json',fixture.native,'fixtures/binding/iceberg/candidate.json','src/projections/binding-iceberg/index.ts','scripts/binding/iceberg-native.py'].map(async file=>[file,createHash('sha256').update(new Uint8Array(await Bun.file(file).arrayBuffer())).digest('hex')])));
+const evidence={scope:'Iceberg v3 sort-order metadata analogue; native parser accepts generated metadata. No committed catalog update or sorted data-file claim.',adapter:'umf.iceberg.table 0.1.0',native,residuals:report.residuals,officialSpec:'https://iceberg.apache.org/spec/#sort-orders',sha256};
+await Bun.write('fixtures/binding/iceberg/oracle.json',JSON.stringify(evidence,null,2)+'\n');
+console.log(JSON.stringify({status:report.status,native:native.runtime,residuals:report.residuals.length}));
