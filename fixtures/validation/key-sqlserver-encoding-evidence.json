@@ -1,0 +1,54 @@
+{
+  "scope": "Native encoding prerequisite for authored SQL Server Key projection. No public projection API, full binding acceptance, ideal admission or native equivalence claim.",
+  "native": {
+    "version": "16.0.4295.3",
+    "tables": 3,
+    "indexesIncludingHeaps": 7,
+    "computedKeyColumns": 8,
+    "probes": 73,
+    "refusals": 31,
+    "storedByteExamples": 19
+  },
+  "tests": {
+    "command": [
+      "bun",
+      "test",
+      "./tests/core-ideals/key-sqlserver.test.ts",
+      "./tests/core-ideals/key-sqlserver-encoding.test.ts"
+    ],
+    "passed": 16,
+    "assertions": 397,
+    "files": 2,
+    "failed": 0
+  },
+  "browser": {
+    "observations": 7,
+    "computedKeys": 4,
+    "recoveries": 2,
+    "distinctCoreExamples": 19,
+    "invalidUnicodeRefused": true,
+    "forgedRefused": true
+  },
+  "verifiedEvidenceFingerprints": 13,
+  "checks": [
+    "bun scripts/core-ideals/key-sqlserver-encoding-discovery.ts",
+    "bun run typecheck",
+    "UMF_CHROMIUM_PATH=/home/erik/.local/bin/chromium bun scripts/core-ideals/key-sqlserver-encoding-browser.ts"
+  ],
+  "projectionRequirements": [
+    "For qualified bounded string/binary components, index persisted binary bytes together with DATALENGTH; direct native string/binary comparison collapses padding.",
+    "PERSISTED NOT NULL computed components can participate in explicit primary and alternate constraints. Preserve original Field membership separately from generated physical columns.",
+    "Carry required DML session settings explicitly; NUMERIC_ROUNDABORT ON refused an otherwise valid insertion.",
+    "Retain input-conversion, native width/size and invalid UTF-16 residuals. Explicit casts may truncate before key computation, and isolated surrogates are accepted natively but refused by the core tuple operation.",
+    "Computed key observations do not establish authored IDs, names, intent or known core equality without an explicit author binding."
+  ],
+  "sha256": {
+    "fixtures/validation/key-sqlserver-encoding-native.json": "b8a0d5df49b023caf87b08889a3ff501dd9b05ebbde7bc85e03b4334e174c650",
+    "fixtures/validation/key-sqlserver-encoding-browser.json": "5461a042887330d74820c7f537149cde9b7ae35ba4e946c65038a871d0cb5e0b",
+    "fixtures/sqlserver/key-encodings.sql": "e2d4f081e94c38dd0dcf4c763302b81d7faec728017488f0cd1204696b9d6308",
+    "scripts/core-ideals/key-sqlserver-encoding-cases.ts": "54db004b2ea0ea321073c8506a67f1857d126621fc6c3aef8ce511d5389cfe60",
+    "scripts/core-ideals/key-sqlserver-encoding-discovery.ts": "66bb3ff278a900dc001b19f47b7c5a4c0cbf4c221cbae48308252c570427cc1d",
+    "scripts/core-ideals/key-sqlserver-encoding-browser.ts": "ebaa2a1009f3dcf6d897e5e1ebee4f887de5755f63487b2bbbd3805f8b25e4f4",
+    "tests/core-ideals/key-sqlserver-encoding.test.ts": "761f36efa0889721f7f6c49a2ad877a2570a2c729bc56e1d84670ae90d25e3f5"
+  }
+}

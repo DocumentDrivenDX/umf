@@ -1,0 +1,19 @@
+export function sqlServerKeyEncodingCases(){
+ const rows:{id:string;statement:string;error:number;value:string|null}[]=[];
+ const add=(id:string,statement:string,error=0,value:string|null='1')=>rows.push({id,statement,error,value});
+ const insert=(id:string,table:string,value:string,error=0)=>add(id,`INSERT INTO umf_key_encoding.${table}(value) VALUES(${value}); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);`,error,error?null:'1');
+ for(const [id,value] of [['empty','0x'],['zero','0x00'],['two-zeroes','0x0000'],['prefix','0x01'],['prefix-zero','0x0100'],['prefix-two-zeroes','0x010000'],['other','0x02']] as const){insert('binary-'+id,'binary_primary',value);insert('binary-'+id+'-duplicate','binary_primary',value,2627);add('binary-'+id+'-stored-bytes',`SELECT @out=CONVERT(varchar(max),key_bytes,2)+N':'+CONVERT(nvarchar(10),key_length) FROM umf_key_encoding.binary_primary WHERE key_bytes=${value} AND key_length=DATALENGTH(${value});`,0,value.slice(2).toUpperCase()+':'+((value.length-2)/2));}
+ insert('binary-null','binary_primary','NULL',515);
+ for(const [id,value] of [['empty',"N''"],['space',"N' '"],['two-spaces',"N'  '"],['lower',"N'a'"],['trailing-space',"N'a '"],['upper',"N'A'"],['accented',"N'á'"],['precomposed',"N'é'"],['decomposed',"N'e'+NCHAR(769)"],['nul','NCHAR(0)'],['a-nul',"N'a'+NCHAR(0)"],['supplementary',"N'😀'"]] as const){insert('text-'+id,'text_primary',value);insert('text-'+id+'-duplicate','text_primary',value,2627);const logical:Record<string,string>={empty:'',space:' ',"two-spaces":'  ',lower:'a',"trailing-space":'a ',upper:'A',accented:'á',precomposed:'é',decomposed:'e\u0301',nul:'\0',"a-nul":'a\0',supplementary:'😀'};const raw=logical[id]!,hex=Array.from({length:raw.length},(_,i)=>{const n=raw.charCodeAt(i);return (n&255).toString(16).padStart(2,'0')+(n>>8).toString(16).padStart(2,'0');}).join('').toUpperCase();add('text-'+id+'-stored-bytes',`SELECT @out=CONVERT(varchar(max),key_bytes,2)+N':'+CONVERT(nvarchar(10),key_length) FROM umf_key_encoding.text_primary WHERE key_bytes=CONVERT(varbinary(64),${value}) AND key_length=DATALENGTH(${value});`,0,hex+':'+raw.length*2);}
+ insert('text-null','text_primary','NULL',515);
+ const compound=(id:string,values:string,error=0)=>add(id,`INSERT INTO umf_key_encoding.compound(tenant,value,external_id) VALUES(${values}); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);`,error,error?null:'1');
+ compound('compound-positive',"1,N'a',0x01");compound('compound-other-tenant',"2,N'a',0x02");compound('compound-trailing-space',"1,N'a ',0x0100");compound('compound-duplicate-primary',"1,N'a',0x03",2627);compound('compound-duplicate-alternate',"3,N'b',0x01",2627);compound('compound-null-tenant',"NULL,N'b',0x04",515);compound('compound-null-text',"3,NULL,0x04",515);compound('compound-null-binary',"3,N'b',NULL",515);
+ add('update-primary-collision',"UPDATE umf_key_encoding.compound SET value=N'a' WHERE tenant=1 AND DATALENGTH(value)=4; SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",2627,null);
+ add('update-alternate-collision',"UPDATE umf_key_encoding.compound SET external_id=0x01 WHERE tenant=2; SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",2627,null);
+ // The encoding proves equality for stored values, not arbitrary SQL input conversion.
+ insert('isolated-surrogate-stored','text_primary','NCHAR(55296)');
+ add('explicit-cast-truncation-collides',"INSERT INTO umf_key_encoding.text_primary(value) VALUES(CONVERT(nvarchar(1),N'ax')); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",2627,null);
+ add('key-bytes-cannot-be-written',"INSERT INTO umf_key_encoding.binary_primary(value,key_bytes) VALUES(0x03,0x04); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",271,null);
+ add('required-session-options',"SET NUMERIC_ROUNDABORT ON; INSERT INTO umf_key_encoding.binary_primary(value) VALUES(0x03); SET @out=CONVERT(nvarchar(20),@@ROWCOUNT);",1934,null);
+ return rows;
+}
