@@ -1,0 +1,557 @@
+[
+  {
+    "name": "many-to-one-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Customers\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"many_to_one\",\"notation\":\"N:1\",\"source_multiplicity\":\"0..*\",\"target_multiplicity\":\"1\",\"mandatory\":true,\"composite_key\":false}}]}}",
+    "original": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}]}",
+    "target": "{\"version\":\"1.0\",\"table_name\":\"Customers\",\"columns\":[{\"name\":\"target_0\",\"data_type\":\"INTEGER\"}]}",
+    "archive": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Customers\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"many_to_one\",\"notation\":\"N:1\",\"source_multiplicity\":\"0..*\",\"target_multiplicity\":\"1\",\"mandatory\":true,\"composite_key\":false}}]}}\n",
+    "columns": [
+      {
+        "sourceColumn": "ref_0",
+        "targetField": {
+          "module": "m",
+          "element": "Customer.id"
+        },
+        "targetColumn": "target_0"
+      }
+    ],
+    "relationship": {
+      "id": "order-customer",
+      "name": "customer",
+      "source": [
+        {
+          "module": "m",
+          "element": "Order"
+        }
+      ],
+      "target": [
+        {
+          "module": "m",
+          "element": "Customer",
+          "key": "identity"
+        }
+      ],
+      "sourceMultiplicity": {
+        "min": 0,
+        "max": "*"
+      },
+      "targetMultiplicity": {
+        "min": 1,
+        "max": 1
+      },
+      "targetLifecycle": "independent",
+      "directed": true,
+      "inverse": "orders"
+    }
+  },
+  {
+    "name": "one-to-one-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Customers\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"one_to_one\",\"notation\":\"1:1\",\"source_multiplicity\":\"0..1\",\"target_multiplicity\":\"1\",\"mandatory\":true,\"composite_key\":false}}]}}",
+    "original": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}]}",
+    "target": "{\"version\":\"1.0\",\"table_name\":\"Customers\",\"columns\":[{\"name\":\"target_0\",\"data_type\":\"INTEGER\"}]}",
+    "archive": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Customers\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"one_to_one\",\"notation\":\"1:1\",\"source_multiplicity\":\"0..1\",\"target_multiplicity\":\"1\",\"mandatory\":true,\"composite_key\":false}}]}}\n",
+    "columns": [
+      {
+        "sourceColumn": "ref_0",
+        "targetField": {
+          "module": "m",
+          "element": "Customer.id"
+        },
+        "targetColumn": "target_0"
+      }
+    ],
+    "relationship": {
+      "id": "order-customer",
+      "name": "customer",
+      "source": [
+        {
+          "module": "m",
+          "element": "Order"
+        }
+      ],
+      "target": [
+        {
+          "module": "m",
+          "element": "Customer",
+          "key": "identity"
+        }
+      ],
+      "sourceMultiplicity": {
+        "min": 0,
+        "max": 1
+      },
+      "targetMultiplicity": {
+        "min": 1,
+        "max": 1
+      },
+      "targetLifecycle": "independent",
+      "directed": true,
+      "inverse": "orders"
+    }
+  },
+  {
+    "name": "many-to-many-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Customers\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"many_to_many\",\"notation\":\"N:N\",\"source_multiplicity\":\"0..*\",\"target_multiplicity\":\"0..*\",\"mandatory\":false,\"composite_key\":false}}]}}",
+    "original": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}]}",
+    "target": "{\"version\":\"1.0\",\"table_name\":\"Customers\",\"columns\":[{\"name\":\"target_0\",\"data_type\":\"INTEGER\"}]}",
+    "archive": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Customers\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"many_to_many\",\"notation\":\"N:N\",\"source_multiplicity\":\"0..*\",\"target_multiplicity\":\"0..*\",\"mandatory\":false,\"composite_key\":false}}]}}\n",
+    "columns": [
+      {
+        "sourceColumn": "ref_0",
+        "targetField": {
+          "module": "m",
+          "element": "Customer.id"
+        },
+        "targetColumn": "target_0"
+      }
+    ],
+    "relationship": {
+      "id": "order-customer",
+      "name": "customer",
+      "source": [
+        {
+          "module": "m",
+          "element": "Order"
+        }
+      ],
+      "target": [
+        {
+          "module": "m",
+          "element": "Customer",
+          "key": "identity"
+        }
+      ],
+      "sourceMultiplicity": {
+        "min": 0,
+        "max": "*"
+      },
+      "targetMultiplicity": {
+        "min": 0,
+        "max": "*"
+      },
+      "targetLifecycle": "independent",
+      "directed": true,
+      "inverse": "orders"
+    }
+  },
+  {
+    "name": "bounded-required-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Customers\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"many_to_many\",\"notation\":\"N:N\",\"source_multiplicity\":\"0..*\",\"target_multiplicity\":\"1..3\",\"mandatory\":true,\"composite_key\":false}}]}}",
+    "original": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}]}",
+    "target": "{\"version\":\"1.0\",\"table_name\":\"Customers\",\"columns\":[{\"name\":\"target_0\",\"data_type\":\"INTEGER\"}]}",
+    "archive": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Customers\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"many_to_many\",\"notation\":\"N:N\",\"source_multiplicity\":\"0..*\",\"target_multiplicity\":\"1..3\",\"mandatory\":true,\"composite_key\":false}}]}}\n",
+    "columns": [
+      {
+        "sourceColumn": "ref_0",
+        "targetField": {
+          "module": "m",
+          "element": "Customer.id"
+        },
+        "targetColumn": "target_0"
+      }
+    ],
+    "relationship": {
+      "id": "order-customer",
+      "name": "customer",
+      "source": [
+        {
+          "module": "m",
+          "element": "Order"
+        }
+      ],
+      "target": [
+        {
+          "module": "m",
+          "element": "Customer",
+          "key": "identity"
+        }
+      ],
+      "sourceMultiplicity": {
+        "min": 0,
+        "max": "*"
+      },
+      "targetMultiplicity": {
+        "min": 1,
+        "max": 3
+      },
+      "targetLifecycle": "independent",
+      "directed": true,
+      "inverse": "orders"
+    }
+  },
+  {
+    "name": "owned-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Customers\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"many_to_one\",\"notation\":\"N:1\",\"source_multiplicity\":\"0..*\",\"target_multiplicity\":\"1\",\"mandatory\":true,\"composite_key\":false}}]}}",
+    "original": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}]}",
+    "target": "{\"version\":\"1.0\",\"table_name\":\"Customers\",\"columns\":[{\"name\":\"target_0\",\"data_type\":\"INTEGER\"}]}",
+    "archive": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Customers\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"many_to_one\",\"notation\":\"N:1\",\"source_multiplicity\":\"0..*\",\"target_multiplicity\":\"1\",\"mandatory\":true,\"composite_key\":false}}]}}\n",
+    "columns": [
+      {
+        "sourceColumn": "ref_0",
+        "targetField": {
+          "module": "m",
+          "element": "Customer.id"
+        },
+        "targetColumn": "target_0"
+      }
+    ],
+    "relationship": {
+      "id": "order-customer",
+      "name": "customer",
+      "source": [
+        {
+          "module": "m",
+          "element": "Order"
+        }
+      ],
+      "target": [
+        {
+          "module": "m",
+          "element": "Customer",
+          "key": "identity"
+        }
+      ],
+      "sourceMultiplicity": {
+        "min": 0,
+        "max": "*"
+      },
+      "targetMultiplicity": {
+        "min": 1,
+        "max": 1
+      },
+      "targetLifecycle": "owned",
+      "directed": true,
+      "inverse": "orders"
+    }
+  },
+  {
+    "name": "undirected-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Customers\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"many_to_one\",\"notation\":\"N:1\",\"source_multiplicity\":\"0..*\",\"target_multiplicity\":\"1\",\"mandatory\":true,\"composite_key\":false}}]}}",
+    "original": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}]}",
+    "target": "{\"version\":\"1.0\",\"table_name\":\"Customers\",\"columns\":[{\"name\":\"target_0\",\"data_type\":\"INTEGER\"}]}",
+    "archive": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Customers\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"many_to_one\",\"notation\":\"N:1\",\"source_multiplicity\":\"0..*\",\"target_multiplicity\":\"1\",\"mandatory\":true,\"composite_key\":false}}]}}\n",
+    "columns": [
+      {
+        "sourceColumn": "ref_0",
+        "targetField": {
+          "module": "m",
+          "element": "Customer.id"
+        },
+        "targetColumn": "target_0"
+      }
+    ],
+    "relationship": {
+      "id": "order-customer",
+      "name": "customer",
+      "source": [
+        {
+          "module": "m",
+          "element": "Order"
+        }
+      ],
+      "target": [
+        {
+          "module": "m",
+          "element": "Customer",
+          "key": "identity"
+        }
+      ],
+      "sourceMultiplicity": {
+        "min": 0,
+        "max": "*"
+      },
+      "targetMultiplicity": {
+        "min": 1,
+        "max": 1
+      },
+      "targetLifecycle": "independent",
+      "directed": false
+    }
+  },
+  {
+    "name": "self-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"},{\"name\":\"target_0\",\"data_type\":\"INTEGER\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Orders\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"many_to_one\",\"notation\":\"N:1\",\"source_multiplicity\":\"0..*\",\"target_multiplicity\":\"1\",\"mandatory\":true,\"composite_key\":false}}]}}",
+    "original": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"},{\"name\":\"target_0\",\"data_type\":\"INTEGER\"}]}",
+    "target": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"},{\"name\":\"target_0\",\"data_type\":\"INTEGER\"}]}",
+    "archive": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"},{\"name\":\"target_0\",\"data_type\":\"INTEGER\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Orders\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"many_to_one\",\"notation\":\"N:1\",\"source_multiplicity\":\"0..*\",\"target_multiplicity\":\"1\",\"mandatory\":true,\"composite_key\":false}}]}}\n",
+    "columns": [
+      {
+        "sourceColumn": "ref_0",
+        "targetField": {
+          "module": "m",
+          "element": "Customer.id"
+        },
+        "targetColumn": "target_0"
+      }
+    ],
+    "relationship": {
+      "id": "order-customer",
+      "name": "customer",
+      "source": [
+        {
+          "module": "m",
+          "element": "Customer"
+        }
+      ],
+      "target": [
+        {
+          "module": "m",
+          "element": "Customer",
+          "key": "identity"
+        }
+      ],
+      "sourceMultiplicity": {
+        "min": 0,
+        "max": "*"
+      },
+      "targetMultiplicity": {
+        "min": 1,
+        "max": 1
+      },
+      "targetLifecycle": "independent",
+      "directed": true,
+      "inverse": "orders"
+    }
+  },
+  {
+    "name": "alternate-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"TEXT\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Customers\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"many_to_one\",\"notation\":\"N:1\",\"source_multiplicity\":\"0..*\",\"target_multiplicity\":\"1\",\"mandatory\":true,\"composite_key\":false}}]}}",
+    "original": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"TEXT\"}]}",
+    "target": "{\"version\":\"1.0\",\"table_name\":\"Customers\",\"columns\":[{\"name\":\"target_0\",\"data_type\":\"TEXT\"}]}",
+    "archive": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"TEXT\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Customers\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"many_to_one\",\"notation\":\"N:1\",\"source_multiplicity\":\"0..*\",\"target_multiplicity\":\"1\",\"mandatory\":true,\"composite_key\":false}}]}}\n",
+    "columns": [
+      {
+        "sourceColumn": "ref_0",
+        "targetField": {
+          "module": "m",
+          "element": "Customer.code"
+        },
+        "targetColumn": "target_0"
+      }
+    ],
+    "relationship": {
+      "id": "order-customer",
+      "name": "customer",
+      "source": [
+        {
+          "module": "m",
+          "element": "Order"
+        }
+      ],
+      "target": [
+        {
+          "module": "m",
+          "element": "Customer",
+          "key": "account-number"
+        }
+      ],
+      "sourceMultiplicity": {
+        "min": 0,
+        "max": "*"
+      },
+      "targetMultiplicity": {
+        "min": 1,
+        "max": 1
+      },
+      "targetLifecycle": "independent",
+      "directed": true,
+      "inverse": "orders"
+    }
+  },
+  {
+    "name": "composite-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_1\",\"data_type\":\"TEXT\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Customers\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"many_to_one\",\"notation\":\"N:1\",\"source_multiplicity\":\"0..*\",\"target_multiplicity\":\"1\",\"mandatory\":true,\"composite_key\":true},\"join_conditions\":[{\"source_column\":\"ref_1\",\"target_column\":\"target_1\"}]}]}}",
+    "original": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_1\",\"data_type\":\"TEXT\"}]}",
+    "target": "{\"version\":\"1.0\",\"table_name\":\"Customers\",\"columns\":[{\"name\":\"target_0\",\"data_type\":\"INTEGER\"},{\"name\":\"target_1\",\"data_type\":\"TEXT\"}]}",
+    "archive": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_1\",\"data_type\":\"TEXT\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Customers\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"many_to_one\",\"notation\":\"N:1\",\"source_multiplicity\":\"0..*\",\"target_multiplicity\":\"1\",\"mandatory\":true,\"composite_key\":true},\"join_conditions\":[{\"source_column\":\"ref_1\",\"target_column\":\"target_1\"}]}]}}\n",
+    "columns": [
+      {
+        "sourceColumn": "ref_0",
+        "targetField": {
+          "module": "m",
+          "element": "Customer.id"
+        },
+        "targetColumn": "target_0"
+      },
+      {
+        "sourceColumn": "ref_1",
+        "targetField": {
+          "module": "m",
+          "element": "Customer.code"
+        },
+        "targetColumn": "target_1"
+      }
+    ],
+    "relationship": {
+      "id": "order-customer",
+      "name": "customer",
+      "source": [
+        {
+          "module": "m",
+          "element": "Order"
+        }
+      ],
+      "target": [
+        {
+          "module": "m",
+          "element": "Customer",
+          "key": "identity"
+        }
+      ],
+      "sourceMultiplicity": {
+        "min": 0,
+        "max": "*"
+      },
+      "targetMultiplicity": {
+        "min": 1,
+        "max": 1
+      },
+      "targetLifecycle": "independent",
+      "directed": true,
+      "inverse": "orders"
+    }
+  },
+  {
+    "name": "unknown-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Customers\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"many_to_one\",\"notation\":\"N:1\",\"source_multiplicity\":\"0..*\",\"target_multiplicity\":\"1\",\"mandatory\":true,\"composite_key\":false}}]}}",
+    "original": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}]}",
+    "target": "{\"version\":\"1.0\",\"table_name\":\"Customers\",\"columns\":[{\"name\":\"target_0\",\"data_type\":\"INTEGER\"}]}",
+    "archive": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Customers\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"many_to_one\",\"notation\":\"N:1\",\"source_multiplicity\":\"0..*\",\"target_multiplicity\":\"1\",\"mandatory\":true,\"composite_key\":false}}]}}\n",
+    "columns": [
+      {
+        "sourceColumn": "ref_0",
+        "targetField": {
+          "module": "m",
+          "element": "Customer.id"
+        },
+        "targetColumn": "target_0"
+      }
+    ],
+    "relationship": {
+      "id": "order-customer",
+      "name": "customer",
+      "source": [
+        {
+          "module": "m",
+          "element": "Order"
+        }
+      ],
+      "target": [
+        {
+          "module": "m",
+          "element": "Customer",
+          "key": "identity"
+        }
+      ],
+      "sourceMultiplicity": {
+        "min": 0,
+        "max": "*"
+      },
+      "targetMultiplicity": {
+        "min": 1,
+        "max": 1
+      },
+      "targetLifecycle": "independent",
+      "directed": true,
+      "inverse": "orders",
+      "future": {
+        "uninterpreted": true
+      }
+    }
+  },
+  {
+    "name": "existing-unrelated-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Elsewhere\",\"source_column\":\"id\",\"target_column\":\"id\",\"type\":\"reference\",\"confidence\":0.5,\"future\":{\"opaque\":true}},{\"target_table\":\"Customers\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"many_to_one\",\"notation\":\"N:1\",\"source_multiplicity\":\"0..*\",\"target_multiplicity\":\"1\",\"mandatory\":true,\"composite_key\":false}}]}}",
+    "original": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Elsewhere\",\"source_column\":\"id\",\"target_column\":\"id\",\"type\":\"reference\",\"confidence\":0.5,\"future\":{\"opaque\":true}}]}}",
+    "target": "{\"version\":\"1.0\",\"table_name\":\"Customers\",\"columns\":[{\"name\":\"target_0\",\"data_type\":\"INTEGER\"}]}",
+    "archive": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}],\"relationships\":{\"outgoing\":[{\"target_table\":\"Elsewhere\",\"source_column\":\"id\",\"target_column\":\"id\",\"type\":\"reference\",\"confidence\":0.5,\"future\":{\"opaque\":true}},{\"target_table\":\"Customers\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"many_to_one\",\"notation\":\"N:1\",\"source_multiplicity\":\"0..*\",\"target_multiplicity\":\"1\",\"mandatory\":true,\"composite_key\":false}}]}}\n",
+    "columns": [
+      {
+        "sourceColumn": "ref_0",
+        "targetField": {
+          "module": "m",
+          "element": "Customer.id"
+        },
+        "targetColumn": "target_0"
+      }
+    ],
+    "relationship": {
+      "id": "order-customer",
+      "name": "customer",
+      "source": [
+        {
+          "module": "m",
+          "element": "Order"
+        }
+      ],
+      "target": [
+        {
+          "module": "m",
+          "element": "Customer",
+          "key": "identity"
+        }
+      ],
+      "sourceMultiplicity": {
+        "min": 0,
+        "max": "*"
+      },
+      "targetMultiplicity": {
+        "min": 1,
+        "max": 1
+      },
+      "targetLifecycle": "independent",
+      "directed": true,
+      "inverse": "orders"
+    }
+  },
+  {
+    "name": "split-report",
+    "native": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"relationships\":{\"future\":{\"n\":9007199254740993,\"decimal\":1.2300},\"outgoing\":[{\"target_table\":\"Customers\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"many_to_one\",\"notation\":\"N:1\",\"source_multiplicity\":\"0..*\",\"target_multiplicity\":\"1\",\"mandatory\":true,\"composite_key\":false}}]},\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}]}",
+    "original": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"relationships\":{\"future\":{\"n\":9007199254740993,\"decimal\":1.2300}},\"columns\":[{\"name\":\"id\",\"data_type\":\"INTEGER\"},{\"name\":\"ref_0\",\"data_type\":\"INTEGER\"}]}",
+    "target": "{\"version\":\"1.0\",\"table_name\":\"Customers\",\"columns\":[{\"name\":\"target_0\",\"data_type\":\"INTEGER\"}]}",
+    "archive": {
+      "table.yaml": "{\"version\":\"1.0\",\"table_name\":\"Orders\",\"relationships\":{\"future\":{\"n\":9007199254740993,\"decimal\":1.2300},\"outgoing\":[{\"target_table\":\"Customers\",\"source_column\":\"ref_0\",\"target_column\":\"target_0\",\"type\":\"reference\",\"confidence\":1,\"reasoning\":\"Explicit UMF metadata projection; confidence does not assert referential enforcement\",\"cardinality\":{\"type\":\"many_to_one\",\"notation\":\"N:1\",\"source_multiplicity\":\"0..*\",\"target_multiplicity\":\"1\",\"mandatory\":true,\"composite_key\":false}}]}}\n",
+      "columns/id.yaml": "column: {name: id, data_type: INTEGER}\n",
+      "columns/ref.yaml": "column: {name: ref_0, data_type: INTEGER}\n",
+      "notes.txt": "untouched\n"
+    },
+    "columns": [
+      {
+        "sourceColumn": "ref_0",
+        "targetField": {
+          "module": "m",
+          "element": "Customer.id"
+        },
+        "targetColumn": "target_0"
+      }
+    ],
+    "relationship": {
+      "id": "order-customer",
+      "name": "customer",
+      "source": [
+        {
+          "module": "m",
+          "element": "Order"
+        }
+      ],
+      "target": [
+        {
+          "module": "m",
+          "element": "Customer",
+          "key": "identity"
+        }
+      ],
+      "sourceMultiplicity": {
+        "min": 0,
+        "max": "*"
+      },
+      "targetMultiplicity": {
+        "min": 1,
+        "max": 1
+      },
+      "targetLifecycle": "independent",
+      "directed": true,
+      "inverse": "orders"
+    }
+  }
+]

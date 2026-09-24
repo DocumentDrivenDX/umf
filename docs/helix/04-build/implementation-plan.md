@@ -4882,3 +4882,24 @@ All 321 JSON schemas and 54 packages pass the structural audit; typechecking
 passes. This is an executable schema contract, not an implemented projection or
 native acceptance claim. Runtime implementation, authored corpus, native and
 Chromium composition evidence remain the next work on `umf-95881098`.
+
+### TableSpec authored projection implementation checkpoint
+
+The outgoing-metadata runtime and public verification/recovery APIs implement
+the preceding contract. The 36-case strict/report matrix projects twelve
+complete carriers and blocks twenty-four cases. All twelve emitted carriers
+pass the pinned native model/schema, with ordered composite column pairs,
+multiplicity metadata and preservation of unrelated native content checked
+independently. The API retains the logical document, author receipt and both
+original native sources; it does not infer physical layout or native enforcement.
+
+All 84 discovery/classification/projection tests pass 631 assertions across three
+files. Chromium passes 36 projection cases, 24 ideal recoveries, 24 original
+native source-pair recoveries, 24 fresh-import/classification recoveries and
+24 forged/stale refusals, with no getters or external requests. The 22-case
+classification browser proof is also refreshed. Typecheck, build and
+321-schema / 54-package audits pass. See the
+[projection checkpoint](../../../fixtures/validation/relationship-tablespec-projection-checkpoint.json).
+Binding acceptance remains open pending its complete acceptance audit and wider
+compatibility verification. Relationship admission and other target bindings
+remain separate work.

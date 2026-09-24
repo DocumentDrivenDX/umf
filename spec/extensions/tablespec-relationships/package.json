@@ -2,7 +2,7 @@
   "id": "umf.tablespec.relationships",
   "version": "1.0.0",
   "coreVersion": "0.1.0",
-  "description": "Experimental TableSpec relationship metadata observations with retained native recovery",
+  "description": "Experimental TableSpec relationship observations and explicit outgoing-metadata projection",
   "schema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "urn:umf:tablespec:relationship-binding:1.0.0",
@@ -229,7 +229,7 @@
       }
     }
   },
-  "semantics": "CONTRACT-041 and TD-045; native observations only. Authored projection, binding acceptance, ideal admission and native equivalence remain unclaimed.",
+  "semantics": "CONTRACT-041 and TD-045; native observations and qualified authored outgoing-metadata projection with retained residuals. Full binding acceptance, ideal admission and native equivalence remain unclaimed.",
   "scopes": [
     "document"
   ],
@@ -246,7 +246,11 @@
     },
     "evidence": [
       "tests/core-ideals/relationship-tablespec.test.ts",
-      "fixtures/validation/relationship-tablespec-discovery-native.json"
+      "fixtures/validation/relationship-tablespec-discovery-native.json",
+      "tests/core-ideals/relationship-tablespec-projection.test.ts",
+      "spec/core/relationship-tablespec-projection.schema.json",
+      "fixtures/validation/relationship-tablespec-projection-native.json",
+      "fixtures/validation/relationship-tablespec-projection-browser.json"
     ]
   }
 }

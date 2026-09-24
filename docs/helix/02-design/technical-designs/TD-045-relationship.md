@@ -270,3 +270,23 @@ unknown qualifiers, pre-existing outgoing metadata, malformed bindings and
 forged/stale receipts. Each successful report projection must compose through
 native model/schema acceptance, fresh import, classification and both recovery
 directions under Bun and Chromium. Implementation and evidence are still pending.
+
+### TableSpec outgoing-metadata implementation checkpoint
+
+The scoped runtime described above is now implemented as
+`projectRelationshipToTableSpec`, with recomputed verification and separate
+logical/original-native recovery APIs. Twelve report-mode carriers from the
+36-case authored matrix pass the pinned native model and JSON Schema. The
+remaining cases block explicitly. Composite and alternate Keys, self links,
+bounded multiplicities, ownership/direction losses, preserved unrelated outgoing
+entries and split bundles are exercised. Heterogeneous and reified association
+layouts remain explicit profile refusals.
+
+Chromium verifies the same outcomes, fresh adapter import, native classification,
+24 logical recoveries, 24 original-native source-pair recoveries and 24 emitted
+native recoveries through JSON/YAML. Forged/stale receipts reject. Native checks
+establish metadata acceptance and unchanged unrelated native content, not row
+enforcement or join execution. See the
+[projection evidence](../../../../fixtures/validation/relationship-tablespec-projection-native.json)
+and [browser composition](../../../../fixtures/validation/relationship-tablespec-projection-browser.json).
+Full binding acceptance and wider compatibility verification remain separate.

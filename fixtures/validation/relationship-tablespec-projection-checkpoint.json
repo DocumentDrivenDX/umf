@@ -1,0 +1,89 @@
+{
+  "scope": "Experimental TableSpec authored outgoing-metadata projection and composed recovery checkpoint; binding acceptance, ideal admission and native equivalence remain unclaimed",
+  "bindingAccepted": false,
+  "idealAdmitted": false,
+  "nativeEquivalence": false,
+  "tests": {
+    "passed": 84,
+    "failed": 0,
+    "assertions": 631,
+    "files": 3,
+    "log": "fixtures/validation/relationship-tablespec-projection-tests.log"
+  },
+  "typecheck": "passed",
+  "build": "passed",
+  "schemas": 321,
+  "packages": 54,
+  "proofs": {
+    "relationship-tablespec-classification-browser": {
+      "cases": 22,
+      "recoveries": 44,
+      "strictBlocks": 19,
+      "forgedRefusals": 22,
+      "staleRefusals": 22,
+      "getterCalls": 0
+    },
+    "relationship-tablespec-projection-browser": {
+      "cases": 36,
+      "projected": 12,
+      "blocked": 24,
+      "idealRecoveries": 24,
+      "nativeSourcePairRecoveries": 24,
+      "classifiedNativeRecoveries": 24,
+      "refusals": 24,
+      "getterCalls": 0
+    },
+    "relationship-tablespec-projection-native": {
+      "acceptedRows": 12
+    }
+  },
+  "limits": [
+    "Metadata model/schema acceptance does not prove row enforcement or join execution.",
+    "Heterogeneous endpoint sets and keyed association Records are explicit profile refusals.",
+    "Wider compatibility and full binding acceptance remain required."
+  ],
+  "sha256": {
+    "/home/erik/Projects/umf/scripts/core-ideals/relationship-tablespec-projection-oracle.py": "644d792963a6909a0c9982792d7f2427a2fc3faed2f41055b69af6f601d05795",
+    "dist/umf.js": "16d5393b02f9cc76ecf93c5d6a2644c90bf6df359b4d063e478ff2fe754b3aa1",
+    "fixtures/validation/relationship-tablespec-classification-browser.json": "8d19dc5d38b3be9ff873a1887331472444452dff8d7f00ace5c56bd2b751ad02",
+    "fixtures/validation/relationship-tablespec-discovery-native.json": "9141882534bc53fb991a18e92747fa0ad4cdfa07bd9511c8428b3cd3dbd73a73",
+    "fixtures/validation/relationship-tablespec-projected-schemas.json": "8e6debaa4b9b42348871acaf9bbedab29a0c43ebd34491a26e9f365b534ebd70",
+    "fixtures/validation/relationship-tablespec-projection-browser.json": "8cb869c8ee6c9bd1bdc538580c4b72ab992b4d7becc3d0eeee5bd0751c1c57d4",
+    "fixtures/validation/relationship-tablespec-projection-native.json": "94c73d5c0c4a67a13a03cc26c6a66fa5be51499f11ddae1f026ed2cefa724b5a",
+    "fixtures/validation/relationship-tablespec-projection-tests.log": "c9c3becf3624d8360891ff76d7d456070882490bbdc79aa062d4453d0a8a0eda",
+    "native/tablespec/sources.json": "be76ee57d9c1a2bd69a14d4a6ffea250509904d7187a19c6f20d4f3741cabd64",
+    "native/tablespec/sources/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "native/tablespec/sources/examples/providers.yaml": "d88a5076031afd12a1d953c0107dac339859c8e88d66de53d4dd7f34f5cdb3f8",
+    "native/tablespec/sources/examples/synthea/umfs/providers/columns/GENDER.yaml": "7c1953ab3300460919f84f7f81c31088d458351f7e5474f2fb2a0cebc5153595",
+    "native/tablespec/sources/examples/synthea/umfs/providers/columns/Id.yaml": "24adc19e810ff8ae5c72b8c88980869ab6457c5a388ca32e4e5e295c1850f70d",
+    "native/tablespec/sources/examples/synthea/umfs/providers/columns/NAME.yaml": "df6d2b18dbd7c9a792d5ead0e81d991b13f280c3f2187a2baaf97da4f5617af9",
+    "native/tablespec/sources/examples/synthea/umfs/providers/columns/ORGANIZATION.yaml": "33eae4f4f3fd1630ee753ea8d1850f15bc5dd739254b7ff0133813c2aaa1b5e4",
+    "native/tablespec/sources/examples/synthea/umfs/providers/columns/SPECIALITY.yaml": "383aac3ec261187bedf12c8b9901b8c03444c382e451df997d2cbdb396495e02",
+    "native/tablespec/sources/examples/synthea/umfs/providers/table.yaml": "96954af2775001f5e5596f830385e4fe8fcc415c9a43782014f3868460fbc776",
+    "native/tablespec/sources/pyproject.toml": "04679004a5690502b9f01e8180e16263aa0f95a3f8bff212aeab0d8c3ea5f910",
+    "native/tablespec/sources/src/tablespec/models/umf.py": "ad82c596c9276823e5c71435198d8e419bc5c1abb0a71bdc0adf03f1060a2f2b",
+    "native/tablespec/sources/src/tablespec/schemas/umf.schema.json": "d5b90026a2d82013a9586b2521b398690c722ca66df7a2663106d6d26778902b",
+    "native/tablespec/sources/src/tablespec/type_mappings.py": "eaa36bcbd96d2b09d22161c5200a2be6a0788d7fd5ee46292d62428bb24cbbe7",
+    "native/tablespec/sources/src/tablespec/umf_loader.py": "1b133536ef2abede237889b3be07e3197cf1a33ba00b0b80bfc2a388ed2efefa",
+    "native/tablespec/sources/src/tablespec/umf_validator.py": "d1c59403361903fdffe2787a4aaf9d40e7aba86d6723b5dd4278d1232ef1c145",
+    "native/tablespec/sources/tests/unit/test_umf_loader.py": "9f39055e7fcf46a37011e6a1cf0178a28b747bef55f58d7a92a422d3d2f90fc6",
+    "native/tablespec/sources/tests/unit/test_umf_models.py": "80b4587721c060c913a1a073f705a7c9ed742351a3384b8223c2ec5c1c48b6ca",
+    "native/tablespec/sources/tests/unit/test_umf_validator.py": "c6cf51ae211d723d4c1d3178820da30ff0001c3c4aac2ffc8e63dd84b6bf716a",
+    "scripts/core-ideals/relationship-tablespec-browser.ts": "777ebc4ce5c7d132da9be5edf9002f1ce6e2d17569fce58ed1c43ea1659d5a33",
+    "scripts/core-ideals/relationship-tablespec-oracle.ts": "316067112a37b9d0763c51f08dbb04d44b3c07e68f9035b38a9e5ef04bc624cc",
+    "scripts/core-ideals/relationship-tablespec-projection-browser.ts": "1beee6770548439b1573ae97a651c5ac01f1bd3d6355070a3a5fd5b85fe76640",
+    "scripts/core-ideals/relationship-tablespec-projection-cases.ts": "1381fb99c815c6eb1668aa9d163b3fd637ed9e3a1c817eba2d2f9cc680107f91",
+    "scripts/core-ideals/relationship-tablespec-projection-schema.ts": "5a2fde800375077b54d410d78e7bf31e04e81b53650fdcc937253b3c56e97d24",
+    "scripts/core-ideals/relationship-tablespec-schema.ts": "8a8ec9767c1a824fdfece16f22ea67ccd0f723f6170cfd856b311996e3ac83c3",
+    "spec/core/relationship-tablespec-projection.schema.json": "a65c41f20c9972102ca442c66a38d3139b9c8f112f1f4452884796989185d774",
+    "spec/core/tablespec-relationship-classification.schema.json": "d9b2250b5fd2348fbca245482b55d63cb623d650455ff4a9a765ac1a47d513a1",
+    "spec/extensions/tablespec-relationships/package.json": "c1c0920214779c8d49ae8d63fa0de044d2c2bb247af836f059360405d4addae2",
+    "spec/extensions/tablespec-relationships/schema.json": "0c0cceddf5033bfe8d42e2811b64a0511677d8ba2f197ed062471edd618f0681",
+    "src/core-ideals/relationship-tablespec-projection.ts": "3c8a4578da37e091a583db83cdd3dde549f873378f5ab3121b4adb895c806a58",
+    "src/core-ideals/relationship-tablespec.ts": "0f14cfa43cfe85fe5b0b921860b0042f22b69d4fe707b5ca95f87a6e80e07d3f",
+    "src/index.ts": "9e9454769f562ac198cf198e864f82615e52f2240047fb2d05d40264cd036b15",
+    "tests/core-ideals/relationship-tablespec-discovery.test.ts": "761b816363c17e06087a70235c5df1c7cf241ec0ab8eac83ef77f46123c8f582",
+    "tests/core-ideals/relationship-tablespec-projection.test.ts": "a7875eee3435192d54afce304f5e0364d649ad18b7d0d11db474cb1e0f9ce1a6",
+    "tests/core-ideals/relationship-tablespec.test.ts": "2a7fbf595ce5432327db47f0d6a6880837b61ec5eb6be4be15bc41a0512bf5bd"
+  }
+}

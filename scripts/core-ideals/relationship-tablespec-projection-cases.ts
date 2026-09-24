@@ -1,0 +1,38 @@
+import {relationshipCandidate} from '../core-relationship-cases';
+import {declareCoreRelationship} from '../../src/model/relationships';
+import {importTableSpec,importTableSpecBundle} from '../../src/adapters/tablespec';
+import type {Document} from '../../src/model/types';
+import type {RelationshipTableSpecRequest} from '../../src/core-ideals/relationship-tablespec-projection';
+export function relationshipTableSpecCase(name='many-to-one'){
+ const logical=relationshipCandidate(),r=logical.modules[0].relationships[0];
+ if(name==='one-to-one')r.sourceMultiplicity={min:0,max:1};
+ if(name==='many-to-many')r.targetMultiplicity={min:0,max:'*'};
+ if(name==='bounded-required')r.targetMultiplicity={min:1,max:3};
+ if(name==='owned')r.targetLifecycle='owned';
+ if(name==='undirected'){r.directed=false;delete r.inverse;}
+ if(name==='heterogeneous')r.source.push({module:'m',element:'Company'});
+ if(name==='association')r.associationRecord={module:'m',element:'Enrollment'};
+ if(name==='self')r.source=[{module:'m',element:'Customer'}];
+ if(name==='alternate')r.target[0].key='account-number';
+ if(name==='unknown')r.future={uninterpreted:true};
+ const targetRecord=logical.modules[0].elements.find((e:any)=>e.id==='Customer'),key=targetRecord.keys.find((k:any)=>k.id===r.target[0].key);
+ if(name==='composite')key.fields.push({module:'m',element:'Customer.code'});
+ const requestFields=Object.fromEntries(Object.entries(r).filter(([k])=>k!=='future'));
+ const author=declareCoreRelationship(logical,{module:'m'},requestFields as any),source=author.target as unknown as Document;
+ const targetColumns=key.fields.map((f:any,i:number)=>({name:'target_'+i,data_type:logical.modules[0].elements.find((e:any)=>e.id===f.element).scalarType==='string'?'TEXT':'INTEGER'}));
+ const sourceColumns=targetColumns.map((c:any,i:number)=>({...c,name:'ref_'+i}));
+ const base={version:'1.0',table_name:'Orders',columns:[{name:'id',data_type:'INTEGER'},...sourceColumns]};
+ let nativeSource=importTableSpec(JSON.stringify(base),{id:'source-table',format:'json'}),nativeTarget=importTableSpec(JSON.stringify({version:'1.0',table_name:'Customers',columns:targetColumns}),{id:'target-table',format:'json'});
+ const request:RelationshipTableSpecRequest={profile:'outgoing-metadata',relationship:{module:'m',id:r.id},mode:'report',columns:key.fields.map((f:any,i:number)=>({sourceColumn:'ref_'+i,targetField:f,targetColumn:'target_'+i}))};
+ if(name==='self'){nativeSource=importTableSpec(JSON.stringify({...base,columns:[...base.columns,...targetColumns]}),{id:'self-table',format:'json'});nativeTarget=structuredClone(nativeSource);}
+ if(name==='missing-column')request.columns[0]!.sourceColumn='missing';
+ if(name==='wrong-key-field')request.columns[0]!.targetField={module:'m',element:'Order.id'};
+ if(name==='type-conflict')nativeTarget=importTableSpec(JSON.stringify({version:'1.0',table_name:'Customers',columns:[{name:'target_0',data_type:'TEXT'}]}),{id:'target-table',format:'json'});
+ if(name==='existing-conflict'||name==='existing-unrelated')nativeSource=importTableSpec(JSON.stringify({...base,relationships:{outgoing:[{target_table:name==='existing-conflict'?'Customers':'Elsewhere',source_column:'id',target_column:'id',type:'reference',confidence:0.5,future:{opaque:true}}]}}),{id:'source-table',format:'json'});
+ if(name==='split')nativeSource=importTableSpecBundle({'table.yaml':'version: "1.0"\ntable_name: Orders\nrelationships: {future: {n: 9007199254740993, decimal: 1.2300}}\n','columns/id.yaml':'column: {name: id, data_type: INTEGER}\n','columns/ref.yaml':'column: {name: ref_0, data_type: INTEGER}\n','notes.txt':'untouched\n'},{id:'source-table'});
+ return {name,source,author,nativeSource,nativeTarget,request};
+}
+export function relationshipTableSpecProjectionCases(){
+ const blocked=new Set(['heterogeneous','association','missing-column','wrong-key-field','type-conflict','existing-conflict']);
+ return ['many-to-one','one-to-one','many-to-many','bounded-required','owned','undirected','heterogeneous','association','self','alternate','composite','unknown','missing-column','wrong-key-field','type-conflict','existing-conflict','existing-unrelated','split'].flatMap(name=>(['strict','report'] as const).map(mode=>{const c=relationshipTableSpecCase(name);c.request.mode=mode;return {...c,name:name+'-'+mode,expected:mode==='strict'||blocked.has(name)?'blocked' as const:'projected' as const};}));
+}
