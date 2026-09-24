@@ -306,3 +306,36 @@ This qualifies metadata projection and retained recovery only. Heterogeneous
 endpoints and keyed association Record layouts refuse explicitly. Native
 execution/enforcement, other system bindings, relationship ideal admission and
 native equivalence remain unclaimed.
+
+### Avro structural relationship classification design
+
+The `schema-structure` profile observes record declarations, named-type tokens,
+unions, arrays and maps under native schema grammar. A named-type token may
+refer to a record, enum or fixed type, or may be unresolved. Classification
+therefore reports name resolution as unverified and never identifies a token
+as an independently keyed Record endpoint. Nested values and repeated items do
+not establish associations or participation bounds. Custom metadata is retained
+inside the complete tagged native node; its contents are not walked as schemas.
+Malformed or unresolved native declarations remain preservable, not certified
+as valid Avro. The discovery codec refusals remain permanent counterexamples.
+
+Each observation includes its archive-relative native path and full tagged
+native node, preserving numeric lexemes. Each has a source-qualified residual
+whose value is exactly that node. A separate root residual retains the original
+schema text and ordered dependency texts. Importing that archive must reproduce
+the current adapter representation before classification proceeds. Whitespace
+and JSON escape spelling recover from the archive, not the adapter renderer.
+
+`classifyAvroRelationships` supports unchanged core envelopes 0.1 through 0.7.
+Report mode adds `umf.avro.relationships` observations to a copied document;
+it does not add authored relationships. Strict mode blocks because schema
+structure cannot establish authored association intent, stable Key resolution,
+referential enforcement or participation. Existing extension content or an
+unsupported vocabulary version blocks rather than being overwritten. Receipt
+verification recomputes every observation, residual and target; stale targets
+and forged receipts refuse. Input getters must never execute.
+
+Publish the complete extension package and classification receipt schema with
+Bun corpus and Chromium recovery evidence. This stage does not satisfy authored
+down-projection, relationship admission or complete Avro binding acceptance;
+those remain on `umf-c81cfc9c`.

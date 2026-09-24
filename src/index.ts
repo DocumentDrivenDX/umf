@@ -362,3 +362,4 @@ export type {CoreRelationshipQuery,CoreRelationshipSelection,CoreRelationshipSel
 export {default as coreRelationshipMetadataSelectionSchema} from '../spec/core/relationship-metadata-selection.schema.json';
 export * from './core-ideals/relationship-tablespec';
 export * from './core-ideals/relationship-tablespec-projection';
+export * from './core-ideals/relationship-avro';

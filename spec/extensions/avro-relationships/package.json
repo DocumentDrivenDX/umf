@@ -1,0 +1,236 @@
+{
+  "id": "umf.avro.relationships",
+  "version": "1.0.0",
+  "coreVersion": "0.1.0",
+  "description": "Experimental Avro relationship structure observations with exact native archives",
+  "schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:umf:avro:relationship-binding:1.0.0",
+    "title": "Avro schema structure without authored association",
+    "$defs": {
+      "node": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "const": "null"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "boolean"
+              },
+              "value": {
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "value"
+            ],
+            "properties": {
+              "kind": {
+                "const": "number"
+              },
+              "value": {
+                "type": "string",
+                "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "items"
+            ],
+            "properties": {
+              "kind": {
+                "const": "array"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "required": [
+              "kind",
+              "members"
+            ],
+            "properties": {
+              "kind": {
+                "const": "object"
+              },
+              "members": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/$defs/node"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type": "object",
+    "additionalProperties": true,
+    "required": [
+      "origin",
+      "binding",
+      "nativeSource",
+      "observations"
+    ],
+    "properties": {
+      "origin": {
+        "const": "classified"
+      },
+      "binding": {
+        "const": {
+          "id": "umf.avro.relationships",
+          "version": "1.0.0",
+          "nativeVersion": "1.12.0",
+          "subset": "Structural observations informed by Apache Avro 1.12.0 and fastavro 1.12.2 discovery; no name resolution, native validity certification, authored association inference or native equivalence"
+        }
+      },
+      "nativeSource": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema",
+          "dependencies"
+        ],
+        "properties": {
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          },
+          "dependencies": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "schema"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "schema": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      },
+      "observations": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "nativePath",
+            "kind",
+            "nativeNode",
+            "nameResolution",
+            "enforcement",
+            "authorIntent",
+            "provenance",
+            "scope"
+          ],
+          "properties": {
+            "nativePath": {
+              "type": "string",
+              "minLength": 1
+            },
+            "kind": {
+              "enum": [
+                "record",
+                "named-type-token",
+                "union",
+                "array",
+                "map"
+              ]
+            },
+            "nativeNode": {
+              "$ref": "#/$defs/node"
+            },
+            "nameResolution": {
+              "const": "unverified"
+            },
+            "enforcement": {
+              "const": "not-expressible"
+            },
+            "authorIntent": {
+              "const": "unknown"
+            },
+            "provenance": {
+              "const": "inferred"
+            },
+            "scope": {
+              "const": "schema-structure"
+            }
+          }
+        }
+      }
+    }
+  },
+  "semantics": "CONTRACT-041 and TD-045. Classification retains native schema structure without inferring authored associations. Authored projection and full binding acceptance remain unfinished.",
+  "scopes": [
+    "document"
+  ],
+  "capabilities": {
+    "validation": "structural",
+    "directions": [
+      "import",
+      "export"
+    ],
+    "native": {
+      "system": "Apache Avro",
+      "version": "1.12.0",
+      "subset": "Structural observations informed by Apache Avro 1.12.0 and fastavro 1.12.2 discovery; no name resolution, native validity certification, authored association inference or native equivalence"
+    },
+    "evidence": [
+      "tests/core-ideals/relationship-avro.test.ts",
+      "fixtures/validation/relationship-avro-discovery-native.json"
+    ]
+  }
+}

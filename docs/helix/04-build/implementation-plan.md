@@ -5021,3 +5021,27 @@ relationship receipt must retain the original source text separately. See
 [the native evidence](../../../fixtures/validation/relationship-avro-discovery-native.json).
 Classification/projection APIs and schemas, authored carriers and residuals,
 composed browser evidence and binding acceptance remain required.
+
+### Avro relationship classification checkpoint
+
+`classifyAvroRelationships`, verification and exact original-archive recovery
+are implemented with a complete `umf.avro.relationships` package and receipt
+schema. The schema-structure profile observes record declarations, named-type
+tokens, unions, arrays and maps without inferring authored relationships or
+certifying native name resolution. Unknown metadata is retained without being
+walked as schema grammar. Strict mode blocks interpretation losses; report mode
+retains source-qualified tagged-node residuals and original schema/dependency
+texts. Conflicting content, stale targets, forged receipts and getters refuse.
+
+The discovery and classification suites pass 28 Bun tests / 402 assertions.
+They cover core envelopes 0.1 through 0.7, metadata lookalikes, enum/fixed reuse,
+exact numeric lexemes, invalid native-name counterexamples and package payload
+validation. Chromium checks eleven cases, 22 JSON/YAML archive recoveries,
+eleven strict blocks and eleven forged-receipt refusals with no external
+requests. Typechecking and browser build pass. See
+[the browser record](../../../fixtures/validation/relationship-avro-browser.json).
+
+This is classification evidence only. Authored carriers, obligation-specific
+projection residuals, composed ideal recovery, broader compatibility and full
+Avro binding acceptance remain on `umf-c81cfc9c`. No relationship admission or
+native-equivalence claim is made.
