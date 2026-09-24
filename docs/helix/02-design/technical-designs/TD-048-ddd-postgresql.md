@@ -53,6 +53,10 @@ bead. It uses a distinct unpartitioned binding for relationship-success DDL:
 PostgreSQL 17.4 rejects an id-only primary key on the original tenant-partitioned
 Order table. No generated FK may target that unenforced key, and the generator
 cannot silently add `tenant` to the authored Key.
+`expected-postgresql-relationships.sql` pins the complete target shape with
+four native PKs, three FKs and five supported indexes. Its isolated PostgreSQL
+17.4 and Chromium results validate the expected target only; the full
+generator must produce and verify its own candidate against this oracle.
 
 ## Component Changes
 

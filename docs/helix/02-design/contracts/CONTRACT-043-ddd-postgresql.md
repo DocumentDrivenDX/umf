@@ -128,6 +128,10 @@ cross-table maps before rendering any DDL. `sourceConstraint` and
 both relationship choices are pinned in
 `fixtures/projections/ddd-authored-relationships/postgresql-layout-proposal.json`;
 the fixture is a design input, not a published schema or generator result.
+The same directory contains a hand-authored expected PostgreSQL DDL target,
+accepted by the pinned PostgreSQL 17.4 catalog oracle and recovered by the
+adapter in Chromium. It is a target oracle for later generator comparisons,
+not evidence that authored relationships have already been projected.
 
 For `foreign_key`, the carrier table MUST be the single source Record's bound
 table, and ordered referencing columns MUST align one-to-one with the single

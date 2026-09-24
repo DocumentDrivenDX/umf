@@ -42,3 +42,12 @@ semantically different. The committed Key candidate validates this
 unpartitioned binding; the existing table/index stage reports four tables and
 five accepted index statements. No Key constraint or relationship DDL is
 claimed yet.
+
+`expected-postgresql-relationships.sql` is a hand-authored target for the
+full generator. It adds four PK constraints, the Order→Customer FK, two
+OrderProduct endpoint FKs, and five supported physical indexes to the four
+tables. `expected-postgresql-oracle.json` records isolated PostgreSQL 17.4
+catalog acceptance; `expected-postgresql-browser.json` records Chromium
+adapter/codec recovery. These prove target syntax and archive handling only:
+the DDL has not been emitted from the relationship ideal, and catalog
+constraints do not prove existing application rows satisfy the assertions.

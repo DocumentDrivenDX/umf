@@ -1,0 +1,72 @@
+{
+  "scope": "Hand-authored expected PostgreSQL 17.4 target; DDL and catalog acceptance only, not generated projection or instance referential proof",
+  "image": "postgres@sha256:304ab813518754228f9f792f79d6da36359b82d8ecf418096c636725f8c930ad",
+  "adapter": "@libpg-query/parser@17.6.10",
+  "sourceRecovered": true,
+  "observed": {
+    "serverVersion": "170004",
+    "constraints": [
+      {
+        "name": "fk_order_products_order",
+        "kind": "f",
+        "table_name": "order_products",
+        "definition": "FOREIGN KEY (\"orderId\") REFERENCES sales.orders(id)",
+        "validated": true
+      },
+      {
+        "name": "fk_order_products_product",
+        "kind": "f",
+        "table_name": "order_products",
+        "definition": "FOREIGN KEY (\"productId\") REFERENCES sales.products(id)",
+        "validated": true
+      },
+      {
+        "name": "fk_orders_customer",
+        "kind": "f",
+        "table_name": "orders",
+        "definition": "FOREIGN KEY (\"customerId\") REFERENCES sales.customers(id)",
+        "validated": true
+      },
+      {
+        "name": "pk_customers",
+        "kind": "p",
+        "table_name": "customers",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "name": "pk_order_products",
+        "kind": "p",
+        "table_name": "order_products",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "name": "pk_orders",
+        "kind": "p",
+        "table_name": "orders",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      },
+      {
+        "name": "pk_products",
+        "kind": "p",
+        "table_name": "products",
+        "definition": "PRIMARY KEY (id)",
+        "validated": true
+      }
+    ],
+    "indexes": [
+      "orders_btree",
+      "orders_expression",
+      "orders_hash",
+      "orders_partial",
+      "orders_unique"
+    ],
+    "quantity": "numeric(12,2)|t"
+  },
+  "sha256": {
+    "fixtures/projections/ddd-authored-relationships/expected-postgresql-relationships.sql": "d529690e9fef9fa39273cb31069aa3bbae58e30a0ece89f449d93382e2e9f418",
+    "fixtures/projections/ddd-authored-relationships/postgresql-layout-proposal.json": "0a60894a7cc34e9171e34dc40c9d39d499b70e60f836f5a5cd3e15c2bcd7cfb0"
+  }
+}
