@@ -58,10 +58,10 @@ profiles retain their own versions and evidence.
 CONTRACT-041 owns the exact relationship shape and operation result;
 CONTRACT-001 owns IDs/unknown preservation and CONTRACT-040 owns stable named
 keys, provenance, strict/report and recovery. This TD wires those surfaces and
-does not add a second reference resolver. Consumers select by module/name and
-preserve full source context. The target-key reference uses the stable Key ID,
-not display name or native index name; the final serialized form follows
-TD-044 before schema publication. Cross-document identity/pinning is deferred
+does not add a second reference resolver. Consumers select by exact
+module/relationship ID and preserve full source context. The serialized
+`target[].key` uses `Record.keys[].id`, not display name or native index name.
+Cross-document identity/pinning is deferred
 to the CONTRACT-001 successor and must not be guessed here.
 
 ## Data Model Changes

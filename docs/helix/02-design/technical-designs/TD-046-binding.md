@@ -58,6 +58,10 @@ adds no physical member to the logical core or DDD profile.
 The binding package version changes independently of the model. A model edit
 that invalidates an exact reference makes the binding stale until explicitly
 repaired. No implicit name-based reassociation occurs.
+The published `umf-binding-1` relationship slot is name-based; before any
+relationship storage projection, add a versioned `umf-binding-2` ID-based
+profile and receipt-backed migration. An ambiguous or missing name match blocks
+instead of choosing a new relationship after a rename.
 
 ## Integration Points
 
@@ -97,6 +101,8 @@ keeps unsupported new choices as residuals while recovering the old document.
 1. Publish schema/package and registry tests.
 2. Implement semantic pairing and copied inspection.
 3. Add target-profile reports and native/browser tests.
+4. After TD-045 publishes stable relationship IDs, migrate relationship
+   bindings to the ID-based profile before emitting relationship storage.
 
 ## Risks
 

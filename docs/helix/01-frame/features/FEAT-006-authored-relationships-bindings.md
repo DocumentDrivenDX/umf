@@ -65,8 +65,11 @@ preserve native sources; the authoring path also needs directed generation.
   not a replacement for either vocabulary. Native FK enforcement and DDD
   aggregate membership remain separate claims.
 - REL-02: Publish independently versioned target bindings for storage choices
-  and index capabilities. Preserve unrecognized choices; report absent target
-  support. A logical field cannot imply filterability or sortability.
+  and index capabilities. A relationship storage choice resolves its stable
+  relationship ID, not its mutable presentation name; migrate the published
+  name-based binding profile with a versioned receipt before relationship
+  projection. Preserve unrecognized choices; report absent target support. A
+  logical field cannot imply filterability or sortability.
 - REL-03: Generate PostgreSQL DDL from DDD plus binding and GraphQL SDL from DDD
   plus relationships. Strict mode blocks non-exact requested obligations;
   report mode emits a complete candidate only with source-linked residuals.

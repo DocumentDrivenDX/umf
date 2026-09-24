@@ -75,10 +75,9 @@ relationship. The endpoint types below MUST be Records with authored Key ideals.
 
 The endpoint sets name allowed **record types**, not a union of current instance
 IDs. Each reference MUST resolve by CONTRACT-001 exact IDs; names and namespaces
-cannot substitute. Target-key identity is resolved against the target Record's
-authored named keys under CONTRACT-040, not against a native UNIQUE index.
-Until Key's final named-key shape is settled, this table specifies the semantic
-reference, not its final serialized spelling. The stable Key ID survives a
+cannot substitute. The serialized `target[].key` value is the exact stable
+`Record.keys[].id` on the named target Record under CONTRACT-040, not a key
+display name or native UNIQUE index. The stable Key ID survives a
 display-name edit; replacement or reassignment of the Key ID is an explicit
 identity migration. A relationship's stable local identity is its
 containing module ID plus exact `id`; cross-document stability and revision
@@ -169,15 +168,16 @@ report. `Enrollment` may be an association Record with `grade` and its own key.
 A DDD `Order.customer` concept field with cardinality many but no authored
 relationship remains a DDD field, not a relationship.
 
+The target-key spelling and physical-binding identity transition are settled:
+`target[].key` names `Record.keys[].id`, and the relationship-capable binding
+profile resolves `{module,id}`. CONTRACT-042 specifies migration from its
+published name-based profile. Neither decision asserts that the Key delivery
+gate has passed.
+
 ## Open Decisions Before Core Publication
 
-- Reconcile the final serialized target-key reference with the named-key shape
-  selected in CONTRACT-040/TD-044; do not publish a second key namespace.
 - Reconcile `(module.id,id)` relationship lineage with the revision-qualified
   identity proposed by CONTRACT-045 before cross-document references ship.
-- The current `umf.binding` profile keys physical relationship bindings by
-  `{module,name}`. A rename therefore requires an explicit binding edit and a
-  versioned future migration to `{module,id}` before stable-ID lookup is claimed.
 - Specify how a physical binding ties an `associationRecord` to endpoint-key
   columns and whether its own key is surrogate or endpoint-derived. The core
   assertion does not dictate that layout.

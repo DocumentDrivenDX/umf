@@ -56,6 +56,9 @@ owns the exact binding document and fidelity report.
   exact/approximate/residual outcomes are explicit.
 - **US-046-AC9:** Given a binding version change, when migrated and rolled
   back, then old and new physical choices and unknown content are recoverable.
+  A name-based relationship entry migrates to a stable ID only when exactly one
+  authored relationship matches; a missing or ambiguous match blocks, and a
+  later presentation rename does not retarget the migrated storage choice.
 - **US-046-AC10:** Given a consumer asking which fields are filterable or
   sortable, when metadata is selected, then the answer comes from the target
   binding's capabilities and never from a logical field definition.

@@ -26,7 +26,8 @@ ddx:
 # CONTRACT-042: Independent physical binding and indexes
 
 **Type:** extension schema/library. **Vocabulary:** `umf.binding` 0.1.0.
-**Status:** draft semantic authority before package/schema publication.
+**Status:** `umf-binding-1` package/schema published; relationship-capable
+`umf-binding-2` transition remains planned.
 
 ## Purpose
 
@@ -54,7 +55,7 @@ survive JSON/YAML read/write. The extension package permits document scope only.
 | `target` | `{system, version, subset}` | yes | Nonempty target identifiers; one binding payload chooses one target. |
 | `elements` | ordered array of element bindings | yes | Each entry has exact `{module,element}`, optional `partition` family name or explicit `null`, optional `table` name; duplicates invalid. |
 | `fields` | ordered array of field bindings | yes | Each has exact `{module,element}` for a core Field, or `{module,element,field}` for a named field within that element's `umf.ddd` data-bearing payload. `storage` is `column` or `embedded`; `embedded` requires a containing document column and nonempty declared path. |
-| `relationships` | ordered array of relationship bindings | yes | Each has exact `{module,name}` for CONTRACT-041 and `storage` of `edge`, `foreign_key`, `junction` or `inline`. |
+| `relationships` | ordered array of relationship bindings | yes | Published `umf-binding-1` stores `{module,name}`; it cannot claim stable relationship identity. The relationship-capable `umf-binding-2` profile MUST store exact `{module,id}` for CONTRACT-041 and `storage` of `edge`, `foreign_key`, `junction` or `inline`. |
 | `indexes` | ordered array of index declarations | yes | Physical capability declarations described below; duplicate names within the binding target/table scope invalid. |
 
 An empty array means no authored choice, not a target default. A DDD field
@@ -147,6 +148,18 @@ includes relationship lowering; the full DDL bead remains open. The support
 table above is not a blanket delivered claim for every kind or target.
 
 ## Precedence and Compatibility
+
+Before any relationship storage projection is delivered, publish a new binding
+package/profile version for `{module,id}` references. The existing 0.1.0
+`umf-binding-1` payload remains readable and byte-recoverable. Migration of a
+name-based entry requires the exact paired logical document and exactly one
+relationship in that module with the given name; it records the old entry, new
+stable ID and original document in a receipt. A missing or ambiguous match
+blocks; migration cannot infer identity from a table, FK or DDD concept field.
+Rollback restores the original name-based entry and retains any new ID-only
+choice as an explicit residual. After migration, a relationship rename keeps
+the same binding target through its ID. A 0.1.0 entry is never re-resolved by
+name against a different logical revision without explicit migration.
 
 Core and `umf.ddd` govern logical identity/meaning; this extension governs
 only physical choices for its declared target. A changed logical ID/version,
