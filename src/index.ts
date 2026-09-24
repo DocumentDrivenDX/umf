@@ -329,3 +329,5 @@ export {default as coreKeyDocumentSchema} from '../spec/core/key-document.schema
 export {default as coreKeyOperationSchema} from '../spec/core/key-operation.schema.json';
 export {default as coreKeyTransitionSchema} from '../spec/core/key-transition.schema.json';
 export {default as coreKeyTupleOperationSchema} from '../spec/core/key-tuple-operation.schema.json';
+
+export * from './core-ideals/key-tablespec';
