@@ -39,6 +39,9 @@ The operation retains each source and reports the meaning the target lacks.
 The relationship-independent table stage is implemented for a pinned PostgreSQL
 17.4 subset: DDD entities and a separate binding emit quoted tables, explicit
 scalar columns, a JSONB object carrier and LIST/default partition layout.
+Its explicit type policy must target bound DDD columns, and every partition
+family must be selected; stale or embedded-field scalar policies block before
+DDL emission.
 The table-stage report retains every index choice, relationship choice, DDD
 identity and unsupported scalar/path obligation as a residual. A separate
 table-plus-index stage has pinned PostgreSQL 17.4 evidence for four supported

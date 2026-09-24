@@ -32,6 +32,18 @@ test('@covers US-048-AC3 @covers US-048-AC4: stale and unknown bindings block; u
   await expect(project(duplicate)).rejects.toThrow();
 });
 
+test('@covers US-048-AC3: stale table policy entries block before DDL emission',async()=>{
+ const missing=structuredClone(fixture.policy);
+ missing.fieldTypes.push({module:'sales',element:'Order',field:'removed',sqlType:'text'});
+ await expect(project(fixture.binding,missing)).rejects.toThrow('Field type policy has no table-bound DDD column');
+ const embedded=structuredClone(fixture.policy);
+ embedded.fieldTypes.push({module:'sales',element:'Order',field:'details',sqlType:'text'});
+ await expect(project(fixture.binding,embedded)).rejects.toThrow('Field type policy has no table-bound DDD column');
+ const unbound=structuredClone(fixture.policy);
+ unbound.partitionFamilies.push({name:'unused',column:'id',defaultTable:'unused_default'});
+ await expect(project(fixture.binding,unbound)).rejects.toThrow('Partition family is not selected');
+});
+
 test('@covers US-048-AC3 @covers US-048-AC4: partition and embedded path losses are named',async()=>{
   const policy=structuredClone(fixture.policy);policy.partitionFamilies=[];
   const report=await project(fixture.binding,policy);

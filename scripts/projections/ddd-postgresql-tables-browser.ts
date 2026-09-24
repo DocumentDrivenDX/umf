@@ -23,8 +23,14 @@ try{
     if(JSON.stringify(report)!==JSON.stringify(expected))throw Error('Bun/Chromium PostgreSQL DDL report mismatch');
     const strict=await u.projectDddTablesToPostgresql(fixture.logical,fixture.binding,backend,fixture.policy,'strict');
     if(strict.status!=='blocked'||strict.candidate)throw Error('Strict emitted partial candidate');
+    const stale=structuredClone(fixture.policy);
+    stale.fieldTypes.push({module:'sales',element:'Order',field:'removed',sqlType:'text'});
+    let staleBlocked=false;
+    try{await u.projectDddTablesToPostgresql(fixture.logical,fixture.binding,backend,stale,'report');}
+    catch(error){staleBlocked=String(error).includes('Field type policy has no table-bound DDD column');}
+    if(!staleBlocked)throw Error('Stale table policy emitted DDL');
     if('Bun'in globalThis||'process'in globalThis)throw Error('Host global in browser');
-    return {status:report.status,tables:(report.candidate?.match(/CREATE TABLE/g)??[]).length,residuals:report.residuals.length,strictBlocked:true};
+    return {status:report.status,tables:(report.candidate?.match(/CREATE TABLE/g)??[]).length,residuals:report.residuals.length,strictBlocked:true,staleBlocked};
   });
   if(external.length)throw Error('External browser request');
   await Bun.write('fixtures/projections/ddd-postgresql-tables/browser.json',JSON.stringify({browser:browser.version(),result,externalRequests:external},null,2)+'\n');
