@@ -1,0 +1,131 @@
+{
+  "scope": "SQL Server 2022 isolated native execution of rowstore, unique and filtered index DDL; no query-plan or performance claim",
+  "image": "mcr.microsoft.com/mssql/server@sha256:4402d880dd4c34bfa7d8705e56a86cd6c88da80a1f6bbbe741f999e76264a090",
+  "sourceVersion": "16.0.4295.3",
+  "observed": [
+    {
+      "name": "umf_active_filtered",
+      "type_desc": "NONCLUSTERED",
+      "is_unique": false,
+      "has_filter": true,
+      "filter_definition": "([active]=(1))"
+    },
+    {
+      "name": "umf_email_btree",
+      "type_desc": "NONCLUSTERED",
+      "is_unique": false,
+      "has_filter": false
+    },
+    {
+      "name": "umf_id_unique",
+      "type_desc": "NONCLUSTERED",
+      "is_unique": true,
+      "has_filter": false
+    }
+  ],
+  "residuals": [
+    {
+      "path": "/extensions/umf.binding/indexes/3",
+      "reason": "No verified disk-rowstore carrier for this index kind",
+      "choice": {
+        "name": "umf_gin",
+        "kind": "gin",
+        "on": [
+          {
+            "field": {
+              "module": "sales",
+              "element": "Item",
+              "field": "email"
+            }
+          }
+        ],
+        "unique": false
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/indexes/4",
+      "reason": "No verified disk-rowstore carrier for this index kind",
+      "choice": {
+        "name": "umf_gist",
+        "kind": "gist",
+        "on": [
+          {
+            "field": {
+              "module": "sales",
+              "element": "Item",
+              "field": "email"
+            }
+          }
+        ],
+        "unique": false
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/indexes/5",
+      "reason": "No verified disk-rowstore carrier for this index kind",
+      "choice": {
+        "name": "umf_hash",
+        "kind": "hash",
+        "on": [
+          {
+            "field": {
+              "module": "sales",
+              "element": "Item",
+              "field": "email"
+            }
+          }
+        ],
+        "unique": false
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/indexes/6",
+      "reason": "No verified disk-rowstore carrier for this index kind",
+      "choice": {
+        "name": "umf_expression",
+        "kind": "expression",
+        "on": [
+          {
+            "documentPath": {
+              "field": {
+                "module": "sales",
+                "element": "Item",
+                "field": "details"
+              },
+              "path": [
+                "customer",
+                "region"
+              ]
+            }
+          }
+        ],
+        "unique": false
+      }
+    },
+    {
+      "path": "/extensions/umf.binding/indexes/7",
+      "reason": "No verified disk-rowstore carrier for this index kind",
+      "choice": {
+        "name": "umf_clustering",
+        "kind": "clustering",
+        "on": [
+          {
+            "field": {
+              "module": "sales",
+              "element": "Item",
+              "field": "id"
+            }
+          }
+        ],
+        "unique": false
+      }
+    }
+  ],
+  "sha256": {
+    "fixtures/binding/sqlserver-indexes/case.json": "d3e81f89f7fd8d2ec047275cab7b88e44bdfcb9409072385e2192f2b18dfa0d5",
+    "fixtures/sqlserver/indexes-catalog.json": "fd7a8a325fd34d2fb3b9219f957de217c15c16fc05a3a935fbcf912a16abed20",
+    "fixtures/sqlserver/indexes.sql": "fe17d9ce9df818b7342a4a0d6ea850caac5855a1be200e6b4c8c3c94cb3c80a9",
+    "fixtures/binding/sqlserver-indexes/generated.sql": "224ce37beca10f54ca3cc386a2204f879841fd5153c4571f29237c8e90ce601d",
+    "src/projections/binding-sqlserver/indexes.ts": "43cf7abed999007a03028ae7d46c1580d12fb48c35b749f105d73afc830a150a"
+  }
+}
