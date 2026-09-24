@@ -438,6 +438,74 @@
       }
     ]
   },
+  "relationshipProposals": [
+    {
+      "module": "sales",
+      "assertion": {
+        "id": "order-customer",
+        "name": "customer",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Customer",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 1,
+          "max": 1
+        },
+        "targetLifecycle": "independent",
+        "directed": true,
+        "inverse": "orders"
+      }
+    },
+    {
+      "module": "sales",
+      "assertion": {
+        "id": "order-product",
+        "name": "products",
+        "source": [
+          {
+            "module": "sales",
+            "element": "Order"
+          }
+        ],
+        "target": [
+          {
+            "module": "sales",
+            "element": "Product",
+            "key": "pk"
+          }
+        ],
+        "sourceMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetMultiplicity": {
+          "min": 0,
+          "max": "*"
+        },
+        "targetLifecycle": "independent",
+        "associationRecord": {
+          "module": "sales",
+          "element": "OrderProduct"
+        },
+        "directed": true,
+        "inverse": "orders"
+      }
+    }
+  ],
   "postgresqlBinding": {
     "umf": "0.1.0",
     "id": "ddd-keyed-postgresql-binding",

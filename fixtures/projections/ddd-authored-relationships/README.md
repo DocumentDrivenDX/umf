@@ -8,6 +8,11 @@ and a stable named `pk` Key on its `id` Field. OrderProduct retains its
 `quantity` attribute and separate identity. The PostgreSQL and Delta binding
 documents remain independent and declare the new logical core version; their
 physical choices are unchanged.
+`relationshipProposals` separately declares Order→Customer through Customer's
+stable `pk` Key and Order→Product as many-to-many with keyed OrderProduct as
+the association Record. The existing DDD `customerId`, `orderId` and
+`productId` fields do not create these relationships by themselves. Inverse
+navigation names are authored presentation only; no resolver is generated.
 
 The committed Key candidate at `46ee0551` validates the core and DDD document
 and both binding documents. With that candidate, the existing partial

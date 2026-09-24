@@ -20,8 +20,17 @@ pgBinding.id='ddd-keyed-postgresql-binding';
 deltaBinding.id='ddd-keyed-delta-binding';
 pgBinding.extensions['umf.binding'].logical.coreVersion='0.6.0';
 deltaBinding.extensions['umf.binding'].logical.coreVersion='0.6.0';
+const ref=(element:string)=>({module:'sales',element});
+const relationshipProposals=[
+ {module:'sales',assertion:{id:'order-customer',name:'customer',source:[ref('Order')],target:[{...ref('Customer'),key:'pk'}],sourceMultiplicity:{min:0,max:'*'},targetMultiplicity:{min:1,max:1},targetLifecycle:'independent',directed:true,inverse:'orders'}},
+ {module:'sales',assertion:{id:'order-product',name:'products',source:[ref('Order')],target:[{...ref('Product'),key:'pk'}],sourceMultiplicity:{min:0,max:'*'},targetMultiplicity:{min:0,max:'*'},targetLifecycle:'independent',associationRecord:ref('OrderProduct'),directed:true,inverse:'orders'}},
+];
+for(const proposal of relationshipProposals){
+ assert(proposal.module===module.id);
+ for(const endpoint of proposal.assertion.target){const record=module.elements.find((row:any)=>row.id===endpoint.element);assert(record?.keys?.some((key:any)=>key.id===endpoint.key));}
+}
 await Bun.write('fixtures/projections/ddd-authored-relationships/base.json',JSON.stringify({
  scope:'Preparatory Key 0.6.0 shared DDD graph; relationships and ID-based binding await admission',
- logical,postgresqlBinding:pgBinding,deltaBinding,postgresqlPolicy:postgresql.policy,graphqlPolicy:core.policy,
+ logical,relationshipProposals,postgresqlBinding:pgBinding,deltaBinding,postgresqlPolicy:postgresql.policy,graphqlPolicy:core.policy,
 },null,2)+'\n');
-console.log({records:module.elements.filter((row:any)=>row.kind==='record').length,fields:module.elements.filter((row:any)=>row.kind==='field').length,targets:[pgBinding.extensions['umf.binding'].target.system,deltaBinding.extensions['umf.binding'].target.system]});
+console.log({records:module.elements.filter((row:any)=>row.kind==='record').length,fields:module.elements.filter((row:any)=>row.kind==='field').length,relationships:relationshipProposals.length,targets:[pgBinding.extensions['umf.binding'].target.system,deltaBinding.extensions['umf.binding'].target.system]});

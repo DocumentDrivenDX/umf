@@ -33,4 +33,18 @@ test('@covers US-045-AC2 @covers US-046-AC1 @covers US-048-AC1 @covers US-049-AC
  expect(prepared.deltaBinding.extensions['umf.binding'].indexes).toEqual(delta.extensions['umf.binding'].indexes);
  expect(prepared.postgresqlPolicy).toEqual(pg.policy);
  expect(prepared.graphqlPolicy).toEqual(source.policy);
+ expect(logical.modules.every((row:any)=>!Object.hasOwn(row,'relationships'))).toBe(true);
+ const proposals=prepared.relationshipProposals;
+ expect(proposals.map((row:any)=>[row.module,row.assertion.id,row.assertion.name])).toEqual([
+  ['sales','order-customer','customer'],['sales','order-product','products'],
+ ]);
+ expect(proposals[0].assertion.target).toEqual([{module:'sales',element:'Customer',key:'pk'}]);
+ expect(proposals[0].assertion.targetMultiplicity).toEqual({min:1,max:1});
+ expect(proposals[1].assertion.target).toEqual([{module:'sales',element:'Product',key:'pk'}]);
+ expect(proposals[1].assertion.sourceMultiplicity).toEqual({min:0,max:'*'});
+ expect(proposals[1].assertion.targetMultiplicity).toEqual({min:0,max:'*'});
+ expect(proposals[1].assertion.associationRecord).toEqual({module:'sales',element:'OrderProduct'});
+ expect(records.find((row:any)=>row.id==='OrderProduct').keys[0].id).toBe('pk');
+ expect(records.find((row:any)=>row.id==='OrderProduct').extensions['umf.ddd'].fields.quantity).toBeDefined();
+ expect(proposals.every((row:any)=>row.assertion.targetLifecycle==='independent')).toBe(true);
 });
