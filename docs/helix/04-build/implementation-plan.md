@@ -5045,3 +5045,27 @@ This is classification evidence only. Authored carriers, obligation-specific
 projection residuals, composed ideal recovery, broader compatibility and full
 Avro binding acceptance remain on `umf-c81cfc9c`. No relationship admission or
 native-equivalence claim is made.
+
+### Avro reference-value carrier checkpoint
+
+TD-045 now defines the `target-key-record` authored profile and its required
+mapping, loss and retained-recovery checks. The internal native carrier builder
+is implemented; it emits explicitly named ordered key components under singular,
+nullable-singular or array wire shapes, with no inferred defaults or logical
+relationships. Invalid names, duplicate components, unknown request fields and
+getters refuse atomically. Logical binding is not yet wired to this builder.
+
+Twelve generated schemas pass Apache Avro 1.12.0 and fastavro 1.12.2 parsing.
+The 24 writer runs include four expected missing/null-reference refusals and
+40 successful cross-codec reads. Dangling keys, empty arrays and duplicate
+references encode, while the binary32 probe narrows 1.0000000000000002 to 1.
+Composite, self-reference and binary key values also round-trip. These results
+constrain future projection residuals rather than proving association enforcement.
+
+Fourteen Bun tests / 197 assertions pass. Chromium checks all twelve generated
+carriers, 24 JSON/YAML native archive recoveries, twelve strict blocks and zero
+getter executions or external requests. Typechecking passes. See the
+[native record](../../../fixtures/validation/relationship-avro-carrier-native.json)
+and [browser record](../../../fixtures/validation/relationship-avro-carrier-browser.json).
+Authored Record/Key binding validation, complete projection receipts, individual
+obligation residuals, ideal recovery and full binding acceptance remain required.

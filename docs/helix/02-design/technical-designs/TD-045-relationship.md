@@ -339,3 +339,51 @@ Publish the complete extension package and classification receipt schema with
 Bun corpus and Chromium recovery evidence. This stage does not satisfy authored
 down-projection, relationship admission or complete Avro binding acceptance;
 those remain on `umf-c81cfc9c`.
+
+### Avro target-key tuple carrier and authored projection design
+
+The first authored profile, `target-key-record`, emits a named Avro record
+containing the selected target Key's ordered components. This is a reference
+value carrier, not a nested copy of the target entity. The request supplies the
+outer record name, namespace, relationship field name, key-record name, exact
+logical component identities, native component names/types and wire shape
+(`one`, `nullable-one`, or `array`). Names are validated, never normalized.
+The wire shape is an explicit representation choice; it does not redefine either
+logical multiplicity. No default is synthesized.
+
+The authored operation must consume a valid core 0.7 document and a verified
+relationship declaration. It resolves stable relationship, target Record and
+Key IDs and checks that endpoint/component meanings have not changed since
+authoring. Ordered component mappings must cover the target Key once, in Key
+order. Native type choices must match the logical scalar families. Integer
+width, decimal precision/scale, length, nullability and unknown qualifiers need
+explicit outcomes; selecting an Avro primitive cannot claim ideal exactness.
+An internal carrier builder accepts only validated explicit native choices and
+has no authority to infer any logical mapping.
+
+This profile initially requires one source and one target Record. Heterogeneous
+endpoints and separately keyed association Records require a different declared
+layout and remain explicit profile refusals. Do not choose one branch or drop
+association attributes to obtain a successful carrier. Self relationships work
+because the emitted key-record type represents a reference value, not a recursive
+copy of the source entity. Distinct key components may have the same native type.
+Outer and key-record fullnames must differ and cannot shadow Avro primitive names.
+
+Every authored obligation receives a logical source-qualified residual: stable
+identity/name, endpoint and Key identity, both multiplicities, lifecycle,
+direction, inverse and unknown qualifiers. Avro does not check target existence,
+uniqueness of references, distinct-record participation or opposite-end bounds.
+Nullable values and empty/duplicate arrays must remain native counterexamples;
+a required field missing from writer input must also be tested independently.
+Strict blocks on these losses. Report may emit a complete qualified carrier with
+all residuals and retained logical source. Native-only reimport classifies schema
+structure without recreating authored intent. Verified retained-receipt recovery
+returns the exact logical source and the emitted native archive. This profile
+creates a new schema rather than editing an existing native bundle; native
+extensions on the logical source remain in the source residual unchanged.
+
+Implement the native carrier builder and pinned codec probes first, then wire
+logical binding validation, complete projection receipt schema, per-obligation
+residuals and recomputed recovery. Finish with authored scenario and Chromium
+composition tests. A builder or codec success alone is not authored projection
+acceptance or a useful relationship-ideal admission result.

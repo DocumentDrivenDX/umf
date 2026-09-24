@@ -1,0 +1,761 @@
+{
+  "scope": "Generated target-key tuple carriers; dangling/duplicate/empty reference values and float narrowing; no authored projection acceptance",
+  "bindingImplemented": false,
+  "nativeEquivalence": false,
+  "versions": {
+    "apache": "1.12.0",
+    "fastavro": "1.12.2"
+  },
+  "cases": [
+    {
+      "case": "dangling-key-value",
+      "writer": "apache",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "ce0f"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "customer": {
+                "id": 999
+              }
+            }
+          ],
+          "bytesConsumed": 2
+        },
+        "fastavro": {
+          "values": [
+            {
+              "customer": {
+                "id": 999
+              }
+            }
+          ],
+          "bytesConsumed": 2
+        }
+      }
+    },
+    {
+      "case": "dangling-key-value",
+      "writer": "fastavro",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "ce0f"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "customer": {
+                "id": 999
+              }
+            }
+          ],
+          "bytesConsumed": 2
+        },
+        "fastavro": {
+          "values": [
+            {
+              "customer": {
+                "id": 999
+              }
+            }
+          ],
+          "bytesConsumed": 2
+        }
+      }
+    },
+    {
+      "case": "required-reference-missing",
+      "writer": "apache",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"None\" provided for \"customer\" is not an example of the schema {\n  \"type\": \"record\",\n  \"name\": \"CustomerKey\",\n  \"namespace\": \"sales\",\n  \"fields\": [\n    {\n      \"type\": \"long\",\n      \"name\": \"id\"\n    }\n  ]\n}"
+      }
+    },
+    {
+      "case": "required-reference-missing",
+      "writer": "fastavro",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": false,
+        "error": "ValueError",
+        "message": "Field customer is specified in the schema but missing from the record"
+      }
+    },
+    {
+      "case": "singular-null-rejected",
+      "writer": "apache",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": false,
+        "error": "AvroTypeException",
+        "message": "The datum \"None\" provided for \"customer\" is not an example of the schema {\n  \"type\": \"record\",\n  \"name\": \"CustomerKey\",\n  \"namespace\": \"sales\",\n  \"fields\": [\n    {\n      \"type\": \"long\",\n      \"name\": \"id\"\n    }\n  ]\n}"
+      }
+    },
+    {
+      "case": "singular-null-rejected",
+      "writer": "fastavro",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": false,
+        "error": "TypeError",
+        "message": "'NoneType' object is not iterable on field customer"
+      }
+    },
+    {
+      "case": "nullable-reference",
+      "writer": "apache",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "000202"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "customer": null
+            },
+            {
+              "customer": {
+                "id": 1
+              }
+            }
+          ],
+          "bytesConsumed": 3
+        },
+        "fastavro": {
+          "values": [
+            {
+              "customer": null
+            },
+            {
+              "customer": {
+                "id": 1
+              }
+            }
+          ],
+          "bytesConsumed": 3
+        }
+      }
+    },
+    {
+      "case": "nullable-reference",
+      "writer": "fastavro",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "000202"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "customer": null
+            },
+            {
+              "customer": {
+                "id": 1
+              }
+            }
+          ],
+          "bytesConsumed": 3
+        },
+        "fastavro": {
+          "values": [
+            {
+              "customer": null
+            },
+            {
+              "customer": {
+                "id": 1
+              }
+            }
+          ],
+          "bytesConsumed": 3
+        }
+      }
+    },
+    {
+      "case": "empty-reference-array",
+      "writer": "apache",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "00"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "customer": []
+            }
+          ],
+          "bytesConsumed": 1
+        },
+        "fastavro": {
+          "values": [
+            {
+              "customer": []
+            }
+          ],
+          "bytesConsumed": 1
+        }
+      }
+    },
+    {
+      "case": "empty-reference-array",
+      "writer": "fastavro",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "00"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "customer": []
+            }
+          ],
+          "bytesConsumed": 1
+        },
+        "fastavro": {
+          "values": [
+            {
+              "customer": []
+            }
+          ],
+          "bytesConsumed": 1
+        }
+      }
+    },
+    {
+      "case": "duplicate-references",
+      "writer": "apache",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "04020200"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "customer": [
+                {
+                  "id": 1
+                },
+                {
+                  "id": 1
+                }
+              ]
+            }
+          ],
+          "bytesConsumed": 4
+        },
+        "fastavro": {
+          "values": [
+            {
+              "customer": [
+                {
+                  "id": 1
+                },
+                {
+                  "id": 1
+                }
+              ]
+            }
+          ],
+          "bytesConsumed": 4
+        }
+      }
+    },
+    {
+      "case": "duplicate-references",
+      "writer": "fastavro",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "04020200"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "customer": [
+                {
+                  "id": 1
+                },
+                {
+                  "id": 1
+                }
+              ]
+            }
+          ],
+          "bytesConsumed": 4
+        },
+        "fastavro": {
+          "values": [
+            {
+              "customer": [
+                {
+                  "id": 1
+                },
+                {
+                  "id": 1
+                }
+              ]
+            }
+          ],
+          "bytesConsumed": 4
+        }
+      }
+    },
+    {
+      "case": "composite-reference",
+      "writer": "apache",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "0a616c70686122"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "customer": {
+                "tenant": "alpha",
+                "id": 17
+              }
+            }
+          ],
+          "bytesConsumed": 7
+        },
+        "fastavro": {
+          "values": [
+            {
+              "customer": {
+                "tenant": "alpha",
+                "id": 17
+              }
+            }
+          ],
+          "bytesConsumed": 7
+        }
+      }
+    },
+    {
+      "case": "composite-reference",
+      "writer": "fastavro",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "0a616c70686122"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "customer": {
+                "tenant": "alpha",
+                "id": 17
+              }
+            }
+          ],
+          "bytesConsumed": 7
+        },
+        "fastavro": {
+          "values": [
+            {
+              "customer": {
+                "tenant": "alpha",
+                "id": 17
+              }
+            }
+          ],
+          "bytesConsumed": 7
+        }
+      }
+    },
+    {
+      "case": "self-reference-key",
+      "writer": "apache",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "02"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "parent": {
+                "id": 1
+              }
+            }
+          ],
+          "bytesConsumed": 1
+        },
+        "fastavro": {
+          "values": [
+            {
+              "parent": {
+                "id": 1
+              }
+            }
+          ],
+          "bytesConsumed": 1
+        }
+      }
+    },
+    {
+      "case": "self-reference-key",
+      "writer": "fastavro",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "02"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "parent": {
+                "id": 1
+              }
+            }
+          ],
+          "bytesConsumed": 1
+        },
+        "fastavro": {
+          "values": [
+            {
+              "parent": {
+                "id": 1
+              }
+            }
+          ],
+          "bytesConsumed": 1
+        }
+      }
+    },
+    {
+      "case": "boolean-key",
+      "writer": "apache",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "01"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "customer": {
+                "id": true
+              }
+            }
+          ],
+          "bytesConsumed": 1
+        },
+        "fastavro": {
+          "values": [
+            {
+              "customer": {
+                "id": true
+              }
+            }
+          ],
+          "bytesConsumed": 1
+        }
+      }
+    },
+    {
+      "case": "boolean-key",
+      "writer": "fastavro",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "01"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "customer": {
+                "id": true
+              }
+            }
+          ],
+          "bytesConsumed": 1
+        },
+        "fastavro": {
+          "values": [
+            {
+              "customer": {
+                "id": true
+              }
+            }
+          ],
+          "bytesConsumed": 1
+        }
+      }
+    },
+    {
+      "case": "binary-key",
+      "writer": "apache",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "0400ff"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "customer": {
+                "id": {
+                  "$bytes": "00ff"
+                }
+              }
+            }
+          ],
+          "bytesConsumed": 3
+        },
+        "fastavro": {
+          "values": [
+            {
+              "customer": {
+                "id": {
+                  "$bytes": "00ff"
+                }
+              }
+            }
+          ],
+          "bytesConsumed": 3
+        }
+      }
+    },
+    {
+      "case": "binary-key",
+      "writer": "fastavro",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "0400ff"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "customer": {
+                "id": {
+                  "$bytes": "00ff"
+                }
+              }
+            }
+          ],
+          "bytesConsumed": 3
+        },
+        "fastavro": {
+          "values": [
+            {
+              "customer": {
+                "id": {
+                  "$bytes": "00ff"
+                }
+              }
+            }
+          ],
+          "bytesConsumed": 3
+        }
+      }
+    },
+    {
+      "case": "float-key-narrows",
+      "writer": "apache",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "0000803f"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "customer": {
+                "id": 1.0
+              }
+            }
+          ],
+          "bytesConsumed": 4
+        },
+        "fastavro": {
+          "values": [
+            {
+              "customer": {
+                "id": 1.0
+              }
+            }
+          ],
+          "bytesConsumed": 4
+        }
+      }
+    },
+    {
+      "case": "float-key-narrows",
+      "writer": "fastavro",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "0000803f"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "customer": {
+                "id": 1.0
+              }
+            }
+          ],
+          "bytesConsumed": 4
+        },
+        "fastavro": {
+          "values": [
+            {
+              "customer": {
+                "id": 1.0
+              }
+            }
+          ],
+          "bytesConsumed": 4
+        }
+      }
+    },
+    {
+      "case": "double-key-preserves-probe",
+      "writer": "apache",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "010000000000f03f"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "customer": {
+                "id": 1.0000000000000002
+              }
+            }
+          ],
+          "bytesConsumed": 8
+        },
+        "fastavro": {
+          "values": [
+            {
+              "customer": {
+                "id": 1.0000000000000002
+              }
+            }
+          ],
+          "bytesConsumed": 8
+        }
+      }
+    },
+    {
+      "case": "double-key-preserves-probe",
+      "writer": "fastavro",
+      "parse": {
+        "ok": true
+      },
+      "write": {
+        "ok": true,
+        "hex": "010000000000f03f"
+      },
+      "reads": {
+        "apache": {
+          "values": [
+            {
+              "customer": {
+                "id": 1.0000000000000002
+              }
+            }
+          ],
+          "bytesConsumed": 8
+        },
+        "fastavro": {
+          "values": [
+            {
+              "customer": {
+                "id": 1.0000000000000002
+              }
+            }
+          ],
+          "bytesConsumed": 8
+        }
+      }
+    }
+  ],
+  "sha256": {
+    "fixtures/avro/relationship-carrier-cases.json": "8e096d7e5d16d56a2f598918e42a1c319e3b786440ddbe3a314aa04926e17906",
+    "scripts/core-ideals/relationship-avro-carrier-native.py": "0218ae2a41826eff537cedbb3262045399c02c95cd970886cb5a0b7e8a3c06f8",
+    "scripts/core-ideals/relationship-avro-carrier-cases.ts": "92e9a271900c2c3a1b0202bc6428766ed88fb1ccb5d0682eff62a4c091043faf",
+    "src/core-ideals/relationship-avro-carrier.ts": "41738f5b72691cf734b595d5372a1aa939e9adc804545ffb8c035a5eb1627444"
+  }
+}

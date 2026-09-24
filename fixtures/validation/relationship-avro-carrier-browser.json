@@ -1,0 +1,20 @@
+{
+  "scope": "Internal native carrier builder and classification recovery only; authored projection and full binding acceptance remain unfinished",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 12,
+    "recoveries": 24,
+    "strictBlocks": 12,
+    "getterReads": 0
+  },
+  "externalRequests": [],
+  "sha256": {
+    "src/core-ideals/relationship-avro-carrier.ts": "41738f5b72691cf734b595d5372a1aa939e9adc804545ffb8c035a5eb1627444",
+    "scripts/core-ideals/relationship-avro-carrier-cases.ts": "92e9a271900c2c3a1b0202bc6428766ed88fb1ccb5d0682eff62a4c091043faf",
+    "scripts/core-ideals/relationship-avro-carrier-browser.ts": "1f9f8760fcfac3c55c9abc91bd91c15c36b3adf79db3f8c0604465689c16bc39",
+    "tests/core-ideals/relationship-avro-carrier.test.ts": "9ac2e3edc11391bbb81476df58684930ec582347670058babb5859767ca6b3f6",
+    "fixtures/avro/relationship-carrier-cases.json": "8e096d7e5d16d56a2f598918e42a1c319e3b786440ddbe3a314aa04926e17906",
+    "fixtures/validation/relationship-avro-carrier-native.json": "02572dfa2146a4a3ac31c5c3f2ffeed523e2848d512b5e096d522ee940851ce2",
+    "dist/umf.js": "77cbdf03e7a0d530ae50bf53a28164516836cd3af82736ac48cfe8b63b3dbc95"
+  }
+}

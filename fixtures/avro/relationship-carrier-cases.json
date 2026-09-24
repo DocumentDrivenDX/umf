@@ -1,0 +1,399 @@
+{
+  "scope": "Internal target-key tuple carrier probes; authored projection not yet implemented",
+  "cases": [
+    {
+      "id": "dangling-key-value",
+      "request": {
+        "recordName": "Order",
+        "namespace": "sales",
+        "fieldName": "customer",
+        "keyRecordName": "CustomerKey",
+        "shape": "one",
+        "components": [
+          {
+            "name": "id",
+            "type": "long"
+          }
+        ]
+      },
+      "values": [
+        {
+          "customer": {
+            "id": 999
+          }
+        }
+      ],
+      "expectedWrite": true,
+      "expectedValues": [
+        {
+          "customer": {
+            "id": 999
+          }
+        }
+      ],
+      "schemaText": "{\"type\":\"record\",\"name\":\"Order\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"customer\",\"type\":{\"type\":\"record\",\"name\":\"CustomerKey\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"}]}}]}\n"
+    },
+    {
+      "id": "required-reference-missing",
+      "request": {
+        "recordName": "Order",
+        "namespace": "sales",
+        "fieldName": "customer",
+        "keyRecordName": "CustomerKey",
+        "shape": "one",
+        "components": [
+          {
+            "name": "id",
+            "type": "long"
+          }
+        ]
+      },
+      "values": [
+        {}
+      ],
+      "expectedWrite": false,
+      "expectedValues": [
+        {}
+      ],
+      "schemaText": "{\"type\":\"record\",\"name\":\"Order\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"customer\",\"type\":{\"type\":\"record\",\"name\":\"CustomerKey\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"}]}}]}\n"
+    },
+    {
+      "id": "singular-null-rejected",
+      "request": {
+        "recordName": "Order",
+        "namespace": "sales",
+        "fieldName": "customer",
+        "keyRecordName": "CustomerKey",
+        "shape": "one",
+        "components": [
+          {
+            "name": "id",
+            "type": "long"
+          }
+        ]
+      },
+      "values": [
+        {
+          "customer": null
+        }
+      ],
+      "expectedWrite": false,
+      "expectedValues": [
+        {
+          "customer": null
+        }
+      ],
+      "schemaText": "{\"type\":\"record\",\"name\":\"Order\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"customer\",\"type\":{\"type\":\"record\",\"name\":\"CustomerKey\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"}]}}]}\n"
+    },
+    {
+      "id": "nullable-reference",
+      "request": {
+        "recordName": "Order",
+        "namespace": "sales",
+        "fieldName": "customer",
+        "keyRecordName": "CustomerKey",
+        "shape": "nullable-one",
+        "components": [
+          {
+            "name": "id",
+            "type": "long"
+          }
+        ]
+      },
+      "values": [
+        {
+          "customer": null
+        },
+        {
+          "customer": {
+            "id": 1
+          }
+        }
+      ],
+      "expectedWrite": true,
+      "expectedValues": [
+        {
+          "customer": null
+        },
+        {
+          "customer": {
+            "id": 1
+          }
+        }
+      ],
+      "schemaText": "{\"type\":\"record\",\"name\":\"Order\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"customer\",\"type\":[\"null\",{\"type\":\"record\",\"name\":\"CustomerKey\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"}]}]}]}\n"
+    },
+    {
+      "id": "empty-reference-array",
+      "request": {
+        "recordName": "Order",
+        "namespace": "sales",
+        "fieldName": "customer",
+        "keyRecordName": "CustomerKey",
+        "shape": "array",
+        "components": [
+          {
+            "name": "id",
+            "type": "long"
+          }
+        ]
+      },
+      "values": [
+        {
+          "customer": []
+        }
+      ],
+      "expectedWrite": true,
+      "expectedValues": [
+        {
+          "customer": []
+        }
+      ],
+      "schemaText": "{\"type\":\"record\",\"name\":\"Order\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"customer\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"CustomerKey\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"}]}}}]}\n"
+    },
+    {
+      "id": "duplicate-references",
+      "request": {
+        "recordName": "Order",
+        "namespace": "sales",
+        "fieldName": "customer",
+        "keyRecordName": "CustomerKey",
+        "shape": "array",
+        "components": [
+          {
+            "name": "id",
+            "type": "long"
+          }
+        ]
+      },
+      "values": [
+        {
+          "customer": [
+            {
+              "id": 1
+            },
+            {
+              "id": 1
+            }
+          ]
+        }
+      ],
+      "expectedWrite": true,
+      "expectedValues": [
+        {
+          "customer": [
+            {
+              "id": 1
+            },
+            {
+              "id": 1
+            }
+          ]
+        }
+      ],
+      "schemaText": "{\"type\":\"record\",\"name\":\"Order\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"customer\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"CustomerKey\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"}]}}}]}\n"
+    },
+    {
+      "id": "composite-reference",
+      "request": {
+        "recordName": "Order",
+        "namespace": "sales",
+        "fieldName": "customer",
+        "keyRecordName": "CustomerKey",
+        "shape": "one",
+        "components": [
+          {
+            "name": "tenant",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "type": "int"
+          }
+        ]
+      },
+      "values": [
+        {
+          "customer": {
+            "tenant": "alpha",
+            "id": 17
+          }
+        }
+      ],
+      "expectedWrite": true,
+      "expectedValues": [
+        {
+          "customer": {
+            "tenant": "alpha",
+            "id": 17
+          }
+        }
+      ],
+      "schemaText": "{\"type\":\"record\",\"name\":\"Order\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"customer\",\"type\":{\"type\":\"record\",\"name\":\"CustomerKey\",\"fields\":[{\"name\":\"tenant\",\"type\":\"string\"},{\"name\":\"id\",\"type\":\"int\"}]}}]}\n"
+    },
+    {
+      "id": "self-reference-key",
+      "request": {
+        "recordName": "Node",
+        "namespace": "sales",
+        "fieldName": "parent",
+        "keyRecordName": "NodeKey",
+        "shape": "one",
+        "components": [
+          {
+            "name": "id",
+            "type": "long"
+          }
+        ]
+      },
+      "values": [
+        {
+          "parent": {
+            "id": 1
+          }
+        }
+      ],
+      "expectedWrite": true,
+      "expectedValues": [
+        {
+          "parent": {
+            "id": 1
+          }
+        }
+      ],
+      "schemaText": "{\"type\":\"record\",\"name\":\"Node\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"parent\",\"type\":{\"type\":\"record\",\"name\":\"NodeKey\",\"fields\":[{\"name\":\"id\",\"type\":\"long\"}]}}]}\n"
+    },
+    {
+      "id": "boolean-key",
+      "request": {
+        "recordName": "Order",
+        "namespace": "sales",
+        "fieldName": "customer",
+        "keyRecordName": "CustomerKey",
+        "shape": "one",
+        "components": [
+          {
+            "name": "id",
+            "type": "boolean"
+          }
+        ]
+      },
+      "values": [
+        {
+          "customer": {
+            "id": true
+          }
+        }
+      ],
+      "expectedWrite": true,
+      "expectedValues": [
+        {
+          "customer": {
+            "id": true
+          }
+        }
+      ],
+      "schemaText": "{\"type\":\"record\",\"name\":\"Order\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"customer\",\"type\":{\"type\":\"record\",\"name\":\"CustomerKey\",\"fields\":[{\"name\":\"id\",\"type\":\"boolean\"}]}}]}\n"
+    },
+    {
+      "id": "binary-key",
+      "request": {
+        "recordName": "Order",
+        "namespace": "sales",
+        "fieldName": "customer",
+        "keyRecordName": "CustomerKey",
+        "shape": "one",
+        "components": [
+          {
+            "name": "id",
+            "type": "bytes"
+          }
+        ]
+      },
+      "values": [
+        {
+          "customer": {
+            "id": {
+              "$bytes": "00ff"
+            }
+          }
+        }
+      ],
+      "expectedWrite": true,
+      "expectedValues": [
+        {
+          "customer": {
+            "id": {
+              "$bytes": "00ff"
+            }
+          }
+        }
+      ],
+      "schemaText": "{\"type\":\"record\",\"name\":\"Order\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"customer\",\"type\":{\"type\":\"record\",\"name\":\"CustomerKey\",\"fields\":[{\"name\":\"id\",\"type\":\"bytes\"}]}}]}\n"
+    },
+    {
+      "id": "float-key-narrows",
+      "request": {
+        "recordName": "Order",
+        "namespace": "sales",
+        "fieldName": "customer",
+        "keyRecordName": "CustomerKey",
+        "shape": "one",
+        "components": [
+          {
+            "name": "id",
+            "type": "float"
+          }
+        ]
+      },
+      "values": [
+        {
+          "customer": {
+            "id": 1.0000000000000002
+          }
+        }
+      ],
+      "expectedWrite": true,
+      "expectedValues": [
+        {
+          "customer": {
+            "id": 1
+          }
+        }
+      ],
+      "schemaText": "{\"type\":\"record\",\"name\":\"Order\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"customer\",\"type\":{\"type\":\"record\",\"name\":\"CustomerKey\",\"fields\":[{\"name\":\"id\",\"type\":\"float\"}]}}]}\n"
+    },
+    {
+      "id": "double-key-preserves-probe",
+      "request": {
+        "recordName": "Order",
+        "namespace": "sales",
+        "fieldName": "customer",
+        "keyRecordName": "CustomerKey",
+        "shape": "one",
+        "components": [
+          {
+            "name": "id",
+            "type": "double"
+          }
+        ]
+      },
+      "values": [
+        {
+          "customer": {
+            "id": 1.0000000000000002
+          }
+        }
+      ],
+      "expectedWrite": true,
+      "expectedValues": [
+        {
+          "customer": {
+            "id": 1.0000000000000002
+          }
+        }
+      ],
+      "schemaText": "{\"type\":\"record\",\"name\":\"Order\",\"namespace\":\"sales\",\"fields\":[{\"name\":\"customer\",\"type\":{\"type\":\"record\",\"name\":\"CustomerKey\",\"fields\":[{\"name\":\"id\",\"type\":\"double\"}]}}]}\n"
+    }
+  ]
+}
