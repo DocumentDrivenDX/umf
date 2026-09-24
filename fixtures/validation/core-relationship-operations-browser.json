@@ -1,0 +1,27 @@
+{
+  "scope": "Experimental relationship authoring, inspection and lookup; public version integration and native binding admission remain separate",
+  "browser": "148.0.7778.0",
+  "checks": {
+    "cases": 13,
+    "recoveries": 78,
+    "refusals": 41,
+    "getterCalls": 0
+  },
+  "externalRequests": [],
+  "bundleSha256": "6e8af1cf01ce9d76bdf381cf1de946c1e0ab6d90108f134ffac8c9281960cc0c",
+  "sha256": {
+    "scripts/core-relationship-operations-browser.ts": "c8c695f656f8bd2cc01408b5941259f5cd4565aaf448f9e5e93f67d9dccbb1e7",
+    "scripts/core-relationship-operation-cases.ts": "fbc86d5abc4616dcd6a5c91144458719fdf2881fa57ba94ec0c1a7c91db44b28",
+    "scripts/core-relationship-operation-schema.ts": "cc24cfa07df23a7567a1bf4964a822efb94ff1526471e28c0f9acd6fffa7cb88",
+    "scripts/core-relationship-cases.ts": "72ec7b69f274be86907ba43a3304f36af8a40cbcc2549b4ab2c3e4d0a5541a2c",
+    "src/model/relationships.ts": "c244305e4279afe612ce978c2a14826b6450a6bf839bc246364a4629c97e6ad8",
+    "src/validation/relationships.ts": "e37ef7c318caaf683144e266b5bd09d494156249d240271f9f2ed0e63c8e6117",
+    "src/validation/keys.ts": "00650bc3e645c2d36e01f423b0a5eb85dba8b38c102697b0e62e3030a4be7886",
+    "src/validation/document.ts": "711c8241449590556fd130644b201055c25b7aaad2a1629794aa6bb9069eed59",
+    "src/model/json.ts": "b2c3f48bb779972af5beadfb22ec1db48c793dcdaf572293afa62904016465e7",
+    "src/model/serialization.ts": "235407a33795c78badb334f66c6131f64d3364503e3c871723d0dd518bc2e28c",
+    "spec/core/relationship-document.schema.json": "a95512729481417f1a3a094cc337d7264a575bd6b54046b05c037db6c33b4813",
+    "spec/core/relationship-operation.schema.json": "2d1607e70f0cc0fd5ddc618e9fe2753863bb2bccecbe70b49c6fa8b075bb43c3",
+    "tests/core/relationship-operations.test.ts": "a186664ac51d0f6091232b09aad6fcdcb48b2dbdaddd9bcd26cd47fcd68adcc0"
+  }
+}

@@ -4724,3 +4724,23 @@ verifies seven transition cases, fourteen serialized rollback recoveries and
 Typechecking, build and 308-schema / 53-package audits pass. Public authoring,
 inspection, selection/versioned operation integration and core-task acceptance
 remain unfinished; this checkpoint does not claim native relationship admission.
+
+
+### Relationship candidate authoring and inspection checkpoint
+
+`declareCoreRelationship`, `inspectCoreRelationships`, `lookupCoreRelationship`
+and receipt verification now operate on the explicit candidate profile. The
+complete operation schema retains copied source, diagnostics and provenance.
+Stable IDs survive presentation edits and endpoint-set reordering; endpoint/key,
+direction or association Record reassignment rejects. Unknown qualifiers survive
+by identity and block participation/lifecycle changes. Future lifecycle values
+remain inspectable without being adopted by authoring. Inspection does not
+authenticate author intent; verification recomputes the receipt and current
+source/target context. Native bindings and their residuals remain separate.
+
+Five Bun tests pass 157 assertions. Chromium verifies thirteen operation cases,
+78 serialized receipt recoveries and 41 refusals with no getters or host globals.
+See the [operations browser record](../../fixtures/validation/core-relationship-operations-browser.json).
+Typechecking, build and 309-schema / 53-package audits pass. Public 0.7.0
+validation/serialization, earlier versioned operations, selection and complete
+core-task acceptance remain before the first native relationship binding.

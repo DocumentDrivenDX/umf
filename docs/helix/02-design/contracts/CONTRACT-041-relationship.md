@@ -206,3 +206,20 @@ gate has passed.
 - [x] Two-priority admission and all-five delivery are distinct.
 - [x] Strict/report, retained recovery and versioned rollback are specified.
 - [ ] Native subsets and generated schema evidence must be supplied before implementation claims.
+
+
+### Candidate authoring identity and retained qualifiers
+
+Authoring addresses the containing module by exact ID and a relationship by its
+stable local ID. Updating that ID preserves the source Record set, target
+Record/Key set, direction and optional association Record identity; endpoint
+list reordering does not change a set. A different association requires a new
+ID or a separate explicit identity migration. Names, inverse presentation,
+participation bounds and known lifecycle assertions may be edited explicitly
+without silently changing those endpoint identities. Omitted inverse/association
+fields retain existing values; an explicit null inverse removes that optional
+presentation. Unknown qualifiers on the assertion, endpoints and bounds remain
+attached by identity. Their presence blocks changes to participation/lifecycle
+meaning; presentation-only edits retain them. A future lifecycle value remains
+inspectable but cannot be authored or edited by this implementation. Inspection
+and lookup describe retained meaning and do not authenticate author provenance.

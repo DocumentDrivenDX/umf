@@ -1,0 +1,764 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:core:relationship-operation:1.0.0",
+  "title": "Experimental relationship authoring and inspection receipts",
+  "$defs": {
+    "identity": {
+      "type": "object",
+      "required": [
+        "module"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "lookupIdentity": {
+      "type": "object",
+      "required": [
+        "module",
+        "id"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "source",
+        "target",
+        "sourceMultiplicity",
+        "targetMultiplicity",
+        "targetLifecycle",
+        "directed"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "module",
+              "element"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "element": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "target": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "module",
+              "element",
+              "key"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "element": {
+                "type": "string",
+                "minLength": 1
+              },
+              "key": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "sourceMultiplicity": {
+          "type": "object",
+          "required": [
+            "min",
+            "max"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "min": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "max": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                {
+                  "const": "*"
+                }
+              ]
+            }
+          }
+        },
+        "targetMultiplicity": {
+          "type": "object",
+          "required": [
+            "min",
+            "max"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "min": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "max": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                {
+                  "const": "*"
+                }
+              ]
+            }
+          }
+        },
+        "targetLifecycle": {
+          "enum": [
+            "owned",
+            "independent",
+            "unspecified"
+          ]
+        },
+        "directed": {
+          "type": "boolean"
+        },
+        "inverse": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "associationRecord": {
+          "type": "object",
+          "required": [
+            "module",
+            "element"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "module": {
+              "type": "string",
+              "minLength": 1
+            },
+            "element": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "declaration": {
+      "type": "object",
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "target",
+        "identity",
+        "request",
+        "provenance",
+        "diagnostics",
+        "residuals"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "operation": {
+          "const": "declare-core-relationship"
+        },
+        "version": {
+          "const": "1.0.0"
+        },
+        "source": {
+          "$ref": "urn:umf:core:0.7.0"
+        },
+        "target": {
+          "$ref": "urn:umf:core:0.7.0"
+        },
+        "identity": {
+          "type": "object",
+          "required": [
+            "module"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "module": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "request": {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "source",
+            "target",
+            "sourceMultiplicity",
+            "targetMultiplicity",
+            "targetLifecycle",
+            "directed"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "module",
+                  "element"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "module": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "element": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "target": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "module",
+                  "element",
+                  "key"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "module": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "element": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "key": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            },
+            "sourceMultiplicity": {
+              "type": "object",
+              "required": [
+                "min",
+                "max"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "min": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "max": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    {
+                      "const": "*"
+                    }
+                  ]
+                }
+              }
+            },
+            "targetMultiplicity": {
+              "type": "object",
+              "required": [
+                "min",
+                "max"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "min": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "max": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    },
+                    {
+                      "const": "*"
+                    }
+                  ]
+                }
+              }
+            },
+            "targetLifecycle": {
+              "enum": [
+                "owned",
+                "independent",
+                "unspecified"
+              ]
+            },
+            "directed": {
+              "type": "boolean"
+            },
+            "inverse": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "associationRecord": {
+              "type": "object",
+              "required": [
+                "module",
+                "element"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "module": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "element": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        },
+        "provenance": {
+          "type": "object",
+          "required": [
+            "origin",
+            "idealPath",
+            "basis",
+            "nativePath"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "origin": {
+              "const": "authored"
+            },
+            "idealPath": {
+              "type": "string"
+            },
+            "basis": {
+              "const": "explicit-author-declaration"
+            },
+            "nativePath": {
+              "type": "null"
+            }
+          }
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "severity": {
+                "enum": [
+                  "error",
+                  "warning"
+                ]
+              }
+            }
+          }
+        },
+        "residuals": {
+          "type": "array",
+          "maxItems": 0,
+          "description": "Core authoring and read operations retain the complete source without projection loss; native binding residuals are separate."
+        }
+      }
+    },
+    "inspection": {
+      "type": "object",
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "identity",
+        "path",
+        "meaning",
+        "provenance",
+        "diagnostics",
+        "residuals"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "operation": {
+          "const": "inspect-core-relationships"
+        },
+        "version": {
+          "const": "1.0.0"
+        },
+        "source": {
+          "oneOf": [
+            {
+              "$ref": "urn:umf:core:0.1.0"
+            },
+            {
+              "$ref": "urn:umf:core:0.2.0"
+            },
+            {
+              "$ref": "urn:umf:core:0.3.0"
+            },
+            {
+              "$ref": "urn:umf:core:0.4.0"
+            },
+            {
+              "$ref": "urn:umf:core:0.5.0"
+            },
+            {
+              "$ref": "urn:umf:core:0.6.0"
+            },
+            {
+              "$ref": "urn:umf:core:0.7.0"
+            }
+          ]
+        },
+        "identity": {
+          "type": "object",
+          "required": [
+            "module"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "module": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "path": {
+          "type": "string"
+        },
+        "provenance": {
+          "const": "unverified"
+        },
+        "meaning": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": [
+                "state"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "state": {
+                  "const": "missing"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "state",
+                "value"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "state": {
+                  "const": "legacy"
+                },
+                "value": {}
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "state",
+                "relationships",
+                "uninterpretedPaths"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "state": {
+                  "const": "known"
+                },
+                "relationships": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "urn:umf:core:0.7.0#/$defs/relationship"
+                  }
+                },
+                "uninterpretedPaths": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "maxItems": 0
+                }
+              }
+            },
+            {
+              "type": "object",
+              "required": [
+                "state",
+                "relationships",
+                "uninterpretedPaths"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "state": {
+                  "const": "partial"
+                },
+                "relationships": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "urn:umf:core:0.7.0#/$defs/relationship"
+                  }
+                },
+                "uninterpretedPaths": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1
+                }
+              }
+            }
+          ]
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "severity": {
+                "enum": [
+                  "error",
+                  "warning"
+                ]
+              }
+            }
+          }
+        },
+        "residuals": {
+          "type": "array",
+          "maxItems": 0,
+          "description": "Core authoring and read operations retain the complete source without projection loss; native binding residuals are separate."
+        }
+      }
+    },
+    "lookup": {
+      "type": "object",
+      "required": [
+        "operation",
+        "version",
+        "source",
+        "identity",
+        "path",
+        "relationship",
+        "uninterpretedPaths",
+        "provenance",
+        "diagnostics",
+        "residuals"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "operation": {
+          "const": "lookup-core-relationship"
+        },
+        "version": {
+          "const": "1.0.0"
+        },
+        "source": {
+          "$ref": "urn:umf:core:0.7.0"
+        },
+        "identity": {
+          "type": "object",
+          "required": [
+            "module",
+            "id"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "module": {
+              "type": "string",
+              "minLength": 1
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "path": {
+          "type": "string"
+        },
+        "relationship": {
+          "$ref": "urn:umf:core:0.7.0#/$defs/relationship"
+        },
+        "uninterpretedPaths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "provenance": {
+          "const": "unverified"
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "code",
+              "path",
+              "message",
+              "severity"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "severity": {
+                "enum": [
+                  "error",
+                  "warning"
+                ]
+              }
+            }
+          }
+        },
+        "residuals": {
+          "type": "array",
+          "maxItems": 0,
+          "description": "Core authoring and read operations retain the complete source without projection loss; native binding residuals are separate."
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/declaration"
+    },
+    {
+      "$ref": "#/$defs/inspection"
+    },
+    {
+      "$ref": "#/$defs/lookup"
+    }
+  ],
+  "description": "Structure only. Verify retained operation and current context by recomputation; do not infer native enforcement or authenticated authorship."
+}
